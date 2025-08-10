@@ -1,0 +1,116 @@
+
+{
+  "common": {
+    "dashboard": "Dashboard",
+    "clients": "Clients",
+    "cases": "Cases", 
+    "services": "Services",
+    "sessions": "Sessions",
+    "courts": "Courts",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "logout": "Logout",
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "print": "Print",
+    "login": "Login",
+    "register": "Register"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "clients": "Clients",
+    "clients_with_authorization": "Authorized Clients",
+    "clients_without_authorization": "Unauthorized Clients",
+    "cases": "Cases",
+    "active_cases": "Active Cases",
+    "closed_cases": "Closed Cases",
+    "services": "Services",
+    "active_services": "Active Services",
+    "completed_services": "Completed Services",
+    "office_management": "Office Management",
+    "lawyers": "Lawyers",
+    "courts": "Courts",
+    "office_data": "Office Data",
+    "reports": "Reports",
+    "cases_reports": "Cases Reports",
+    "services_reports": "Services Reports",
+    "sessions_reports": "Sessions Reports",
+    "procedures_reports": "Procedures Reports",
+    "ads_reports": "Ads Reports",
+    "procedures": "Procedures",
+    "sessions": "Sessions",
+    "announcements": "Announcements",
+    "legal_procedures": "Legal Procedures",
+    "accounts": "Accounts",
+    "expenses": "Expenses",
+    "revenues": "Revenues",
+    "account_settings": "Account Settings",
+    "users": "Users",
+    "users_list": "Users List",
+    "roles_permissions": "Roles & Permissions"
+  },
+  "dashboard": {
+    "welcome_message": "Welcome to Avocat Legal System",
+    "open_sidebar": "Open Sidebar",
+    "close_sidebar": "Close Sidebar",
+    "total_cases": "Total Cases",
+    "active_cases": "Active Cases",
+    "completed_cases": "Completed Cases",
+    "total_clients": "Total Clients",
+    "recent_activities": "Recent Activities",
+    "upcoming_sessions": "Upcoming Sessions",
+    "statistics": "Statistics",
+    "quick_actions": "Quick Actions"
+  },
+  "lawlanding": {
+    "nav": {
+      "home": "Home",
+      "services": "Services",
+      "about": "About Us",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title": "Welcome to Avocat Law Firm",
+      "subtitle": "Your trusted legal partner",
+      "cta": "Book Consultation"
+    },
+    "services": {
+      "title": "Our Services",
+      "litigation": "Litigation",
+      "consult": "Consultations",
+      "contracts": "Contracts",
+      "corporate": "Corporate Law"
+    },
+    "about": {
+      "title": "About Us",
+      "description": "Avocat Law Firm is dedicated to providing professional legal services across Egypt."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send"
+    },
+    "footer": {
+      "rights": "© 2025 Avocat Law Firm | All Rights Reserved."
+    }
+  },
+  "landing": {
+    "title": "Avocat",
+    "subtitle": "Digital solutions for modern law firms",
+    "footer": {
+      "copyright": "© 2025 Avocat",
+      "disclaimer": "Information here is not legal advice."
+    }
+  }
+}

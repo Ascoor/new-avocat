@@ -1,0 +1,116 @@
+
+{
+  "common": {
+    "dashboard": "لوحة التحكم",
+    "clients": "العملاء", 
+    "cases": "القضايا",
+    "services": "الخدمات",
+    "sessions": "الجلسات",
+    "courts": "المحاكم",
+    "analytics": "التحليلات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "welcome": "مرحباً",
+    "loading": "جاري التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "search": "بحث",
+    "filter": "تصفية",
+    "export": "تصدير",
+    "import": "استيراد",
+    "print": "طباعة",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+  "sidebar": {
+    "dashboard": "الرئيسية",
+    "clients": "العملاء",
+    "clients_with_authorization": "عملاء بتوكيل (موكلين)",
+    "clients_without_authorization": "عملاء بدون توكيل (غير موكلين)",
+    "cases": "القضايا",
+    "active_cases": "قضايا متداولة",
+    "closed_cases": "قضايا منتهية",
+    "services": "الخدمات",
+    "active_services": "خدمات متداولة", 
+    "completed_services": "خدمات منتهية",
+    "office_management": "إدارة المكتب",
+    "lawyers": "المحامين",
+    "courts": "المحاكم",
+    "office_data": "بيانات المكتب",
+    "reports": "التقارير",
+    "cases_reports": "تقارير القضايا",
+    "services_reports": "تقارير الخدمات",
+    "sessions_reports": "تقارير الجلسات",
+    "procedures_reports": "تقارير الإجراءات",
+    "ads_reports": "تقارير الإعلانات",
+    "procedures": "الإجراءات",
+    "sessions": "جلسات",
+    "announcements": "إعلانات",
+    "legal_procedures": "إجراءات",
+    "accounts": "الحسابات",
+    "expenses": "مصروفات",
+    "revenues": "إيرادات",
+    "account_settings": "إعدادات الحسابات",
+    "users": "المستخدمين",
+    "users_list": "قائمة المستخدمين",
+    "roles_permissions": "الأدوار والصلاحيات"
+  },
+  "dashboard": {
+    "welcome_message": "مرحباً بك في نظام أفوكات القانوني",
+    "open_sidebar": "فتح الشريط الجانبي",
+    "close_sidebar": "إغلاق الشريط الجانبي",
+    "total_cases": "إجمالي القضايا",
+    "active_cases": "القضايا النشطة",
+    "completed_cases": "القضايا المكتملة",
+    "total_clients": "إجمالي العملاء",
+    "recent_activities": "الأنشطة الأخيرة",
+    "upcoming_sessions": "الجلسات القادمة",
+    "statistics": "الإحصائيات",
+    "quick_actions": "الإجراءات السريعة"
+  },
+  "lawlanding": {
+    "nav": {
+      "home": "الرئيسية",
+      "services": "الخدمات",
+      "about": "من نحن",
+      "contact": "تواصل معنا"
+    },
+    "hero": {
+      "title": "مرحبًا بكم في مكتب أفوكات للمحاماة",
+      "subtitle": "شريككم القانوني الموثوق",
+      "cta": "احجز استشارتك"
+    },
+    "services": {
+      "title": "خدماتنا",
+      "litigation": "التقاضي",
+      "consult": "استشارات",
+      "contracts": "عقود",
+      "corporate": "شركات"
+    },
+    "about": {
+      "title": "من نحن",
+      "description": "يقدم مكتب أفوكات خدمات قانونية احترافية في جميع أنحاء مصر."
+    },
+    "contact": {
+      "title": "تواصل معنا",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "message": "رسالتك",
+      "submit": "إرسال"
+    },
+    "footer": {
+      "rights": "© ٢٠٢٥ مكتب أفوكات للمحاماة | جميع الحقوق محفوظة."
+    }
+  },
+  "landing": {
+    "title": "أفوكات",
+    "subtitle": "منظومة قانونية متقدمة",
+    "footer": {
+      "copyright": "© ٢٠٢٥ أفوكات",
+      "disclaimer": "هذا الموقع لأغراض المعلومات فقط ولا يمثل استشارة قانونية."
+    }
+  }
+}
