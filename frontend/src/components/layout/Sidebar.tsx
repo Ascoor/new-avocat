@@ -180,58 +180,50 @@
       const hasChildren = item.children && item.children.length > 0;
       const isParentActive = isActiveParent(item);
       const isExpanded = isGroupExpanded(item.key);
+      const paddingClass =
+        hasChildren && (!collapsed || isMobile)
+          ? isRTL
+            ? 'pl-8'
+            : 'pr-8'
+          : '';
 
       return (
         <div key={item.key} className="w-full">
           {/* Parent Menu Item */}
           <div className="relative">
-            {hasChildren ? (
+            <NavLink
+              to={item.path}
+              className={`
+                flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200 ${paddingClass}
+                ${isActive || isParentActive
+                  ? 'bg-blue-500/10 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-600'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                }
+                ${collapsed && !isMobile ? 'justify-center' : ''}
+              `}
+              title={collapsed && !isMobile ? t(`sidebar.${item.key}`) : undefined}
+            >
+              <Icon className={`h-5 w-5 ${isActive || isParentActive ? 'text-blue-600 dark:text-blue-400' : ''}`} />
+              {(!collapsed || isMobile) && (
+                <span className="font-medium">
+                  {t(`sidebar.${item.key}`)}
+                </span>
+              )}
+            </NavLink>
+            {hasChildren && (!collapsed || isMobile) && (
               <button
-                onClick={() => toggleGroup(item.key)}
-                className={`
-                  w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200
-                  ${isActive || isParentActive
-                    ? 'bg-blue-500/10 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-600'  
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }
-                  ${collapsed && !isMobile ? 'justify-center' : 'justify-between'}
-                `}
-                title={collapsed && !isMobile ? t(`sidebar.${item.key}`) : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleGroup(item.key);
+                }}
+                className={`absolute top-1/2 -translate-y-1/2 ${
+                  isRTL ? 'left-3' : 'right-3'
+                } rounded-md p-1 text-gray-500 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700`}
+                aria-label="Toggle Submenu"
               >
-                <div className="flex items-center gap-3">
-                  <Icon className={`h-5 w-5 ${isActive || isParentActive ? 'text-blue-600 dark:text-blue-400' : ''}`} />
-                  {(!collapsed || isMobile) && (
-                    <span className="font-medium">
-                      {t(`sidebar.${item.key}`)}
-                    </span>
-                  )}
-                </div>
-                {(!collapsed || isMobile) && hasChildren && (
-                  <div className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>
-                    <ChevronDown className="h-4 w-4" />
-                  </div>
-                )}
+                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
               </button>
-            ) : (
-              <NavLink
-                to={item.path}
-                className={`
-                  flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-200
-                  ${isActive
-                    ? 'bg-blue-500/10 dark:bg-blue-400/10 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-600'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }
-                  ${collapsed && !isMobile ? 'justify-center' : ''}
-                `}
-                title={collapsed && !isMobile ? t(`sidebar.${item.key}`) : undefined}
-              >
-                <Icon className={`h-5 w-5 ${isActive ? 'text-blue-600 dark:text-blue-400' : ''}`} />
-                {(!collapsed || isMobile) && (
-                  <span className="font-medium">
-                    {t(`sidebar.${item.key}`)}
-                  </span>
-                )}
-              </NavLink>
             )}
           </div>
 
