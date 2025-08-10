@@ -7,7 +7,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../features/auth/hooks';
 import { useAuthRedirect } from '../features/auth/useAuthRedirect';
-import { LanguageSwitcher } from '../components/common/LanguageSwitcher';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 import { ThemeToggle } from '../components/common/ThemeToggle';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { Button } from '../components/ui/button';

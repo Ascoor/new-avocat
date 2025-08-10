@@ -2,7 +2,7 @@
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../hooks/useLanguage';
 import { useAuthStore } from '../../store/authStore';
-import { LanguageSwitcher } from '../common/LanguageSwitcher';
+import LanguageSwitcher from '../LanguageSwitcher';
 import { ThemeToggle } from '../common/ThemeToggle';
 import { Logo } from '../common/Logo';
 import { Link } from 'react-router-dom';

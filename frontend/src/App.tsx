@@ -13,7 +13,6 @@ import { LoadingSpinner } from './shared/components/Spinner';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 // i18n
-import './i18n';
 
 const queryClient = new QueryClient({
   defaultOptions: {
