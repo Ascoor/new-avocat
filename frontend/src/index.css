@@ -159,3 +159,6 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--ring));
 }
+
+html.rtl .text-start { text-align: right; }
+html.rtl .text-end { text-align: left; }

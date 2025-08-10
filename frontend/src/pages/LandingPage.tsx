@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../features/auth/hooks';
 import { useLanguage } from '../hooks/useLanguage';
-import { LanguageSwitcher } from '../components/common/LanguageSwitcher';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 import { ThemeToggle } from '../components/common/ThemeToggle';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';

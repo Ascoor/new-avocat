@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/hooks/useLanguage';
-import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export const Navbar = () => {
   const { t } = useTranslation();

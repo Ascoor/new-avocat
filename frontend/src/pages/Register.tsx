@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import { LanguageSwitcher } from '../components/common/LanguageSwitcher';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
