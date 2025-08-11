@@ -70,11 +70,18 @@ export const Landing = () => {
                 {t('landing.title')}
               </h1>
               <p className={`text-xs transition-colors duration-300 ${
-                specialEdition 
-                  ? 'text-amber-700 dark:text-amber-300' 
+                specialEdition
+                  ? 'text-amber-700 dark:text-amber-300'
                   : 'text-gray-600 dark:text-gray-400'
               }`}>
                 {specialEdition ? 'النسخة الذهبية - طبعة محدودة' : t('landing.subtitle')}
+              </p>
+              <p className={`text-xs transition-colors duration-300 ${
+                specialEdition
+                  ? 'text-amber-700 dark:text-amber-300'
+                  : 'text-gray-600 dark:text-gray-400'
+              }`}>
+                {t('hello_user', { name: 'أحمد' })}
               </p>
             </div>
           </div>

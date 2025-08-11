@@ -16,12 +16,13 @@ i18n
   .init({
     resources,
     fallbackLng: 'ar',
+    lng: 'ar',
     supportedLngs: ['ar', 'en'],
     ns: ['common'],
     defaultNS: 'common',
     interpolation: { escapeValue: false },
     detection: {
-      order: ['localStorage', 'querystring', 'navigator'],
+      order: ['localStorage', 'querystring'],
       lookupLocalStorage: 'lang',
       caches: ['localStorage'],
     },
