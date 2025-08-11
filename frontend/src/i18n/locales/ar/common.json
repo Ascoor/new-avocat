@@ -11,6 +11,7 @@
     "settings": "الإعدادات",
     "logout": "تسجيل الخروج",
     "welcome": "مرحباً",
+    "hello_user": "مرحباً {{name}}",
     "loading": "جاري التحميل...",
     "save": "حفظ",
     "cancel": "إلغاء",

@@ -11,6 +11,7 @@
     "settings": "Settings",
     "logout": "Logout",
     "welcome": "Welcome",
+    "hello_user": "Hello {{name}}",
     "loading": "Loading...",
     "save": "Save",
     "cancel": "Cancel",
