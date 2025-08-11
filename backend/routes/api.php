@@ -40,9 +40,9 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 
-        Route::middleware('auth:api')->get('/token', function (Request $request) {
+        Route::middleware('auth:api')->get('auth/token', function (Request $request) {
             return response()->json([
-                'token' => $request->user()->token()->accessToken,
+                'access_token' => $request->user()->token()->accessToken,
             ]);
         });
 
@@ -60,13 +60,13 @@ Route::get('/user', function (Request $request) {
         Route::get('/user/{user}', [UserController::class, 'getUserDetails'])->name('user.details');
 
             // User Logout
-            Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+            Route::post('auth/logout', [AuthController::class, 'logout'])->name('logout');
 
             // Verify Email (Email Verification)
-            Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+            Route::get('auth/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 
             // Resend Verification Email
-            Route::post('/email/verify/resend', [AuthController::class, 'resendVerificationEmail'])->name('verification.resend');
+            Route::post('auth/email/verify/resend', [AuthController::class, 'resendVerificationEmail'])->name('verification.resend');
         });
         // Document Management
 
@@ -85,10 +85,12 @@ Route::get('/user', function (Request $request) {
 
         Route::post('/legal-doc-upload', [LegalDocArchiveController::class, 'uploadLegalDoc']);
 
-        Route::post('register', [AuthController::class, 'register']);
-        Route::post('login', [AuthController::class, 'login']);
-        Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
-        Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
+        Route::prefix('auth')->group(function () {
+            Route::post('register', [AuthController::class, 'register']);
+            Route::post('login', [AuthController::class, 'login']);
+            Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+            Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
+        });
 
         // Resourcea //
         Route::apiResource('clients', ClientController::class);
