@@ -1,5 +1,5 @@
 import apiClient from '../../shared/libs/axios';
-import { AuthResponse } from '../../shared/libs/authTokens';
+import { AuthResponse, setAuthToken, clearAuthToken } from '../../shared/libs/authTokens';
 
 export interface LoginRequest {
   email: string;
@@ -34,6 +34,7 @@ export const authApi = {
    */
   async login(credentials: LoginRequest): Promise<AuthResponse> {
     const response = await apiClient.post('/api/auth/login', credentials);
+    setAuthToken(response.data.access_token);
     return response.data;
   },
 
@@ -95,6 +96,7 @@ export const authApi = {
    */
   async logout(): Promise<void> {
     await apiClient.post('/api/auth/logout');
+    clearAuthToken();
   },
 
   /**
