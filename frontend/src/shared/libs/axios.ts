@@ -3,7 +3,8 @@ import { handleApiError } from './errorHandler';
 import { getAuthToken, clearAuthToken } from './authTokens';
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/v1',
+  // Default to Laravel's local dev server
+  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

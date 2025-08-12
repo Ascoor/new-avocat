@@ -61,4 +61,23 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+    /**
+     * Return the authenticated user's profile
+     */
+    public function profile(Request $request)
+    {
+        return response()->json($request->user());
+    }
+
+    /**
+     * Verify current authentication status
+     */
+    public function verify(Request $request)
+    {
+        return response()->json([
+            'authenticated' => (bool) $request->user(),
+            'user' => $request->user(),
+        ]);
+    }
 }
