@@ -59,9 +59,6 @@ Route::get('/user', function (Request $request) {
         // Get user details
         Route::get('/user/{user}', [UserController::class, 'getUserDetails'])->name('user.details');
 
-            // User Logout
-            Route::post('auth/logout', [AuthController::class, 'logout'])->name('logout');
-
             // Verify Email (Email Verification)
             Route::get('auth/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 
@@ -90,6 +87,12 @@ Route::get('/user', function (Request $request) {
             Route::post('login', [AuthController::class, 'login']);
             Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
             Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
+
+            Route::middleware('auth:api')->group(function () {
+                Route::get('profile', [AuthController::class, 'profile']);
+                Route::get('verify', [AuthController::class, 'verify']);
+                Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+            });
         });
 
         // Resourcea //
