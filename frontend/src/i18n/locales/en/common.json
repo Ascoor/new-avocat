@@ -109,6 +109,16 @@
   "landing": {
     "title": "Avocat",
     "subtitle": "Digital solutions for modern law firms",
+    "nav": {
+      "features": "Features",
+      "testimonials": "Testimonials",
+      "contact": "Contact"
+    },
+    "buttons": {
+      "sign_in": "Sign In",
+      "get_started": "Get Started",
+      "dashboard": "Go to Dashboard"
+    },
     "footer": {
       "copyright": "© 2025 Avocat",
       "disclaimer": "Information here is not legal advice."

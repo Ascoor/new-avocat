@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
+import { useAuth } from '../features/auth/hooks';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { Button } from '../components/ui/button';
@@ -16,7 +16,7 @@ import { toast } from 'sonner';
 export const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { login, isLoading } = useAuthStore();
+  const { login, isLoading } = useAuth();
   
   const [formData, setFormData] = useState({
     email: '',
@@ -26,11 +26,11 @@ export const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    try {
-      await login(formData.email, formData.password);
+    const success = await login({ email: formData.email, password: formData.password });
+    if (success) {
       toast.success('Welcome back!');
       navigate('/dashboard');
-    } catch (error) {
+    } else {
       toast.error('Invalid credentials. Please try again.');
     }
   };

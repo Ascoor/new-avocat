@@ -3,14 +3,14 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
 import { ProtectedRoute } from '../ProtectedRoute'
 
-const mockUseAuthStore = vi.fn()
-vi.mock('@/store/authStore', () => ({
-  useAuthStore: mockUseAuthStore
+const mockUseAuth = vi.fn()
+vi.mock('../../features/auth/hooks', () => ({
+  useAuth: () => mockUseAuth()
 }))
 
 describe('ProtectedRoute', () => {
   it('redirects to login when unauthenticated', () => {
-    mockUseAuthStore.mockReturnValue({ isAuthenticated: false, isLoading: false })
+    mockUseAuth.mockReturnValue({ isAuthenticated: false, isLoading: false })
     render(
       <MemoryRouter initialEntries={['/secret']}>
         <Routes>
@@ -23,7 +23,7 @@ describe('ProtectedRoute', () => {
   })
 
   it('renders children when authenticated', () => {
-    mockUseAuthStore.mockReturnValue({ isAuthenticated: true, isLoading: false })
+    mockUseAuth.mockReturnValue({ isAuthenticated: true, isLoading: false })
     render(
       <MemoryRouter initialEntries={['/secret']}>
         <Routes>
