@@ -149,13 +149,13 @@ export const LandingPage = () => {
           
           <nav className="hidden md:flex items-center gap-6">
             <Button variant="ghost" onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}>
-              Features
+              {t('landing.nav.features')}
             </Button>
             <Button variant="ghost" onClick={() => document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' })}>
-              Testimonials
+              {t('landing.nav.testimonials')}
             </Button>
             <Button variant="ghost" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
-              Contact
+              {t('landing.nav.contact')}
             </Button>
           </nav>
           
@@ -163,23 +163,23 @@ export const LandingPage = () => {
             <LanguageSwitcher />
             <ThemeToggle />
             {isAuthenticated ? (
-              <Button 
+              <Button
                 onClick={() => navigate('/dashboard')}
                 className="bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Go to Dashboard
+                {t('landing.buttons.dashboard')}
                 <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180 mr-2' : 'ml-2'}`} />
               </Button>
             ) : (
               <>
                 <Button variant="ghost" onClick={() => navigate('/login')}>
-                  Sign In
+                  {t('landing.buttons.sign_in')}
                 </Button>
-                <Button 
+                <Button
                   onClick={() => navigate('/register')}
                   className="bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200"
                 >
-                  Get Started
+                  {t('landing.buttons.get_started')}
                 </Button>
               </>
             )}
@@ -459,7 +459,7 @@ export const LandingPage = () => {
             <div>
               <h3 className="font-semibold mb-4">Product</h3>
               <ul className="space-y-2 text-muted-foreground">
-                <li><Link to="#features" className="hover:text-primary transition-colors">Features</Link></li>
+                <li><Link to="#features" className="hover:text-primary transition-colors">{t('landing.nav.features')}</Link></li>
                 <li><Link to="/pricing" className="hover:text-primary transition-colors">Pricing</Link></li>
                 <li><Link to="/security" className="hover:text-primary transition-colors">Security</Link></li>
               </ul>

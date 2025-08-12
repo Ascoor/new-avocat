@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuthStore } from '../store/authStore';
+import { useAuth } from '../features/auth/hooks';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { Button } from '../components/ui/button';
@@ -16,7 +16,7 @@ import { toast } from 'sonner';
 export const Register = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { register, isLoading } = useAuthStore();
+  const { register: registerUser, isLoading } = useAuth();
   
   const [formData, setFormData] = useState({
     firstName: '',
@@ -34,16 +34,18 @@ export const Register = () => {
       return;
     }
 
-    try {
-      await register({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        role: 'lawyer'
-      });
+    const success = await registerUser({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      role: 'lawyer'
+    });
+    if (success) {
       toast.success('Account created successfully!');
       navigate('/dashboard');
-    } catch (error) {
+    } else {
       toast.error('Failed to create account. Please try again.');
     }
   };
