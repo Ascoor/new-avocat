@@ -1,11 +1,10 @@
-import { User, LoginRequest, RegisterRequest } from './api';
+import { User, LoginRequest, RegisterRequest, AuthResponse } from './api';
 import { AuthState } from './slice';
-import { AuthResponse, AuthTokens } from '../../shared/libs/authTokens';
 
 // Re-export types for convenience
 export type { User, LoginRequest, RegisterRequest };
 export type { AuthState };
-export type { AuthResponse, AuthTokens };
+export type { AuthResponse };
 
 // Additional auth-related types
 export interface Permission {

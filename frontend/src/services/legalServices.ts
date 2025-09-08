@@ -9,18 +9,18 @@ export interface Service {
 }
 
 export const getServices = (): Promise<AxiosResponse<{ services: Service[] }>> =>
-  apiClient.get('/api/services');
+  apiClient.get('/services');
 
 export const getServiceById = (id: string): Promise<AxiosResponse<Service>> =>
-  apiClient.get(`/api/services/${id}`);
+  apiClient.get(`/services/${id}`);
 
 export const createService = (data: Partial<Service>): Promise<AxiosResponse<Service>> =>
-  apiClient.post('/api/services', data);
+  apiClient.post('/services', data);
 
 export const updateService = (
   id: string,
   data: Partial<Service>
-): Promise<AxiosResponse<Service>> => apiClient.put(`/api/services/${id}`, data);
+): Promise<AxiosResponse<Service>> => apiClient.put(`/services/${id}`, data);
 
 export const deleteService = (id: string): Promise<AxiosResponse<void>> =>
-  apiClient.delete(`/api/services/${id}`);
+  apiClient.delete(`/services/${id}`);

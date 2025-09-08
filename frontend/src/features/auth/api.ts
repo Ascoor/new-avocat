@@ -1,15 +1,9 @@
-import apiClient from '../../shared/libs/axios';
-import {
-  AuthResponse,
-  setAuthToken,
-  clearAuthToken,
-  getAuthToken
-} from '../../shared/libs/authTokens';
+import axios from 'axios';
+import apiClient from '../../services/apiClient';
 
 export interface LoginRequest {
   email: string;
   password: string;
-  remember?: boolean;
 }
 
 export interface RegisterRequest {
@@ -23,97 +17,50 @@ export interface RegisterRequest {
 
 export interface User {
   id: string;
+  name: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-  permissions?: string[];
-  createdAt?: string;    
-  updatedAt?: string;
+  role?: string;
 }
 
-// Authentication API calls
+export interface AuthResponse {
+  user: User;
+}
+
 export const authApi = {
-  /**
-   * Login user with email and password
-   */
   async login(credentials: LoginRequest): Promise<AuthResponse> {
-    const response = await apiClient.post('/api/auth/login', credentials);
-    setAuthToken(response.data.access_token);
-    return response.data;
+    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+      withCredentials: true,
+    });
+    const { data } = await apiClient.post('/auth/login', credentials);
+    return data;
   },
 
-  /**
-   * Register new user
-   */
   async register(userData: RegisterRequest): Promise<AuthResponse> {
-    const response = await apiClient.post('/api/auth/register', userData);
-    return response.data;
+    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+      withCredentials: true,
+    });
+    const payload = {
+      name: `${userData.firstName} ${userData.lastName}`.trim(),
+      email: userData.email,
+      password: userData.password,
+      password_confirmation: userData.confirmPassword,
+      role: userData.role,
+    };
+    const { data } = await apiClient.post('/auth/register', payload);
+    return data;
   },
 
-  /**
-   * Get current user profile
-   */
-  async getProfile(): Promise<User> {
-    const response = await apiClient.get('/api/auth/profile');
-    return response.data;
-  },
-
-  /**
-   * Update user profile
-   */
-  async updateProfile(updates: Partial<User>): Promise<User> {
-    const response = await apiClient.put('/api/auth/profile', updates);
-    return response.data;
-  },
-
-  /**
-   * Change password
-   */
-  async changePassword(data: {
-    currentPassword: string;
-    newPassword: string;
-    confirmPassword: string;
-  }): Promise<void> {
-    await apiClient.post('/api/auth/change-password', data);
-  },
-
-  /**
-   * Request password reset
-   */
-  async requestPasswordReset(email: string): Promise<void> {
-    await apiClient.post('/api/auth/forgot-password', { email });
-  },
-
-  /**
-   * Reset password with token
-   */
-  async resetPassword(data: {
-    token: string;
-    password: string;
-    confirmPassword: string;
-  }): Promise<void> {
-    await apiClient.post('/api/auth/reset-password', data);
-  },
-
-  /**
-   * Logout user
-   */
   async logout(): Promise<void> {
-    await apiClient.post('/api/auth/logout');
-    clearAuthToken();
+    await apiClient.post('/auth/logout');
   },
 
-  /**
-   * Verify authentication status
-   */
-  async verifyAuth(): Promise<{ user: User | null; authenticated: boolean }> {
-    const token = getAuthToken();
-    if (!token) {
-      return { user: null, authenticated: false };
-    }
+  async profile(): Promise<User> {
+    const { data } = await apiClient.get('/auth/profile');
+    return data;
+  },
 
-    const response = await apiClient.get('/api/auth/verify');
-    return response.data;
-  }
+  async verifyAuth(): Promise<{ user: User; authenticated: boolean }> {
+    const { data } = await apiClient.get('/auth/verify');
+    return data;
+  },
 };

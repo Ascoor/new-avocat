@@ -17,14 +17,10 @@ class DatabaseSeeder extends Seeder
     {
 
            // تشغيل أوامر Passport قبل تشغيل أي Seeder
-        Artisan::call('passport:install', ['--force' => true]);
-
         // استدعاء باقي seeders
         $this->call([
-            PassportClientSeeder::class,
             UsersTableSeeder::class,
         ]);
-    $this->call(PassportClientSeeder::class);   // الأساسيات والبيانات المشتركة
         $this->call(UsersTableSeeder::class);
         $this->call(ClientsTableSeeder::class);
         $this->call(LawyerSeeder::class);

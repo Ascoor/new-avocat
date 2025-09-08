@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -14,70 +14,56 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
         ]);
 
-        $user = new User([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
-        $user->save();
-        return response()->json([
-            'message' => 'Successfully registered',
-            'user' => $user
-        ], 201);
+        Auth::login($user);
+
+        return response()->json(['user' => $user], 201);
     }
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string'
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (!Auth::attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
-        $token->save();
+        $request->session()->regenerate();
 
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'user' => $user
-        ]);
+        return response()->json(['user' => $request->user()]);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->token()->revoke();
+        Auth::guard('web')->logout();
 
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json(['message' => 'Logged out']);
     }
 
-    /**
-     * Return the authenticated user's profile
-     */
     public function profile(Request $request)
     {
         return response()->json($request->user());
     }
 
-    /**
-     * Verify current authentication status
-     */
     public function verify(Request $request)
     {
         return response()->json([
-            'authenticated' => (bool) $request->user(),
             'user' => $request->user(),
+            'authenticated' => true,
         ]);
     }
 }

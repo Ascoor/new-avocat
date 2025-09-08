@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { authApi, User, LoginRequest, RegisterRequest } from './api';
-import { AuthResponse } from '../../shared/libs/authTokens';
+import { authApi, User, LoginRequest, RegisterRequest, AuthResponse } from './api';
 import { ApiError } from '../../shared/libs/errorHandler';
 
 export interface AuthState {
@@ -68,17 +67,6 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-export const updateProfile = createAsyncThunk(
-  'auth/updateProfile',
-  async (updates: Partial<User>, { rejectWithValue }) => {
-    try {
-      const updatedUser = await authApi.updateProfile(updates);
-      return updatedUser;
-    } catch (error: any) {
-      return rejectWithValue(error as ApiError);
-    }
-  }
-);
 
 // Auth slice
 const authSlice = createSlice({
@@ -174,21 +162,6 @@ const authSlice = createSlice({
       .addCase(logoutUser.rejected, (state, action) => {
         state.error = (action.payload as ApiError)?.message || 'Logout failed';
       })
-
-    // Update Profile
-    builder
-      .addCase(updateProfile.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(updateProfile.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload;
-      })
-      .addCase(updateProfile.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = (action.payload as ApiError)?.message || 'Profile update failed';
-      });
 
     // Global 401 handler
     builder.addMatcher(

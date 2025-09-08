@@ -1,4 +1,4 @@
-import apiClient from '../../shared/libs/axios';
+import apiClient from '../../services/apiClient';
 
 export interface Client {
   id: string;
@@ -55,7 +55,7 @@ export const clientsApi = {
    * Get all clients with pagination and filters
    */
   async getClients(params: ClientsQueryParams = {}): Promise<ClientsResponse> {
-    const response = await apiClient.get('/api/clients', { params });
+    const response = await apiClient.get('/clients', { params });
     return response.data;
   },
 
@@ -63,7 +63,7 @@ export const clientsApi = {
    * Get single client by ID
    */
   async getClient(id: string): Promise<Client> {
-    const response = await apiClient.get(`/api/clients/${id}`);
+    const response = await apiClient.get(`/clients/${id}`);
     return response.data;
   },
 
@@ -71,7 +71,7 @@ export const clientsApi = {
    * Create new client
    */
   async createClient(clientData: CreateClientRequest): Promise<Client> {
-    const response = await apiClient.post('/api/clients', clientData);
+    const response = await apiClient.post('/clients', clientData);
     return response.data;
   },
 
@@ -79,7 +79,7 @@ export const clientsApi = {
    * Update existing client
    */
   async updateClient(id: string, updates: UpdateClientRequest): Promise<Client> {
-    const response = await apiClient.put(`/api/clients/${id}`, updates);
+    const response = await apiClient.put(`/clients/${id}`, updates);
     return response.data;
   },
 
@@ -87,14 +87,14 @@ export const clientsApi = {
    * Delete client
    */
   async deleteClient(id: string): Promise<void> {
-    await apiClient.delete(`/api/clients/${id}`);
+    await apiClient.delete(`/clients/${id}`);
   },
 
   /**
    * Search clients by name or email
    */
   async searchClients(query: string): Promise<Client[]> {
-    const response = await apiClient.get(`/api/clients/search`, {
+    const response = await apiClient.get(`/clients/search`, {
       params: { q: query }
     });
     return response.data;
