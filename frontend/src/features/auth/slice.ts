@@ -1,5 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { authApi, User, LoginRequest, RegisterRequest, AuthResponse } from './api';
+import {
+  authApi,
+  User,
+  LoginRequest,
+  RegisterRequest,
+  AuthResponse,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+} from './api';
 import { ApiError } from '../../shared/libs/errorHandler';
 
 export interface AuthState {
@@ -49,6 +57,30 @@ export const verifyAuth = createAsyncThunk(
     try {
       const response = await authApi.verifyAuth();
       return response;
+    } catch (error: any) {
+      return rejectWithValue(error as ApiError);
+    }
+  }
+);
+
+export const requestPasswordReset = createAsyncThunk(
+  'auth/requestPasswordReset',
+  async (payload: ForgotPasswordRequest, { rejectWithValue }) => {
+    try {
+      await authApi.requestPasswordReset(payload);
+      return null;
+    } catch (error: any) {
+      return rejectWithValue(error as ApiError);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (payload: ResetPasswordRequest, { rejectWithValue }) => {
+    try {
+      await authApi.resetPassword(payload);
+      return null;
     } catch (error: any) {
       return rejectWithValue(error as ApiError);
     }
@@ -162,6 +194,34 @@ const authSlice = createSlice({
       .addCase(logoutUser.rejected, (state, action) => {
         state.error = (action.payload as ApiError)?.message || 'Logout failed';
       })
+
+    // Request Password Reset
+    builder
+      .addCase(requestPasswordReset.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(requestPasswordReset.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(requestPasswordReset.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as ApiError)?.message || 'Request failed';
+      });
+
+    // Reset Password
+    builder
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as ApiError)?.message || 'Reset failed';
+      });
 
     // Global 401 handler
     builder.addMatcher(

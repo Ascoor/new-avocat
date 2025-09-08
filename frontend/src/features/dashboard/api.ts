@@ -69,3 +69,20 @@ export const Session = {
     return sessions;
   }
 };
+
+export interface DashboardStats {
+  clients: number;
+  cases: number;
+  sessions: number;
+  services: number;
+}
+
+export async function getDashboardStats(): Promise<DashboardStats> {
+  await delay(200);
+  return {
+    clients: 120,
+    cases: 80,
+    sessions: 45,
+    services: 12,
+  };
+}
