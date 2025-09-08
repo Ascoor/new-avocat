@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../../features/auth/slice';
-import clientsReducer from '../../features/clients/slice';
+import clientsReducer from '../../features/clientsAndUnClients/slice';
 import dashboardReducer from '../../features/dashboard/slice';
 import casesReducer from '../../features/cases/slice';
 import sessionsReducer from '../../features/sessions/slice';

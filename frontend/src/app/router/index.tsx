@@ -14,7 +14,7 @@ import ResetPassword from '../../pages/auth/ResetPassword';
 
 // Protected pages
 const Dashboard = React.lazy(() => import('../../pages/Dashboard'));
-const ClientsPage = React.lazy(() => import('../../features/clients/containers/ClientsPage'));
+const ClientsPage = React.lazy(() => import('../../features/clientsAndUnClients/containers/ClientsPage'));
 const CasesPage = React.lazy(() => import('../../pages/Cases'));
 const LegalCaseDetails = React.lazy(() => import('../../pages/CaseDashboard'));
 const SessionsPage = React.lazy(() => import('../../pages/Sessions'));
