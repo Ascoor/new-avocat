@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { authApi, User, LoginRequest, RegisterRequest } from './api';
 import { AuthResponse } from '../../shared/libs/authTokens';
+import { ApiError } from '../../shared/libs/errorHandler';
 
 export interface AuthState {
   user: User | null;
@@ -26,7 +27,7 @@ export const loginUser = createAsyncThunk(
       const response = await authApi.login(credentials);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Login failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -38,7 +39,7 @@ export const registerUser = createAsyncThunk(
       const response = await authApi.register(userData);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Registration failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -50,7 +51,7 @@ export const verifyAuth = createAsyncThunk(
       const response = await authApi.verifyAuth();
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Auth verification failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -62,7 +63,7 @@ export const logoutUser = createAsyncThunk(
       await authApi.logout();
       return;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Logout failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -74,7 +75,7 @@ export const updateProfile = createAsyncThunk(
       const updatedUser = await authApi.updateProfile(updates);
       return updatedUser;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Profile update failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -112,7 +113,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as ApiError)?.message || 'Login failed';
         state.isAuthenticated = false;
         state.user = null;
       })
@@ -131,7 +132,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as ApiError)?.message || 'Registration failed';
         state.isAuthenticated = false;
         state.user = null;
       })
@@ -152,11 +153,12 @@ const authSlice = createSlice({
           state.isAuthenticated = false;
         }
       })
-      .addCase(verifyAuth.rejected, (state) => {
+      .addCase(verifyAuth.rejected, (state, action) => {
         state.isLoading = false;
         state.isInitialized = true;
         state.user = null;
         state.isAuthenticated = false;
+        state.error = (action.payload as ApiError)?.message || null;
       })
 
     // Logout
@@ -165,6 +167,9 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
         state.error = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.error = (action.payload as ApiError)?.message || 'Logout failed';
       })
 
     // Update Profile
@@ -179,8 +184,18 @@ const authSlice = createSlice({
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as ApiError)?.message || 'Profile update failed';
       });
+
+    // Global 401 handler
+    builder.addMatcher(
+      (action): action is any =>
+        action.type.endsWith('/rejected') && (action.payload as ApiError)?.status === 401,
+      (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+      }
+    );
   }
 });
 
