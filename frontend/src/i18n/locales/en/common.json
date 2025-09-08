@@ -70,7 +70,26 @@
     "recent_activities": "Recent Activities",
     "upcoming_sessions": "Upcoming Sessions",
     "statistics": "Statistics",
-    "quick_actions": "Quick Actions"
+    "quick_actions": "Quick Actions",
+    "welcome_title": "Welcome back!",
+    "welcome_subtitle": "Here's an overview of your legal practice.",
+    "active_clients": "Active Clients",
+    "total_revenue": "Total Revenue",
+    "cases_by_status": "Cases by Status",
+    "cases_by_category": "Cases by Category",
+    "new_case": "New Case",
+    "add_client": "Add Client",
+    "schedule_session": "Schedule Session",
+    "manage_services": "Manage Services",
+    "recent_cases": "Recent Cases",
+    "view_all": "View All",
+    "active": "Active",
+    "pending": "Pending",
+    "closed": "Closed",
+    "on_hold": "On Hold",
+    "scheduled": "Scheduled",
+    "completed": "Completed",
+    "canceled": "Canceled"
   },
   "lawlanding": {
     "nav": {
