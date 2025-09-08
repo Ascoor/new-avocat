@@ -1,8 +1,8 @@
 // TODO: migrate complete fields from legacy procedure modal
 import { GlobalModal } from '../common/GlobalModal'
 import { useForm } from 'react-hook-form'
-import { createServiceProcedure, updateServiceProcedure } from '@/services/services'
-import type { ServiceProcedure } from '@/services/services'
+import { servicesApi } from '@/features/services/api'
+import type { ServiceProcedure } from '@/types'
 
 interface Props {
   procedure?: ServiceProcedure
@@ -16,9 +16,9 @@ export const AddEditServiceProcedureForm = ({ procedure, isOpen, onClose, onSave
 
   const onSubmit = async (data: Partial<ServiceProcedure>) => {
     if (procedure?.id) {
-      await updateServiceProcedure(procedure.id, data)
+      await servicesApi.updateProcedure(procedure.id, data)
     } else {
-      await createServiceProcedure(data)
+      await servicesApi.createProcedure(data)
     }
     onSaved();
     onClose();

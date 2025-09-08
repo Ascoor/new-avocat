@@ -1,7 +1,8 @@
 // TODO: migrate full fields from old component
 import { GlobalModal } from '../common/GlobalModal'
 import { useForm } from 'react-hook-form'
-import { createLegalCase, updateLegalCase, LegalCase } from '@/services/legalCases'
+import { casesApi } from '@/features/cases/api'
+import type { LegalCase } from '@/types'
 
 interface Props {
   legalCase?: LegalCase
@@ -15,9 +16,9 @@ export const AddEditLegCaseForm = ({ legalCase, isOpen, onClose, onSaved }: Prop
 
   const onSubmit = async (data: LegalCase) => {
     if (legalCase?.id) {
-      await updateLegalCase(legalCase.id, data)
+      await casesApi.update(legalCase.id, data)
     } else {
-      await createLegalCase(data)
+      await casesApi.create(data)
     }
     onSaved();
     onClose();

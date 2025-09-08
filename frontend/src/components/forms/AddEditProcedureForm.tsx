@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { GlobalModal } from '../common/GlobalModal'
-import { createProcedure, updateProcedure } from '@/services/procedures'
+import { proceduresApi } from '@/features/procedures/api'
 import type { Procedure } from '@/types'
 
 interface Props {
@@ -35,11 +35,9 @@ export const AddEditProcedureForm = ({ procedure, isOpen, onClose, onSaved }: Pr
     
     let saved: Procedure | undefined
     if (procedure?.id) {
-      const res = await updateProcedure(procedure.id, submitData)
-      saved = res.data
+      saved = await proceduresApi.update(procedure.id, submitData)
     } else {
-      const res = await createProcedure(submitData)
-      saved = res.data
+      saved = await proceduresApi.create(submitData)
     }
     if (saved) onSaved(saved)
     onClose()
