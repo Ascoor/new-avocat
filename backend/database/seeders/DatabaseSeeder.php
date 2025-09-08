@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
      public function run(): void
     {
 
-           // تشغيل أوامر Passport قبل تشغيل أي Seeder
         // استدعاء باقي seeders
         $this->call([
             UsersTableSeeder::class,

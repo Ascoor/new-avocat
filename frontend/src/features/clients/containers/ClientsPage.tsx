@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Plus, Search } from 'lucide-react';
 import { RootState, AppDispatch } from '../../../app/store';
 import { fetchClients, setSearchQuery, setFilters, setPage } from '../slice';
-import { ClientsTable } from '../clients/components/ClientsTable';
-import { ClientForm } from '../components/ClientForm';
-import { Button } from '../../../components/ui/button';
-import { Input } from '../../../components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../../../components/ui/dialog';
+import  ClientsTable  from '@/features/clients/components/ClientsTable';
+import { ClientForm } from '@/features/clients/components/ClientForm';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { LoadingSpinner } from '../../../shared/components/Spinner';
 
 const ClientsPage: React.FC = () => {
