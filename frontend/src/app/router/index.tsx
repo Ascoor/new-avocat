@@ -8,6 +8,8 @@ import Layout from '../../shared/components/Layout';
 import LandingPage from '../../pages/LandingPage';
 import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
+import ForgotPassword from '../../pages/auth/ForgotPassword';
+import ResetPassword from '../../pages/auth/ResetPassword';
 
 // Protected pages
 const Dashboard = React.lazy(() => import('../../pages/Dashboard'));
@@ -34,6 +36,8 @@ const AppRouter: React.FC = () => (
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>
