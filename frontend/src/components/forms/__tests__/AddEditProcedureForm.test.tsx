@@ -6,9 +6,15 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 import { AddEditProcedureForm } from '../AddEditProcedureForm'
 
-vi.mock('@/services/procedures', () => ({
-  createProcedure: vi.fn(() => Promise.resolve({ data: { id: 1, title: 't' } })),
-  updateProcedure: vi.fn(() => Promise.resolve({ data: { id: 1, title: 't' } }))
+vi.mock('@/features/procedures/api', () => ({
+  proceduresApi: {
+    create: vi.fn(() => Promise.resolve({ id: 1, title: 't' })),
+    update: vi.fn(() => Promise.resolve({ id: 1, title: 't' }))
+  }
+}))
+
+vi.mock('../../common/GlobalModal', () => ({
+  GlobalModal: ({ children }: any) => <div>{children}</div>
 }))
 
 describe('AddEditProcedureForm', () => {

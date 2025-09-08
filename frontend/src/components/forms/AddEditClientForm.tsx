@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { GlobalModal } from '../common/GlobalModal'
-import { createClient, updateClient, Client } from '@/services/clients'
+import { clientsApi, Client } from '@/features/clients/api'
 
 interface AddEditClientFormProps {
   client?: Client
@@ -65,11 +65,9 @@ export const AddEditClientForm = ({ client, isOpen, onClose, onSaved }: AddEditC
 
     let saved: Client | undefined
     if (client?.id) {
-      const res = await updateClient(client.id, payload)
-      saved = res.data
+      saved = await clientsApi.updateClient(client.id, payload)
     } else {
-      const res = await createClient(payload)
-      saved = res.data
+      saved = await clientsApi.createClient(payload)
     }
     if (saved) onSaved(saved)
     onClose()

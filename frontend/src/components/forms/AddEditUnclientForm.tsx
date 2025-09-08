@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { GlobalModal } from '../common/GlobalModal'
-import { Client, createClient, updateClient } from '@/services/clients'
+import { clientsApi, Client } from '@/features/clients/api'
 
 interface Props {
   client?: Client
@@ -19,9 +19,9 @@ export const AddEditUnclientForm = ({ client, isOpen, onClose, onSaved }: Props)
 
   const onSubmit = async (data: Client) => {
     if (client?.id) {
-      await updateClient(client.id, data)
+      await clientsApi.updateClient(client.id, data)
     } else {
-      await createClient(data)
+      await clientsApi.createClient(data)
     }
     onSaved()
     onClose()
