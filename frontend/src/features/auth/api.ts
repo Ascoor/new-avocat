@@ -1,5 +1,10 @@
 import apiClient from '../../shared/libs/axios';
-import { AuthResponse, setAuthToken, clearAuthToken } from '../../shared/libs/authTokens';
+import {
+  AuthResponse,
+  setAuthToken,
+  clearAuthToken,
+  getAuthToken
+} from '../../shared/libs/authTokens';
 
 export interface LoginRequest {
   email: string;
@@ -102,7 +107,12 @@ export const authApi = {
   /**
    * Verify authentication status
    */
-  async verifyAuth(): Promise<{ user: User; authenticated: boolean }> {
+  async verifyAuth(): Promise<{ user: User | null; authenticated: boolean }> {
+    const token = getAuthToken();
+    if (!token) {
+      return { user: null, authenticated: false };
+    }
+
     const response = await apiClient.get('/api/auth/verify');
     return response.data;
   }

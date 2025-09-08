@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { handleApiError } from './errorHandler';
-import { getAuthToken, clearAuthToken } from './authTokens';
 
 const apiClient: AxiosInstance = axios.create({
   // Default to Laravel's local dev server
@@ -12,8 +11,14 @@ const apiClient: AxiosInstance = axios.create({
   }
 });
 
+const getToken = () => localStorage.getItem('token');
+const clearToken = () => {
+  localStorage.removeItem('token');
+  delete apiClient.defaults.headers.common.Authorization;
+};
+
 apiClient.interceptors.request.use((config) => {
-  const token = getAuthToken();
+  const token = getToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -24,8 +29,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      clearAuthToken();
-      window.location.href = '/login';
+      clearToken();
     }
 
     return Promise.reject(handleApiError(error));
