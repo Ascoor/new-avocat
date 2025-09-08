@@ -6,12 +6,14 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\DB;
+
 class UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
              // 🧹 مسح كل المستخدمين قبل الإنشاء
-DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 DB::table('users')->truncate();
 DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
