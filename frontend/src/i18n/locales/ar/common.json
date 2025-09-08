@@ -70,7 +70,26 @@
     "recent_activities": "الأنشطة الأخيرة",
     "upcoming_sessions": "الجلسات القادمة",
     "statistics": "الإحصائيات",
-    "quick_actions": "الإجراءات السريعة"
+    "quick_actions": "الإجراءات السريعة",
+    "welcome_title": "مرحباً بعودتك!",
+    "welcome_subtitle": "إليك نظرة عامة على عملك القانوني.",
+    "active_clients": "العملاء النشطون",
+    "total_revenue": "إجمالي الإيرادات",
+    "cases_by_status": "القضايا حسب الحالة",
+    "cases_by_category": "القضايا حسب النوع",
+    "new_case": "قضية جديدة",
+    "add_client": "إضافة عميل",
+    "schedule_session": "جدولة جلسة",
+    "manage_services": "إدارة الخدمات",
+    "recent_cases": "أحدث القضايا",
+    "view_all": "عرض الكل",
+    "active": "نشطة",
+    "pending": "قيد الانتظار",
+    "closed": "مغلقة",
+    "on_hold": "معلقة",
+    "scheduled": "مجدولة",
+    "completed": "مكتملة",
+    "canceled": "ملغاة"
   },
   "lawlanding": {
     "nav": {

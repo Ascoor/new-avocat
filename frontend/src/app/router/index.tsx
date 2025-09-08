@@ -12,9 +12,10 @@ import RegisterPage from '../../pages/RegisterPage';
 // Protected pages
 const Dashboard = React.lazy(() => import('../../pages/Dashboard'));
 const ClientsPage = React.lazy(() => import('../../features/clients/containers/ClientsPage'));
-const LegalCasesPage = React.lazy(() => import('../../pages/Cases'));
+const CasesPage = React.lazy(() => import('../../pages/Cases'));
 const LegalCaseDetails = React.lazy(() => import('../../pages/CaseDashboard'));
 const SessionsPage = React.lazy(() => import('../../pages/Sessions'));
+const ServicesPage = React.lazy(() => import('../../pages/Services'));
 const CourtsPage = React.lazy(() => import('../../pages/Courts'));
 const ReportsPage = React.lazy(() => import('../../pages/Reports'));
 const FinancialPage = React.lazy(() => import('../../pages/Financial'));
@@ -39,9 +40,11 @@ const AppRouter: React.FC = () => (
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/clients" element={<ClientsPage />} />
-          <Route path="/legal-cases" element={<LegalCasesPage />} />
+          <Route path="/cases" element={<CasesPage />} />
+          <Route path="/legal-cases" element={<CasesPage />} />
           <Route path="/legal-cases/:id" element={<LegalCaseDetails />} />
           <Route path="/sessions" element={<SessionsPage />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="/courts" element={<CourtsPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/financial" element={<RoleGuard allowedRoles={['admin', 'lawyer']}><FinancialPage /></RoleGuard>} />
