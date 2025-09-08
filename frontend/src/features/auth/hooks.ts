@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RootState, AppDispatch } from '../../app/store';
-import { verifyAuth, loginUser, registerUser, logoutUser } from './slice';
+import { verifyAuth, loginUser, registerUser, logoutUser, initialize } from './slice';
 import { LoginRequest, RegisterRequest } from './api';
 
 /**
@@ -96,12 +96,19 @@ export const useRole = () => {
  */
 export const useAuthInit = () => {
   const { checkAuth, isInitialized } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+  const publicPaths = ['/', '/login', '/register'];
 
   useEffect(() => {
     if (!isInitialized) {
-      checkAuth();
+      if (publicPaths.includes(location.pathname)) {
+        dispatch(initialize());
+      } else {
+        checkAuth();
+      }
     }
-  }, [checkAuth, isInitialized]);
+  }, [checkAuth, isInitialized, location.pathname, dispatch]);
 
-  return { isInitialized };
+  return { isInitialized: isInitialized || publicPaths.includes(location.pathname) };
 };
