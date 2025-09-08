@@ -2,12 +2,12 @@ import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute, PublicRoute, RoleGuard } from '../../features/auth/guards';
 import BrandedLoader from '../../shared/components/BrandedLoader';
-import Layout from '../../shared/components/Layout';
+import Layout from '@/components/layout/Layout';
 
 // Public pages
 import LandingPage from '../../pages/LandingPage';
-import LoginPage from '../../pages/LoginPage';
-import RegisterPage from '../../pages/RegisterPage'; 
+import LoginPage from '../../pages/LoginPage'; 
+import RegisterPage from '../../pages/RegisterPage';
 import ForgotPassword from '../../pages/auth/ForgotPassword';
 import ResetPassword from '../../pages/auth/ResetPassword';
  
