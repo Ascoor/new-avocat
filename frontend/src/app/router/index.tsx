@@ -6,10 +6,11 @@ import Layout from '@/components/layout/Layout';
 
 // Public pages
 import LandingPage from '../../pages/LandingPage';
-import LoginPage from '../../pages/LoginPage';
+import LoginPage from '../../pages/LoginPage'; 
 import RegisterPage from '../../pages/RegisterPage';
 import ForgotPassword from '../../pages/auth/ForgotPassword';
 import ResetPassword from '../../pages/auth/ResetPassword';
+ 
 
 // Protected pages
 const Dashboard = React.lazy(() => import('../../pages/Dashboard'));
