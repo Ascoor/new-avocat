@@ -37,14 +37,7 @@ use Illuminate\Http\Request;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:api');
-
-
-        Route::middleware('auth:api')->get('auth/token', function (Request $request) {
-            return response()->json([
-                'access_token' => $request->user()->token()->accessToken,
-            ]);
-        });
+})->middleware('auth:sanctum');
 
         // Public routes
         Route::get('/search-court', [CourtSearchController::class, 'index']);
@@ -52,7 +45,7 @@ Route::get('/user', function (Request $request) {
         // Court Search
 
 
-        Route::put('/user/{userId}', [UserController::class, 'updateProfile']);Route::middleware(['auth:api'])->group(function () {
+        Route::put('/user/{userId}', [UserController::class, 'updateProfile']);Route::middleware(['auth:sanctum'])->group(function () {
         // Update user profile
         Route::put('/user/{user}', [UserController::class, 'updateProfile'])->name('user.update');
 
@@ -82,18 +75,11 @@ Route::get('/user', function (Request $request) {
 
         Route::post('/legal-doc-upload', [LegalDocArchiveController::class, 'uploadLegalDoc']);
 
-        Route::prefix('auth')->group(function () {
-            Route::post('register', [AuthController::class, 'register']);
-            Route::post('login', [AuthController::class, 'login']);
-            Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
-            Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
-
-            Route::middleware('auth:api')->group(function () {
-                Route::get('profile', [AuthController::class, 'profile']);
-                Route::get('verify', [AuthController::class, 'verify']);
-                Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-            });
-        });
+        Route::post('/auth/register', [AuthController::class, 'register']);
+        Route::post('/auth/login', [AuthController::class, 'login']);
+        Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+        Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
+        Route::get('/auth/verify', [AuthController::class, 'verify'])->middleware('auth:sanctum');
 
         // Resourcea //
         Route::apiResource('clients', ClientController::class);
