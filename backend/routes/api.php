@@ -34,82 +34,47 @@ use App\Http\Controllers\ServiceProcedureController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+Route::middleware('auth:sanctum')->get('/user', fn(Request $request) => $request->user());
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+// Auth
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
+Route::get('/auth/verify', [AuthController::class, 'verify'])->middleware('auth:sanctum');
 
+// Email verification
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('auth/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+    Route::post('auth/email/verify/resend', [AuthController::class, 'resendVerificationEmail'])->name('verification.resend');
 
-        Route::middleware('auth:api')->get('auth/token', function (Request $request) {
-            return response()->json([
-                'access_token' => $request->user()->token()->accessToken,
-            ]);
-        });
+    Route::put('/user/{user}', [UserController::class, 'updateProfile'])->name('user.update');
+    Route::get('/user/{user}', [UserController::class, 'getUserDetails'])->name('user.details');
+});
 
-        // Public routes
-        Route::get('/search-court', [CourtSearchController::class, 'index']);
-        Route::get('/clients/search', [DashboardController::class, 'getClientByNameOrPhoneNumber'])->name('client.search');
-        // Court Search
+// Dashboard & searches
+Route::get('/search-court', [CourtSearchController::class, 'index']);
+Route::get('/clients/search', [DashboardController::class, 'getClientByNameOrPhoneNumber'])->name('client.search');
+Route::get('unclients-search', [UnclientController::class, 'getUnclientSearch']);
 
-
-        Route::put('/user/{userId}', [UserController::class, 'updateProfile']);Route::middleware(['auth:api'])->group(function () {
-        // Update user profile
-        Route::put('/user/{user}', [UserController::class, 'updateProfile'])->name('user.update');
-
-        // Get user details
-        Route::get('/user/{user}', [UserController::class, 'getUserDetails'])->name('user.details');
-
-            // Verify Email (Email Verification)
-            Route::get('auth/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
-
-            // Resend Verification Email
-            Route::post('auth/email/verify/resend', [AuthController::class, 'resendVerificationEmail'])->name('verification.resend');
-        });
-        // Document Management
-
-
-        // legal documents types and sub types routes
-        Route::get('/doc-types', [LegalDocToolsController::class, 'getDocTypesWithDocSubTypes']);
-        Route::post('/doc-types', [LegalDocToolsController::class, 'addDocType']);
-        Route::put('/doc-types/{id}', [LegalDocToolsController::class, 'editDocType']);
-
-        Route::post('/doc-sub-types', [LegalDocToolsController::class, 'addDocSubType']);
-        Route::put('/doc-sub-types/{id}', [LegalDocToolsController::class, 'editDocSubType']);
-
-        // Delete DocType and DocSubType logic if
-        Route::delete('/doc-types/{id}', [LegalDocToolsController::class,'deleteDocTypeAndDocSubType']);
-        // upload Legal Documents
-
-        Route::post('/legal-doc-upload', [LegalDocArchiveController::class, 'uploadLegalDoc']);
-
-        Route::prefix('auth')->group(function () {
-            Route::post('register', [AuthController::class, 'register']);
-            Route::post('login', [AuthController::class, 'login']);
-            Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
-            Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('reset-password');
-
-            Route::middleware('auth:api')->group(function () {
-                Route::get('profile', [AuthController::class, 'profile']);
-                Route::get('verify', [AuthController::class, 'verify']);
-                Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-            });
-        });
-
-        // Resourcea //
-        Route::apiResource('clients', ClientController::class);
-        Route::apiResource('unclients', UnclientController::class);
-        Route::apiResource('lawyers', LawyerController::class);
-        Route::apiResource('courts', CourtController::class);
-        Route::apiResource('court_types', CourtTypeController::class);
-        Route::apiResource('court_levels', CourtLevelController::class);
-        Route::apiResource('legal-cases', LegCaseController::class);
-        Route::apiResource('case_types', CaseTypeController::class);
-        Route::apiResource('case_sub_types', CaseSubTypeController::class);
-        Route::apiResource('procedure_types', ProcedureTypeController::class);
-        Route::apiResource('procedure_place_types', ProcedurePlaceTypeController::class);
-        Route::apiResource('expense_categories', ExpenseCategoryController::class);
-        Route::apiResource('procedures', ProcedureController::class);
-        Route::resource('services', ServiceController::class);
+// Resources
+Route::apiResources([
+    'clients' => ClientController::class,
+    'unclients' => UnclientController::class,
+    'lawyers' => LawyerController::class,
+    'courts' => CourtController::class,
+    'court_types' => CourtTypeController::class,
+    'court_levels' => CourtLevelController::class,
+    'legal-cases' => LegCaseController::class,
+    'case_types' => CaseTypeController::class,
+    'case_sub_types' => CaseSubTypeController::class,
+    'procedure_types' => ProcedureTypeController::class,
+    'procedure_place_types' => ProcedurePlaceTypeController::class,
+    'expense_categories' => ExpenseCategoryController::class,
+    'procedures' => ProcedureController::class,
+    'services' => ServiceController::class,
+]);
+ 
         # Lawyer routes use LawyerController (store -> create->show->update->destroy)
         Route::get('lawyer/{lawyer}', [LawyerController::class, 'show']);
         Route::put('lawyer/{lawyer}', [LawyerController::class, 'update']);
@@ -119,8 +84,9 @@ Route::get('/user', function (Request $request) {
         Route::get('/client-search', [HomeController::class, 'searchClient']);
         Route::get('/leg-case-search', [HomeController::class, 'searchLegCase']);
 
-        // unclients
-        Route::get('unclients-search', [u::class, 'getUnclientSearch']);
+        // unclients 
+        Route::get('unclients-search', [UnclientController::class, 'getUnclientSearch']);
+
         // Courts Setting
         Route::get('/court-types/{courtTypeId}', [CourtTypeController::class, 'getCourtTypesWithSubTypes']);
         // Create LegCase
@@ -198,10 +164,9 @@ Route::delete('/legal-cases/{legCaseId}/clients/{clientId}', [LegCaseController:
         Route::get('/expenses/search', [ExpenseController::class, 'searchExpenses']);
         Route::get('/expense_categories', [ExpenseCategoryController::class,'index']);
 
-        //
-        Route::get('notifications/{userId}', [NotificationController::class,'index']);
-        Route::post('notifications/{notificationId}/read',  [NotificationController::class,'index']);
-
+// Notifications
+Route::get('notifications/{userId}', [NotificationController::class,'index']);
+Route::post('notifications/{notificationId}/read', [NotificationController::class,'markAsRead']);
         Route::post('notification', [NotificationController::class,'store']);
         Route::post('event', [EventController::class,'store']);
         Route::get('/events', [EventController::class,'index']);
