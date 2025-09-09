@@ -2,16 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
+             // 🧹 مسح كل المستخدمين قبل الإنشاء
+             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+DB::table('users')->truncate();
+DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         $users = [
             [
                 'name' => 'عبدالحميد عسكر',

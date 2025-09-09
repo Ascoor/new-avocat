@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../../features/auth/slice';
-import clientsReducer from '../../features/clients/slice';
+import dashboardReducer from '../../features/dashboard/slice';
+import notificationsReducer from '../../features/notifications/slice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    clients: clientsReducer,
+    dashboard: dashboardReducer,
+    notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

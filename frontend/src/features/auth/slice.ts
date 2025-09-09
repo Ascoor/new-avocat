@@ -1,6 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { authApi, User, LoginRequest, RegisterRequest } from './api';
-import { AuthResponse } from '../../shared/libs/authTokens';
+import {
+  authApi,
+  User,
+  LoginRequest,
+  RegisterRequest,
+  AuthResponse,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+} from './api';
+import { ApiError } from '../../shared/libs/errorHandler';
 
 export interface AuthState {
   user: User | null;
@@ -26,7 +34,7 @@ export const loginUser = createAsyncThunk(
       const response = await authApi.login(credentials);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Login failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -38,7 +46,7 @@ export const registerUser = createAsyncThunk(
       const response = await authApi.register(userData);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Registration failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -50,7 +58,31 @@ export const verifyAuth = createAsyncThunk(
       const response = await authApi.verifyAuth();
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Auth verification failed');
+      return rejectWithValue(error as ApiError);
+    }
+  }
+);
+
+export const requestPasswordReset = createAsyncThunk(
+  'auth/requestPasswordReset',
+  async (payload: ForgotPasswordRequest, { rejectWithValue }) => {
+    try {
+      await authApi.requestPasswordReset(payload);
+      return null;
+    } catch (error: any) {
+      return rejectWithValue(error as ApiError);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (payload: ResetPasswordRequest, { rejectWithValue }) => {
+    try {
+      await authApi.resetPassword(payload);
+      return null;
+    } catch (error: any) {
+      return rejectWithValue(error as ApiError);
     }
   }
 );
@@ -62,22 +94,11 @@ export const logoutUser = createAsyncThunk(
       await authApi.logout();
       return;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Logout failed');
+      return rejectWithValue(error as ApiError);
     }
   }
 );
 
-export const updateProfile = createAsyncThunk(
-  'auth/updateProfile',
-  async (updates: Partial<User>, { rejectWithValue }) => {
-    try {
-      const updatedUser = await authApi.updateProfile(updates);
-      return updatedUser;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Profile update failed');
-    }
-  }
-);
 
 // Auth slice
 const authSlice = createSlice({
@@ -95,6 +116,9 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.error = null;
+    },
+    initialize: (state) => {
+      state.isInitialized = true;
     }
   },
   extraReducers: (builder) => {
@@ -112,7 +136,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as ApiError)?.message || 'Login failed';
         state.isAuthenticated = false;
         state.user = null;
       })
@@ -131,7 +155,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as ApiError)?.message || 'Registration failed';
         state.isAuthenticated = false;
         state.user = null;
       })
@@ -152,11 +176,12 @@ const authSlice = createSlice({
           state.isAuthenticated = false;
         }
       })
-      .addCase(verifyAuth.rejected, (state) => {
+      .addCase(verifyAuth.rejected, (state, action) => {
         state.isLoading = false;
         state.isInitialized = true;
         state.user = null;
         state.isAuthenticated = false;
+        state.error = (action.payload as ApiError)?.message || null;
       })
 
     // Logout
@@ -166,23 +191,49 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.error = null;
       })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.error = (action.payload as ApiError)?.message || 'Logout failed';
+      })
 
-    // Update Profile
+    // Request Password Reset
     builder
-      .addCase(updateProfile.pending, (state) => {
+      .addCase(requestPasswordReset.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(updateProfile.fulfilled, (state, action) => {
+      .addCase(requestPasswordReset.fulfilled, (state) => {
         state.isLoading = false;
-        state.user = action.payload;
       })
-      .addCase(updateProfile.rejected, (state, action) => {
+      .addCase(requestPasswordReset.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload as string;
+        state.error = (action.payload as ApiError)?.message || 'Request failed';
       });
+
+    // Reset Password
+    builder
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = (action.payload as ApiError)?.message || 'Reset failed';
+      });
+
+    // Global 401 handler
+    builder.addMatcher(
+      (action): action is any =>
+        action.type.endsWith('/rejected') && (action.payload as ApiError)?.status === 401,
+      (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+      }
+    );
   }
 });
 
-export const { clearError, setUser, clearAuth } = authSlice.actions;
+export const { clearError, setUser, clearAuth, initialize } = authSlice.actions;
 export default authSlice.reducer;

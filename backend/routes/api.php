@@ -32,7 +32,6 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProcedureSearchController;
 use App\Http\Controllers\ServiceProcedureController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 Route::middleware('auth:sanctum')->get('/user', fn(Request $request) => $request->user());
 

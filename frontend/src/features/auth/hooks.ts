@@ -2,8 +2,21 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RootState, AppDispatch } from '../../app/store';
-import { verifyAuth, loginUser, registerUser, logoutUser } from './slice';
-import { LoginRequest, RegisterRequest } from './api';
+import {
+  verifyAuth,
+  loginUser,
+  registerUser,
+  logoutUser,
+  initialize,
+  requestPasswordReset,
+  resetPassword,
+} from './slice';
+import {
+  LoginRequest,
+  RegisterRequest,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+} from './api';
 
 /**
  * Main auth hook for managing authentication state
@@ -30,12 +43,24 @@ export const useAuth = () => {
     await dispatch(verifyAuth());
   };
 
+  const requestPasswordResetFn = async (payload: ForgotPasswordRequest) => {
+    const result = await dispatch(requestPasswordReset(payload));
+    return result.type === 'auth/requestPasswordReset/fulfilled';
+  };
+
+  const resetPasswordFn = async (payload: ResetPasswordRequest) => {
+    const result = await dispatch(resetPassword(payload));
+    return result.type === 'auth/resetPassword/fulfilled';
+  };
+
   return {
     ...auth,
     login,
     register,
     logout,
-    checkAuth
+    checkAuth,
+    requestPasswordReset: requestPasswordResetFn,
+    resetPassword: resetPasswordFn,
   };
 };
 
@@ -96,12 +121,19 @@ export const useRole = () => {
  */
 export const useAuthInit = () => {
   const { checkAuth, isInitialized } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+  const publicPaths = ['/', '/login', '/register', '/forgot-password', '/reset-password'];
 
   useEffect(() => {
     if (!isInitialized) {
-      checkAuth();
+      if (publicPaths.includes(location.pathname)) {
+        dispatch(initialize());
+      } else {
+        checkAuth();
+      }
     }
-  }, [checkAuth, isInitialized]);
+  }, [checkAuth, isInitialized, location.pathname, dispatch]);
 
-  return { isInitialized };
+  return { isInitialized: isInitialized || publicPaths.includes(location.pathname) };
 };

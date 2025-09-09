@@ -15,7 +15,11 @@ class DatabaseSeeder extends Seeder
      */
      public function run(): void
     {
-    $this->call(PassportClientSeeder::class);   // الأساسيات والبيانات المشتركة
+
+        // استدعاء باقي seeders
+        $this->call([
+            UsersTableSeeder::class,
+        ]);
         $this->call(UsersTableSeeder::class);
         $this->call(ClientsTableSeeder::class);
         $this->call(LawyerSeeder::class);
