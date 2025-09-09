@@ -1,11 +1,18 @@
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
 import { useAuth } from '@/features/auth/hooks';
+import { useAuthRedirect } from '@/features/auth/useAuthRedirect';
 
 const schema = z.object({
   email: z.string().email(),
@@ -14,7 +21,7 @@ const schema = z.object({
 
 const LoginPage: React.FC = () => {
   const { login, isLoading } = useAuth();
-  const navigate = useNavigate();
+  const redirect = useAuthRedirect();
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: { email: '', password: '' },
@@ -22,13 +29,21 @@ const LoginPage: React.FC = () => {
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
     const success = await login(values);
-    if (success) navigate('/dashboard');
+    if (success) {
+      redirect();
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full max-w-sm">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit(onSubmit)(e);
+          }}
+          className="space-y-4 w-full max-w-sm"
+        >
           <FormField
             control={form.control}
             name="email"
