@@ -52,7 +52,7 @@
     }
 
     // لو مش مسجل دخول
-    if (!user) return <DemoLogin onLogin={handleLogin} language={language} />;
+if (!user) return <DemoLogin />;
 
     // الصفحات الداخلية
     return (
