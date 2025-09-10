@@ -1,5 +1,17 @@
 
 {
+  "language": {
+    "en": "الإنجليزية",
+    "ar": "العربية"
+  },
+  "header": {
+    "toggle_theme": "تبديل السمة",
+    "toggle_language": "تبديل اللغة",
+    "toggle_sidebar": "تبديل القائمة"
+  },
+  "brand": {
+    "name": "المحامي"
+  },
   "common": {
     "dashboard": "لوحة التحكم",
     "clients": "العملاء", 

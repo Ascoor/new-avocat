@@ -11,8 +11,10 @@ import AppRouter from './app/router';
 import { useAuthInit } from './features/auth/hooks';
 import { LoadingSpinner } from './shared/components/Spinner';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
-
-// i18n
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n/i18n';
+import { ThemeProvider } from './context';
+import { LanguageProvider } from './context/LanguageContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,20 +44,25 @@ const AppInitializer: React.FC = () => {
 };
 
 const App = () => (
-  <ErrorBoundary>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <BrowserRouter>
-            <AppInitializer />
-          </BrowserRouter>
-          
-          <Toaster />
-          <Sonner />
-        </TooltipProvider>
-      </QueryClientProvider>
-    </Provider>
-  </ErrorBoundary>
+  <I18nextProvider i18n={i18n}>
+    <LanguageProvider>
+      <ThemeProvider>
+        <ErrorBoundary>
+          <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+              <TooltipProvider>
+                <BrowserRouter>
+                  <AppInitializer />
+                </BrowserRouter>
+                <Toaster />
+                <Sonner />
+              </TooltipProvider>
+            </QueryClientProvider>
+          </Provider>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </LanguageProvider>
+  </I18nextProvider>
 );
 
 export default App;

@@ -23,26 +23,16 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const toggleLanguage = () => {
     const newLang = language === 'en' ? 'ar' : 'en';
-    setLanguage(newLang);
     i18n.changeLanguage(newLang);
-    
-    // Update document direction
-    document.documentElement.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
-    document.documentElement.setAttribute('lang', newLang);
-    
-    // Save to localStorage
+    setLanguage(newLang);
     localStorage.setItem('avocat_language', newLang);
   };
 
   useEffect(() => {
-    // Check for saved language preference
-    const savedLang = localStorage.getItem('avocat_language') as 'en' | 'ar' | null;
-    if (savedLang && (savedLang === 'en' || savedLang === 'ar')) {
-      setLanguage(savedLang);
-      i18n.changeLanguage(savedLang);
-      document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
-      document.documentElement.setAttribute('lang', savedLang);
-    }
+    const saved = localStorage.getItem('avocat_language') as 'en' | 'ar' | null;
+    const lang = saved === 'ar' || saved === 'en' ? saved : (i18n.language as 'en' | 'ar');
+    setLanguage(lang);
+    i18n.changeLanguage(lang);
   }, [i18n]);
 
   const isRTL = language === 'ar';
