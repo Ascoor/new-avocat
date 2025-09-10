@@ -18,18 +18,22 @@ export default {
 				'2xl': '1400px'
 			}
 		},
-		extend: {
-			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))',
-					glow: 'hsl(var(--primary-glow))'
-				},
+                extend: {
+                        colors: {
+                                border: 'hsl(var(--border))',
+                                input: 'hsl(var(--input))',
+                                ring: 'hsl(var(--ring))',
+                                background: 'hsl(var(--background))',
+                                foreground: 'hsl(var(--foreground))',
+                                brand: {
+                                        DEFAULT: 'hsl(var(--primary))',
+                                        foreground: 'hsl(var(--primary-foreground))',
+                                },
+                                primary: {
+                                        DEFAULT: 'hsl(var(--primary))',
+                                        foreground: 'hsl(var(--primary-foreground))',
+                                        glow: 'hsl(var(--primary-glow))'
+                                },
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
@@ -69,21 +73,25 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
-			backgroundImage: {
-				'gradient-primary': 'var(--gradient-primary)',
-				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-accent': 'var(--gradient-accent)'
-			},
-			boxShadow: {
-				'glow': 'var(--shadow-glow)',
-				'elegant': 'var(--shadow-elegant)',
-				'card': 'var(--shadow-card)'
-			},
-			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
-			},
+                        backgroundImage: {
+                                'gradient-primary': 'var(--gradient-primary)',
+                                'gradient-hero': 'var(--gradient-hero)',
+                                'gradient-accent': 'var(--gradient-accent)',
+                                'brand-gradient': 'var(--gradient-primary)'
+                        },
+                        boxShadow: {
+                                'glow': 'var(--shadow-glow)',
+                                'elegant': 'var(--shadow-elegant)',
+                                'card': 'var(--shadow-card)'
+                        },
+                        fontFamily: {
+                                brand: ['"Cairo"', 'sans-serif'],
+                        },
+                        borderRadius: {
+                                lg: 'var(--radius)',
+                                md: 'calc(var(--radius) - 2px)',
+                                sm: 'calc(var(--radius) - 4px)'
+                        },
 			keyframes: {
 				'accordion-down': {
 					from: {

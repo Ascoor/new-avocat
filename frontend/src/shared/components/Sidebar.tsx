@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Home, 
   Users, 
@@ -14,21 +15,25 @@ import {
 } from 'lucide-react';
 import { useSidebar } from '../hooks/useSidebar';
 import { useAuth } from '../../features/auth/hooks';
+import { LanguageToggle } from '@/components/ui/language-toggle';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { BrandLogo } from '@/components/common/BrandLogo';
 
 const navigationItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: Home },
-  { name: 'Clients', href: '/clients', icon: Users },
-  { name: 'Legal Cases', href: '/legal-cases', icon: Scale },
-  { name: 'Sessions', href: '/sessions', icon: Calendar },
-  { name: 'Courts', href: '/courts', icon: Building },
-  { name: 'Reports', href: '/reports', icon: FileText },
-  { name: 'Financial', href: '/financial', icon: DollarSign, roles: ['admin', 'lawyer'] },
-  { name: 'Settings', href: '/settings', icon: Settings, roles: ['admin'] },
+  { key: 'dashboard', href: '/dashboard', icon: Home },
+  { key: 'clients', href: '/clients', icon: Users },
+  { key: 'cases', href: '/legal-cases', icon: Scale },
+  { key: 'sessions', href: '/sessions', icon: Calendar },
+  { key: 'courts', href: '/courts', icon: Building },
+  { key: 'reports', href: '/reports', icon: FileText },
+  { key: 'financial', href: '/financial', icon: DollarSign, roles: ['admin', 'lawyer'] },
+  { key: 'settings', href: '/settings', icon: Settings, roles: ['admin'] },
 ];
 
 export const Sidebar: React.FC = () => {
   const { isOpen, toggle } = useSidebar();
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   const filteredItems = navigationItems.filter(item => {
     if (!item.roles) return true;
@@ -53,35 +58,37 @@ export const Sidebar: React.FC = () => {
       `}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
-          {isOpen && (
-            <h1 className="font-bold text-lg text-foreground">Legal System</h1>
-          )}
-          <button
-            onClick={toggle}
-            className="p-2 rounded-lg hover:bg-accent transition-colors"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <BrandLogo variant={isOpen ? 'full' : 'icon'} className={isOpen ? 'h-8' : 'h-8 mx-auto'} />
+          <div className="flex items-center space-x-2 rtl:space-x-reverse">
+            {isOpen && <LanguageToggle />}
+            {isOpen && <ThemeToggle />}
+            <button
+              onClick={toggle}
+              className="p-2 rounded-lg hover:bg-accent transition-colors"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         {/* Navigation */}
         <nav className="mt-6">
           <ul className="space-y-2 px-3">
             {filteredItems.map((item) => (
-              <li key={item.name}>
+              <li key={item.key}>
                 <NavLink
                   to={item.href}
                   className={({ isActive }) => `
                     flex items-center px-3 py-2 rounded-lg transition-colors
-                    ${isActive 
-                      ? 'bg-primary text-primary-foreground' 
+                    ${isActive
+                      ? 'bg-primary text-primary-foreground'
                       : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                     }
                   `}
                 >
                   <item.icon size={20} />
                   {isOpen && (
-                    <span className="ml-3 font-medium">{item.name}</span>
+                    <span className="ml-3 font-medium">{t(`sidebar.${item.key}`)}</span>
                   )}
                 </NavLink>
               </li>

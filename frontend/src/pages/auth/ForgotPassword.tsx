@@ -9,7 +9,7 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Mail } from 'lucide-react';
-import { Logo } from '../../components/common/Logo';
+import { BrandLogo } from '@/components/common/BrandLogo';
 import { toast } from 'sonner';
 
 export const ForgotPassword = () => {
@@ -36,7 +36,7 @@ export const ForgotPassword = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center justify-center">
-            <Logo />
+            <BrandLogo className="h-10 w-auto" />
           </Link>
         </div>
 
