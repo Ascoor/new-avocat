@@ -140,19 +140,56 @@
   "landing": {
     "title": "Avocat",
     "subtitle": "Digital solutions for modern law firms",
-    "nav": {
-      "features": "Features",
-      "testimonials": "Testimonials",
-      "contact": "Contact"
+    "brand": {
+      "name": "Avocat",
+      "slogan": "Digital solutions for modern law firms"
     },
-    "buttons": {
-      "sign_in": "Sign In",
-      "get_started": "Get Started",
-      "dashboard": "Go to Dashboard"
+    "nav": {
+      "login": "Sign In",
+      "register": "Get Started",
+      "services": "Services"
+    },
+    "hero": {
+      "title": "Streamline Your Legal Practice",
+      "subtitle": "Manage cases, clients, and services with ease",
+      "cta_login": "Explore Platform",
+      "cta_register": "Start Free"
+    },
+    "services": {
+      "title": "Everything Your Firm Needs",
+      "subtitle": "Integrated tools to run a modern law office",
+      "items": [
+        {
+          "title": "Case Management",
+          "description": "Track every case from intake to resolution."
+        },
+        {
+          "title": "Client Portal",
+          "description": "Collaborate with clients in real time."
+        },
+        {
+          "title": "Office Management",
+          "description": "Handle scheduling, documents, and tasks."
+        },
+        {
+          "title": "Analytics",
+          "description": "Gain insights with comprehensive reports."
+        },
+        {
+          "title": "Legal Education",
+          "description": "Stay updated with the latest legal resources."
+        },
+        {
+          "title": "Security",
+          "description": "Bank-level protection for sensitive data."
+        }
+      ]
     },
     "footer": {
-      "copyright": "© 2025 Avocat",
-      "disclaimer": "Information here is not legal advice."
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "contact": "Contact",
+      "copyright": "© 2025 Avocat"
     }
   }
 }
