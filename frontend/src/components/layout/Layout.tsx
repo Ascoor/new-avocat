@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { SidebarProvider } from '@/components/ui/sidebar';
@@ -8,17 +8,17 @@ import { useAuth } from '@/features/auth/hooks';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, isLoading, logout } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
 
-  // Theme
+  // Theme and Language management
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
-  // Language
   useEffect(() => {
     localStorage.setItem('language', language);
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
@@ -27,8 +27,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
   const toggleLanguage = () => setLanguage(language === 'en' ? 'ar' : 'en');
+  
   const handleLogout = () => {
     logout();
+    navigate('/');
   };
 
   // Public pages
@@ -45,11 +47,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className={`min-h-screen ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-      <SidebarProvider>
-        <div className="flex min-h-screen">
-          <Sidebar language={language} />
-          <main className="flex-1 flex flex-col">
+    <div className={`min-h-screen bg-background ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+      <SidebarProvider> 
             <Header
               user={user}
               language={language}
@@ -58,6 +57,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               toggleLanguage={toggleLanguage}
               handleLogout={handleLogout}
             />
+        <div className="flex min-h-screen">
+          <Sidebar language={language} />
+          <main className="flex-1 flex flex-col">
             <div className="flex-1 overflow-auto">{children}</div>
           </main>
         </div>

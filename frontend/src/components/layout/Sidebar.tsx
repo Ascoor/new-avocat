@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Sidebar as ShadSidebar,
   SidebarContent,
@@ -14,16 +14,16 @@ import {
 import { Scale } from "lucide-react";
 import { navigationItems, lawFirmItems } from "@/components/navigation/navigationItems";
 
-export default function Sidebar({ language }: { language: string }) {
+export default function Sidebar({ language, isOpen, toggleSidebar }: { language: string; isOpen: boolean; toggleSidebar: () => void }) {
   const location = useLocation();
 
   return (
     <ShadSidebar
-      className={`border-r border-slate-200 dark:border-slate-800 ${
-        language === "ar" ? "border-l border-r-0" : ""
-      }`}
+      className={`border-r border-slate-200 dark:border-slate-800 ${language === "ar" ? "border-l border-r-0" : ""} md:block transition-all duration-300`}
       side={language === "ar" ? "right" : "left"}
+      open={isOpen}  // Apply conditional open based on `isOpen`
     >
+      {/* Sidebar Header */}
       <SidebarHeader className="border-b p-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
@@ -40,12 +40,11 @@ export default function Sidebar({ language }: { language: string }) {
         </div>
       </SidebarHeader>
 
+      {/* Sidebar Content */}
       <SidebarContent className="p-4">
         {/* Management Section */}
         <SidebarGroup>
-          <SidebarGroupLabel>
-            {language === "ar" ? "الإدارة" : "Management"}
-          </SidebarGroupLabel>
+          <SidebarGroupLabel>{language === "ar" ? "الإدارة" : "Management"}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navigationItems.map((item) => (
@@ -83,9 +82,7 @@ export default function Sidebar({ language }: { language: string }) {
 
         {/* Law Firm Section */}
         <SidebarGroup className="mt-6">
-          <SidebarGroupLabel>
-            {language === "ar" ? "المكتب" : "Law Firm"}
-          </SidebarGroupLabel>
+          <SidebarGroupLabel>{language === "ar" ? "المكتب" : "Law Firm"}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {lawFirmItems.map((item) => (
