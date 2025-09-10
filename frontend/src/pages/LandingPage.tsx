@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LanguageToggle } from '@/components/ui/language-toggle';
+import { BrandLogo } from '@/components/common/BrandLogo';
 import {
   Scale,
   Users,
@@ -63,9 +64,7 @@ const LandingPage: React.FC = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <h1 className="text-2xl font-bold gradient-text">
-                  {t('landing.brand.name')}
-                </h1>
+                <BrandLogo variant="full" className="h-10 w-auto" />
               </div>
             </div>
             
@@ -97,6 +96,7 @@ const LandingPage: React.FC = () => {
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <div className="animate-fade-in">
+            <BrandLogo variant="full" className="mx-auto mb-8 h-24 w-auto" />
             <h1 className="heading-xl mb-6">
               {t('landing.hero.title')}
             </h1>
@@ -199,9 +199,7 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-1 md:col-span-2">
-              <h3 className="text-2xl font-bold gradient-text mb-4">
-                {t('landing.brand.name')}
-              </h3>
+              <BrandLogo variant="full" className="h-10 w-auto mb-4" />
               <p className="text-sm opacity-80 max-w-md mb-4">
                 {t('landing.brand.slogan')}
               </p>

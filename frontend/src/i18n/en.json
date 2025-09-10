@@ -36,7 +36,8 @@
     "import": "Import",
     "print": "Print",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "profile": "Profile"
   },
   "sidebar": {
     "dashboard": "Dashboard",
@@ -64,6 +65,7 @@
     "announcements": "Announcements",
     "legal_procedures": "Legal Procedures",
     "accounts": "Accounts",
+    "financial": "Financial",
     "expenses": "Expenses",
     "revenues": "Revenues",
     "account_settings": "Account Settings",

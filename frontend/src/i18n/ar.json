@@ -36,7 +36,8 @@
     "import": "استيراد",
     "print": "طباعة",
     "login": "تسجيل الدخول",
-    "register": "إنشاء حساب"
+    "register": "إنشاء حساب",
+    "profile": "الملف الشخصي"
   },
   "sidebar": {
     "dashboard": "الرئيسية",
@@ -64,6 +65,7 @@
     "announcements": "إعلانات",
     "legal_procedures": "إجراءات",
     "accounts": "الحسابات",
+    "financial": "المالية",
     "expenses": "مصروفات",
     "revenues": "إيرادات",
     "account_settings": "إعدادات الحسابات",
