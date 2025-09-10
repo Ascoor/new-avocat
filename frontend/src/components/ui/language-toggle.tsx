@@ -13,11 +13,12 @@ export const LanguageToggle: React.FC = () => {
       variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="gap-2 hover:bg-white/10 transition-smooth"
+      aria-label={t('header.toggle_language')}
+      className="gap-2 transition-smooth"
     >
       <Globe className="h-4 w-4" />
       <span className="hidden md:inline">
-        {language === 'en' ? 'العربية' : 'English'}
+        {language === 'en' ? t('language.ar') : t('language.en')}
       </span>
     </Button>
   );

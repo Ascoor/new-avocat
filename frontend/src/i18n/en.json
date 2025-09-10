@@ -1,5 +1,17 @@
 
 {
+  "language": {
+    "en": "English",
+    "ar": "Arabic"
+  },
+  "header": {
+    "toggle_theme": "Toggle theme",
+    "toggle_language": "Toggle language",
+    "toggle_sidebar": "Toggle sidebar"
+  },
+  "brand": {
+    "name": "Avocat"
+  },
   "common": {
     "dashboard": "Dashboard",
     "clients": "Clients",
