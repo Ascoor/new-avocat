@@ -18,6 +18,7 @@ import { useAuth } from '../../features/auth/hooks';
 import { LanguageToggle } from '@/components/ui/language-toggle';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { BrandLogo } from '@/components/common/BrandLogo';
+import { useLanguage } from '@/context/LanguageContext';
 
 const navigationItems = [
   { key: 'dashboard', href: '/dashboard', icon: Home },
@@ -34,6 +35,7 @@ export const Sidebar: React.FC = () => {
   const { isOpen, toggle } = useSidebar();
   const { user } = useAuth();
   const { t } = useTranslation();
+  const { isRTL } = useLanguage();
 
   const filteredItems = navigationItems.filter(item => {
     if (!item.roles) return true;
@@ -52,9 +54,9 @@ export const Sidebar: React.FC = () => {
 
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 h-full bg-card border-r border-border z-50 transition-all duration-300
+        fixed top-0 ${isRTL ? 'right-0 border-l' : 'left-0 border-r'} h-full bg-card z-50 transition-all duration-300
         ${isOpen ? 'w-64' : 'w-16'}
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        ${isOpen ? 'translate-x-0' : isRTL ? 'translate-x-full lg:translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
