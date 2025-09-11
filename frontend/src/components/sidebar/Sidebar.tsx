@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
+import { menuItems } from '@/config/sidebar';
 import SidebarMenu from './SidebarMenu';
 import { useTranslation } from 'react-i18next';
-import { menuItems } from '@/config/sidebar';
 import BrandLogo from '../common/BrandLogo';
 import { cn } from '@/lib/utils'; // make sure cn is imported
 import { ChevronLeft, ChevronRight } from 'lucide-react'; // import the icons
@@ -10,12 +10,13 @@ const Sidebar = () => {
   const { t, i18n } = useTranslation();
   const [collapsed, setCollapsed] = useState(false); // state for sidebar collapse
 
+
   const toggleSidebar = () => setCollapsed(!collapsed); // toggle function
 
   return (
-    <aside
+        <aside
       className={cn(
-        "h-full bg-gray-800 text-white transition-all duration-300",
+        "h-full bg-background text-white transition-all duration-300",
         collapsed ? "w-20" : "w-64"
       )}
       dir={i18n.dir()}
@@ -38,11 +39,10 @@ const Sidebar = () => {
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
       </div>
-
-      {/* Sidebar Menu */}
-      <div className="p-2">
-        <SidebarMenu items={menuItems} collapsed={collapsed} />
+         <div className="p-4">
+        <h2 className="text-lg font-semibold">{t('sidebar.dashboard')}</h2>
       </div>
+      <SidebarMenu items={menuItems} />
     </aside>
   );
 };
