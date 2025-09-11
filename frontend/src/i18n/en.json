@@ -87,7 +87,11 @@
     "account_settings": "Account Settings",
     "users": "Users",
     "users_list": "Users List",
-    "roles_permissions": "Roles & Permissions"
+    "roles_permissions": "Roles & Permissions",
+    "invoices": "Invoices",
+    "consultations": "Consultations",
+    "contracts": "Contracts",
+    "search_courts": "Courts Search"
   },
   "dashboard": {
     "welcome_message": "Welcome to Avocat Legal System",

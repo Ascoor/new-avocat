@@ -50,30 +50,9 @@ export default function Header() {
       <div
         className={cn(
           'flex items-center gap-2 md:gap-4',
-          isRTL && 'flex-row-reverse'
+          isRTL ? 'flex-row' : 'flex-row-reverse'
         )}
       >
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="relative flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-muted-foreground hover:text-foreground">
-              <Bell className="h-4 w-4" />
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-primary" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>
-              {t('header.notifications')}
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <div className="p-2 text-sm text-muted-foreground">
-              {t('header.no_notifications')}
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <ThemeToggle />
-        <LanguageToggle />
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 focus:outline-none">
@@ -97,6 +76,27 @@ export default function Header() {
             <DropdownMenuItem onClick={logout}>
               {t('common.logout')}
             </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <ThemeToggle />
+        <LanguageToggle />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="relative flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-muted-foreground hover:text-foreground">
+              <Bell className="h-4 w-4" />
+              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-primary" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>
+              {t('header.notifications')}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <div className="p-2 text-sm text-muted-foreground">
+              {t('header.no_notifications')}
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

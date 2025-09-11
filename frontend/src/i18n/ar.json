@@ -82,12 +82,16 @@
     "legal_procedures": "إجراءات",
     "accounts": "الحسابات",
     "financial": "المالية",
-    "expenses": "مصروفات",
+    "expenses": "المصروفات",
     "revenues": "إيرادات",
     "account_settings": "إعدادات الحسابات",
     "users": "المستخدمين",
     "users_list": "قائمة المستخدمين",
-    "roles_permissions": "الأدوار والصلاحيات"
+    "roles_permissions": "الأدوار والصلاحيات",
+    "invoices": "الفواتير",
+    "consultations": "الاستشارات",
+    "contracts": "العقود",
+    "search_courts": "بحث محاكم"
   },
   "dashboard": {
     "welcome_message": "مرحباً بك في نظام أفوكات القانوني",
