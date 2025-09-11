@@ -13,7 +13,13 @@ import ForgotPassword from '@/pages/auth/ForgotPassword';
 import ResetPassword from '@/pages/auth/ResetPassword';
 
 // Protected pages
-const DashboardPage = React.lazy(() => import('@/features/dashboard/DashboardPage'));
+const DashboardPage = React.lazy(() => import('@/pages/DashboardPage'));
+const ClientsPage = React.lazy(() => import('@/pages/ClientsPage'));
+const CasesPage = React.lazy(() => import('@/pages/CasesPage'));
+const ReportsPage = React.lazy(() => import('@/pages/ReportsPage'));
+const ProceduresPage = React.lazy(() => import('@/pages/ProceduresPage'));
+const ServicesPage = React.lazy(() => import('@/pages/ServicesPage'));
+const AccountsPage = React.lazy(() => import('@/pages/AccountsPage'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -35,6 +41,12 @@ const AppRouter: React.FC = () => (
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/clients" element={<ClientsPage />} />
+          <Route path="/cases" element={<CasesPage />} />
+          <Route path="/reports" element={<ReportsPage />} />
+          <Route path="/procedures" element={<ProceduresPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/accounts" element={<AccountsPage />} />
         </Route>
       </Route>
 
