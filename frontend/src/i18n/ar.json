@@ -7,7 +7,9 @@
   "header": {
     "toggle_theme": "تبديل السمة",
     "toggle_language": "تبديل اللغة",
-    "toggle_sidebar": "تبديل القائمة"
+    "toggle_sidebar": "تبديل القائمة",
+    "notifications": "الإشعارات",
+    "no_notifications": "لا توجد إشعارات"
   },
   "brand": {
     "name": "المحامي"

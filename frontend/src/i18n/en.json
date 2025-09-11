@@ -7,7 +7,9 @@
   "header": {
     "toggle_theme": "Toggle theme",
     "toggle_language": "Toggle language",
-    "toggle_sidebar": "Toggle sidebar"
+    "toggle_sidebar": "Toggle sidebar",
+    "notifications": "Notifications",
+    "no_notifications": "No notifications"
   },
   "brand": {
     "name": "Avocat"
