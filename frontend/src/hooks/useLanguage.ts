@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 export const useLanguage = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
   const isRTL = currentLanguage === 'ar';
 
@@ -10,6 +10,7 @@ export const useLanguage = () => {
   };
 
   return {
+    t, // <-- return t here
     currentLanguage,
     isRTL,
     changeLanguage,
