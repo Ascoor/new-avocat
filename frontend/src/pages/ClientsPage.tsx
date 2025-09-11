@@ -1,0 +1,13 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+
+const ClientsPage = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <h1 className="text-2xl font-bold mb-4">{t('sidebar.clients')}</h1>
+    </div>
+  );
+};
+
+export default ClientsPage;

@@ -1,42 +1,31 @@
-import { useStats } from "@/hooks/useStats";
-import StatsCard from "@/components/dashboard/StatsCard";
-import GaugeChart from "@/components/dashboard/GaugeChart";
-import TrendingSection from "@/components/dashboard/TrendingSection";
-import ProjectsTable from "@/components/dashboard/ProjectsTable";
-import FearGreedIndex from "@/components/dashboard/FearGreedIndex";
-import { Bitcoin, DollarSign, BarChart, LineChart } from "lucide-react";
-import AppShell from "@/components/layout/Layout"; // the file we just created
-
-export default function Dashboard() {
-  const { loading, stats, tvlData, fearGreed, trending, recentProjects, refreshData } = useStats();
-
-  const formatCurrency = (value: number) => {
-    if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(2)}B`;
-    if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(2)}M`;
-    return `$${value.toFixed(2)}`;
-  };
-
+import StatsCards from '@/components/dashboard/StatsCards';
+import CasesByStatusChart from '@/components/dashboard/CasesByStatusChart';
+import CasesByCategoryChart from '@/components/dashboard/CasesByCategoryChart';
+import QuickActions from '@/components/dashboard/QuickActions';
+import RecentCases from '@/components/dashboard/RecentCases';
+import UpcomingSessions from '@/components/dashboard/UpcomingSessions';
+import { useTranslation } from 'react-i18next';
+export default function DashboardPage() {
+  const { t } = useTranslation();
   return (
-    <AppShell isLoading={loading} onRefresh={refreshData}>
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
-        <StatsCard title="Market Cap" value={formatCurrency(stats.marketCap)} change={stats.dailyChange} icon={<BarChart size={20} className="text-chart-blue" />} />
-        <StatsCard title="Bitcoin Price" value={formatCurrency(stats.bitcoinPrice)} change={4.2} icon={<Bitcoin size={20} className="text-chart-yellow" />} />
-        <StatsCard title="Total Value Locked" value={formatCurrency(stats.totalValueLocked)} change={10.2} icon={<DollarSign size={20} className="text-chart-green" />} />
-        <StatsCard title="24h Trading Volume" value={formatCurrency(stats.tradingVolume)} change={-2.8} icon={<LineChart size={20} className="text-chart-purple" />} />
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold">{t('dashboard.welcome_title')}</h1>
+        <p className="text-muted-foreground">{t('dashboard.welcome_subtitle')}</p>
       </div>
-
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <GaugeChart value={tvlData.current} dailyChange={tvlData.dailyChange} weeklyChange={tvlData.weeklyChange} />
-        <FearGreedIndex value={fearGreed.value} indicator={fearGreed.indicator} previousValue={fearGreed.previousValue} previousChange={fearGreed.previousChange} />
+      <StatsCards />
+      <div className="grid gap-4 lg:grid-cols-2">
+        <CasesByStatusChart />
+        <CasesByCategoryChart />
       </div>
-
-      {/* Trending */}
-      <TrendingSection tokens={trending} />
-
-      {/* Recent projects */}
-      <ProjectsTable projects={recentProjects} />
-    </AppShell>
+      <div>
+        <h2 className="text-xl font-semibold mb-4">{t('dashboard.quick_actions')}</h2>
+        <QuickActions />
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <RecentCases />
+        <UpcomingSessions />
+      </div>
+    </div>
   );
 }

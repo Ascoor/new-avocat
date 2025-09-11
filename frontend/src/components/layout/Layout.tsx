@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
-import AppSidebar from '@/components/layout/AppSidebar';
+import Sidebar from '@/components/sidebar/Sidebar';
  
-import { SidebarProvider } from '@/contexts/SidebarContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Header } from './Header';
 
@@ -16,7 +15,7 @@ const AppShell = ({ children }: AppShellProps) => {
   return (
     <div className="flex min-h-screen w-full" dir={direction}>
       {/* Sidebar */}
-      <AppSidebar className="flex-shrink-0" />
+      <Sidebar />
 
       {/* Main content */}
       <div className="flex flex-col flex-1">
@@ -32,11 +31,7 @@ const AppShell = ({ children }: AppShellProps) => {
   );
 };
 
-// Layout wrapper with SidebarProvider
+// Layout wrapper
 export default function LayoutWrapper() {
-  return (
-    <SidebarProvider>
-      <AppShell />
-    </SidebarProvider>
-  );
+  return <AppShell />;
 }
