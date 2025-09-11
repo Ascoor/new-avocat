@@ -1,7 +1,7 @@
 import React from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useTheme } from '@/context';
+import { useTheme } from '@/contexts';
 import { useTranslation } from 'react-i18next';
 
 export const ThemeToggle: React.FC = () => {

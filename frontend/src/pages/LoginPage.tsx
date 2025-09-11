@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/features/auth/hooks';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -14,6 +14,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { LanguageToggle } from '@/components/ui/language-toggle';
 import { Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 import authBackground from '@/assets/auth-background.jpg';
+
+import BrandLogo from "@/components/common/BrandLogo";
 
 const LoginPage: React.FC = () => {
   const { t } = useTranslation();
@@ -55,8 +57,8 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Background */}
+<div className="min-h-screen flex">
+      {/* Background Section */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -67,23 +69,28 @@ const LoginPage: React.FC = () => {
         <div className="relative z-10 flex items-center justify-center p-12 text-white">
           <div className="text-center max-w-md">
             <h1 className="text-4xl font-bold mb-4">{t('brand.name')}</h1>
-            <p className="text-xl opacity-90">{t('brand.slogan')}</p>
+            <p className="text-xl opacity-90 leading-relaxed">{t('brand.slogan')}</p>
           </div>
         </div>
       </div>
 
-      {/* Form */}
+      {/* Form Section */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-md space-y-6">
-          <div className="flex justify-between items-center mb-8">
-            <Link to="/" className="text-2xl font-bold gradient-text">
-              {t('brand.name')}
-            </Link>
-            <LanguageToggle />
-          </div>
 
           <Card className="glass-card animate-fade-in">
             <CardHeader className="text-center">
+          {/* Header with Logo and Language Toggle */}
+          <div className="flex justify-between items-center mb-8">
+            <Link to="/" className="text-2xl font-bold gradient-text"> 
+              {isRTL ? (
+                <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
+              ) : (
+                <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
+              )}
+            </Link>
+            <LanguageToggle />
+          </div>
               <CardTitle className="heading-md">{t('auth.login.title')}</CardTitle>
               <CardDescription>{t('auth.login.subtitle')}</CardDescription>
             </CardHeader>
@@ -134,7 +141,7 @@ const LoginPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Remember */}
+                {/* Remember Me */}
                 <div className="flex items-center space-x-2 rtl:space-x-reverse">
                   <Checkbox
                     id="remember"
@@ -146,7 +153,7 @@ const LoginPage: React.FC = () => {
                   <Label htmlFor="remember">{t('auth.login.remember')}</Label>
                 </div>
 
-                {/* Submit */}
+                {/* Submit Button */}
                 <Button type="submit" className="w-full glow-effect" disabled={isLoading}>
                   {isLoading ? (
                     <div className="flex items-center gap-2">

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { 
@@ -14,6 +13,7 @@ import {
   Star,
   Users
 } from "lucide-react";
+import BrandLogo from "../common/BrandLogo";
 
 interface SidebarLinkProps {
   icon: React.ElementType;
@@ -42,7 +42,7 @@ const SidebarLink = ({
       )}
     >
       <Icon size={20} />
-      {!collapsed && <span>{label}</span>}
+      {!collapsed && <span>{label}</span>} {/* Show label only when not collapsed */}
     </button>
   );
 };
@@ -59,33 +59,35 @@ export default function Sidebar({ className }: SidebarProps) {
     <div
       className={cn(
         "relative h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out",
-        collapsed ? "w-16" : "w-56",
+        collapsed ? "w-16" : "w-56",  // Sidebar width changes based on collapsed state
         className
       )}
     >
+      {/* Sidebar Header with Logo and Collapse Toggle */}
       <div className="p-4">
-        <div className={cn(
-          "flex items-center gap-2",
-          collapsed && "justify-center"
-        )}>
-          <div className="h-8 w-8 rounded-md bg-primary/90 flex items-center justify-center">
-            <BarChart4 size={18} className="text-primary-foreground" />
-          </div>
-          {!collapsed && (
-            <h1 className="font-semibold text-xl text-sidebar-foreground">Chain<span className="text-primary">Agent</span></h1>
+        <div className={cn("flex items-center gap-2", collapsed && "justify-center")}>
+          {/* Display only the icon logo when collapsed, and both icon and text logo when expanded */}
+          {collapsed ? (
+            <BrandLogo variant="icon" className="text-primary-foreground h-8 w-8" />
+          ) : (
+            <> 
+              <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
+            </>
           )}
+
+          {/* Sidebar Collapse Toggle */}
+          <div className="ml-auto">
+            <button
+              onClick={() => setCollapsed(!collapsed)}
+              className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+            >
+              {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="absolute top-4 -right-3">
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
-        >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-        </button>
-      </div>
-
+      {/* Sidebar Links */}
       <div className="px-2 mt-6 space-y-6">
         <div className="space-y-1">
           <SidebarLink 
@@ -151,6 +153,7 @@ export default function Sidebar({ className }: SidebarProps) {
         </div>
       </div>
 
+      {/* Sidebar Settings */}
       <div className="absolute bottom-4 w-full px-2">
         <SidebarLink 
           icon={Settings} 

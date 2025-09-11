@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from '@/components/layout/Sidebar';
 import Header from '@/components/layout/Header';
 import { SidebarProvider } from '@/contexts/SidebarContext';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AppShellProps {
   children?: ReactNode; // optional, can also render <Outlet />

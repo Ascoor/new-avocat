@@ -9,10 +9,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { LanguageToggle } from '@/components/ui/language-toggle';
-import BrandLogo from '@/components/common/BrandLogo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/features/auth/hooks';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 
@@ -28,7 +27,7 @@ export default function Header() {
         isRTL && 'flex-row-reverse'
       )}
     >
-      <BrandLogo className="h-8 w-auto" />
+
       <div
         className={cn(
           'flex items-center gap-2 md:gap-4',
