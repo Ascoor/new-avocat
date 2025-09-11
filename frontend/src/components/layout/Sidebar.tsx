@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   LayoutDashboard, 
   TrendingUp, 
@@ -9,7 +12,6 @@ import {
   ChevronLeft, 
   ChevronRight,
   Wallet,
-  BarChart4,
   Star,
   Users
 } from "lucide-react";
@@ -23,26 +25,26 @@ interface SidebarLinkProps {
   onClick?: () => void;
 }
 
-const SidebarLink = ({ 
-  icon: Icon, 
-  label, 
-  active = false, 
+const SidebarLink = ({
+  icon: Icon,
+  label,
+  active = false,
   collapsed = false,
-  onClick 
+  onClick
 }: SidebarLinkProps) => {
   return (
     <button
       onClick={onClick}
       className={cn(
         "flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-all duration-200",
-        active 
-          ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium" 
+        active
+          ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium glow"
           : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         collapsed && "justify-center"
       )}
     >
       <Icon size={20} />
-      {!collapsed && <span>{label}</span>} {/* Show label only when not collapsed */}
+      {!collapsed && <span>{label}</span>}
     </button>
   );
 };
@@ -52,17 +54,32 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ className }: SidebarProps) {
-  const [collapsed, setCollapsed] = useState(false);
+  const { isCollapsed: collapsed, toggleSidebar } = useSidebar();
   const [activeLink, setActiveLink] = useState("Dashboard");
+  const isMobile = useIsMobile();
 
   return (
-    <div
-      className={cn(
-        "relative h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out",
-        collapsed ? "w-16" : "w-56",  // Sidebar width changes based on collapsed state
-        className
+    <>
+      {isMobile && !collapsed && (
+        <div
+          className="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden"
+          onClick={toggleSidebar}
+        />
       )}
-    >
+      <motion.aside
+        initial={false}
+        animate={
+          isMobile
+            ? { x: collapsed ? "-100%" : "0%" }
+            : { width: collapsed ? "4rem" : "14rem" }
+        }
+        transition={{ type: "spring", stiffness: 260, damping: 30 }}
+        className={cn(
+          "fixed top-0 left-0 z-40 h-screen bg-sidebar shadow-lg dark:shadow-glow border-r border-sidebar-border md:relative transition-all duration-300 ease-in-out",
+          !isMobile && (collapsed ? "w-16" : "w-56"),
+          className
+        )}
+      >
       {/* Sidebar Header with Logo and Collapse Toggle */}
       <div className="p-4">
         <div className={cn("flex items-center gap-2", collapsed && "justify-center")}>
@@ -75,15 +92,15 @@ export default function Sidebar({ className }: SidebarProps) {
             </>
           )}
 
-          {/* Sidebar Collapse Toggle */}
-          <div className="ml-auto">
-            <button
-              onClick={() => setCollapsed(!collapsed)}
+      {/* Sidebar Collapse Toggle */}
+      <div className="ml-auto">
+        <button
+              onClick={toggleSidebar}
               className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
-            >
-              {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-            </button>
-          </div>
+        >
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+        </button>
+      </div>
         </div>
       </div>
 
@@ -155,14 +172,15 @@ export default function Sidebar({ className }: SidebarProps) {
 
       {/* Sidebar Settings */}
       <div className="absolute bottom-4 w-full px-2">
-        <SidebarLink 
-          icon={Settings} 
-          label="Settings" 
+        <SidebarLink
+          icon={Settings}
+          label="Settings"
           active={activeLink === "Settings"}
           collapsed={collapsed}
           onClick={() => setActiveLink("Settings")}
         />
       </div>
-    </div>
+    </motion.aside>
+  </>
   );
 }

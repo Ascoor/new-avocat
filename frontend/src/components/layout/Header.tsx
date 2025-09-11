@@ -1,4 +1,5 @@
-import { Bell } from 'lucide-react';
+import { Bell, Menu } from 'lucide-react';
+import { motion } from 'framer-motion';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +13,8 @@ import { LanguageToggle } from '@/components/ui/language-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/features/auth/hooks';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useSidebar } from '@/contexts/SidebarContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
 
@@ -19,14 +22,30 @@ export default function Header() {
   const { user, logout } = useAuth();
   const { isRTL } = useLanguage();
   const { t } = useTranslation();
+  const { toggleSidebar } = useSidebar();
+  const isMobile = useIsMobile();
 
   return (
-    <header
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
       className={cn(
-        'flex items-center justify-between border-b bg-background px-4 py-2 md:px-8',
+        'glass flex items-center justify-between border-b px-4 py-2 md:px-8 shadow-sm dark:shadow-glow',
         isRTL && 'flex-row-reverse'
       )}
     >
+      <div className="flex items-center">
+        {isMobile && (
+          <button
+            onClick={toggleSidebar}
+            className="md:hidden rounded-md bg-secondary p-2 text-secondary-foreground hover:bg-secondary/80"
+            aria-label={t('header.toggle_sidebar')}
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        )}
+      </div>
 
       <div
         className={cn(
@@ -81,6 +100,6 @@ export default function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-    </header>
+    </motion.header>
   );
 }
