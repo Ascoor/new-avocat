@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { lazy, Suspense } from 'react';
 import { FaUserTie, FaUserAltSlash } from 'react-icons/fa';
-import GlobalSpinner from '../components/common/Spinners/GlobalSpinner';
+import BrandedLoader from '@/components/common/BrandedLoader';
 
 const ClientList = lazy(
   () => import('../components/ClientsAndUnClients/clients/index.jsx'),
@@ -41,7 +41,7 @@ const ClientUnclientList = () => {
       <Suspense
         fallback={
           <div className="text-center text-gray-500">
-            <GlobalSpinner />
+            <BrandedLoader />
           </div>
         }
       >

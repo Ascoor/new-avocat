@@ -8,7 +8,7 @@ import {
   ForgotPasswordRequest,
   ResetPasswordRequest,
 } from './api';
-import { ApiError } from '../../shared/libs/errorHandler';
+import { ApiError } from '@/utils/errorHandler';
 
 export interface AuthState {
   user: User | null;
