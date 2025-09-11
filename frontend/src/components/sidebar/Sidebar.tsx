@@ -3,20 +3,20 @@ import SidebarMenu from './SidebarMenu';
 import { useTranslation } from 'react-i18next';
 import { menuItems } from '@/config/sidebar';
 import BrandLogo from '../common/BrandLogo';
-import { cn } from '@/lib/utils'; // make sure cn is imported
-import { ChevronLeft, ChevronRight } from 'lucide-react'; // import the icons
+import { cn } from '@/lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Sidebar = () => {
-  const { t, i18n } = useTranslation();
-  const [collapsed, setCollapsed] = useState(false); // state for sidebar collapse
+  const { i18n } = useTranslation();
+  const [collapsed, setCollapsed] = useState(false);
 
   const toggleSidebar = () => setCollapsed(!collapsed); // toggle function
 
   return (
     <aside
       className={cn(
-        "h-full bg-gray-800 text-white transition-all duration-300",
-        collapsed ? "w-20" : "w-64"
+        'h-full bg-sidebar text-sidebar-foreground border-r border-sidebar-border transition-all duration-300',
+        collapsed ? 'w-20' : 'w-64'
       )}
       dir={i18n.dir()}
     >
@@ -33,7 +33,7 @@ const Sidebar = () => {
         {/* Sidebar Collapse Toggle */}
         <button
           onClick={toggleSidebar}
-          className="flex items-center justify-center h-6 w-6 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition-colors"
+          className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent/80 transition-colors"
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>

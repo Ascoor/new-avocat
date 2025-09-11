@@ -86,6 +86,10 @@
     "expenses": "Expenses",
     "revenues": "Revenues",
     "account_settings": "Account Settings",
+    "settings": "Settings",
+    "office_settings": "Office Settings",
+    "court_settings": "Court Settings",
+    "app_settings": "App Settings",
     "users": "Users",
     "users_list": "Users List",
     "roles_permissions": "Roles & Permissions"

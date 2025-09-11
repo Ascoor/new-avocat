@@ -86,6 +86,10 @@
     "expenses": "مصروفات",
     "revenues": "إيرادات",
     "account_settings": "إعدادات الحسابات",
+    "settings": "الإعدادات",
+    "office_settings": "إعدادات المكتب",
+    "court_settings": "إعدادات المحاكم",
+    "app_settings": "إعدادات التطبيق",
     "users": "المستخدمين",
     "users_list": "قائمة المستخدمين",
     "roles_permissions": "الأدوار والصلاحيات"
