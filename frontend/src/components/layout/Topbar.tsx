@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/hooks/useLanguage';
-import { useAuthStore } from '@/store/authStore';
+import { useAuth } from '@/features/auth/hooks';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ interface TopbarProps {
 export const Topbar = ({ onToggleSidebar }: TopbarProps) => {
   const { t } = useTranslation();
   const { isRTL } = useLanguage();
-  const { user, logout } = useAuthStore();
+  const { user, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/70 dark:bg-gray-950/70 backdrop-blur">
@@ -41,19 +41,19 @@ export const Topbar = ({ onToggleSidebar }: TopbarProps) => {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={user?.avatar} alt={`${user?.firstName} ${user?.lastName}`} />
+                  <AvatarImage src={user?.avatar} alt={user?.name} />
                   <AvatarFallback>
-                    {user?.firstName?.[0]}
-                    {user?.lastName?.[0]}
+                    {user?.name
+                      ?.split(' ')
+                      .map((n) => n[0])
+                      .join('')}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className={`w-56 ${isRTL ? 'ml-2' : 'mr-2'}`} align="end">
               <div className="flex flex-col space-y-1 p-2">
-                <p className="font-medium">
-                  {user?.firstName} {user?.lastName}
-                </p>
+                <p className="font-medium">{user?.name}</p>
                 <p className="text-sm text-muted-foreground">{user?.email}</p>
               </div>
               <DropdownMenuSeparator />

@@ -1,4 +1,6 @@
-export const BASE_URL = 'http://127.0.0.1:8000';
+import { BACKEND_URL } from '@/config/api';
+
+export const BASE_URL = BACKEND_URL;
 
 export interface SearchCourtData {
   search_degrees: { id: number; degree_value: string; degree_name: string }[];
