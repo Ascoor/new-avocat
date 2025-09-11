@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/hooks/useLanguage';
+import { useLanguage } from '@/context/LanguageContext';
 import { useAuth } from '@/features/auth/hooks';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ui/theme-toggle';

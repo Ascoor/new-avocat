@@ -1,78 +1,80 @@
-// src/components/layout/Layout.tsx
-import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { Scale } from 'lucide-react';
-import Sidebar from './Sidebar';
-import  Header  from './Header';
+import React from 'react';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarInset,
+  useSidebar,
+} from '@/components/ui/sidebar';
+import Topbar from './Topbar';
 import { useAuth } from '@/features/auth/hooks';
+import { useLanguage } from '@/context/LanguageContext';
+import { useTranslation } from 'react-i18next';
+import { Home, Users, FileText, Scale } from 'lucide-react';
 
-export default function Layout() {
-  const { user, isLoading, logout } = useAuth();
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-  const getInitialLanguage = (): "en" | "ar" => {
-  const lang = localStorage.getItem('language');
-  return lang === 'ar' ? 'ar' : 'en';
-};
+const navigation = [
+  { to: '/dashboard', icon: Home, label: 'sidebar.dashboard' },
+  { to: '/clients', icon: Users, label: 'sidebar.clients' },
+  { to: '/cases', icon: FileText, label: 'sidebar.cases' },
+];
 
-const [language, setLanguage] = useState<"en" | "ar">(getInitialLanguage());
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  // Theme management
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
-
-  // Language management
-  useEffect(() => {
-    localStorage.setItem('language', language);
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-  }, [language]);
-
-  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
-  const toggleLanguage = () => setLanguage(language === 'en' ? 'ar' : 'en');
-
-  const handleLogout = () => {
-    logout();
-  };
+function AppShell() {
+  const { user, isLoading } = useAuth();
+  const { t } = useTranslation();
+  const { toggleSidebar } = useSidebar();
+  const { isRTL } = useLanguage();
+  const location = useLocation();
 
   if (isLoading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Scale className="w-8 h-8 text-blue-600 animate-pulse" />
+      <div className="min-h-screen flex items-center justify-center">
+        <Scale className="w-8 h-8 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen bg-background ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-      <SidebarProvider>
-        <div className="flex min-h-screen">
-<Sidebar 
-  language={language}      // <--- add this
-  isOpen={sidebarOpen}
-  toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-/>
-
-
-
-          <main className="flex-1 flex flex-col">
-            <Header
-              user={user}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              toggleLanguage={toggleLanguage}
-              handleLogout={handleLogout}
-              onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-            />
-            <div className="flex-1 overflow-auto">
-              <Outlet />
-            </div>
-          </main>
+    <div className="flex min-h-screen w-full" dir={isRTL ? 'rtl' : 'ltr'}>
+      <Sidebar side={isRTL ? 'right' : 'left'} collapsible="icon">
+        <SidebarHeader className="h-16 flex items-center px-4">
+          <span className="font-bold text-lg">Avocat</span>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            {navigation.map((item) => (
+              <SidebarMenuItem key={item.to}>
+                <SidebarMenuButton asChild isActive={location.pathname === item.to}>
+                  <NavLink to={item.to} className="flex items-center gap-2">
+                    <item.icon className="h-4 w-4" />
+                    <span>{t(item.label)}</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter />
+      </Sidebar>
+      <SidebarInset>
+        <Topbar onToggleSidebar={toggleSidebar} />
+        <div className="flex-1 overflow-auto p-4">
+          <Outlet />
         </div>
-      </SidebarProvider>
+      </SidebarInset>
     </div>
+  );
+}
+
+export default function Layout() {
+  return (
+    <SidebarProvider>
+      <AppShell />
+    </SidebarProvider>
   );
 }
