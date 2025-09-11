@@ -25,11 +25,13 @@ interface LanguageProviderProps {
   children: ReactNode;
 }
 
+const STORAGE_KEY = 'avocat_language';
+
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const { i18n } = useTranslation();
   const [language, setLanguageState] = useState<Language>(() => {
-    const stored = localStorage.getItem('language');
-    return (stored as Language) || 'ar';
+    const stored = localStorage.getItem(STORAGE_KEY) as Language | null;
+    return stored || (i18n.language as Language) || 'en';
   });
 
   const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
@@ -47,7 +49,7 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     i18n.changeLanguage(language);
     document.documentElement.setAttribute('dir', direction);
     document.documentElement.setAttribute('lang', language);
-    localStorage.setItem('language', language);
+    localStorage.setItem(STORAGE_KEY, language);
   }, [language, direction, i18n]);
 
   return (
