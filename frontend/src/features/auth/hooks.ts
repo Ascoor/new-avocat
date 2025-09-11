@@ -26,8 +26,12 @@ export const useAuth = () => {
   const auth = useSelector((state: RootState) => state.auth);
 
   const login = async (credentials: LoginRequest) => {
-    const result = await dispatch(loginUser(credentials));
-    return result.type === 'auth/login/fulfilled';
+    try {
+      await dispatch(loginUser(credentials)).unwrap();
+      return true;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const register = async (userData: RegisterRequest) => {
