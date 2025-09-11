@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth, useRole } from './hooks';
-import BrandedLoader from '../../shared/components/BrandedLoader';
+import BrandedLoader from '@/components/common/BrandedLoader';
 
 export const ProtectedRoute: React.FC = () => {
   const { isAuthenticated, isLoading, isInitialized } = useAuth();

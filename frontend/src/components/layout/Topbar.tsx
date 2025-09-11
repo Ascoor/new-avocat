@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useAuthStore } from '@/store/authStore';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { ThemeToggle } from '@/components/common/ThemeToggle';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {

@@ -1,19 +1,44 @@
 # Frontend (React) / الواجهة الأمامية
 
-Planned stack:
+Stack:
 - React 18 + TypeScript + Vite
 - Tailwind CSS
 - Axios (`withCredentials: true`)
-- react-hook-form + zod
-- i18n with RTL support
+- React Hook Form + Zod
+- i18next with RTL support
 
-## Environment
-Create `.env` with `VITE_API_URL` pointing to backend.
+## Project Structure
 
-## TODO
-Implementation pending.
+The codebase follows a feature-first layout:
+
+```
+src/
+├── components/        # UI and common components
+├── features/          # domain features (auth, dashboard, etc.)
+├── pages/             # route components
+├── utils/             # shared utilities (e.g. errorHandler)
+└── context/           # global contexts such as theme & language
+```
+
+## Development
+
+1. Create a `.env` file with `VITE_API_URL` pointing to the backend.
+2. Install dependencies and start the dev server:
+
+```bash
+npm install
+npm run dev
+```
+
+## Testing
+
+Run all unit tests with:
+
+```bash
+npm test
+```
 
 ## Branding
 
-The `BrandLogo` component automatically swaps logos based on the active theme (light/dark) and language direction (LTR/RTL). Place `<BrandLogo />` anywhere in the app and it will render the correct logo variant without manual asset imports.
+The `BrandLogo` component automatically swaps logos based on the active theme (light/dark) and language direction (LTR/RTL).
 

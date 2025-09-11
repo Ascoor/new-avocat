@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 - Ongoing development
+- Removed legacy `shared` directory and consolidated loaders and utilities.
 - Migrated `Data.js` to typed `fakeData.ts`.
 - Converted old `HomeCards` JSX component to `HomeCards.tsx` under `src/components/common`.
 - Created `docs/progress-report.md` to track migration status.

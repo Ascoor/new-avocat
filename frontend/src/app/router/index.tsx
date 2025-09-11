@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute, PublicRoute } from '@/features/auth/guards';
-import BrandedLoader from '@/shared/components/BrandedLoader';
+import BrandedLoader from '@/components/common/BrandedLoader';
 import Layout from '@/components/layout/Layout';
 
 // Public pages

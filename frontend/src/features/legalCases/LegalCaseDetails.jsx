@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
-import GlobalSpinner from '../common/Spinners/GlobalSpinner';
+import BrandedLoader from '@/components/common/BrandedLoader';
 import axios from 'axios';
 import API_CONFIG from '../../config/config';
 import { motion } from 'framer-motion';
@@ -40,7 +40,7 @@ export default function LegCaseDetails() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <GlobalSpinner />
+        <BrandedLoader />
       </div>
     );
   }

@@ -9,7 +9,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { store } from './app/store';
 import AppRouter from './app/router';
 import { useAuthInit } from './features/auth/hooks';
-import { LoadingSpinner } from './shared/components/Spinner';
+import { LoadingSpinner } from './components/common/LoadingSpinner';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n/i18n';
