@@ -1,67 +1,57 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
+type Language = 'ar' | 'en';
+type Direction = 'rtl' | 'ltr';
+
 interface LanguageContextType {
-  language: 'en' | 'ar';
-  /** Set the current language explicitly */
-  changeLanguage: (lang: 'en' | 'ar') => void;
-  /** Convenience toggle between Arabic and English */
+  language: Language;
+  direction: Direction;
   toggleLanguage: () => void;
-  /** Whether the current language is RTL */
-  isRTL: boolean;
-  /** Available languages for the switcher */
-  languages: { code: 'en' | 'ar'; name: string; flag: string }[];
+  setLanguage: (lang: Language) => void;
 }
 
-const LanguageContext = createContext<LanguageContextType | null>(null);
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    throw new Error('useLanguage must be used within LanguageProvider');
   }
   return context;
 };
 
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { i18n } = useTranslation();
-  const [language, setLanguage] = useState<'en' | 'ar'>('en');
+interface LanguageProviderProps {
+  children: ReactNode;
+}
 
-  /** Change the interface language and persist the choice */
-  const changeLanguage = (lang: 'en' | 'ar') => {
-    i18n.changeLanguage(lang);
-    setLanguage(lang);
-    localStorage.setItem('avocat_language', lang);
-  };
+export const LanguageProvider = ({ children }: LanguageProviderProps) => {
+  const { i18n } = useTranslation();
+  const [language, setLanguageState] = useState<Language>(() => {
+    const stored = localStorage.getItem('language');
+    return (stored as Language) || 'ar';
+  });
+
+  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
 
   const toggleLanguage = () => {
-    changeLanguage(language === 'en' ? 'ar' : 'en');
+    const newLang = language === 'ar' ? 'en' : 'ar';
+    setLanguageState(newLang);
+  };
+
+  const setLanguage = (newLang: Language) => {
+    setLanguageState(newLang);
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem('avocat_language') as 'en' | 'ar' | null;
-    const lang = saved === 'ar' || saved === 'en' ? saved : (i18n.language as 'en' | 'ar');
-    changeLanguage(lang);
-  }, [i18n]);
-
-  const isRTL = language === 'ar';
-
-  useEffect(() => {
-    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-  }, [isRTL, language]);
+    i18n.changeLanguage(language);
+    document.documentElement.setAttribute('dir', direction);
+    document.documentElement.setAttribute('lang', language);
+    localStorage.setItem('language', language);
+  }, [language, direction, i18n]);
 
   return (
-    <LanguageContext.Provider value={{
-      language,
-      changeLanguage,
-      toggleLanguage,
-      isRTL,
-      languages: [
-        { code: 'en', name: 'English', flag: '🇺🇸' },
-        { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-      ],
-    }}>
+    <LanguageContext.Provider value={{ language, direction, toggleLanguage, setLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -1,8 +1,7 @@
-// BrandLogo.tsx
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/contexts';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useLanguage } from '@/contexts/LanguageContext';  // تأكد من الاستيراد بشكل صحيح
 import { cn } from '@/lib/utils';
 
 interface BrandLogoProps {
@@ -12,24 +11,24 @@ interface BrandLogoProps {
 
 export const BrandLogo: React.FC<BrandLogoProps> = ({ variant = 'full', className }) => {
   const { theme } = useTheme();
-  const { language } = useLanguage();
+  const { language } = useLanguage();  // استخدام `useLanguage` هنا
   const { t } = useTranslation();
 
-  const isDark = theme === 'dark';  // Check if dark mode is enabled
-  const isArabic = language === 'ar';  // Check if language is Arabic
+  const isDark = theme === 'dark';  // تحقق من ما إذا كان الوضع الداكن مفعلًا
+  const isArabic = language === 'ar';  // تحقق من ما إذا كانت اللغة هي العربية
 
   let src: string;
   if (variant === 'icon') {
-    // For collapsed sidebar, show icon only
+    // عند تصغير الشريط الجانبي، عرض الأيقونة فقط
     src = isDark ? '/images/logo-icon-dark.png' : '/images/logo-icon-light.png';
   } else {
-    // For expanded sidebar, show full logo
+    // عند توسيع الشريط الجانبي، عرض الشعار كاملًا
     if (isArabic) {
-      // For Arabic language
+      // إذا كانت اللغة عربية
       src = isDark ? '/images/logo-full-arabic-dark.png' : '/images/logo-full-arabic-light.png';
     } else {
-      // For English language
-      src = isDark ? '/images/logo-full-en-dark.png' : '/images/logo-full-en-light.png'; // Dark or light theme for English logo
+      // إذا كانت اللغة إنجليزية
+      src = isDark ? '/images/logo-full-en-dark.png' : '/images/logo-full-en-light.png';
     }
   }
 

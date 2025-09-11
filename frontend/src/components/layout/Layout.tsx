@@ -1,20 +1,22 @@
 import { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
-import Sidebar from '@/components/layout/Sidebar';
-import Header from '@/components/layout/Header';
+import AppSidebar from '@/components/layout/AppSidebar';
+ 
 import { SidebarProvider } from '@/contexts/SidebarContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Header } from './Header';
 
 interface AppShellProps {
   children?: ReactNode; // optional, can also render <Outlet />
 }
 
 const AppShell = ({ children }: AppShellProps) => {
-  const { isRTL } = useLanguage();
+  const { direction } = useLanguage();  // Use language context to check for RTL
+ 
   return (
-    <div className="flex min-h-screen w-full" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="flex min-h-screen w-full" dir={direction}>
       {/* Sidebar */}
-      <Sidebar className="flex-shrink-0" />
+      <AppSidebar className="flex-shrink-0" />
 
       {/* Main content */}
       <div className="flex flex-col flex-1">

@@ -1,21 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useSidebar } from "@/contexts/SidebarContext";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { 
-  LayoutDashboard, 
-  TrendingUp, 
-  LineChart, 
-  List, 
-  Settings, 
-  ChevronLeft, 
-  ChevronRight,
-  Wallet,
-  Star,
-  Users
-} from "lucide-react";
+import { LayoutDashboard, TrendingUp, LineChart, List, Settings, ChevronLeft, ChevronRight, Wallet, Star, Users } from "lucide-react";
 import BrandLogo from "../common/BrandLogo";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SidebarLinkProps {
   icon: React.ElementType;
@@ -53,33 +41,20 @@ interface SidebarProps {
   className?: string;
 }
 
-export default function Sidebar({ className }: SidebarProps) {
-  const { isCollapsed: collapsed, toggleSidebar } = useSidebar();
+export default function AppSidebar({ className }: SidebarProps) {
+  const [collapsed, setCollapsed] = useState(false);
   const [activeLink, setActiveLink] = useState("Dashboard");
-  const isMobile = useIsMobile();
+  const { direction } = useLanguage();  // Use language context to check for RTL
 
   return (
-    <>
-      {isMobile && !collapsed && (
-        <div
-          className="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden"
-          onClick={toggleSidebar}
-        />
+      <div
+      className={cn(
+        "relative h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out",
+        collapsed ? "w-16" : "w-56",
+        className,
+        direction === 'rtl' ? 'ml-auto' : 'mr-auto' // ضبط اتجاه الشريط الجانبي بناءً على اللغة
       )}
-      <motion.aside
-        initial={false}
-        animate={
-          isMobile
-            ? { x: collapsed ? "-100%" : "0%" }
-            : { width: collapsed ? "4rem" : "14rem" }
-        }
-        transition={{ type: "spring", stiffness: 260, damping: 30 }}
-        className={cn(
-          "fixed top-0 left-0 z-40 h-screen bg-sidebar shadow-lg dark:shadow-glow border-r border-sidebar-border md:relative transition-all duration-300 ease-in-out",
-          !isMobile && (collapsed ? "w-16" : "w-56"),
-          className
-        )}
-      >
+    >
       {/* Sidebar Header with Logo and Collapse Toggle */}
       <div className="p-4">
         <div className={cn("flex items-center gap-2", collapsed && "justify-center")}>
@@ -87,50 +62,50 @@ export default function Sidebar({ className }: SidebarProps) {
           {collapsed ? (
             <BrandLogo variant="icon" className="text-primary-foreground h-8 w-8" />
           ) : (
-            <> 
-              <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
+            <>
+                <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
             </>
           )}
 
-      {/* Sidebar Collapse Toggle */}
-      <div className="ml-auto">
-        <button
-              onClick={toggleSidebar}
+          {/* Sidebar Collapse Toggle Button */}
+          <div className={cn(direction === 'rtl' ? "ml-auto" : "mr-auto")}> {/* Adjust button position based on RTL */}
+            <button
+              onClick={() => setCollapsed(!collapsed)}
               className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
-        >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-        </button>
-      </div>
+            >
+              {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Sidebar Links */}
       <div className="px-2 mt-6 space-y-6">
         <div className="space-y-1">
-          <SidebarLink 
-            icon={LayoutDashboard} 
-            label="Dashboard" 
+          <SidebarLink
+            icon={LayoutDashboard}
+            label="Dashboard"
             active={activeLink === "Dashboard"}
             collapsed={collapsed}
             onClick={() => setActiveLink("Dashboard")}
           />
-          <SidebarLink 
-            icon={List} 
-            label="Project List" 
+          <SidebarLink
+            icon={List}
+            label="Project List"
             active={activeLink === "Project List"}
             collapsed={collapsed}
             onClick={() => setActiveLink("Project List")}
           />
-          <SidebarLink 
-            icon={Star} 
-            label="Top ROI" 
+          <SidebarLink
+            icon={Star}
+            label="Top ROI"
             active={activeLink === "Top ROI"}
             collapsed={collapsed}
             onClick={() => setActiveLink("Top ROI")}
           />
-          <SidebarLink 
-            icon={TrendingUp} 
-            label="Trending" 
+          <SidebarLink
+            icon={TrendingUp}
+            label="Trending"
             active={activeLink === "Trending"}
             collapsed={collapsed}
             onClick={() => setActiveLink("Trending")}
@@ -138,30 +113,32 @@ export default function Sidebar({ className }: SidebarProps) {
         </div>
 
         <div className="pt-4 border-t border-sidebar-border">
-          <p className={cn(
-            "text-xs uppercase text-sidebar-foreground/60 mb-2 px-3",
-            collapsed && "text-center"
-          )}>
+          <p
+            className={cn(
+              "text-xs uppercase text-sidebar-foreground/60 mb-2 px-3",
+              collapsed && "text-center"
+            )}
+          >
             {collapsed ? "More" : "Analytics"}
           </p>
           <div className="space-y-1">
-            <SidebarLink 
-              icon={LineChart} 
-              label="Market Insights" 
+            <SidebarLink
+              icon={LineChart}
+              label="Market Insights"
               active={activeLink === "Market Insights"}
               collapsed={collapsed}
               onClick={() => setActiveLink("Market Insights")}
             />
-            <SidebarLink 
-              icon={Wallet} 
-              label="Portfolios" 
+            <SidebarLink
+              icon={Wallet}
+              label="Portfolios"
               active={activeLink === "Portfolios"}
               collapsed={collapsed}
               onClick={() => setActiveLink("Portfolios")}
             />
-            <SidebarLink 
-              icon={Users} 
-              label="Social Trends" 
+            <SidebarLink
+              icon={Users}
+              label="Social Trends"
               active={activeLink === "Social Trends"}
               collapsed={collapsed}
               onClick={() => setActiveLink("Social Trends")}
@@ -180,7 +157,6 @@ export default function Sidebar({ className }: SidebarProps) {
           onClick={() => setActiveLink("Settings")}
         />
       </div>
-    </motion.aside>
-  </>
+    </div>
   );
 }
