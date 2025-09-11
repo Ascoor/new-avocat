@@ -1,56 +1,86 @@
+import { Bell } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { LanguageToggle } from '@/components/ui/language-toggle';
+import BrandLogo from '@/components/common/BrandLogo';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAuth } from '@/features/auth/hooks';
+import { useLanguage } from '@/context/LanguageContext';
+import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
-import { useState } from "react";
-import { Search, Bell, RefreshCw } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
-
-interface HeaderProps {
-  onRefresh: () => void;
-  isLoading?: boolean;
-}
-
-export default function Header({ onRefresh, isLoading = false }: HeaderProps) {
-  const [searchValue, setSearchValue] = useState("");
-  const isMobile = useIsMobile();
+export default function Header() {
+  const { user, logout } = useAuth();
+  const { isRTL } = useLanguage();
+  const { t } = useTranslation();
 
   return (
-    <header className="bg-background py-3 px-4 md:px-8 border-b border-border flex items-center justify-between animate-fade-in">
-      <div className="flex-1">
-        <h1 className="text-xl font-medium">Dashboard</h1>
-        <p className="text-sm text-muted-foreground">
-          Your crypto insights for {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-        </p>
-      </div>
+    <header
+      className={cn(
+        'flex items-center justify-between border-b bg-background px-4 py-2 md:px-8',
+        isRTL && 'flex-row-reverse'
+      )}
+    >
+      <BrandLogo className="h-8 w-auto" />
+      <div
+        className={cn(
+          'flex items-center gap-2 md:gap-4',
+          isRTL && 'flex-row-reverse'
+        )}
+      >
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="relative flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-muted-foreground hover:text-foreground">
+              <Bell className="h-4 w-4" />
+              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-primary" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>
+              {t('header.notifications')}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <div className="p-2 text-sm text-muted-foreground">
+              {t('header.no_notifications')}
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onRefresh}
-          className={cn(
-            "h-9 w-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors bg-secondary hover:bg-secondary/80",
-            isLoading && "animate-pulse"
-          )}
-          disabled={isLoading}
-        >
-          <RefreshCw size={16} className={isLoading ? "animate-spin" : ""} />
-        </button>
-        
-        <button className="h-9 w-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors bg-secondary hover:bg-secondary/80 relative">
-          <Bell size={16} />
-          <span className="absolute top-1 right-2 h-2 w-2 rounded-full bg-primary"></span>
-        </button>
+        <ThemeToggle />
+        <LanguageToggle />
 
-        <div className="h-9 relative hidden sm:block">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <Search size={16} className="text-muted-foreground" />
-          </div>
-          <input
-            type="text"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            placeholder="Search projects..."
-            className="pl-10 pr-4 py-2 h-full rounded-full text-sm bg-secondary border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors w-[220px] md:w-[280px]"
-          />
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 focus:outline-none">
+              <Avatar className="h-8 w-8">
+                {user?.avatar ? (
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                ) : (
+                  <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                )}
+              </Avatar>
+              <span className="hidden text-sm font-medium md:inline">
+                {user?.name}
+              </span>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <a href="/profile">{t('common.profile')}</a>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={logout}>
+              {t('common.logout')}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
