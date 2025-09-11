@@ -1,111 +1,164 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import {
-  Sidebar as ShadSidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { Scale } from "lucide-react";
-import { navigationItems, lawFirmItems } from "@/components/navigation/navigationItems";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { 
+  LayoutDashboard, 
+  TrendingUp, 
+  LineChart, 
+  List, 
+  Settings, 
+  ChevronLeft, 
+  ChevronRight,
+  Wallet,
+  BarChart4,
+  Star,
+  Users
+} from "lucide-react";
 
-export default function Sidebar({ language, isOpen, toggleSidebar }: { language: string; isOpen: boolean; toggleSidebar: () => void }) {
-  const location = useLocation();
+interface SidebarLinkProps {
+  icon: React.ElementType;
+  label: string;
+  active?: boolean;
+  collapsed?: boolean;
+  onClick?: () => void;
+}
+
+const SidebarLink = ({ 
+  icon: Icon, 
+  label, 
+  active = false, 
+  collapsed = false,
+  onClick 
+}: SidebarLinkProps) => {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-all duration-200",
+        active 
+          ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium" 
+          : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        collapsed && "justify-center"
+      )}
+    >
+      <Icon size={20} />
+      {!collapsed && <span>{label}</span>}
+    </button>
+  );
+};
+
+interface SidebarProps {
+  className?: string;
+}
+
+export default function Sidebar({ className }: SidebarProps) {
+  const [collapsed, setCollapsed] = useState(false);
+  const [activeLink, setActiveLink] = useState("Dashboard");
 
   return (
-    <ShadSidebar
-      className={`border-r border-slate-200 dark:border-slate-800 ${language === "ar" ? "border-l border-r-0" : ""} md:block transition-all duration-300`}
-      side={language === "ar" ? "right" : "left"}
-      open={isOpen}  // Apply conditional open based on `isOpen`
+    <div
+      className={cn(
+        "relative h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out",
+        collapsed ? "w-16" : "w-56",
+        className
+      )}
     >
-      {/* Sidebar Header */}
-      <SidebarHeader className="border-b p-6">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
-            <Scale className="w-6 h-6 text-white" />
+      <div className="p-4">
+        <div className={cn(
+          "flex items-center gap-2",
+          collapsed && "justify-center"
+        )}>
+          <div className="h-8 w-8 rounded-md bg-primary/90 flex items-center justify-center">
+            <BarChart4 size={18} className="text-primary-foreground" />
           </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold">
-              {language === "ar" ? "المحامي" : "Avocat"}
-            </h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              {language === "ar" ? "نظام إدارة المكتب" : "Legal Practice Management"}
-            </p>
+          {!collapsed && (
+            <h1 className="font-semibold text-xl text-sidebar-foreground">Chain<span className="text-primary">Agent</span></h1>
+          )}
+        </div>
+      </div>
+
+      <div className="absolute top-4 -right-3">
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+        >
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+        </button>
+      </div>
+
+      <div className="px-2 mt-6 space-y-6">
+        <div className="space-y-1">
+          <SidebarLink 
+            icon={LayoutDashboard} 
+            label="Dashboard" 
+            active={activeLink === "Dashboard"}
+            collapsed={collapsed}
+            onClick={() => setActiveLink("Dashboard")}
+          />
+          <SidebarLink 
+            icon={List} 
+            label="Project List" 
+            active={activeLink === "Project List"}
+            collapsed={collapsed}
+            onClick={() => setActiveLink("Project List")}
+          />
+          <SidebarLink 
+            icon={Star} 
+            label="Top ROI" 
+            active={activeLink === "Top ROI"}
+            collapsed={collapsed}
+            onClick={() => setActiveLink("Top ROI")}
+          />
+          <SidebarLink 
+            icon={TrendingUp} 
+            label="Trending" 
+            active={activeLink === "Trending"}
+            collapsed={collapsed}
+            onClick={() => setActiveLink("Trending")}
+          />
+        </div>
+
+        <div className="pt-4 border-t border-sidebar-border">
+          <p className={cn(
+            "text-xs uppercase text-sidebar-foreground/60 mb-2 px-3",
+            collapsed && "text-center"
+          )}>
+            {collapsed ? "More" : "Analytics"}
+          </p>
+          <div className="space-y-1">
+            <SidebarLink 
+              icon={LineChart} 
+              label="Market Insights" 
+              active={activeLink === "Market Insights"}
+              collapsed={collapsed}
+              onClick={() => setActiveLink("Market Insights")}
+            />
+            <SidebarLink 
+              icon={Wallet} 
+              label="Portfolios" 
+              active={activeLink === "Portfolios"}
+              collapsed={collapsed}
+              onClick={() => setActiveLink("Portfolios")}
+            />
+            <SidebarLink 
+              icon={Users} 
+              label="Social Trends" 
+              active={activeLink === "Social Trends"}
+              collapsed={collapsed}
+              onClick={() => setActiveLink("Social Trends")}
+            />
           </div>
         </div>
-      </SidebarHeader>
+      </div>
 
-      {/* Sidebar Content */}
-      <SidebarContent className="p-4">
-        {/* Management Section */}
-        <SidebarGroup>
-          <SidebarGroupLabel>{language === "ar" ? "الإدارة" : "Management"}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    className={`hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-slate-800 transition-all duration-200 rounded-lg mb-1 ${
-                      location.pathname === item.url
-                        ? "bg-blue-50 text-blue-700 dark:bg-slate-800 dark:text-blue-400 border-r-2 border-blue-600 dark:border-blue-400"
-                        : ""
-                    }`}
-                  >
-                    <Link to={item.url} className="flex items-center gap-3 px-3 py-2.5">
-                      <item.icon className="w-5 h-5" />
-                      <span>
-                        {language === "ar"
-                          ? {
-                              Dashboard: "لوحة التحكم",
-                              Cases: "القضايا",
-                              Clients: "العملاء",
-                              Sessions: "الجلسات",
-                              Services: "الخدمات",
-                              Procedures: "الإجراءات",
-                              Marketing: "التسويق",
-                            }[item.title] || item.title
-                          : item.title}
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {/* Law Firm Section */}
-        <SidebarGroup className="mt-6">
-          <SidebarGroupLabel>{language === "ar" ? "المكتب" : "Law Firm"}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {lawFirmItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link to={item.url} className="flex items-center gap-3 px-3 py-2.5">
-                      <item.icon className="w-5 h-5" />
-                      <span>
-                        {language === "ar"
-                          ? {
-                              "About Us": "من نحن",
-                              "Our Services": "خدماتنا",
-                            }[item.title] || item.title
-                          : item.title}
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </ShadSidebar>
+      <div className="absolute bottom-4 w-full px-2">
+        <SidebarLink 
+          icon={Settings} 
+          label="Settings" 
+          active={activeLink === "Settings"}
+          collapsed={collapsed}
+          onClick={() => setActiveLink("Settings")}
+        />
+      </div>
+    </div>
   );
 }

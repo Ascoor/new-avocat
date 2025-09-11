@@ -1,8 +1,9 @@
+// src/app/router/index.tsx
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { ProtectedRoute, PublicRoute } from '@/features/auth/guards';
 import BrandedLoader from '@/components/common/BrandedLoader';
 import Layout from '@/components/layout/Layout';
+import { ProtectedRoute, PublicRoute } from '@/features/auth/guards';
 
 // Public pages
 import LandingPage from '@/pages/LandingPage';
@@ -10,7 +11,6 @@ import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import ForgotPassword from '@/pages/auth/ForgotPassword';
 import ResetPassword from '@/pages/auth/ResetPassword';
- 
 
 // Protected pages
 const DashboardPage = React.lazy(() => import('@/features/dashboard/DashboardPage'));
@@ -38,15 +38,12 @@ const AppRouter: React.FC = () => (
         </Route>
       </Route>
 
+      {/* 404 page */}
       <Route
         path="*"
         element={
-          <div className="min-h-screen flex items-center justify-center">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-primary mb-4">404</h1>
-              <p className="text-muted-foreground mb-4">Page not found</p>
-              <a href="/" className="text-primary hover:underline">Go back home</a>
-            </div>
+          <div className="min-h-screen flex items-center justify-center text-xl font-bold">
+            404 - Page Not Found
           </div>
         }
       />

@@ -1,74 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { Scale } from 'lucide-react';
-import { useAuth } from '@/features/auth/hooks';
+import { useState } from "react";
+import { Search, Bell, RefreshCw } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { user, isLoading, logout } = useAuth();
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
-  const [sidebarOpen, setSidebarOpen] = useState(false);  // For mobile sidebar toggle
+interface HeaderProps {
+  onRefresh: () => void;
+  isLoading?: boolean;
+}
 
-  // Theme and Language management
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
-
-  useEffect(() => {
-    localStorage.setItem('language', language);
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-  }, [language]);
-
-  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
-  const toggleLanguage = () => setLanguage(language === 'en' ? 'ar' : 'en');
-  
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
-  // Public pages
-  if (location.pathname === '/') {
-    return <div>{children}</div>;
-  }
-
-  if (isLoading || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Scale className="w-8 h-8 text-blue-600 animate-pulse" />
-      </div>
-    );
-  }
+export default function Header({ onRefresh, isLoading = false }: HeaderProps) {
+  const [searchValue, setSearchValue] = useState("");
+  const isMobile = useIsMobile();
 
   return (
-    <div className={`min-h-screen bg-background ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-      <SidebarProvider> 
-        <div className="flex min-h-screen">
-          {/* Sidebar */}
-          <Sidebar language={language} isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-          
-          {/* Main content */}
-          <main className="flex-1 flex flex-col">
-            <Header
-              user={user}
-              language={language}
-              theme={theme}
-              toggleTheme={toggleTheme}
-              toggleLanguage={toggleLanguage}
-              handleLogout={handleLogout}
-              onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}  // Toggle sidebar on mobile
-            />
-            <div className="flex-1 overflow-auto">{children}</div>
-          </main>
+    <header className="bg-background py-3 px-4 md:px-8 border-b border-border flex items-center justify-between animate-fade-in">
+      <div className="flex-1">
+        <h1 className="text-xl font-medium">Dashboard</h1>
+        <p className="text-sm text-muted-foreground">
+          Your crypto insights for {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <button
+          onClick={onRefresh}
+          className={cn(
+            "h-9 w-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors bg-secondary hover:bg-secondary/80",
+            isLoading && "animate-pulse"
+          )}
+          disabled={isLoading}
+        >
+          <RefreshCw size={16} className={isLoading ? "animate-spin" : ""} />
+        </button>
+        
+        <button className="h-9 w-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors bg-secondary hover:bg-secondary/80 relative">
+          <Bell size={16} />
+          <span className="absolute top-1 right-2 h-2 w-2 rounded-full bg-primary"></span>
+        </button>
+
+        <div className="h-9 relative hidden sm:block">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Search size={16} className="text-muted-foreground" />
+          </div>
+          <input
+            type="text"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder="Search projects..."
+            className="pl-10 pr-4 py-2 h-full rounded-full text-sm bg-secondary border border-border focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors w-[220px] md:w-[280px]"
+          />
         </div>
-      </SidebarProvider>
-    </div>
+      </div>
+    </header>
   );
 }

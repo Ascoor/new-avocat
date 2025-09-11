@@ -32,28 +32,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
   return (
     <div className="flex h-screen bg-background text-foreground">
-      <aside
-        className={`transition-all duration-300 bg-sidebar text-sidebar-foreground ${
-          collapsed ? 'w-16' : 'w-64'
-        }`}
-      >
-        <nav className="p-4 space-y-2">
-          {menuItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="flex items-center gap-3 p-2 rounded hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-            >
-              <item.icon className="h-5 w-5" />
-              {!collapsed && <span>{t(item.label)}</span>}
-            </Link>
-          ))}
-        </nav>
-      </aside>
-      <div className="flex flex-1 flex-col">
-        <Header onToggleSidebar={toggleSidebar} />
+ 
         <main className="flex-1 overflow-auto p-4">{children}</main>
-      </div>
+ 
     </div>
   );
 };
