@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { BACKEND_URL } from '@/config/api';
 
 const apiClient = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: `${BACKEND_URL}/api`,
   withCredentials: true,
 });
 

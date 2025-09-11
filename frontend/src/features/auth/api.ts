@@ -1,5 +1,6 @@
 import axios from 'axios';
 import apiClient from '../../services/apiClient';
+import { BACKEND_URL } from '@/config/api';
 
 export interface LoginRequest {
   email: string;
@@ -20,6 +21,7 @@ export interface User {
   name: string;
   email: string;
   role?: string;
+  avatar?: string;
 }
 
 export interface AuthResponse {
@@ -39,7 +41,7 @@ export interface ResetPasswordRequest {
 
 export const authApi = {
   async login(credentials: LoginRequest): Promise<AuthResponse> {
-    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+    await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
       withCredentials: true,
     });
     const { data } = await apiClient.post('/auth/login', credentials);
@@ -47,7 +49,7 @@ export const authApi = {
   },
 
   async register(userData: RegisterRequest): Promise<AuthResponse> {
-    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+    await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
       withCredentials: true,
     });
     const payload = {
@@ -76,14 +78,14 @@ export const authApi = {
   },
 
   async requestPasswordReset(payload: ForgotPasswordRequest): Promise<void> {
-    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+    await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
       withCredentials: true,
     });
     await apiClient.post('/auth/forgot-password', payload);
   },
 
   async resetPassword(payload: ResetPasswordRequest): Promise<void> {
-    await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', {
+    await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
       withCredentials: true,
     });
     const data = {

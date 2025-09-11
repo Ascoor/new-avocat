@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import axios from 'axios';
+import { BACKEND_URL } from '@/config/api';
 
 vi.mock('axios');
 
@@ -11,7 +12,7 @@ describe('apiClient', () => {
     await import('../apiClient');
 
     expect(create).toHaveBeenCalledWith({
-      baseURL: 'http://127.0.0.1:8000/api',
+      baseURL: `${BACKEND_URL}/api`,
       withCredentials: true,
     });
   });
