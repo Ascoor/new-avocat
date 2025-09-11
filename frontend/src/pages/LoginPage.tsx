@@ -36,20 +36,19 @@ const LoginPage: React.FC = () => {
     setError('');
 
     try {
-      const success = await login({ email: formData.email, password: formData.password });
-      if (success) {
-        toast({
-          title: t('common.success'),
-          description: 'Successfully logged in!',
-        });
-        const nextUrl = searchParams.get('next') || '/dashboard';
-        navigate(nextUrl);
-      }
+      await login({ email: formData.email, password: formData.password });
+      toast({
+        title: t('common.success'),
+        description: t('auth.login.success'),
+      });
+      const nextUrl = searchParams.get('next') || '/dashboard';
+      navigate(nextUrl);
     } catch (err: any) {
-      setError(err.message || 'Login failed');
+      const message = err?.message || t('auth.login.error');
+      setError(message);
       toast({
         title: t('common.error'),
-        description: 'Invalid credentials. Please try again.',
+        description: message,
         variant: 'destructive',
       });
     }
