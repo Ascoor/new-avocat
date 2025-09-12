@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import type { MenuItem } from '@/config/sidebar'
 import { ChevronDown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 interface SidebarLinkProps {
   item: MenuItem
@@ -14,21 +15,22 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
   const hasChildren = !!item.children && item.children.length > 0
   const isActive = location.pathname.startsWith(item.path)
   const [open, setOpen] = useState(isActive)
+  const { t } = useTranslation()
 
   const toggle = () => setOpen((o) => !o)
 
   const linkClasses = cn(
-    'flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-colors',
+    'flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-all',
     collapsed && 'justify-center',
     isActive
-      ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-      : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+      ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-glow'
+      : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-glow'
   )
 
   const content = (
     <div className={linkClasses}>
       <item.icon size={20} />
-      {!collapsed && <span>{item.key}</span>}
+      {!collapsed && <span>{t(`sidebar.${item.key}`)}</span>}
       {!collapsed && hasChildren && (
         <ChevronDown
           size={16}
