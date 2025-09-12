@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import BrandedLoader from '@/components/common/BrandedLoader';
 import Layout from '@/components/layout/Layout';
 import { ProtectedRoute, PublicRoute } from '@/features/auth/guards';
+import { menuItems } from '@/config/sidebar';
+import generateDemoRoutes from './generateDemoRoutes';
 
 // Public pages
 import LandingPage from '@/pages/LandingPage';
@@ -47,6 +49,18 @@ const AppRouter: React.FC = () => (
           <Route path="/procedures" element={<ProceduresPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/accounts" element={<AccountsPage />} />
+          {generateDemoRoutes(
+            menuItems,
+            new Set([
+              '/dashboard',
+              '/clients',
+              '/cases',
+              '/reports',
+              '/procedures',
+              '/services',
+              '/accounts',
+            ])
+          )}
         </Route>
       </Route>
 

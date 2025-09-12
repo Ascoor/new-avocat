@@ -210,5 +210,9 @@
       "contact": "Contact",
       "copyright": "© 2025 Avocat"
     }
+  },
+  "demo": {
+    "description": "This is a demo page for {{section}}",
+    "card_title": "Card {{number}}"
   }
 }

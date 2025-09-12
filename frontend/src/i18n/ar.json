@@ -210,5 +210,9 @@
       "contact": "تواصل",
       "copyright": "© ٢٠٢٥ أفوكات"
     }
+  },
+  "demo": {
+    "description": "هذه صفحة تجريبية لـ {{section}}",
+    "card_title": "بطاقة {{number}}"
   }
 }
