@@ -1,59 +1,58 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-type Language = 'ar' | 'en';
-type Direction = 'rtl' | 'ltr';
-
 interface LanguageContextType {
-  language: Language;
-  direction: Direction;
+  language: 'en' | 'ar';
   toggleLanguage: () => void;
-  setLanguage: (lang: Language) => void;
+  isRTL: boolean;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error('useLanguage must be used within LanguageProvider');
+    throw new Error('useLanguage must be used within a LanguageProvider');
   }
   return context;
 };
 
-interface LanguageProviderProps {
-  children: ReactNode;
-}
-
-const STORAGE_KEY = 'avocat_language';
-
-export const LanguageProvider = ({ children }: LanguageProviderProps) => {
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { i18n } = useTranslation();
-  const [language, setLanguageState] = useState<Language>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY) as Language | null;
-    return stored || (i18n.language as Language) || 'en';
-  });
-
-  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
+  const [language, setLanguage] = useState<'en' | 'ar'>('en');
 
   const toggleLanguage = () => {
-    const newLang = language === 'ar' ? 'en' : 'ar';
-    setLanguageState(newLang);
-  };
-
-  const setLanguage = (newLang: Language) => {
-    setLanguageState(newLang);
+    const newLang = language === 'en' ? 'ar' : 'en';
+    setLanguage(newLang);
+    i18n.changeLanguage(newLang);
+    
+    // Update document direction
+    document.documentElement.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('lang', newLang);
+    
+    // Save to localStorage
+    localStorage.setItem('avocat_language', newLang);
   };
 
   useEffect(() => {
-    i18n.changeLanguage(language);
-    document.documentElement.setAttribute('dir', direction);
-    document.documentElement.setAttribute('lang', language);
-    localStorage.setItem(STORAGE_KEY, language);
-  }, [language, direction, i18n]);
+    // Check for saved language preference
+    const savedLang = localStorage.getItem('avocat_language') as 'en' | 'ar' | null;
+    if (savedLang && (savedLang === 'en' || savedLang === 'ar')) {
+      setLanguage(savedLang);
+      i18n.changeLanguage(savedLang);
+      document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+      document.documentElement.setAttribute('lang', savedLang);
+    }
+  }, [i18n]);
+
+  const isRTL = language === 'ar';
 
   return (
-    <LanguageContext.Provider value={{ language, direction, toggleLanguage, setLanguage }}>
+    <LanguageContext.Provider value={{
+      language,
+      toggleLanguage,
+      isRTL
+    }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -1,4 +1,4 @@
-import i18n from '@/i18n/i18n';
+import i18n from '@/i18n/index';
 
 export const fmtNumber = (value: number, lng: string = i18n.language) =>
   new Intl.NumberFormat(lng).format(value);
