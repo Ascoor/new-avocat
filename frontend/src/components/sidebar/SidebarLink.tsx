@@ -1,36 +1,67 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import type { MenuItem } from '@/config/sidebar';
+import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { cn } from '@/lib/utils'
+import type { MenuItem } from '@/config/sidebar'
+import { ChevronDown } from 'lucide-react'
 
 interface SidebarLinkProps {
-  item: MenuItem;
-  collapsed?: boolean; // ← أضف هذه الخاصية
+  item: MenuItem
+  collapsed?: boolean // property to control collapsed state
 }
 
 const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) => {
+  const location = useLocation()
+  const hasChildren = !!item.children && item.children.length > 0
+  const isActive = location.pathname.startsWith(item.path)
+  const [open, setOpen] = useState(isActive)
+
+  const toggle = () => setOpen((o) => !o)
+
+  const linkClasses = cn(
+    'flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-colors',
+    collapsed && 'justify-center',
+    isActive
+      ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+      : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+  )
+
+  const content = (
+    <div className={linkClasses}>
+      <item.icon size={20} />
+      {!collapsed && <span>{item.key}</span>}
+      {!collapsed && hasChildren && (
+        <ChevronDown
+          size={16}
+          className={cn('ml-auto transition-transform', open && 'rotate-180')}
+        />
+      )}
+    </div>
+  )
+
   return (
     <div>
-      <Link
-        to={item.path}
-        className={cn(
-          'flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-all duration-200 hover:bg-gray-700',
-          collapsed && 'justify-center'
-        )}
-      >
-        <item.icon size={20} />
-        {!collapsed && <span>{item.key}</span>} {/* أو استخدم t(`sidebar.${item.key}`) */}
-      </Link>
+      {hasChildren ? (
+        <button onClick={toggle} className="w-full text-left">
+          {content}
+        </button>
+      ) : (
+        <Link to={item.path}>{content}</Link>
+      )}
 
-      {item.children && !collapsed && (
-        <div className="pl-6 space-y-1">
-          {item.children.map(child => (
+      {hasChildren && !collapsed && (
+        <div
+          className={cn(
+            'pl-6 space-y-1 overflow-hidden transition-all',
+            open ? 'max-h-96 animate-accordion-down' : 'max-h-0 animate-accordion-up'
+          )}
+        >
+          {item.children?.map((child) => (
             <SidebarLink key={child.key} item={child} collapsed={collapsed} />
           ))}
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SidebarLink;
+export default SidebarLink
