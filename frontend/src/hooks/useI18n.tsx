@@ -6,27 +6,33 @@ export type Locale = 'ar' | 'en';
 interface I18nContextValue {
   locale: Locale;
   dir: 'rtl' | 'ltr';
-  t: (path: string) => any;
+  t: (path: string) => unknown;
   setLocale: (locale: Locale) => void;
 }
 
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
-const resolvePath = (obj: any, path: string[], locale: Locale): any => {
-  if (!obj) return undefined;
-  if (path.length === 0) return obj;
-  const [key, ...rest] = path;
-  let next = obj[key];
-  if (Array.isArray(next)) {
-    next = next.map((item) => {
-      if (item && typeof item === 'object' && ('ar' in item || 'en' in item)) {
-        return item[locale];
-      }
-      return item;
-    });
-  } else if (next && typeof next === 'object' && ('ar' in next || 'en' in next)) {
-    next = next[locale];
+const isLocaleObject = (value: unknown): value is Record<Locale, unknown> =>
+  !!value && typeof value === 'object' && ('ar' in value || 'en' in value);
+
+const localize = (value: unknown, locale: Locale): unknown => {
+  if (Array.isArray(value)) return value.map((v) => localize(v, locale));
+  if (isLocaleObject(value)) return localize(value[locale], locale);
+  if (value && typeof value === 'object') {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      result[k] = localize(v, locale);
+    }
+    return result;
   }
+  return value;
+};
+
+const resolvePath = (obj: unknown, path: string[], locale: Locale): unknown => {
+  if (!obj) return undefined;
+  if (path.length === 0) return localize(obj, locale);
+  const [key, ...rest] = path;
+  const next = (obj as Record<string, unknown>)[key];
   return resolvePath(next, rest, locale);
 };
 
