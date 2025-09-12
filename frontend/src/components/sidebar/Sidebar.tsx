@@ -1,29 +1,28 @@
-import React, { useState } from 'react'; 
-import { menuItems } from '@/config/sidebar';
-import SidebarMenu from './SidebarMenu';
-import { useTranslation } from 'react-i18next';
-import BrandLogo from '../common/BrandLogo';
-import { cn } from '@/lib/utils'; // make sure cn is imported
-import { ChevronLeft, ChevronRight } from 'lucide-react'; // import the icons
+import React, { useState } from 'react'
+import { menuItems } from '@/config/sidebar'
+import SidebarMenu from './SidebarMenu'
+import { useTranslation } from 'react-i18next'
+import BrandLogo from '../common/BrandLogo'
+import { cn } from '@/lib/utils'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const Sidebar = () => {
-  const { t, i18n } = useTranslation();
-  const [collapsed, setCollapsed] = useState(false); // state for sidebar collapse
+  const { t, i18n } = useTranslation()
+  const [collapsed, setCollapsed] = useState(false)
 
-
-  const toggleSidebar = () => setCollapsed(!collapsed); // toggle function
+  const toggleSidebar = () => setCollapsed((c) => !c)
 
   return (
-        <aside
+    <aside
       className={cn(
-        "h-full bg-background text-white transition-all duration-300",
-        collapsed ? "w-20" : "w-64"
+        'h-full bg-sidebar text-sidebar-foreground transition-all duration-300',
+        collapsed ? 'w-20' : 'w-64'
       )}
       dir={i18n.dir()}
     >
       {/* Logo Section */}
       <div className="p-4 flex items-center justify-between">
-        <div className={cn("flex items-center gap-2")}>
+        <div className={cn('flex items-center gap-2')}>
           {collapsed ? (
             <BrandLogo variant="icon" className="text-primary-foreground h-8 w-8" />
           ) : (
@@ -34,17 +33,17 @@ const Sidebar = () => {
         {/* Sidebar Collapse Toggle */}
         <button
           onClick={toggleSidebar}
-          className="flex items-center justify-center h-6 w-6 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition-colors"
+          className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-accent text-sidebar-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors"
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
       </div>
-         <div className="p-4">
+      <div className="p-4">
         <h2 className="text-lg font-semibold">{t('sidebar.dashboard')}</h2>
       </div>
-      <SidebarMenu items={menuItems} />
+      <SidebarMenu items={menuItems} collapsed={collapsed} />
     </aside>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
