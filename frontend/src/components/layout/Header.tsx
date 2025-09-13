@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export const Header = () => {
-  const { t } = useTranslation(); 
-  const { language, toggleLanguage, direction } = useLanguage();
+  const { t } = useTranslation();
+  const { language, toggleLanguage, isRTL } = useLanguage();
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -32,21 +32,26 @@ export const Header = () => {
         {/* Search */}
         <div className="flex items-center flex-1 max-w-md">
           <div className="relative w-full">
-            <Search className={`absolute top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground ${direction === 'rtl' ? 'right-3' : 'left-3'}`} />
+            <Search
+              className={cn(
+                'absolute top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground',
+                isRTL ? 'right-3' : 'left-3'
+              )}
+            />
             <Input
               placeholder={t('common.search')}
-              className={`glass border-0 ${direction === 'rtl' ? 'pr-10' : 'pl-10'}`}
+              className={cn('glass border-0', isRTL ? 'pr-10' : 'pl-10')}
             />
           </div>
         </div>
 
         {/* Right Side Controls */}
         <div className="flex items-center gap-2">
-                    {/* Notifications */}
+          {/* Notifications */}
           <Button
             variant="ghost"
             size="sm"
-            className="glass-button relative"
+            className="glass-button relative hover:shadow-glow transition-colors"
           >
             <Bell className="h-4 w-4" />
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full animate-pulse" />
@@ -56,7 +61,7 @@ export const Header = () => {
             variant="ghost"
             size="sm"
             onClick={toggleLanguage}
-            className="glass-button"
+            className="glass-button hover:shadow-glow transition-colors"
           >
             <Globe className="h-4 w-4" />
             <span className="ml-2 font-medium">
@@ -79,10 +84,10 @@ export const Header = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="glass-card border-white/20">
               <DropdownMenuItem>
-                {t('settings.profile')}
+                {t('common.profile')}
               </DropdownMenuItem>
               <DropdownMenuItem>
-                {t('settings.title')}
+                {t('common.settings')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -92,7 +97,7 @@ export const Header = () => {
                   navigate('/login');
                 }}
               >
-                {t('auth.logout')}
+                {t('common.logout')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
