@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { GlobalModal } from '../common/GlobalModal'
-import { clientsApi, Client } from '@/features/clients/api'
+import { clientsApi, Client } from '@/services/clients'
 
 interface AddEditClientFormProps {
   client?: Client

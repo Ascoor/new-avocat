@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import { ProtectedRoute } from '../ProtectedRoute'
 
 const mockUseAuth = vi.fn()
-vi.mock('../../features/auth/hooks', () => ({
+vi.mock('../../auth/hooks', () => ({
   useAuth: () => mockUseAuth()
 }))
 

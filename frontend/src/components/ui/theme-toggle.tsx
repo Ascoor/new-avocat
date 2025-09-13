@@ -14,6 +14,7 @@ export const ThemeToggle: React.FC = () => {
       size="sm"
       onClick={toggleTheme}
       aria-label={t('header.toggle_theme')}
+      className="glass-button hover:shadow-glow transition-colors"
     >
       {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
     </Button>

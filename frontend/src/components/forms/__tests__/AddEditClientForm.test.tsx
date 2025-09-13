@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { AddEditClientForm } from '../AddEditClientForm'
 
-vi.mock('@/features/clients/api', () => ({
+vi.mock('@/services/clients', () => ({
   clientsApi: {
     createClient: vi.fn(() => Promise.resolve({ id: '1', name: 't' })),
     updateClient: vi.fn(() => Promise.resolve({ id: '1', name: 't' }))

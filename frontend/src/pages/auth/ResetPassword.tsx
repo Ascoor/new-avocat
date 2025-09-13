@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../../features/auth/hooks';
+import { useAuth } from '@/auth/hooks';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import { LoadingSpinner } from '../../components/common/LoadingSpinner';
 import { Button } from '../../components/ui/button';

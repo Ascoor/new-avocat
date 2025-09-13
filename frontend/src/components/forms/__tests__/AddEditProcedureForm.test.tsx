@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 import { AddEditProcedureForm } from '../AddEditProcedureForm'
 
-vi.mock('@/features/procedures/api', () => ({
+vi.mock('@/services/procedures', () => ({
   proceduresApi: {
     create: vi.fn(() => Promise.resolve({ id: 1, title: 't' })),
     update: vi.fn(() => Promise.resolve({ id: 1, title: 't' }))

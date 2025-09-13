@@ -1,7 +1,7 @@
 // TODO: migrate complete logic from legacy component
 import { GlobalModal } from '../common/GlobalModal'
 import { useForm } from 'react-hook-form'
-import { servicesApi } from '@/features/services/api'
+import { createService, updateService } from '@/services/legalServices'
 import type { Service } from '@/types'
 
 interface Props {
@@ -16,9 +16,9 @@ export const AddEditServiceForm = ({ service, isOpen, onClose, onSaved }: Props)
 
   const onSubmit = async (data: Service) => {
     if (service?.id) {
-      await servicesApi.update(service.id, data)
+      await updateService(service.id, data)
     } else {
-      await servicesApi.create(data)
+      await createService(data)
     }
     onSaved();
     onClose();

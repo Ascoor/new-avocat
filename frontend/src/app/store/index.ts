@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../../features/auth/slice';
-import dashboardReducer from '../../features/dashboard/slice';
-import notificationsReducer from '../../features/notifications/slice';
+import authReducer from '../../auth/slice';
+import dashboardReducer from '../../dashboard/slice';
+import notificationsReducer from '../../notifications/slice';
 
 export const store = configureStore({
   reducer: {
