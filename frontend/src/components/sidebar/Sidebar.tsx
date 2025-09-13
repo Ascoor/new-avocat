@@ -10,6 +10,8 @@ const Sidebar = () => {
   const { t, i18n } = useTranslation()
   const [collapsed, setCollapsed] = useState(false)
 
+  const dir = i18n.dir()
+
   const toggleSidebar = () => setCollapsed((c) => !c)
 
   return (
@@ -18,18 +20,24 @@ const Sidebar = () => {
         'h-full bg-sidebar text-sidebar-foreground transition-all duration-300',
         collapsed ? 'w-20' : 'w-64'
       )}
-      dir={i18n.dir()}
+      dir={dir}
     >
       {/* Logo Section */}
-      <div className="p-4 flex items-center justify-between">
+      <div className={cn('p-4 flex items-center justify-between', dir === 'rtl' ? 'flex-row-reverse' : '')}>
 
 
         {/* Sidebar Collapse Toggle */}
         <button
           onClick={toggleSidebar}
-          className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-accent text-sidebar-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors"
+          className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-accent text-sidebar-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-all duration-300 hover:shadow-glow"
         >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+          {collapsed
+            ? dir === 'rtl'
+              ? <ChevronLeft size={14} />
+              : <ChevronRight size={14} />
+            : dir === 'rtl'
+              ? <ChevronRight size={14} />
+              : <ChevronLeft size={14} />}
         </button>
                 <div className={cn('flex items-center gap-2')}>
           {collapsed ? (

@@ -14,6 +14,7 @@ import { Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import authBackground from '@/assets/auth-background.jpg';
 import BrandLogo from '@/components/common/BrandLogo';
+import { cn } from '@/lib/utils';
 
 type FormErrors = Partial<{ email: string; password: string }>;
 const emailRegex = /\S+@\S+\.\S+/;
@@ -104,9 +105,9 @@ const LoginPage: React.FC = () => {
 
       const nextUrl = searchParams.get('next') || '/dashboard';
       navigate(nextUrl, { replace: true });
-    } catch (err: any) {
+    } catch (err: unknown) {
       const message =
-        err?.message ||
+        (err as { message?: string })?.message ||
         t('auth.errors.invalid_credentials') ||
         t('auth.login.error') ||
         'Something went wrong.';
@@ -119,7 +120,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className={cn('min-h-screen flex', isRTL ? 'flex-row-reverse' : '')} dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Background Image Section */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div 
@@ -168,7 +169,7 @@ const LoginPage: React.FC = () => {
                     ref={firstInvalidRef}
                     onChange={(e) => setField('email', e.target.value)}
                     className={errors.email ? 'border-destructive' : ''}
-                    placeholder="example@domain.com"
+                    placeholder={t('auth.login.email_placeholder')}
                     inputMode="email"
                     autoComplete="email"
                     aria-invalid={!!errors.email}
@@ -196,7 +197,7 @@ const LoginPage: React.FC = () => {
                       value={formData.password}
                       onChange={(e) => setField('password', e.target.value)}
                       className={errors.password ? 'border-destructive pr-10' : 'pr-10'}
-                      placeholder="••••••••"
+                      placeholder={t('auth.login.password_placeholder')}
                       autoComplete="current-password"
                       aria-invalid={!!errors.password}
                       aria-describedby={errors.password ? 'password-error' : undefined}

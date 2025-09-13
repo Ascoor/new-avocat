@@ -53,7 +53,9 @@
       "remember": "Remember me",
       "submit": "Login",
       "success": "Successfully logged in!",
-      "error": "Invalid credentials. Please try again."
+      "error": "Invalid credentials. Please try again.",
+      "email_placeholder": "example@domain.com",
+      "password_placeholder": "••••••••"
     }
   },
   "sidebar": {
