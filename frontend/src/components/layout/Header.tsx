@@ -26,13 +26,9 @@ export const Header = () => {
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card rounded-none border-x-0 border-t-0 sticky top-0 z-40"
-    >
-      <div className="flex items-center justify-between h-16 px-6">
-        {/* Search */}
-        <div className="flex items-center flex-1 max-w-md">
-          <div className="relative w-full">
-            <Search
+   className="bg-background py-3 px-4 md:px-8 border-b border-border flex items-center justify-between animate-fade-in">
+      <div className="flex-1">
+        <Search
               className={cn(
                 'absolute top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground',
                 isRTL ? 'right-3' : 'left-3'
@@ -43,8 +39,8 @@ export const Header = () => {
               className={cn('glass border-0', isRTL ? 'pr-10' : 'pl-10')}
             />
           </div>
-        </div>
-
+ 
+  <div className="flex items-center gap-3">
         {/* Right Side Controls */}
         <div className="flex items-center gap-2">
           {/* Notifications */}

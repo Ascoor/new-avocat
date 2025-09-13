@@ -52,29 +52,29 @@ export const SessionForm: React.FC<SessionFormProps> = ({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="caseTitle" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-            <MessageSquare className="h-4 w-4 text-blue-500" />
+          <Label htmlFor="caseTitle" className="flex items-center gap-2 text-foreground">
+            <MessageSquare className="h-4 w-4 text-primary" />
             Case Title
           </Label>
           <Input
             id="caseTitle"
             value={formData.caseTitle}
             onChange={(e) => handleChange('caseTitle', e.target.value)}
-            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+            className="border-input bg-background"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="clientName" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-            <User className="h-4 w-4 text-green-500" />
+          <Label htmlFor="clientName" className="flex items-center gap-2 text-foreground">
+            <User className="h-4 w-4 text-success" />
             Client Name
           </Label>
           <Input
             id="clientName"
             value={formData.clientName}
             onChange={(e) => handleChange('clientName', e.target.value)}
-            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+            className="border-input bg-background"
             required
           />
         </div>
@@ -82,8 +82,8 @@ export const SessionForm: React.FC<SessionFormProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="sessionDate" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-            <Calendar className="h-4 w-4 text-purple-500" />
+          <Label htmlFor="sessionDate" className="flex items-center gap-2 text-foreground">
+            <Calendar className="h-4 w-4 text-secondary" />
             Date
           </Label>
           <Input
@@ -91,14 +91,14 @@ export const SessionForm: React.FC<SessionFormProps> = ({
             type="date"
             value={formData.sessionDate}
             onChange={(e) => handleChange('sessionDate', e.target.value)}
-            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+            className="border-input bg-background"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="sessionTime" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-            <Clock className="h-4 w-4 text-orange-500" />
+          <Label htmlFor="sessionTime" className="flex items-center gap-2 text-foreground">
+            <Clock className="h-4 w-4 text-warning" />
             Time
           </Label>
           <Input
@@ -106,13 +106,13 @@ export const SessionForm: React.FC<SessionFormProps> = ({
             type="time"
             value={formData.sessionTime}
             onChange={(e) => handleChange('sessionTime', e.target.value)}
-            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+            className="border-input bg-background"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="duration" className="text-gray-700 dark:text-gray-300">
+          <Label htmlFor="duration" className="text-foreground">
             Duration (minutes)
           </Label>
           <Input
@@ -123,7 +123,7 @@ export const SessionForm: React.FC<SessionFormProps> = ({
             step="15"
             value={formData.duration}
             onChange={(e) => handleChange('duration', parseInt(e.target.value))}
-            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+            className="border-input bg-background"
             required
           />
         </div>
@@ -131,12 +131,12 @@ export const SessionForm: React.FC<SessionFormProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label className="text-gray-700 dark:text-gray-300">Session Type</Label>
+          <Label className="text-foreground">Session Type</Label>
           <Select value={formData.sessionType} onValueChange={(value) => handleChange('sessionType', value as SessionFormData['sessionType'])}>
-            <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            <SelectTrigger className="border-input bg-background">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            <SelectContent className="bg-popover border-border">
               <SelectItem value="consultation">Consultation</SelectItem>
               <SelectItem value="meeting">Meeting</SelectItem>
               <SelectItem value="phone_call">Phone Call</SelectItem>
@@ -146,12 +146,12 @@ export const SessionForm: React.FC<SessionFormProps> = ({
         </div>
 
         <div className="space-y-2">
-          <Label className="text-gray-700 dark:text-gray-300">Status</Label>
+          <Label className="text-foreground">Status</Label>
           <Select value={formData.status} onValueChange={(value) => handleChange('status', value as SessionFormData['status'])}>
-            <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            <SelectTrigger className="border-input bg-background">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            <SelectContent className="bg-popover border-border">
               <SelectItem value="scheduled">Scheduled</SelectItem>
               <SelectItem value="completed">Completed</SelectItem>
               <SelectItem value="cancelled">Cancelled</SelectItem>
@@ -162,7 +162,7 @@ export const SessionForm: React.FC<SessionFormProps> = ({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="notes" className="text-gray-700 dark:text-gray-300">
+        <Label htmlFor="notes" className="text-foreground">
           Notes
         </Label>
         <Textarea
@@ -170,23 +170,22 @@ export const SessionForm: React.FC<SessionFormProps> = ({
           rows={4}
           value={formData.notes}
           onChange={(e) => handleChange('notes', e.target.value)}
-          className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+          className="border-input bg-background"
           placeholder="Add any relevant notes about this session..."
         />
       </div>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="flex justify-end gap-3 pt-4 border-t border-border">
         <Button
           type="button"
           variant="outline"
           onClick={onCancel}
-          className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
         >
           Cancel
         </Button>
         <Button
           type="submit"
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
+          variant="info"
         >
           {session ? 'Update Session' : 'Create Session'}
         </Button>

@@ -8,9 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 
 const STATUS_STYLES: Record<string, string> = {
-  scheduled: 'bg-yellow-500',
-  completed: 'bg-green-500',
-  canceled: 'bg-red-500',
+  scheduled: 'bg-warning text-warning-foreground',
+  completed: 'bg-success text-success-foreground',
+  canceled: 'bg-destructive text-destructive-foreground',
 };
 
 export default function UpcomingSessions() {
@@ -26,7 +26,7 @@ export default function UpcomingSessions() {
       );
     }
     if (error) {
-      return <div className="text-center text-red-500">Error</div>;
+      return <div className="text-center text-destructive">Error</div>;
     }
     const upcoming = data?.slice(0, 5) ?? [];
     return (
@@ -37,7 +37,7 @@ export default function UpcomingSessions() {
               <p className="font-medium">{s.title}</p>
               <p className="text-sm text-muted-foreground">{s.client} • {new Date(s.date).toLocaleDateString()}</p>
             </div>
-            <Badge className={`${STATUS_STYLES[s.status]} text-white`}>
+            <Badge className={`${STATUS_STYLES[s.status]}`}>
               {t(`dashboard.${s.status}`)}
             </Badge>
           </li>

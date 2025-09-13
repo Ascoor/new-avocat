@@ -26,7 +26,8 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
   }, [location.pathname, item])
 
   const [open, setOpen] = useState(isActive)
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const dir = i18n.dir()
 
   const toggle = () => setOpen((o) => !o)
 
@@ -45,7 +46,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
       {!collapsed && hasChildren && (
         <ChevronDown
           size={16}
-          className={cn('ml-auto transition-transform', open && 'rotate-180')}
+          className={cn(dir === 'rtl' ? 'mr-auto' : 'ml-auto', 'transition-transform', open && 'rotate-180')}
         />
       )}
     </div>
@@ -82,7 +83,8 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
       {hasChildren && !collapsed && (
         <div
           className={cn(
-            'pl-6 space-y-1 overflow-hidden transition-all',
+            'space-y-1 overflow-hidden transition-all',
+            dir === 'rtl' ? 'pr-6' : 'pl-6',
             open ? 'max-h-96 animate-accordion-down' : 'max-h-0 animate-accordion-up'
           )}
         >

@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 
 const STATUS_COLORS: Record<string, string> = {
-  active: 'bg-green-500',
-  pending: 'bg-yellow-500',
-  closed: 'bg-red-500',
-  on_hold: 'bg-gray-500',
+  active: 'bg-success',
+  pending: 'bg-warning',
+  closed: 'bg-destructive',
+  on_hold: 'bg-muted',
 };
 
 export default function RecentCases() {
@@ -26,7 +26,7 @@ export default function RecentCases() {
       );
     }
     if (error) {
-      return <div className="text-center text-red-500">Error</div>;
+      return <div className="text-center text-destructive">Error</div>;
     }
     const recent = data?.slice(0, 5) ?? [];
     return (

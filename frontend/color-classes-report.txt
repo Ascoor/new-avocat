@@ -1,0 +1,664 @@
+src/App.css:  text-align: center;
+src/app/router/index.tsx:          <div className="min-h-screen flex items-center justify-center text-xl font-bold">
+src/components/LanguageSwitcher.tsx:          className={`px-2 py-1 rounded border text-sm ${
+src/components/LanguageSwitcher.tsx:              ? 'bg-primary text-primary-foreground'
+src/components/cases/CaseForm.tsx:      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+src/components/cases/CaseForm.tsx:        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+src/components/landing/AboutSection.tsx:                <h2 className="text-4xl lg:text-5xl font-bold text-foreground">
+src/components/landing/AboutSection.tsx:                  <span className="text-accent"> Legal Practice</span>
+src/components/landing/AboutSection.tsx:                <p className="text-xl text-muted-foreground leading-relaxed">
+src/components/landing/AboutSection.tsx:                <p className="text-muted-foreground leading-relaxed">
+src/components/landing/AboutSection.tsx:                <h3 className="text-lg font-semibold text-foreground mb-4">
+src/components/landing/AboutSection.tsx:                    <div className="w-2 h-2 bg-accent rounded-full"></div>
+src/components/landing/AboutSection.tsx:                    <span className="text-muted-foreground">{achievement}</span>
+src/components/landing/AboutSection.tsx:                    className="bg-card border rounded-xl p-6 text-center hover-lift shadow-soft"
+src/components/landing/AboutSection.tsx:                        <stat.icon className="h-6 w-6 text-accent-foreground" />
+src/components/landing/AboutSection.tsx:                        <div className="text-3xl font-bold text-foreground">
+src/components/landing/AboutSection.tsx:                        <div className="text-sm text-muted-foreground">
+src/components/landing/AboutSection.tsx:              <div className="bg-card border rounded-xl p-6 shadow-soft">
+src/components/landing/AboutSection.tsx:                  <h3 className="text-lg font-semibold text-foreground">
+src/components/landing/AboutSection.tsx:                      <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2"></div>
+src/components/landing/AboutSection.tsx:                      <span className="text-muted-foreground">
+src/components/landing/AboutSection.tsx:                      <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2"></div>
+src/components/landing/AboutSection.tsx:                      <span className="text-muted-foreground">
+src/components/landing/AboutSection.tsx:                      <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2"></div>
+src/components/landing/AboutSection.tsx:                      <span className="text-muted-foreground">
+src/components/landing/FooterSection.tsx:    <footer className="bg-card border-t">
+src/components/landing/FooterSection.tsx:                <Scale className="h-8 w-8 text-accent" />
+src/components/landing/FooterSection.tsx:                  <h3 className="text-xl font-bold text-foreground">Avocat</h3>
+src/components/landing/FooterSection.tsx:                  <p className="text-sm text-muted-foreground">Law Firm</p>
+src/components/landing/FooterSection.tsx:              <p className="text-muted-foreground leading-relaxed">
+src/components/landing/FooterSection.tsx:                <div className="flex items-center space-x-3 text-muted-foreground">
+src/components/landing/FooterSection.tsx:                  <Phone className="h-4 w-4 text-accent" />
+src/components/landing/FooterSection.tsx:                <div className="flex items-center space-x-3 text-muted-foreground">
+src/components/landing/FooterSection.tsx:                  <Mail className="h-4 w-4 text-accent" />
+src/components/landing/FooterSection.tsx:                <div className="flex items-center space-x-3 text-muted-foreground">
+src/components/landing/FooterSection.tsx:                  <MapPin className="h-4 w-4 text-accent" />
+src/components/landing/FooterSection.tsx:                    className="p-2 rounded-lg bg-background hover:bg-accent/10 text-muted-foreground hover:text-accent transition-colors duration-300"
+src/components/landing/FooterSection.tsx:              <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
+src/components/landing/FooterSection.tsx:                      className="text-muted-foreground hover:text-accent transition-colors duration-300"
+src/components/landing/FooterSection.tsx:              <h4 className="text-lg font-semibold text-foreground">Practice Areas</h4>
+src/components/landing/FooterSection.tsx:                      className="text-muted-foreground hover:text-accent transition-colors duration-300"
+src/components/landing/FooterSection.tsx:              <h4 className="text-lg font-semibold text-foreground">Legal Information</h4>
+src/components/landing/FooterSection.tsx:                      className="text-muted-foreground hover:text-accent transition-colors duration-300"
+src/components/landing/FooterSection.tsx:                <p className="text-sm text-muted-foreground leading-relaxed">
+src/components/landing/FooterSection.tsx:          <div className="border-t pt-8 mt-12">
+src/components/landing/FooterSection.tsx:              <p className="text-muted-foreground text-sm">
+src/components/landing/FooterSection.tsx:              <p className="text-muted-foreground text-sm">
+src/components/landing/Services.tsx:    <div className="text-center">
+src/components/landing/Services.tsx:      <h2 className={`text-3xl md:text-4xl font-bold mb-4 transition-colors duration-300 ${
+src/components/landing/Services.tsx:          ? 'text-amber-900 dark:text-amber-100' 
+src/components/landing/Services.tsx:          : 'text-gray-900 dark:text-white'
+src/components/landing/Services.tsx:        <Card className={`transition-all duration-500 border-0 shadow-2xl ${
+src/components/landing/Services.tsx:            ? 'bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20'
+src/components/landing/Services.tsx:            : 'bg-white dark:bg-gray-800'
+src/components/landing/Services.tsx:                ? 'text-amber-400' 
+src/components/landing/Services.tsx:                : 'text-blue-400'
+src/components/landing/Services.tsx:            <blockquote className={`text-xl md:text-2xl font-medium mb-8 leading-relaxed transition-colors duration-300 ${
+src/components/landing/Services.tsx:                ? 'text-amber-800 dark:text-amber-200' 
+src/components/landing/Services.tsx:                : 'text-gray-700 dark:text-gray-300'
+src/components/landing/Services.tsx:                      ? 'text-amber-400' 
+src/components/landing/Services.tsx:                      : 'text-yellow-400'
+src/components/landing/Services.tsx:                className="w-16 h-16 rounded-full mr-4 border-4 border-white shadow-lg"
+src/components/landing/Services.tsx:              <div className="text-center">
+src/components/landing/Services.tsx:                <h4 className={`font-bold text-lg transition-colors duration-300 ${
+src/components/landing/Services.tsx:                    ? 'text-amber-900 dark:text-amber-100' 
+src/components/landing/Services.tsx:                    : 'text-gray-900 dark:text-white'
+src/components/landing/Services.tsx:                    ? 'text-amber-600 dark:text-amber-400' 
+src/components/landing/Services.tsx:                    : 'text-gray-600 dark:text-gray-400'
+src/components/landing/Services.tsx:              ? 'bg-amber-500 hover:bg-amber-600 text-white'
+src/components/landing/Services.tsx:              : 'bg-blue-500 hover:bg-blue-600 text-white'
+src/components/landing/Services.tsx:              ? 'bg-amber-500 hover:bg-amber-600 text-white'
+src/components/landing/Services.tsx:              : 'bg-blue-500 hover:bg-blue-600 text-white'
+src/components/landing/Services.tsx:                    ? 'bg-amber-500 w-8'
+src/components/landing/Services.tsx:                    : 'bg-blue-500 w-8'
+src/components/landing/Services.tsx:                  : 'bg-gray-300 hover:bg-gray-400'
+src/components/landing/LandingHeader.tsx:              <span className="text-accent-foreground font-bold text-xl">A</span>
+src/components/landing/LandingHeader.tsx:            <h1 className="text-2xl md:text-3xl font-bold text-primary-foreground">
+src/components/landing/LandingHeader.tsx:              className="hidden sm:inline-block px-3 py-2 rounded-lg border border-border hover:bg-accent/10 text-sm transition-all duration-300"
+src/components/landing/LandingHeader.tsx:            <Link to="/register" className="hidden sm:inline-block btn-hero text-sm">
+src/components/landing/LandingHeader.tsx:              className="md:hidden p-2 rounded-lg hover:bg-accent/10 transition-colors"
+src/components/landing/LandingHeader.tsx:              {isMenuOpen ? <X className="h-6 w-6 text-foreground" /> : <Menu className="h-6 w-6 text-foreground" />}
+src/components/landing/LandingHeader.tsx:          <div className="md:hidden py-4 border-t">
+src/components/landing/LandingHeader.tsx:                  className={clsx('nav-link py-2', dir === 'rtl' ? 'text-right' : 'text-left')}
+src/components/landing/LandingHeader.tsx:              <div className="pt-4 border-t flex gap-3">
+src/components/landing/LandingHeader.tsx:                <Link to="/login" className="btn-outline flex-1 text-center">{t<string>('nav.login')}</Link>
+src/components/landing/LandingHeader.tsx:                <Link to="/register" className="btn-hero flex-1 text-center">{t<string>('nav.register')}</Link>
+src/components/landing/HeroSection.tsx:        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+src/components/landing/HeroSection.tsx:      <div className="relative z-10 container mx-auto px-4 text-center">
+src/components/landing/HeroSection.tsx:          <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 leading-relaxed fade-in-up delay-1">
+src/components/landing/HeroSection.tsx:      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent" />
+src/components/landing/ScrollToTop.tsx:      className={`fixed bottom-6 right-6 z-50 p-4 gradient-primary text-primary-foreground rounded-full shadow-elegant hover:shadow-gold transition-all duration-300 hover:scale-110 ${
+src/components/landing/ContactSection.tsx:    <section id="contact" className="py-20 bg-background">
+src/components/landing/ContactSection.tsx:          <div className="text-center space-y-4 mb-16 animate-fade-in">
+src/components/landing/ContactSection.tsx:            <h2 className="text-4xl lg:text-5xl font-bold text-foreground">
+src/components/landing/ContactSection.tsx:            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+src/components/landing/ContactSection.tsx:                    className="bg-card border rounded-xl p-6 hover-lift shadow-soft"
+src/components/landing/ContactSection.tsx:                        <info.icon className="h-6 w-6 text-accent-foreground" />
+src/components/landing/ContactSection.tsx:                        <h3 className="text-lg font-semibold text-foreground">
+src/components/landing/ContactSection.tsx:                          <p key={detailIndex} className="text-muted-foreground">
+src/components/landing/ContactSection.tsx:                                className="hover:text-accent transition-colors"
+src/components/landing/ContactSection.tsx:              <div className="bg-card border rounded-xl p-6 shadow-soft">
+src/components/landing/ContactSection.tsx:                <h3 className="text-lg font-semibold text-foreground mb-4">
+src/components/landing/ContactSection.tsx:                <p className="text-muted-foreground mb-4">
+src/components/landing/ContactSection.tsx:                  className="text-accent hover:text-accent/80 font-semibold transition-colors"
+src/components/landing/ContactSection.tsx:              <form onSubmit={handleSubmit} className="bg-card border rounded-xl p-6 shadow-soft space-y-6">
+src/components/landing/ContactSection.tsx:                  <h3 className="text-lg font-semibold text-foreground">
+src/components/landing/ContactSection.tsx:                      <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+src/components/landing/ContactSection.tsx:                        className="w-full px-4 py-3 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+src/components/landing/ContactSection.tsx:                      <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+src/components/landing/ContactSection.tsx:                        className="w-full px-4 py-3 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+src/components/landing/ContactSection.tsx:                      <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+src/components/landing/ContactSection.tsx:                        className="w-full px-4 py-3 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+src/components/landing/ContactSection.tsx:                      <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
+src/components/landing/ContactSection.tsx:                        className="w-full px-4 py-3 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+src/components/landing/ContactSection.tsx:                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+src/components/landing/ContactSection.tsx:                      className="w-full px-4 py-3 bg-background border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
+src/components/common/BrandedLoader.tsx:          ? 'fixed inset-0 z-50 grid place-items-center bg-background/60 backdrop-blur-sm'
+src/components/common/BrandedLoader.tsx:        <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+src/components/common/BrandedLoader.tsx:        <div className="relative flex h-full w-full items-center justify-center rounded-full bg-primary text-primary-foreground">
+src/components/common/HomeCards.tsx:  'bg-white dark:bg-avocat-blue-darker p-5 rounded-lg border border-light dark:border-dark shadow-md';
+src/components/common/HomeCards.tsx:  'w-full text-center border-collapse rounded-lg overflow-x-auto';
+src/components/common/HomeCards.tsx:const theadStyle = 'bg-avocat-indigo text-white text-sm md:text-base';
+src/components/common/HomeCards.tsx:  'px-4 py-2 border-b border-light dark:border-dark text-gray-700 dark:text-gray-200';
+src/components/common/HomeCards.tsx:  'bg-avocat-blue hover:bg-avocat-orange-light dark:hover:bg-avocat-orange-dark';
+src/components/common/HomeCards.tsx:    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-avocat-blue dark:text-avocat-orange">
+src/components/common/GlobalTable.tsx:      return <span className="text-gray-400">-</span>;
+src/components/common/GlobalTable.tsx:            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+src/components/common/GlobalTable.tsx:            {title && <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h2>}
+src/components/common/GlobalTable.tsx:            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+src/components/common/GlobalTable.tsx:                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+src/components/common/GlobalTable.tsx:                    className={column.sortable ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800" : ""}
+src/components/common/GlobalTable.tsx:                        <span className="text-xs">
+src/components/common/GlobalTable.tsx:                  <TableCell colSpan={columns.length + (actions.length > 0 ? 1 : 0)} className="text-center py-8">
+src/components/common/GlobalTable.tsx:                    <div className="text-gray-500 dark:text-gray-400">
+src/components/common/GlobalTable.tsx:                                className={action.variant === 'destructive' ? 'text-red-600' : ''}
+src/components/common/GlobalTable.tsx:            <div className="text-sm text-gray-600 dark:text-gray-400">
+src/components/common/GlobalModal.tsx:            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+src/components/common/GlobalModal.tsx:                bg-white dark:bg-gray-900 
+src/components/common/GlobalModal.tsx:                border border-gray-200 dark:border-gray-700
+src/components/common/GlobalModal.tsx:                <DialogHeader className="flex flex-row items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+src/components/common/GlobalModal.tsx:                  <DialogTitle className="text-xl font-bold text-gray-900 dark:text-white">
+src/components/common/GlobalModal.tsx:                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+src/components/common/GlobalModal.tsx:                    <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+src/components/common/LoadingSpinner.tsx:      <Scale className={`${sizeClasses[size]} animate-spin text-blue-600 dark:text-blue-400`} />
+src/components/common/LoadingSpinner.tsx:        <p className="text-sm text-gray-600 dark:text-gray-400 animate-pulse">
+src/components/sidebar/SidebarLink.tsx:      ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-glow'
+src/components/sidebar/SidebarLink.tsx:      : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-glow'
+src/components/sidebar/SidebarLink.tsx:      {!collapsed && <span className="text-sm font-medium">{t(`sidebar.${item.key}`)}</span>}
+src/components/sidebar/SidebarLink.tsx:                <button onClick={toggle} className="w-full text-left" aria-expanded={open} aria-haspopup={true}>
+src/components/sidebar/SidebarLink.tsx:            <TooltipContent side="right" align="center" className="glass-card py-1.5 px-2 text-xs">
+src/components/sidebar/SidebarLink.tsx:        <button onClick={toggle} className="w-full text-left" aria-expanded={open} aria-haspopup={true}>
+src/components/sidebar/Sidebar.tsx:        'hidden md:block h-full bg-sidebar text-sidebar-foreground transition-all duration-300 border-r border-sidebar-border',
+src/components/sidebar/Sidebar.tsx:          className="flex items-center justify-center h-6 w-6 rounded-full bg-sidebar-accent text-sidebar-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-all duration-300 hover:shadow-glow focus-visible:ring-2 ring-sidebar-ring outline-none"
+src/components/sidebar/Sidebar.tsx:            <BrandLogo variant="icon" className="text-primary-foreground h-8 w-8" />
+src/components/sidebar/Sidebar.tsx:            <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
+src/components/sidebar/Sidebar.tsx:          <h2 className="text-sm font-semibold text-sidebar-foreground/80 tracking-wide">
+src/components/layout/Layout.tsx:        <main className="flex-1 overflow-auto bg-background p-6">
+src/components/layout/Header.tsx:      className="hero-gradient rounded-none border-x-0 border-t-0 sticky top-0 z-40 shadow-glow"
+src/components/layout/Header.tsx:                'absolute top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground',
+src/components/layout/Header.tsx:              className={cn('glass border-0', isRTL ? 'pr-10' : 'pl-10')}
+src/components/layout/Header.tsx:            <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full animate-pulse" />
+src/components/layout/Header.tsx:            <DropdownMenuContent align="end" className="glass-card border-white/20">
+src/components/layout/Header.tsx:                className="text-destructive"
+src/components/sessions/SessionForm.tsx:          <Label htmlFor="caseTitle" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+src/components/sessions/SessionForm.tsx:            <MessageSquare className="h-4 w-4 text-blue-500" />
+src/components/sessions/SessionForm.tsx:            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+src/components/sessions/SessionForm.tsx:          <Label htmlFor="clientName" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+src/components/sessions/SessionForm.tsx:            <User className="h-4 w-4 text-green-500" />
+src/components/sessions/SessionForm.tsx:            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+src/components/sessions/SessionForm.tsx:          <Label htmlFor="sessionDate" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+src/components/sessions/SessionForm.tsx:            <Calendar className="h-4 w-4 text-purple-500" />
+src/components/sessions/SessionForm.tsx:            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+src/components/sessions/SessionForm.tsx:          <Label htmlFor="sessionTime" className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+src/components/sessions/SessionForm.tsx:            <Clock className="h-4 w-4 text-orange-500" />
+src/components/sessions/SessionForm.tsx:            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+src/components/sessions/SessionForm.tsx:          <Label htmlFor="duration" className="text-gray-700 dark:text-gray-300">
+src/components/sessions/SessionForm.tsx:            className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+src/components/sessions/SessionForm.tsx:          <Label className="text-gray-700 dark:text-gray-300">Session Type</Label>
+src/components/sessions/SessionForm.tsx:            <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+src/components/sessions/SessionForm.tsx:            <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+src/components/sessions/SessionForm.tsx:          <Label className="text-gray-700 dark:text-gray-300">Status</Label>
+src/components/sessions/SessionForm.tsx:            <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+src/components/sessions/SessionForm.tsx:            <SelectContent className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+src/components/sessions/SessionForm.tsx:        <Label htmlFor="notes" className="text-gray-700 dark:text-gray-300">
+src/components/sessions/SessionForm.tsx:          className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+src/components/sessions/SessionForm.tsx:      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+src/components/sessions/SessionForm.tsx:          className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
+src/components/sessions/SessionForm.tsx:          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
+src/components/ui/drawer.tsx:    className={cn("fixed inset-0 z-50 bg-black/80", className)}
+src/components/ui/drawer.tsx:        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background",
+src/components/ui/drawer.tsx:      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+src/components/ui/drawer.tsx:    className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)}
+src/components/ui/drawer.tsx:      "text-lg font-semibold leading-none tracking-tight",
+src/components/ui/drawer.tsx:    className={cn("text-sm text-muted-foreground", className)}
+src/components/ui/accordion.tsx:    className={cn("border-b", className)}
+src/components/ui/accordion.tsx:    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+src/components/ui/card.tsx:      "rounded-lg border bg-card text-card-foreground shadow-sm",
+src/components/ui/card.tsx:      "text-2xl font-semibold leading-none tracking-tight",
+src/components/ui/card.tsx:    className={cn("text-sm text-muted-foreground", className)}
+src/components/ui/textarea.tsx:          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+src/components/ui/command.tsx:      "flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",
+src/components/ui/command.tsx:        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+src/components/ui/command.tsx:  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+src/components/ui/command.tsx:        "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+src/components/ui/command.tsx:    className="py-6 text-center text-sm"
+src/components/ui/command.tsx:      "overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground",
+src/components/ui/command.tsx:    className={cn("-mx-1 h-px bg-border", className)}
+src/components/ui/command.tsx:      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50",
+src/components/ui/command.tsx:        "ml-auto text-xs tracking-widest text-muted-foreground",
+src/components/ui/radio-group.tsx:        "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+src/components/ui/radio-group.tsx:        <Circle className="h-2.5 w-2.5 fill-current text-current" />
+src/components/ui/alert-dialog.tsx:      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+src/components/ui/alert-dialog.tsx:        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+src/components/ui/alert-dialog.tsx:      "flex flex-col space-y-2 text-center sm:text-left",
+src/components/ui/alert-dialog.tsx:    className={cn("text-lg font-semibold", className)}
+src/components/ui/alert-dialog.tsx:    className={cn("text-sm text-muted-foreground", className)}
+src/components/ui/dropdown-menu.tsx:      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent",
+src/components/ui/dropdown-menu.tsx:      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/dropdown-menu.tsx:        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/dropdown-menu.tsx:      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/dropdown-menu.tsx:      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/dropdown-menu.tsx:      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/dropdown-menu.tsx:      "px-2 py-1.5 text-sm font-semibold",
+src/components/ui/dropdown-menu.tsx:    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+src/components/ui/dropdown-menu.tsx:      className={cn("ml-auto text-xs tracking-widest opacity-60", className)}
+src/components/ui/tabs.tsx:      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+src/components/ui/tabs.tsx:      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+src/components/ui/sidebar.tsx:              "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+src/components/ui/sidebar.tsx:            "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground",
+src/components/ui/sidebar.tsx:            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+src/components/ui/sidebar.tsx:        className="group peer hidden md:block text-sidebar-foreground"
+src/components/ui/sidebar.tsx:            "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
+src/components/ui/sidebar.tsx:              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
+src/components/ui/sidebar.tsx:            className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+src/components/ui/sidebar.tsx:        "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
+src/components/ui/sidebar.tsx:        "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full group-data-[collapsible=offcanvas]:hover:bg-sidebar",
+src/components/ui/sidebar.tsx:        "relative flex min-h-svh flex-1 flex-col bg-background",
+src/components/ui/sidebar.tsx:        "h-8 w-full bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+src/components/ui/sidebar.tsx:      className={cn("mx-2 w-auto bg-sidebar-border", className)}
+src/components/ui/sidebar.tsx:        "duration-200 flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-sidebar-foreground/70 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+src/components/ui/sidebar.tsx:        "absolute right-3 top-3.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+src/components/ui/sidebar.tsx:    className={cn("w-full text-sm", className)}
+src/components/ui/sidebar.tsx:  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+src/components/ui/sidebar.tsx:        default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+src/components/ui/sidebar.tsx:          "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
+src/components/ui/sidebar.tsx:        default: "h-8 text-sm",
+src/components/ui/sidebar.tsx:        sm: "h-7 text-xs",
+src/components/ui/sidebar.tsx:        lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
+src/components/ui/sidebar.tsx:        "absolute right-1 top-1.5 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground outline-none ring-sidebar-ring transition-transform hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 peer-hover/menu-button:text-sidebar-accent-foreground [&>svg]:size-4 [&>svg]:shrink-0",
+src/components/ui/sidebar.tsx:          "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0",
+src/components/ui/sidebar.tsx:      "absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium tabular-nums text-sidebar-foreground select-none pointer-events-none",
+src/components/ui/sidebar.tsx:      "peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
+src/components/ui/sidebar.tsx:      "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-sidebar-border px-2.5 py-0.5",
+src/components/ui/sidebar.tsx:        "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
+src/components/ui/sidebar.tsx:        "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
+src/components/ui/sidebar.tsx:        size === "sm" && "text-xs",
+src/components/ui/sidebar.tsx:        size === "md" && "text-sm",
+src/components/ui/breadcrumb.tsx:      "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+src/components/ui/breadcrumb.tsx:      className={cn("transition-colors hover:text-foreground", className)}
+src/components/ui/breadcrumb.tsx:    className={cn("font-normal text-foreground", className)}
+src/components/ui/label.tsx:  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+src/components/ui/alert.tsx:  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+src/components/ui/alert.tsx:        default: "bg-background text-foreground",
+src/components/ui/alert.tsx:          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+src/components/ui/alert.tsx:    className={cn("text-sm [&_p]:leading-relaxed", className)}
+src/components/ui/form.tsx:      className={cn(error && "text-destructive", className)}
+src/components/ui/form.tsx:      className={cn("text-sm text-muted-foreground", className)}
+src/components/ui/form.tsx:      className={cn("text-sm font-medium text-destructive", className)}
+src/components/ui/hover-card.tsx:      "z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/button.tsx:  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+src/components/ui/button.tsx:        default: "bg-primary text-primary-foreground hover:bg-primary-hover shadow-md hover:shadow-lg",
+src/components/ui/button.tsx:        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg",
+src/components/ui/button.tsx:        outline: "border border-border bg-background hover:bg-accent hover:text-accent-foreground",
+src/components/ui/button.tsx:        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+src/components/ui/button.tsx:        ghost: "hover:bg-accent hover:text-accent-foreground",
+src/components/ui/button.tsx:        link: "text-primary underline-offset-4 hover:underline",
+src/components/ui/button.tsx:        hero: "bg-gradient-primary text-white border-0 shadow-glow hover:shadow-glow hover:scale-105 font-semibold",
+src/components/ui/button.tsx:        glass: "glass text-foreground hover:bg-accent/20 border-glass-border",
+src/components/ui/button.tsx:        glow: "bg-accent text-accent-foreground shadow-glow hover:shadow-glow hover:scale-105 animate-glow-pulse",
+src/components/ui/button.tsx:        success: "bg-success text-success-foreground hover:bg-success/90 shadow-md hover:shadow-lg",
+src/components/ui/button.tsx:        warning: "bg-warning text-warning-foreground hover:bg-warning/90 shadow-md hover:shadow-lg",
+src/components/ui/dialog.tsx:      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+src/components/ui/dialog.tsx:        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+src/components/ui/dialog.tsx:      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+src/components/ui/dialog.tsx:      "flex flex-col space-y-1.5 text-center sm:text-left",
+src/components/ui/dialog.tsx:      "text-lg font-semibold leading-none tracking-tight",
+src/components/ui/dialog.tsx:    className={cn("text-sm text-muted-foreground", className)}
+src/components/ui/menubar.tsx:      "flex h-10 items-center space-x-1 rounded-md border bg-background p-1",
+src/components/ui/menubar.tsx:      "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+src/components/ui/menubar.tsx:      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+src/components/ui/menubar.tsx:      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/menubar.tsx:          "z-50 min-w-[12rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/menubar.tsx:      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/menubar.tsx:      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/menubar.tsx:      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/menubar.tsx:      "px-2 py-1.5 text-sm font-semibold",
+src/components/ui/menubar.tsx:    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+src/components/ui/menubar.tsx:        "ml-auto text-xs tracking-widest text-muted-foreground",
+src/components/ui/sheet.tsx:      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+src/components/ui/sheet.tsx:  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+src/components/ui/sheet.tsx:        top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+src/components/ui/sheet.tsx:          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+src/components/ui/sheet.tsx:        left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+src/components/ui/sheet.tsx:          "inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+src/components/ui/sheet.tsx:      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+src/components/ui/sheet.tsx:      "flex flex-col space-y-2 text-center sm:text-left",
+src/components/ui/sheet.tsx:    className={cn("text-lg font-semibold text-foreground", className)}
+src/components/ui/sheet.tsx:    className={cn("text-sm text-muted-foreground", className)}
+src/components/ui/input-otp.tsx:        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+src/components/ui/input-otp.tsx:          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+src/components/ui/context-menu.tsx:import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
+src/components/ui/context-menu.tsx:      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+src/components/ui/context-menu.tsx:      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/context-menu.tsx:        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/context-menu.tsx:      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/context-menu.tsx:      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/context-menu.tsx:      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/context-menu.tsx:      "px-2 py-1.5 text-sm font-semibold text-foreground",
+src/components/ui/context-menu.tsx:    className={cn("-mx-1 my-1 h-px bg-border", className)}
+src/components/ui/context-menu.tsx:        "ml-auto text-xs tracking-widest text-muted-foreground",
+src/components/ui/glass-card.tsx:        default: "bg-card text-card-foreground",
+src/components/ui/glass-card.tsx:        primary: "bg-gradient-glass border-accent/20 shadow-glow",
+src/components/ui/glass-card.tsx:        muted: "bg-muted/50 text-muted-foreground border-muted/20",
+src/components/ui/glass-card.tsx:        ghost: "bg-background/30 border-border/10",
+src/components/ui/glass-card.tsx:        glow: "hover:shadow-glow hover:border-accent/40",
+src/components/ui/glass-card.tsx:    className={cn("text-2xl font-semibold leading-none tracking-tight", className)}
+src/components/ui/glass-card.tsx:    className={cn("text-sm text-muted-foreground", className)}
+src/components/ui/badge.tsx:  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+src/components/ui/badge.tsx:          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+src/components/ui/badge.tsx:          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+src/components/ui/badge.tsx:          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+src/components/ui/badge.tsx:        outline: "text-foreground",
+src/components/ui/switch.tsx:      "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+src/components/ui/switch.tsx:        "pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
+src/components/ui/sonner.tsx:            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+src/components/ui/sonner.tsx:          description: "group-[.toast]:text-muted-foreground",
+src/components/ui/sonner.tsx:            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
+src/components/ui/sonner.tsx:            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+src/components/ui/chart.tsx:          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+src/components/ui/chart.tsx:          "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+src/components/ui/chart.tsx:                  "flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
+src/components/ui/chart.tsx:                            "shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg]",
+src/components/ui/chart.tsx:                              "w-0 border-[1.5px] border-dashed bg-transparent":
+src/components/ui/chart.tsx:                        <span className="text-muted-foreground">
+src/components/ui/chart.tsx:                        <span className="font-mono font-medium tabular-nums text-foreground">
+src/components/ui/chart.tsx:                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
+src/components/ui/toast.tsx:  "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
+src/components/ui/toast.tsx:        default: "border bg-background text-foreground",
+src/components/ui/toast.tsx:          "destructive group border-destructive bg-destructive text-destructive-foreground",
+src/components/ui/toast.tsx:      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive",
+src/components/ui/toast.tsx:      "absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-2 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600",
+src/components/ui/toast.tsx:    className={cn("text-sm font-semibold", className)}
+src/components/ui/toast.tsx:    className={cn("text-sm opacity-90", className)}
+src/components/ui/scroll-area.tsx:        "h-full w-2.5 border-l border-l-transparent p-[1px]",
+src/components/ui/scroll-area.tsx:        "h-2.5 flex-col border-t border-t-transparent p-[1px]",
+src/components/ui/scroll-area.tsx:    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
+src/components/ui/table.tsx:      className={cn("w-full caption-bottom text-sm", className)}
+src/components/ui/table.tsx:  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+src/components/ui/table.tsx:    className={cn("[&_tr:last-child]:border-0", className)}
+src/components/ui/table.tsx:      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+src/components/ui/table.tsx:      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+src/components/ui/table.tsx:      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+src/components/ui/table.tsx:    className={cn("mt-4 text-sm text-muted-foreground", className)}
+src/components/ui/input.tsx:          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+src/components/ui/skeleton.tsx:      className={cn("animate-pulse rounded-md bg-muted", className)}
+src/components/ui/avatar.tsx:      "flex h-full w-full items-center justify-center rounded-full bg-muted",
+src/components/ui/popover.tsx:        "z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/toggle.tsx:  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
+src/components/ui/toggle.tsx:        default: "bg-transparent",
+src/components/ui/toggle.tsx:          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
+src/components/ui/progress.tsx:      "relative h-4 w-full overflow-hidden rounded-full bg-secondary",
+src/components/ui/progress.tsx:      className="h-full w-full flex-1 bg-primary transition-all"
+src/components/ui/calendar.tsx:        caption_label: "text-sm font-medium",
+src/components/ui/calendar.tsx:          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+src/components/ui/calendar.tsx:        table: "w-full border-collapse space-y-1",
+src/components/ui/calendar.tsx:          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+src/components/ui/calendar.tsx:        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+src/components/ui/calendar.tsx:          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+src/components/ui/calendar.tsx:        day_today: "bg-accent text-accent-foreground",
+src/components/ui/calendar.tsx:          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
+src/components/ui/calendar.tsx:        day_disabled: "text-muted-foreground opacity-50",
+src/components/ui/calendar.tsx:          "aria-selected:bg-accent aria-selected:text-accent-foreground",
+src/components/ui/navigation-menu.tsx:  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+src/components/ui/navigation-menu.tsx:      "left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto ",
+src/components/ui/navigation-menu.tsx:        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+src/components/ui/navigation-menu.tsx:    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+src/components/ui/checkbox.tsx:      "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+src/components/ui/checkbox.tsx:      className={cn("flex items-center justify-center text-current")}
+src/components/ui/slider.tsx:    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-secondary">
+src/components/ui/slider.tsx:      <SliderPrimitive.Range className="absolute h-full bg-primary" />
+src/components/ui/slider.tsx:    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" />
+src/components/ui/tooltip.tsx:      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/select.tsx:      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+src/components/ui/select.tsx:        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+src/components/ui/select.tsx:    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
+src/components/ui/select.tsx:      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+src/components/ui/select.tsx:    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+src/components/ui/resizable.tsx:      "relative flex w-px items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-y-1/2 data-[panel-group-direction=vertical]:after:translate-x-0 [&[data-panel-group-direction=vertical]>div]:rotate-90",
+src/components/ui/resizable.tsx:      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border">
+src/components/ui/separator.tsx:        "shrink-0 bg-border",
+src/components/dashboard/QuickActions.tsx:    { label: t('dashboard.new_case'), icon: Briefcase, to: '/cases/new', color: 'bg-blue-500 hover:bg-blue-600' },
+src/components/dashboard/QuickActions.tsx:    { label: t('dashboard.add_client'), icon: UserPlus, to: '/clients/new', color: 'bg-green-500 hover:bg-green-600' },
+src/components/dashboard/QuickActions.tsx:    { label: t('dashboard.schedule_session'), icon: Calendar, to: '/sessions/new', color: 'bg-purple-500 hover:bg-purple-600' },
+src/components/dashboard/QuickActions.tsx:    { label: t('dashboard.manage_services'), icon: ClipboardList, to: '/services', color: 'bg-orange-500 hover:bg-orange-600' },
+src/components/dashboard/QuickActions.tsx:          <Button asChild key={action.label} className={`${action.color} text-white`}>
+src/components/dashboard/CasesByStatusChart.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/components/dashboard/FearGreedIndex.tsx:    <div className="rounded-lg border border-border bg-card p-5 gradient-border h-[320px] animate-scale-in" style={{ animationDelay: "400ms" }}>
+src/components/dashboard/FearGreedIndex.tsx:          <AlertCircle size={16} className="text-primary" />
+src/components/dashboard/FearGreedIndex.tsx:          <div className="text-5xl font-bold">{value}</div>
+src/components/dashboard/FearGreedIndex.tsx:            className="text-xl font-medium mt-1" 
+src/components/dashboard/FearGreedIndex.tsx:          <div className="flex items-center mt-4 text-sm">
+src/components/dashboard/FearGreedIndex.tsx:            <span className="text-muted-foreground mr-2">Yesterday: {previousValue}</span>
+src/components/dashboard/FearGreedIndex.tsx:              isPositiveChange ? "text-green-500" : "text-red-500"
+src/components/dashboard/GaugeChart.tsx:    <div className="relative rounded-lg border border-border bg-card p-5 gradient-border h-[320px] animate-scale-in" style={{ animationDelay: "100ms" }}>
+src/components/dashboard/GaugeChart.tsx:          <h3 className="text-sm font-medium text-muted-foreground flex items-center gap-1.5">
+src/components/dashboard/GaugeChart.tsx:          <div className="text-2xl font-semibold mt-1.5">${formattedValue}B</div>
+src/components/dashboard/GaugeChart.tsx:          <div className="text-xl font-medium mb-5 text-center">TVL Change</div>
+src/components/dashboard/GaugeChart.tsx:            <div className="flex flex-col items-center bg-secondary p-3 rounded-md">
+src/components/dashboard/GaugeChart.tsx:              <div className="text-sm text-muted-foreground mb-1">Daily</div>
+src/components/dashboard/GaugeChart.tsx:                <ArrowUpRight size={16} className="text-green-500" />
+src/components/dashboard/GaugeChart.tsx:                <span className="text-lg font-medium text-green-500">{dailyChange}%</span>
+src/components/dashboard/GaugeChart.tsx:            <div className="flex flex-col items-center bg-secondary p-3 rounded-md">
+src/components/dashboard/GaugeChart.tsx:              <div className="text-sm text-muted-foreground mb-1">Weekly</div>
+src/components/dashboard/GaugeChart.tsx:                <ArrowUpRight size={16} className="text-green-500" />
+src/components/dashboard/GaugeChart.tsx:                <span className="text-lg font-medium text-green-500">{weeklyChange}%</span>
+src/components/dashboard/UpcomingSessions.tsx:  scheduled: 'bg-yellow-500',
+src/components/dashboard/UpcomingSessions.tsx:  completed: 'bg-green-500',
+src/components/dashboard/UpcomingSessions.tsx:  canceled: 'bg-red-500',
+src/components/dashboard/UpcomingSessions.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/components/dashboard/UpcomingSessions.tsx:              <p className="text-sm text-muted-foreground">{s.client} • {new Date(s.date).toLocaleDateString()}</p>
+src/components/dashboard/UpcomingSessions.tsx:            <Badge className={`${STATUS_STYLES[s.status]} text-white`}>
+src/components/dashboard/CasesByCategoryChart.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/components/dashboard/ProjectsTable.tsx:    <div className="rounded-lg border border-border bg-card p-5 gradient-border animate-scale-in" style={{ animationDelay: "300ms" }}>
+src/components/dashboard/ProjectsTable.tsx:        <ListStart size={16} className="text-primary" />
+src/components/dashboard/ProjectsTable.tsx:            <tr className="border-b border-border">
+src/components/dashboard/ProjectsTable.tsx:              <th className="text-left px-4 py-3 text-sm font-medium text-muted-foreground">
+src/components/dashboard/ProjectsTable.tsx:                  className="flex items-center gap-1 hover:text-foreground transition-colors"
+src/components/dashboard/ProjectsTable.tsx:                  <ArrowUpDown size={14} className="text-muted-foreground/50" />
+src/components/dashboard/ProjectsTable.tsx:              <th className="text-left px-4 py-3 text-sm font-medium text-muted-foreground">
+src/components/dashboard/ProjectsTable.tsx:                  className="flex items-center gap-1 hover:text-foreground transition-colors"
+src/components/dashboard/ProjectsTable.tsx:                  <ArrowUpDown size={14} className="text-muted-foreground/50" />
+src/components/dashboard/ProjectsTable.tsx:              <th className="text-left px-4 py-3 text-sm font-medium text-muted-foreground">
+src/components/dashboard/ProjectsTable.tsx:                  className="flex items-center gap-1 hover:text-foreground transition-colors"
+src/components/dashboard/ProjectsTable.tsx:                  <ArrowUpDown size={14} className="text-muted-foreground/50" />
+src/components/dashboard/ProjectsTable.tsx:              <th className="text-right px-4 py-3 text-sm font-medium text-muted-foreground">
+src/components/dashboard/ProjectsTable.tsx:                  className="flex items-center gap-1 justify-end ml-auto hover:text-foreground transition-colors"
+src/components/dashboard/ProjectsTable.tsx:                  <ArrowUpDown size={14} className="text-muted-foreground/50" />
+src/components/dashboard/ProjectsTable.tsx:              <th className="text-right px-4 py-3 text-sm font-medium text-muted-foreground">
+src/components/dashboard/ProjectsTable.tsx:                  className="flex items-center gap-1 justify-end ml-auto hover:text-foreground transition-colors"
+src/components/dashboard/ProjectsTable.tsx:                  <ArrowUpDown size={14} className="text-muted-foreground/50" />
+src/components/dashboard/ProjectsTable.tsx:              <tr key={project.id} className="hover:bg-secondary/30 transition-colors">
+src/components/dashboard/ProjectsTable.tsx:                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+src/components/dashboard/ProjectsTable.tsx:                      <div className="text-xs text-muted-foreground">{project.symbol}</div>
+src/components/dashboard/ProjectsTable.tsx:                  <div className="text-sm">#{project.rank}</div>
+src/components/dashboard/ProjectsTable.tsx:                      "h-2 flex-1 max-w-28 rounded-full overflow-hidden bg-secondary",
+src/components/dashboard/ProjectsTable.tsx:                          project.brokerScore >= 8 ? "bg-green-500" : 
+src/components/dashboard/ProjectsTable.tsx:                          project.brokerScore >= 6 ? "bg-yellow-500" : "bg-red-500"
+src/components/dashboard/ProjectsTable.tsx:                    <span className="text-sm font-medium">{project.brokerScore.toFixed(1)}</span>
+src/components/dashboard/ProjectsTable.tsx:                <td className="px-4 py-3 text-right">
+src/components/dashboard/ProjectsTable.tsx:                <td className="px-4 py-3 text-right">
+src/components/dashboard/ProjectsTable.tsx:                    project.priceChange >= 0 ? "text-green-500" : "text-red-500"
+src/components/dashboard/TrendingSection.tsx:    <div className="rounded-lg border border-border bg-card p-5 gradient-border animate-scale-in" style={{ animationDelay: "200ms" }}>
+src/components/dashboard/TrendingSection.tsx:          <TrendingUp size={16} className="text-primary" />
+src/components/dashboard/TrendingSection.tsx:                "text-xs px-3 py-1 rounded-full transition-colors",
+src/components/dashboard/TrendingSection.tsx:                  ? "bg-primary text-primary-foreground"
+src/components/dashboard/TrendingSection.tsx:                  : "bg-secondary text-muted-foreground hover:text-foreground"
+src/components/dashboard/TrendingSection.tsx:              className="flex flex-col justify-between p-4 min-w-[150px] md:min-w-[180px] rounded-lg bg-secondary border border-border hover:border-primary/50 transition-colors"
+src/components/dashboard/TrendingSection.tsx:                  <div className="text-xs text-muted-foreground mt-0.5">{token.symbol}</div>
+src/components/dashboard/TrendingSection.tsx:                <div className="text-xs px-2 py-0.5 rounded-full bg-secondary border border-border">
+src/components/dashboard/TrendingSection.tsx:                "flex items-center text-sm",
+src/components/dashboard/TrendingSection.tsx:                token.change >= 0 ? "text-green-500" : "text-red-500"
+src/components/dashboard/RecentCases.tsx:  active: 'bg-green-500',
+src/components/dashboard/RecentCases.tsx:  pending: 'bg-yellow-500',
+src/components/dashboard/RecentCases.tsx:  closed: 'bg-red-500',
+src/components/dashboard/RecentCases.tsx:  on_hold: 'bg-gray-500',
+src/components/dashboard/RecentCases.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/components/dashboard/RecentCases.tsx:              <p className="text-sm text-muted-foreground">{c.client} • {c.category}</p>
+src/components/dashboard/StatsCard.tsx:  colorClass = "from-blue-500/20 to-blue-600/5",
+src/components/dashboard/StatsCard.tsx:      className="relative overflow-hidden rounded-lg border border-border bg-card p-5 gradient-border animate-scale-in"
+src/components/dashboard/StatsCard.tsx:      <div className="absolute inset-0 bg-gradient-to-br opacity-[0.08] pointer-events-none z-0" />
+src/components/dashboard/StatsCard.tsx:          <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
+src/components/dashboard/StatsCard.tsx:          <div className="text-2xl font-semibold">{value}</div>
+src/components/dashboard/StatsCard.tsx:            "flex items-center text-sm font-medium",
+src/components/dashboard/StatsCard.tsx:            isPositive ? "text-green-500" : "text-red-500"
+src/components/dashboard/StatsCard.tsx:            <span className="text-muted-foreground ml-1">vs yesterday</span>
+src/components/dashboard/StatsCard.tsx:          <div className="h-10 w-10 rounded-md bg-card flex items-center justify-center border border-border">
+src/components/dashboard/StatsCards.tsx:    return <div className="text-center text-red-500 p-4">Failed to load stats</div>;
+src/components/dashboard/StatsCards.tsx:      gradient: 'from-blue-500 to-blue-700',
+src/components/dashboard/StatsCards.tsx:      gradient: 'from-green-500 to-green-700',
+src/components/dashboard/StatsCards.tsx:      gradient: 'from-purple-500 to-purple-700',
+src/components/dashboard/StatsCards.tsx:      gradient: 'from-orange-500 to-orange-700',
+src/components/dashboard/StatsCards.tsx:        const changeColor = stat.change >= 0 ? 'text-emerald-300' : 'text-red-300';
+src/components/dashboard/StatsCards.tsx:          <Card key={stat.label} className={`text-white border-none shadow-sm bg-gradient-to-br ${stat.gradient}`}>
+src/components/dashboard/StatsCards.tsx:              <CardTitle className="text-sm font-medium">{stat.label}</CardTitle>
+src/components/dashboard/StatsCards.tsx:              <div className="text-2xl font-bold">{stat.value}</div>
+src/components/dashboard/StatsCards.tsx:              <div className={`flex items-center text-xs mt-1 ${changeColor}`}>
+src/components/forms/AddEditAdForm.tsx:          {errors.description && <p className="text-red-600 text-sm">{errors.description.message}</p>}
+src/components/forms/AddEditAdForm.tsx:          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded">إلغاء</button>
+src/components/forms/AddEditAdForm.tsx:          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">حفظ</button>
+src/components/forms/AddEditServiceProcedureForm.tsx:          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded">إلغاء</button>
+src/components/forms/AddEditServiceProcedureForm.tsx:          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">حفظ</button>
+src/components/forms/AddEditServiceForm.tsx:          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded">إلغاء</button>
+src/components/forms/AddEditServiceForm.tsx:          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">حفظ</button>
+src/components/forms/AddEditUnclientForm.tsx:          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded">
+src/components/forms/AddEditUnclientForm.tsx:          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+src/components/forms/AddEditLegCaseForm.tsx:          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded">إلغاء</button>
+src/components/forms/AddEditLegCaseForm.tsx:          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">حفظ</button>
+src/components/forms/AddEditProcedureForm.tsx:          {errors.title && <p className="text-red-600 text-sm">{errors.title.message}</p>}
+src/components/forms/AddEditProcedureForm.tsx:          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded">إلغاء</button>
+src/components/forms/AddEditProcedureForm.tsx:          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">حفظ</button>
+src/components/forms/AddEditClientForm.tsx:          {errors.name && <p className="text-red-600 text-sm">{errors.name.message}</p>}
+src/components/forms/AddEditClientForm.tsx:          {errors.identity_number && <p className="text-red-600 text-sm">{errors.identity_number.message}</p>}
+src/components/forms/AddEditClientForm.tsx:          {errors.address && <p className="text-red-600 text-sm">{errors.address.message}</p>}
+src/components/forms/AddEditClientForm.tsx:          {errors.phone && <p className="text-red-600 text-sm">{errors.phone.message}</p>}
+src/components/forms/AddEditClientForm.tsx:          {errors.email && <p className="text-red-600 text-sm">{errors.email.message}</p>}
+src/components/forms/AddEditClientForm.tsx:          <button type="button" onClick={onClose} className="px-4 py-2 bg-gray-500 text-white rounded">
+src/components/forms/AddEditClientForm.tsx:          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+src/components/lawfirm/AboutSection.tsx:      <div className="container mx-auto text-center max-w-2xl">
+src/components/lawfirm/AboutSection.tsx:        <h2 className="text-3xl font-bold mb-6">{t('lawlanding.about.title')}</h2>
+src/components/lawfirm/AboutSection.tsx:        <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+src/components/lawfirm/ServicesSection.tsx:    <section id="services" className="py-16 bg-gray-50 dark:bg-gray-900">
+src/components/lawfirm/ServicesSection.tsx:      <div className="container mx-auto text-center">
+src/components/lawfirm/ServicesSection.tsx:        <h2 className="text-3xl font-bold mb-8">{t('lawlanding.services.title')}</h2>
+src/components/lawfirm/ServicesSection.tsx:            <div key={service.key} className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition">
+src/components/lawfirm/ServicesSection.tsx:              <service.icon className="h-10 w-10 mx-auto text-blue-600 mb-4" />
+src/components/lawfirm/HeroSection.tsx:    <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 text-white relative">
+src/components/lawfirm/HeroSection.tsx:              <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center p-4 rounded-xl">
+src/components/lawfirm/HeroSection.tsx:                <h1 className="text-4xl font-bold mb-4">{t('lawlanding.hero.title')}</h1>
+src/components/lawfirm/HeroSection.tsx:                <p className="mb-6 text-lg">{t('lawlanding.hero.subtitle')}</p>
+src/components/lawfirm/HeroSection.tsx:                <Button className="bg-yellow-500 text-blue-900 hover:bg-yellow-600 mt-2">
+src/components/lawfirm/HeroSection.tsx:        <CarouselPrevious className={`bg-white/80 ${isRTL ? 'right-2' : 'left-2'}`} />
+src/components/lawfirm/HeroSection.tsx:        <CarouselNext className={`bg-white/80 ${isRTL ? 'left-2' : 'right-2'}`} />
+src/components/lawfirm/Footer.tsx:    <footer className="py-8 bg-gray-900 text-gray-200 text-center">
+src/components/lawfirm/Navbar.tsx:    <nav className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur z-50 shadow">
+src/components/lawfirm/Navbar.tsx:        <div className="font-bold text-xl text-blue-900 dark:text-blue-200">Avocat</div>
+src/components/lawfirm/Navbar.tsx:          <li><a href="#home" className="hover:text-blue-600">{t('lawlanding.nav.home')}</a></li>
+src/components/lawfirm/Navbar.tsx:          <li><a href="#services" className="hover:text-blue-600">{t('lawlanding.nav.services')}</a></li>
+src/components/lawfirm/Navbar.tsx:          <li><a href="#about" className="hover:text-blue-600">{t('lawlanding.nav.about')}</a></li>
+src/components/lawfirm/Navbar.tsx:          <li><a href="#contact" className="hover:text-blue-600">{t('lawlanding.nav.contact')}</a></li>
+src/components/lawfirm/ContactSection.tsx:    <section id="contact" className="py-16 bg-gray-100 dark:bg-gray-800">
+src/components/lawfirm/ContactSection.tsx:        <h2 className="text-3xl font-bold mb-6 text-center">{t('lawlanding.contact.title')}</h2>
+src/components/lawfirm/ContactSection.tsx:          <input type="text" placeholder={t('lawlanding.contact.name')} className="w-full p-3 rounded-md border border-gray-300" />
+src/components/lawfirm/ContactSection.tsx:          <input type="email" placeholder={t('lawlanding.contact.email')} className="w-full p-3 rounded-md border border-gray-300" />
+src/components/lawfirm/ContactSection.tsx:          <textarea placeholder={t('lawlanding.contact.message')} className="w-full p-3 rounded-md border border-gray-300 h-32" />
+src/components/lawfirm/ContactSection.tsx:          <Button type="submit" className="w-full bg-blue-600 text-white hover:bg-blue-700">
+src/dashboard/components/QuickActions.tsx:    { label: t('dashboard.new_case'), icon: Briefcase, to: '/cases/new', color: 'bg-blue-500 hover:bg-blue-600' },
+src/dashboard/components/QuickActions.tsx:    { label: t('dashboard.add_client'), icon: UserPlus, to: '/clients/new', color: 'bg-green-500 hover:bg-green-600' },
+src/dashboard/components/QuickActions.tsx:    { label: t('dashboard.schedule_session'), icon: Calendar, to: '/sessions/new', color: 'bg-purple-500 hover:bg-purple-600' },
+src/dashboard/components/QuickActions.tsx:    { label: t('dashboard.manage_services'), icon: ClipboardList, to: '/services', color: 'bg-orange-500 hover:bg-orange-600' },
+src/dashboard/components/QuickActions.tsx:          <Button asChild key={action.label} className={`${action.color} text-white`}>
+src/dashboard/components/CasesByStatusChart.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/dashboard/components/UpcomingSessions.tsx:  scheduled: 'bg-yellow-500',
+src/dashboard/components/UpcomingSessions.tsx:  completed: 'bg-green-500',
+src/dashboard/components/UpcomingSessions.tsx:  canceled: 'bg-red-500',
+src/dashboard/components/UpcomingSessions.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/dashboard/components/UpcomingSessions.tsx:              <p className="text-sm text-muted-foreground">{s.client} • {new Date(s.date).toLocaleDateString()}</p>
+src/dashboard/components/UpcomingSessions.tsx:            <Badge className={`${STATUS_STYLES[s.status]} text-white`}>
+src/dashboard/components/CasesByCategoryChart.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/dashboard/components/RecentCases.tsx:  active: 'bg-green-500',
+src/dashboard/components/RecentCases.tsx:  pending: 'bg-yellow-500',
+src/dashboard/components/RecentCases.tsx:  closed: 'bg-red-500',
+src/dashboard/components/RecentCases.tsx:  on_hold: 'bg-gray-500',
+src/dashboard/components/RecentCases.tsx:      return <div className="text-center text-red-500">Error</div>;
+src/dashboard/components/RecentCases.tsx:              <p className="text-sm text-muted-foreground">{c.client} • {c.category}</p>
+src/dashboard/components/StatsCards.tsx:    return <div className="text-center text-red-500 p-4">Failed to load stats</div>;
+src/dashboard/components/StatsCards.tsx:      gradient: 'from-blue-500 to-blue-700',
+src/dashboard/components/StatsCards.tsx:      gradient: 'from-green-500 to-green-700',
+src/dashboard/components/StatsCards.tsx:      gradient: 'from-purple-500 to-purple-700',
+src/dashboard/components/StatsCards.tsx:      gradient: 'from-orange-500 to-orange-700',
+src/dashboard/components/StatsCards.tsx:        const changeColor = stat.change >= 0 ? 'text-emerald-300' : 'text-red-300';
+src/dashboard/components/StatsCards.tsx:          <Card key={stat.label} className={`text-white border-none shadow-sm bg-gradient-to-br ${stat.gradient}`}>
+src/dashboard/components/StatsCards.tsx:              <CardTitle className="text-sm font-medium">{stat.label}</CardTitle>
+src/dashboard/components/StatsCards.tsx:              <div className="text-2xl font-bold">{stat.value}</div>
+src/dashboard/components/StatsCards.tsx:              <div className={`flex items-center text-xs mt-1 ${changeColor}`}>
+src/App.tsx:      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+src/App.tsx:        <div className="text-center">
+src/App.tsx:          <p className="mt-4 text-gray-600 dark:text-gray-400">⚖️ Initializing Legal Intelligence</p>
+src/styles/base.css:    @apply border-border;
+src/styles/base.css:    @apply bg-background text-foreground font-sans antialiased;
+src/styles/base.css:  .heading-xl { @apply text-4xl md:text-6xl font-bold tracking-tight; }
+src/styles/base.css:  .heading-lg { @apply text-3xl md:text-4xl font-bold tracking-tight; }
+src/styles/base.css:  .heading-md { @apply text-2xl md:text-3xl font-semibold tracking-tight; }
+src/styles/base.css:  .heading-sm { @apply text-xl md:text-2xl font-semibold tracking-tight; }
+src/styles/utilities.css:    -webkit-text-fill-color: transparent;
+src/styles/components.css:  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring disabled:pointer-events-none disabled:opacity-50; }
+src/styles/components.css:  .btn-primary { @apply bg-primary text-primary-foreground; }
+src/styles/components.css:  .btn-secondary { @apply bg-secondary text-secondary-foreground; }
+src/styles/components.css:  .btn-ghost { @apply bg-transparent hover:bg-muted/40 text-foreground; }
+src/styles/components.css:  .btn-destructive { @apply bg-destructive text-destructive-foreground; }
+src/styles/components.css:  .card { @apply rounded-2xl p-6 shadow-card bg-card text-card-foreground; }
+src/styles/components.css:  .input { @apply h-10 w-full rounded-md bg-background shadow-none focus-visible:ring-2 focus-visible:ring-sidebar-ring; }
+src/styles/components.css:  .sidebar-panel { @apply bg-sidebar text-sidebar-foreground border-r border-sidebar-border; }
+src/content/site-content.json:        "Auto-reminders for hearings & deadlines",
+src/content/site-content.json:        "End-to-end e-filing assistance",
+src/content/site-content.json:        "End-to-end procedural & file management on a trusted platform",
+src/auth/guards.tsx:          <div className="text-center">
+src/auth/guards.tsx:            <h1 className="text-2xl font-bold text-destructive mb-4">Access Denied</h1>
+src/auth/guards.tsx:            <p className="text-muted-foreground">You don't have permission to access this page.</p>
+src/auth/guards.tsx:          <div className="text-center">
+src/auth/guards.tsx:            <h1 className="text-2xl font-bold text-destructive mb-4">Permission Required</h1>
+src/auth/guards.tsx:            <p className="text-muted-foreground">You need the "{permission}" permission to access this feature.</p>
+src/pages/LoginPage.tsx:          className="absolute inset-0 bg-cover bg-center"
+src/pages/LoginPage.tsx:          <div className="text-white text-center max-w-md">
+src/pages/LoginPage.tsx:      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
+src/pages/LoginPage.tsx:            <Link to="/" className="text-2xl font-bold gradient-text" />
+src/pages/LoginPage.tsx:            <CardHeader className="text-center space-y-2">
+src/pages/LoginPage.tsx:                    className={errors.email ? 'border-destructive' : ''}
+src/pages/LoginPage.tsx:                      className="text-sm text-destructive flex items-center gap-1"
+src/pages/LoginPage.tsx:                      className={errors.password ? 'border-destructive pr-10' : 'pr-10'}
+src/pages/LoginPage.tsx:                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+src/pages/LoginPage.tsx:                        <EyeOff className="h-4 w-4 text-muted-foreground" />
+src/pages/LoginPage.tsx:                        <Eye className="h-4 w-4 text-muted-foreground" />
+src/pages/LoginPage.tsx:                      className="text-sm text-destructive flex items-center gap-1"
+src/pages/LoginPage.tsx:                    <Label htmlFor="remember" className="text-sm">
+src/pages/LoginPage.tsx:                  <Button asChild variant="link" className="px-0 text-sm">
+src/pages/LoginPage.tsx:                      <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+src/pages/LoginPage.tsx:                <div className="text-center">
+src/pages/LoginPage.tsx:                  <p className="text-sm text-muted-foreground">
+src/pages/LoginPage.tsx:                    <Link to="/register" className="text-primary hover:underline font-medium">
+src/pages/ClientsPage.tsx:      <h1 className="text-2xl font-bold mb-4">{t('sidebar.clients')}</h1>
+src/pages/CasesPage.tsx:      <h1 className="text-2xl font-bold mb-4">{t('sidebar.cases')}</h1>
+src/pages/DashboardPage.tsx:        <h1 className="text-2xl font-bold">{t('dashboard.welcome_title')}</h1>
+src/pages/DashboardPage.tsx:        <p className="text-muted-foreground">{t('dashboard.welcome_subtitle')}</p>
+src/pages/DashboardPage.tsx:        <h2 className="text-xl font-semibold mb-4">{t('dashboard.quick_actions')}</h2>
+src/pages/ReportsPage.tsx:      <h1 className="text-2xl font-bold mb-4">{t('sidebar.reports')}</h1>
+src/pages/auth/ForgotPassword.tsx:    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900/20 dark:to-indigo-900/20 flex items-center justify-center p-4">
+src/pages/auth/ForgotPassword.tsx:        <div className="text-center mb-8">
+src/pages/auth/ForgotPassword.tsx:        <Card className="shadow-xl border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+src/pages/auth/ForgotPassword.tsx:          <CardHeader className="text-center">
+src/pages/auth/ForgotPassword.tsx:            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+src/pages/auth/ForgotPassword.tsx:            <CardDescription className="text-gray-600 dark:text-gray-400">
+src/pages/auth/ForgotPassword.tsx:                <Label htmlFor="email" className="text-gray-700 dark:text-gray-300">
+src/pages/auth/ForgotPassword.tsx:                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+src/pages/auth/ForgotPassword.tsx:                    className="pl-10 border-gray-300 dark:border-gray-600"
+src/pages/auth/ForgotPassword.tsx:                className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+src/pages/auth/ForgotPassword.tsx:            <div className="mt-6 text-center">
+src/pages/auth/ForgotPassword.tsx:                className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+src/pages/auth/ResetPassword.tsx:    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900/20 dark:to-indigo-900/20 flex items-center justify-center p-4">
+src/pages/auth/ResetPassword.tsx:        <div className="text-center mb-8">
+src/pages/auth/ResetPassword.tsx:        <Card className="shadow-xl border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+src/pages/auth/ResetPassword.tsx:          <CardHeader className="text-center">
+src/pages/auth/ResetPassword.tsx:            <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+src/pages/auth/ResetPassword.tsx:            <CardDescription className="text-gray-600 dark:text-gray-400">
+src/pages/auth/ResetPassword.tsx:                <Label htmlFor="password" className="text-gray-700 dark:text-gray-300">
+src/pages/auth/ResetPassword.tsx:                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+src/pages/auth/ResetPassword.tsx:                    className="pl-10 border-gray-300 dark:border-gray-600"
+src/pages/auth/ResetPassword.tsx:                <Label htmlFor="confirmPassword" className="text-gray-700 dark:text-gray-300">
+src/pages/auth/ResetPassword.tsx:                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+src/pages/auth/ResetPassword.tsx:                    className="pl-10 border-gray-300 dark:border-gray-600"
+src/pages/auth/ResetPassword.tsx:                className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+src/pages/auth/ResetPassword.tsx:            <div className="mt-6 text-center">
+src/pages/auth/ResetPassword.tsx:                className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+src/pages/ProceduresPage.tsx:      <h1 className="text-2xl font-bold mb-4">{t('sidebar.procedures')}</h1>
+src/pages/LandingPage.tsx:         <div dir={dir} className="font-cairomin-h-screen bg-background">
+src/pages/DemoPage.tsx:        <h1 className="text-2xl font-bold mb-2">{title}</h1>
+src/pages/DemoPage.tsx:        <p className="text-muted-foreground">{description}</p>
+src/pages/DemoPage.tsx:            className="p-4 rounded-xl border border-glass-border bg-glass-bg/50 dark:bg-glass-bg/20 backdrop-blur shadow-glass transition-all duration-300 hover:shadow-glow hover:-translate-y-1 hover:scale-105"
+src/pages/DemoPage.tsx:            <p className="text-center">{t('demo.card_title', { number: n })}</p>
+src/pages/AccountsPage.tsx:      <h1 className="text-2xl font-bold mb-4">{t('sidebar.accounts')}</h1>
+src/pages/DashboardDemo.tsx:      <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
+src/pages/DashboardDemo.tsx:      <div className="text-primary">{icon}</div>
+src/pages/DashboardDemo.tsx:      <div className="text-3xl font-bold">{value}</div>
+src/pages/DashboardDemo.tsx:        <main className="flex-1 p-6 bg-background">
+src/pages/ServicesPage.tsx:      <h1 className="text-2xl font-bold mb-4">{t('sidebar.services')}</h1>

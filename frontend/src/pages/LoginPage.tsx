@@ -121,38 +121,42 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={cn('min-h-screen flex', isRTL ? 'flex-row-reverse' : '')} dir={isRTL ? 'rtl' : 'ltr'}>
-      {/* Background Image Section */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${authBackground})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-primary opacity-80"></div>
-        </div>
-        
-        <div className="relative z-10 flex items-center justify-center p-6">
-          <div className="text-white text-center max-w-md">
-<BrandLogo variant='full'/>
-      
-          </div>
-        </div>
+      {/* Top language toggle overlay */}
+      <div className={cn('fixed top-4 z-50', isRTL ? 'left-4' : 'right-4')}>
+        <LanguageToggle />
       </div>
+      {/* Background Image Section */}
+   {/* Background Image Section */}
+<div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+  {/* الخلفية + التدرج */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center"
+    style={{ backgroundImage: `url(${authBackground})` }}
+  >
+    <div className="absolute inset-0 hero-gradient opacity-80"></div>
+  </div>
+
+  {/* محتوى متوسّط بالكامل */}
+  <div className="relative z-10 flex items-center justify-center w-full h-full">
+    <div className="text-white text-center max-w-md">
+      <BrandLogo variant="full" className="mx-auto h-24 w-auto drop-shadow-none shadow-none" />
+    </div>
+  </div>
+</div>
 
 
       {/* Form Section */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
         <div className="w-full max-w-md space-y-6">
-          {/* Header */}
+          {/* Header (kept minimal with brand link) */}
           <div className="flex justify-between items-center mb-8">
-            <Link to="/" className="text-2xl font-bold gradient-text">
-              {t('brand.name')}
-            </Link>
-            <LanguageToggle />
+            <Link to="/" className="text-2xl font-bold gradient-text" />
           </div>
 
           {/* Login Card */}
-          <Card className="glass-card animate-fade-in">
-            <CardHeader className="text-center">
+          <Card className="glass-card animate-fade-in border-x-0">
+            <CardHeader className="text-center space-y-2">
+              <BrandLogo className='mx-auto h-16 w-16 drop-shadow-none shadow-none' variant='icon' />
               <CardTitle className="heading-md">{t('auth.login.title')}</CardTitle>
               <CardDescription>{t('auth.login.subtitle')}</CardDescription>
             </CardHeader>

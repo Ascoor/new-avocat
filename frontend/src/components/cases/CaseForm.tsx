@@ -130,11 +130,11 @@ export const CaseForm: React.FC<CaseFormProps> = ({ caseData, onSubmit, onCancel
         />
       </div>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="flex justify-end gap-3 pt-4 border-t border-border">
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
-        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button type="submit" variant="default">
           {caseData ? 'Update Case' : 'Create Case'}
         </Button>
       </div>

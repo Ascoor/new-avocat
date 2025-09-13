@@ -37,10 +37,6 @@
     --destructive-foreground: 0 0% 100%;
     --success: 175 100% 35%;
     --success-foreground: 0 0% 100%;
-    --info: 200 100% 50%;
-    --info-foreground: 0 0% 100%;
-    --warning: 40 100% 50%;
-    --warning-foreground: 0 0% 0%;
 
     /* UI Elements */
     --border: 200 16% 62%;
@@ -104,10 +100,6 @@
 
     --destructive: 331 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    --info: 200 100% 50%;
-    --info-foreground: 0 0% 100%;
-    --warning: 40 100% 50%;
-    --warning-foreground: 0 0% 0%;
 
     --border: 200 16% 62%;
     --input: 200 16% 62%;
