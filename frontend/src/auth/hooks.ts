@@ -21,7 +21,7 @@ import {
 /**
  * Main auth hook for managing authentication state
  */
-export const useAuth = () => {
+export const useAuthState = () => {
   const dispatch = useDispatch<AppDispatch>();
   const auth = useSelector((state: RootState) => state.auth);
 
@@ -73,7 +73,7 @@ export const useAuth = () => {
  * Automatically redirects to login if not authenticated
  */
 export const useRequireAuth = (redirectTo = '/login') => {
-  const auth = useAuth();
+  const auth = useAuthState();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -91,7 +91,7 @@ export const useRequireAuth = (redirectTo = '/login') => {
  * Hook for role-based access control
  */
 export const useRole = () => {
-  const { user } = useAuth();
+  const { user } = useAuthState();
 
   const hasRole = (requiredRole: string | string[]) => {
     if (!user) return false;
@@ -124,7 +124,7 @@ export const useRole = () => {
  * Should be called in the app root to verify auth status on load
  */
 export const useAuthInit = () => {
-  const { checkAuth, isInitialized } = useAuth();
+  const { checkAuth, isInitialized } = useAuthState();
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
   const publicPaths = ['/', '/login', '/register', '/forgot-password', '/reset-password'];

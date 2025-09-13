@@ -8,13 +8,14 @@ import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { store } from './app/store';
 import AppRouter from './app/router';
-import { useAuthInit } from './auth/hooks';
+import { useAuthInit } from '@/auth/hooks';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
 import { ThemeProvider } from './contexts';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,15 +50,17 @@ const App = () => (
       <ThemeProvider>
         <ErrorBoundary>
           <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
-              <TooltipProvider>
-                <BrowserRouter>
-                  <AppInitializer />
-                </BrowserRouter>
-                <Toaster />
-                <Sonner />
-              </TooltipProvider>
-            </QueryClientProvider>
+            <AuthProvider>
+              <QueryClientProvider client={queryClient}>
+                <TooltipProvider>
+                  <BrowserRouter>
+                    <AppInitializer />
+                  </BrowserRouter>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </QueryClientProvider>
+            </AuthProvider>
           </Provider>
         </ErrorBoundary>
       </ThemeProvider>
