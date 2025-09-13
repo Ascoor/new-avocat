@@ -78,6 +78,7 @@ export default {
           border: "hsl(var(--glass-border))",
           shadow: "hsl(var(--glass-shadow))",
         },
+        gold: "#FFD700",
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
