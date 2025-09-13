@@ -22,13 +22,7 @@ const Sidebar = () => {
     >
       {/* Logo Section */}
       <div className="p-4 flex items-center justify-between">
-        <div className={cn('flex items-center gap-2')}>
-          {collapsed ? (
-            <BrandLogo variant="icon" className="text-primary-foreground h-8 w-8" />
-          ) : (
-            <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
-          )}
-        </div>
+
 
         {/* Sidebar Collapse Toggle */}
         <button
@@ -37,6 +31,13 @@ const Sidebar = () => {
         >
           {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
+                <div className={cn('flex items-center gap-2')}>
+          {collapsed ? (
+            <BrandLogo variant="icon" className="text-primary-foreground h-8 w-8" />
+          ) : (
+            <BrandLogo variant="full" className="text-primary-foreground ml-2 h-8 w-auto" />
+          )}
+        </div>
       </div>
       <div className="p-4">
         <h2 className="text-lg font-semibold">{t('sidebar.dashboard')}</h2>
