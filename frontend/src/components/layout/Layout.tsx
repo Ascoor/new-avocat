@@ -24,7 +24,7 @@ const AppShell = ({ children }: AppShellProps) => {
         <Header />
 
         {/* Page content */}
-        <main className="flex-1 overflow-auto bg-gray-50 p-6 dark:bg-gray-900">
+        <main className="flex-1 overflow-auto bg-background p-6">
           {children ?? <Outlet />}
         </main>
       </div>

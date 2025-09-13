@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import type { MenuItem } from '@/config/sidebar'
 import { ChevronDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface SidebarLinkProps {
   item: MenuItem
@@ -13,14 +14,24 @@ interface SidebarLinkProps {
 const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) => {
   const location = useLocation()
   const hasChildren = !!item.children && item.children.length > 0
-  const isActive = location.pathname.startsWith(item.path)
+
+  // Mark active if the item path matches or any child path matches
+  const isActive = useMemo(() => {
+    const selfActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/') || location.pathname.startsWith(item.path)
+    if (selfActive) return true
+    if (!item.children) return false
+    return item.children.some((child) =>
+      location.pathname === child.path || location.pathname.startsWith(child.path + '/') || location.pathname.startsWith(child.path)
+    )
+  }, [location.pathname, item])
+
   const [open, setOpen] = useState(isActive)
   const { t } = useTranslation()
 
   const toggle = () => setOpen((o) => !o)
 
   const linkClasses = cn(
-    'flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-all',
+    'flex items-center gap-3 px-3 py-2.5 rounded-md w-full transition-all outline-none focus-visible:ring-2 ring-sidebar-ring',
     collapsed && 'justify-center',
     isActive
       ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-glow'
@@ -30,7 +41,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
   const content = (
     <div className={linkClasses}>
       <item.icon size={20} />
-      {!collapsed && <span>{t(`sidebar.${item.key}`)}</span>}
+      {!collapsed && <span className="text-sm font-medium">{t(`sidebar.${item.key}`)}</span>}
       {!collapsed && hasChildren && (
         <ChevronDown
           size={16}
@@ -42,12 +53,30 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
 
   return (
     <div>
-      {hasChildren ? (
-        <button onClick={toggle} className="w-full text-left">
+      {collapsed ? (
+        // Collapsed mode: show tooltip with the label for better UX
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              {hasChildren ? (
+                <button onClick={toggle} className="w-full text-left" aria-expanded={open} aria-haspopup={true}>
+                  {content}
+                </button>
+              ) : (
+                <Link to={item.path} aria-current={isActive ? 'page' : undefined}>{content}</Link>
+              )}
+            </TooltipTrigger>
+            <TooltipContent side="right" align="center" className="glass-card py-1.5 px-2 text-xs">
+              {t(`sidebar.${item.key}`)}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : hasChildren ? (
+        <button onClick={toggle} className="w-full text-left" aria-expanded={open} aria-haspopup={true}>
           {content}
         </button>
       ) : (
-        <Link to={item.path}>{content}</Link>
+        <Link to={item.path} aria-current={isActive ? 'page' : undefined}>{content}</Link>
       )}
 
       {hasChildren && !collapsed && (
