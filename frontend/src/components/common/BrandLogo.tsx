@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '@/contexts';
+import { useUi } from '@/contexts';
 import { useLanguage } from '@/contexts/LanguageContext';  // تأكد من الاستيراد بشكل صحيح
 import { cn } from '@/lib/utils';
 
@@ -10,7 +10,7 @@ interface BrandLogoProps {
 }
 
 export const BrandLogo: React.FC<BrandLogoProps> = ({ variant = 'full', className }) => {
-  const { theme } = useTheme();
+  const { theme } = useUi();
   const { language } = useLanguage();  // استخدام `useLanguage` هنا
   const { t } = useTranslation();
 

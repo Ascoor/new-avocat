@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface NotificationsState {}
+type NotificationsState = Record<string, unknown>;
 
 const initialState: NotificationsState = {};
 

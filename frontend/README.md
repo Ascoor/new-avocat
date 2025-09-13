@@ -45,3 +45,11 @@ npm test
 
 The `BrandLogo` component automatically swaps logos based on the active theme (light/dark) and language direction (LTR/RTL).
 
+## UI State & Navigation
+
+Theme and sidebar visibility are managed via `UiProvider` in `src/contexts/UiContext.tsx`. The provider persists the `theme` and `sidebarOpen` preferences to `localStorage` and applies the `dark` class on the document element.
+
+`LanguageProvider` updates the document `dir` and `lang` attributes so the layout flips instantly when switching languages.
+
+To add navigation items, edit `src/components/layout/Sidebar.tsx` and include a new `<Link>` with a translation key. Provide matching entries in `src/i18n/locales/en.json` and `src/i18n/locales/ar.json` under the `sidebar` namespace.
+
