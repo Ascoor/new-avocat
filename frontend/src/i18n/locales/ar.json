@@ -53,7 +53,9 @@
       "remember": "تذكرني",
       "submit": "تسجيل الدخول",
       "success": "تم تسجيل الدخول بنجاح!",
-      "error": "بيانات الاعتماد غير صحيحة. حاول مرة أخرى."
+      "error": "بيانات الاعتماد غير صحيحة. حاول مرة أخرى.",
+      "email_placeholder": "example@domain.com",
+      "password_placeholder": "••••••••"
     }
   },
   "sidebar": {

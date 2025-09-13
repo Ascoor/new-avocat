@@ -5,6 +5,7 @@ interface LanguageContextType {
   language: 'en' | 'ar';
   toggleLanguage: () => void;
   isRTL: boolean;
+  direction: 'ltr' | 'rtl';
 }
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
@@ -46,12 +47,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [i18n]);
 
   const isRTL = language === 'ar';
+  const direction = isRTL ? 'rtl' : 'ltr';
 
   return (
     <LanguageContext.Provider value={{
       language,
       toggleLanguage,
-      isRTL
+      isRTL,
+      direction,
     }}>
       {children}
     </LanguageContext.Provider>
