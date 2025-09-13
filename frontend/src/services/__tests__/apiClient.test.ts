@@ -6,8 +6,9 @@ vi.mock('axios');
 
 describe('apiClient', () => {
   it('initializes with credentials and base URL', async () => {
-    const create = vi.fn().mockReturnValue({});
-    (axios as any).create = create;
+    const create = vi
+      .spyOn(axios, 'create')
+      .mockReturnValue({} as ReturnType<typeof axios.create>);
 
     await import('../apiClient');
 

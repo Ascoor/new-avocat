@@ -4,28 +4,32 @@ import content from '@/content/site-content.json';
 
 export type Locale = 'ar' | 'en';
 
-type TFunc = <T = string>(path: string) => T;
-
 interface I18nContextValue {
   locale: Locale;
   dir: 'rtl' | 'ltr';
-  t: TFunc;                          // ← مفيش unknown بعد كده
+  t: <T = string>(path: string) => T;
   setLocale: (locale: Locale) => void;
-  getRaw: <T = unknown>(path: string) => T; // لو عايز ترجع الأصل بدون تعريب
+  getRaw: <T = unknown>(path: string) => T;
 }
 
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
 // helpers
-const getByPath = (obj: any, path: string[]) =>
-  path.reduce((acc, k) => (acc ? acc[k] : undefined), obj);
+const getByPath = (obj: unknown, path: string[]): unknown =>
+  path.reduce<unknown>((acc, k) => {
+    if (acc && typeof acc === 'object') {
+      return (acc as Record<string, unknown>)[k];
+    }
+    return undefined;
+  }, obj);
 
-const localize = (value: any, locale: Locale): any => {
+const localize = (value: unknown, locale: Locale): unknown => {
   if (Array.isArray(value)) return value.map((v) => localize(v, locale));
   if (value && typeof value === 'object') {
-    if ('ar' in value || 'en' in value) return localize(value[locale], locale);
-    const out: any = {};
-    for (const [k, v] of Object.entries(value)) out[k] = localize(v as any, locale);
+    const record = value as Record<string, unknown>;
+    if ('ar' in record || 'en' in record) return localize(record[locale], locale);
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(record)) out[k] = localize(v, locale);
     return out;
   }
   return value;
@@ -34,7 +38,7 @@ const localize = (value: any, locale: Locale): any => {
 const pickInitialLocale = (): Locale => {
   const saved = (typeof window !== 'undefined' && localStorage.getItem('locale')) as Locale | null;
   if (saved === 'ar' || saved === 'en') return saved;
-  const fromContent = (content as any)?.site?.defaultLocale as Locale | undefined;
+  const fromContent = (content as { site?: { defaultLocale?: Locale } }).site?.defaultLocale;
   if (fromContent === 'ar' || fromContent === 'en') return fromContent;
   return 'ar';
 };
@@ -49,9 +53,9 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem('locale', locale);
   }, [dir, locale]);
 
-  const t: TFunc = (path) => {
+  const t = <T = string>(path: string): T => {
     const raw = getByPath(content, path.split('.'));
-    return localize(raw, locale) as any;
+    return localize(raw, locale) as T;
   };
 
   const getRaw = <T,>(path: string): T => getByPath(content, path.split('.')) as T;

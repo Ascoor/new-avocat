@@ -7,7 +7,13 @@ export interface ApiError {
   fields?: Record<string, string[]>;
 }
 
-export const handleApiError = (error: AxiosError): ApiError => {
+interface ErrorData {
+  message?: string;
+  errors?: Record<string, string[]>;
+  [key: string]: unknown;
+}
+
+export const handleApiError = (error: AxiosError<ErrorData>): ApiError => {
   // Network error
   if (!error.response) {
     return {
@@ -23,10 +29,10 @@ export const handleApiError = (error: AxiosError): ApiError => {
   switch (status) {
     case 400:
       return {
-        message: (data as any)?.message || 'Bad request. Please check your input.',
+        message: data?.message || 'Bad request. Please check your input.',
         status,
         code: 'BAD_REQUEST',
-        fields: (data as any)?.errors
+        fields: data?.errors
       };
 
     case 401:
@@ -55,7 +61,7 @@ export const handleApiError = (error: AxiosError): ApiError => {
         message: 'Validation failed. Please check your input.',
         status,
         code: 'VALIDATION_ERROR',
-        fields: (data as any)?.errors
+        fields: data?.errors
       };
 
     case 429:
@@ -74,13 +80,18 @@ export const handleApiError = (error: AxiosError): ApiError => {
 
     default:
       return {
-        message: (data as any)?.message || 'An unexpected error occurred.',
+        message: data?.message || 'An unexpected error occurred.',
         status,
         code: 'UNKNOWN_ERROR'
       };
   }
 };
 
-export const isApiError = (error: any): error is ApiError => {
-  return error && typeof error.message === 'string';
+export const isApiError = (error: unknown): error is ApiError => {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof (error as { message: unknown }).message === 'string'
+  );
 };

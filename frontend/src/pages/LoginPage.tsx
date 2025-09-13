@@ -105,9 +105,9 @@ const LoginPage: React.FC = () => {
 
       const nextUrl = searchParams.get('next') || '/dashboard';
       navigate(nextUrl, { replace: true });
-    } catch (err: any) {
+    } catch (err: unknown) {
       const message =
-        err?.message ||
+        (err as { message?: string })?.message ||
         t('auth.errors.invalid_credentials') ||
         t('auth.login.error') ||
         'Something went wrong.';

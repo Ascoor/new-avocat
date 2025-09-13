@@ -77,9 +77,8 @@ export interface Service {
   [key: string]: unknown; // Index signature for GlobalTable compatibility
 }
 
-export interface LegalService extends Service {
-  // Alias for backward compatibility
-}
+// Alias for backward compatibility
+export type LegalService = Service;
 
 export interface Session {
   id: string;
@@ -99,9 +98,8 @@ export interface Session {
   [key: string]: unknown; // Index signature for GlobalTable compatibility
 }
 
-export interface LegalSession extends Session {
-  // Alias for backward compatibility
-}
+// Alias for backward compatibility
+export type LegalSession = Session;
 
 export interface Court {
   id: string;
