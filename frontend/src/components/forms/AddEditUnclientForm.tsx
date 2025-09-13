@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { GlobalModal } from '../common/GlobalModal'
-import { clientsApi, Client } from '@/features/clients/api'
+import { clientsApi, Client } from '@/services/clients'
 
 interface Props {
   client?: Client

@@ -1,7 +1,7 @@
 // TODO: migrate full fields from old component
 import { GlobalModal } from '../common/GlobalModal'
 import { useForm } from 'react-hook-form'
-import { casesApi } from '@/features/cases/api'
+import { casesApi } from '@/services/cases'
 import type { LegalCase } from '@/types'
 
 interface Props {

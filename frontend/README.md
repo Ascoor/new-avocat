@@ -9,15 +9,18 @@ Stack:
 
 ## Project Structure
 
-The codebase follows a feature-first layout:
+The codebase organizes domain modules at the top level:
 
 ```
 src/
+├── auth/              # authentication logic and guards
+├── dashboard/         # dashboard state and components
+├── notifications/     # notifications state
 ├── components/        # UI and common components
-├── features/          # domain features (auth, dashboard, etc.)
 ├── pages/             # route components
+├── services/          # API services
 ├── utils/             # shared utilities (e.g. errorHandler)
-└── context/           # global contexts such as theme & language
+└── contexts/          # global contexts such as theme & language
 ```
 
 ## Development

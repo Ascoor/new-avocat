@@ -8,7 +8,7 @@ import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { store } from './app/store';
 import AppRouter from './app/router';
-import { useAuthInit } from './features/auth/hooks';
+import { useAuthInit } from './auth/hooks';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { I18nextProvider } from 'react-i18next';

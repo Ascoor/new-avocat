@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import BrandedLoader from '@/components/common/BrandedLoader';
 import Layout from '@/components/layout/Layout';
-import { ProtectedRoute, PublicRoute } from '@/features/auth/guards';
+import { ProtectedRoute, PublicRoute } from '@/auth/guards';
 import { menuItems } from '@/config/sidebar';
 import generateDemoRoutes from './generateDemoRoutes';
 

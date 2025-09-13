@@ -1,5 +1,5 @@
 import axios from 'axios';
-import apiClient from '../../services/apiClient';
+import apiClient from '../services/apiClient';
 import { BACKEND_URL } from '@/config/api';
 
 export interface LoginRequest {

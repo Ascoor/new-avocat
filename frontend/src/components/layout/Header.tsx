@@ -4,7 +4,7 @@ import { Moon, Sun, Globe, User, Bell, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { useAuth } from '@/features/auth/hooks';
+import { useAuth } from '@/auth/hooks';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils'; 
 import { useNavigate } from 'react-router-dom';
