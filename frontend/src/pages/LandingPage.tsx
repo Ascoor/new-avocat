@@ -2,25 +2,19 @@ import React from 'react';
 import { useI18n, I18nProvider } from '@/hooks/useI18n';
 import ContentGuard from '@/utils/contentGuard';
 import LandingHeader from '@/components/landing/LandingHeader';
-import Hero from '@/components/landing/HeroSection';
-import { ServicesSection } from '@/components/lawfirm/ServicesSection';
-import { AboutSection } from '@/components/lawfirm/AboutSection';
-import { ContactSection } from '@/components/lawfirm/ContactSection';
-import FooterSection from '@/components/landing/FooterSection';
-import ScrollToTop from '@/components/landing/ScrollToTop';
 
-import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from '@/components/ui/glass-card';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowRight, Shield, Users, FileText, BarChart3, Gavel, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-ContentGuard();
- 
+import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from '@/components/ui/glass-card';
+import { useLanguage } from '@/contexts/LanguageContext';
+
+ContentGuard(); 
 
 const LandingContent: React.FC = () => {
-  const {  isRTL } = useLanguage();
+  
+  const { t, isRTL } = useLanguage();
 
-  const { t,dir, locale, setLocale } = useI18n(); 
   const features = [
     {
       icon: Gavel,
@@ -52,32 +46,31 @@ const LandingContent: React.FC = () => {
       title: isRTL ? 'الوصول السحابي' : 'Cloud Access',
       description: isRTL ? 'وصول آمن من أي مكان وفي أي وقت' : 'Secure access from anywhere, anytime'
     }
-  ]; 
+  ];
 
-  return ( 
-         <div dir={dir} className="font-cairomin-h-screen bg-background">
+  return (
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden hero-gradient">
-
-        <div className="absolute inset-0" style={{ backgroundImage: `url(${"/images/landing/hero.jpg"})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.2 }} />
+      <section className="relative overflow-hidden bg-gradient-hero">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-4xl mx-auto text-center text-white">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-              {t('hero.title')}
+              {t('landing.hero.title')}
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90 animate-fade-in">
-              {t('hero.subtitle')}
+              {t('landing.hero.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-scale-in">
               <Button asChild variant="hero" size="lg" className="w-full sm:w-auto">
                 <Link to="/signup">
-                  {t('hero.ctaPrimary')}
+                  {t('landing.cta.signup')}
                   <ArrowRight className={`h-5 w-5 ${isRTL ? 'rotate-180' : ''}`} />
                 </Link>
               </Button>
               <Button asChild variant="glass" size="lg" className="w-full sm:w-auto">
                 <Link to="/login">
-                  {t('hero.ctaSecondary')}
+                  {t('landing.cta.login')}
                 </Link>
               </Button>
             </div>
@@ -181,9 +174,9 @@ const LandingContent: React.FC = () => {
             <p>&copy; 2024 Avocat. {isRTL ? 'جميع الحقوق محفوظة' : 'All rights reserved'}.</p>
           </div>
         </div>
-      </footer> 
+      </footer>
     </div>
-  );
+  );  
 };
 const LandingPage: React.FC = () => (
   <I18nProvider>

@@ -1,152 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Cyber-Legal Design System for Avocat Law Firm */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 20% 15%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 15%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 15%;
-    --primary: 219 84% 25%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 219 84% 25%;
-    --accent: 43 96% 56%;
-    --accent-foreground: 219 84% 25%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 10% 45%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 219 84% 25%;
-    --gradient-primary: linear-gradient(135deg, hsl(219 84% 25%), hsl(219 84% 35%));
-    --gradient-hero: linear-gradient(135deg, hsl(219 84% 18%), hsl(219 84% 30%));
-    --gradient-accent: linear-gradient(135deg, hsl(43 96% 56%), hsl(43 96% 66%));
-    --shadow-elegant: 0 10px 30px -10px hsl(219 84% 25% / 0.2);
-    --shadow-card: 0 4px 20px -4px hsl(219 84% 25% / 0.1);
-    --shadow-gold: 0 0 40px hsl(43, 100%, 88%);
-    --shadow-glow: 0 0 28px hsl(42, 100%, 95%);
-    --radius: 0.75rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 43.2 100% 95.1%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-    --glass-bg: hsl(var(--card) / 0.75);
-    --glass-border: hsl(var(--border) / 0.6);
+    /* Core Brand Colors - Professional Legal */
+    --background: 220 15% 96%;
+    --foreground: 220 25% 10%;
+
+    /* Card System - Glass Morphism */
+    --card: 220 15% 98%;
+    --card-foreground: 220 25% 10%;
+
+    /* Glass Morphism Properties */
+    --glass-bg: 220 15% 100% / 0.8;
+    --glass-border: 220 20% 88% / 0.3;
+    --glass-shadow: 220 25% 10% / 0.08;
+
+    /* Professional Legal Primary - Deep Navy */
+    --primary: 220 60% 25%;
+    --primary-foreground: 220 15% 98%;
+    --primary-hover: 220 60% 20%;
+
+    /* Professional Accent - Refined Blue */
+    --accent: 210 40% 45%;
+    --accent-foreground: 220 15% 98%;
+    --accent-glow: 210 40% 45% / 0.25;
+
+    /* Secondary Professional */
+    --secondary: 220 20% 90%;
+    --secondary-foreground: 220 25% 10%;
+
+    /* Muted Professional */
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 20% 40%;
+
+    /* Destructive Professional Red */
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 220 15% 98%;
+
+    /* Borders and Inputs */
+    --border: 220 20% 88%;
+    --input: 220 15% 94%;
+    --ring: 220 60% 25%;
+
+    /* Success Professional Green */
+    --success: 140 50% 35%;
+    --success-foreground: 220 15% 98%;
+
+    /* Warning Professional Amber */
+    --warning: 35 80% 50%;
+    --warning-foreground: 220 25% 10%;
+
+    /* Design System Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 60% 25%), hsl(210 40% 45%));
+    --gradient-hero: linear-gradient(135deg, hsl(220, 88%, 74%) 0%, hsl(202, 69%, 54%) 50%, hsl(220, 100%, 74%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(53, 100%, 98%, 0.95), hsla(46, 100%, 86%, 0.959));
+
+    /* Shadow System */
+    --shadow-glow: 0 0 25px hsl(var(--accent-glow));
+    --shadow-glass: 0 8px 32px hsl(var(--glass-shadow));
+    --shadow-elegant: 0 4px 16px hsl(220 25% 10% / 0.12);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Border Radius */
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+
+    /* Sidebar Design */
+    --sidebar-background: 220 15% 97%;
+    --sidebar-foreground: 220 25% 10%;
+    --sidebar-primary: 220 60% 25%;
+    --sidebar-primary-foreground: 220 15% 98%;
+    --sidebar-accent: 220 20% 90%;
+    --sidebar-accent-foreground: 220 25% 10%;
+    --sidebar-border: 220 20% 88%;
+    --sidebar-ring: 210 40% 45%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 216 78.9% 11.2%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-    --gradient-primary: linear-gradient(135deg, hsl(219 84% 42%), hsl(219 84% 55%));
-    --gradient-hero: linear-gradient(135deg, hsl(219 30% 12%), hsl(219 30% 18%));
-    --gradient-accent: linear-gradient(135deg, hsl(43 96% 46%), hsl(43 96% 56%));
-    --shadow-card: 0 6px 24px hsl(219 84% 45% / 0.25);
-    --shadow-glow: 0 0 9px hsl(106, 100%, 90%);
-    --glass-bg: hsl(var(--card) / 0.6);
-    --glass-border: hsl(var(--border) / 0.5);
-  }
+    /* Dark Mode - Professional Legal Theme */
+    --background: 220 25% 6%;
+    --foreground: 220 15% 95%;
 
+    /* Dark Glass Morphism */
+    --card: 220 25% 8%;
+    --card-foreground: 220 15% 95%;
+    --glass-bg: 220 25% 12% / 0.85;
+    --glass-border: 220 20% 20% / 0.4;
+    --glass-shadow: 210 40% 45% / 0.08;
+
+    /* Dark Primary */
+    --primary: 210 40% 55%;
+    --primary-foreground: 220 25% 6%;
+    --primary-hover: 210 40% 50%;
+
+    /* Dark Accent */
+    --accent: 210 40% 60%;
+    --accent-foreground: 220 25% 6%;
+    --accent-glow: 210 40% 60% / 0.3;
+
+    /* Dark Secondary */
+    --secondary: 220 25% 12%;
+    --secondary-foreground: 220 15% 95%;
+
+    /* Dark Muted */
+    --muted: 220 25% 10%;
+    --muted-foreground: 220 15% 70%;
+
+    /* Dark Destructive */
+    --destructive: 0 60% 55%;
+    --destructive-foreground: 220 15% 95%;
+
+    /* Dark Borders */
+    --border: 220 25% 18%;
+    --input: 220 25% 12%;
+    --ring: 210 40% 55%;
+
+    /* Dark Success & Warning */
+    --success: 140 50% 45%;
+    --success-foreground: 220 25% 6%;
+    --warning: 35 80% 55%;
+    --warning-foreground: 220 25% 6%;
+
+    /* Dark Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(210 40% 55%), hsl(220 60% 45%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 25% 4%) 0%, hsl(210 40% 20%) 50%, hsl(220 25% 8%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(220 25% 12% / 0.95), hsl(220 25% 8% / 0.8));
+
+    /* Dark Shadows */
+    --shadow-glow: 0 0 30px hsl(var(--accent-glow));
+    --shadow-glass: 0 8px 32px hsl(210 40% 45% / 0.12);
+    --shadow-elegant: 0 4px 16px hsl(210 40% 45% / 0.15);
+
+    /* Dark Sidebar */
+    --sidebar-background: 220 25% 8%;
+    --sidebar-foreground: 220 15% 95%;
+    --sidebar-primary: 210 40% 55%;
+    --sidebar-primary-foreground: 220 25% 6%;
+    --sidebar-accent: 220 25% 12%;
+    --sidebar-accent-foreground: 220 15% 95%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 210 40% 55%;
+  }
+}
+
+@layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply bg-background text-foreground font-inter antialiased;
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
   }
-}
 
-@layer components {
-  .btn-hero {
-    @apply bg-gradient-to-r from-accent to-accent/90 text-accent-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300;
+  /* Arabic Typography */
+  [lang="ar"], [dir="rtl"] {
+    @apply font-cairo;
   }
-  .btn-outline-gold {
-    @apply border-2 border-accent text-accent px-6 py-3 rounded-lg font-semibold hover:bg-accent hover:text-accent-foreground transition-all duration-300;
-  }
-  .service-card {
-    @apply bg-card p-8 rounded-xl shadow-card hover:shadow-gold transition-all duration-300 hover:-translate-y-2 border border-border/50;
-  }
-  .hero-title {
-    @apply text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-tight;
-  }
-  .section-title {
-    @apply text-4xl md:text-5xl font-bold text-primary mb-6;
-  }
-  .section-subtitle {
-    @apply text-xl md:text-2xl text-muted-foreground leading-relaxed;
-  }
-  .nav-link {
-    @apply text-primary-foreground/90 hover:text-primary-foreground transition-colors duration-200 relative;
-  }
-  .glass-card {
-    @apply rounded-2xl p-6 shadow-card border;
-    background: var(--glass-bg);
-    border-color: var(--glass-border);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-  .glass-button {
-    @apply border rounded-md;
-    background: hsl(var(--background) / 0.4);
-    border-color: hsl(var(--border) / 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-}
 
-@layer utilities {
-  .hero-gradient { background: var(--gradient-hero); }
-  .gradient-accent { background: var(--gradient-accent); }
-  .gradient-text {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  /* English Typography */
+  [lang="en"], [dir="ltr"] {
+    @apply font-inter;
   }
-  .shadow-elegant { box-shadow: var(--shadow-elegant); }
-  .shadow-card { box-shadow: var(--shadow-card); }
-  .shadow-gold { box-shadow: var(--shadow-gold); }
-  .shadow-glow { box-shadow: var(--shadow-glow); }
-  .glow-effect { box-shadow: var(--shadow-glow); }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  [dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) { margin-right: 0.5rem; margin-left: 0; }
-  [dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-right: 1rem; margin-left: 0; }
-  [dir="rtl"] .space-x-8 > :not([hidden]) ~ :not([hidden]) { margin-right: 2rem; margin-left: 0; }
-  [dir="rtl"] .ml-4 { margin-left: 0; margin-right: 1rem; }
-  [dir="rtl"] .mr-3 { margin-right: 0; margin-left: 0.75rem; }
+
+  /* Glass Morphism Base */
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--glass-border));
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* Glow Effects */
+  .glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-hover:hover {
+    box-shadow: var(--shadow-glow);
+    transition: var(--transition-smooth);
+  }
+
+  /* Smooth Transitions */
+  .smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .bounce {
+    transition: var(--transition-bounce);
+  }
+
+  /* Background Patterns */
+  .bg-grid-pattern {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--accent));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent) / 0.8);
+  }
+
+  /* Dark mode scrollbar */
+  .dark ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: hsl(var(--accent) / 0.6);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--accent) / 0.8);
+  }
 }
