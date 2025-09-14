@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import BrandLogo from "../common/BrandLogo";
 import SidebarMenu from "./SidebarMenu";
-import { menuItems } from "@/config/sidebar";
+import { menuItems } from "@/config/menuItems";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Sidebar({ onClose }: { onClose?: () => void }) {

@@ -1,4 +1,3 @@
-// src/components/layout/Header.tsx
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Globe, User, Bell, Menu } from 'lucide-react';
@@ -16,10 +15,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 interface HeaderProps {
+  title?: string;
   onToggleSidebar?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
+export const Header: React.FC<HeaderProps> = ({ title, onToggleSidebar }) => {
   const { t } = useTranslation();
   const { language, toggleLanguage } = useLanguage();
   const { logout } = useAuth();
@@ -29,9 +29,8 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
     <motion.header
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-background py-3 px-4 md:px-8 border-b border-border flex items-center justify-between animate-fade-in"
+      className="bg-background py-3 px-4 md:px-8 border-b border-border flex items-center justify-between"
     >
-      {/* زر لفتح/إغلاق الشريط الجانبي */}
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"
@@ -40,10 +39,10 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           className="glass-button hover:shadow-glow transition-colors md:hidden"
         >
           <Menu className="h-5 w-5" />
-        </Button> 
+        </Button>
+        {title && <h1 className="text-lg font-bold text-primary">{title}</h1>}
       </div>
 
-      {/* العناصر على اليمين */}
       <div className="flex items-center gap-3">
         <Button variant="ghost" size="sm" className="relative glass-button">
           <Bell className="h-4 w-4" />

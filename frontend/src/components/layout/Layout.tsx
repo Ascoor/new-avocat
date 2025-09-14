@@ -1,43 +1,40 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
-import { Header } from './Header';
-import Sidebar from '../sidebar/Sidebar';
-import MobileDrawer from './MobileDrawer';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { Header } from "./Header";
+import Sidebar from "../sidebar/Sidebar";
+import MobileDrawer from "./MobileDrawer";
 
 interface AppShellProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title?: string;
 }
 
 const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
   const { i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const isRTL = i18n.language === "ar";
 
   return (
-    <div 
+    <div
       className="min-h-screen bg-background text-foreground"
-      dir={isRTL ? 'rtl' : 'ltr'}
+      dir={isRTL ? "rtl" : "ltr"}
     >
       {/* Desktop Layout */}
       <div className="flex h-screen">
         {/* Sidebar */}
-        <Sidebar isCollapsed={false} onToggle={() => {}} />
+        <Sidebar />
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0">
-          {/* Header */}
           <Header title={title} />
 
-          {/* Page Content */}
           <main className="flex-1 overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ 
+              transition={{
                 duration: 0.2,
-                ease: 'easeOut'
+                ease: "easeOut",
               }}
               className="p-6"
             >

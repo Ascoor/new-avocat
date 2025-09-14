@@ -6,8 +6,10 @@ export type Language = 'ar' | 'en';
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
+  toggleLanguage: () => void;     // ✅ أضفناها هنا
   t: (key: string) => string;
   isRTL: boolean;
+  direction: 'rtl' | 'ltr';
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -15,7 +17,6 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 // Flattened translations object for backward compatibility
 const flatTranslations = {
   ar: {
-    // Legacy flat translations for backward compatibility
     ...Object.entries(translations.ar).reduce((acc, [section, values]) => {
       if (typeof values === 'object') {
         Object.entries(values).forEach(([key, value]) => {
@@ -26,7 +27,6 @@ const flatTranslations = {
     }, {} as Record<string, string>)
   },
   en: {
-    // Legacy flat translations for backward compatibility
     ...Object.entries(translations.en).reduce((acc, [section, values]) => {
       if (typeof values === 'object') {
         Object.entries(values).forEach(([key, value]) => {
@@ -37,7 +37,6 @@ const flatTranslations = {
     }, {} as Record<string, string>)
   }
 };
-
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
@@ -59,28 +58,32 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('avocat_language', language);
   }, [language]);
 
+  const toggleLanguage = () => {
+    setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));
+  };
+
   const t = (key: string): string => {
-    // Try nested access first
     const keys = key.split('.');
     let value: any = translations[language];
-    
+
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k];
       } else {
-        // Fallback to flat access for backward compatibility
         return flatTranslations[language][key as keyof typeof flatTranslations[typeof language]] || key;
       }
     }
-    
+
     return typeof value === 'string' ? value : key;
   };
 
-  const value = {
+  const value: LanguageContextType = {
     language,
     setLanguage,
+    toggleLanguage, // ✅ هنا نضيفها
     t,
-    isRTL: language === 'ar'
+    isRTL: language === 'ar',
+    direction: language === 'ar' ? 'rtl' : 'ltr',
   };
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

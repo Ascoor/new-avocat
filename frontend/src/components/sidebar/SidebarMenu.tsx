@@ -1,6 +1,6 @@
 import React from 'react'
 import SidebarLink from './SidebarLink'
-import type { MenuItem } from '@/config/sidebar'
+import type { MenuItem } from '@/config/menuItems'
 
 interface SidebarMenuProps {
   items: MenuItem[]

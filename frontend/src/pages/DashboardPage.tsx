@@ -1,9 +1,9 @@
 import StatsCards from '@/components/dashboard/StatsCards';
 import CasesByStatusChart from '@/components/dashboard/CasesByStatusChart';
-import CasesByCategoryChart from '@/components/dashboard/CasesByCategoryChart';
+import CasesByCategoryChart from '@/components/dashboard/Cases';
 import QuickActions from '@/components/dashboard/QuickActions';
 import RecentCases from '@/components/dashboard/RecentCases';
-import UpcomingSessions from '@/components/dashboard/UpcomingSessions';
+import UpcomingSessions from '@/components/dashboard/DashboardHome';
 import { useTranslation } from 'react-i18next';
 export default function DashboardPage() {
   const { t } = useTranslation();
