@@ -216,7 +216,7 @@ export function DataTable<T extends TableData>({
               processedData.map((row, index) => (
                 <TableRow 
                   key={row.id || index}
-                  className="hover:bg-muted/60 transition-colors"
+                  className="qhover:bg-muted/30 transition-colors"
                 >
                   {columns.map((column) => (
                     <TableCell key={String(column.key)}>
