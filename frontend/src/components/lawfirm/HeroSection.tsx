@@ -14,16 +14,16 @@ export const HeroSection = () => {
   const { isRTL } = useLanguage();
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-700 to-blue-400 text-white relative">
+    <section id="home" className="min-h-screen flex items-center justify-center gradient-hero text-primary-foreground relative">
       <Carousel className="w-full max-w-5xl">
         <CarouselContent>
           {slides.map((slide) => (
             <CarouselItem key={slide.id} className="h-[500px] relative">
               <img src={slide.image} alt="slide" className="w-full h-full object-cover rounded-xl" />
-              <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center p-4 rounded-xl">
-                <h1 className="text-4xl font-bold mb-4">{t('lawlanding.hero.title')}</h1>
-                <p className="mb-6 text-lg">{t('lawlanding.hero.subtitle')}</p>
-                <Button className="bg-yellow-500 text-blue-900 hover:bg-yellow-600 mt-2">
+              <div className="absolute inset-0 bg-background/40 flex flex-col items-center justify-center text-center p-4 rounded-xl">
+                <h1 className="hero-title mb-4 fade-in-up">{t('lawlanding.hero.title')}</h1>
+                <p className="section-subtitle mb-6 fade-in-up delay-1">{t('lawlanding.hero.subtitle')}</p>
+                <Button className="btn-hero shadow-gold mt-2">
                   {t('lawlanding.hero.cta')}
                 </Button>
               </div>

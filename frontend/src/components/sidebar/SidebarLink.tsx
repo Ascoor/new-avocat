@@ -9,9 +9,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 interface SidebarLinkProps {
   item: MenuItem
   collapsed?: boolean // property to control collapsed state
+  onSelect?: () => void
 }
 
-const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) => {
+const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false, onSelect }) => {
   const location = useLocation()
   const hasChildren = !!item.children && item.children.length > 0
 
@@ -64,7 +65,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
                   {content}
                 </button>
               ) : (
-                <Link to={item.path} aria-current={isActive ? 'page' : undefined}>{content}</Link>
+                <Link to={item.path} onClick={onSelect} aria-current={isActive ? 'page' : undefined}>{content}</Link>
               )}
             </TooltipTrigger>
             <TooltipContent side="right" align="center" className="glass-card py-1.5 px-2 text-xs">
@@ -77,7 +78,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
           {content}
         </button>
       ) : (
-        <Link to={item.path} aria-current={isActive ? 'page' : undefined}>{content}</Link>
+        <Link to={item.path} onClick={onSelect} aria-current={isActive ? 'page' : undefined}>{content}</Link>
       )}
 
       {hasChildren && !collapsed && (
@@ -89,7 +90,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ item, collapsed = false }) =>
           )}
         >
           {item.children?.map((child) => (
-            <SidebarLink key={child.key} item={child} collapsed={collapsed} />
+            <SidebarLink key={child.key} item={child} collapsed={collapsed} onSelect={onSelect} />
           ))}
         </div>
       )}

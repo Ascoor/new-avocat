@@ -1,330 +1,166 @@
 {
-  "site": {
-    "brand": {
-      "name_ar": "آفاق للمحاماة (Avocat)",
-      "name_en": "Afaq Law Firm (Avocat)"
-    },
-    "locales": [
-      "ar",
-      "en"
-    ],
-    "defaultLocale": "ar"
-  },
+  "brand": { "ar": "AVC LAW FIRM", "en": "AVC LAW FIRM" },
   "nav": {
-    "ar": [
-      "الرئيسية",
-      "من نحن",
-      "خدماتنا",
-      "قدراتنا",
-      "ذكاء قانوني",
-      "تحول رقمي",
-      "جرائم إلكترونية",
-      "إنجازات",
-      "الفريق",
-      "تواصل"
-    ],
-    "en": [
-      "Home",
-      "About",
-      "Services",
-      "Capabilities",
-      "AI Legal",
-      "Digital Transformation",
-      "Cybercrime",
-      "Cases",
-      "Team",
-      "Contact"
-    ]
+    "home": { "ar": "الرئيسية", "en": "Home" },
+    "services": { "ar": "الخدمات", "en": "Services" },
+    "about": { "ar": "من نحن", "en": "About" },
+    "capabilities": { "ar": "قدراتنا", "en": "Capabilities" },
+    "ai": { "ar": "منظومة الذكاء القانوني", "en": "AI Legal Suite" },
+    "digital": { "ar": "التحول الرقمي", "en": "Digital Transformation" },
+    "cyber": { "ar": "مكافحة الجرائم الإلكترونية", "en": "Cybercrime" },
+    "challenges": { "ar": "التحديات", "en": "Challenges" },
+    "whyus": { "ar": "لماذا نحن", "en": "Why Us" },
+    "achievements": { "ar": "إنجازات", "en": "Achievements" },
+    "team": { "ar": "الفريق", "en": "Team" },
+    "contact": { "ar": "اتصل بنا", "en": "Contact" },
+    "login": { "ar": "تسجيل الدخول", "en": "Login" },
+    "register": { "ar": "إنشاء حساب", "en": "Register" }
   },
   "hero": {
-    "ar": {
-      "headline": "حلول قانونية ذكية وسريعة مبنية على الثقة",
-      "subheadline": "منذ 2013 نعيد تعريف ممارسة المهنة برؤية رقمية حديثة تدعم الشفافية وتُيسر العدالة.",
-      "primaryCta": "ابدأ استشارتك",
-      "secondaryCta": "تعرّف علينا"
+    "title": {
+      "ar": "ابدأ استشارتك القانونية مع خبراء المحاماة",
+      "en": "Start Your Legal Consultation with Trusted Experts"
     },
-    "en": {
-      "headline": "Smart, Trusted & Fast Legal Solutions",
-      "subheadline": "Since 2013, we’ve redefined legal practice with a digital, transparent, and client-first approach.",
-      "primaryCta": "Start a Consultation",
-      "secondaryCta": "Discover More"
-    }
+    "subtitle": {
+      "ar": "نمزج الخبرة القانونية بالابتكار والتقنية لصناعة مستقبل قانوني أكثر كفاءة ومرونة.",
+      "en": "We blend legal expertise with innovation and technology to deliver efficient, modern legal services."
+    },
+    "ctaPrimary": { "ar": "ابدأ الاستشارة", "en": "Start Consultation" },
+    "ctaSecondary": { "ar": "تعرّف علينا", "en": "Learn More" },
+    "background": { "ar": "/images/landing/hero.jpg", "en": "/images/landing/hero.jpg" }
   },
-  "about": {
-    "founded_year": 2013,
-    "vision": {
-      "ar": "أن نكون الواجهة الأولى لعملائنا في عالم المحاماة المعاصر بتقديم حلول قانونية متكاملة، مبنية على الثقة والسرعة، تدعم العدالة الذكية وحقوق الأفراد والمؤسسات.",
-      "en": "To be the first choice in modern legal services, delivering integrated, trusted, and fast solutions that advance smart justice and protect rights."
-    },
-    "philosophy": {
-      "ar": "لا نكتفي بالممارسة التقليدية؛ نمزج الخبرة القانونية بالابتكار والتقنية لصناعة مستقبل قانوني أكثر كفاءة ومرونة.",
-      "en": "We go beyond tradition, blending deep legal expertise with innovation and technology to build a more efficient and agile legal future."
-    },
-    "client_commitment": {
-      "ar": "ثقة وشفافية وتبسيط للتعقيدات القانونية، مع استشارات مُصمَّمة لاحتياجات كل عميل ومتابعة دقيقة لضمان نتائج موثوقة.",
-      "en": "Trust, transparency, and simplification of legal complexity—tailored advice and meticulous follow-through for dependable outcomes."
-    }
-  },
-  "services": [
-    {
-      "ar": "التقاضي وحل النزاعات (جميع درجات المحاكم)",
-      "en": "Litigation & Dispute Resolution (all court tiers)"
-    },
-    {
-      "ar": "صياغة العقود والاتفاقيات وفق المعايير الدولية",
-      "en": "Contract & Agreement Drafting to international standards"
-    },
-    {
-      "ar": "استشارات قانونية متخصصة للأفراد والشركات",
-      "en": "Specialized Legal Advisory for individuals & corporations"
-    },
-    {
-      "ar": "تأسيس الشركات والامتثال والحوكمة",
-      "en": "Company Formation, Compliance & Governance"
-    },
-    {
-      "ar": "الملكية الفكرية والتسجيل والدفاع",
-      "en": "Intellectual Property (registration & defense)"
-    },
-    {
-      "ar": "التحكيم التجاري وتسوية المنازعات",
-      "en": "Commercial Arbitration & ADR"
-    },
-    {
-      "ar": "إدارة القضايا وأرشفة رقمية مؤمنة",
-      "en": "Case Management & Secure Digital Archiving"
-    }
-  ],
-  "capabilities": {
-    "ar": [
-      "إدارة مكاتب المحاماة والعمليات القانونية بمرونة عالية",
-      "تطبيقات قانونية مخصصة حسب احتياجات العمل",
-      "تكامل مباشر مع قواعد بيانات المحاكم لتسريع الإجراءات",
-      "منصة خدمات إلكترونية متاحة للجمهور 24/7",
-      "أرشفة رقمية آمنة للملفات والأحكام والمستندات",
-      "تحليلات ذكية لدعم اتخاذ القرار القانوني",
-      "أنظمة متابعة القضايا بمؤشرات تنبيه وتذكير",
-      "حماية معلومات وفق أعلى معايير الأمن السيبراني"
-    ],
-    "en": [
-      "Flexible law-office & legal operations management",
-      "Custom legal apps tailored to business needs",
-      "Direct integration with court databases to accelerate filings",
-      "24/7 public e-services portal",
-      "Secure digital archiving for files, rulings & documents",
-      "Smart analytics for legal decision-making",
-      "Case tracking with alerts & reminders",
-      "Data protection aligned with top cybersecurity standards"
-    ]
-  },
-  "ai_legal": {
-    "ar": {
-      "title": "منظومة ذكاء اصطناعي قانوني",
-      "points": [
-        "أتمتة الإجراءات القانونية وتوليد النماذج بدقة",
-        "تذكير تلقائي بالمواعيد والجلسات",
-        "مساعدة شاملة في التقديم الإلكتروني",
-        "بحث متقدم في الأحكام والدفوع",
-        "صياغة مسودات مذكرات وردود",
-        "متابعة سير الإجراءات بتنبيهات فورية",
-        "وضع استراتيجيات إطار قانوني لإدارة الأحداث"
-      ]
-    },
-    "en": {
-      "title": "AI-Powered Legal System",
-      "points": [
-        "Automated legal workflows & precise template generation",
-        "Auto-reminders for hearings & deadlines",
-        "End-to-end e-filing assistance",
-        "Advanced judgments & defenses research",
-        "Drafting support for memos & pleadings",
-        "Real-time procedural tracking & notifications",
-        "Strategic legal frameworks for incident management"
-      ]
-    }
-  },
-  "digital_transformation": {
-    "ar": {
-      "title": "التحوّل الرقمي القانوني",
-      "bullets": [
-        "إدارة كاملة للإجراءات والملفات عبر منصة موثّقة",
-        "توقيع إلكتروني معتمد وتعزيز حجية المستندات",
-        "تكامل مع الأنظمة الحكومية لتسريع المعاملات",
-        "لوحات تحكم توضّح سير القضايا والطلبات",
-        "تقليل الاعتماد على الورق وزيادة كفاءة الأداء"
-      ]
-    },
-    "en": {
-      "title": "Legal Digital Transformation",
-      "bullets": [
-        "End-to-end procedural & file management on a trusted platform",
-        "Qualified e-signature and enhanced evidentiary weight",
-        "Integration with government systems to speed transactions",
-        "Dashboards clarifying case & request status",
-        "Reduced paper reliance and higher operational efficiency"
-      ]
-    }
-  },
-  "cybercrime": {
-    "ar": {
-      "title": "مكافحة الجرائم الإلكترونية",
-      "bullets": [
-        "توثيق الأدلة الرقمية بدقة",
-        "تدريب متخصص وتأهيل الكوادر",
-        "نشر ثقافة قانونية رقمية آمنة",
-        "تأمين البيانات أثناء التعامل مع المنصات",
-        "حلول تقنية متوافقة مع التشريعات الدولية",
-        "تحديث مستمر للإجراءات ومعايير الحماية"
-      ]
-    },
-    "en": {
-      "title": "Cybercrime Response Program",
-      "bullets": [
-        "Rigorous digital-evidence preservation",
-        "Specialized training & capacity building",
-        "Public awareness of safe digital legal practices",
-        "Data security across platforms",
-        "Tech solutions aligned with international laws",
-        "Continuous updates to procedures & safeguards"
-      ]
-    }
-  },
-  "challenges": {
-    "ar": [
-      "ضعف الثقافة القانونية الرقمية ومقاومة الانتقال من الورقي",
-      "نقص الكفاءات المؤهلة لتشغيل الأنظمة الحديثة",
-      "قيود البنية التحتية التقنية",
-      "حماية الخصوصية والبيانات في بيئة متغيرة",
-      "الحاجة لتشريعات مرنة مواكِبة للتقنية",
-      "فجوة الثقة في الخدمات الرقمية الوليدة"
-    ],
-    "en": [
-      "Low digital-legal literacy & resistance to moving off paper",
-      "Shortage of qualified talent to run modern systems",
-      "Infrastructure constraints",
-      "Privacy & data protection in a changing environment",
-      "Need for flexible, tech-aware regulations",
-      "Trust gap in emerging digital services"
-    ]
-  },
-  "why_us": {
-    "ar": [
-      "نمزج بين التقنية والمعرفة القانونية العميقة",
-      "حلول تغطي احتياجات العملاء بتنوّع ومرونة",
-      "التزام صارم بالسرية والمعايير الدولية",
-      "تقليل التكاليف وزيادة الكفاءة",
-      "قدرة عالية على مواكبة التطورات التشريعية",
-      "استشارات مدعومة بالذكاء الاصطناعي",
-      "خدمات رقمية شفافة وسهلة الوصول",
-      "نتائج سريعة وموثوقة"
-    ],
-    "en": [
-      "Blend of technology with deep legal expertise",
-      "Flexible solutions covering diverse client needs",
-      "Strict confidentiality & international standards",
-      "Cost reduction with higher efficiency",
-      "Agile adaptation to regulatory changes",
-      "AI-assisted advisory",
-      "Transparent, accessible digital services",
-      "Fast and reliable outcomes"
-    ]
-  },
-  "case_highlights": [
-    {
-      "ar": {
-        "title": "حكم بالبراءة في تهمة النصب",
-        "summary": "انتهت المحكمة إلى انتفاء أركان الجريمة وعدم كفاية الدليل الفني، وقضي بالبراءة."
-      },
-      "en": {
-        "title": "Acquittal in Fraud Allegation",
-        "summary": "Court found elements unfulfilled and technical evidence insufficient; defendant acquitted."
+  "sections": {
+    "about": {
+      "title": { "ar": "من نحن", "en": "About Us" },
+      "body": {
+        "ar": "نسعى لأن نكون الواجهة الأولى لعملائنا في عالم المحاماة المعاصر بتقديم حلول قانونية متكاملة، مبنية على الثقة والسرعة، تدعم العدالة الذكية وحقوق الأفراد والمؤسسات.",
+        "en": "We aim to be our clients’ first choice in modern legal services, delivering integrated, reliable, and fast solutions that support smart justice for individuals and organizations."
       }
     },
-    {
-      "ar": {
-        "title": "براءة من مخالفة شروط الترخيص",
-        "summary": "ثبوت عدم توافر المخالفة الإدارية وشيوع الاتهام؛ قُضي بالبراءة."
-      },
-      "en": {
-        "title": "Cleared of Licensing-Terms Violation",
-        "summary": "Administrative breach not established; charge dismissed."
-      }
-    },
-    {
-      "ar": {
-        "title": "براءة من عدم الامتثال لأوامر إدارية",
-        "summary": "بطلان الدليل الإداري وغياب القصد الجنائي؛ قُضي بالبراءة."
-      },
-      "en": {
-        "title": "Acquittal: Non-Compliance with Administrative Orders",
-        "summary": "Administrative evidence void; no criminal intent."
-      }
-    }
-  ],
-  "team": {
-    "ar": {
-      "intro": "فريق قانوني وتقني يجمع الخبرة بالممارسة والابتكار.",
-      "members": [
-        {
-          "name": "عضو فريق 1",
-          "role": "محام بالنقض",
-          "bio": "خبرة واسعة في التقاضي والتحكيم وصياغة العقود."
-        },
-        {
-          "name": "عضو فريق 2",
-          "role": "مستشار قانوني وتقني",
-          "bio": "اختصاص في الجرائم الإلكترونية والتحول الرقمي القانوني."
-        }
+    "services": {
+      "title": { "ar": "خدماتنا", "en": "Our Services" },
+      "items": [
+        { "ar": "التقاضي وحل النزاعات (جميع درجات المحاكم)", "en": "Litigation & Dispute Resolution (all court levels)" },
+        { "ar": "صياغة العقود والاتفاقيات وفق المعايير الدولية", "en": "Contract Drafting & Agreements (international standards)" },
+        { "ar": "استشارات قانونية متخصصة للأفراد والشركات", "en": "Specialized Legal Advisory for Individuals & Companies" },
+        { "ar": "تأسيس الشركات والامتثال والحوكمة", "en": "Company Formation, Compliance & Governance" },
+        { "ar": "الملكية الفكرية والتسجيل والدفاع", "en": "Intellectual Property: Registration & Defense" },
+        { "ar": "التحكيم التجاري وتسوية المنازعات", "en": "Commercial Arbitration & Dispute Settlement" },
+        { "ar": "إدارة القضايا وأرشفة رقمية مؤمنة", "en": "Case Management & Secure Digital Archiving" }
       ]
     },
-    "en": {
-      "intro": "A cross-functional legal-tech team with deep practice and innovation.",
-      "members": [
-        {
-          "name": "Member 1",
-          "role": "Cassation Lawyer",
-          "bio": "Extensive experience in litigation, arbitration, and contract drafting."
-        },
-        {
-          "name": "Member 2",
-          "role": "Legal & Tech Counsel",
-          "bio": "Specialist in cybercrime and legal digital transformation."
-        }
+    "capabilities": {
+      "title": { "ar": "قدراتنا", "en": "Our Capabilities" },
+      "items": [
+        { "ar": "إدارة مكاتب المحاماة والعمليات القانونية بمرونة عالية", "en": "Flexible Law‑Firm & Legal Ops Management" },
+        { "ar": "تطبيقات قانونية مخصصة حسب احتياجات العمل", "en": "Custom Legal Applications" },
+        { "ar": "تكامل مباشر مع قواعد بيانات المحاكم لتسريع الإجراءات", "en": "Direct Court DB Integrations to Accelerate Procedures" },
+        { "ar": "منصة خدمات إلكترونية متاحة للجمهور 24/7", "en": "24/7 Public E‑Services Platform" },
+        { "ar": "أرشفة رقمية آمنة للملفات والأحكام والمستندات", "en": "Secure Digital Archiving for Files, Judgments & Docs" },
+        { "ar": "تحليلات ذكية لدعم اتخاذ القرار القانوني", "en": "Smart Analytics for Legal Decision‑Making" },
+        { "ar": "أنظمة متابعة القضايا بمؤشرات تنبيه وتذكير", "en": "Case Tracking with Alerts & Reminders" },
+        { "ar": "حماية معلومات وفق أعلى معايير الأمن السيبراني", "en": "Information Security at Top Standards" }
       ]
-    }
-  },
-  "contact": {
-    "ar": {
-      "address": "العنوان (حدّثه وفق بياناتكم الرسمية)",
-      "phone": [
-        "+20-XXX-XXXXXXX"
-      ],
-      "email": "info@example.com"
     },
-    "en": {
-      "address": "Address (update to your official details)",
-      "phone": [
-        "+20-XXX-XXXXXXX"
-      ],
-      "email": "info@example.com"
-    }
-  },
-  "footer": {
-    "ar": "© آفاق للمحاماة — جميع الحقوق محفوظة.",
-    "en": "© Afaq Law Firm — All rights reserved."
-  },
-  "legal_disclaimer": {
-    "ar": "المذكور أعلاه أمثلة موجزة لأحكام/إنجازات بهدف العرض التسويقي فقط ولا يُعد استشارة قانونية.",
-    "en": "The above case notes are brief illustrative examples for marketing purposes and are not legal advice."
-  },
-  "titles": {
+    "aiPlatform": {
+      "title": { "ar": "منظومة ذكاء اصطناعي قانوني", "en": "AI Legal Suite" },
+      "items": [
+        { "ar": "أتمتة الإجراءات القانونية وتوليد النماذج بدقة", "en": "Automated Legal Workflows & Accurate Template Generation" },
+        { "ar": "تذكير تلقائي بالمواعيد والجلسات", "en": "Automatic Reminders for Hearings & Deadlines" },
+        { "ar": "مساعدة شاملة في التقديم الإلكتروني", "en": "Comprehensive E‑Filing Assistance" },
+        { "ar": "بحث متقدم في الأحكام والدفوع", "en": "Advanced Search across Judgments & Pleadings" },
+        { "ar": "صياغة مسودات مذكرات وردود", "en": "Drafting Memos & Responses" },
+        { "ar": "متابعة سير الإجراءات بتنبيهات فورية", "en": "Live Procedure Tracking with Instant Alerts" },
+        { "ar": "وضع استراتيجيات إطار قانوني لإدارة الأحداث", "en": "Event‑Driven Legal Strategy Frameworks" }
+      ]
+    },
+    "digital": {
+      "title": { "ar": "التحوّل الرقمي القانوني", "en": "Legal Digital Transformation" },
+      "items": [
+        { "ar": "إدارة كاملة للإجراءات والملفات عبر منصة موثّقة", "en": "End‑to‑End Workflow & File Management on a Trusted Platform" },
+        { "ar": "توقيع إلكتروني معتمد وتعزيز حجية المستندات", "en": "Certified E‑Signatures & Document Authenticity" },
+        { "ar": "تكامل مع الأنظمة الحكومية لتسريع المعاملات", "en": "Integrations with Gov Systems to Speed Up Transactions" },
+        { "ar": "لوحات تحكم توضّح سير القضايا والطلبات", "en": "Dashboards to Visualize Case & Request Progress" },
+        { "ar": "تقليل الاعتماد على الورق وزيادة كفاءة الأداء", "en": "Paperless Operations & Efficiency Gains" }
+      ]
+    },
+    "cyber": {
+      "title": { "ar": "مكافحة الجرائم الإلكترونية", "en": "Cybercrime" },
+      "items": [
+        { "ar": "توثيق الأدلة الرقمية بدقة", "en": "Precise Digital Evidence Preservation" },
+        { "ar": "تدريب متخصص وتأهيل الكوادر", "en": "Specialized Training & Workforce Enablement" },
+        { "ar": "نشر ثقافة قانونية رقمية آمنة", "en": "Promoting a Safe Digital Legal Culture" },
+        { "ar": "تأمين البيانات أثناء التعامل مع المنصات", "en": "Data Security across Platforms" },
+        { "ar": "حلول تقنية متوافقة مع التشريعات الدولية", "en": "Tech Solutions Aligned with International Regulations" },
+        { "ar": "تحديث مستمر للإجراءات ومعايير الحماية", "en": "Continuous Procedure & Protection Updates" }
+      ]
+    },
     "challenges": {
-      "ar": "التحديات",
-      "en": "Challenges"
+      "title": { "ar": "التحديات", "en": "Challenges" },
+      "items": [
+        { "ar": "ضعف الثقافة القانونية الرقمية ومقاومة الانتقال من الورقي", "en": "Limited Digital Legal Literacy & Resistance to Change" },
+        { "ar": "نقص الكفاءات المؤهلة لتشغيل الأنظمة الحديثة", "en": "Shortage of Qualified Talent for Modern Systems" },
+        { "ar": "قيود البنية التحتية التقنية", "en": "Infrastructure Constraints" },
+        { "ar": "حماية الخصوصية والبيانات في بيئة متغيرة", "en": "Privacy & Data Protection in Evolving Environments" },
+        { "ar": "الحاجة لتشريعات مرنة مواكِبة للتقنية", "en": "Need for Adaptive, Tech‑Ready Legislation" },
+        { "ar": "فجوة الثقة في الخدمات الرقمية الوليدة", "en": "Trust Gap in Emerging Digital Services" }
+      ]
     },
-    "why_us": {
-      "ar": "لماذا نحن",
-      "en": "Why Us"
+    "whyus": {
+      "title": { "ar": "لماذا نحن", "en": "Why Choose Us" },
+      "items": [
+        { "ar": "نمزج بين التقنية والمعرفة القانونية العميقة", "en": "Blend of Deep Legal Knowledge & Technology" },
+        { "ar": "حلول تغطي احتياجات العملاء بتنوّع ومرونة", "en": "Flexible, Client‑Centric Solutions" },
+        { "ar": "التزام صارم بالسرية والمعايير الدولية", "en": "Strict Confidentiality & International Standards" },
+        { "ar": "تقليل التكاليف وزيادة الكفاءة", "en": "Cost Reduction & Efficiency" },
+        { "ar": "قدرة عالية على مواكبة التطورات التشريعية", "en": "High Adaptability to Regulatory Change" },
+        { "ar": "استشارات مدعومة بالذكاء الاصطناعي", "en": "AI‑Augmented Advisory" },
+        { "ar": "خدمات رقمية شفافة وسهلة الوصول", "en": "Transparent, Accessible Digital Services" },
+        { "ar": "نتائج سريعة وموثوقة", "en": "Fast, Reliable Outcomes" }
+      ]
+    },
+    "achievements": {
+      "title": { "ar": "إنجازات", "en": "Achievements" },
+      "disclaimer": {
+        "ar": "المذكور أمثلة موجزة لأحكام/إنجازات بهدف العرض التسويقي فقط ولا يُعد استشارة قانونية.",
+        "en": "These are brief, illustrative examples for marketing only and do not constitute legal advice."
+      },
+      "items": [
+        {
+          "title": { "ar": "حكم بالبراءة في تهمة النصب", "en": "Acquittal in Fraud Charge" },
+          "desc": { "ar": "انتفاء أركان الجريمة وعدم كفاية الدليل الفني؛ قُضي بالبراءة.", "en": "Elements not established; technical evidence insufficient; acquittal granted." }
+        },
+        {
+          "title": { "ar": "براءة من مخالفة شروط الترخيص", "en": "Acquittal of Licensing Violation" },
+          "desc": { "ar": "ثبوت عدم توافر المخالفة الإدارية وشيوع الاتهام؛ قُضي بالبراءة.", "en": "No administrative breach; allegation not specific; acquittal." }
+        },
+        {
+          "title": { "ar": "براءة من عدم الامتثال لأوامر إدارية", "en": "Acquittal of Non‑Compliance with Administrative Orders" },
+          "desc": { "ar": "بطلان الدليل الإداري وغياب القصد الجنائي؛ قُضي بالبراءة.", "en": "Administrative evidence void; no mens rea; acquittal." }
+        }
+      ]
+    },
+    "team": {
+      "title": { "ar": "الفريق", "en": "Team" },
+      "intro": { "ar": "فريق قانوني وتقني يجمع الخبرة بالممارسة والابتكار.", "en": "A legal & tech team combining practice with innovation." },
+      "members": [
+        {
+          "name": { "ar": "عضو فريق 1", "en": "Team Member 1" },
+          "role": { "ar": "محام بالنقض", "en": "Cassation Lawyer" },
+          "bio": { "ar": "خبرة واسعة في التقاضي والتحكيم وصياغة العقود.", "en": "Extensive experience in litigation, arbitration, and contracts." }
+        },
+        {
+          "name": { "ar": "عضو فريق 2", "en": "Team Member 2" },
+          "role": { "ar": "مستشار قانوني وتقني", "en": "Legal & Tech Consultant" },
+          "bio": { "ar": "اختصاص في الجرائم الإلكترونية والتحول الرقمي القانوني.", "en": "Specialized in cybercrime & legal digital transformation." }
+        }
+      ]
+    },
+    "contact": {
+      "title": { "ar": "اتصل بنا", "en": "Contact Us" },
+      "blurb": { "ar": "هل لديك أي استفسار؟ يسعدنا تواصلك.", "en": "Have a question? We'd love to hear from you." },
+      "emailCta": { "ar": "راسلنا", "en": "Email Us" }
     }
   }
 }
+

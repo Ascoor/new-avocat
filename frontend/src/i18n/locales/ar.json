@@ -10,6 +10,11 @@
     "toggle_sidebar": "تبديل القائمة",
     "notifications": "الإشعارات",
     "no_notifications": "لا توجد إشعارات"
+  }, 
+  
+  "about": {
+    "title": "من نحن",
+    "description": "أحدث نظام لإدارة المكاتب القانونية."
   },
   "brand": {
     "name": "أفوكات مكتب محاماة" ,

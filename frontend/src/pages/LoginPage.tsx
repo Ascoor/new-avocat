@@ -139,8 +139,8 @@ const LoginPage: React.FC = () => {
   {/* محتوى متوسّط بالكامل */}
   <div className="relative z-10 flex items-center justify-center w-full h-full">
     <div className="text-white text-center max-w-md">
-      <BrandLogo variant="full" className="mx-auto h-24 w-auto drop-shadow-none shadow-none" />
-    </div>
+ 
+<BrandLogo variant="static-ar" className="h-36" />   </div>
   </div>
 </div>
 
