@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import DemoPage from '@/pages/DemoPage';
+import DemoPage from '@/pages/demo/DemoPage';
 import type { MenuItem } from '@/config/sidebar';
 
 export const generateDemoRoutes = (items: MenuItem[], skip: Set<string> = new Set()) => {
