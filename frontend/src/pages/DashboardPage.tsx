@@ -1,10 +1,8 @@
-import StatsCards from '@/components/dashboard/StatsCards';
-import CasesByStatusChart from '@/components/dashboard/CasesByStatusChart';
-import CasesByCategoryChart from '@/components/dashboard/Cases';
-import QuickActions from '@/components/dashboard/QuickActions';
-import RecentCases from '@/components/dashboard/RecentCases';
-import UpcomingSessions from '@/components/dashboard/DashboardHome';
-import { useTranslation } from 'react-i18next';
+import StatsCards from '@/components/dashboard/StatsCards'
+import CasesByStatusChart from '@/components/dashboard/CasesByStatusChart'
+import QuickActions from '@/components/dashboard/QuickActions'
+import RecentCases from '@/components/dashboard/RecentCases'
+import { useTranslation } from 'react-i18next'
 export default function DashboardPage() {
   const { t } = useTranslation();
   return (
@@ -16,16 +14,12 @@ export default function DashboardPage() {
       <StatsCards />
       <div className="grid gap-4 lg:grid-cols-2">
         <CasesByStatusChart />
-        <CasesByCategoryChart />
+        <RecentCases />
       </div>
       <div>
         <h2 className="text-xl font-semibold mb-4">{t('dashboard.quick_actions')}</h2>
         <QuickActions />
       </div>
-      <div className="grid gap-4 lg:grid-cols-2">
-        <RecentCases />
-        <UpcomingSessions />
-      </div>
     </div>
-  );
+  )
 }

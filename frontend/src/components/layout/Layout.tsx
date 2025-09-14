@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Header } from "./Header";
@@ -38,7 +39,7 @@ const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
               }}
               className="p-6"
             >
-              {children}
+              {children ?? <Outlet />}
             </motion.div>
           </main>
         </div>

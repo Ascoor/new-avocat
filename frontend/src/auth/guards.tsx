@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
   children?: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
 
@@ -24,4 +24,20 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   return <>{children || <Outlet />}</>;
 };
 
-export default ProtectedRoute;
+// PublicRoute: blocks access to auth-only pages when authenticated
+export const PublicRoute: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return <BrandedLoader full />;
+  }
+
+  if (isAuthenticated) {
+    // If already logged in, redirect away from public auth pages
+    const next = new URLSearchParams(location.search).get('next') || '/dashboard';
+    return <Navigate to={next} replace />;
+  }
+
+  return <>{children || <Outlet />}</>;
+};
