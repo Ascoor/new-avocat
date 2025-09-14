@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Header } from "./Header";
 import Sidebar from "../sidebar/Sidebar";
 import MobileDrawer from "./MobileDrawer";
+import { useSidebar } from "@/contexts/SidebarContext";
 
 interface AppShellProps {
   children?: React.ReactNode;
@@ -14,6 +15,7 @@ interface AppShellProps {
 const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
   const { i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
+  const { toggleMobile } = useSidebar();
 
   return (
     <div
@@ -22,12 +24,14 @@ const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
     >
       {/* Desktop Layout */}
       <div className="flex h-screen">
-        {/* Sidebar */}
-        <Sidebar />
+        {/* Sidebar (desktop only) */}
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0">
-          <Header title={title} />
+          <Header title={title} onToggleSidebar={toggleMobile} />
 
           <main className="flex-1 overflow-y-auto">
             <motion.div

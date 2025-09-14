@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { SidebarProvider } from "@/contexts/SidebarContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ProtectedRoute, PublicRoute } from "@/auth/guards";
@@ -16,6 +17,7 @@ import Cases from "@/components/dashboard/Cases";
 import ClientsAndUnclients from "@/pages/ClientsAndUnclients";
 import ClientsPage from "@/pages/ClientsPage";
 import UnclientsPage from "@/pages/UnclientsPage";
+import ClientDetailsPage from "@/pages/ClientDetailsPage";
 import Lawyers from "@/components/dashboard/Lawyers";
 import NotFound from "@/pages/NotFound";
 import { menuItems } from "@/config/menuItems";
@@ -27,6 +29,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <LanguageProvider>
+        <SidebarProvider>
         <AuthProvider>
           <TooltipProvider>
             <Toaster />
@@ -47,6 +50,7 @@ const App = () => (
                     <Route path="/clients" element={<ClientsAndUnclients />} >
                       <Route index element={<ClientsPage />} />
                       <Route path="authorized" element={<ClientsPage />} />
+                      <Route path="authorized/:id" element={<ClientDetailsPage />} />
                       <Route path="unauthorized" element={<UnclientsPage />} />
                     </Route>
                     <Route path="/lawyers" element={<Lawyers />} />
@@ -93,6 +97,7 @@ const App = () => (
             </BrowserRouter>
           </TooltipProvider>
         </AuthProvider>
+        </SidebarProvider>
       </LanguageProvider>
     </ThemeProvider>
   </QueryClientProvider>

@@ -1,14 +1,14 @@
+import { AxiosPromise } from 'axios'
+import apiClient from './apiClient'
+
 export interface Procedure {
-  id?: string | number;
-  title: string;
-  note?: string;
+  id?: string | number
+  title: string
+  note?: string
 }
 
-export const proceduresApi = {
-  async create(data: Partial<Procedure>): Promise<Procedure> {
-    return { id: 1, title: '', ...data } as Procedure;
-  },
-  async update(id: string | number, data: Partial<Procedure>): Promise<Procedure> {
-    return { id, ...data } as Procedure;
-  },
-};
+export const getProcedures = (): AxiosPromise<Procedure[] | { procedures: Procedure[] }> => apiClient.get('/procedures')
+export const getProcedureById = (id: string | number): AxiosPromise<Procedure> => apiClient.get(`/procedures/${id}`)
+export const createProcedure = (data: Partial<Procedure>): AxiosPromise<Procedure> => apiClient.post('/procedures', data)
+export const updateProcedure = (id: string | number, data: Partial<Procedure>): AxiosPromise<Procedure> => apiClient.put(`/procedures/${id}`, data)
+export const deleteProcedure = (id: string | number): AxiosPromise<void> => apiClient.delete(`/procedures/${id}`)

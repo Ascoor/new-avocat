@@ -9,7 +9,7 @@ const Table = React.forwardRef<
   <div className="relative w-full overflow-auto">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
+      className={cn("w-full min-w-[640px] caption-bottom text-sm", className)}
       {...props}
     />
   </div>
@@ -58,7 +58,11 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+      "border-b transition-colors odd:bg-muted/30 hover:bg-muted/50 data-[state=selected]:bg-muted",
+      "data-[tone=success]:bg-[hsl(var(--success))]/5 data-[tone=success]:hover:bg-[hsl(var(--success))]/10 data-[tone=success]:text-[hsl(var(--success))]",
+      "data-[tone=danger]:bg-[hsl(var(--destructive))]/5 data-[tone=danger]:hover:bg-[hsl(var(--destructive))]/10 data-[tone=danger]:text-[hsl(var(--destructive))]",
+      "data-[tone=primary]:bg-[hsl(var(--primary))]/5 data-[tone=primary]:hover:bg-[hsl(var(--primary))]/10 data-[tone=primary]:text-[hsl(var(--primary))]",
+      "data-[tone=accent]:bg-[hsl(var(--accent))]/5 data-[tone=accent]:hover:bg-[hsl(var(--accent))]/10 data-[tone=accent]:text-[hsl(var(--accent))]",
       className
     )}
     {...props}
@@ -73,7 +77,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      "sticky top-0 z-10 bg-card h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
       className
     )}
     {...props}
@@ -87,7 +91,11 @@ const TableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)}
+    className={cn(
+      "p-4 align-middle [&:has([role=checkbox])]:pr-0 data-[align=center]:text-center data-[align=right]:text-right data-[numeric=true]:text-right tabular-nums",
+      "data-[tone=success]:text-[hsl(var(--success))] data-[tone=danger]:text-[hsl(var(--destructive))] data-[tone=primary]:text-[hsl(var(--primary))] data-[tone=accent]:text-[hsl(var(--accent))]",
+      className
+    )}
     {...props}
   />
 ))

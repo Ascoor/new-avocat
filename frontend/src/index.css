@@ -80,7 +80,7 @@
     --sidebar-foreground: 220 25% 10%;
     --sidebar-primary: 220 60% 25%;
     --sidebar-primary-foreground: 220 15% 98%;
-    --sidebar-accent: 220 20% 90%;
+    --sidebar-accent: 58.2 100% 93.5%;
     --sidebar-accent-foreground: 220 25% 10%;
     --sidebar-border: 220 20% 88%;
     --sidebar-ring: 210 40% 45%;
@@ -138,15 +138,15 @@
 
     /* Dark Shadows */
     --shadow-glow: 0 0 30px hsl(var(--accent-glow));
-    --shadow-glass: 0 8px 32px hsl(210 40% 45% / 0.12);
-    --shadow-elegant: 0 4px 16px hsl(210 40% 45% / 0.15);
+    --shadow-glass: 0 8px 32px hsla(130, 73%, 47%, 0.418);
+    --shadow-elegant: 0 4px 16px hsla(83, 100%, 51%, 0.493);
 
     /* Dark Sidebar */
     --sidebar-background: 220 25% 8%;
     --sidebar-foreground: 220 15% 95%;
     --sidebar-primary: 210 40% 55%;
     --sidebar-primary-foreground: 220 25% 6%;
-    --sidebar-accent: 220 25% 12%;
+    --sidebar-accent: 152.1 100% 30.4%;
     --sidebar-accent-foreground: 220 15% 95%;
     --sidebar-border: 220 25% 18%;
     --sidebar-ring: 210 40% 55%;

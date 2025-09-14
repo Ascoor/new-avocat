@@ -9,7 +9,7 @@ export interface Client {
   phone_number?: string;
   identity_number: string;
   address: string;
-  company?: string;
+  company?: string; 
   notes?: string;
   status: 'active' | 'inactive';
   createdAt: string;
