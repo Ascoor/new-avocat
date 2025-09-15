@@ -90,12 +90,12 @@ const MobileDrawer: React.FC = () => {
               damping: 25,
               stiffness: 200 
             }}
-            className={cn(
-              'fixed top-0 z-50 h-full w-80 max-w-[85vw] bg-sidebar-background border-border md:hidden',
-              'flex flex-col shadow-lg',
-              isRTL ? 'right-0 border-l' : 'left-0 border-r'
-            )}
-          >
+              className={cn(
+                'fixed top-0 z-50 h-full w-full bg-sidebar-background border-border md:hidden overflow-y-auto',
+                'flex flex-col shadow-lg',
+                isRTL ? 'right-0 border-l' : 'left-0 border-r'
+              )}
+            >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
               <BrandLogo variant="full" className="h-8" />
