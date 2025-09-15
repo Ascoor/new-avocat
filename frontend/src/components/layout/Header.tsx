@@ -1,11 +1,6 @@
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { Globe, User, Bell, Menu } from 'lucide-react';
+import React from 'react';
+import { Moon, Sun, Globe, ChevronDown, User, LogOut, Menu, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,71 +8,117 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useSidebar } from '@/contexts/SidebarContext';
+import BrandLogo from '@/components/common/BrandLogo';
+import { cn } from '@/lib/utils';
 
 interface HeaderProps {
   title?: string;
-  onToggleSidebar?: () => void;
+  className?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, onToggleSidebar }) => {
-  const { t } = useTranslation();
-  const { language, toggleLanguage } = useLanguage();
-  const { logout } = useAuth();
-  const navigate = useNavigate();
+export const Header: React.FC<HeaderProps> = ({ title, className }) => {
+  const { theme, toggleTheme } = useTheme();
+const { language, toggleLanguage, t, isRTL } = useLanguage();
+
+  const { user, logout } = useAuth();
+  const { toggleMobile } = useSidebar();
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-background py-3 px-4 md:px-8 border-b border-border flex items-center justify-between"
-    >
-      <div className="flex items-center gap-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onToggleSidebar}
-          className="glass-button hover:shadow-glow transition-colors md:hidden"
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
-        {title && <h1 className="text-lg font-bold text-primary">{title}</h1>}
+    <header className={cn(
+      'sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur',
+      className
+    )}>
+      <div className="flex h-full items-center justify-between px-4 gap-4">
+        {/* Left side */}
+        <div className={cn(
+          'flex items-center gap-3',
+          isRTL ? 'flex-row-reverse' : 'flex-row'
+        )}>
+          {/* Mobile menu button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleMobile}
+            className="md:hidden h-9 w-9"
+            aria-label={t('common.menu')}
+          >
+            <Menu className="h-4 w-4" />
+          </Button>
+
+          {/* Desktop logo - hidden on mobile */}
+          <div className="hidden md:block">
+            <BrandLogo variant="full" className="h-8" />
+          </div>
+
+          {/* Page title */}
+          {title && (
+            <h1 className="hidden sm:block text-lg font-semibold text-foreground">
+              {title}
+            </h1>
+          )}
+        </div>
+
+        {/* Right Side Controls */}
+        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="rounded-full hover:bg-accent/20 glow-hover"
+          >
+            {theme === 'light' ? (
+              <Moon className="h-5 w-5" />
+            ) : (
+              <Sun className="h-5 w-5" />
+            )}
+          </Button>
+
+   <Button
+  variant="ghost"
+  size="icon"
+  onClick={toggleLanguage}
+  className="rounded-full hover:bg-accent/20 glow-hover"
+  aria-label="Toggle Language"
+>
+  {language === 'ar' ? 'EN' : 'ع'}
+</Button>
+
+          {/* User Menu */}
+          {user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-2 rtl:space-x-reverse rounded-full hover:bg-accent/20 glow-hover">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback className="bg-gradient-primary text-white">
+                      {user.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="hidden md:block font-medium">{user.name}</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="glass border-glass-border w-56">
+                <DropdownMenuItem className="flex items-center">
+                  <User className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                  {t('auth.profile')}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-glass-border" />
+                <DropdownMenuItem onClick={logout} className="flex items-center text-destructive">
+                  <LogOut className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                  {t('auth.logout')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </div>
       </div>
-
-      <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" className="relative glass-button">
-          <Bell className="h-4 w-4" />
-          <span className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full animate-pulse" />
-        </Button>
-
-        <Button variant="ghost" size="sm" onClick={toggleLanguage} className="glass-button">
-          <Globe className="h-4 w-4" />
-          <span className="ml-2 font-medium">{language === 'ar' ? 'العربية' : 'English'}</span>
-        </Button>
-
-        <ThemeToggle />
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="glass-button">
-              <User className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="glass-card border-white/20">
-            <DropdownMenuItem>{t('common.profile')}</DropdownMenuItem>
-            <DropdownMenuItem>{t('common.settings')}</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="text-destructive"
-              onSelect={() => {
-                logout();
-                navigate('/login');
-              }}
-            >
-              {t('common.logout')}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </motion.header>
+    </header>
   );
 };

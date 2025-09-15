@@ -6,10 +6,9 @@ export type Language = 'ar' | 'en';
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  toggleLanguage: () => void;     // ✅ أضفناها هنا
+  toggleLanguage: () => void; // ✅ الإضافة الجديدة
   t: (key: string) => string;
   isRTL: boolean;
-  direction: 'rtl' | 'ltr';
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -58,10 +57,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('avocat_language', language);
   }, [language]);
 
-  const toggleLanguage = () => {
-    setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));
-  };
-
   const t = (key: string): string => {
     const keys = key.split('.');
     let value: any = translations[language];
@@ -70,20 +65,27 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (value && typeof value === 'object' && k in value) {
         value = value[k];
       } else {
-        return flatTranslations[language][key as keyof typeof flatTranslations[typeof language]] || key;
+        return (
+          flatTranslations[language][
+            key as keyof typeof flatTranslations[typeof language]
+          ] || key
+        );
       }
     }
 
     return typeof value === 'string' ? value : key;
   };
 
+  const toggleLanguage = () => {
+    setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));
+  };
+
   const value: LanguageContextType = {
     language,
     setLanguage,
-    toggleLanguage, // ✅ هنا نضيفها
+    toggleLanguage, // ✅ إضافة الدالة
     t,
-    isRTL: language === 'ar',
-    direction: language === 'ar' ? 'rtl' : 'ltr',
+    isRTL: language === 'ar'
   };
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

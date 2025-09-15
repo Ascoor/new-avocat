@@ -1,0 +1,81 @@
+{
+  "brand": { 
+    "name": "Avocat" 
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "cases": "Cases",
+    "clients": "Clients",
+    "documents": "Documents",
+    "reports": "Reports",
+    "settings": "Settings",
+    "login": "Login",
+    "register": "Register"
+  },
+  "common": {
+    "theme": "Theme",
+    "language": "Language",
+    "logout": "Logout",
+    "profile": "Profile",
+    "dark": "Dark",
+    "light": "Light",
+    "notifications": "Notifications",
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "kpis": {
+      "openCases": "Open Cases",
+      "activeClients": "Active Clients",
+      "hearings": "Hearings This Week",
+      "revenue": "Monthly Revenue"
+    },
+    "recentActivity": "Recent Activity",
+    "casesByStatus": "Cases by Status"
+  },
+  "cases": {
+    "title": "Cases",
+    "addNew": "Add New Case",
+    "status": "Status",
+    "client": "Client",
+    "type": "Type",
+    "nextHearing": "Next Hearing",
+    "actions": "Actions"
+  },
+  "clients": {
+    "title": "Clients",
+    "addNew": "Add New Client",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "joinDate": "Join Date"
+  },
+  "documents": {
+    "title": "Documents",
+    "upload": "Upload Document",
+    "viewType": "View Type",
+    "grid": "Grid",
+    "list": "List"
+  },
+  "reports": {
+    "title": "Reports",
+    "dateRange": "Date Range",
+    "generate": "Generate Report"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile Settings",
+    "preferences": "Preferences",
+    "appearance": "Appearance",
+    "rtlPreview": "RTL Preview"
+  }
+}

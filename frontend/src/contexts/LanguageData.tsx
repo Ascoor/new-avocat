@@ -1,4 +1,4 @@
- 
+// Language translations for the application
 
 export const translations = {
   en: {

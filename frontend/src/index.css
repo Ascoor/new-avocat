@@ -59,7 +59,6 @@
     /* Design System Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(220 60% 25%), hsl(210 40% 45%));
     --gradient-hero: linear-gradient(135deg, hsl(220, 88%, 74%) 0%, hsl(202, 69%, 54%) 50%, hsl(220, 100%, 74%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsla(53, 100%, 98%, 0.95), hsla(46, 100%, 86%, 0.959));
 
     /* Shadow System */
     --shadow-glow: 0 0 25px hsl(var(--accent-glow));
@@ -79,9 +78,9 @@
     --sidebar-background: 220 15% 97%;
     --sidebar-foreground: 220 25% 10%;
     --sidebar-primary: 220 60% 25%;
-    --sidebar-primary-foreground: 220 15% 98%;
-    --sidebar-accent: 58.2 100% 93.5%;
-    --sidebar-accent-foreground: 220 25% 10%;
+    --sidebar-primary-foreground: 22.0 28.8% 32%;
+    --sidebar-accent:  24.0 82.1% 46.1%;
+    --sidebar-accent-foreground: 0 70.4% 47.6%;
     --sidebar-border: 220 20% 88%;
     --sidebar-ring: 210 40% 45%;
   }

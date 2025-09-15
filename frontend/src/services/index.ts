@@ -1,6 +1,0 @@
-export { default as apiClient } from './apiClient'
-export * from './courts'
-export * from './lawyers'
-export * from './events'
-export * from './expenses'
-export * from './ads'

@@ -1,22 +1,28 @@
 import React from 'react';
-import { Sun, Moon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useTheme } from '@/contexts';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import { Button } from './button';
 
-export const ThemeToggle: React.FC = () => {
+const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
 
   return (
     <Button
       variant="ghost"
-      size="sm"
+      size="icon"
       onClick={toggleTheme}
-      aria-label={t('header.toggle_theme')}
-      className="glass-button hover:shadow-glow transition-colors"
+      aria-label={theme === 'dark' ? t('light') : t('dark')}
+      className="h-9 w-9"
     >
-      {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+      {theme === 'dark' ? (
+        <Sun className="h-4 w-4" />
+      ) : (
+        <Moon className="h-4 w-4" />
+      )}
     </Button>
   );
 };
+
+export default ThemeToggle;

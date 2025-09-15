@@ -1,0 +1,81 @@
+{
+  "brand": { 
+    "name": "أفوكات" 
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "cases": "القضايا",
+    "clients": "العملاء",
+    "documents": "الوثائق",
+    "reports": "التقارير",
+    "settings": "الإعدادات",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
+  },
+  "common": {
+    "theme": "المظهر",
+    "language": "اللغة",
+    "logout": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "dark": "ليلي",
+    "light": "نهاري",
+    "notifications": "الإشعارات",
+    "menu": "القائمة",
+    "close": "إغلاق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "export": "تصدير",
+    "add": "إضافة",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "save": "حفظ",
+    "cancel": "إلغاء"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "kpis": {
+      "openCases": "القضايا المفتوحة",
+      "activeClients": "العملاء النشطون",
+      "hearings": "الجلسات هذا الأسبوع",
+      "revenue": "الإيرادات الشهرية"
+    },
+    "recentActivity": "النشاط الأخير",
+    "casesByStatus": "القضايا حسب الحالة"
+  },
+  "cases": {
+    "title": "القضايا",
+    "addNew": "إضافة قضية جديدة",
+    "status": "الحالة",
+    "client": "العميل",
+    "type": "النوع",
+    "nextHearing": "الجلسة القادمة",
+    "actions": "الإجراءات"
+  },
+  "clients": {
+    "title": "العملاء",
+    "addNew": "إضافة عميل جديد",
+    "name": "الاسم",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "joinDate": "تاريخ الانضمام"
+  },
+  "documents": {
+    "title": "الوثائق",
+    "upload": "رفع وثيقة",
+    "viewType": "نوع العرض",
+    "grid": "شبكة",
+    "list": "قائمة"
+  },
+  "reports": {
+    "title": "التقارير",
+    "dateRange": "نطاق التاريخ",
+    "generate": "إنشاء تقرير"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "profile": "إعدادات الملف الشخصي",
+    "preferences": "التفضيلات",
+    "appearance": "المظهر",
+    "rtlPreview": "معاينة RTL"
+  }
+}
