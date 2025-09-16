@@ -33,6 +33,11 @@
   },
   "dashboard": {
     "title": "Dashboard",
+    "tagline": "Command center for your practice",
+    "status": {
+      "label": "Workspace status",
+      "healthy": "All systems steady"
+    },
     "kpis": {
       "openCases": "Open Cases",
       "activeClients": "Active Clients",

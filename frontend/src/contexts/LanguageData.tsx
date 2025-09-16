@@ -23,6 +23,14 @@ export const translations = {
       expand: 'Expand sidebar',
       collapse: 'Collapse sidebar'
     },
+
+    dashboard: {
+      tagline: 'Command center for your practice',
+      status: {
+        label: 'Workspace status',
+        healthy: 'All systems steady'
+      }
+    },
     
     // Common
     common: {
@@ -207,6 +215,14 @@ export const translations = {
       courts_search: 'البحث في المحاكم',
       expand: 'توسيع الشريط الجانبي',
       collapse: 'طي الشريط الجانبي'
+    },
+
+    dashboard: {
+      tagline: 'مركز القيادة لإدارة مكتبك',
+      status: {
+        label: 'حالة مساحة العمل',
+        healthy: 'كل الأنظمة مستقرة'
+      }
     },
 
     // عام
