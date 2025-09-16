@@ -32,6 +32,68 @@
     "cancel": "Cancel",
     "loading": "Loading..."
   },
+  "landing": {
+    "hero": {
+      "title": "A comprehensive legal platform to run your firm professionally",
+      "subtitle": "Avocat gives your team a unified view of cases, clients, and hearings with intelligent analytics and a native Arabic-first experience."
+    },
+    "cta": {
+      "signup": "Start your free trial",
+      "login": "Sign in to your account"
+    },
+    "features": {
+      "title": "Why Legal Teams Choose Avocat",
+      "subtitle": "A professional solution built for law firms pursuing a complete digital transformation.",
+      "items": {
+        "caseManagement": {
+          "title": "Matter Control Center",
+          "description": "Track case progress and tasks with instant alerts and precise reporting at every stage."
+        },
+        "clientManagement": {
+          "title": "Intelligent Client Management",
+          "description": "Organize client and agent records with full visibility into communications, directives, and history."
+        },
+        "documentAutomation": {
+          "title": "Smart Documents & Archiving",
+          "description": "Attach critical files, classify them automatically, and share securely with your team or clients."
+        },
+        "analytics": {
+          "title": "Advanced Reporting & Analytics",
+          "description": "Monitor firm performance, hearing indicators, and financial outcomes in real time."
+        },
+        "security": {
+          "title": "Enterprise-Grade Security",
+          "description": "Data encryption, granular permissions, and audit trails that protect your clients' privacy."
+        },
+        "cloudAccess": {
+          "title": "Reliable Cloud Access",
+          "description": "Work from any device with an Arabic-first experience that empowers distributed teams."
+        }
+      }
+    },
+    "secondaryCta": {
+      "title": "Elevate your law firm today",
+      "subtitle": "Join the growing community of firms relying on Avocat to transform their daily operations.",
+      "button": "Try Avocat now"
+    },
+    "footer": {
+      "tagline": "The most advanced legal practice management platform in the region.",
+      "servicesTitle": "Services",
+      "contactTitle": "Contact",
+      "services": {
+        "caseManagement": "Case Management",
+        "clientManagement": "Client Management",
+        "reports": "Professional Reports",
+        "archive": "Digital Archiving"
+      },
+      "contact": {
+        "email": "info@avocat.com",
+        "phone": "+966 11 123 4567",
+        "address": "Riyadh, Saudi Arabia"
+      },
+      "rights": "All rights reserved"
+    }
+  },
   "dashboard": {
     "title": "Dashboard",
     "kpis": {

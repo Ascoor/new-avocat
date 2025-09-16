@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
+import { CalendarCheck } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
+import DetailsTable, { DetailsTableColumn } from './DetailsTable';
 import { useToast } from '@/components/ui/use-toast';
 import {
   getSessionsByLegCaseId,
@@ -10,8 +13,6 @@ import {
 import { LegalSession } from '@/types/legalCase';
 import SessionModal from './SessionModal';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { CalendarCheck } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 
 interface SessionsSectionProps {
   caseId: string;
@@ -84,7 +85,7 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
           title={t('legalCaseDetails.sessions.title')}
           subtitle={t('legalCaseDetails.sessions.subtitle')}
         />
-        <Button onClick={openCreateModal} className="self-center sm:self-auto">
+        <Button onClick={openCreateModal} className="self-start sm:self-auto">
           {t('legalCaseDetails.sessions.addButton')}
         </Button>
       </div>
@@ -94,70 +95,26 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
           {t('common.loading')}
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-border/60 text-sm">
-            <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
-              <tr>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.date')}
-                </th>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.lawyer')}
-                </th>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.roll')}
-                </th>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.court')}
-                </th>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.orders')}
-                </th>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.result')}
-                </th>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.status')}
-                </th>
-                <th className="px-4 py-2 text-center">
-                  {t('legalCaseDetails.sessions.columns.actions')}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessions.length === 0 && (
-                <tr>
-                  <td className="px-4 py-6 text-center text-muted-foreground" colSpan={8}>
-                    {t('legalCaseDetails.sessions.empty')}
-                  </td>
-                </tr>
-              )}
-              {sessions.map((session) => (
-                <tr key={session.id} className="border-t border-border/40">
-                  <td className="px-4 py-2 text-sm">{session.session_date ?? '—'}</td>
-                  <td className="px-4 py-2 text-sm">{session.lawyer?.name ?? '—'}</td>
-                  <td className="px-4 py-2 text-sm">{session.session_roll ?? '—'}</td>
-                  <td className="px-4 py-2 text-sm">{session.court?.name ?? '—'}</td>
-                  <td className="px-4 py-2 text-sm">{session.orders ?? '—'}</td>
-                  <td className="px-4 py-2 text-sm">{session.result ?? '—'}</td>
-                  <td className="px-4 py-2 text-sm">{session.status ?? '—'}</td>
-                  <td className="px-4 py-2 text-center space-x-2 rtl:space-x-reverse">
-                    <Button variant="outline" size="sm" onClick={() => openEditModal(session)}>
-                      {t('legalCaseDetails.sessions.editButton')}
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => setConfirmDelete(session)}
-                    >
-                      {t('legalCaseDetails.sessions.deleteButton')}
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DetailsTable
+          data={sessions}
+          columns={createSessionColumns(t)}
+          actionsHeader={t('legalCaseDetails.sessions.columns.actions')}
+          renderActions={(session) => (
+            <div className="flex justify-center gap-2">
+              <Button variant="outline" size="sm" onClick={() => openEditModal(session)}>
+                {t('legalCaseDetails.sessions.editButton')}
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => setConfirmDelete(session)}
+              >
+                {t('legalCaseDetails.sessions.deleteButton')}
+              </Button>
+            </div>
+          )}
+          emptyMessage={t('legalCaseDetails.sessions.empty')}
+        />
       )}
 
       <SessionModal
@@ -183,6 +140,39 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
     </Card>
   );
 };
+
+const createSessionColumns = (
+  t: ReturnType<typeof useLanguage>['t'],
+): DetailsTableColumn<LegalSession>[] => [
+  {
+    header: t('legalCaseDetails.sessions.columns.date'),
+    render: (session) => session.session_date ?? '—',
+  },
+  {
+    header: t('legalCaseDetails.sessions.columns.lawyer'),
+    render: (session) => session.lawyer?.name ?? '—',
+  },
+  {
+    header: t('legalCaseDetails.sessions.columns.roll'),
+    render: (session) => session.session_roll ?? '—',
+  },
+  {
+    header: t('legalCaseDetails.sessions.columns.court'),
+    render: (session) => session.court?.name ?? '—',
+  },
+  {
+    header: t('legalCaseDetails.sessions.columns.orders'),
+    render: (session) => session.orders ?? '—',
+  },
+  {
+    header: t('legalCaseDetails.sessions.columns.result'),
+    render: (session) => session.result ?? '—',
+  },
+  {
+    header: t('legalCaseDetails.sessions.columns.status'),
+    render: (session) => session.status ?? '—',
+  },
+];
 
 const SectionHeading = ({
   icon: Icon,

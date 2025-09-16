@@ -8,38 +8,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 const Landing: React.FC = () => {
   const { t, isRTL } = useLanguage();
 
-  const features = [
-    {
-      icon: Gavel,
-      title: isRTL ? 'إدارة القضايا' : 'Case Management',
-      description: isRTL ? 'نظام شامل لإدارة ومتابعة جميع القضايا القانونية' : 'Comprehensive system for managing and tracking all legal cases'
-    },
-    {
-      icon: Users,
-      title: isRTL ? 'إدارة العملاء' : 'Client Management', 
-      description: isRTL ? 'متابعة العملاء والوكلاء مع نظام تنبيهات ذكي' : 'Track clients and agents with smart notification system'
-    },
-    {
-      icon: FileText,
-      title: isRTL ? 'الوثائق القانونية' : 'Legal Documents',
-      description: isRTL ? 'تنظيم وأرشفة جميع الوثائق والمستندات القانونية' : 'Organize and archive all legal documents and files'
-    },
-    {
-      icon: BarChart3,
-      title: isRTL ? 'التقارير التحليلية' : 'Analytics Reports',
-      description: isRTL ? 'تقارير مفصلة حول الأداء والإحصائيات' : 'Detailed performance and statistical reports'
-    },
-    {
-      icon: Shield,
-      title: isRTL ? 'الأمان المتقدم' : 'Advanced Security',
-      description: isRTL ? 'حماية البيانات الحساسة بأعلى معايير الأمان' : 'Protect sensitive data with highest security standards'
-    },
-    {
-      icon: Globe,
-      title: isRTL ? 'الوصول السحابي' : 'Cloud Access',
-      description: isRTL ? 'وصول آمن من أي مكان وفي أي وقت' : 'Secure access from anywhere, anytime'
-    }
-  ];
+  const featureItems = [
+    { icon: Gavel, key: 'caseManagement' },
+    { icon: Users, key: 'clientManagement' },
+    { icon: FileText, key: 'documentAutomation' },
+    { icon: BarChart3, key: 'analytics' },
+    { icon: Shield, key: 'security' },
+    { icon: Globe, key: 'cloudAccess' }
+  ] as const;
 
   return (
     <div className="min-h-screen">
@@ -77,15 +53,15 @@ const Landing: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-              {isRTL ? 'مميزات النظام' : 'System Features'}
+              {t('landing.features.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {isRTL ? 'اكتشف كيف يمكن لنظام Avocat تحويل طريقة إدارة مكتبك القانوني' : 'Discover how Avocat can transform your legal office management'}
+              {t('landing.features.subtitle')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+            {featureItems.map((feature, index) => (
               <GlassCard
                 key={index}
                 variant="primary"
@@ -98,12 +74,12 @@ const Landing: React.FC = () => {
                     <feature.icon className="h-6 w-6 text-white" />
                   </div>
                   <GlassCardTitle className="text-xl font-semibold">
-                    {feature.title}
+                    {t(`landing.features.items.${feature.key}.title`)}
                   </GlassCardTitle>
                 </GlassCardHeader>
                 <GlassCardContent>
                   <GlassCardDescription className="text-base leading-relaxed">
-                    {feature.description}
+                    {t(`landing.features.items.${feature.key}.description`)}
                   </GlassCardDescription>
                 </GlassCardContent>
               </GlassCard>
@@ -117,15 +93,15 @@ const Landing: React.FC = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            {isRTL ? 'ابدأ رحلتك الرقمية اليوم' : 'Start Your Digital Journey Today'}
+            {t('landing.secondaryCta.title')}
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            {isRTL ? 'انضم إلى المئات من المكاتب القانونية التي تثق في نظام Avocat' : 'Join hundreds of law firms that trust Avocat system'}
+            {t('landing.secondaryCta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button asChild variant="glass" size="lg" className="w-full sm:w-auto bg-white/20 hover:bg-white/30 text-white border-white/20">
               <Link to="/signup">
-                {t('landing.cta.signup')}
+                {t('landing.secondaryCta.button')}
                 <ArrowRight className={`h-5 w-5 ${isRTL ? 'rotate-180' : ''}`} />
               </Link>
             </Button>
@@ -139,32 +115,32 @@ const Landing: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
               <h3 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4">
-                Avocat
+                {t('brand.name')}
               </h3>
               <p className="text-muted-foreground mb-4">
-                {isRTL ? 'نظام إدارة المكاتب القانونية الأكثر تطوراً في المنطقة' : 'The most advanced legal office management system in the region'}
+                {t('landing.footer.tagline')}
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">{isRTL ? 'الخدمات' : 'Services'}</h4>
+              <h4 className="font-semibold mb-4">{t('landing.footer.servicesTitle')}</h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li>{isRTL ? 'إدارة القضايا' : 'Case Management'}</li>
-                <li>{isRTL ? 'إدارة العملاء' : 'Client Management'}</li>
-                <li>{isRTL ? 'التقارير' : 'Reports'}</li>
-                <li>{isRTL ? 'الأرشيف' : 'Archive'}</li>
+                <li>{t('landing.footer.services.caseManagement')}</li>
+                <li>{t('landing.footer.services.clientManagement')}</li>
+                <li>{t('landing.footer.services.reports')}</li>
+                <li>{t('landing.footer.services.archive')}</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">{isRTL ? 'التواصل' : 'Contact'}</h4>
+              <h4 className="font-semibold mb-4">{t('landing.footer.contactTitle')}</h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li>info@avocat.com</li>
-                <li>+966 11 123 4567</li>
-                <li>{isRTL ? 'الرياض، المملكة العربية السعودية' : 'Riyadh, Saudi Arabia'}</li>
+                <li>{t('landing.footer.contact.email')}</li>
+                <li>{t('landing.footer.contact.phone')}</li>
+                <li>{t('landing.footer.contact.address')}</li>
               </ul>
             </div>
           </div>
           <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 Avocat. {isRTL ? 'جميع الحقوق محفوظة' : 'All rights reserved'}.</p>
+            <p>&copy; 2024 {t('brand.name')}. {t('landing.footer.rights')}.</p>
           </div>
         </div>
       </footer>
