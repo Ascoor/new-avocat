@@ -139,7 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     );
 
     return (
-      <div key={item.key} className="w-full">
+       <div key={item.key} className="w-full">
         {hasChildren ? (
           <button
             onClick={() => !isCollapsed && toggleExpanded(item.key)}
@@ -224,7 +224,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 z-50 h-full glass border-r border-sidebar-border transition-all duration-300",
+          "bg-[var(--gradient-sidebar)] fixed top-0 z-50 h-full glass border-r border-sidebar-border transition-all duration-300",
           "lg:relative lg:translate-x-0",
           // Positioning based on RTL/LTR
           isRTL ? "right-0" : "left-0",

@@ -24,7 +24,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { theme, toggleTheme } = useTheme();
 const { language, toggleLanguage, t, isRTL } = useLanguage();
-
+ 
+const isArabic = language === 'ar';
   const { user, logout } = useAuth();
   const { toggleMobile } = useSidebar();
 
@@ -52,7 +53,9 @@ const { language, toggleLanguage, t, isRTL } = useLanguage();
 
           {/* Desktop logo - hidden on mobile */}
           <div className="hidden md:block">
-            <BrandLogo variant="full" className="h-8" />
+ 
+<BrandLogo variant="full" className="h-8" lang={language} />
+
           </div>
 
           {/* Page title */}
