@@ -1,5 +1,5 @@
 import React from 'react';
-import { Moon, Sun, Globe, ChevronDown, User, LogOut, Menu, Bell } from 'lucide-react';
+import { Moon, Sun, ChevronDown, User, LogOut, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -23,17 +23,20 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { theme, toggleTheme } = useTheme();
-const { language, toggleLanguage, t, isRTL } = useLanguage();
- 
-const isArabic = language === 'ar';
+  const { language, toggleLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { toggleMobile } = useSidebar();
 
+  const headerSurface = { '--glass-surface': 'var(--gradient-header)' } as React.CSSProperties;
+
   return (
-    <header className={cn(
-      'sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur',
-      className
-    )}>
+    <header
+      className={cn(
+        'sticky top-0 z-50 h-16 glass border-b border-border/60 text-white shadow-elegant',
+        className
+      )}
+      style={headerSurface}
+    >
       <div className="flex h-full items-center justify-between px-4 gap-4">
         {/* Left side */}
         <div className={cn(
@@ -45,7 +48,7 @@ const isArabic = language === 'ar';
             variant="ghost"
             size="icon"
             onClick={toggleMobile}
-            className="md:hidden h-9 w-9"
+            className="md:hidden h-9 w-9 text-white hover:bg-white/15 hover:text-white focus-visible:ring-white/60 focus-visible:ring-offset-0"
             aria-label={t('common.menu')}
           >
             <Menu className="h-4 w-4" />
@@ -53,14 +56,12 @@ const isArabic = language === 'ar';
 
           {/* Desktop logo - hidden on mobile */}
           <div className="hidden md:block">
- 
-<BrandLogo variant="full" className="h-8" lang={language} />
-
+            <BrandLogo variant="full" className="h-8" lang={language} />
           </div>
 
           {/* Page title */}
           {title && (
-            <h1 className="hidden sm:block text-lg font-semibold text-foreground">
+            <h1 className="hidden sm:block text-lg font-semibold text-white/90">
               {title}
             </h1>
           )}
@@ -73,7 +74,7 @@ const isArabic = language === 'ar';
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="rounded-full hover:bg-accent/20 glow-hover"
+            className="rounded-full text-white hover:bg-white/15 hover:text-white focus-visible:ring-white/60 focus-visible:ring-offset-0 glow-hover"
           >
             {theme === 'light' ? (
               <Moon className="h-5 w-5" />
@@ -82,21 +83,24 @@ const isArabic = language === 'ar';
             )}
           </Button>
 
-   <Button
-  variant="ghost"
-  size="icon"
-  onClick={toggleLanguage}
-  className="rounded-full hover:bg-accent/20 glow-hover"
-  aria-label="Toggle Language"
->
-  {language === 'ar' ? 'EN' : 'ع'}
-</Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleLanguage}
+            className="rounded-full text-white hover:bg-white/15 hover:text-white focus-visible:ring-white/60 focus-visible:ring-offset-0 glow-hover"
+            aria-label="Toggle Language"
+          >
+            {language === 'ar' ? 'EN' : 'ع'}
+          </Button>
 
           {/* User Menu */}
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 rtl:space-x-reverse rounded-full hover:bg-accent/20 glow-hover">
+                <Button
+                  variant="ghost"
+                  className="flex items-center space-x-2 rtl:space-x-reverse rounded-full text-white hover:bg-white/15 hover:text-white focus-visible:ring-white/60 focus-visible:ring-offset-0 glow-hover"
+                >
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={user.avatar} alt={user.name} />
                     <AvatarFallback className="bg-gradient-primary text-white">

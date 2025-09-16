@@ -82,6 +82,13 @@ export default {
         'gradient-primary': 'var(--gradient-primary)',
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-glass': 'var(--gradient-glass)',
+        'gradient-header': 'var(--gradient-header)',
+        'gradient-sidebar': 'var(--gradient-sidebar)',
+        'gradient-card': 'var(--gradient-card)',
+        'gradient-accent': 'var(--gradient-accent)',
+        'gradient-success': 'var(--gradient-success)',
+        'gradient-warning': 'var(--gradient-warning)',
+        'gradient-destructive': 'var(--gradient-destructive)',
       },
       boxShadow: {
         'glow': 'var(--shadow-glow)',
