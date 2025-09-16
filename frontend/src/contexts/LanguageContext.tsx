@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { translations } from './LanguageData';
+import enCommon from '@/i18n/locales/en/common.json';
+import arCommon from '@/i18n/locales/ar/common.json';
 
 export type Language = 'ar' | 'en';
 
@@ -7,34 +9,43 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void; // ✅ الإضافة الجديدة
-  t: (key: string) => string;
+  t: (key: string, vars?: Record<string, string | number>) => string;
   isRTL: boolean;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Flattened translations object for backward compatibility
-const flatTranslations = {
+const flattenTranslations = (
+  source: Record<string, unknown>,
+  prefix = '',
+  target: Record<string, string> = {},
+): Record<string, string> => {
+  Object.entries(source).forEach(([key, value]) => {
+    const nextKey = prefix ? prefix + '.' + key : key;
+    if (typeof value === 'string') {
+      target[nextKey] = value;
+    } else if (value && typeof value === 'object') {
+      flattenTranslations(value as Record<string, unknown>, nextKey, target);
+    }
+  });
+  return target;
+};
+
+const extraTranslations: Record<Language, Record<string, unknown>> = {
+  ar: arCommon as Record<string, unknown>,
+  en: enCommon as Record<string, unknown>,
+};
+
+const flatTranslations: Record<Language, Record<string, string>> = {
   ar: {
-    ...Object.entries(translations.ar).reduce((acc, [section, values]) => {
-      if (typeof values === 'object') {
-        Object.entries(values).forEach(([key, value]) => {
-          acc[`${section}.${key}`] = value;
-        });
-      }
-      return acc;
-    }, {} as Record<string, string>)
+    ...flattenTranslations(translations.ar),
+    ...flattenTranslations(extraTranslations.ar),
   },
   en: {
-    ...Object.entries(translations.en).reduce((acc, [section, values]) => {
-      if (typeof values === 'object') {
-        Object.entries(values).forEach(([key, value]) => {
-          acc[`${section}.${key}`] = value;
-        });
-      }
-      return acc;
-    }, {} as Record<string, string>)
-  }
+    ...flattenTranslations(translations.en),
+    ...flattenTranslations(extraTranslations.en),
+  },
 };
 
 export const useLanguage = () => {
@@ -57,23 +68,35 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('avocat_language', language);
   }, [language]);
 
-  const t = (key: string): string => {
+  const interpolate = (
+    template: string,
+    vars?: Record<string, string | number>,
+  ) => {
+    if (!vars) return template;
+    return template.replace(/{{(\w+)}}/g, (match, name) =>
+      Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '',
+    );
+  };
+
+  const t = (key: string, vars?: Record<string, string | number>): string => {
     const keys = key.split('.');
-    let value: any = translations[language];
+    let value: unknown = translations[language];
 
     for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
+      if (value && typeof value === 'object' && k in (value as Record<string, unknown>)) {
+        value = (value as Record<string, unknown>)[k];
       } else {
-        return (
-          flatTranslations[language][
-            key as keyof typeof flatTranslations[typeof language]
-          ] || key
-        );
+        const fallback = flatTranslations[language][key] ?? key;
+        return interpolate(fallback, vars);
       }
     }
 
-    return typeof value === 'string' ? value : key;
+    if (typeof value === 'string') {
+      return interpolate(value, vars);
+    }
+
+    const fallback = flatTranslations[language][key] ?? key;
+    return interpolate(fallback, vars);
   };
 
   const toggleLanguage = () => {

@@ -10,7 +10,6 @@ type Renderer<T extends RowWithId> = (row: T) => ReactNode;
 
 type RowWithId = {
   id: RowId;
-  [key: string]: unknown;
 };
 
 export interface TableHeader<T extends RowWithId> {
@@ -31,16 +30,19 @@ export interface TableComponentProps<T extends RowWithId> {
 const ITEMS_PER_PAGE = 10;
 
 const getCellValue = <T extends RowWithId>(row: T, key: keyof T | string) => {
+  const asRecord = (value: unknown): Record<string, unknown> | undefined =>
+    value && typeof value === 'object' ? (value as Record<string, unknown>) : undefined;
+
   if (typeof key === 'string' && key.includes('.')) {
     return key.split('.').reduce<unknown>((value, part) => {
-      if (value && typeof value === 'object' && part in value) {
-        return (value as Record<string, unknown>)[part];
-      }
-      return undefined;
-    }, row);
+      const record = asRecord(value);
+      return record ? record[part] : undefined;
+    }, row as unknown);
   }
 
-  return row[key as keyof T];
+  const base = asRecord(row);
+  if (!base) return undefined;
+  return base[key as string];
 };
 
 const normalize = (value: unknown) =>
@@ -141,13 +143,13 @@ const TableComponent = <T extends RowWithId>({
       {filteredData.length > 0 ? (
         <div className="w-full overflow-x-auto">
           <table className="w-full table-auto shadow-md">
-            <thead className="border-b border-gray-600 bg-blue-500 text-center text-sm font-semibold uppercase tracking-wide text-gray-100 dark:bg-gradient-night dark:text-avocat-orange-light">
+            <thead className="border-b border-border/60 bg-muted/60 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               <tr>
                 {onView && <th className="px-4 py-3">عرض</th>}
                 {headers.map((header) => (
                   <th
                     key={String(header.key)}
-                    className="px-4 py-3 cursor-pointer"
+                    className="px-4 py-3 cursor-pointer text-foreground"
                     onClick={() => handleSort(header.key)}
                   >
                     <span className="inline-flex items-center gap-2">
@@ -172,7 +174,7 @@ const TableComponent = <T extends RowWithId>({
                     <td className="px-4 py-2">
                       <button
                         onClick={() => onView(String(row.id))}
-                        className="text-blue-600 transition-colors duration-300 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                        className="text-primary transition-colors duration-300 hover:text-primary/80"
                       >
                         <MdVisibility />
                       </button>
@@ -211,7 +213,7 @@ const TableComponent = <T extends RowWithId>({
                     <td className="px-4 py-2">
                       <button
                         onClick={() => onEdit(String(row.id))}
-                        className="text-violet-600 transition-colors duration-300 hover:text-violet-800 dark:text-violet-400 dark:hover:text-violet-300"
+                        className="text-primary transition-colors duration-300 hover:text-primary/80"
                       >
                         <MdEdit />
                       </button>
@@ -221,7 +223,7 @@ const TableComponent = <T extends RowWithId>({
                     <td className="px-4 py-2">
                       <button
                         onClick={() => onDelete(row)}
-                        className="text-red-600 transition-colors duration-300 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                        className="text-destructive transition-colors duration-300 hover:text-destructive/80"
                       >
                         <FaTrashAlt />
                       </button>

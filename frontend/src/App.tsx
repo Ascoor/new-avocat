@@ -13,6 +13,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import LegalCases from "@/components/LegalCases/LegalCases";
+import LegalCaseDetails from "@/components/LegalCases/Details/LegalCaseDetails";
 import Clients from "./pages/dashboard/StatsCards";
 import Lawyers from "./pages/dashboard/CasesByStatusChart";
 import NotFound from "./pages/NotFound";
@@ -42,6 +43,7 @@ const App = () => (
                 }>
                   <Route index element={<DashboardHome />} />
                   <Route path="cases" element={<LegalCases />} />
+                  <Route path="cases/:id" element={<LegalCaseDetails />} />
                   <Route path="clients" element={<Clients />} />
                   <Route path="lawyers" element={<Lawyers />} />
                   <Route path="customer_service" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Customer Service</h2><p className="text-muted-foreground">Coming Soon</p></div>} />

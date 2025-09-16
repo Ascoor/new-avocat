@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Scale } from 'lucide-react';
 import TableComponent, { TableHeader } from '@/components/common/TableComponent';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -40,18 +40,20 @@ const LegalCases = () => {
     [t],
   );
 
-  const customRenderers = useMemo<Record<string, (row: LegalCase) => ReactNode>>(
+  const customRenderers = useMemo<
+    Partial<Record<string, (row: LegalCase) => ReactNode>>
+  >(
     () => ({
       clients: (row: LegalCase) => {
         if (!row.clients || row.clients.length === 0) {
-          return <span className="text-gray-500">{t('legalCases.noClient')}</span>;
+          return <span className="text-muted-foreground">{t('legalCases.noClient')}</span>;
         }
         const [firstClient, ...others] = row.clients;
         return (
           <div className="flex flex-col items-center gap-1">
             <span>{firstClient.name}</span>
             {others.length > 0 && (
-              <span className="text-xs text-red-600">
+              <span className="text-xs text-destructive">
                 {t('legalCases.moreClients', { count: others.length })}
               </span>
             )}
@@ -60,7 +62,9 @@ const LegalCases = () => {
       },
       case_sub_type: (row: LegalCase) => row.case_sub_type?.name ?? '—',
       status: (row: LegalCase) => (
-        <span className={statusClasses[row.status] ?? 'text-gray-500'}>{row.status ?? '—'}</span>
+        <span className={statusClasses[row.status] ?? 'text-muted-foreground'}>
+          {row.status ?? '—'}
+        </span>
       ),
     }),
     [t],
@@ -79,24 +83,26 @@ const LegalCases = () => {
     }
   };
 
-  const handleDeleteCase = async (row: LegalCase) => {
+  const handleDeleteCase = (row: LegalCase) => {
     const confirmed = window.confirm(
       t('legalCases.confirmDelete', { title: row.title || row.slug }),
     );
 
     if (!confirmed) return;
 
-    try {
-      await deleteCase.mutateAsync(String(row.id));
-      toast({ title: t('legalCases.deleteSuccess') });
-    } catch (mutationError) {
-      console.error('Failed to delete legal case', mutationError);
-      toast({
-        title: t('legalCases.deleteErrorTitle'),
-        description: t('legalCases.deleteErrorDescription'),
-        variant: 'destructive',
+    void deleteCase
+      .mutateAsync(String(row.id))
+      .then(() => {
+        toast({ title: t('legalCases.deleteSuccess') });
+      })
+      .catch((mutationError) => {
+        console.error('Failed to delete legal case', mutationError);
+        toast({
+          title: t('legalCases.deleteErrorTitle'),
+          description: t('legalCases.deleteErrorDescription'),
+          variant: 'destructive',
+        });
       });
-    }
   };
 
   const handleViewCase = (id: string) => {
@@ -127,8 +133,12 @@ const LegalCases = () => {
         onDelete={handleDeleteCase}
         onView={handleViewCase}
         renderAddButton={() => (
-          <Button onClick={handleAddCase} className="flex items-center gap-2">
-            <PlusCircle className="h-4 w-4" />
+          <Button
+            variant="secondary"
+            onClick={handleAddCase}
+            className="flex items-center gap-2"
+          >
+            <PlusCircle className="h-4 w-4 text-primary" />
             {t('legalCases.addCase')}
           </Button>
         )}
@@ -138,15 +148,22 @@ const LegalCases = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">{t('legalCases.title')}</h1>
-          <p className="text-sm text-muted-foreground">{t('legalCases.subtitle')}</p>
+      <div className="rounded-2xl border border-border/60 bg-gradient-to-r from-primary/5 via-background to-background p-6 shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <Scale className="h-6 w-6" />
+            </span>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">{t('legalCases.title')}</h1>
+              <p className="text-sm text-muted-foreground">{t('legalCases.subtitle')}</p>
+            </div>
+          </div>
+          <Button onClick={handleAddCase} className="flex items-center gap-2 shadow-sm">
+            <PlusCircle className="h-4 w-4 text-primary-foreground" />
+            {t('legalCases.addCase')}
+          </Button>
         </div>
-        <Button onClick={handleAddCase} className="flex items-center gap-2 self-start">
-          <PlusCircle className="h-4 w-4" />
-          {t('legalCases.addCase')}
-        </Button>
       </div>
 
       {content}

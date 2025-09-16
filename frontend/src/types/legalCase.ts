@@ -179,6 +179,11 @@ export interface LegalAd {
   date?: string;
   details?: string;
   status?: string;
+  description?: string;
+  send_date?: string;
+  receive_date?: string;
+  lawyer_send?: Lawyer;
+  lawyer_receive?: Lawyer;
   created_by?: string;
   updated_by?: string;
   legal_ad_type?: LegalAdType;

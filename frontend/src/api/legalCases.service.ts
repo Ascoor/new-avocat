@@ -30,14 +30,23 @@ export const searchLegCase = (query: string) =>
 // ----------------------
 // علاقات (Clients, Courts, Lawyers)
 // ----------------------
-export const addLegalCaseClients = (caseId: string, clients: string[]) =>
-  api.post(`/api/legal-cases/${caseId}/add_clients`, { clients });
+export const addLegalCaseClients = (
+  caseId: string,
+  clients: Array<{ client_id: string }>,
+) => api.post(`/api/legal-cases/${caseId}/add_clients`, { clients });
 
 export const removeLegalCaseClient = (caseId: string, clientId: string) =>
   api.delete(`/api/legal-cases/${caseId}/clients/${clientId}`);
 
-export const addLegalCaseCourts = (caseId: string, courts: string[]) =>
-  api.post(`/api/legal-cases/add_courts`, { leg_case_id: caseId, courts });
+export const addLegalCaseCourts = (
+  caseId: string,
+  courts: Array<{
+    case_number: string;
+    case_year: string;
+    court_level_id: string;
+    court_id: string;
+  }>,
+) => api.post(`/api/legal-cases/add_courts`, { leg_case_id: caseId, courts });
 
 export const removeLegalCaseCourt = (caseId: string, courtId: string) =>
   api.delete(`/api/leg-case/remove-court`, {

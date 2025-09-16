@@ -25,7 +25,6 @@ export const useLegalCase = (id?: string) =>
   useQuery<LegalCase, Error>({
     queryKey: ['legal-cases', id],
     queryFn: async () => {
-      if (!id) throw new Error('Missing legal case id');
       const { data } = await getLegCaseById(id);
       return data.leg_case;
     },
