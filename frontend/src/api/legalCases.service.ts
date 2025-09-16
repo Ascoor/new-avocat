@@ -13,7 +13,7 @@ import {
 export const getLegCases = () => api.get<LegalCase[]>('/api/legal-cases');
 
 export const getLegCaseById = (id: string) =>
-  api.get<LegalCase>(`/api/legal-cases/${id}`);
+  api.get<{ leg_case: LegalCase }>(`/api/legal-cases/${id}`);
 
 export const createLegCase = (data: LegalCaseCreateDTO) =>
   api.post<LegalCase>('/api/legal-cases', data);

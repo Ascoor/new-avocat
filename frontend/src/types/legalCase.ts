@@ -6,6 +6,7 @@ export interface Client {
   name: string;
   phone?: string;
   email?: string;
+  slug?: string;
 }
 
 export interface Court {
@@ -13,6 +14,13 @@ export interface Court {
   name: string;
   city?: string;
   department?: string;
+  case_number?: string;
+  case_year?: string;
+  court_level_id?: string;
+  court_level?: {
+    id: string;
+    name: string;
+  };
 }
 
 export interface Lawyer {
@@ -116,6 +124,7 @@ export interface Procedure {
   updated_by?: string;
   lawyer?: Lawyer;
   procedure_type?: ProcedureType;
+  procedure_place_type?: ProcedurePlaceType;
 }
 
 export type ProcedurePayload = Omit<Procedure, 'id' | 'lawyer' | 'procedure_type'>;
