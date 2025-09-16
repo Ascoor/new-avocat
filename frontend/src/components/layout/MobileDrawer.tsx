@@ -91,10 +91,11 @@ const MobileDrawer: React.FC = () => {
               stiffness: 200 
             }}
             className={cn(
-              'fixed top-0 z-50 h-full w-80 max-w-[85vw] bg-sidebar-background border-border md:hidden',
-              'flex flex-col shadow-lg',
+              'fixed top-0 z-50 h-full w-80 max-w-[85vw] glass border border-sidebar-border text-sidebar-foreground md:hidden',
+              'flex flex-col shadow-elegant',
               isRTL ? 'right-0 border-l' : 'left-0 border-r'
             )}
+            style={{ '--glass-surface': 'var(--gradient-sidebar)' } as React.CSSProperties}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-sidebar-border">

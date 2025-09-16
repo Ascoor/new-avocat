@@ -224,7 +224,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
       {/* Sidebar */}
       <aside
         className={cn(
-          "bg-[var(--gradient-sidebar)] fixed top-0 z-50 h-full glass border-r border-sidebar-border transition-all duration-300",
+          "fixed top-0 z-50 h-full glass border-r border-sidebar-border text-sidebar-foreground transition-all duration-300",
           "lg:relative lg:translate-x-0",
           // Positioning based on RTL/LTR
           isRTL ? "right-0" : "left-0",
@@ -237,8 +237,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
           !isMobile && "translate-x-0"
         )}
         style={{
-          direction: isRTL ? 'rtl' : 'ltr'
-        }}
+          direction: isRTL ? 'rtl' : 'ltr',
+          '--glass-surface': 'var(--gradient-sidebar)'
+        } as React.CSSProperties}
       >
         <div className="flex h-full flex-col">
           {/* Header */}
