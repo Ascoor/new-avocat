@@ -44,12 +44,15 @@
   },
   "cases": {
     "title": "القضايا",
-    "addNew": "إضافة قضية جديدة",
+    "file_number": "رقم الملف",
+    "clients": "الموكل",
+    "client_capacity": "صفة الموكل",
+    "subject": "الموضوع",
+    "case_type": "نوع القضية",
     "status": "الحالة",
-    "client": "العميل",
-    "type": "النوع",
-    "nextHearing": "الجلسة القادمة",
-    "actions": "الإجراءات"
+    "actions": "الإجراءات",
+    "no_cases": "لا توجد قضايا",
+    "no_client": "لا يوجد"
   },
   "clients": {
     "title": "العملاء",

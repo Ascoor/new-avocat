@@ -44,12 +44,15 @@
   },
   "cases": {
     "title": "Cases",
-    "addNew": "Add New Case",
+    "file_number": "File Number",
+    "clients": "Client",
+    "client_capacity": "Client Capacity",
+    "subject": "Subject",
+    "case_type": "Case Type",
     "status": "Status",
-    "client": "Client",
-    "type": "Type",
-    "nextHearing": "Next Hearing",
-    "actions": "Actions"
+    "actions": "Actions",
+    "no_cases": "No cases available",
+    "no_client": "No client"
   },
   "clients": {
     "title": "Clients",
