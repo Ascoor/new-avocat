@@ -29,7 +29,8 @@
     "edit": "Edit",
     "delete": "Delete",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "loading": "Loading..."
   },
   "dashboard": {
     "title": "Dashboard",
@@ -42,17 +43,25 @@
     "recentActivity": "Recent Activity",
     "casesByStatus": "Cases by Status"
   },
-  "cases": {
-    "title": "Cases",
-    "file_number": "File Number",
-    "clients": "Client",
-    "client_capacity": "Client Capacity",
-    "subject": "Subject",
-    "case_type": "Case Type",
-    "status": "Status",
-    "actions": "Actions",
-    "no_cases": "No cases available",
-    "no_client": "No client"
+  "legalCases": {
+    "title": "Legal Cases",
+    "subtitle": "Manage case records, clients, and follow-up details in one place.",
+    "addCase": "Add New Case",
+    "fetchError": "Unable to load cases right now. Please try again later.",
+    "noClient": "No client",
+    "moreClients": "and {{count}} more",
+    "deleteSuccess": "Case deleted successfully.",
+    "deleteErrorTitle": "Failed to delete the case.",
+    "deleteErrorDescription": "Please try again or contact support if the problem persists.",
+    "confirmDelete": "Are you sure you want to delete \"{{title}}\"?",
+    "columns": {
+      "fileNumber": "File Number",
+      "clients": "Client",
+      "clientCapacity": "Client Capacity",
+      "subject": "Subject",
+      "caseType": "Case Type",
+      "status": "Status"
+    }
   },
   "clients": {
     "title": "Clients",

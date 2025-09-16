@@ -29,7 +29,8 @@
     "edit": "تعديل",
     "delete": "حذف",
     "save": "حفظ",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "loading": "جارٍ التحميل..."
   },
   "dashboard": {
     "title": "لوحة التحكم",
@@ -42,17 +43,25 @@
     "recentActivity": "النشاط الأخير",
     "casesByStatus": "القضايا حسب الحالة"
   },
-  "cases": {
+  "legalCases": {
     "title": "القضايا",
-    "file_number": "رقم الملف",
-    "clients": "الموكل",
-    "client_capacity": "صفة الموكل",
-    "subject": "الموضوع",
-    "case_type": "نوع القضية",
-    "status": "الحالة",
-    "actions": "الإجراءات",
-    "no_cases": "لا توجد قضايا",
-    "no_client": "لا يوجد"
+    "subtitle": "إدارة بيانات القضايا والمتابعة مع الموكلين من مكان واحد.",
+    "addCase": "إضافة قضية جديدة",
+    "fetchError": "تعذر تحميل القضايا حاليًا، يرجى المحاولة لاحقًا.",
+    "noClient": "لا يوجد موكل",
+    "moreClients": "و{{count}} آخرين",
+    "deleteSuccess": "تم حذف القضية بنجاح.",
+    "deleteErrorTitle": "تعذر حذف القضية.",
+    "deleteErrorDescription": "يرجى المحاولة مرة أخرى أو التواصل مع الدعم عند استمرار المشكلة.",
+    "confirmDelete": "هل أنت متأكد من حذف \"{{title}}\"؟",
+    "columns": {
+      "fileNumber": "رقم الملف",
+      "clients": "الموكل",
+      "clientCapacity": "صفة الموكل",
+      "subject": "الموضوع",
+      "caseType": "نوع القضية",
+      "status": "الحالة"
+    }
   },
   "clients": {
     "title": "العملاء",
