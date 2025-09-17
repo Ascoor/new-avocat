@@ -5,9 +5,21 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLegalCase } from '@/hooks/useLegalCases';
-import { LegalCase } from '@/types/legalCase';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { ArrowLeft } from 'lucide-react';
+import {
+  ArrowLeft,
+  BadgeCheck,
+  CalendarClock,
+  ClipboardList,
+  Gavel,
+  Hash,
+  Layers,
+  Megaphone,
+  Phone,
+  Scale,
+  UserCircle2,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass-card';
 import { motion } from 'framer-motion';
 
@@ -28,7 +40,7 @@ const DetailsSkeleton = () => (
 const LegalCaseDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const [activeTab, setActiveTab] = useState('procedures');
 
   const {
@@ -41,20 +53,35 @@ const LegalCaseDetails = () => {
   const basicInfo = useMemo(() => {
     if (!legCase) return [];
     return [
-      { label: t('legalCaseDetails.fields.slug'), value: legCase.slug },
-      { label: t('legalCaseDetails.fields.title'), value: legCase.title },
-      { label: t('legalCaseDetails.fields.status'), value: legCase.status },
+      {
+        label: t('legalCaseDetails.fields.slug'),
+        value: legCase.slug ?? '—',
+        icon: Hash,
+      },
+      {
+        label: t('legalCaseDetails.fields.title'),
+        value: legCase.title ?? '—',
+        icon: Layers,
+      },
+      {
+        label: t('legalCaseDetails.fields.status'),
+        value: legCase.status ?? '—',
+        icon: BadgeCheck,
+      },
       {
         label: t('legalCaseDetails.fields.caseType'),
         value: legCase.case_type?.name ?? '—',
+        icon: Scale,
       },
       {
         label: t('legalCaseDetails.fields.caseSubType'),
         value: legCase.case_sub_type?.name ?? '—',
+        icon: ClipboardList,
       },
       {
         label: t('legalCaseDetails.fields.clientCapacity'),
         value: legCase.client_capacity ?? '—',
+        icon: UserCircle2,
       },
     ];
   }, [legCase, t]);
@@ -65,18 +92,22 @@ const LegalCaseDetails = () => {
       {
         label: t('legalCaseDetails.fields.litigantName'),
         value: legCase.litigants_name ?? '—',
+        icon: UserCircle2,
       },
       {
         label: t('legalCaseDetails.fields.litigantPhone'),
         value: legCase.litigants_phone ?? '—',
+        icon: Phone,
       },
       {
         label: t('legalCaseDetails.fields.lawyerName'),
         value: legCase.litigants_lawyer_name ?? '—',
+        icon: Gavel,
       },
       {
         label: t('legalCaseDetails.fields.lawyerPhone'),
         value: legCase.litigants_lawyer_phone ?? '—',
+        icon: Phone,
       },
     ];
   }, [legCase, t]);
@@ -92,10 +123,15 @@ const LegalCaseDetails = () => {
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)}
+            className="rounded-full border border-border/50 bg-surface-100/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
+          >
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">{t('legalCaseDetails.back')}</span>
           </Button>
@@ -132,10 +168,15 @@ const LegalCaseDetails = () => {
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_45%)]" />
               <div className="relative grid gap-8 md:grid-cols-2">
-                <InfoList title={t('legalCaseDetails.sections.basicInfo')} items={basicInfo} />
+                <InfoList
+                  title={t('legalCaseDetails.sections.basicInfo')}
+                  items={basicInfo}
+                  direction={isRTL ? 'rtl' : 'ltr'}
+                />
                 <InfoList
                   title={t('legalCaseDetails.sections.opponentInfo')}
                   items={opponentInfo}
+                  direction={isRTL ? 'rtl' : 'ltr'}
                 />
                 {legCase.description && (
                   <motion.div
@@ -173,14 +214,26 @@ const LegalCaseDetails = () => {
           </Suspense>
           <Suspense fallback={<DetailsSkeleton />}>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="flex flex-wrap gap-2">
-                <TabsTrigger value="procedures">
+              <TabsList className="flex flex-wrap justify-start gap-2 md:justify-center">
+                <TabsTrigger
+                  value="procedures"
+                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-100/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
+                >
+                  <ClipboardList className="h-4 w-4 transition group-data-[state=active]:text-primary" />
                   {t('legalCaseDetails.tabs.procedures')}
                 </TabsTrigger>
-                <TabsTrigger value="sessions">
+                <TabsTrigger
+                  value="sessions"
+                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-100/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
+                >
+                  <CalendarClock className="h-4 w-4 transition group-data-[state=active]:text-primary" />
                   {t('legalCaseDetails.tabs.sessions')}
                 </TabsTrigger>
-                <TabsTrigger value="ads">
+                <TabsTrigger
+                  value="ads"
+                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-100/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
+                >
+                  <Megaphone className="h-4 w-4 transition group-data-[state=active]:text-primary" />
                   {t('legalCaseDetails.tabs.ads')}
                 </TabsTrigger>
               </TabsList>
@@ -206,28 +259,44 @@ const LegalCaseDetails = () => {
 interface InfoItem {
   label: string;
   value: string;
+  icon?: LucideIcon;
 }
 
-const InfoList = ({ title, items }: { title: string; items: InfoItem[] }) => (
-  <div className="space-y-4">
+const InfoList = ({
+  title,
+  items,
+  direction,
+}: {
+  title: string;
+  items: InfoItem[];
+  direction: 'rtl' | 'ltr';
+}) => (
+  <div className="space-y-4" dir={direction}>
     <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
       {title}
     </h3>
-    <div className="space-y-3">
+    <div className="grid gap-3 sm:grid-cols-2">
       {items.map((item, index) => (
         <motion.div
           key={item.label}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.05 }}
-          className="group flex items-start justify-between gap-3 rounded-xl border border-border/50 bg-surface-100/80 px-4 py-3 shadow-inner transition hover:border-primary/50 hover:bg-primary/5"
+          className="group flex items-center gap-3 rounded-2xl border border-border/50 bg-surface-100/80 px-4 py-3 shadow-inner backdrop-blur-sm transition hover:border-primary/60 hover:bg-primary/5"
         >
-          <span className="text-xs font-semibold uppercase tracking-wide text-text-muted">
-            {item.label}
-          </span>
-          <span className="text-sm font-semibold text-text-strong text-right rtl:text-left">
-            {item.value || '—'}
-          </span>
+          {item.icon && (
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
+              <item.icon className="h-5 w-5" aria-hidden="true" />
+            </span>
+          )}
+          <div className="flex flex-1 flex-col gap-1">
+            <span className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+              {item.label}
+            </span>
+            <span className="text-sm font-semibold text-text-strong text-end">
+              {item.value || '—'}
+            </span>
+          </div>
         </motion.div>
       ))}
     </div>
