@@ -1,73 +1,92 @@
 import React from 'react';
-import { useTheme } from '@/contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+// icons
+import logoIconLight from '@/assets/brand/icons/logo-icon-light.png';
+import logoIconDark from '@/assets/brand/icons/logo-icon-dark.png';
 
-export type LogoVariant = "full" | "icon" | "static";
+// text
+import logoTextArLight from '@/assets/brand/text/logo-text-ar-light.png';
+import logoTextArDark from '@/assets/brand/text/logo-text-ar-dark.png';
+
+// full
+import logoFullArLight from '@/assets/brand/full/logo-full-arabic-light.png';
+import logoFullArDark from '@/assets/brand/full/logo-full-arabic-dark.png';
+import logoFullEnLight from '@/assets/brand/full/logo-full-en-light.png';
+import logoFullEnDark from '@/assets/brand/full/logo-full-en-dark.png';
+
+export type LogoVariant = "icon" | "text" | "full";
 
 interface BrandLogoProps {
-  variant?: LogoVariant;
+  variant?: LogoVariant;   // 👈 icon | text | full
   className?: string;
-  lang?: 'ar' | 'en';   // 👈 force Arabic/English
-  dark?: boolean;       // 👈 force dark/light regardless of theme
+  lang?: 'ar' | 'en';      // 👈 عربي أو إنجليزي (للنص أو الشعار الكامل)
+  dark?: boolean;          // 👈 اختيار نسخة Light أو Dark
 }
 
 const BrandLogo: React.FC<BrandLogoProps> = ({
   variant = "full",
   className,
   lang,
-  dark,
+  dark = false,   // ✅ افتراضي Light
 }) => {
-  const { theme } = useTheme();
   const { i18n } = useTranslation();
 
-  // ✅ stable overrides
+  // اللغة الحالية
   const currentLang: 'ar' | 'en' = lang ?? (i18n.language === 'ar' ? 'ar' : 'en');
-  const isDark = dark !== undefined ? dark : theme === 'dark';
+  const mode = dark ? 'dark' : 'light';
 
-  const getLogoSrc = (): string => {
-    switch (variant) {
-      case 'icon':
-        return isDark
-          ? '/images/logo-icon-dark.png'
-          : '/images/logo-icon-light.png';
+  // ✅ مسارات الشعارات
+const logos = {
+  icon: {
+    light: logoIconLight,
+    dark: logoIconDark,
+  },
+  text: {
+    ar: {
+      light: logoTextArLight,
+      dark: logoTextArDark,
+    },
+    en: {
+      // ⚠️ مفيش عندك نص إنجليزي → fallback على العربي
+      light: logoTextArLight,
+      dark: logoTextArDark,
+    },
+  },
+  full: {
+    ar: {
+      light: logoFullArLight,
+      dark: logoFullArDark,
+    },
+    en: {
+      light: logoFullEnLight,
+      dark: logoFullEnDark,
+    },
+  },
+};
 
-      case 'static':
-        // شعار ثابت، يتأثر فقط باللغة
-        return currentLang === 'ar'
-          ? '/images/logo-arabic-light.png'
-          : '/images/logo-full-en-light.png';
 
-      case 'full':
-      default:
-        if (currentLang === 'ar') {
-          return isDark
-            ? '/images/logo-full-arabic-dark.png'
-            : '/images/logo-full-arabic-light.png';
-        }
-        return isDark
-          ? '/images/logo-full-en-dark.png'
-          : '/images/logo-full-en-light.png';
+  const getSrc = () => {
+    if (variant === "icon") {
+      return logos.icon[mode];
     }
+    if (variant === "text") {
+      return logos.text[currentLang][mode];
+    }
+    return logos.full[currentLang][mode];
   };
 
   const getAltText = (): string => {
-    return currentLang === 'ar' ? 'أفوكات' : 'Avocat';
+    if (variant === "icon") return "Avocat Icon";
+    if (variant === "text") return currentLang === "ar" ? "أفوكات" : "Avocat";
+    return currentLang === "ar" ? "شعار أفوكات الكامل" : "Avocat Full Logo";
   };
 
   return (
     <img
-      src={getLogoSrc()}
+      src={getSrc()}
       alt={getAltText()}
       className={cn('object-contain', className)}
-      onError={(e) => {
-        const target = e.target as HTMLImageElement;
-        target.style.display = 'none';
-        const fallback = document.createElement('div');
-        fallback.textContent = getAltText();
-        fallback.className = cn('font-bold text-primary', className);
-        target.parentNode?.insertBefore(fallback, target);
-      }}
     />
   );
 };

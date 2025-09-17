@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import {
@@ -12,7 +11,7 @@ import { getClients } from '@/api/clients.service';
 import { Client } from '@/types/legalCase';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Users } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import CaseSection from './CaseSection';
 
 interface ClientsSectionProps {
   caseId: string;
@@ -31,6 +30,7 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
   const [searchTerm, setSearchTerm] = useState('');
   const [pendingClients, setPendingClients] = useState<SelectableClient[]>([]);
   const [confirmDelete, setConfirmDelete] = useState<{ id: string; name: string } | null>(null);
+  const [sectionOpen, setSectionOpen] = useState(true);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -61,6 +61,7 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
   }, [allClients, searchTerm]);
 
   const handleAddRow = () => {
+    setSectionOpen(true);
     setPendingClients((prev) => [...prev, { client_id: '', id: '', name: '' }]);
   };
 
@@ -134,22 +135,19 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
   };
 
   return (
-    <Card className="space-y-6 p-6 shadow-sm">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <SectionHeading
-          icon={Users}
-          title={t('legalCaseDetails.clients.title')}
-          subtitle={t('legalCaseDetails.clients.subtitle')}
-        />
-        <Button
-          variant="secondary"
-          onClick={handleAddRow}
-          className="self-start sm:self-auto"
-        >
+    <CaseSection
+      icon={Users}
+      title={t('legalCaseDetails.clients.title')}
+      subtitle={t('legalCaseDetails.clients.subtitle')}
+      open={sectionOpen}
+      onOpenChange={setSectionOpen}
+      toggleLabel={sectionOpen ? t('common.collapse') : t('common.expand')}
+      actions={
+        <Button variant="secondary" onClick={handleAddRow} className="self-start sm:self-auto">
           {t('legalCaseDetails.clients.addClient')}
         </Button>
-      </div>
-
+      }
+    >
       {pendingClients.length > 0 && (
         <div className="space-y-3 rounded-lg border border-dashed border-border/60 bg-muted/20 p-4">
           {pendingClients.map((pending, index) => (
@@ -264,28 +262,8 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
         onConfirm={handleConfirmDelete}
         onClose={() => setConfirmDelete(null)}
       />
-    </Card>
+    </CaseSection>
   );
 };
-
-const SectionHeading = ({
-  icon: Icon,
-  title,
-  subtitle,
-}: {
-  icon: LucideIcon;
-  title: string;
-  subtitle: string;
-}) => (
-  <div className="flex items-center gap-3">
-    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-      <Icon className="h-5 w-5" />
-    </span>
-    <div>
-      <h2 className="text-lg font-semibold text-foreground">{title}</h2>
-      <p className="text-sm text-muted-foreground">{subtitle}</p>
-    </div>
-  </div>
-);
 
 export default ClientsSection;

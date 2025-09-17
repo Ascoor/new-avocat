@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { CalendarCheck } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import DetailsTable, { DetailsTableColumn } from './DetailsTable';
 import { useToast } from '@/components/ui/use-toast';
@@ -13,6 +11,7 @@ import {
 import { LegalSession } from '@/types/legalCase';
 import SessionModal from './SessionModal';
 import { useLanguage } from '@/contexts/LanguageContext';
+import CaseSection from './CaseSection';
 
 interface SessionsSectionProps {
   caseId: string;
@@ -27,6 +26,7 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingSession, setEditingSession] = useState<LegalSession | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<LegalSession | null>(null);
+  const [sectionOpen, setSectionOpen] = useState(true);
 
   const fetchSessions = useCallback(async () => {
     setLoading(true);
@@ -50,11 +50,13 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
   }, [fetchSessions]);
 
   const openCreateModal = () => {
+    setSectionOpen(true);
     setEditingSession(null);
     setModalOpen(true);
   };
 
   const openEditModal = (session: LegalSession) => {
+    setSectionOpen(true);
     setEditingSession(session);
     setModalOpen(true);
   };
@@ -78,44 +80,47 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
   };
 
   return (
-    <Card className="space-y-6 p-6 shadow-sm">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <SectionHeading
-          icon={CalendarCheck}
-          title={t('legalCaseDetails.sessions.title')}
-          subtitle={t('legalCaseDetails.sessions.subtitle')}
-        />
-        <Button onClick={openCreateModal} className="self-start sm:self-auto">
-          {t('legalCaseDetails.sessions.addButton')}
-        </Button>
-      </div>
-
-      {loading ? (
-        <div className="py-8 text-center text-muted-foreground">
-          {t('common.loading')}
-        </div>
-      ) : (
-        <DetailsTable
-          data={sessions}
-          columns={createSessionColumns(t)}
-          actionsHeader={t('legalCaseDetails.sessions.columns.actions')}
-          renderActions={(session) => (
-            <div className="flex justify-center gap-2">
-              <Button variant="outline" size="sm" onClick={() => openEditModal(session)}>
-                {t('legalCaseDetails.sessions.editButton')}
-              </Button>
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => setConfirmDelete(session)}
-              >
-                {t('legalCaseDetails.sessions.deleteButton')}
-              </Button>
-            </div>
-          )}
-          emptyMessage={t('legalCaseDetails.sessions.empty')}
-        />
-      )}
+    <>
+      <CaseSection
+        icon={CalendarCheck}
+        title={t('legalCaseDetails.sessions.title')}
+        subtitle={t('legalCaseDetails.sessions.subtitle')}
+        open={sectionOpen}
+        onOpenChange={setSectionOpen}
+        toggleLabel={sectionOpen ? t('common.collapse') : t('common.expand')}
+        actions={
+          <Button onClick={openCreateModal} className="self-start sm:self-auto">
+            {t('legalCaseDetails.sessions.addButton')}
+          </Button>
+        }
+      >
+        {loading ? (
+          <div className="py-8 text-center text-muted-foreground">
+            {t('common.loading')}
+          </div>
+        ) : (
+          <DetailsTable
+            data={sessions}
+            columns={createSessionColumns(t)}
+            actionsHeader={t('legalCaseDetails.sessions.columns.actions')}
+            renderActions={(session) => (
+              <div className="flex justify-center gap-2">
+                <Button variant="outline" size="sm" onClick={() => openEditModal(session)}>
+                  {t('legalCaseDetails.sessions.editButton')}
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => setConfirmDelete(session)}
+                >
+                  {t('legalCaseDetails.sessions.deleteButton')}
+                </Button>
+              </div>
+            )}
+            emptyMessage={t('legalCaseDetails.sessions.empty')}
+          />
+        )}
+      </CaseSection>
 
       <SessionModal
         open={modalOpen}
@@ -137,7 +142,7 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
         onConfirm={handleDelete}
         onClose={() => setConfirmDelete(null)}
       />
-    </Card>
+    </>
   );
 };
 
@@ -173,25 +178,5 @@ const createSessionColumns = (
     render: (session) => session.status ?? '—',
   },
 ];
-
-const SectionHeading = ({
-  icon: Icon,
-  title,
-  subtitle,
-}: {
-  icon: LucideIcon;
-  title: string;
-  subtitle: string;
-}) => (
-  <div className="flex items-center gap-3">
-    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-      <Icon className="h-5 w-5" />
-    </span>
-    <div>
-      <h2 className="text-lg font-semibold text-foreground">{title}</h2>
-      <p className="text-sm text-muted-foreground">{subtitle}</p>
-    </div>
-  </div>
-);
 
 export default SessionsSection;

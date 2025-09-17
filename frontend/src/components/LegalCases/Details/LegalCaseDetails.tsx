@@ -8,6 +8,8 @@ import { useLegalCase } from '@/hooks/useLegalCases';
 import { LegalCase } from '@/types/legalCase';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { ArrowLeft } from 'lucide-react';
+import { GlassCard } from '@/components/ui/glass-card';
+import { motion } from 'framer-motion';
 
 const ClientsSection = lazy(() => import('./ClientsSection'));
 const CourtsSection = lazy(() => import('./CourtsSection'));
@@ -118,21 +120,41 @@ const LegalCaseDetails = () => {
 
       {!isLoading && legCase && (
         <div className="space-y-6">
-          <Card className="grid gap-6 p-6 md:grid-cols-2">
-            <InfoList title={t('legalCaseDetails.sections.basicInfo')} items={basicInfo} />
-            <InfoList
-              title={t('legalCaseDetails.sections.opponentInfo')}
-              items={opponentInfo}
-            />
-            {legCase.description && (
-              <div className="md:col-span-2">
-                <h3 className="text-sm font-semibold text-muted-foreground">
-                  {t('legalCaseDetails.fields.description')}
-                </h3>
-                <p className="mt-2 text-sm text-foreground">{legCase.description}</p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <GlassCard
+              variant="primary"
+              hover="glow"
+              className="relative overflow-hidden border border-border/60 bg-gradient-card/90 p-6 md:p-8"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_45%)]" />
+              <div className="relative grid gap-8 md:grid-cols-2">
+                <InfoList title={t('legalCaseDetails.sections.basicInfo')} items={basicInfo} />
+                <InfoList
+                  title={t('legalCaseDetails.sections.opponentInfo')}
+                  items={opponentInfo}
+                />
+                {legCase.description && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, delay: 0.15 }}
+                    className="md:col-span-2 rounded-2xl border border-border/60 bg-surface-100/80 p-5 shadow-inner"
+                  >
+                    <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+                      {t('legalCaseDetails.fields.description')}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-text-strong">
+                      {legCase.description}
+                    </p>
+                  </motion.div>
+                )}
               </div>
-            )}
-          </Card>
+            </GlassCard>
+          </motion.div>
 
           <Suspense fallback={<DetailsSkeleton />}>
             <ClientsSection
@@ -187,14 +209,26 @@ interface InfoItem {
 }
 
 const InfoList = ({ title, items }: { title: string; items: InfoItem[] }) => (
-  <div className="space-y-3">
-    <h3 className="text-sm font-semibold text-muted-foreground">{title}</h3>
-    <div className="space-y-2 rounded-lg border border-border/60 bg-card/60 p-4">
-      {items.map((item) => (
-        <div key={item.label} className="flex flex-col gap-1 text-sm">
-          <span className="text-muted-foreground">{item.label}</span>
-          <span className="text-foreground">{item.value || '—'}</span>
-        </div>
+  <div className="space-y-4">
+    <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+      {title}
+    </h3>
+    <div className="space-y-3">
+      {items.map((item, index) => (
+        <motion.div
+          key={item.label}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: index * 0.05 }}
+          className="group flex items-start justify-between gap-3 rounded-xl border border-border/50 bg-surface-100/80 px-4 py-3 shadow-inner transition hover:border-primary/50 hover:bg-primary/5"
+        >
+          <span className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+            {item.label}
+          </span>
+          <span className="text-sm font-semibold text-text-strong text-right rtl:text-left">
+            {item.value || '—'}
+          </span>
+        </motion.div>
       ))}
     </div>
   </div>

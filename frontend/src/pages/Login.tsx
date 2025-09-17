@@ -139,7 +139,7 @@ await login(email, password);
   <div className="relative z-10 flex items-center justify-center w-full h-full">
     <div className="text-white text-center max-w-md">
  
- <BrandLogo variant="static" lang="ar" dark={true} className="h-36" />
+ <BrandLogo variant="text" lang="ar" dark={true} className="h-4head er6" />
 </div>
   </div>
 </div>

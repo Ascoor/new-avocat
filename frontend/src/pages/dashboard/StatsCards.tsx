@@ -1,9 +1,9 @@
 import { ArrowDownRight, ArrowUpRight, Briefcase, Calendar, DollarSign, Users, Loader2 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { Case, Client, Session } from './api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import { GlassCard } from '@/components/ui/glass-card';
 
 export default function StatsCards() {
   const { t } = useTranslation();
@@ -64,41 +64,48 @@ export default function StatsCards() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {stats.map(stat => {
+      {stats.map((stat, index) => {
         const Icon = stat.icon;
         const Arrow = stat.change >= 0 ? ArrowUpRight : ArrowDownRight;
         const isPositive = stat.change >= 0;
         const changeBadge = isPositive
-          ? 'bg-[color:hsla(var(--success)/0.32)]'
-          : 'bg-[color:hsla(var(--destructive)/0.32)]';
+          ? 'bg-[color:hsla(var(--success)/0.22)] text-white'
+          : 'bg-[color:hsla(var(--destructive)/0.18)] text-white';
         const changeText = `${isPositive ? '+' : '−'}${Math.abs(stat.change)}%`;
+
         return (
-          <Card
+          <GlassCard
             key={stat.label}
+            variant="primary"
+            hover="glow"
             className={cn(
-              'relative overflow-hidden border-none text-white shadow-elegant',
+              'relative overflow-hidden border border-border/70 text-white shadow-lg transition-transform duration-300',
               stat.background
             )}
           >
-            <CardHeader className="flex flex-row items-center justify-between pb-3">
-              <CardTitle className="text-sm font-medium text-white/90">{stat.label}</CardTitle>
-              <div className="rounded-full bg-white/15 p-2 shadow-inner">
-                <Icon className="h-5 w-5" />
+            <div className="absolute inset-0 opacity-70 mix-blend-screen" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.25),transparent_45%)]" />
+            <div className="relative flex flex-col gap-4 p-5">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-white/85">{stat.label}</p>
+                <span className="rounded-full bg-white/15 p-2 shadow-inner">
+                  <Icon className="h-5 w-5" />
+                </span>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="text-2xl font-semibold tracking-tight">{stat.value}</div>
+              <div className="text-2xl font-semibold tracking-tight">
+                {stat.value}
+              </div>
               <div
                 className={cn(
-                  'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium text-white backdrop-blur-sm',
+                  'inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium backdrop-blur-sm transition-colors',
                   changeBadge
                 )}
               >
                 <Arrow className="h-4 w-4" />
                 <span>{changeText}</span>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </GlassCard>
         );
       })}
     </div>

@@ -38,7 +38,9 @@
     "comingSoon": "Coming Soon",
     "comingSoonDescription": "We are crafting this experience for you.",
     "backToDashboard": "Back to dashboard",
-    "backToLanding": "Back to landing"
+    "backToLanding": "Back to landing",
+    "expand": "Expand",
+    "collapse": "Collapse"
   },
   "home": {
     "title": "Welcome to Avocat",

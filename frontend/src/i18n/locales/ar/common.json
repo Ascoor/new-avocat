@@ -38,7 +38,9 @@
     "comingSoon": "قريبًا",
     "comingSoonDescription": "نعمل على إتاحة هذه التجربة لك قريبًا.",
     "backToDashboard": "العودة للوحة التحكم",
-    "backToLanding": "العودة للصفحة التعريفية"
+    "backToLanding": "العودة للصفحة التعريفية",
+    "expand": "توسيع",
+    "collapse": "طي"
   },
   "home": {
     "title": "مرحبًا بك في أفوكات",
