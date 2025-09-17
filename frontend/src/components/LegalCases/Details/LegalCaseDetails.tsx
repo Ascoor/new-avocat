@@ -128,9 +128,9 @@ const LegalCaseDetails = () => {
             <GlassCard
               variant="primary"
               hover="glow"
-              className="relative overflow-hidden border border-border/60 bg-gradient-card/90 p-6 md:p-8"
+              className="relative overflow-hidden border border-border/60 bg-gradient-card/10 p-6 md:p-8"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_45%)]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(7, 123, 255, 0.18),transparent_45%)]" />
               <div className="relative grid gap-8 md:grid-cols-2">
                 <InfoList title={t('legalCaseDetails.sections.basicInfo')} items={basicInfo} />
                 <InfoList
