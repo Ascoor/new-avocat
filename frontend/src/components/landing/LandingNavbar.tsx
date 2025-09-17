@@ -9,12 +9,14 @@ import LanguageToggle from '@/components/ui/language-toggle';
 import BrandLogo from '@/components/common/BrandLogo';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
+import { useTheme } from "next-themes";
 
 const LandingNavbar: React.FC = () => {
   const { t, isRTL ,language} = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+const { theme } = useTheme();
 
   // Handle scroll effect
   useEffect(() => {
@@ -62,9 +64,15 @@ const LandingNavbar: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/" className="flex-shrink-0">
- <BrandLogo variant="text" className="h-12  " dark={true} />
-            </Link>
+<Link to="/" className="flex-shrink-0">
+  {theme === "dark" ? (
+    // 👇 ثابت في الليل مهما حصل scroll
+    <BrandLogo variant="text" className="h-12" dark={true} />
+  ) : (
+    // 👇 يتغير في النهار حسب الـ scroll
+    <BrandLogo variant="text" className="h-12" dark={!isScrolled} />
+  )}
+</Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 rtl:space-x-reverse">

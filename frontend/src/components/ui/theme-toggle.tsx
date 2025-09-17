@@ -8,19 +8,17 @@ const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation('common');
 
+  const isDark = theme === 'dark';
+
   return (
     <Button
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      aria-label={theme === 'dark' ? t('light') : t('dark')}
+      aria-label={isDark ? t('light') : t('dark')}
       className="h-9 w-9"
     >
-      {theme === 'dark' ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
+      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </Button>
   );
 };

@@ -62,44 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
           'flex items-center gap-3',
           isRTL ? 'flex-row-reverse' : 'flex-row'
         )}>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleSidebarToggle}
-            className={cn('h-9 w-9', iconButtonClass)}
-            aria-label={t('common.menu')}
-          >
-            <Menu className="h-4 w-4 lg:hidden" />
-            {isCollapsed ? (
-              isRTL ? (
-                <ChevronLeft className="hidden h-4 w-4 lg:block" />
-              ) : (
-                <ChevronRight className="hidden h-4 w-4 lg:block" />
-              )
-            ) : (
-              isRTL ? (
-                <ChevronRight className="hidden h-4 w-4 lg:block" />
-              ) : (
-                <ChevronLeft className="hidden h-4 w-4 lg:block" />
-              )
-            )}
-          </Button>
-
-          {/* Desktop collapse toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleCollapsed}
-            className={cn('hidden lg:inline-flex h-9 w-9', iconButtonClass)}
-            aria-label={isCollapsed ? t('nav.expand') : t('nav.collapse')}
-          >
-            {isCollapsed ? (
-              isRTL ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
-            ) : (
-              isRTL ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />
-            )}
-          </Button>
-
+           
           {/* Desktop logo - hidden on mobile */}
           <div className="hidden md:block">
             <BrandLogo variant="full" className="h-8" lang={language} dark={isDark} />
