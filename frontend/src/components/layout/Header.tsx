@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             size="icon"
             onClick={toggleLanguage}
             className="rounded-full text-white hover:bg-white/15 hover:text-white focus-visible:ring-white/60 focus-visible:ring-offset-0 glow-hover"
-            aria-label="Toggle Language"
+            aria-label={t('common.toggleLanguage')}
           >
             {language === 'ar' ? 'EN' : 'ع'}
           </Button>

@@ -25,7 +25,7 @@ export default function CasesByStatusChart() {
       );
     }
     if (error) {
-      return <div className="text-center text-red-500">Error</div>;
+      return <div className="text-center text-destructive">{t('dashboard.errors.chart')}</div>;
     }
     const counts: Record<string, number> = { active: 0, pending: 0, closed: 0, on_hold: 0 };
     data?.forEach(c => {

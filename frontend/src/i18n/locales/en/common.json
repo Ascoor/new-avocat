@@ -30,61 +30,206 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "info": "Information",
+    "toggleLanguage": "Toggle language",
+    "comingSoon": "Coming Soon",
+    "comingSoonDescription": "We are crafting this experience for you.",
+    "backToDashboard": "Back to dashboard",
+    "backToLanding": "Back to landing"
+  },
+  "home": {
+    "title": "Welcome to Avocat",
+    "subtitle": "Start building your next-generation legal operations platform."
+  },
+  "auth": {
+    "profile": "Profile",
+    "logout": "Sign out",
+    "session_expired": "Your session has expired. Please sign in again.",
+    "errors": {
+      "invalid_credentials": "The email or password you entered is incorrect."
+    },
+    "validation": {
+      "required": "This field is required.",
+      "email_invalid": "Enter a valid email address.",
+      "password_length": "Password must be at least 6 characters.",
+      "password_mismatch": "Passwords do not match."
+    },
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to manage your cases, clients, and hearings.",
+      "email": "Email",
+      "email_placeholder": "Enter your email address",
+      "password": "Password",
+      "password_placeholder": "Enter your password",
+      "show_password": "Show password",
+      "hide_password": "Hide password",
+      "remember": "Remember me",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "success": "Signed in successfully.",
+      "error": "We couldn't sign you in. Please try again.",
+      "after_register": "Account created successfully. Please sign in.",
+      "register_prompt": "Don't have an account?",
+      "register_cta": "Create one"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Join Avocat and unlock the full digital law office experience.",
+      "name": "Full name",
+      "name_placeholder": "Enter your full name",
+      "email": "Email",
+      "email_placeholder": "Enter your email address",
+      "password": "Password",
+      "password_placeholder": "Create a strong password",
+      "confirm_password": "Confirm password",
+      "confirm_password_placeholder": "Re-enter your password",
+      "submit": "Create account",
+      "success_title": "Welcome to Avocat",
+      "success_message": "Your account has been created successfully.",
+      "error_title": "Something went wrong",
+      "error_message": "We couldn't complete your registration. Please try again.",
+      "have_account": "Already have an account?",
+      "back_to_home": "Back to homepage"
+    },
+    "register": {
+      "title": "Create account"
+    }
   },
   "landing": {
-    "hero": {
-      "title": "A comprehensive legal platform to run your firm professionally",
-      "subtitle": "Avocat gives your team a unified view of cases, clients, and hearings with intelligent analytics and a native Arabic-first experience."
+    "nav": {
+      "home": "Home",
+      "features": "Features",
+      "services": "Services",
+      "about": "About",
+      "contact": "Contact",
+      "login": "Login",
+      "signup": "Create Account"
     },
-    "cta": {
-      "signup": "Start your free trial",
-      "login": "Sign in to your account"
+    "hero": {
+      "slides": {
+        "slide1": {
+          "title": "Integrated platform for elite legal practice",
+          "description": "Orchestrate every case lifecycle from intake to closure with a unified digital workspace built for modern firms.",
+          "cta": "Start your free trial"
+        },
+        "slide2": {
+          "title": "Total control of matters, clients, and knowledge",
+          "description": "Coordinate teams, automate workflows, and stay proactive with intelligent reminders and dynamic dashboards.",
+          "cta": "Explore the platform"
+        },
+        "slide3": {
+          "title": "Bank-grade security tailored for legal data",
+          "description": "Safeguard privileged information with zero-trust access, full audit trails, and regionally compliant hosting.",
+          "cta": "Book a secure demo"
+        }
+      },
+      "ctaPrimary": "Start your free trial",
+      "ctaSecondary": "Speak to an expert"
     },
     "features": {
-      "title": "Why Legal Teams Choose Avocat",
-      "subtitle": "A professional solution built for law firms pursuing a complete digital transformation.",
+      "title": "Elite capabilities for modern law firms",
+      "subtitle": "Operate with confidence through a suite engineered for high-volume, high-value legal work.",
       "items": {
         "caseManagement": {
-          "title": "Matter Control Center",
-          "description": "Track case progress and tasks with instant alerts and precise reporting at every stage."
+          "title": "Strategic Matter Management",
+          "description": "Assign, track, and resolve cases with precision timelines, task automations, and outcome tracking."
         },
         "clientManagement": {
-          "title": "Intelligent Client Management",
-          "description": "Organize client and agent records with full visibility into communications, directives, and history."
+          "title": "Client Relationship Intelligence",
+          "description": "Deliver premium client service with unified profiles, secure collaboration, and instant status updates."
         },
         "documentAutomation": {
-          "title": "Smart Documents & Archiving",
-          "description": "Attach critical files, classify them automatically, and share securely with your team or clients."
+          "title": "Intelligent Document Archiving",
+          "description": "Centralize pleadings, evidence, and contracts with smart tagging, version trails, and granular permissions."
         },
         "analytics": {
-          "title": "Advanced Reporting & Analytics",
-          "description": "Monitor firm performance, hearing indicators, and financial outcomes in real time."
+          "title": "Executive Analytics & KPIs",
+          "description": "Read performance signals in real time with revenue insights, workload heatmaps, and utilization forecasting."
         },
         "security": {
-          "title": "Enterprise-Grade Security",
-          "description": "Data encryption, granular permissions, and audit trails that protect your clients' privacy."
+          "title": "Regulatory-Grade Security",
+          "description": "Protect confidential data through encryption, adaptive access controls, and comprehensive audit trails."
         },
         "cloudAccess": {
-          "title": "Reliable Cloud Access",
-          "description": "Work from any device with an Arabic-first experience that empowers distributed teams."
+          "title": "Always-On Cloud Access",
+          "description": "Empower distributed teams with Arabic-first experiences across desktop, tablet, and mobile."
+        }
+      }
+    },
+    "services": {
+      "title": "Advisory & Enablement Services",
+      "subtitle": "A dedicated success squad supports your digital transformation from day one.",
+      "items": {
+        "onboarding": {
+          "title": "Strategic Onboarding",
+          "description": "Launch in weeks with data migration, tailored templates, and change-management workshops for every department."
+        },
+        "customization": {
+          "title": "Tailored Configuration",
+          "description": "Model your practice areas, approval chains, and compliance rules with precision tuning by Avocat experts."
+        },
+        "support": {
+          "title": "Premium Support",
+          "description": "Benefit from 24/7 concierge assistance, SLA-backed responses, and proactive optimization reviews."
         }
       }
     },
     "secondaryCta": {
       "title": "Elevate your law firm today",
-      "subtitle": "Join the growing community of firms relying on Avocat to transform their daily operations.",
-      "button": "Try Avocat now"
+      "subtitle": "Activate Avocat’s secure cloud suite and empower your attorneys to deliver more value in less time.",
+      "button": "Request a live demo"
+    },
+    "about": {
+      "title": "Designed by lawyers for visionary law firms",
+      "subtitle": "Avocat modernises legal operations with elegant technology woven around regional regulations.",
+      "mission": "Our mission is to help every Gulf-based law practice scale client impact through seamless digital workflows.",
+      "highlights": {
+        "experience": "15+ years serving GCC legal leaders",
+        "compliance": "Full compliance with Saudi and regional regulations",
+        "delivery": "Dedicated success managers and certified trainers"
+      }
+    },
+    "contact": {
+      "title": "Let’s discuss your digital firm",
+      "subtitle": "Reach us directly or send a message and one of our consultants will respond within one business day.",
+      "info": {
+        "emailLabel": "Email",
+        "phoneLabel": "Phone",
+        "addressLabel": "Address"
+      },
+      "details": {
+        "email": "info@avocat.com",
+        "phone": "+966 11 123 4567",
+        "address": "Riyadh, Saudi Arabia"
+      },
+      "form": {
+        "name": "Full name",
+        "email": "Work email",
+        "phone": "Phone number",
+        "message": "How can we support your practice?",
+        "submit": "Send message",
+        "success": "Thank you for reaching out. We will be in touch shortly.",
+        "error": "We couldn't send your message. Please try again."
+      }
     },
     "footer": {
-      "tagline": "The most advanced legal practice management platform in the region.",
-      "servicesTitle": "Services",
-      "contactTitle": "Contact",
+      "tagline": "The trusted digital backbone for forward-thinking legal practices.",
+      "servicesTitle": "Core capabilities",
+      "contactTitle": "Head office",
+      "quickLinksTitle": "Quick links",
       "services": {
-        "caseManagement": "Case Management",
-        "clientManagement": "Client Management",
-        "reports": "Professional Reports",
-        "archive": "Digital Archiving"
+        "caseManagement": "Matter lifecycle management",
+        "clientManagement": "Client relationship hub",
+        "reports": "Analytics & dashboards",
+        "archive": "Secure document vault"
+      },
+      "quickLinks": {
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Use",
+        "support": "Support Center"
       },
       "contact": {
         "email": "info@avocat.com",
@@ -96,6 +241,44 @@
   },
   "dashboard": {
     "title": "Dashboard",
+    "welcome_title": "Hello, welcome back",
+    "welcome_subtitle": "Here's a quick snapshot of your practice today.",
+    "quick_actions": "Quick Actions",
+    "total_cases": "Total Cases",
+    "active_clients": "Active Clients",
+    "upcoming_sessions": "Upcoming Sessions",
+    "total_revenue": "Total Revenue",
+    "cases_by_status": "Cases by Status",
+    "recent_cases": "Recent Cases",
+    "view_all": "View all",
+    "new_case": "New case",
+    "add_client": "Add client",
+    "schedule_session": "Schedule session",
+    "manage_services": "Manage services",
+    "active": "Active",
+    "pending": "Pending",
+    "closed": "Closed",
+    "on_hold": "On Hold",
+    "errors": {
+      "stats": "Failed to load stats",
+      "chart": "Unable to load case distribution",
+      "recent": "Unable to load recent cases"
+    },
+    "sections": {
+      "customer_service": "Customer Service",
+      "agents": "Client Agents",
+      "clients_no_agents": "Clients without Agents",
+      "reports": "Reports",
+      "sessions": "Sessions",
+      "procedures": "Legal Procedures",
+      "services": "Services",
+      "settings": "Settings",
+      "office_settings": "Office Settings",
+      "users_roles": "Users & Roles",
+      "archive": "Archive",
+      "courts_search": "Courts Search"
+    },
+    "coming_soon": "This module is coming soon.",
     "kpis": {
       "openCases": "Open Cases",
       "activeClients": "Active Clients",

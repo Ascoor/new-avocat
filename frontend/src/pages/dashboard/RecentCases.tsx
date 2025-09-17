@@ -26,7 +26,7 @@ export default function RecentCases() {
       );
     }
     if (error) {
-      return <div className="text-center text-destructive">Error</div>;
+      return <div className="text-center text-destructive">{t('dashboard.errors.recent')}</div>;
     }
     const recent = data?.slice(0, 5) ?? [];
     return (

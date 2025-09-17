@@ -105,7 +105,7 @@ const MobileDrawer: React.FC = () => {
                 size="icon"
                 onClick={closeMobile}
                 className="h-8 w-8"
-                aria-label={t('close')}
+                aria-label={t('common.close')}
               >
                 <X className="h-4 w-4" />
               </Button>

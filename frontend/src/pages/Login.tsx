@@ -65,13 +65,13 @@ const Login: React.FC = () => {
     if (searchParams.get('registered') === '1') {
       toast({
         title: t('common.success'),
-        description: t('auth.login.after_register') || 'Account created. Please log in.',
+        description: t('auth.login.after_register'),
       });
     }
     if (searchParams.get('session') === 'expired') {
       toast({
         title: t('common.info'),
-        description: t('auth.session_expired') || 'Your session has expired. Please sign in again.',
+        description: t('auth.session_expired'),
       });
     }
   }, [searchParams, toast, t]);
@@ -95,8 +95,8 @@ const Login: React.FC = () => {
 
       if (formData.remember) localStorage.setItem('rememberEmail', email);
       else localStorage.removeItem('rememberEmail');
+await login(email, password);
 
-      await login({ email, password });
 
       toast({
         title: t('common.success'),
@@ -109,8 +109,7 @@ const Login: React.FC = () => {
       const message =
         (err as { message?: string })?.message ||
         t('auth.errors.invalid_credentials') ||
-        t('auth.login.error') ||
-        'Something went wrong.';
+        t('auth.login.error');
       toast({
         title: t('common.error'),
         description: message,
@@ -140,7 +139,8 @@ const Login: React.FC = () => {
   <div className="relative z-10 flex items-center justify-center w-full h-full">
     <div className="text-white text-center max-w-md">
  
-<BrandLogo variant="static-ar" className="h-36" />   </div>
+ <BrandLogo variant="static" lang="ar" dark={true} className="h-36" />
+</div>
   </div>
 </div>
 
@@ -213,11 +213,7 @@ const Login: React.FC = () => {
                       className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                       onClick={() => setShowPassword((s) => !s)}
                       aria-pressed={showPassword}
-                      aria-label={
-                        showPassword
-                          ? t('auth.login.hide_password') || 'Hide password'
-                          : t('auth.login.show_password') || 'Show password'
-                      }
+                      aria-label={showPassword ? t('auth.login.hide_password') : t('auth.login.show_password')}
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -273,14 +269,9 @@ const Login: React.FC = () => {
                 {/* Register CTA */}
                 <div className="text-center">
                   <p className="text-sm text-muted-foreground">
-                    {(t('auth.login.register_prompt') ||
-                      t('auth.login.register_link')?.split('?')[0] ||
-                      '')?.toString()}{' '}
-                    <Link to="/register" className="text-primary hover:underline font-medium">
-                      {(t('auth.login.register_cta') ||
-                        t('auth.login.register_link')?.split('? ')[1] ||
-                        t('auth.register.title') ||
-                        'Create account')?.toString()}
+                    {t('auth.login.register_prompt')}{' '}
+                    <Link to="/signup" className="font-medium text-primary hover:underline">
+                      {t('auth.login.register_cta')}
                     </Link>
                   </p>
                 </div>

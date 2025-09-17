@@ -17,9 +17,9 @@ export default function QuickActions() {
         const Icon = action.icon;
         return (
           <Button asChild key={action.label} variant={action.variant}>
-            <Link to={action.to} className="flex items-center">
-              <Icon className="h-4 w-4 mr-2" />
-              {action.label}
+            <Link to={action.to} className="flex items-center gap-2 rtl:flex-row-reverse">
+              <Icon className="h-4 w-4" />
+              <span>{action.label}</span>
             </Link>
           </Button>
         );

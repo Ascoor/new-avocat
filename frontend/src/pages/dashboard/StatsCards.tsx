@@ -23,7 +23,7 @@ export default function StatsCards() {
   }
 
   if (isError) {
-    return <div className="text-center text-red-500 p-4">Failed to load stats</div>;
+    return <div className="p-4 text-center text-destructive">{t('dashboard.errors.stats')}</div>;
   }
 
   const totalCases = casesQuery.data?.length ?? 0;

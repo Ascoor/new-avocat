@@ -27,8 +27,8 @@ const Signup: React.FC = () => {
     
     if (password !== confirmPassword) {
       toast({
-        title: isRTL ? 'خطأ' : 'Error',
-        description: isRTL ? 'كلمات المرور غير متطابقة' : 'Passwords do not match',
+        title: t('common.error'),
+        description: t('auth.validation.password_mismatch'),
         variant: 'destructive',
       });
       return;
@@ -36,8 +36,8 @@ const Signup: React.FC = () => {
 
     if (password.length < 6) {
       toast({
-        title: isRTL ? 'خطأ' : 'Error',
-        description: isRTL ? 'كلمة المرور يجب أن تكون 6 أحرف على الأقل' : 'Password must be at least 6 characters',
+        title: t('common.error'),
+        description: t('auth.validation.password_length'),
         variant: 'destructive',
       });
       return;
@@ -48,14 +48,14 @@ const Signup: React.FC = () => {
     try {
       await signup(email, password, name);
       toast({
-        title: isRTL ? 'مرحباً بك' : 'Welcome',
-        description: isRTL ? 'تم إنشاء الحساب بنجاح' : 'Account created successfully',
+        title: t('auth.signup.success_title'),
+        description: t('auth.signup.success_message'),
       });
       navigate('/dashboard');
     } catch (error) {
       toast({
-        title: isRTL ? 'خطأ' : 'Error',
-        description: error instanceof Error ? error.message : isRTL ? 'حدث خطأ غير متوقع' : 'An unexpected error occurred',
+        title: t('common.error'),
+        description: error instanceof Error ? error.message : t('auth.signup.error_message'),
         variant: 'destructive',
       });
     } finally {
@@ -73,10 +73,10 @@ const Signup: React.FC = () => {
             <User className="h-8 w-8 text-white" />
           </div>
           <GlassCardTitle className="text-2xl font-bold">
-            {t('auth.signup')}
+            {t('auth.signup.title')}
           </GlassCardTitle>
           <GlassCardDescription>
-            {isRTL ? 'أنشئ حساباً جديداً للبدء' : 'Create a new account to get started'}
+            {t('auth.signup.subtitle')}
           </GlassCardDescription>
         </GlassCardHeader>
 
@@ -84,14 +84,14 @@ const Signup: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-sm font-medium">
-                {t('auth.name')}
+                {t('auth.signup.name')}
               </Label>
               <div className="relative">
                 <User className={`absolute top-3 h-4 w-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
                 <Input
                   id="name"
                   type="text"
-                  placeholder={isRTL ? 'أدخل اسمك الكامل' : 'Enter your full name'}
+                  placeholder={t('auth.signup.name_placeholder')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className={`glass ${isRTL ? 'pr-10' : 'pl-10'}`}
@@ -102,14 +102,14 @@ const Signup: React.FC = () => {
 
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
-                {t('auth.email')}
+                {t('auth.signup.email')}
               </Label>
               <div className="relative">
                 <Mail className={`absolute top-3 h-4 w-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
                 <Input
                   id="email"
                   type="email"
-                  placeholder={isRTL ? 'أدخل بريدك الإلكتروني' : 'Enter your email'}
+                  placeholder={t('auth.signup.email_placeholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className={`glass ${isRTL ? 'pr-10' : 'pl-10'}`}
@@ -120,14 +120,14 @@ const Signup: React.FC = () => {
 
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium">
-                {t('auth.password')}
+                {t('auth.signup.password')}
               </Label>
               <div className="relative">
                 <Lock className={`absolute top-3 h-4 w-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={isRTL ? 'أدخل كلمة المرور' : 'Enter your password'}
+                  placeholder={t('auth.signup.password_placeholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className={`glass ${isRTL ? 'pr-10 pl-10' : 'pl-10 pr-10'}`}
@@ -137,6 +137,7 @@ const Signup: React.FC = () => {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className={`absolute top-3 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors ${isRTL ? 'left-3' : 'right-3'}`}
+                  aria-label={showPassword ? t('auth.login.hide_password') : t('auth.login.show_password')}
                 >
                   {showPassword ? <EyeOff /> : <Eye />}
                 </button>
@@ -145,14 +146,14 @@ const Signup: React.FC = () => {
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-sm font-medium">
-                {isRTL ? 'تأكيد كلمة المرور' : 'Confirm Password'}
+                {t('auth.signup.confirm_password')}
               </Label>
               <div className="relative">
                 <Lock className={`absolute top-3 h-4 w-4 text-muted-foreground ${isRTL ? 'right-3' : 'left-3'}`} />
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
-                  placeholder={isRTL ? 'أعد إدخال كلمة المرور' : 'Confirm your password'}
+                  placeholder={t('auth.signup.confirm_password_placeholder')}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className={`glass ${isRTL ? 'pr-10 pl-10' : 'pl-10 pr-10'}`}
@@ -162,6 +163,7 @@ const Signup: React.FC = () => {
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className={`absolute top-3 h-4 w-4 text-muted-foreground hover:text-foreground transition-colors ${isRTL ? 'left-3' : 'right-3'}`}
+                  aria-label={showConfirmPassword ? t('auth.login.hide_password') : t('auth.login.show_password')}
                 >
                   {showConfirmPassword ? <EyeOff /> : <Eye />}
                 </button>
@@ -175,27 +177,26 @@ const Signup: React.FC = () => {
               className="w-full"
               disabled={loading}
             >
-              {loading ? (isRTL ? 'جاري إنشاء الحساب...' : 'Creating account...') : t('auth.signup')}
+              {loading ? t('common.loading') : t('auth.signup.submit')}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              {isRTL ? 'لديك حساب بالفعل؟' : 'Already have an account?'}{' '}
+              {t('auth.signup.have_account')}{' '}
               <Link
                 to="/login"
                 className="text-accent hover:text-accent/80 font-medium transition-colors"
               >
-                {t('auth.login')}
+                {t('auth.login.submit')}
               </Link>
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              {isRTL ? 'العودة إلى' : 'Back to'}{' '}
               <Link
                 to="/"
                 className="text-accent hover:text-accent/80 font-medium transition-colors"
               >
-                {isRTL ? 'الصفحة الرئيسية' : 'Homepage'}
+                {t('auth.signup.back_to_home')}
               </Link>
             </p>
           </div>
