@@ -23,7 +23,7 @@ const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
       {/* Desktop Layout */}
       <div className="flex h-screen">
         {/* Sidebar */}
-        <Sidebar isCollapsed={false} onToggle={() => {}} />
+        <Sidebar />
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0">
