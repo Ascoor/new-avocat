@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { language, toggleLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { toggleMobile, toggleCollapsed, isCollapsed } = useSidebar();
-
+ 
   const handleSidebarToggle = React.useCallback(() => {
     if (typeof window !== 'undefined' && window.innerWidth < 1024) {
       toggleMobile();
@@ -35,6 +35,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
 
     toggleCollapsed();
   }, [toggleMobile, toggleCollapsed]);
+ 
 
   const headerSurface = { '--glass-surface': 'var(--gradient-header)' } as React.CSSProperties;
   const isDark = theme === 'dark';
@@ -81,6 +82,21 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
               ) : (
                 <ChevronLeft className="hidden h-4 w-4 lg:block" />
               )
+            )}
+          </Button>
+
+          {/* Desktop collapse toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleCollapsed}
+            className={cn('hidden lg:inline-flex h-9 w-9', iconButtonClass)}
+            aria-label={isCollapsed ? t('nav.expand') : t('nav.collapse')}
+          >
+            {isCollapsed ? (
+              isRTL ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
+            ) : (
+              isRTL ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />
             )}
           </Button>
 
