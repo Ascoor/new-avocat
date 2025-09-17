@@ -18,17 +18,12 @@ import {
   Search,
   BarChart3,
   Menu,
-  X
+  PanelsTopLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useSidebar } from '@/contexts/SidebarContext';
 import { cn } from '@/lib/utils';
-
-interface SidebarProps {
-  isCollapsed: boolean;
-  onToggle: () => void;
-}
 
 interface MenuItem {
   key: string;
@@ -36,43 +31,7 @@ interface MenuItem {
   children?: MenuItem[];
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
-  const { t, isRTL } = useLanguage();
-  const location = useLocation();
-  const isMobile = useIsMobile();
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
-
-  // Auto-expand parent items based on current route
-  useEffect(() => {
-    const currentPath = location.pathname;
-    const pathSegments = currentPath.split('/').filter(Boolean);
-    
-    if (pathSegments.length >= 2) {
-      const section = pathSegments[1]; // /dashboard/[section]
-      
-      // Find parent menu item for current route
-      const parentItem = menuItems.find(item => 
-        item.children?.some(child => String(child.key) === section)
-      );
-      
-      if (parentItem && !expandedItems.includes(parentItem.key)) {
-        setExpandedItems(prev => [...prev, parentItem.key]);
-      }
-    }
-  }, [location.pathname]);
-
-  // Handle mobile sidebar state
-  useEffect(() => {
-    if (isMobile && !isCollapsed) {
-      // Auto-collapse on mobile when route changes
-      const timer = setTimeout(() => {
-        onToggle();
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [location.pathname, isMobile]);
-
-  const menuItems: MenuItem[] = [
+const menuItems: MenuItem[] = [
     {
       key: 'cases',
       icon: Gavel,
@@ -117,6 +76,31 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     },
   ];
 
+const Sidebar: React.FC = () => {
+  const { t, isRTL } = useLanguage();
+  const location = useLocation();
+  const { isCollapsed, toggleCollapsed } = useSidebar();
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  // Auto-expand parent items based on current route
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const pathSegments = currentPath.split('/').filter(Boolean);
+
+    if (pathSegments.length >= 2) {
+      const section = pathSegments[1]; // /dashboard/[section]
+
+      // Find parent menu item for current route
+      const parentItem = menuItems.find(item =>
+        item.children?.some(child => String(child.key) === section)
+      );
+
+      if (parentItem && !expandedItems.includes(parentItem.key)) {
+        setExpandedItems(prev => [...prev, parentItem.key]);
+      }
+    }
+  }, [location.pathname, expandedItems]);
+
   const toggleExpanded = (key: string) => {
     setExpandedItems(prev =>
       prev.includes(key)
@@ -139,14 +123,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     );
 
     return (
-       <div key={item.key} className="w-full">
+      <div key={item.key} className="w-full">
         {hasChildren ? (
           <button
             onClick={() => !isCollapsed && toggleExpanded(item.key)}
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+              "sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
               "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
-              hasActiveChild && "bg-sidebar-accent text-sidebar-accent-foreground",
+              hasActiveChild &&
+                "bg-sidebar-accent text-sidebar-accent-foreground sidebar-link-active",
               level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
               isCollapsed && "justify-center px-2"
             )}
@@ -173,15 +158,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
                 )}
               </>
             )}
+            {isCollapsed && (
+              <span className="sr-only">{t(`nav.${item.key}`)}</span>
+            )}
           </button>
         ) : (
           <NavLink
             to={`/dashboard/${item.key}`}
             className={({ isActive }) =>
               cn(
-                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                "sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                 "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
-                isActive && "bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant",
+                isActive &&
+                  "bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant sidebar-link-active",
                 level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
                 isCollapsed && "justify-center px-2"
               )
@@ -199,6 +188,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
                 {t(`nav.${item.key}`)}
               </span>
             )}
+            {isCollapsed && (
+              <span className="sr-only">{t(`nav.${item.key}`)}</span>
+            )}
           </NavLink>
         )}
 
@@ -212,64 +204,55 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
   };
 
   return (
-    <>
-      {/* Mobile Overlay */}
-      {isMobile && !isCollapsed && (
-        <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
-          onClick={onToggle}
-        />
+    <aside
+      className={cn(
+        "fixed top-16 z-40 hidden h-[calc(100vh-4rem)] flex-col border-sidebar-border/70 text-sidebar-foreground transition-all duration-300 ease-out lg:flex",
+        "glass shadow-elegant backdrop-blur-xl",
+        "bg-[hsl(var(--sidebar-background)/0.92)] dark:bg-[hsl(var(--sidebar-background)/0.85)]",
+        isCollapsed ? "w-[4.5rem]" : "w-[17rem]",
+        isRTL ? "right-0 border-l" : "left-0 border-r"
       )}
-
-      {/* Sidebar */}
-      <aside
-        className={cn(
-          "fixed top-0 z-50 h-full glass border-r border-sidebar-border text-sidebar-foreground transition-all duration-300",
-          "lg:relative lg:translate-x-0",
-          // Positioning based on RTL/LTR
-          isRTL ? "right-0" : "left-0",
-          // Width and visibility
-          isCollapsed ? "w-16" : "w-64",
-          // Mobile behavior
-          isMobile && isCollapsed && (isRTL ? "-translate-x-full" : "-translate-x-full"),
-          isMobile && !isCollapsed && "translate-x-0",
-          // Desktop behavior
-          !isMobile && "translate-x-0"
-        )}
-        style={{
-          direction: isRTL ? 'rtl' : 'ltr',
-          '--glass-surface': 'var(--gradient-sidebar)'
-        } as React.CSSProperties}
-      >
-        <div className="flex h-full flex-col">
-          {/* Header */}
-          <div className={cn(
-            "flex h-16 items-center border-b border-sidebar-border px-4",
+      style={{
+        direction: isRTL ? 'rtl' : 'ltr',
+        '--glass-surface': 'var(--gradient-sidebar)'
+      } as React.CSSProperties}
+    >
+      <div className="flex h-full flex-col">
+        <div
+          className={cn(
+            "flex h-14 items-center border-b border-sidebar-border/70 px-3",
             isCollapsed ? "justify-center" : "justify-between"
-          )}>
-            {!isCollapsed && (
-              <h2 className="text-lg font-semibold bg-gradient-primary bg-clip-text text-transparent truncate">
-                {t('nav.dashboard')}
-              </h2>
+          )}
+        >
+          {!isCollapsed && (
+            <h2 className="text-base font-semibold tracking-wide text-sidebar-foreground/90">
+              {t('nav.dashboard')}
+            </h2>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleCollapsed}
+            className={cn(
+              "h-8 w-8 rounded-full border border-transparent transition-colors",
+              "hover:border-sidebar-border hover:bg-sidebar-accent/60",
+              "dark:hover:bg-sidebar-accent/40"
             )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onToggle}
-              className="h-8 w-8 hover:bg-sidebar-accent glow-hover flex-shrink-0"
-              aria-label={isCollapsed ? t('nav.expand') : t('nav.collapse')}
-            >
-              {isCollapsed ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
-            </Button>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
-            {menuItems.map(item => renderMenuItem(item))}
-          </nav>
+            aria-label={isCollapsed ? t('nav.expand') : t('nav.collapse')}
+          >
+            {isCollapsed ? (
+              <Menu className="h-4 w-4" />
+            ) : (
+              <PanelsTopLeft className="h-4 w-4" />
+            )}
+          </Button>
         </div>
-      </aside>
-    </>
+
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-2 custom-scrollbar">
+          {menuItems.map(item => renderMenuItem(item))}
+        </nav>
+      </div>
+    </aside>
   );
 };
 

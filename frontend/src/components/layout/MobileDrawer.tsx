@@ -73,9 +73,9 @@ const MobileDrawer: React.FC = () => {
 
           {/* Drawer */}
           <motion.aside
-            initial={{ 
+            initial={{
               x: isRTL ? '100%' : '-100%',
-              opacity: 0 
+              opacity: 0
             }}
             animate={{ 
               x: 0,
@@ -91,9 +91,9 @@ const MobileDrawer: React.FC = () => {
               stiffness: 200 
             }}
             className={cn(
-              'fixed top-0 z-50 h-full w-80 max-w-[85vw] glass border border-sidebar-border text-sidebar-foreground md:hidden',
+              'fixed top-0 z-50 h-full w-full glass border border-sidebar-border text-sidebar-foreground md:hidden',
               'flex flex-col shadow-elegant',
-              isRTL ? 'right-0 border-l' : 'left-0 border-r'
+              isRTL ? 'right-0' : 'left-0'
             )}
             style={{ '--glass-surface': 'var(--gradient-sidebar)' } as React.CSSProperties}
           >

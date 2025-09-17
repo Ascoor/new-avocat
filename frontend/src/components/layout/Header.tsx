@@ -1,5 +1,5 @@
 import React from 'react';
-import { Moon, Sun, ChevronDown, User, LogOut, Menu } from 'lucide-react';
+import { Moon, Sun, ChevronDown, User, LogOut, Menu, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { theme, toggleTheme } = useTheme();
   const { language, toggleLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
-  const { toggleMobile } = useSidebar();
+  const { toggleMobile, toggleCollapsed, isCollapsed } = useSidebar();
 
   const headerSurface = { '--glass-surface': 'var(--gradient-header)' } as React.CSSProperties;
   const isDark = theme === 'dark';
@@ -61,6 +61,21 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             aria-label={t('common.menu')}
           >
             <Menu className="h-4 w-4" />
+          </Button>
+
+          {/* Desktop collapse toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleCollapsed}
+            className={cn('hidden lg:inline-flex h-9 w-9', iconButtonClass)}
+            aria-label={isCollapsed ? t('nav.expand') : t('nav.collapse')}
+          >
+            {isCollapsed ? (
+              isRTL ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
+            ) : (
+              isRTL ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />
+            )}
           </Button>
 
           {/* Desktop logo - hidden on mobile */}

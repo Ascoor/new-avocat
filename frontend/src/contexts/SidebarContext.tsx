@@ -12,13 +12,19 @@ const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(() => {
-    const saved = localStorage.getItem('sidebar-collapsed');
+    if (typeof window === 'undefined') {
+      return false;
+    }
+
+    const saved = window.localStorage.getItem('sidebar-collapsed');
     return saved ? JSON.parse(saved) : false;
   });
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('sidebar-collapsed', JSON.stringify(isCollapsed));
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('sidebar-collapsed', JSON.stringify(isCollapsed));
+    }
   }, [isCollapsed]);
 
   const toggleCollapsed = () => {
