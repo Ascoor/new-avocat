@@ -144,9 +144,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
           <button
             onClick={() => !isCollapsed && toggleExpanded(item.key)}
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+              "sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
               "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
-              hasActiveChild && "bg-sidebar-accent text-sidebar-accent-foreground",
+              hasActiveChild &&
+                "bg-sidebar-accent text-sidebar-accent-foreground sidebar-link-active",
               level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
               isCollapsed && "justify-center px-2"
             )}
@@ -179,9 +180,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
             to={`/dashboard/${item.key}`}
             className={({ isActive }) =>
               cn(
-                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                "sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                 "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
-                isActive && "bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant",
+                isActive &&
+                  "bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant sidebar-link-active",
                 level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
                 isCollapsed && "justify-center px-2"
               )
