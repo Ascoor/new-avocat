@@ -26,6 +26,16 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { language, toggleLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { toggleMobile, toggleCollapsed, isCollapsed } = useSidebar();
+ 
+  const handleSidebarToggle = React.useCallback(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      toggleMobile();
+      return;
+    }
+
+    toggleCollapsed();
+  }, [toggleMobile, toggleCollapsed]);
+ 
 
   const headerSurface = { '--glass-surface': 'var(--gradient-header)' } as React.CSSProperties;
   const isDark = theme === 'dark';
@@ -52,15 +62,27 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
           'flex items-center gap-3',
           isRTL ? 'flex-row-reverse' : 'flex-row'
         )}>
-          {/* Mobile menu button */}
           <Button
             variant="ghost"
             size="icon"
-            onClick={toggleMobile}
-            className={cn('md:hidden h-9 w-9', iconButtonClass)}
+            onClick={handleSidebarToggle}
+            className={cn('h-9 w-9', iconButtonClass)}
             aria-label={t('common.menu')}
           >
-            <Menu className="h-4 w-4" />
+            <Menu className="h-4 w-4 lg:hidden" />
+            {isCollapsed ? (
+              isRTL ? (
+                <ChevronLeft className="hidden h-4 w-4 lg:block" />
+              ) : (
+                <ChevronRight className="hidden h-4 w-4 lg:block" />
+              )
+            ) : (
+              isRTL ? (
+                <ChevronRight className="hidden h-4 w-4 lg:block" />
+              ) : (
+                <ChevronLeft className="hidden h-4 w-4 lg:block" />
+              )
+            )}
           </Button>
 
           {/* Desktop collapse toggle */}
