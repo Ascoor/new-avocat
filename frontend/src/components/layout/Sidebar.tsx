@@ -128,35 +128,47 @@ const Sidebar: React.FC = () => {
           <button
             onClick={() => !isCollapsed && toggleExpanded(item.key)}
             className={cn(
-              "sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+              "sidebar-link flex w-full items-center rounded-lg text-sm font-medium transition-all duration-200",
               "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
               hasActiveChild &&
                 "bg-sidebar-accent text-sidebar-accent-foreground sidebar-link-active",
               level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
-              isCollapsed && "justify-center px-2"
+              isCollapsed ? "justify-center gap-0 px-2 py-2.5" : "gap-3 px-3 py-2.5"
             )}
           >
-            <IconComponent className={cn(
-              "h-5 w-5 flex-shrink-0",
-              isCollapsed && "h-6 w-6"
-            )} />
-            {!isCollapsed && (
-              <>
-                <span className={cn(
-                  "flex-1 truncate",
-                  isRTL ? "text-right" : "text-left"
-                )}>
-                  {t(`nav.${item.key}`)}
-                </span>
-                {expanded ? (
-                  <ChevronDown className="h-4 w-4 flex-shrink-0" />
-                ) : (
-                  <ChevronRight className={cn(
-                    "h-4 w-4 flex-shrink-0",
-                    isRTL && "rotate-180"
-                  )} />
+            <IconComponent
+              className={cn(
+                "h-5 w-5 flex-shrink-0 transition-transform duration-300",
+                isCollapsed && "h-6 w-6"
+              )}
+            />
+            <div
+              aria-hidden={isCollapsed}
+              className={cn(
+                "flex-1 overflow-hidden transition-[max-width,opacity,transform] duration-300 ease-out",
+                isCollapsed
+                  ? "max-w-0 translate-x-2 opacity-0"
+                  : "max-w-full translate-x-0 opacity-100",
+                isRTL ? "text-right" : "text-left"
+              )}
+            >
+              <span className="block truncate">{t(`nav.${item.key}`)}</span>
+            </div>
+            {expanded ? (
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 flex-shrink-0 transition-opacity duration-200",
+                  isCollapsed && "hidden"
                 )}
-              </>
+              />
+            ) : (
+              <ChevronRight
+                className={cn(
+                  "h-4 w-4 flex-shrink-0 transition-opacity duration-200",
+                  isRTL && "rotate-180",
+                  isCollapsed && "hidden"
+                )}
+              />
             )}
             {isCollapsed && (
               <span className="sr-only">{t(`nav.${item.key}`)}</span>
@@ -167,27 +179,33 @@ const Sidebar: React.FC = () => {
             to={`/dashboard/${item.key}`}
             className={({ isActive }) =>
               cn(
-                "sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                "sidebar-link flex w-full items-center rounded-lg text-sm font-medium transition-all duration-200",
                 "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
                 isActive &&
                   "bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant sidebar-link-active",
                 level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
-                isCollapsed && "justify-center px-2"
+                isCollapsed ? "justify-center gap-0 px-2 py-2.5" : "gap-3 px-3 py-2.5"
               )
             }
           >
-            <IconComponent className={cn(
-              "h-5 w-5 flex-shrink-0",
-              isCollapsed && "h-6 w-6"
-            )} />
-            {!isCollapsed && (
-              <span className={cn(
-                "flex-1 truncate",
+            <IconComponent
+              className={cn(
+                "h-5 w-5 flex-shrink-0 transition-transform duration-300",
+                isCollapsed && "h-6 w-6"
+              )}
+            />
+            <div
+              aria-hidden={isCollapsed}
+              className={cn(
+                "flex-1 overflow-hidden transition-[max-width,opacity,transform] duration-300 ease-out",
+                isCollapsed
+                  ? "max-w-0 translate-x-2 opacity-0"
+                  : "max-w-full translate-x-0 opacity-100",
                 isRTL ? "text-right" : "text-left"
-              )}>
-                {t(`nav.${item.key}`)}
-              </span>
-            )}
+              )}
+            >
+              <span className="block truncate">{t(`nav.${item.key}`)}</span>
+            </div>
             {isCollapsed && (
               <span className="sr-only">{t(`nav.${item.key}`)}</span>
             )}
@@ -205,8 +223,9 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
+      data-collapsed={isCollapsed}
       className={cn(
-        "fixed top-16 z-40 hidden h-[calc(100vh-4rem)] flex-col border-sidebar-border/70 text-sidebar-foreground transition-all duration-300 ease-out lg:flex",
+        "group/sidebar fixed top-16 z-40 hidden h-[calc(100vh-4rem)] flex-col border-sidebar-border/70 text-sidebar-foreground transition-[width,transform] duration-300 ease-out lg:flex",
         "glass shadow-elegant backdrop-blur-xl",
         "bg-[hsl(var(--sidebar-background)/0.92)] dark:bg-[hsl(var(--sidebar-background)/0.85)]",
         isCollapsed ? "w-[4.5rem]" : "w-[17rem]",
@@ -218,26 +237,17 @@ const Sidebar: React.FC = () => {
       } as React.CSSProperties}
     >
       <div className="flex h-full flex-col">
-        <div
-          className={cn(
-            "flex h-14 items-center border-b border-sidebar-border/70 px-3",
-            isCollapsed ? "justify-center" : "justify-between"
-          )}
-        >
-          {!isCollapsed && (
-            <h2 className="text-base font-semibold tracking-wide text-sidebar-foreground/90">
-              {t('nav.dashboard')}
-            </h2>
-          )}
+        <div className="flex h-14 items-center justify-center border-b border-sidebar-border/70 px-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleCollapsed}
             className={cn(
-              "h-8 w-8 rounded-full border border-transparent transition-colors",
+              "h-9 w-9 rounded-full border border-transparent transition-all duration-300",
               "hover:border-sidebar-border hover:bg-sidebar-accent/60",
               "dark:hover:bg-sidebar-accent/40"
             )}
+            aria-expanded={!isCollapsed}
             aria-label={isCollapsed ? t('nav.expand') : t('nav.collapse')}
           >
             {isCollapsed ? (
@@ -248,7 +258,7 @@ const Sidebar: React.FC = () => {
           </Button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-2 custom-scrollbar">
+        <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-4 custom-scrollbar">
           {menuItems.map(item => renderMenuItem(item))}
         </nav>
       </div>
