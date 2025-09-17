@@ -1,100 +1,94 @@
-import type { ReactNode } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { type LucideIcon } from 'lucide-react';
+import { type ReactNode, useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export interface DetailsTableColumn<T> {
-  header: string;
-  render: (row: T) => ReactNode;
-  align?: 'start' | 'center' | 'end';
+interface CaseSectionProps {
+  icon: LucideIcon;
+  title: string;
+  subtitle?: string;
+  actions?: ReactNode;
+  children: ReactNode;
   className?: string;
+  contentClassName?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  toggleLabel?: string;
 }
 
-export interface DetailsTableProps<T> {
-  data: T[];
-  columns: DetailsTableColumn<T>[];
-  actionsHeader?: string;
-  renderActions?: (row: T) => ReactNode;
-  emptyMessage: string;
-}
+const CaseSection = ({
+  icon: Icon,
+  title,
+  subtitle,
+  actions,
+  children,
+  className,
+  contentClassName,
+  open = true,
+  onOpenChange,
+  toggleLabel,
+}: CaseSectionProps) => {
+  const isControlled = typeof onOpenChange === 'function';
+  const [internalOpen, setInternalOpen] = useState(open);
 
-const alignClass: Record<'start' | 'center' | 'end', string> = {
-  start: 'text-left rtl:text-right',
-  center: 'text-center',
-  end: 'text-right rtl:text-left',
-};
+  useEffect(() => {
+    if (!isControlled) {
+      setInternalOpen(open);
+    }
+  }, [open, isControlled]);
 
-const DetailsTable = <T,>({
-  data,
-  columns,
-  actionsHeader,
-  renderActions,
-  emptyMessage,
-}: DetailsTableProps<T>) => {
-  const { isRTL } = useLanguage();
-  const hasActions = typeof renderActions === 'function';
+  const isOpen = isControlled ? open : internalOpen;
+
+  const handleToggle = () => {
+    if (isControlled) {
+      onOpenChange?.(!isOpen);
+      return;
+    }
+    setInternalOpen((previous) => !previous);
+  };
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border/60 bg-card/40 shadow-sm">
-      <Table dir={isRTL ? 'rtl' : 'ltr'}>
-        <TableHeader>
-          <TableRow className="bg-muted/40">
-            {columns.map((column, index) => (
-              <TableHead
-                key={`head-${index}`}
-                className={cn(
-                  'px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground',
-                  alignClass[column.align ?? 'start'],
-                  column.className,
-                )}
-              >
-                {column.header}
-              </TableHead>
-            ))}
-            {hasActions && (
-              <TableHead className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground text-center">
-                {actionsHeader}
-              </TableHead>
+    <section
+      className={cn(
+        'rounded-2xl border border-border/60 bg-card/60 p-6 shadow-sm backdrop-blur',
+        className,
+      )}
+    >
+      <div className="flex flex-col gap-4 border-b border-border/60 pb-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <Icon className="h-5 w-5" />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+            {subtitle && (
+              <p className="text-sm text-muted-foreground">{subtitle}</p>
             )}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={columns.length + (hasActions ? 1 : 0)}
-                className="px-4 py-6 text-center text-sm text-muted-foreground"
-              >
-                {emptyMessage}
-              </TableCell>
-            </TableRow>
-          ) : (
-            data.map((row, rowIndex) => (
-              <TableRow key={`row-${rowIndex}`} className="border-border/40">
-                {columns.map((column, colIndex) => (
-                  <TableCell
-                    key={`cell-${rowIndex}-${colIndex}`}
-                    className={cn(
-                      'px-4 py-2 text-sm text-foreground',
-                      alignClass[column.align ?? 'start'],
-                      column.className,
-                    )}
-                  >
-                    {column.render(row)}
-                  </TableCell>
-                ))}
-                {hasActions && (
-                  <TableCell className="px-4 py-2 text-center">
-                    {renderActions?.(row)}
-                  </TableCell>
-                )}
-              </TableRow>
-            ))
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {actions}
+          {(toggleLabel || isControlled) && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={handleToggle}
+              aria-expanded={isOpen}
+              className="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+            >
+              {toggleLabel ?? (isOpen ? 'Collapse' : 'Expand')}
+            </Button>
           )}
-        </TableBody>
-      </Table>
-    </div>
+        </div>
+      </div>
+
+      {isOpen && (
+        <div className={cn('mt-4 space-y-4', contentClassName)}>{children}</div>
+      )}
+    </section>
   );
 };
 
-export default DetailsTable;
+export default CaseSection;
