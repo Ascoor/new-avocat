@@ -1,45 +1,38 @@
 import { useEffect, useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { createClient, updateClient } from '@/api/clients.service';
-import type { Client } from '@/types/clients';
-import type { ClientFormMode } from './types';
+import { createUnclient, updateUnclient } from '@/api/unclients.service';
+import type { Unclient } from '@/types/unclients';
+import type { UnclientFormMode } from './types';
 
-interface ClientFormDialogProps {
+interface UnclientFormDialogProps {
   open: boolean;
-  mode: ClientFormMode;
-  initialData?: Client;
+  mode: UnclientFormMode;
+  initialData?: Unclient;
   onOpenChange: (open: boolean) => void;
   onSaved?: () => void;
 }
 
-const DEFAULT_CLIENT: Partial<Client> = {
+const DEFAULT_UNCLIENT: Partial<Unclient> = {
   slug: '',
   name: '',
   identity_number: '',
-  address: '',
   phone_number: '',
   email: '',
-  nationality: '',
+  address: '',
   work: '',
   emergency_number: '',
   date_of_birth: '',
-  status: 'active',
   gender: 'ذكر',
   religion: 'مسلم',
 };
 
-const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
+const UnclientFormDialog: React.FC<UnclientFormDialogProps> = ({
   open,
   mode,
   initialData,
@@ -48,7 +41,7 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
 }) => {
   const { t } = useLanguage();
   const { toast } = useToast();
-  const [formState, setFormState] = useState<Partial<Client>>(DEFAULT_CLIENT);
+  const [formState, setFormState] = useState<Partial<Unclient>>(DEFAULT_UNCLIENT);
   const [loading, setLoading] = useState(false);
 
   const isReadOnly = mode === 'view';
@@ -58,12 +51,12 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
 
     if (initialData) {
       setFormState({
-        ...DEFAULT_CLIENT,
+        ...DEFAULT_UNCLIENT,
         ...initialData,
         date_of_birth: initialData.date_of_birth?.slice(0, 10),
       });
     } else {
-      setFormState(DEFAULT_CLIENT);
+      setFormState(DEFAULT_UNCLIENT);
     }
   }, [open, initialData]);
 
@@ -71,7 +64,7 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
     onOpenChange(false);
   };
 
-  const updateField = <K extends keyof Client>(key: K, value: Client[K]) => {
+  const updateField = <K extends keyof Unclient>(key: K, value: Unclient[K]) => {
     setFormState((prev) => ({
       ...prev,
       [key]: value,
@@ -87,26 +80,26 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
 
     setLoading(true);
     try {
-      const payload: Partial<Client> = {
+      const payload = {
         ...formState,
         date_of_birth: formState.date_of_birth || null,
       };
 
       if (mode === 'edit' && initialData) {
-        await updateClient(String(initialData.id), payload);
-        toast({ title: t('clients.form.messages.updateSuccess') });
+        await updateUnclient(String(initialData.id), payload);
+        toast({ title: t('unclients.form.messages.updateSuccess') });
       } else {
-        await createClient(payload);
-        toast({ title: t('clients.form.messages.createSuccess') });
+        await createUnclient(payload as Omit<Unclient, 'id'>);
+        toast({ title: t('unclients.form.messages.createSuccess') });
       }
 
       onSaved?.();
       handleClose();
     } catch (error) {
-      console.error('Failed to save client', error);
+      console.error('Failed to save unclient', error);
       toast({
-        title: t('clients.form.messages.errorTitle'),
-        description: t('clients.form.messages.errorDescription'),
+        title: t('unclients.form.messages.errorTitle'),
+        description: t('unclients.form.messages.errorDescription'),
         variant: 'destructive',
       });
     } finally {
@@ -120,49 +113,49 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
         <DialogHeader>
           <DialogTitle>
             {mode === 'create'
-              ? t('clients.form.titleCreate')
+              ? t('unclients.form.titleCreate')
               : mode === 'edit'
-                ? t('clients.form.titleEdit')
-                : t('clients.form.titleView')}
+                ? t('unclients.form.titleEdit')
+                : t('unclients.form.titleView')}
           </DialogTitle>
           {mode === 'view' && (
-            <DialogDescription>{t('clients.form.readOnlyNotice')}</DialogDescription>
+            <DialogDescription>{t('unclients.form.readOnlyNotice')}</DialogDescription>
           )}
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
-            <FormField label={t('clients.form.labels.slug')} required>
+            <FormField label={t('unclients.form.labels.slug')} required>
               <Input
                 value={formState.slug ?? ''}
                 onChange={(event) => updateField('slug', event.target.value)}
                 disabled={isReadOnly}
-                placeholder={t('clients.form.placeholders.slug')}
+                placeholder={t('unclients.form.placeholders.slug')}
               />
             </FormField>
-            <FormField label={t('clients.form.labels.name')} required>
+            <FormField label={t('unclients.form.labels.name')} required>
               <Input
                 value={formState.name ?? ''}
                 onChange={(event) => updateField('name', event.target.value)}
                 disabled={isReadOnly}
-                placeholder={t('clients.form.placeholders.name')}
+                placeholder={t('unclients.form.placeholders.name')}
               />
             </FormField>
-            <FormField label={t('clients.form.labels.identity')}>
+            <FormField label={t('unclients.form.labels.identity')}>
               <Input
                 value={formState.identity_number ?? ''}
                 onChange={(event) => updateField('identity_number', event.target.value)}
                 disabled={isReadOnly}
               />
             </FormField>
-            <FormField label={t('clients.form.labels.phone')}>
+            <FormField label={t('unclients.form.labels.phone')}>
               <Input
                 value={formState.phone_number ?? ''}
                 onChange={(event) => updateField('phone_number', event.target.value)}
                 disabled={isReadOnly}
               />
             </FormField>
-            <FormField label={t('clients.form.labels.email')}>
+            <FormField label={t('unclients.form.labels.email')}>
               <Input
                 type="email"
                 value={formState.email ?? ''}
@@ -170,29 +163,28 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
                 disabled={isReadOnly}
               />
             </FormField>
-            <FormField label={t('clients.form.labels.address')}>
+            <FormField label={t('unclients.form.labels.address')}>
               <Input
                 value={formState.address ?? ''}
                 onChange={(event) => updateField('address', event.target.value)}
                 disabled={isReadOnly}
               />
             </FormField>
-            <FormField label={t('clients.form.labels.status')}>
-              <Select
-                value={formState.status ?? 'active'}
-                onValueChange={(value) => updateField('status', value as Client['status'])}
+            <FormField label={t('unclients.form.labels.work')}>
+              <Input
+                value={formState.work ?? ''}
+                onChange={(event) => updateField('work', event.target.value)}
                 disabled={isReadOnly}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">{t('clients.status.active')}</SelectItem>
-                  <SelectItem value="inactive">{t('clients.status.inactive')}</SelectItem>
-                </SelectContent>
-              </Select>
+              />
             </FormField>
-            <FormField label={t('clients.form.labels.dateOfBirth')}>
+            <FormField label={t('unclients.form.labels.emergency')}>
+              <Input
+                value={formState.emergency_number ?? ''}
+                onChange={(event) => updateField('emergency_number', event.target.value)}
+                disabled={isReadOnly}
+              />
+            </FormField>
+            <FormField label={t('unclients.form.labels.dateOfBirth')}>
               <Input
                 type="date"
                 value={formState.date_of_birth ?? ''}
@@ -200,36 +192,37 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
                 disabled={isReadOnly}
               />
             </FormField>
-            <FormField label={t('clients.form.labels.nationality')}>
-              <Input
-                value={formState.nationality ?? ''}
-                onChange={(event) => updateField('nationality', event.target.value)}
+            <FormField label={t('unclients.form.labels.gender')}>
+              <Select
+                value={formState.gender ?? 'ذكر'}
+                onValueChange={(value) => updateField('gender', value as Unclient['gender'])}
                 disabled={isReadOnly}
-              />
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ذكر">{t('unclients.form.genderOptions.male')}</SelectItem>
+                  <SelectItem value="أنثى">{t('unclients.form.genderOptions.female')}</SelectItem>
+                </SelectContent>
+              </Select>
             </FormField>
-            <FormField label={t('clients.form.labels.work')}>
-              <Input
-                value={formState.work ?? ''}
-                onChange={(event) => updateField('work', event.target.value)}
+            <FormField label={t('unclients.form.labels.religion')}>
+              <Select
+                value={formState.religion ?? 'مسلم'}
+                onValueChange={(value) => updateField('religion', value as Unclient['religion'])}
                 disabled={isReadOnly}
-              />
-            </FormField>
-            <FormField label={t('clients.form.labels.emergency')}>
-              <Input
-                value={formState.emergency_number ?? ''}
-                onChange={(event) => updateField('emergency_number', event.target.value)}
-                disabled={isReadOnly}
-              />
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="مسلم">{t('unclients.form.religionOptions.muslim')}</SelectItem>
+                  <SelectItem value="مسيحي">{t('unclients.form.religionOptions.christian')}</SelectItem>
+                </SelectContent>
+              </Select>
             </FormField>
           </div>
-
-          <FormField label={t('clients.form.labels.religion')}>
-            <Input
-              value={formState.religion ?? ''}
-              onChange={(event) => updateField('religion', event.target.value as Client['religion'])}
-              disabled={isReadOnly}
-            />
-          </FormField>
 
           <div className="flex justify-end gap-2">
             <Button type="button" variant="outline" onClick={handleClose}>
@@ -237,7 +230,7 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
             </Button>
             {!isReadOnly && (
               <Button type="submit" disabled={loading}>
-                {loading ? t('common.loading') : t('clients.form.actions.save')}
+                {loading ? t('common.loading') : t('unclients.form.actions.save')}
               </Button>
             )}
           </div>
@@ -263,4 +256,4 @@ const FormField: React.FC<FormFieldProps> = ({ label, required, children }) => (
   </label>
 );
 
-export default ClientFormDialog;
+export default UnclientFormDialog;

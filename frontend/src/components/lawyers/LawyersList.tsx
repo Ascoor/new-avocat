@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
-import DetailsTable, { DetailsTableColumn } from '@/components/legalCases/Details/DetailsTable';
+import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import { GlassCard } from '@/components/ui/glass-card';
 import LawyerFormDialog from '@/components/lawyers/LawyerFormDialog';

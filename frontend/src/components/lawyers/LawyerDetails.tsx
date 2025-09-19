@@ -8,7 +8,7 @@ import { getSessionsByLawyerId } from '@/api/sessions.service';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { GlassCard } from '@/components/ui/glass-card';
-import DetailsTable, { DetailsTableColumn } from '@/components/legalCases/Details/DetailsTable';
+import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import { LegalSession } from '@/types/legalCase';
 import { Lawyer } from '@/types/lawyers';
 

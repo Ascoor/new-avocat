@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { CalendarCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
-import DetailsTable, { DetailsTableColumn } from './DetailsTable';
+import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import { useToast } from '@/components/ui/use-toast';
 import {
   getSessionsByLegCaseId,
