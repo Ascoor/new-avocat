@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Header } from './Header';
 import Sidebar from './Sidebar';
 import MobileDrawer from './MobileDrawer';
-import { cn } from '@/lib/utils';
+import { useSidebar } from '@/contexts/SidebarContext';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -14,6 +14,15 @@ interface AppShellProps {
 const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
   const { i18n } = useTranslation();
   const isRTL = i18n.language === 'ar';
+  const { isCollapsed, toggleCollapsed } = useSidebar();
+
+  const desktopSpacingClass = isRTL
+    ? isCollapsed
+      ? 'md:pr-16'
+      : 'md:pr-64'
+    : isCollapsed
+      ? 'md:pl-16'
+      : 'md:pl-64';
 
   return (
     <div 
@@ -23,10 +32,12 @@ const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
       {/* Desktop Layout */}
       <div className="flex h-screen">
         {/* Sidebar */}
-        <Sidebar />
+        <div className="hidden md:block">
+          <Sidebar isCollapsed={isCollapsed} onToggle={toggleCollapsed} />
+        </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${desktopSpacingClass}`}>
           {/* Header */}
           <Header title={title} />
 

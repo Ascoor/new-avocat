@@ -8,15 +8,15 @@ import ThemeToggle from '@/components/ui/theme-toggle';
 import LanguageToggle from '@/components/ui/language-toggle';
 import BrandLogo from '@/components/common/BrandLogo';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
-import { useTheme } from "next-themes";
 
 const LandingNavbar: React.FC = () => {
-  const { t, isRTL ,language} = useLanguage();
+  const { t, isRTL, language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-const { theme } = useTheme();
+  const { theme } = useTheme();
 
   // Handle scroll effect
   useEffect(() => {
@@ -64,15 +64,14 @@ const { theme } = useTheme();
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-<Link to="/" className="flex-shrink-0">
-  {theme === "dark" ? (
-    // 👇 ثابت في الليل مهما حصل scroll
-    <BrandLogo variant="text" className="h-12" dark={true} />
-  ) : (
-    // 👇 يتغير في النهار حسب الـ scroll
-    <BrandLogo variant="text" className="h-12" dark={!isScrolled} />
-  )}
-</Link>
+            <BrandLogo
+              variant="text"
+              className="h-12"
+              lang={language}
+              dark={!isScrolled ? true : theme === 'dark'}
+            />
+
+ 
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 rtl:space-x-reverse">
@@ -171,7 +170,7 @@ const { theme } = useTheme();
               <div className="flex flex-col h-full">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-border">
-                  <BrandLogo variant="full" className="h-8" />
+                  <BrandLogo variant="full" className="h-8" lang={language} />
                   <Button
                     variant="ghost"
                     size="icon"

@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import  LanguageToggle  from '@/components/ui/language-toggle';
+import LanguageToggle from '@/components/ui/language-toggle';
 import { Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import authBackground from '@/assets/auth-background.jpg';
@@ -21,7 +21,7 @@ const emailRegex = /\S+@\S+\.\S+/;
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
-  const { isRTL } = useLanguage();
+  const { isRTL, language } = useLanguage();
   const { login, loading } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -125,24 +125,27 @@ await login(email, password);
         <LanguageToggle />
       </div>
       {/* Background Image Section */}
-   {/* Background Image Section */}
-<div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-  {/* الخلفية + التدرج */}
-  <div 
-    className="absolute inset-0 bg-cover bg-center"
-    style={{ backgroundImage: `url(${authBackground})` }}
-  >
-    <div className="absolute inset-0 hero-gradient opacity-80"></div>
-  </div>
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+        {/* الخلفية + التدرج */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${authBackground})` }}
+        >
+          <div className="absolute inset-0 hero-gradient opacity-80"></div>
+        </div>
 
-  {/* محتوى متوسّط بالكامل */}
-  <div className="relative z-10 flex items-center justify-center w-full h-full">
-    <div className="text-white text-center max-w-md">
- 
- <BrandLogo variant="text" lang="ar" dark={true} className="h-4head er6" />
-</div>
-  </div>
-</div>
+        {/* محتوى متوسّط بالكامل */}
+        <div className="relative z-10 flex items-center justify-center w-full h-full">
+          <div className="text-white text-center max-w-md">
+            <BrandLogo
+              variant="text"
+              lang={language}
+              dark={true}
+              className="mx-auto h-16"
+            />
+          </div>
+        </div>
+      </div>
 
 
       {/* Form Section */}

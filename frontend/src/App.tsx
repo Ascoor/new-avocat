@@ -13,10 +13,10 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import DashboardHome from "./pages/dashboard/DashboardHome";
-import LegalCases from "@/components/LegalCases/LegalCases";
-import LegalCaseDetails from "@/components/LegalCases/Details/LegalCaseDetails";
+import LegalCases from "@/pages/LegalCasesPage";
+import LegalCaseDetails from "@/components/legalCases/Details/LegalCaseDetails";
 import Clients from "./pages/dashboard/StatsCards";
-import Lawyers from "./pages/dashboard/CasesByStatusChart";
+import { LawyersList, LawyerDetails } from "./components/lawyers";
 import NotFound from "./pages/NotFound";
 
 type DashboardSectionKey =
@@ -71,7 +71,8 @@ const App = () => (
                   <Route path="cases" element={<LegalCases />} />
                   <Route path="cases/:id" element={<LegalCaseDetails />} />
                   <Route path="clients" element={<Clients />} />
-                  <Route path="lawyers" element={<Lawyers />} />
+                  <Route path="lawyers" element={<LawyersList />} />
+                  <Route path="lawyers/:id" element={<LawyerDetails />} />
                   <Route path="customer_service" element={<DashboardPlaceholder sectionKey="customer_service" />} />
                   <Route path="agents" element={<DashboardPlaceholder sectionKey="agents" />} />
                   <Route path="clients_no_agents" element={<DashboardPlaceholder sectionKey="clients_no_agents" />} />

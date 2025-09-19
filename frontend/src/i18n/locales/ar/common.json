@@ -5,10 +5,21 @@
   "nav": {
     "dashboard": "لوحة التحكم",
     "cases": "القضايا",
+    "customer_service": "خدمة العملاء",
     "clients": "العملاء",
+    "agents": "وكلاء العملاء",
+    "clients_no_agents": "عملاء بدون وكلاء",
+    "lawyers": "المحامون",
     "documents": "الوثائق",
+    "sessions": "الجلسات",
+    "procedures": "الإجراءات",
+    "services": "الخدمات",
     "reports": "التقارير",
     "settings": "الإعدادات",
+    "office_settings": "إعدادات المكتب",
+    "users_roles": "المستخدمون والصلاحيات",
+    "archive": "الأرشيف",
+    "courts_search": "البحث في المحاكم",
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب"
   },
@@ -41,6 +52,122 @@
     "backToLanding": "العودة للصفحة التعريفية",
     "expand": "توسيع",
     "collapse": "طي"
+  },
+  "table": {
+    "showing": "عرض",
+    "of": "من",
+    "entries": "سجلات",
+    "search": "بحث...",
+    "export": "تصدير",
+    "exportExcel": "تصدير إلى Excel",
+    "exportCSV": "تصدير إلى CSV",
+    "noResults": "لا توجد نتائج",
+    "noData": "لا توجد بيانات",
+    "page": "الصفحة",
+    "previous": "السابق",
+    "next": "التالي",
+    "sortBy": "ترتيب حسب",
+    "noSort": "بدون ترتيب",
+    "sortDirection": {
+      "asc": "تصاعدي",
+      "desc": "تنازلي"
+    },
+    "clearSort": "إعادة الترتيب",
+    "aria": {
+      "sortColumn": "تغيير عمود الترتيب",
+      "toggleDirection": "تبديل اتجاه الترتيب",
+      "clearSort": "مسح الترتيب",
+      "exportCsv": "تصدير الجدول كملف CSV",
+      "exportExcel": "تصدير الجدول كملف Excel"
+    }
+  },
+  "status": {
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "pending": "قيد الانتظار",
+    "completed": "مكتمل",
+    "cancelled": "ملغى",
+    "scheduled": "مجدول",
+    "in_progress": "قيد التنفيذ",
+    "closed": "مغلق",
+    "suspended": "معلق",
+    "postponed": "مؤجل"
+  },
+  "priority": {
+    "low": "منخفضة",
+    "medium": "متوسطة",
+    "high": "مرتفعة",
+    "urgent": "عاجلة"
+  },
+  "cases": {
+    "title": "إدارة القضايا",
+    "caseTitle": "عنوان القضية",
+    "client": "الموكل",
+    "lawyer": "المحامي",
+    "status": "الحالة",
+    "priority": "الأولوية",
+    "createdDate": "تاريخ الإنشاء",
+    "nextHearing": "الجلسة القادمة",
+    "value": "قيمة القضية",
+    "addCase": "إضافة قضية جديدة"
+  },
+  "clients": {
+    "title": "إدارة العملاء",
+    "name": "اسم العميل",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "agent": "الوكيل",
+    "status": "الحالة",
+    "joinDate": "تاريخ الانضمام",
+    "totalCases": "إجمالي القضايا",
+    "addClient": "إضافة عميل جديد",
+    "withoutAgent": "عملاء بلا وكلاء"
+  },
+  "agents": {
+    "title": "إدارة الوكلاء",
+    "name": "اسم الوكيل",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "department": "القسم",
+    "clientsCount": "عدد العملاء",
+    "status": "الحالة",
+    "joinDate": "تاريخ الانضمام",
+    "addAgent": "إضافة وكيل جديد"
+  },
+  "sessions": {
+    "title": "إدارة الجلسات",
+    "caseTitle": "القضية",
+    "date": "التاريخ",
+    "type": "النوع",
+    "status": "الحالة",
+    "lawyer": "المحامي",
+    "court": "المحكمة",
+    "duration": "المدة",
+    "addSession": "إضافة جلسة جديدة",
+    "hearing": "جلسة",
+    "consultation": "استشارة",
+    "mediation": "وساطة",
+    "minutes": "دقائق"
+  },
+  "procedures": {
+    "title": "الإجراءات القانونية",
+    "caseTitle": "القضية",
+    "type": "نوع الإجراء",
+    "status": "الحالة",
+    "assignedTo": "مكلف بـ",
+    "dueDate": "تاريخ الاستحقاق",
+    "priority": "الأولوية",
+    "addProcedure": "إضافة إجراء جديد"
+  },
+  "services": {
+    "title": "إدارة الخدمات",
+    "name": "اسم الخدمة",
+    "category": "الفئة",
+    "price": "السعر",
+    "duration": "المدة",
+    "status": "الحالة",
+    "description": "الوصف",
+    "addService": "إضافة خدمة جديدة"
   },
   "home": {
     "title": "مرحبًا بك في أفوكات",
@@ -239,6 +366,87 @@
         "address": "الرياض، المملكة العربية السعودية"
       },
       "rights": "جميع الحقوق محفوظة"
+    }
+  },
+  "lawyers": {
+    "list": {
+      "title": "المحامون",
+      "subtitle": "أدر ملفات المحامين وبيانات اعتمادهم ومتابعة أنشطتهم.",
+      "add": "إضافة محامٍ",
+      "table": {
+        "name": "الاسم",
+        "identity": "رقم الهوية",
+        "license": "رقم القيد",
+        "class": "درجة القيد",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "actions": "إجراءات"
+      },
+      "actions": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "empty": "لا يوجد محامون مضافون بعد.",
+      "confirmDeleteTitle": "حذف {name}؟",
+      "confirmDeleteDescription": "سيتم حذف ملف المحامي بشكل نهائي.",
+      "confirmDelete": "حذف"
+    },
+    "detail": {
+      "title": "ملف المحامي",
+      "about": "البيانات الشخصية",
+      "contact": "بيانات التواصل",
+      "meta": "بيانات القيد",
+      "sessions": "أحدث الجلسات",
+      "procedures": "أحدث الإجراءات"
+    },
+    "form": {
+      "titleCreate": "إضافة محامٍ",
+      "titleEdit": "تعديل بيانات المحامي",
+      "labels": {
+        "name": "الاسم الكامل",
+        "birthdate": "تاريخ الميلاد",
+        "identity_number": "رقم الهوية",
+        "law_reg_num": "رقم القيد",
+        "lawyer_class": "درجة القيد",
+        "email": "البريد الإلكتروني",
+        "phone_number": "رقم الهاتف",
+        "gender": "الجنس",
+        "address": "العنوان",
+        "religion": "الديانة"
+      },
+      "placeholders": {
+        "name": "أدخل الاسم الكامل",
+        "identity_number": "أدخل رقم الهوية",
+        "law_reg_num": "أدخل رقم القيد",
+        "email": "أدخل البريد الإلكتروني",
+        "phone_number": "أدخل رقم الهاتف",
+        "address": "أدخل العنوان"
+      },
+      "gender": {
+        "male": "ذكر",
+        "female": "أنثى"
+      },
+      "religion": {
+        "muslim": "مسلم",
+        "christian": "مسيحي"
+      },
+      "class": {
+        "naqdh": "نقض",
+        "isteenaf": "استئناف",
+        "ibtedai": "ابتدائي",
+        "general": "جدول عام"
+      },
+      "actions": {
+        "save": "حفظ",
+        "cancel": "إلغاء"
+      },
+      "messages": {
+        "createSuccess": "تمت إضافة المحامي بنجاح.",
+        "updateSuccess": "تم تحديث بيانات المحامي بنجاح.",
+        "deleteSuccess": "تم حذف المحامي بنجاح.",
+        "error": "تعذر إتمام الطلب، حاول مرة أخرى."
+      }
     }
   },
   "dashboard": {

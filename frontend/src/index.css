@@ -5,98 +5,171 @@
 @tailwind utilities;
 
 /* Cyber-Legal Design System for Avocat Law Firm */
+
 @layer base {
   :root {
-    /* 🌞 Light Mode - Professional Artistic */
-    --background: 210 40% 98%;
-    --foreground: 220 25% 12%;
+    /* Core Brand Colors */
+    --background: 220 15% 97%;
+    --foreground: 220 30% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 25% 12%;
+    /* Typography Scale */
+    --text-strong: 220 28% 15%;
+    --text-muted: 220 16% 42%;
+    --text-subtle: 220 12% 55%;
 
-    --primary: 220 65% 32%;
-    --primary-foreground: 0 0% 98%;
-    --primary-hover: 220 70% 28%;
+    /* Card */
+    --card: 220 15% 99%;
+    --card-foreground: 220 30% 12%;
 
-    --accent: 200 80% 45%;
-    --accent-foreground: 0 0% 100%;
-    --accent-glow: 200 80% 60% / 0.25;
+    /* Glass Morphism */
+    --glass-bg: 220 15% 100% / 0.85;
+    --glass-border: 220 20% 88% / 0.35;
+    --glass-shadow: 220 25% 10% / 0.06;
 
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 25% 20%;
+    /* Primary - Legal Navy */
+    --primary: 225 70% 23%;
+    --primary-foreground: 220 15% 98%;
+    --primary-hover: 225 70% 20%;
 
-    --muted: 220 15% 95%;
-    --muted-foreground: 220 20% 40%;
+    /* Accent - Cyan/Blue */
+    --accent: 200 90% 45%;
+    --accent-foreground: 220 15% 98%;
+    --accent-glow: 200 90% 45% / 0.25;
 
-    --success: 150 55% 38%;
-    --warning: 40 90% 50%;
-    --destructive: 0 65% 52%;
+    /* Secondary Neutral */
+    --secondary: 220 12% 92%;
+    --secondary-foreground: 220 30% 12%;
 
+    /* Muted Neutral */
+    --muted: 220 10% 90%;
+    --muted-foreground: 220 15% 45%;
+
+    /* Semantic Colors */
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 220 15% 98%;
+    --success: 145 55% 32%;
+    --success-foreground: 220 15% 98%;
+    --warning: 35 90% 52%;
+    --warning-foreground: 220 30% 12%;
+
+    /* Borders/Inputs */
     --border: 220 20% 85%;
-    --input: 220 15% 94%;
-    --ring: 220 65% 32%;
+    --input: 220 12% 94%;
+    --ring: 225 70% 23%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(220 65% 32%), hsl(200 80% 45%));
-    --gradient-hero: linear-gradient(135deg, hsl(220 70% 28%) 0%, hsl(200 70% 40%) 50%, hsl(220 65% 32%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.95), hsl(220 15% 95% / 0.8));
+    /* Sidebar Surface */
+    --sidebar-background: 220 18% 96%;
+    --sidebar-foreground: 220 32% 12%;
+    --sidebar-primary: 220 65% 24%;
+    --sidebar-primary-foreground: 220 15% 98%;
+    --sidebar-accent: 220 22% 90%;
+    --sidebar-accent-foreground: 220 30% 14%;
+    --sidebar-border: 220 18% 88%;
+    --sidebar-ring: 210 70% 45%;
 
-    --shadow-glow: 0 0 18px hsl(var(--accent-glow));
-    --shadow-glass: 0 6px 18px hsl(220 25% 20% / 0.08);
-    --shadow-elegant: 0 3px 12px hsl(220 25% 20% / 0.12);
+    /* Header Surface */
+    --header-background: 220 32% 98%;
+    --header-foreground: 220 28% 18%;
+    --header-muted: 220 16% 45%;
+    --header-border: 220 18% 88%;
+    --header-ring: 210 80% 50%;
+    --header-ring-offset: 220 40% 98%;
+    --header-button-bg: 0 0% 100%;
+    --header-button-foreground: 220 32% 20%;
+    --header-button-hover-bg: 210 45% 95%;
+    --header-button-hover-foreground: 210 70% 40%;
 
-    --radius: 0.75rem;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(225 70% 23%), hsl(200 90% 45%));
+    --gradient-hero: linear-gradient(135deg, hsl(225 70% 18%) 0%, hsl(200 90% 35%) 50%, hsl(225 70% 23%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(220 15% 100% / 0.95), hsl(220 20% 96% / 0.85));
+    --gradient-sidebar: linear-gradient(180deg, hsl(220 25% 100% / 0.92) 0%, hsl(220 20% 92% / 0.85) 100%);
+    --gradient-header: linear-gradient(135deg, hsl(220 40% 99% / 0.92), hsl(210 55% 96% / 0.88));
+    --gradient-card: linear-gradient(135deg, hsl(220 25% 99%), hsl(210 40% 94%));
+
+    /* Shadows */
+    --shadow-glow: 0 0 25px hsl(var(--accent-glow));
+    --shadow-glass: 0 8px 32px hsl(var(--glass-shadow));
+    --shadow-elegant: 0 4px 16px hsl(220 30% 12% / 0.1);
+
+    /* Border Radius */
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
   }
 
   .dark {
-    /* 🌙 Dark Mode - Blue Neon Tech */
-    --background: 220 30% 6%;      /* كحلي داكن */
-    --foreground: 210 90% 85%;     /* أزرق فاتح نيون */
+    --background: 225 25% 7%;
+    --foreground: 220 15% 95%;
+    --text-strong: 220 15% 95%;
+    --text-muted: 220 15% 72%;
+    --text-subtle: 220 12% 62%;
 
-    --card: 220 25% 10%;
-    --card-foreground: 210 90% 85%;
+    --card: 225 25% 9%;
+    --card-foreground: 220 15% 95%;
 
-    --primary: 210 90% 70%;        /* الأزرق الفاتح النيون */
-    --primary-foreground: 220 20% 6%;
-    --primary-hover: 210 90% 65%;
+    --glass-bg: 225 25% 12% / 0.85;
+    --glass-border: 225 20% 20% / 0.4;
+    --glass-shadow: 200 90% 45% / 0.08;
 
-    --accent: 200 100% 65%;        /* أزرق سماوي/تركواز */
-    --accent-foreground: 220 20% 6%;
-    --accent-glow: 200 100% 70% / 0.3;
+    --primary: 200 90% 55%;
+    --primary-foreground: 225 25% 7%;
+    --primary-hover: 200 90% 50%;
 
-    --secondary: 220 25% 12%;
-    --secondary-foreground: 210 90% 85%;
+    --accent: 190 100% 70%;
+    --accent-foreground: 225 25% 7%;
+    --accent-glow: 190 100% 70% / 0.4;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 210 70% 75%;
+    --secondary: 225 25% 14%;
+    --secondary-foreground: 220 15% 95%;
 
-    --border: 220 25% 14%;
-    --input: 220 25% 10%;
-    --ring: 210 90% 70%;
+    --muted: 225 25% 11%;
+    --muted-foreground: 220 15% 70%;
 
-    --gradient-primary: linear-gradient(
-      135deg,
-      hsl(220 30% 6%) 0%,
-      hsl(220 40% 15%) 40%,
-      hsl(210 90% 30%) 100%
-    );
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 220 15% 95%;
 
-    --gradient-hero: linear-gradient(
-      135deg,
-      hsl(220 30% 6%) 0%,
-      hsl(220 35% 12%) 40%,
-      hsl(210 90% 25%) 100%
-    );
+    --border: 225 25% 18%;
+    --input: 225 25% 12%;
+    --ring: 200 90% 55%;
 
-    --shadow-glow: 0 0 16px hsl(210 90% 70% / 0.4),
-                   0 0 22px hsl(200 100% 65% / 0.25);
-    --shadow-glass: 0 4px 18px hsl(210 90% 70% / 0.15);
+    --success: 145 55% 42%;
+    --success-foreground: 225 25% 7%;
+    --warning: 35 90% 55%;
+    --warning-foreground: 225 25% 7%;
 
-    --radius: 0.75rem;
+    --sidebar-background: 225 25% 10%;
+    --sidebar-foreground: 220 15% 95%;
+    --sidebar-primary: 200 90% 55%;
+    --sidebar-primary-foreground: 225 25% 7%;
+    --sidebar-accent: 225 25% 14%;
+    --sidebar-accent-foreground: 220 15% 95%;
+    --sidebar-border: 225 20% 20%;
+    --sidebar-ring: 200 90% 60%;
+
+    --header-background: 225 25% 11%;
+    --header-foreground: 220 15% 92%;
+    --header-muted: 220 12% 70%;
+    --header-border: 225 20% 20%;
+    --header-ring: 200 90% 60%;
+    --header-ring-offset: 225 25% 8%;
+    --header-button-bg: 225 30% 16%;
+    --header-button-foreground: 220 18% 92%;
+    --header-button-hover-bg: 200 60% 35%;
+    --header-button-hover-foreground: 225 25% 8%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(200 90% 55%), hsl(225 70% 35%));
+    --gradient-hero: linear-gradient(135deg, hsl(225 25% 6%) 0%, hsl(200 90% 30%) 50%, hsl(225 25% 10%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(225 25% 12% / 0.95), hsl(225 25% 9% / 0.85));
+    --gradient-sidebar: linear-gradient(180deg, hsl(225 25% 14% / 0.9) 0%, hsl(225 25% 9% / 0.85) 100%);
+    --gradient-header: linear-gradient(135deg, hsl(225 25% 12% / 0.9), hsl(200 70% 18% / 0.85));
+    --gradient-card: linear-gradient(135deg, hsl(225 25% 12%), hsl(200 70% 18%));
+
+    --shadow-glow: 0 0 35px hsl(var(--accent-glow));
+    --shadow-glass: 0 8px 32px hsl(200 90% 45% / 0.12);
+    --shadow-elegant: 0 4px 16px hsl(200 90% 45% / 0.15);
   }
-
-
 }
-
 
 @layer base {
   * {
@@ -124,7 +197,7 @@
     background: hsl(var(--glass-bg));
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 0.5px solid hsl(var(--glass-border));
+    border: 1px solid hsl(var(--glass-border));
     box-shadow: var(--shadow-glass);
   }
 

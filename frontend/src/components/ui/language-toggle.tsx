@@ -1,6 +1,5 @@
 import React from 'react';
 import { Globe } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 import { Button } from './button';
 import {
   DropdownMenu,
@@ -8,15 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './dropdown-menu';
+import { useLanguage } from '@/contexts/LanguageContext';
+import type { Language } from '@/contexts/LanguageContext';
 
 const LanguageToggle: React.FC = () => {
-  const { i18n, t } = useTranslation('common');
+  const { language, setLanguage, t } = useLanguage();
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-    // Update document direction
-    document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = lng;
+  const changeLanguage = (lng: Language) => {
+    setLanguage(lng);
   };
 
   return (
@@ -25,7 +23,7 @@ const LanguageToggle: React.FC = () => {
         <Button
           variant="ghost"
           size="icon"
-          aria-label={t('language')}
+          aria-label={t('common.language')}
           className="h-9 w-9"
         >
           <Globe className="h-4 w-4" />
@@ -34,13 +32,13 @@ const LanguageToggle: React.FC = () => {
       <DropdownMenuContent align="end">
         <DropdownMenuItem
           onClick={() => changeLanguage('en')}
-          className={i18n.language === 'en' ? 'bg-accent' : ''}
+          className={language === 'en' ? 'bg-accent' : ''}
         >
           English
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => changeLanguage('ar')}
-          className={i18n.language === 'ar' ? 'bg-accent' : ''}
+          className={language === 'ar' ? 'bg-accent' : ''}
         >
           العربية
         </DropdownMenuItem>

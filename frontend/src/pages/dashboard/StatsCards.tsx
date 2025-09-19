@@ -64,7 +64,7 @@ export default function StatsCards() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {stats.map((stat, index) => {
+      {stats.map((stat) => {
         const Icon = stat.icon;
         const Arrow = stat.change >= 0 ? ArrowUpRight : ArrowDownRight;
         const isPositive = stat.change >= 0;

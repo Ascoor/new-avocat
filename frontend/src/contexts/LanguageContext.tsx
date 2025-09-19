@@ -1,7 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { translations } from './LanguageData';
-import enCommon from '@/i18n/locales/en/common.json';
-import arCommon from '@/i18n/locales/ar/common.json';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export type Language = 'ar' | 'en';
 
@@ -15,39 +13,6 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Flattened translations object for backward compatibility
-const flattenTranslations = (
-  source: Record<string, unknown>,
-  prefix = '',
-  target: Record<string, string> = {},
-): Record<string, string> => {
-  Object.entries(source).forEach(([key, value]) => {
-    const nextKey = prefix ? prefix + '.' + key : key;
-    if (typeof value === 'string') {
-      target[nextKey] = value;
-    } else if (value && typeof value === 'object') {
-      flattenTranslations(value as Record<string, unknown>, nextKey, target);
-    }
-  });
-  return target;
-};
-
-const extraTranslations: Record<Language, Record<string, unknown>> = {
-  ar: arCommon as Record<string, unknown>,
-  en: enCommon as Record<string, unknown>,
-};
-
-const flatTranslations: Record<Language, Record<string, string>> = {
-  ar: {
-    ...flattenTranslations(translations.ar),
-    ...flattenTranslations(extraTranslations.ar),
-  },
-  en: {
-    ...flattenTranslations(translations.en),
-    ...flattenTranslations(extraTranslations.en),
-  },
-};
-
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (context === undefined) {
@@ -57,51 +22,60 @@ export const useLanguage = () => {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>(() => {
-    const stored = localStorage.getItem('avocat_language');
-    return (stored as Language) || 'ar';
+  const { i18n, t: i18nextT } = useTranslation('common');
+
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = window.localStorage.getItem('avocat_language');
+      if (stored === 'ar' || stored === 'en') {
+        return stored;
+      }
+    }
+
+    if (i18n.language) {
+      return i18n.language.startsWith('ar') ? 'ar' : 'en';
+    }
+
+    return 'ar';
   });
 
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-    localStorage.setItem('avocat_language', language);
-  }, [language]);
-
-  const interpolate = (
-    template: string,
-    vars?: Record<string, string | number>,
-  ) => {
-    if (!vars) return template;
-    return template.replace(/{{(\w+)}}/g, (match, name) =>
-      Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '',
-    );
-  };
-
-  const t = (key: string, vars?: Record<string, string | number>): string => {
-    const keys = key.split('.');
-    let value: unknown = translations[language];
-
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in (value as Record<string, unknown>)) {
-        value = (value as Record<string, unknown>)[k];
-      } else {
-        const fallback = flatTranslations[language][key] ?? key;
-        return interpolate(fallback, vars);
-      }
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('avocat_language', language);
     }
-
-    if (typeof value === 'string') {
-      return interpolate(value, vars);
+    if (i18n.language !== language) {
+      i18n.changeLanguage(language);
     }
+  }, [language, i18n]);
 
-    const fallback = flatTranslations[language][key] ?? key;
-    return interpolate(fallback, vars);
-  };
+  useEffect(() => {
+    const handleLanguageChanged = (lng: string) => {
+      const normalized: Language = lng.startsWith('ar') ? 'ar' : 'en';
+      setLanguageState((prev) => (prev === normalized ? prev : normalized));
+    };
 
-  const toggleLanguage = () => {
-    setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));
-  };
+    i18n.on('languageChanged', handleLanguageChanged);
+
+    return () => {
+      i18n.off('languageChanged', handleLanguageChanged);
+    };
+  }, [i18n]);
+
+  const t = useCallback(
+    (key: string, vars?: Record<string, string | number>) =>
+      i18nextT(key, { defaultValue: key, ...(vars ?? {}) }),
+    [i18nextT],
+  );
+
+  const setLanguage = useCallback((lang: Language) => {
+    setLanguageState(lang);
+  }, []);
+
+  const toggleLanguage = useCallback(() => {
+    setLanguageState((prev) => (prev === 'ar' ? 'en' : 'ar'));
+  }, []);
 
   const value: LanguageContextType = {
     language,

@@ -5,10 +5,21 @@
   "nav": {
     "dashboard": "Dashboard",
     "cases": "Cases",
+    "customer_service": "Customer Service",
     "clients": "Clients",
+    "agents": "Agents",
+    "clients_no_agents": "Clients without Agents",
+    "lawyers": "Lawyers",
     "documents": "Documents",
+    "sessions": "Sessions",
+    "procedures": "Procedures",
+    "services": "Services",
     "reports": "Reports",
     "settings": "Settings",
+    "office_settings": "Office Settings",
+    "users_roles": "Users & Roles",
+    "archive": "Archive",
+    "courts_search": "Courts Search",
     "login": "Login",
     "register": "Register"
   },
@@ -41,6 +52,122 @@
     "backToLanding": "Back to landing",
     "expand": "Expand",
     "collapse": "Collapse"
+  },
+  "table": {
+    "showing": "Showing",
+    "of": "of",
+    "entries": "entries",
+    "search": "Search...",
+    "export": "Export",
+    "exportExcel": "Export to Excel",
+    "exportCSV": "Export to CSV",
+    "noResults": "No results found",
+    "noData": "No data available",
+    "page": "Page",
+    "previous": "Previous",
+    "next": "Next",
+    "sortBy": "Sort by",
+    "noSort": "No sorting",
+    "sortDirection": {
+      "asc": "Ascending",
+      "desc": "Descending"
+    },
+    "clearSort": "Reset sorting",
+    "aria": {
+      "sortColumn": "Change sort column",
+      "toggleDirection": "Toggle sort direction",
+      "clearSort": "Clear sorting",
+      "exportCsv": "Export table as CSV",
+      "exportExcel": "Export table as Excel"
+    }
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "scheduled": "Scheduled",
+    "in_progress": "In Progress",
+    "closed": "Closed",
+    "suspended": "Suspended",
+    "postponed": "Postponed"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "cases": {
+    "title": "Cases Management",
+    "caseTitle": "Case Title",
+    "client": "Client",
+    "lawyer": "Lawyer",
+    "status": "Status",
+    "priority": "Priority",
+    "createdDate": "Created Date",
+    "nextHearing": "Next Hearing",
+    "value": "Case Value",
+    "addCase": "Add New Case"
+  },
+  "clients": {
+    "title": "Clients Management",
+    "name": "Client Name",
+    "email": "Email",
+    "phone": "Phone",
+    "agent": "Agent",
+    "status": "Status",
+    "joinDate": "Join Date",
+    "totalCases": "Total Cases",
+    "addClient": "Add New Client",
+    "withoutAgent": "Clients without Agents"
+  },
+  "agents": {
+    "title": "Agents Management",
+    "name": "Agent Name",
+    "email": "Email",
+    "phone": "Phone",
+    "department": "Department",
+    "clientsCount": "Clients Count",
+    "status": "Status",
+    "joinDate": "Join Date",
+    "addAgent": "Add New Agent"
+  },
+  "sessions": {
+    "title": "Sessions Management",
+    "caseTitle": "Case",
+    "date": "Date",
+    "type": "Type",
+    "status": "Status",
+    "lawyer": "Lawyer",
+    "court": "Court",
+    "duration": "Duration",
+    "addSession": "Add New Session",
+    "hearing": "Hearing",
+    "consultation": "Consultation",
+    "mediation": "Mediation",
+    "minutes": "minutes"
+  },
+  "procedures": {
+    "title": "Legal Procedures",
+    "caseTitle": "Case",
+    "type": "Procedure Type",
+    "status": "Status",
+    "assignedTo": "Assigned To",
+    "dueDate": "Due Date",
+    "priority": "Priority",
+    "addProcedure": "Add New Procedure"
+  },
+  "services": {
+    "title": "Services Management",
+    "name": "Service Name",
+    "category": "Category",
+    "price": "Price",
+    "duration": "Duration",
+    "status": "Status",
+    "description": "Description",
+    "addService": "Add New Service"
   },
   "home": {
     "title": "Welcome to Avocat",
@@ -239,6 +366,87 @@
         "address": "Riyadh, Saudi Arabia"
       },
       "rights": "All rights reserved"
+    }
+  },
+  "lawyers": {
+    "list": {
+      "title": "Lawyers",
+      "subtitle": "Manage your legal team profiles, credentials, and activity.",
+      "add": "Add Lawyer",
+      "table": {
+        "name": "Name",
+        "identity": "ID Number",
+        "license": "Bar Registration",
+        "class": "Practice Class",
+        "email": "Email",
+        "phone": "Phone",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "empty": "No lawyers have been added yet.",
+      "confirmDeleteTitle": "Remove {name}?",
+      "confirmDeleteDescription": "This action permanently deletes the lawyer profile.",
+      "confirmDelete": "Delete"
+    },
+    "detail": {
+      "title": "Lawyer Profile",
+      "about": "Personal Information",
+      "contact": "Contact Details",
+      "meta": "Registration",
+      "sessions": "Recent Sessions",
+      "procedures": "Recent Procedures"
+    },
+    "form": {
+      "titleCreate": "Add Lawyer",
+      "titleEdit": "Edit Lawyer",
+      "labels": {
+        "name": "Full name",
+        "birthdate": "Birthdate",
+        "identity_number": "National ID",
+        "law_reg_num": "Bar registration number",
+        "lawyer_class": "Practice class",
+        "email": "Email",
+        "phone_number": "Phone number",
+        "gender": "Gender",
+        "address": "Address",
+        "religion": "Religion"
+      },
+      "placeholders": {
+        "name": "Enter full name",
+        "identity_number": "Enter national ID",
+        "law_reg_num": "Enter registration number",
+        "email": "Enter email",
+        "phone_number": "Enter phone number",
+        "address": "Enter address"
+      },
+      "gender": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "religion": {
+        "muslim": "Muslim",
+        "christian": "Christian"
+      },
+      "class": {
+        "naqdh": "Cassation",
+        "isteenaf": "Appeal",
+        "ibtedai": "First Instance",
+        "general": "General roll"
+      },
+      "actions": {
+        "save": "Save",
+        "cancel": "Cancel"
+      },
+      "messages": {
+        "createSuccess": "Lawyer added successfully.",
+        "updateSuccess": "Lawyer updated successfully.",
+        "deleteSuccess": "Lawyer removed successfully.",
+        "error": "Unable to complete the request. Please try again."
+      }
     }
   },
   "dashboard": {

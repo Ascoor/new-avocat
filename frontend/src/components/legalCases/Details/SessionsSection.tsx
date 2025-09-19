@@ -88,11 +88,6 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
         open={sectionOpen}
         onOpenChange={setSectionOpen}
         toggleLabel={sectionOpen ? t('common.collapse') : t('common.expand')}
-        actions={
-          <Button onClick={openCreateModal} className="self-start sm:self-auto">
-            {t('legalCaseDetails.sessions.addButton')}
-          </Button>
-        }
       >
         {loading ? (
           <div className="py-8 text-center text-muted-foreground">
@@ -117,6 +112,12 @@ const SessionsSection = ({ caseId, onChanged }: SessionsSectionProps) => {
                 </Button>
               </div>
             )}
+            enableSorting
+            enableExport
+            exportFileName={`case-${caseId}-sessions`}
+            isLoading={loading}
+            onAdd={openCreateModal}
+            addButtonLabel={t('legalCaseDetails.sessions.addButton')}
             emptyMessage={t('legalCaseDetails.sessions.empty')}
           />
         )}
@@ -150,32 +151,51 @@ const createSessionColumns = (
   t: ReturnType<typeof useLanguage>['t'],
 ): DetailsTableColumn<LegalSession>[] => [
   {
+    key: 'date',
     header: t('legalCaseDetails.sessions.columns.date'),
+    accessor: (session) => session.session_date ?? '',
     render: (session) => session.session_date ?? '—',
+    sortable: true,
   },
   {
+    key: 'lawyer',
     header: t('legalCaseDetails.sessions.columns.lawyer'),
+    accessor: (session) => session.lawyer?.name ?? '',
     render: (session) => session.lawyer?.name ?? '—',
+    sortable: true,
   },
   {
+    key: 'roll',
     header: t('legalCaseDetails.sessions.columns.roll'),
+    accessor: (session) => session.session_roll ?? '',
     render: (session) => session.session_roll ?? '—',
   },
   {
+    key: 'court',
     header: t('legalCaseDetails.sessions.columns.court'),
+    accessor: (session) => session.court?.name ?? '',
     render: (session) => session.court?.name ?? '—',
+    sortable: true,
   },
   {
+    key: 'orders',
     header: t('legalCaseDetails.sessions.columns.orders'),
+    accessor: (session) => session.orders ?? '',
     render: (session) => session.orders ?? '—',
   },
   {
+    key: 'result',
     header: t('legalCaseDetails.sessions.columns.result'),
+    accessor: (session) => session.result ?? '',
     render: (session) => session.result ?? '—',
+    sortable: true,
   },
   {
+    key: 'status',
     header: t('legalCaseDetails.sessions.columns.status'),
+    accessor: (session) => session.status ?? '',
     render: (session) => session.status ?? '—',
+    sortable: true,
   },
 ];
 

@@ -73,9 +73,9 @@ const MobileDrawer: React.FC = () => {
 
           {/* Drawer */}
           <motion.aside
-            initial={{
+            initial={{ 
               x: isRTL ? '100%' : '-100%',
-              opacity: 0
+              opacity: 0 
             }}
             animate={{ 
               x: 0,
@@ -91,11 +91,10 @@ const MobileDrawer: React.FC = () => {
               stiffness: 200 
             }}
             className={cn(
-              'fixed top-0 z-50 h-full w-full glass border border-sidebar-border text-sidebar-foreground md:hidden',
-              'flex flex-col shadow-elegant',
-              isRTL ? 'right-0' : 'left-0'
+              'fixed top-0 z-50 h-full w-full max-w-[100vw] bg-sidebar-background border-border md:hidden',
+              'flex flex-col shadow-lg',
+              isRTL ? 'right-0 border-l' : 'left-0 border-r'
             )}
-            style={{ '--glass-surface': 'var(--gradient-sidebar)' } as React.CSSProperties}
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
@@ -105,7 +104,7 @@ const MobileDrawer: React.FC = () => {
                 size="icon"
                 onClick={closeMobile}
                 className="h-8 w-8"
-                aria-label={t('common.close')}
+                aria-label={t('close')}
               >
                 <X className="h-4 w-4" />
               </Button>

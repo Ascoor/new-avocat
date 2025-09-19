@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import { Shield, Users, FileText, BarChart3, Gavel, Globe, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -10,9 +10,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import LandingNavbar from '@/components/landing/LandingNavbar';
 import HeroSlider from '@/components/landing/HeroSlider';
 
+import BrandLogo from '@/components/common/BrandLogo';
+import { useTheme } from 'next-themes';
 const Landing: React.FC = () => {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
 
+  const [isScrolled, setIsScrolled] = useState(false);
+ 
+  const { theme } = useTheme();
   const rawFeatures = t('landing.features.items') as any;
   const features = (Array.isArray(rawFeatures) ? rawFeatures : [
     {
@@ -56,17 +61,19 @@ const Landing: React.FC = () => {
   const featureIcons = [Gavel, Users, FileText, BarChart3, Shield, Globe];
 
   return (
-   <div className="min-h-screen bg-background text-foreground transition-colors duration-500">
+    <div className="min-h-screen">
+      {/* Navigation */}
       <LandingNavbar />
 
-      <section id="hero" className="relative overflow-hidden">
+      {/* Hero Section with Slider */}
+      <div id="hero">
         <HeroSlider />
-        <div className="absolute inset-0 bg-gradient-hero opacity-80 pointer-events-none"></div>
-      </section>
+      </div>
 
+      {/* Features Section */}
       <section id="features" className="py-20 bg-background relative">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -83,7 +90,7 @@ const Landing: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => {
-              const Icon = featureIcons[index]
+              const Icon = featureIcons[index];
               return (
                 <motion.div
                   key={index}
@@ -92,7 +99,11 @@ const Landing: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <GlassCard variant="primary" hover="glow" className="group h-full border border-border bg-card shadow-glass">
+                  <GlassCard
+                    variant="primary"
+                    hover="glow"
+                    className="group h-full"
+                  >
                     <GlassCardHeader>
                       <div className="h-14 w-14 rounded-xl bg-gradient-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                         <Icon className="h-7 w-7 text-white" />
@@ -108,15 +119,16 @@ const Landing: React.FC = () => {
                     </GlassCardContent>
                   </GlassCard>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </div>
       </section>
 
+      {/* Services Section (placeholder for future expansion) */}
       <section id="services" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -127,13 +139,14 @@ const Landing: React.FC = () => {
               {t('nav.services')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              {isRTL
+              {isRTL 
                 ? 'خدمات شاملة ومتخصصة لإدارة مكتبك القانوني بأعلى معايير الجودة والاحترافية'
-                : 'Comprehensive and specialized services for managing your law firm with the highest standards of quality and professionalism'}
+                : 'Comprehensive and specialized services for managing your law firm with the highest standards of quality and professionalism'
+              }
             </p>
           </motion.div>
-
-          <motion.div
+          
+          <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -146,7 +159,7 @@ const Landing: React.FC = () => {
               { title: isRTL ? 'الأرشيف الرقمي' : 'Digital Archive', desc: isRTL ? 'أرشفة آمنة للوثائق' : 'Secure document archiving' },
               { title: isRTL ? 'التقارير' : 'Reports', desc: isRTL ? 'تقارير تفصيلية ومؤشرات' : 'Detailed reports and metrics' },
             ].map((service, index) => (
-              <GlassCard key={index} className="text-center p-6 bg-card shadow-glass hover:shadow-glow transition-shadow">
+              <GlassCard key={index} className="text-center p-6">
                 <GlassCardHeader>
                   <GlassCardTitle className="text-lg font-semibold mb-2">
                     {service.title}
@@ -163,7 +176,8 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-primary relative overflow-hidden text-white">
+      {/* Secondary CTA Section */}
+      <section className="py-20 bg-gradient-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div
@@ -172,17 +186,17 @@ const Landing: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               {t('landing.secondaryCta.title')}
             </h2>
             <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
               {t('landing.secondaryCta.subtitle')}
             </p>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="bg-white/10 border-white/30 text-white hover:bg-white/20 shadow-glow font-semibold text-lg px-8 py-4"
+            <Button 
+              asChild 
+              variant="outline" 
+              size="lg" 
+              className="bg-white/10 border-white/30 text-white hover:bg-white/20 font-semibold text-lg px-8 py-4"
             >
               <Link to="/register">
                 {t('landing.secondaryCta.cta')}
@@ -193,7 +207,8 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      <section id="about" className="py-20 bg-background text-foreground">
+      {/* About Section */}
+      <section id="about" className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <motion.div
@@ -215,9 +230,10 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
+      {/* Contact Section */}
       <section id="contact" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <motion.div
+          <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -233,13 +249,14 @@ const Landing: React.FC = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <GlassCard className="p-8 bg-card shadow-glass hover:shadow-glow transition-shadow">
+              <GlassCard className="p-8">
                 <form className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -255,24 +272,31 @@ const Landing: React.FC = () => {
                       <Input placeholder={t('landing.contact.form.phone')} />
                     </div>
                   </div>
+                  
                   <div>
                     <label className="block text-sm font-medium mb-2">
                       {t('landing.contact.form.email')}
                     </label>
                     <Input type="email" placeholder={t('landing.contact.form.email')} />
                   </div>
+                  
                   <div>
                     <label className="block text-sm font-medium mb-2">
                       {t('landing.contact.form.subject')}
                     </label>
                     <Input placeholder={t('landing.contact.form.subject')} />
                   </div>
+                  
                   <div>
                     <label className="block text-sm font-medium mb-2">
                       {t('landing.contact.form.message')}
                     </label>
-                    <Textarea placeholder={t('landing.contact.form.message')} className="min-h-[120px]" />
+                    <Textarea 
+                      placeholder={t('landing.contact.form.message')} 
+                      className="min-h-[120px]"
+                    />
                   </div>
+                  
                   <Button type="submit" className="w-full" size="lg">
                     {t('landing.contact.form.submit')}
                   </Button>
@@ -280,6 +304,7 @@ const Landing: React.FC = () => {
               </GlassCard>
             </motion.div>
 
+            {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -335,36 +360,39 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      <footer className="bg-card border-t border-border text-muted-foreground">
+      {/* Footer */}
+      <footer className="bg-card border-t border-border">
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
-              <h3 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4">
-                {t('brand.name')}
-              </h3>
-              <p className="mb-4 leading-relaxed">
-                {t('landing.footer.description')}
-              </p>
+              <BrandLogo
+                variant="text"
+                className="h-12"
+                lang={language}
+              />
             </div>
+            
             <div>
               <h4 className="font-semibold mb-4">{t('landing.footer.services')}</h4>
-              <ul className="space-y-2">
+              <ul className="space-y-2 text-muted-foreground">
                 <li>{isRTL ? 'إدارة القضايا' : 'Case Management'}</li>
                 <li>{isRTL ? 'إدارة العملاء' : 'Client Management'}</li>
                 <li>{isRTL ? 'التقارير' : 'Reports'}</li>
                 <li>{isRTL ? 'الأرشيف' : 'Archive'}</li>
               </ul>
             </div>
+            
             <div>
               <h4 className="font-semibold mb-4">{t('landing.footer.contact')}</h4>
-              <ul className="space-y-2">
+              <ul className="space-y-2 text-muted-foreground">
                 <li>{t('landing.contact.info.email')}</li>
                 <li>{t('landing.contact.info.phone')}</li>
                 <li>{t('landing.contact.info.address')}</li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-border mt-8 pt-8 text-center">
+          
+          <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
             <p>&copy; 2024 {t('brand.name')}. {t('landing.footer.rights')}.</p>
           </div>
         </div>
