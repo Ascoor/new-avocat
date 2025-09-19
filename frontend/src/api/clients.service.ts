@@ -14,3 +14,5 @@ export const updateClient = (id: string, data: Partial<Client>) =>
 
 export const deleteClient = (id: string) =>
   api.delete(`/api/clients/${id}`);
+
+export const getUnclients = () => api.get<{ unclients: { id: string; name: string }[] }>('/api/unclients');

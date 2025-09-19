@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { Moon, Sun, Globe, ChevronDown, User, LogOut, Menu, Bell } from 'lucide-react';
+import { Moon, Sun, Globe, ChevronDown, User, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -27,28 +27,8 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
 
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
-  const { toggleMobile, toggleCollapsed, isCollapsed, isMobileOpen } = useSidebar();
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const headerSurface = { '--glass-surface': 'var(--gradient-header)' } as React.CSSProperties;
-
-  const iconButtonClass = cn(
-    'rounded-full border border-[hsl(var(--header-border)/0.6)] transition-all duration-300 shadow-[0_12px_32px_hsl(var(--header-ring)/0.12)]',
-    'bg-header-button text-header-button-foreground hover:bg-header-button-hover hover:text-header-button-hover-foreground',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-header-ring focus-visible:ring-offset-2 focus-visible:ring-offset-header-ring-offset'
-  );
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 6);
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
+  const { toggleMobile, isMobileOpen } = useSidebar();
+      return (
      <header className={cn(
       'sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur',
       className
@@ -65,9 +45,9 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             size="icon"
             onClick={toggleMobile}
             className="md:hidden h-9 w-9"
-            aria-label={t('common.menu')}
+            aria-label={isMobileOpen ? t('common.close') : t('common.menu')}
           >
-            <Menu className="h-4 w-4" />
+            {isMobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </Button>
 
           {/* Desktop logo - hidden on mobile */}

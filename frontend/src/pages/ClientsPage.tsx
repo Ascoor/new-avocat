@@ -1,0 +1,33 @@
+ 
+const ClientList = lazy(() => import('@/components/ClientsAndUnClients/clients/index.tsx'));
+
+const ClientPage: React.FC = () => {
+  return (
+    <section className="flex flex-col items-center justify-start min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
+      <div className="flex space-x-4 bg-white dark:bg-gray-800 shadow-md rounded-lg p-2 mt-4">
+        <button
+          className="flex items-center px-6 py-3 rounded-lg transition-all duration-300 text-lg font-medium cursor-pointer bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg"
+        >
+          <span className="text-2xl mr-2">
+            <FaUserTie />
+          </span>
+          عملاء بوكالة
+        </button>
+      </div>
+
+      <Suspense
+        fallback={
+          <div className="text-center text-gray-500">
+            <GlobalSpinner />
+          </div>
+        }
+      >
+        <div className="mt-8 w-full max-w-5xl p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+          <ClientList />
+        </div>
+      </Suspense>
+    </section>
+  );
+};
+
+export default ClientPage;

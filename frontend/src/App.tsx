@@ -16,17 +16,16 @@ import DashboardHome from "./pages/dashboard/DashboardHome";
 import LegalCases from "@/pages/LegalCasesPage";
 import LegalCaseDetails from "@/components/legalCases/Details/LegalCaseDetails";
 import Clients from "./pages/dashboard/StatsCards";
-import { LawyersList, LawyerDetails } from "./components/lawyers";
+import { LawyersList, LawyerDetails } from "@/pages/LawyersPage";
 import NotFound from "./pages/NotFound";
+import ServicesPage from "./pages/ServicesPage";
+import ClientPage from "./pages/ClientsPage";
+import UnClientPage from "./pages/UnClientsPage";
 
 type DashboardSectionKey =
-  | 'customer_service'
-  | 'agents'
-  | 'clients_no_agents'
+ 
   | 'reports'
-  | 'sessions'
-  | 'procedures'
-  | 'services'
+ 
   | 'settings'
   | 'office_settings'
   | 'users_roles'
@@ -73,13 +72,10 @@ const App = () => (
                   <Route path="clients" element={<Clients />} />
                   <Route path="lawyers" element={<LawyersList />} />
                   <Route path="lawyers/:id" element={<LawyerDetails />} />
-                  <Route path="customer_service" element={<DashboardPlaceholder sectionKey="customer_service" />} />
-                  <Route path="agents" element={<DashboardPlaceholder sectionKey="agents" />} />
-                  <Route path="clients_no_agents" element={<DashboardPlaceholder sectionKey="clients_no_agents" />} />
+                    <Route path="clients" element={<ClientPage />} />
+                  <Route path="unClients" element={<UnClientPage  />} />
                   <Route path="reports" element={<DashboardPlaceholder sectionKey="reports" />} />
-                  <Route path="sessions" element={<DashboardPlaceholder sectionKey="sessions" />} />
-                  <Route path="procedures" element={<DashboardPlaceholder sectionKey="procedures" />} />
-                  <Route path="services" element={<DashboardPlaceholder sectionKey="services" />} />
+  <Route path="services" element={<ServicesPage />} />
                   <Route path="settings" element={<DashboardPlaceholder sectionKey="settings" />} />
                   <Route path="office_settings" element={<DashboardPlaceholder sectionKey="office_settings" />} />
                   <Route path="users_roles" element={<DashboardPlaceholder sectionKey="users_roles" />} />

@@ -366,6 +366,82 @@
         "address": "Riyadh, Saudi Arabia"
       },
       "rights": "All rights reserved"
+    },
+    "list": {
+      "title": "Services",
+      "subtitle": "Monitor service requests, clients, and fulfillment progress.",
+      "add": "Add Service",
+      "empty": "No services have been added yet.",
+      "table": {
+        "slug": "Service Number",
+        "type": "Service Type",
+        "place": "Service Place",
+        "year": "Year",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "confirmDeleteTitle": "Delete {name}?",
+      "confirmDeleteDescription": "This will permanently remove the service.",
+      "confirmDelete": "Delete"
+    },
+    "form": {
+      "titleCreate": "Add Service",
+      "titleEdit": "Edit Service",
+      "titleView": "Service Details",
+      "readOnlyNotice": "This service is read-only.",
+      "labels": {
+        "slug": "Service Number",
+        "serviceType": "Service Type",
+        "description": "Description",
+        "place": "Service Place",
+        "year": "Service Year",
+        "associationType": "Association",
+        "client": "Registered Client",
+        "unclient": "Unregistered Client",
+        "status": "Status"
+      },
+      "placeholders": {
+        "slug": "Enter service number",
+        "serviceType": "Select a service type",
+        "description": "Describe the service",
+        "place": "Enter service place",
+        "year": "Enter service year",
+        "client": "Select a client",
+        "unclient": "Select an unregistered client"
+      },
+      "association": {
+        "client": "Registered client",
+        "unclient": "Unregistered client"
+      },
+      "actions": {
+        "create": "Create"
+      },
+      "messages": {
+        "loadErrorTitle": "Failed to load service data",
+        "loadErrorDescription": "Please refresh and try again.",
+        "createSuccess": "Service created successfully.",
+        "updateSuccess": "Service updated successfully.",
+        "errorTitle": "Unable to save service",
+        "errorDescription": "Check the form details and try again."
+      }
+    },
+    "messages": {
+      "deleteSuccess": "Service deleted successfully.",
+      "deleteErrorTitle": "Failed to delete service",
+      "deleteErrorDescription": "Please try again later."
+    },
+    "status": {
+      "inProgress": "In progress",
+      "underExecution": "Under execution",
+      "completed": "Completed",
+      "circulating": "Circulating",
+      "settled": "Settled",
+      "unknown": "Unknown"
     }
   },
   "lawyers": {

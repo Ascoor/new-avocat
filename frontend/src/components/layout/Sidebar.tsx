@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   ChevronDown,
@@ -109,14 +109,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     }
   }, [location.pathname, menuItems, expandedItems]);
 
+  const previousPath = useRef(location.pathname);
+
   useEffect(() => {
-    if (isMobile && !isCollapsed) {
-      const timer = setTimeout(() => {
-        onToggle();
-      }, 100);
-      return () => clearTimeout(timer);
+    if (!isMobile) {
+      previousPath.current = location.pathname;
+      return;
     }
-    return undefined;
+
+    if (location.pathname !== previousPath.current && !isCollapsed) {
+      onToggle();
+    }
+
+    previousPath.current = location.pathname;
   }, [location.pathname, isMobile, isCollapsed, onToggle]);
 
   const getItemLabel = (key: string) => {
@@ -241,7 +246,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
           // Positioning based on RTL/LTR
           isRTL ? "right-0" : "left-0",
           // Width and visibility
-          isMobile ? "w-64" : isCollapsed ? "w-16" : "w-64",
+          isMobile ? "w-full" : isCollapsed ? "w-16" : "w-64",
           // Mobile behavior
           isMobile && isCollapsed && (isRTL ? "translate-x-full" : "-translate-x-full"),
           isMobile && !isCollapsed && "translate-x-0",

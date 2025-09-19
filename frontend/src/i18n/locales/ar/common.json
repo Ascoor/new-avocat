@@ -366,6 +366,82 @@
         "address": "الرياض، المملكة العربية السعودية"
       },
       "rights": "جميع الحقوق محفوظة"
+    },
+    "list": {
+      "title": "الخدمات",
+      "subtitle": "إدارة طلبات الخدمات ومتابعة تنفيذها.",
+      "add": "إضافة خدمة",
+      "empty": "لم يتم إضافة أي خدمات بعد.",
+      "table": {
+        "slug": "رقم الخدمة",
+        "type": "نوع الخدمة",
+        "place": "مكان الخدمة",
+        "year": "سنة الخدمة",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "actions": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "confirmDeleteTitle": "حذف {name}?",
+      "confirmDeleteDescription": "سيتم حذف الخدمة بشكل نهائي.",
+      "confirmDelete": "حذف"
+    },
+    "form": {
+      "titleCreate": "إضافة خدمة",
+      "titleEdit": "تعديل خدمة",
+      "titleView": "عرض الخدمة",
+      "readOnlyNotice": "هذه الخدمة للعرض فقط.",
+      "labels": {
+        "slug": "رقم الخدمة",
+        "serviceType": "نوع الخدمة",
+        "description": "الوصف",
+        "place": "مكان الخدمة",
+        "year": "سنة الخدمة",
+        "associationType": "نوع الارتباط",
+        "client": "عميل مسجل",
+        "unclient": "عميل غير مسجل",
+        "status": "الحالة"
+      },
+      "placeholders": {
+        "slug": "أدخل رقم الخدمة",
+        "serviceType": "اختر نوع الخدمة",
+        "description": "اكتب وصف الخدمة",
+        "place": "أدخل مكان الخدمة",
+        "year": "أدخل سنة الخدمة",
+        "client": "اختر العميل",
+        "unclient": "اختر العميل غير المسجل"
+      },
+      "association": {
+        "client": "عميل مسجل",
+        "unclient": "عميل غير مسجل"
+      },
+      "actions": {
+        "create": "إضافة"
+      },
+      "messages": {
+        "loadErrorTitle": "تعذر تحميل بيانات الخدمة",
+        "loadErrorDescription": "يرجى إعادة المحاولة لاحقًا.",
+        "createSuccess": "تمت إضافة الخدمة بنجاح.",
+        "updateSuccess": "تم تحديث الخدمة بنجاح.",
+        "errorTitle": "تعذر حفظ الخدمة",
+        "errorDescription": "تحقق من البيانات وحاول مرة أخرى."
+      }
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف الخدمة بنجاح.",
+      "deleteErrorTitle": "تعذر حذف الخدمة",
+      "deleteErrorDescription": "يرجى المحاولة مرة أخرى لاحقًا."
+    },
+    "status": {
+      "inProgress": "جاري التنفيذ",
+      "underExecution": "قيد التنفيذ",
+      "completed": "منتهية",
+      "circulating": "متداولة",
+      "settled": "استيفاء",
+      "unknown": "غير محدد"
     }
   },
   "lawyers": {

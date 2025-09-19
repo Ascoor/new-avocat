@@ -39,6 +39,18 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setIsMobileOpen(false);
   };
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileOpen]);
+
   const value = {
     isCollapsed,
     isMobileOpen,
