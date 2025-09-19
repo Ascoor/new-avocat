@@ -5,7 +5,7 @@ import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
-import DetailsTable, { DetailsTableColumn } from '@/components/legalCases/Details/DetailsTable';
+import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import ServiceFormDialog from '@/components/services/ServiceFormDialog';
 import type { ServiceRecord } from '@/components/services/types';

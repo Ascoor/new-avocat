@@ -25,7 +25,10 @@ import {
   getServiceTypes,
   getServiceById,
 } from '@/api/services.service';
-import { getClients, getUnclients } from '@/api/clients.service';
+import { getClients } from '@/api/clients.service';
+import { getUnclients } from '@/api/unclients.service';
+import type { Client } from '@/types/clients';
+import type { Unclient } from '@/types/unclients';
 import type {
   ServiceDialogMode,
   ServiceFormInput,
@@ -94,6 +97,16 @@ const ServiceFormDialog: React.FC<ServiceFormDialogProps> = ({
     return [];
   };
 
+  const mapAssociations = <T extends { id?: string | number | null; name?: string | null }>(
+    items: T[],
+  ): ServiceAssociation[] =>
+    items
+      .filter((item) => item && item.id !== undefined && item.id !== null)
+      .map((item) => ({
+        id: String(item.id),
+        name: item.name ?? '-',
+      }));
+
   const isReadOnly = mode === 'view';
   const isDisabled = isReadOnly || isFetching;
 
@@ -106,8 +119,8 @@ const ServiceFormDialog: React.FC<ServiceFormDialogProps> = ({
       ]);
 
       setServiceTypes(normaliseArray<ServiceTypeOption>(typesRes.data));
-      setClients(mapAssociations(clientsRes.data.clients ?? clientsRes.data));
-      setUnclients(mapAssociations(unclientsRes.data.unclients ?? unclientsRes.data));
+      setClients(mapAssociations<Client>(clientsRes.data ?? []));
+      setUnclients(mapAssociations<Unclient>(unclientsRes.data ?? []));
     } catch (error) {
       console.error('Failed to load service dependencies', error);
       toast({

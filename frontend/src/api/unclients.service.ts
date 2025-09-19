@@ -1,11 +1,33 @@
+import type { AxiosResponse } from 'axios';
+
 import api from './axiosConfig';
 import type { Unclient } from '@/types/unclients';
 
-interface UnclientsResponse {
-  unclients: Unclient[];
-}
+type UnclientsResponse = Unclient[] | { unclients: Unclient[] } | { data: Unclient[] };
 
-export const getUnclients = () => api.get<UnclientsResponse>('/api/unclients');
+const normaliseUnclients = (payload: UnclientsResponse): Unclient[] => {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (payload && typeof payload === 'object') {
+    if ('unclients' in payload && Array.isArray(payload.unclients)) {
+      return payload.unclients;
+    }
+
+    if ('data' in payload && Array.isArray(payload.data)) {
+      return payload.data;
+    }
+  }
+
+  return [];
+};
+
+export const getUnclients = async (): Promise<AxiosResponse<Unclient[]>> => {
+  const response = await api.get<UnclientsResponse>('/api/unclients');
+  response.data = normaliseUnclients(response.data);
+  return response as AxiosResponse<Unclient[]>;
+};
 
 export const getUnclientById = (id: string) =>
   api.get<Unclient>(`/api/unclients/${id}`);

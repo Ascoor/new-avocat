@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
-
-import DetailsTable, { DetailsTableColumn } from '@/components/legalCases/Details/DetailsTable';
+ 
+import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
+ 
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -26,7 +27,9 @@ const UnclientsTable = () => {
     queryKey: ['unclients'],
     queryFn: async () => {
       const { data } = await getUnclients();
-      return Array.isArray(data) ? (data as unknown as Unclient[]) : data.unclients ?? [];
+ 
+      return data ?? [];
+ 
     },
   });
 

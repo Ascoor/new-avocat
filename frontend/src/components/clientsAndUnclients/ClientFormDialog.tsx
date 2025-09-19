@@ -87,7 +87,7 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
 
     setLoading(true);
     try {
-      const payload = {
+      const payload: Partial<Client> = {
         ...formState,
         date_of_birth: formState.date_of_birth || null,
       };
@@ -96,7 +96,7 @@ const ClientFormDialog: React.FC<ClientFormDialogProps> = ({
         await updateClient(String(initialData.id), payload);
         toast({ title: t('clients.form.messages.updateSuccess') });
       } else {
-        await createClient(payload as Omit<Client, 'id'>);
+        await createClient(payload);
         toast({ title: t('clients.form.messages.createSuccess') });
       }
 

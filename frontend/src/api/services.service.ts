@@ -3,7 +3,6 @@ import type {
   ServiceRecord,
   ServiceFormInput,
   ServiceTypeOption,
-  ServiceAssociation,
 } from '@/components/services/types';
 
 interface ServicesResponse {
@@ -16,10 +15,6 @@ interface ServiceResponse {
 
 interface ServiceTypesResponse {
   data: ServiceTypeOption[];
-}
-
-interface UnclientsResponse {
-  unclients: ServiceAssociation[];
 }
 
 export const getServices = () => api.get<ServicesResponse>('/api/services');
@@ -38,6 +33,3 @@ export const deleteService = (id: string) =>
 
 export const getServiceTypes = () =>
   api.get<ServiceTypesResponse>('/api/service-types');
-
-export const getUnclients = () =>
-  api.get<UnclientsResponse>('/api/unclients');

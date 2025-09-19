@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 
-import DetailsTable, { DetailsTableColumn } from '@/components/legalCases/Details/DetailsTable';
+import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -40,7 +40,7 @@ const ClientsTable = () => {
     queryKey: ['clients'],
     queryFn: async () => {
       const { data } = await getClients();
-      return data.clients ?? [];
+      return data ?? [];
     },
   });
 

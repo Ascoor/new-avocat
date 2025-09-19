@@ -8,25 +8,34 @@ import {
   removeLegalCaseClient,
 } from '@/api/legalCases.service';
 import { getClients } from '@/api/clients.service';
-import { Client } from '@/types/legalCase';
+import type { Client as CaseClient } from '@/types/legalCase';
+import type { Client as ClientRecord } from '@/types/clients';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Users } from 'lucide-react';
 import CaseSection from './CaseSection';
 
 interface ClientsSectionProps {
   caseId: string;
-  clients: Client[];
+  clients: CaseClient[];
   onChanged: () => void;
 }
 
-interface SelectableClient extends Client {
+interface SelectableClient extends CaseClient {
   client_id: string;
 }
+
+const mapToCaseClient = (client: ClientRecord): CaseClient => ({
+  id: String(client.id),
+  name: client.name,
+  phone: client.phone_number,
+  email: client.email,
+  slug: client.slug,
+});
 
 const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
-  const [allClients, setAllClients] = useState<Client[]>([]);
+  const [allClients, setAllClients] = useState<CaseClient[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [pendingClients, setPendingClients] = useState<SelectableClient[]>([]);
   const [confirmDelete, setConfirmDelete] = useState<{ id: string; name: string } | null>(null);
@@ -36,7 +45,7 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
     const fetchClients = async () => {
       try {
         const { data } = await getClients();
-        setAllClients(data.clients ?? []);
+        setAllClients((data ?? []).map(mapToCaseClient));
       } catch (error) {
         console.error('Failed to load clients', error);
         toast({

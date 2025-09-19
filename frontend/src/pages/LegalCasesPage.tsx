@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, Pencil, Scale, Trash2 } from 'lucide-react';
-import DetailsTable, { DetailsTableColumn } from '@/components/legalCases/Details/DetailsTable';
+import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
