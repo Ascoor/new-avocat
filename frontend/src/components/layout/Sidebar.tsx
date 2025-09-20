@@ -9,6 +9,7 @@ import {
   UserX,
   Scale,
   Calendar,
+  Package2,
   Briefcase,
   Settings,
   Building,
@@ -41,54 +42,56 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
-
-  const menuItems: MenuItem[] = useMemo(
-    () => [
-      {
-        key: 'cases',
-        icon: Gavel,
-      },
-      {
-        key: 'lawyers',
-        icon: Scale,
-      },
-      {
-        key: 'customer_service',
-        icon: Users,
-        children: [
- 
-          { key: 'clients', icon: UserCheck },
-          { key: 'unClients', icon: UserX },
-        ],
-      },
- 
-      {
-        key: 'services',
-        icon: Cookie,
-      },
-      {
-        key: 'reports',
-        icon: BarChart3,
-      },
-      {
-        key: 'settings',
-        icon: Settings,
-        children: [
-          { key: 'office_settings', icon: Building },
-          { key: 'users_roles', icon: Shield },
-        ],
-      },
-      {
-        key: 'archive',
-        icon: Archive,
-      },
-      {
-        key: 'courts_search',
-        icon: Search,
-      },
-    ],
-    [],
-  );
+const menuItems: MenuItem[] = useMemo(
+  () => [
+    {
+      key: 'cases',
+      icon: Package2,
+    },
+    {
+      key: 'lawyers',
+      icon: Scale,
+    },
+    {
+      key: 'customer_service',
+      icon: Users,
+      children: [
+        { key: 'clients', icon: UserCheck },
+        { key: 'unClients', icon: UserX },
+      ],
+    },
+    {
+      key: 'services',
+      icon: Cookie,
+    },
+    {
+      key: 'followUpWork',
+      icon: BarChart3,
+      children: [
+        { key: 'sessions', icon: Calendar },    // الجلسات
+        { key: 'procedures', icon: Briefcase }, // الإجراءات
+      ],
+    },
+    {
+      key: 'settings',
+      icon: Settings,
+      children: [
+        { key: 'courts_settings', icon: Gavel },
+        { key: 'office_settings', icon: Building },
+        { key: 'users_roles', icon: Shield },
+      ],
+    },
+    {
+      key: 'archive',
+      icon: Archive,
+    },
+    {
+      key: 'courts_search',
+      icon: Search,
+    },
+  ],
+  [],
+);
 
   useEffect(() => {
     const currentPath = location.pathname;
