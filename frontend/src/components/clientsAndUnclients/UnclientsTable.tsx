@@ -100,7 +100,7 @@ const UnclientsTable = () => {
 
   return (
     <>
-      <DetailsTable<Unclient>
+      <DetailsTable
         data={unclients}
         columns={columns}
         enableSorting
