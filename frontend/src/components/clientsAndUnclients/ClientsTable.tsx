@@ -140,42 +140,14 @@ const ClientsTable = () => {
 
   return (
     <>
-      <DetailsTable<Client>
-        data={clients}
-        columns={columns}
-        enableSorting
-        enableSearch
-        enableExport
-        enablePagination
-        exportFileName="clients"
-        isLoading={clientsQuery.isLoading}
-        emptyMessage={clientsQuery.isLoading ? t('common.loading') : t('clients.list.empty')}
-        onAdd={() => openDialog('create')}
-        addButtonLabel={t('clients.list.add')}
-        actionsHeader={t('clients.list.table.actions')}
-        renderActions={(client) => (
-          <div className="flex items-center justify-center gap-2">
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => openDialog('view', client)}>
-              <Eye className="h-4 w-4" />
-              <span className="sr-only">{t('clients.list.actions.view')}</span>
-            </Button>
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => openDialog('edit', client)}>
-              <Pencil className="h-4 w-4" />
-              <span className="sr-only">{t('clients.list.actions.edit')}</span>
-            </Button>
-            <Button
-              variant="destructive"
-              size="icon"
-              className="h-8 w-8"
-              onClick={() => setConfirmDelete(client)}
-              disabled={deleteMutation.isPending}
-            >
-              <Trash2 className="h-4 w-4" />
-              <span className="sr-only">{t('clients.list.actions.delete')}</span>
-            </Button>
-          </div>
-        )}
-      />
+  <DetailsTable 
+  data={clients} // Change from unclients to clients
+  columns={columns} // Pass the columns configuration
+  enableSorting
+  enableSearch
+  emptyMessage={t('clients.list.noClientsFound')} // Make sure this is added as well
+/>
+
 
       <ClientFormDialog
         open={dialogOpen}

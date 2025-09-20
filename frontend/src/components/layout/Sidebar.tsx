@@ -58,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
         children: [
  
           { key: 'clients', icon: UserCheck },
-          { key: 'clients_no_agents', icon: UserX },
+          { key: 'unClients', icon: UserX },
         ],
       },
  
