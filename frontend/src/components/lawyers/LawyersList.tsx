@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { Eye, Pencil, Trash2 ,Layers} from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -12,6 +12,7 @@ import { GlassCard } from '@/components/ui/glass-card';
 import LawyerFormDialog from '@/components/lawyers/LawyerFormDialog';
 import { getLawyers, deleteLawyer } from '@/api/lawyers.service';
 import { Lawyer } from '@/types/lawyers';
+import PageHeader from '../common/PageHeader';
 
 const LawyersList = () => {
   const { t } = useLanguage();
@@ -93,18 +94,12 @@ const LawyersList = () => {
 
   return (
     <div className="space-y-6 p-6">
-      <GlassCard variant="primary" className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-gradient-card/80 p-6 text-text-strong">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold">
-              {t('lawyers.list.title')}
-            </h1>
-            <p className="text-sm text-text-muted">
-              {t('lawyers.list.subtitle')}
-            </p>
-          </div>
-        </div>
-      </GlassCard>
+          <PageHeader
+        icon={<Layers className="h-6 w-6" />}
+        title={t('lawyers.list.title')}
+        subtitle={t('lawyers.list.subtitle')}
+      />
+
 
       <GlassCard className="rounded-2xl border border-border/60 bg-card/80 p-0">
         <DetailsTable

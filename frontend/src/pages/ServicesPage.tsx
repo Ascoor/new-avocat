@@ -146,8 +146,8 @@ const ServicesPage: React.FC = () => {
     <div className="space-y-6">
       <PageHeader
         icon={<ClipboardList className="h-6 w-6" />}
-        title={t('services.list.title')}
-        subtitle={t('services.list.subtitle')}
+        title={t('services.title')}
+        subtitle={t('services.subtitle')}
       />
 
       <DetailsTable
