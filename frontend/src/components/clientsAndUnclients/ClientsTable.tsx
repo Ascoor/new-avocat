@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 
 import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
@@ -8,13 +8,11 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import {
-  getClients,
   updateClient,
-  deleteClient,
 } from '@/api/clients.service';
-import type { Client } from '@/types/clients';
+import { useClients, useDeleteClient } from '@/hooks/useClients';
+import type { Client, ClientFormMode } from '@/types/clients';
 import ClientFormDialog from './ClientFormDialog';
-import type { ClientFormMode } from './types';
 
 const statusLabelKey: Record<Client['status'], string> = {
   active: 'clients.status.active',
@@ -30,35 +28,16 @@ const ClientsTable = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { clients, isLoading: isClientsLoading } = useClients();
+  const {
+    deleteClient: deleteClientMutation,
+    isLoading: isDeletingClient,
+  } = useDeleteClient();
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState<ClientFormMode>('create');
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<Client | null>(null);
-
-  const clientsQuery = useQuery({
-    queryKey: ['clients'],
-    queryFn: async () => {
-      const { data } = await getClients();
-      return data ?? [];
-    },
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: number) => deleteClient(String(id)),
-    onSuccess: () => {
-      toast({ title: t('clients.messages.deleteSuccess') });
-      queryClient.invalidateQueries({ queryKey: ['clients'] });
-    },
-    onError: () => {
-      toast({
-        title: t('clients.messages.deleteErrorTitle'),
-        description: t('clients.messages.deleteErrorDescription'),
-        variant: 'destructive',
-      });
-    },
-    onSettled: () => setConfirmDelete(null),
-  });
 
   const toggleStatusMutation = useMutation({
     mutationFn: (client: Client) =>
@@ -77,7 +56,7 @@ const ClientsTable = () => {
     },
   });
 
-  const clients = clientsQuery.data ?? [];
+  const safeClients = clients ?? [];
 
   const columns = useMemo<DetailsTableColumn<Client>[]>(
     () => [
@@ -141,16 +120,16 @@ const ClientsTable = () => {
   return (
     <>
       <DetailsTable
-        data={clients}
+        data={safeClients}
         columns={columns}
         enableSorting
         enableSearch
         enableExport
         enablePagination
         exportFileName="clients"
-        isLoading={clientsQuery.isLoading}
+        isLoading={isClientsLoading}
         emptyMessage={
-          clientsQuery.isLoading ? t('common.loading') : t('clients.list.empty')
+          isClientsLoading ? t('common.loading') : t('clients.list.empty')
         }
         onAdd={() => openDialog('create')}
         addButtonLabel={t('clients.list.add')}
@@ -180,7 +159,7 @@ const ClientsTable = () => {
               size="icon"
               className="h-8 w-8"
               onClick={() => setConfirmDelete(client)}
-              disabled={deleteMutation.isPending}
+              disabled={isDeletingClient}
             >
               <Trash2 className="h-4 w-4" />
               <span className="sr-only">{t('clients.list.actions.delete')}</span>
@@ -210,7 +189,19 @@ const ClientsTable = () => {
         onClose={() => setConfirmDelete(null)}
         onConfirm={() => {
           if (confirmDelete) {
-            deleteMutation.mutate(confirmDelete.id);
+            deleteClientMutation(String(confirmDelete.id), {
+              onSuccess: () => {
+                toast({ title: t('clients.messages.deleteSuccess') });
+              },
+              onError: () => {
+                toast({
+                  title: t('clients.messages.deleteErrorTitle'),
+                  description: t('clients.messages.deleteErrorDescription'),
+                  variant: 'destructive',
+                });
+              },
+              onSettled: () => setConfirmDelete(null),
+            });
           }
         }}
       />

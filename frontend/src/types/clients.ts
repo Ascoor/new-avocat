@@ -1,3 +1,5 @@
+export type ClientFormMode = 'create' | 'edit' | 'view';
+
 export interface Client {
   id: number;
   slug: string;
