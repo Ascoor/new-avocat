@@ -1,114 +1,110 @@
-import React ,{useState}from 'react';
-import { Shield, Users, FileText, BarChart3, Gavel, Globe, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
+import React, { useMemo } from 'react';
+import {
+  ArrowRight,
+  BarChart3,
+  Briefcase,
+  FileText,
+  Gavel,
+  Globe,
+  Mail,
+  MapPin,
+  Phone,
+  Shield,
+  Sparkles,
+  Users as UsersIcon,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from '@/components/ui/glass-card';
+import {
+  GlassCard,
+  GlassCardContent,
+  GlassCardDescription,
+  GlassCardHeader,
+  GlassCardTitle,
+} from '@/components/ui/glass-card';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LandingNavbar from '@/components/landing/LandingNavbar';
 import HeroSlider from '@/components/landing/HeroSlider';
-
 import BrandLogo from '@/components/common/BrandLogo';
-import { useTheme } from 'next-themes';
+
+const featureIcons = [Gavel, UsersIcon, FileText, BarChart3, Shield, Globe];
+
 const Landing: React.FC = () => {
   const { t, isRTL, language } = useLanguage();
 
-  const [isScrolled, setIsScrolled] = useState(false);
- 
-  const { theme } = useTheme();
-  const rawFeatures = t('landing.features.items') as any;
-  const features = (Array.isArray(rawFeatures) ? rawFeatures : [
-    {
-      title: isRTL ? 'إدارة القضايا الذكية' : 'Smart Case Management',
-      description: isRTL
-        ? 'نظام شامل لإدارة ومتابعة جميع القضايا القانونية مع تنبيهات تلقائية للمواعيد المهمة والجلسات القادمة'
-        : 'Comprehensive system for managing and tracking all legal cases with automatic alerts for important dates and upcoming hearings',
-    },
-    {
-      title: isRTL ? 'إدارة العملاء المتقدمة' : 'Advanced Client Management',
-      description: isRTL
-        ? 'قاعدة بيانات متكاملة لمتابعة العملاء والوكلاء مع نظام تنبيهات ذكي وإدارة الاتصالات والملفات الشخصية'
-        : 'Integrated database for tracking clients and agents with smart notifications and profile management',
-    },
-    {
-      title: isRTL ? 'الأرشفة الذكية للوثائق' : 'Smart Document Archiving',
-      description: isRTL
-        ? 'تنظيم وأرشفة جميع الوثائق والمستندات القانونية مع إمكانية البحث السريع والوصول الآمن من أي مكان'
-        : 'Organize and archive all legal documents with fast search and secure access from anywhere',
-    },
-    {
-      title: isRTL ? 'التقارير والتحليلات' : 'Reports and Analytics',
-      description: isRTL
-        ? 'تقارير تفصيلية ومؤشرات أداء شاملة تساعدك في اتخاذ قرارات مدروسة وتحليل أداء المكتب'
-        : 'Detailed reports and comprehensive KPIs to help decision-making and performance analysis',
-    },
-    {
-      title: isRTL ? 'الأمان المتقدم' : 'Advanced Security',
-      description: isRTL
-        ? 'حماية البيانات الحساسة بأعلى معايير الأمان والتشفير مع نظام صلاحيات متقدم وتسجيل العمليات'
-        : 'Protect sensitive data with top encryption, advanced permissions, and audit logs',
-    },
-    {
-      title: isRTL ? 'الوصول السحابي' : 'Cloud Access',
-      description: isRTL
-        ? 'وصول آمن من أي مكان وفي أي وقت عبر الهاتف أو الحاسوب مع تزامن تلقائي للبيانات'
-        : 'Secure access from anywhere on any device with automatic data sync',
-    },
-  ]) as Array<{ title: string; description: string }>;
+  const features = useMemo(() => {
+    const items = t('landing.features.items', { returnObjects: true }) as Record<
+      string,
+      { title?: string; description?: string }
+    >;
+    return Object.values(items ?? {});
+  }, [t]);
 
-  const featureIcons = [Gavel, Users, FileText, BarChart3, Shield, Globe];
+  const services = useMemo(() => {
+    const items = t('landing.services.items', { returnObjects: true }) as Record<
+      string,
+      { title?: string; description?: string }
+    >;
+    return Object.values(items ?? {});
+  }, [t]);
+
+  const footerServices = useMemo(() => {
+    const items = t('landing.footer.services', { returnObjects: true }) as Record<string, string>;
+    return Object.values(items ?? {});
+  }, [t]);
+
+  const contactDetails = t('landing.contact.details', { returnObjects: true }) as Record<string, string>;
+  const contactLabels = t('landing.contact.info', { returnObjects: true }) as Record<string, string>;
 
   return (
     <div className="min-h-screen">
-      {/* Navigation */}
       <LandingNavbar />
 
-      {/* Hero Section with Slider */}
       <div id="hero">
         <HeroSlider />
       </div>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-background relative">
+      <section id="features" className="relative bg-background py-20">
         <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-16"
+          <motion.div
+            className="mb-16 text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
-              {t('landing.features.title')}
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <div className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold md:text-5xl">
+              <Sparkles className="h-10 w-10 text-primary" />
+              <span className="bg-gradient-primary bg-clip-text text-transparent">
+                {t('landing.features.title')}
+              </span>
+            </div>
+            <p className="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground">
               {t('landing.features.subtitle')}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, index) => {
-              const Icon = featureIcons[index];
+              const Icon = featureIcons[index % featureIcons.length];
               return (
                 <motion.div
-                  key={index}
+                  key={`${feature.title}-${index}`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <GlassCard
-                    variant="primary"
-                    hover="glow"
-                    className="group h-full"
-                  >
+                  <GlassCard variant="primary" hover="glow" className="group h-full">
                     <GlassCardHeader>
-                      <div className="h-14 w-14 rounded-xl bg-gradient-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-primary transition-transform duration-300 group-hover:scale-110">
                         <Icon className="h-7 w-7 text-white" />
                       </div>
-                      <GlassCardTitle className="text-xl font-semibold mb-2">
+                      <GlassCardTitle className="mb-2 text-xl font-semibold">
                         {feature.title}
                       </GlassCardTitle>
                     </GlassCardHeader>
@@ -125,50 +121,40 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Section (placeholder for future expansion) */}
-      <section id="services" className="py-20 bg-muted/30">
+      <section id="services" className="bg-muted/30 py-20">
         <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-16"
+          <motion.div
+            className="mb-16 text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {t('nav.services')}
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              {isRTL 
-                ? 'خدمات شاملة ومتخصصة لإدارة مكتبك القانوني بأعلى معايير الجودة والاحترافية'
-                : 'Comprehensive and specialized services for managing your law firm with the highest standards of quality and professionalism'
-              }
+            <div className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold md:text-5xl">
+              <Briefcase className="h-10 w-10 text-primary" />
+              <span>{t('landing.services.title')}</span>
+            </div>
+            <p className="mx-auto max-w-3xl text-xl text-muted-foreground">
+              {t('landing.services.subtitle')}
             </p>
           </motion.div>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+
+          <motion.div
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {[
-              { title: isRTL ? 'إدارة القضايا' : 'Case Management', desc: isRTL ? 'نظام متكامل لإدارة القضايا' : 'Integrated case management system' },
-              { title: isRTL ? 'إدارة العملاء' : 'Client Management', desc: isRTL ? 'متابعة شاملة للعملاء' : 'Comprehensive client tracking' },
-              { title: isRTL ? 'الأرشيف الرقمي' : 'Digital Archive', desc: isRTL ? 'أرشفة آمنة للوثائق' : 'Secure document archiving' },
-              { title: isRTL ? 'التقارير' : 'Reports', desc: isRTL ? 'تقارير تفصيلية ومؤشرات' : 'Detailed reports and metrics' },
-            ].map((service, index) => (
-              <GlassCard key={index} className="text-center p-6">
+            {services.map((service, index) => (
+              <GlassCard key={`${service.title}-${index}`} className="p-6 text-center">
                 <GlassCardHeader>
-                  <GlassCardTitle className="text-lg font-semibold mb-2">
+                  <GlassCardTitle className="mb-2 text-lg font-semibold">
                     {service.title}
                   </GlassCardTitle>
                 </GlassCardHeader>
                 <GlassCardContent>
-                  <GlassCardDescription>
-                    {service.desc}
-                  </GlassCardDescription>
+                  <GlassCardDescription>{service.description}</GlassCardDescription>
                 </GlassCardContent>
               </GlassCard>
             ))}
@@ -176,53 +162,55 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Secondary CTA Section */}
-      <section className="py-20 bg-gradient-primary relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
+      <section className="relative overflow-hidden bg-gradient-primary py-20">
+        <div className="absolute inset-0 opacity-20 bg-grid-pattern" />
+        <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">
               {t('landing.secondaryCta.title')}
             </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="mx-auto mb-8 max-w-3xl text-xl leading-relaxed text-white/90">
               {t('landing.secondaryCta.subtitle')}
             </p>
-            <Button 
-              asChild 
-              variant="outline" 
-              size="lg" 
-              className="bg-white/10 border-white/30 text-white hover:bg-white/20 font-semibold text-lg px-8 py-4"
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="px-8 py-4 text-lg font-semibold text-white bg-white/10 border-white/30 hover:bg-white/20"
             >
               <Link to="/register">
-                {t('landing.secondaryCta.cta')}
-                <ArrowRight className={`h-5 w-5 ml-2 ${isRTL ? 'rotate-180 ml-0 mr-2' : ''}`} />
+                {t('landing.secondaryCta.button')}
+                <ArrowRight className={`ml-2 h-5 w-5 ${isRTL ? 'rotate-180 rtl:mr-2 rtl:ml-0' : ''}`} />
               </Link>
             </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-background">
+      <section id="about" className="bg-background py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="mx-auto max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">
-                {t('landing.about.title')}
-              </h2>
-              <div className="prose prose-lg max-w-none text-center">
-                <p className="text-xl text-muted-foreground leading-relaxed">
-                  {t('landing.about.content')}
+              <div className="mb-8 flex items-center justify-center gap-3 text-4xl font-bold md:text-5xl">
+                <UsersIcon className="h-10 w-10 text-primary" />
+                <span>{t('landing.about.title')}</span>
+              </div>
+              <div className="prose prose-lg mx-auto text-center">
+                <p className="text-xl leading-relaxed text-muted-foreground">
+                  {t('landing.about.subtitle')}
+                </p>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  {t('landing.about.mission')}
                 </p>
               </div>
             </motion.div>
@@ -230,26 +218,25 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-muted/30">
+      <section id="contact" className="bg-muted/30 py-20">
         <div className="container mx-auto px-4">
-          <motion.div 
-            className="text-center mb-16"
+          <motion.div
+            className="mb-16 text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              {t('landing.contact.title')}
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <div className="mb-4 flex items-center justify-center gap-3 text-4xl font-bold md:text-5xl">
+              <Mail className="h-10 w-10 text-primary" />
+              <span>{t('landing.contact.title')}</span>
+            </div>
+            <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
               {t('landing.contact.subtitle')}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Form */}
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -258,45 +245,45 @@ const Landing: React.FC = () => {
             >
               <GlassCard className="p-8">
                 <form className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label className="mb-2 block text-sm font-medium">
                         {t('landing.contact.form.name')}
                       </label>
                       <Input placeholder={t('landing.contact.form.name')} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label className="mb-2 block text-sm font-medium">
                         {t('landing.contact.form.phone')}
                       </label>
                       <Input placeholder={t('landing.contact.form.phone')} />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">
+                    <label className="mb-2 block text-sm font-medium">
                       {t('landing.contact.form.email')}
                     </label>
                     <Input type="email" placeholder={t('landing.contact.form.email')} />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">
+                    <label className="mb-2 block text-sm font-medium">
                       {t('landing.contact.form.subject')}
                     </label>
                     <Input placeholder={t('landing.contact.form.subject')} />
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium mb-2">
+                    <label className="mb-2 block text-sm font-medium">
                       {t('landing.contact.form.message')}
                     </label>
-                    <Textarea 
-                      placeholder={t('landing.contact.form.message')} 
+                    <Textarea
+                      placeholder={t('landing.contact.form.message')}
                       className="min-h-[120px]"
                     />
                   </div>
-                  
+
                   <Button type="submit" className="w-full" size="lg">
                     {t('landing.contact.form.submit')}
                   </Button>
@@ -304,7 +291,6 @@ const Landing: React.FC = () => {
               </GlassCard>
             </motion.div>
 
-            {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -314,44 +300,32 @@ const Landing: React.FC = () => {
             >
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-primary">
                     <Mail className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">
-                      {t('landing.contact.form.email')}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {t('landing.contact.info.email')}
-                    </p>
+                    <h3 className="mb-1 text-lg font-semibold">{contactLabels.emailLabel}</h3>
+                    <p className="text-muted-foreground">{contactDetails.email}</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-primary">
                     <Phone className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">
-                      {t('landing.contact.form.phone')}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {t('landing.contact.info.phone')}
-                    </p>
+                    <h3 className="mb-1 text-lg font-semibold">{contactLabels.phoneLabel}</h3>
+                    <p className="text-muted-foreground">{contactDetails.phone}</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-primary">
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1">
-                      {isRTL ? 'العنوان' : 'Address'}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {t('landing.contact.info.address')}
-                    </p>
+                    <h3 className="mb-1 text-lg font-semibold">{contactLabels.addressLabel}</h3>
+                    <p className="text-muted-foreground">{contactDetails.address}</p>
                   </div>
                 </div>
               </div>
@@ -360,40 +334,42 @@ const Landing: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-card border-t border-border">
+      <footer className="border-t border-border bg-card">
         <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
             <div className="md:col-span-2">
-              <BrandLogo
-                variant="text"
-                className="h-12"
-                lang={language}
-              />
+              <BrandLogo variant="text" className="h-12" lang={language} />
             </div>
-            
+
             <div>
-              <h4 className="font-semibold mb-4">{t('landing.footer.services')}</h4>
+              <h4 className="mb-4 flex items-center gap-2 font-semibold">
+                <Sparkles className="h-5 w-5 text-primary" />
+                {t('landing.footer.servicesTitle')}
+              </h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li>{isRTL ? 'إدارة القضايا' : 'Case Management'}</li>
-                <li>{isRTL ? 'إدارة العملاء' : 'Client Management'}</li>
-                <li>{isRTL ? 'التقارير' : 'Reports'}</li>
-                <li>{isRTL ? 'الأرشيف' : 'Archive'}</li>
+                {footerServices.map((service, index) => (
+                  <li key={`${service}-${index}`}>{service}</li>
+                ))}
               </ul>
             </div>
-            
+
             <div>
-              <h4 className="font-semibold mb-4">{t('landing.footer.contact')}</h4>
+              <h4 className="mb-4 flex items-center gap-2 font-semibold">
+                <Mail className="h-5 w-5 text-primary" />
+                {t('landing.footer.contactTitle')}
+              </h4>
               <ul className="space-y-2 text-muted-foreground">
-                <li>{t('landing.contact.info.email')}</li>
-                <li>{t('landing.contact.info.phone')}</li>
-                <li>{t('landing.contact.info.address')}</li>
+                <li>{contactDetails.email}</li>
+                <li>{contactDetails.phone}</li>
+                <li>{contactDetails.address}</li>
               </ul>
             </div>
           </div>
-          
-          <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 {t('brand.name')}. {t('landing.footer.rights')}.</p>
+
+          <div className="mt-8 border-t border-border pt-8 text-center text-muted-foreground">
+            <p>
+              &copy; 2024 {t('brand.name')}. {t('landing.footer.rights')}.
+            </p>
           </div>
         </div>
       </footer>

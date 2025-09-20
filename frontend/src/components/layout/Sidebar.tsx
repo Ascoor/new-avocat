@@ -33,6 +33,7 @@ interface SidebarProps {
 interface MenuItem {
   key: string;
   icon: React.ComponentType<{ className?: string }>;
+  path?: string;
   children?: MenuItem[];
 }
 
@@ -47,44 +48,49 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
       {
         key: 'cases',
         icon: Gavel,
+        path: 'cases',
       },
       {
         key: 'lawyers',
         icon: Scale,
+        path: 'lawyers',
       },
       {
         key: 'customer_service',
         icon: Users,
         children: [
- 
-          { key: 'clients', icon: UserCheck },
-          { key: 'unClients', icon: UserX },
+          { key: 'clients', path: 'clients', icon: UserCheck },
+          { key: 'clients_no_agents', path: 'unClients', icon: UserX },
         ],
       },
- 
+
       {
         key: 'services',
         icon: Cookie,
+        path: 'services',
       },
       {
         key: 'reports',
         icon: BarChart3,
+        path: 'reports',
       },
       {
         key: 'settings',
         icon: Settings,
         children: [
-          { key: 'office_settings', icon: Building },
-          { key: 'users_roles', icon: Shield },
+          { key: 'office_settings', path: 'office_settings', icon: Building },
+          { key: 'users_roles', path: 'users_roles', icon: Shield },
         ],
       },
       {
         key: 'archive',
         icon: Archive,
+        path: 'archive',
       },
       {
         key: 'courts_search',
         icon: Search,
+        path: 'courts_search',
       },
     ],
     [],
@@ -97,8 +103,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     if (pathSegments.length >= 2) {
       const section = pathSegments[1];
 
-      const parentItem = menuItems.find(item =>
-        item.children?.some(child => String(child.key) === section)
+      const parentItem = menuItems.find((item) =>
+        item.children?.some((child) => String(child.path ?? child.key) === section)
       );
 
       if (parentItem && !expandedItems.includes(parentItem.key)) {
@@ -146,10 +152,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     const hasChildren = item.children && item.children.length > 0;
     const expanded = isExpanded(item.key);
     const IconComponent = item.icon;
-
-    const isCurrentRoute = location.pathname === `/dashboard/${item.key}`;
+    const itemPath = item.path ?? item.key;
+    const isCurrentRoute = location.pathname === `/dashboard/${itemPath}`;
     const hasActiveChild = hasChildren && item.children?.some(
-      child => location.pathname === `/dashboard/${child.key}`
+      (child) => location.pathname === `/dashboard/${child.path ?? child.key}`
     );
 
     return (
@@ -190,7 +196,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
           </button>
         ) : (
           <NavLink
-            to={`/dashboard/${item.key}`}
+            to={`/dashboard/${itemPath}`}
             onClick={() => {
               if (isMobile && !isCollapsed) onToggle();
             }}
@@ -221,7 +227,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
 
         {hasChildren && expanded && !isCollapsed && (
           <div className="mt-1 space-y-1 animate-accordion-down">
-            {item.children?.map(child => renderMenuItem(child, level + 1))}
+            {item.children?.map((child) => renderMenuItem(child, level + 1))}
           </div>
         )}
       </div>

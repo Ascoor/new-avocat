@@ -46,6 +46,7 @@
     "error": "Error",
     "info": "Information",
     "toggleLanguage": "Toggle language",
+    "welcome": "Welcome back",
     "comingSoon": "Coming Soon",
     "comingSoonDescription": "We are crafting this experience for you.",
     "backToDashboard": "Back to dashboard",
@@ -338,6 +339,7 @@
         "name": "Full name",
         "email": "Work email",
         "phone": "Phone number",
+        "subject": "Subject",
         "message": "How can we support your practice?",
         "submit": "Send message",
         "success": "Thank you for reaching out. We will be in touch shortly.",
@@ -572,7 +574,94 @@
       "revenue": "Monthly Revenue"
     },
     "recentActivity": "Recent Activity",
-    "casesByStatus": "Cases by Status"
+    "casesByStatus": "Cases by Status",
+    "home": {
+      "welcome": {
+        "title": "Hello, welcome back",
+        "subtitle": "Overview of your latest activities and statistics"
+      },
+      "stats": [
+        {
+          "title": "Total Cases",
+          "value": "124",
+          "change": "+12%",
+          "icon": "cases",
+          "color": "text-primary"
+        },
+        {
+          "title": "Active Clients",
+          "value": "89",
+          "change": "+8%",
+          "icon": "clients",
+          "color": "text-accent"
+        },
+        {
+          "title": "Upcoming Sessions",
+          "value": "23",
+          "change": "+5%",
+          "icon": "sessions",
+          "color": "text-success"
+        },
+        {
+          "title": "Success Rate",
+          "value": "94%",
+          "change": "+3%",
+          "icon": "performance",
+          "color": "text-warning"
+        }
+      ],
+      "activities": {
+        "title": "Recent activities",
+        "subtitle": "Latest updates and activities in the system",
+        "items": [
+          {
+            "title": "New Case: Commercial Dispute",
+            "time": "1 hour ago",
+            "type": "case"
+          },
+          {
+            "title": "Court Session Scheduled",
+            "time": "3 hours ago",
+            "type": "session"
+          },
+          {
+            "title": "New Client Registered",
+            "time": "1 day ago",
+            "type": "client"
+          },
+          {
+            "title": "Monthly Report Ready",
+            "time": "2 days ago",
+            "type": "report"
+          }
+        ]
+      },
+      "tasks": {
+        "title": "Urgent tasks",
+        "subtitle": "Tasks that need immediate attention",
+        "items": [
+          {
+            "title": "Review Partnership Contract",
+            "deadline": "Today",
+            "priority": "high"
+          },
+          {
+            "title": "Prepare Defense Plea",
+            "deadline": "Tomorrow",
+            "priority": "high"
+          },
+          {
+            "title": "Follow up Real Estate Case",
+            "deadline": "Next Week",
+            "priority": "medium"
+          }
+        ],
+        "priorities": {
+          "high": "High",
+          "medium": "Medium"
+        }
+      }
+    }
   },
   "legalCases": {
     "title": "Legal Cases",
@@ -862,6 +951,75 @@
   "unClients": {
     "title": "Clients without Mandate",
     "subtitle": "Track individuals who are not yet represented by your office."
+  },
+  "unclients": {
+    "list": {
+      "title": "Prospects",
+      "subtitle": "Manage potential clients who have not been onboarded yet.",
+      "add": "Add prospect",
+      "empty": "No prospects have been added yet.",
+      "table": {
+        "slug": "Reference",
+        "name": "Name",
+        "identity": "National ID",
+        "phone": "Phone",
+        "email": "Email",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "confirmDeleteTitle": "Delete {name}?",
+      "confirmDeleteDescription": "This record will be permanently removed.",
+      "confirmDelete": "Delete"
+    },
+    "form": {
+      "titleCreate": "Add prospect",
+      "titleEdit": "Edit prospect",
+      "titleView": "Prospect details",
+      "readOnlyNotice": "This record is for viewing only.",
+      "labels": {
+        "slug": "Reference number",
+        "name": "Full name",
+        "identity": "National ID",
+        "phone": "Phone number",
+        "email": "Email",
+        "address": "Address",
+        "work": "Occupation",
+        "emergency": "Emergency contact",
+        "dateOfBirth": "Date of birth",
+        "gender": "Gender",
+        "religion": "Religion"
+      },
+      "placeholders": {
+        "slug": "Enter reference number",
+        "name": "Enter full name"
+      },
+      "genderOptions": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "religionOptions": {
+        "muslim": "Muslim",
+        "christian": "Christian"
+      },
+      "actions": {
+        "save": "Save"
+      },
+      "messages": {
+        "createSuccess": "Prospect added successfully.",
+        "updateSuccess": "Prospect updated successfully.",
+        "errorTitle": "Unable to save prospect",
+        "errorDescription": "Review the information and try again."
+      }
+    },
+    "messages": {
+      "deleteSuccess": "Prospect deleted successfully.",
+      "deleteErrorTitle": "Unable to delete prospect",
+      "deleteErrorDescription": "Please try again later."
+    }
   },
   "documents": {
     "title": "Documents",
