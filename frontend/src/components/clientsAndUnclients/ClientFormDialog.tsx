@@ -12,8 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { createClient, updateClient } from '@/api/clients.service';
-import type { Client } from '@/types/clients';
-import type { ClientFormMode } from './types';
+import type { Client, ClientFormMode } from '@/types/clients';
 
 interface ClientFormDialogProps {
   open: boolean;
