@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
+  BarChart3,
+  Briefcase,
+  Calendar,
   ChevronDown,
   ChevronRight,
   Gavel,
+  Menu,
+  PanelsTopLeft,
+  Scale,
+  Search,
+  Settings,
   Users,
   UserCheck,
+  UserMinus,
   UserX,
-  Scale,
-  FileText,
-  Calendar,
-  Briefcase,
-  Settings,
-  Building,
-  Shield,
   Archive,
-  Search,
-  BarChart3,
-  Menu,
-  PanelsTopLeft
+  FileText,
+  Building,
+  Shield
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -28,6 +29,7 @@ import { cn } from '@/lib/utils';
 interface MenuItem {
   key: string;
   icon: React.ComponentType<{ className?: string }>;
+  path?: string;
   children?: MenuItem[];
 }
 
@@ -40,7 +42,8 @@ const menuItems: MenuItem[] = [
       key: 'customer_service',
       icon: Users,
       children: [
-        { key: 'clients', icon: Users },
+        { key: 'clients', icon: Users, path: 'clients' },
+        { key: 'unclients', icon: UserMinus, path: 'clients/unclients' },
         { key: 'agents', icon: UserCheck },
         { key: 'clients_no_agents', icon: UserX },
       ],
@@ -88,11 +91,15 @@ const Sidebar: React.FC = () => {
     const pathSegments = currentPath.split('/').filter(Boolean);
 
     if (pathSegments.length >= 2) {
-      const section = pathSegments[1]; // /dashboard/[section]
+      const sectionPath = `/dashboard/${pathSegments.slice(1).join('/')}`;
 
-      // Find parent menu item for current route
       const parentItem = menuItems.find(item =>
-        item.children?.some(child => String(child.key) === section)
+        item.children?.some(child => {
+          const childPath = `/dashboard/${child.path ?? child.key}`;
+          return (
+            sectionPath === childPath || sectionPath.startsWith(`${childPath}/`)
+          );
+        })
       );
 
       if (parentItem && !expandedItems.includes(parentItem.key)) {
@@ -115,12 +122,17 @@ const Sidebar: React.FC = () => {
     const hasChildren = item.children && item.children.length > 0;
     const expanded = isExpanded(item.key);
     const IconComponent = item.icon;
+    const itemPath = `/dashboard/${item.path ?? item.key}`;
 
-    // Check if current item or any child is active
-    const isCurrentActive = location.pathname === `/dashboard/${item.key}`;
-    const hasActiveChild = hasChildren && item.children?.some(
-      child => location.pathname === `/dashboard/${child.key}`
-    );
+    const isCurrentActive =
+      location.pathname === itemPath || location.pathname.startsWith(`${itemPath}/`);
+    const hasActiveChild = hasChildren &&
+      item.children?.some(child => {
+        const childPath = `/dashboard/${child.path ?? child.key}`;
+        return (
+          location.pathname === childPath || location.pathname.startsWith(`${childPath}/`)
+        );
+      });
 
     return (
       <div key={item.key} className="w-full">
@@ -176,7 +188,7 @@ const Sidebar: React.FC = () => {
           </button>
         ) : (
           <NavLink
-            to={`/dashboard/${item.key}`}
+            to={itemPath}
             className={({ isActive }) =>
               cn(
                 "sidebar-link flex w-full items-center rounded-lg text-sm font-medium transition-all duration-200",

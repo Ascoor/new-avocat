@@ -6,6 +6,7 @@
     "dashboard": "لوحة التحكم",
     "cases": "القضايا",
     "clients": "العملاء",
+    "unclients": "المهتمون",
     "documents": "الوثائق",
     "reports": "التقارير",
     "settings": "الإعدادات",
@@ -289,6 +290,109 @@
     },
     "recentActivity": "النشاط الأخير",
     "casesByStatus": "القضايا حسب الحالة"
+  },
+  "clientManagement": {
+    "title": "إدارة العملاء والمهتمين",
+    "description": "إدارة علاقات العملاء الحاليين والمهتمين في مساحة عمل واحدة.",
+    "form": {
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "address": "العنوان",
+      "nationality": "الجنسية",
+      "work": "المهنة",
+      "emergency": "هاتف الطوارئ",
+      "birthDate": "تاريخ الميلاد",
+      "gender": "الجنس",
+      "genderPlaceholder": "اختر الجنس",
+      "genderMale": "ذكر",
+      "genderFemale": "أنثى",
+      "genderNotSet": "غير محدد",
+      "religion": "الديانة",
+      "religionPlaceholder": "اختر الديانة",
+      "religionMuslim": "مسلم",
+      "religionChristian": "مسيحي",
+      "religionNotSet": "غير محددة",
+      "identity": "رقم الهوية",
+      "status": "الحالة",
+      "statusPlaceholder": "اختر الحالة",
+      "submit": "حفظ",
+      "submitting": "جاري الحفظ..."
+    },
+    "clients": {
+      "title": "العملاء",
+      "subtitle": "متابعة علاقات المكتب مع العملاء الحاليين.",
+      "actions": {
+        "add": "عميل جديد",
+        "addTitle": "إضافة عميل",
+        "addDescription": "أدخل بيانات العميل لإنشاء سجل جديد.",
+        "editTitle": "تعديل العميل",
+        "editDescription": "تحديث بيانات الاتصال ومعلومات العميل.",
+        "confirmDeleteTitle": "حذف العميل",
+        "confirmDeleteDescription": "هل أنت متأكد من حذف {{name}}؟ لا يمكن التراجع عن هذه العملية."
+      },
+      "columns": {
+        "name": "العميل",
+        "phone": "الهاتف",
+        "identity": "رقم الهوية",
+        "status": "الحالة",
+        "createdAt": "تاريخ الإنشاء"
+      },
+      "notifications": {
+        "createSuccess": "تم إنشاء العميل بنجاح.",
+        "createError": "تعذر إنشاء العميل.",
+        "updateSuccess": "تم تحديث بيانات العميل بنجاح.",
+        "updateError": "تعذر تحديث بيانات العميل.",
+        "deleteSuccess": "تم حذف العميل بنجاح.",
+        "deleteError": "تعذر حذف العميل."
+      },
+      "details": {
+        "subtitle": "معلومات الملف والزمن المرتبط بالعميل.",
+        "overview": "ملف العميل",
+        "timeline": "الخط الزمني",
+        "createdAt": "تاريخ الإنشاء",
+        "updatedAt": "آخر تحديث",
+        "notFound": "تعذر العثور على العميل المطلوب.",
+        "backToList": "العودة إلى العملاء"
+      }
+    },
+    "unclients": {
+      "title": "المهتمون",
+      "subtitle": "تنظيم بيانات المهتمين والمراجعين المستقبليين.",
+      "actions": {
+        "add": "مهتم جديد",
+        "addTitle": "إضافة مهتم",
+        "addDescription": "سجّل بيانات مهتم أو عميل محتمل جديد.",
+        "editTitle": "تعديل المهتم",
+        "editDescription": "حدّث أحدث معلومات للمهتم.",
+        "confirmDeleteTitle": "حذف المهتم",
+        "confirmDeleteDescription": "هل أنت متأكد من حذف {{name}}؟ لا يمكن التراجع عن هذه العملية."
+      },
+      "columns": {
+        "name": "المهتم",
+        "phone": "الهاتف",
+        "identity": "رقم الهوية",
+        "birthDate": "تاريخ الميلاد",
+        "createdAt": "تاريخ الإنشاء"
+      },
+      "notifications": {
+        "createSuccess": "تم إنشاء سجل المهتم بنجاح.",
+        "createError": "تعذر إنشاء سجل المهتم.",
+        "updateSuccess": "تم تحديث بيانات المهتم بنجاح.",
+        "updateError": "تعذر تحديث بيانات المهتم.",
+        "deleteSuccess": "تم حذف المهتم بنجاح.",
+        "deleteError": "تعذر حذف المهتم."
+      },
+      "details": {
+        "subtitle": "بيانات الملف والمتابعة الزمنية للمهتم.",
+        "overview": "ملف المهتم",
+        "timeline": "الخط الزمني",
+        "createdAt": "تاريخ الإنشاء",
+        "updatedAt": "آخر تحديث",
+        "notFound": "تعذر العثور على المهتم المطلوب.",
+        "backToList": "العودة إلى المهتمين"
+      }
+    }
   },
   "legalCases": {
     "title": "القضايا",

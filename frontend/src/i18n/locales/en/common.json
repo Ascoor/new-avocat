@@ -6,6 +6,7 @@
     "dashboard": "Dashboard",
     "cases": "Cases",
     "clients": "Clients",
+    "unclients": "Unclients",
     "documents": "Documents",
     "reports": "Reports",
     "settings": "Settings",
@@ -289,6 +290,109 @@
     },
     "recentActivity": "Recent Activity",
     "casesByStatus": "Cases by Status"
+  },
+  "clientManagement": {
+    "title": "Client & Lead Directory",
+    "description": "Manage active clients and prospective leads in one workspace.",
+    "form": {
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone number",
+      "address": "Address",
+      "nationality": "Nationality",
+      "work": "Profession",
+      "emergency": "Emergency contact",
+      "birthDate": "Date of birth",
+      "gender": "Gender",
+      "genderPlaceholder": "Select gender",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "genderNotSet": "Not specified",
+      "religion": "Religion",
+      "religionPlaceholder": "Select religion",
+      "religionMuslim": "Muslim",
+      "religionChristian": "Christian",
+      "religionNotSet": "Not specified",
+      "identity": "National ID",
+      "status": "Status",
+      "statusPlaceholder": "Select status",
+      "submit": "Save",
+      "submitting": "Saving..."
+    },
+    "clients": {
+      "title": "Clients",
+      "subtitle": "Track your firm's active client relationships.",
+      "actions": {
+        "add": "New client",
+        "addTitle": "Add client",
+        "addDescription": "Enter the client details to create a new record.",
+        "editTitle": "Edit client",
+        "editDescription": "Update the client's information and contact details.",
+        "confirmDeleteTitle": "Delete client",
+        "confirmDeleteDescription": "Are you sure you want to delete {{name}}? This action cannot be undone."
+      },
+      "columns": {
+        "name": "Client",
+        "phone": "Phone",
+        "identity": "National ID",
+        "status": "Status",
+        "createdAt": "Created"
+      },
+      "notifications": {
+        "createSuccess": "Client created successfully.",
+        "createError": "Unable to create the client.",
+        "updateSuccess": "Client updated successfully.",
+        "updateError": "Unable to update the client.",
+        "deleteSuccess": "Client removed successfully.",
+        "deleteError": "Unable to delete the client."
+      },
+      "details": {
+        "subtitle": "Profile information and registration timeline.",
+        "overview": "Client profile",
+        "timeline": "Timeline",
+        "createdAt": "Created",
+        "updatedAt": "Last updated",
+        "notFound": "The requested client could not be found.",
+        "backToList": "Back to clients"
+      }
+    },
+    "unclients": {
+      "title": "Unclients",
+      "subtitle": "Keep leads and walk-ins organised for future follow-up.",
+      "actions": {
+        "add": "New unclient",
+        "addTitle": "Add unclient",
+        "addDescription": "Capture the details of a new lead or prospective client.",
+        "editTitle": "Edit unclient",
+        "editDescription": "Update the lead's latest information.",
+        "confirmDeleteTitle": "Delete unclient",
+        "confirmDeleteDescription": "Are you sure you want to delete {{name}}? This action cannot be undone."
+      },
+      "columns": {
+        "name": "Unclient",
+        "phone": "Phone",
+        "identity": "National ID",
+        "birthDate": "Birth date",
+        "createdAt": "Created"
+      },
+      "notifications": {
+        "createSuccess": "Unclient created successfully.",
+        "createError": "Unable to create the unclient.",
+        "updateSuccess": "Unclient updated successfully.",
+        "updateError": "Unable to update the unclient.",
+        "deleteSuccess": "Unclient removed successfully.",
+        "deleteError": "Unable to delete the unclient."
+      },
+      "details": {
+        "subtitle": "Lead dossier and engagement notes.",
+        "overview": "Unclient profile",
+        "timeline": "Timeline",
+        "createdAt": "Created",
+        "updatedAt": "Last updated",
+        "notFound": "The requested unclient could not be found.",
+        "backToList": "Back to unclients"
+      }
+    }
   },
   "legalCases": {
     "title": "Legal Cases",

@@ -15,7 +15,11 @@ import Dashboard from "./pages/Dashboard";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import LegalCases from "@/components/LegalCases/LegalCases";
 import LegalCaseDetails from "@/components/LegalCases/Details/LegalCaseDetails";
-import Clients from "./pages/dashboard/StatsCards";
+import ClientsList from "./pages/client-management/ClientsList";
+import ClientDetails from "./pages/client-management/ClientDetails";
+import ClientManagementLayout from "./pages/client-management/ClientManagementLayout";
+import UnclientsList from "./pages/client-management/UnclientsList";
+import UnclientDetails from "./pages/client-management/UnclientDetails";
 import Lawyers from "./pages/dashboard/CasesByStatusChart";
 import NotFound from "./pages/NotFound";
 
@@ -70,7 +74,12 @@ const App = () => (
                   <Route index element={<DashboardHome />} />
                   <Route path="cases" element={<LegalCases />} />
                   <Route path="cases/:id" element={<LegalCaseDetails />} />
-                  <Route path="clients" element={<Clients />} />
+                  <Route path="clients/*" element={<ClientManagementLayout />}>
+                    <Route index element={<ClientsList />} />
+                    <Route path=":clientId" element={<ClientDetails />} />
+                    <Route path="unclients" element={<UnclientsList />} />
+                    <Route path="unclients/:unclientId" element={<UnclientDetails />} />
+                  </Route>
                   <Route path="lawyers" element={<Lawyers />} />
                   <Route path="customer_service" element={<DashboardPlaceholder sectionKey="customer_service" />} />
                   <Route path="agents" element={<DashboardPlaceholder sectionKey="agents" />} />
