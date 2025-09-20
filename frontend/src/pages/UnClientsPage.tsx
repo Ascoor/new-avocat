@@ -1,24 +1,25 @@
 import { Suspense, lazy } from 'react';
-import { FaUserAltSlash } from 'react-icons/fa';
+import { UserMinus } from 'lucide-react';
 
+import PageHeader from '@/components/common/PageHeader';
 import GlobalSpinner from '@/components/common/GlobalSpinner';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const UnClientList = lazy(() => import('@/components/clientsAndUnclients/UnClients'));
 
 const UnClientPage: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
-    <section className="flex min-h-screen flex-col items-center justify-start bg-gray-100 p-6 dark:bg-gray-900">
-      <div className="mt-4 flex space-x-4 rounded-lg bg-white p-2 shadow-md dark:bg-gray-800">
-        <button className="flex cursor-pointer items-center rounded-lg bg-gradient-to-r from-pink-500 to-purple-500 px-6 py-3 text-lg font-medium text-white shadow-lg transition-all duration-300">
-          <span className="mr-2 text-2xl">
-            <FaUserAltSlash />
-          </span>
-          عملاء بدون وكالة
-        </button>
-      </div>
+    <section className="space-y-6">
+      <PageHeader
+        icon={<UserMinus className="h-6 w-6" />}
+        title={t('unClients.title')}
+        subtitle={t('unClients.subtitle')}
+      />
 
       <Suspense fallback={<GlobalSpinner />}>
-        <div className="mt-8 w-full max-w-5xl rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
+        <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-sm">
           <UnClientList />
         </div>
       </Suspense>
