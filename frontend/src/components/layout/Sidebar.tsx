@@ -1,27 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import {
-  ChevronDown,
-  ChevronRight,
-  Gavel,
-  Users,
-  UserCheck,
-  UserX,
-  Scale,
-  Calendar,
-  Package2,
-  Briefcase,
-  Settings,
-  Building,
-  Shield,
-  Archive,
-  Search,
-  BarChart3,
-  Cookie,
-  Menu,
-  X
-} from 'lucide-react';
+import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
+import { sidebarItems, type SidebarItem } from '@/config/sidebar';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
@@ -31,92 +13,50 @@ interface SidebarProps {
   onToggle: () => void;
 }
 
-interface MenuItem {
-  key: string;
-  icon: React.ComponentType<{ className?: string }>;
-  path?: string;
-  children?: MenuItem[];
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
+const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
   const { t, isRTL } = useLanguage();
   const location = useLocation();
   const isMobile = useIsMobile();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
- 
-const menuItems: MenuItem[] = useMemo(
-  () => [
-    {
-      key: 'cases',
-      icon: Package2,
-    },
-    {
-      key: 'lawyers',
-      icon: Scale,
-    },
-    {
-      key: 'customer_service',
-      icon: Users,
-      children: [
-        { key: 'clients', icon: UserCheck },
-        { key: 'unClients', icon: UserX },
-      ],
-    },
-    {
-      key: 'services',
-      icon: Cookie,
-    },
-    {
-      key: 'followUpWork',
-      icon: BarChart3,
-      children: [
-        { key: 'sessions', icon: Calendar },    // الجلسات
-        { key: 'procedures', icon: Briefcase }, // الإجراءات
-      ],
-    },
-    {
-      key: 'settings',
-      icon: Settings,
-      children: [
-        { key: 'courts_settings', icon: Gavel },
-        { key: 'office_settings', icon: Building },
-        { key: 'users_roles', icon: Shield },
-      ],
-    },
-    {
-      key: 'archive',
-      icon: Archive,
-    },
-    {
-      key: 'courts_search',
-      icon: Search,
-    },
-  ],
-  [],
-);
- 
+
+  const isPathActive = (path?: string) => {
+    if (!path) return false;
+    if (path === '/dashboard') {
+      return location.pathname === '/dashboard';
+    }
+
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  };
+
+  const hasActiveChild = useMemo(() => {
+    const visit = (item: SidebarItem): boolean => {
+      if (isPathActive(item.path)) return true;
+      return item.children?.some(visit) ?? false;
+    };
+
+    return (item: SidebarItem) => item.children?.some(visit) ?? false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   useEffect(() => {
-    const currentPath = location.pathname;
-    const pathSegments = currentPath.split('/').filter(Boolean);
+    const activeParentIds = sidebarItems
+      .filter((item) => hasActiveChild(item))
+      .map((item) => item.id);
 
-    if (pathSegments.length >= 2) {
-      const section = pathSegments[1];
+    setExpandedItems((prev) => {
+      const merged = new Set(prev);
+      activeParentIds.forEach((id) => merged.add(id));
+      return Array.from(merged);
+    });
+  }, [hasActiveChild, location.pathname]);
 
-      const parentItem = menuItems.find((item) =>
-        item.children?.some((child) => String(child.path ?? child.key) === section)
-      );
-
-      if (parentItem && !expandedItems.includes(parentItem.key)) {
-        setExpandedItems(prev => (
-          prev.includes(parentItem.key) ? prev : [...prev, parentItem.key]
-        ));
-      }
-    }
-  }, [location.pathname, menuItems, expandedItems]);
+  const toggleExpanded = (id: string) => {
+    setExpandedItems((prev) =>
+      prev.includes(id) ? prev.filter((value) => value !== id) : [...prev, id],
+    );
+  };
 
   const previousPath = useRef(location.pathname);
-
   useEffect(() => {
     if (!isMobile) {
       previousPath.current = location.pathname;
@@ -128,147 +68,124 @@ const menuItems: MenuItem[] = useMemo(
     }
 
     previousPath.current = location.pathname;
-  }, [location.pathname, isMobile, isCollapsed, onToggle]);
+  }, [isMobile, isCollapsed, location.pathname, onToggle]);
 
-  const getItemLabel = (key: string) => {
-    const navLabel = t(`nav.${key}`);
-    if (navLabel !== `nav.${key}`) return navLabel;
-    const sectionLabel = t(`dashboard.sections.${key}`);
-    if (sectionLabel !== `dashboard.sections.${key}`) return sectionLabel;
-    return key;
+  const getItemLabel = (labelKey: string) => {
+    const label = t(labelKey as never);
+    return label === labelKey ? labelKey : label;
   };
 
-  const toggleExpanded = (key: string) => {
-    setExpandedItems(prev =>
-      prev.includes(key)
-        ? prev.filter(item => item !== key)
-        : [...prev, key]
-    );
-  };
+  const renderItem = (item: SidebarItem, level = 0) => {
+    const hasChildren = !!item.children?.length;
+    const expanded = expandedItems.includes(item.id);
+    const Icon = item.icon;
+    const itemActive = isPathActive(item.path);
+    const childActive = hasChildren && hasActiveChild(item);
+    const indentation = level > 0 && !isCollapsed ? (isRTL ? 'mr-4' : 'ml-4') : '';
 
-  const isExpanded = (key: string) => expandedItems.includes(key);
-
-  const renderMenuItem = (item: MenuItem, level = 0) => {
-    const hasChildren = item.children && item.children.length > 0;
-    const expanded = isExpanded(item.key);
-    const IconComponent = item.icon;
-    const itemPath = item.path ?? item.key;
-    const isCurrentRoute = location.pathname === `/dashboard/${itemPath}`;
-    const hasActiveChild = hasChildren && item.children?.some(
-      (child) => location.pathname === `/dashboard/${child.path ?? child.key}`
-    );
-
-    return (
-      <div key={item.key} className="w-full">
-        {hasChildren ? (
+    if (hasChildren) {
+      return (
+        <div key={item.id} className="w-full">
           <button
-            onClick={() => !isCollapsed && toggleExpanded(item.key)}
+            type="button"
+            onClick={() => {
+              if (!isCollapsed) toggleExpanded(item.id);
+            }}
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-              "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
-              (hasActiveChild || isCurrentRoute) && "bg-sidebar-accent text-sidebar-accent-foreground",
-              level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
-              isCollapsed && "justify-center px-2"
+              'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
+              'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover',
+              (childActive || itemActive) && 'bg-sidebar-accent text-sidebar-accent-foreground',
+              indentation,
+              isCollapsed && 'justify-center px-2',
             )}
           >
-            <IconComponent className={cn(
-              "h-5 w-5 flex-shrink-0",
-              isCollapsed && "h-6 w-6"
-            )} />
+            <Icon className={cn('h-5 w-5 flex-shrink-0', isCollapsed && 'h-6 w-6')} />
             {!isCollapsed && (
               <>
-                <span className={cn(
-                  "flex-1 truncate",
-                  isRTL ? "text-right" : "text-left"
-                )}>
-                  {getItemLabel(item.key)}
+                <span className={cn('flex-1 truncate', isRTL ? 'text-right' : 'text-left')}>
+                  {getItemLabel(item.labelKey)}
                 </span>
                 {expanded ? (
                   <ChevronDown className="h-4 w-4 flex-shrink-0" />
                 ) : (
-                  <ChevronRight className={cn(
-                    "h-4 w-4 flex-shrink-0",
-                    isRTL && "rotate-180"
-                  )} />
+                  <ChevronRight
+                    className={cn('h-4 w-4 flex-shrink-0 transition-transform', isRTL && 'rotate-180')}
+                  />
                 )}
               </>
             )}
           </button>
-        ) : (
-          <NavLink
-            to={`/dashboard/${itemPath}`}
-            onClick={() => {
-              if (isMobile && !isCollapsed) onToggle();
-            }}
-            className={({ isActive }) =>
-              cn(
-                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-                "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover",
-                isActive && "bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant",
-                level > 0 && !isCollapsed && (isRTL ? "mr-4" : "ml-4"),
-                isCollapsed && "justify-center px-2"
-              )
-            }
-          >
-            <IconComponent className={cn(
-              "h-5 w-5 flex-shrink-0",
-              isCollapsed && "h-6 w-6"
-            )} />
-            {!isCollapsed && (
-              <span className={cn(
-                "flex-1 truncate",
-                isRTL ? "text-right" : "text-left"
-              )}>
-                {getItemLabel(item.key)}
-              </span>
-            )}
-          </NavLink>
-        )}
 
-        {hasChildren && expanded && !isCollapsed && (
-          <div className="mt-1 space-y-1 animate-accordion-down">
-            {item.children?.map((child) => renderMenuItem(child, level + 1))}
-          </div>
+          {expanded && !isCollapsed && (
+            <div className="mt-1 space-y-1 animate-accordion-down">
+              {item.children?.map((child) => renderItem(child, level + 1))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    if (!item.path) {
+      return null;
+    }
+
+    return (
+      <NavLink
+        key={item.id}
+        to={item.path}
+        end={item.path === '/dashboard'}
+        onClick={() => {
+          if (isMobile && !isCollapsed) onToggle();
+        }}
+        className={({ isActive }) =>
+          cn(
+            'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
+            'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover',
+            (isActive || itemActive) && 'bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant',
+            indentation,
+            isCollapsed && 'justify-center px-2',
+          )
+        }
+      >
+        <Icon className={cn('h-5 w-5 flex-shrink-0', isCollapsed && 'h-6 w-6')} />
+        {!isCollapsed && (
+          <span className={cn('flex-1 truncate', isRTL ? 'text-right' : 'text-left')}>
+            {getItemLabel(item.labelKey)}
+          </span>
         )}
-      </div>
+      </NavLink>
     );
   };
 
   return (
     <>
-      {/* Mobile Overlay */}
       {isMobile && !isCollapsed && (
-        <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+        <div
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
           onClick={onToggle}
+          role="presentation"
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 z-50 h-full glass border-r border-sidebar-border transition-all duration-300",
-          "lg:relative lg:translate-x-0",
-          // Positioning based on RTL/LTR
-          isRTL ? "right-0" : "left-0",
-          // Width and visibility
-          isMobile ? "w-full" : isCollapsed ? "w-16" : "w-64",
-          // Mobile behavior
-          isMobile && isCollapsed && (isRTL ? "translate-x-full" : "-translate-x-full"),
-          isMobile && !isCollapsed && "translate-x-0",
-          // Desktop behavior
-          !isMobile && "translate-x-0"
+          'fixed top-0 z-50 h-full glass border-r border-sidebar-border transition-all duration-300',
+          'lg:relative lg:translate-x-0',
+          isRTL ? 'right-0' : 'left-0',
+          isMobile ? 'w-full' : isCollapsed ? 'w-16' : 'w-64',
+          isMobile && isCollapsed && (isRTL ? 'translate-x-full' : '-translate-x-full'),
+          isMobile && !isCollapsed && 'translate-x-0',
+          !isMobile && 'translate-x-0',
         )}
-        style={{
-          direction: isRTL ? 'rtl' : 'ltr'
-        }}
+        style={{ direction: isRTL ? 'rtl' : 'ltr' }}
       >
         <div className="flex h-full flex-col">
-          {/* Header */}
-          <div className={cn(
-            "flex h-16 items-center border-b border-sidebar-border px-4",
-            isCollapsed ? "justify-center" : "justify-between"
-          )}>
+          <div
+            className={cn(
+              'flex h-16 items-center border-b border-sidebar-border px-4',
+              isCollapsed ? 'justify-center' : 'justify-between',
+            )}
+          >
             {!isCollapsed && (
               <NavLink
                 to="/dashboard"
@@ -284,16 +201,15 @@ const menuItems: MenuItem[] = useMemo(
               variant="ghost"
               size="icon"
               onClick={onToggle}
-              className="h-8 w-8 hover:bg-sidebar-accent glow-hover flex-shrink-0"
+              className="h-8 w-8 flex-shrink-0 hover:bg-sidebar-accent glow-hover"
               aria-label={isCollapsed ? t('common.expand') : t('common.collapse')}
             >
               {isCollapsed ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
             </Button>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
-            {menuItems.map(item => renderMenuItem(item))}
+          <nav className="custom-scrollbar flex-1 space-y-2 overflow-y-auto p-4">
+            {sidebarItems.map((item) => renderItem(item))}
           </nav>
         </div>
       </aside>
