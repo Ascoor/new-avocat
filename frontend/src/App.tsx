@@ -15,7 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import LegalCases from "@/pages/LegalCasesPage";
 import LegalCaseDetails from "@/components/legalCases/Details/LegalCaseDetails";
-import Clients from "./pages/dashboard/StatsCards";
+import Clients from "./pages/ClientsPage";
 import { LawyersList, LawyerDetails } from "@/pages/LawyersPage";
 import NotFound from "./pages/NotFound";
 import ServicesPage from "./pages/ServicesPage";
