@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,30 +9,26 @@ const HeroSlider: React.FC = () => {
   const { t, isRTL } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  const rawSlides = t('landing.hero.slides') as any;
-  const slides = (Array.isArray(rawSlides) ? rawSlides : [
-    {
-      title: isRTL ? 'منصة متكاملة لإدارة مكتبك القانوني باحترافية' : 'Comprehensive Platform for Professional Legal Office Management',
-      subtitle: isRTL
-        ? 'استفد من أحدث التقنيات في إدارة القضايا والعملاء والوثائق بكفاءة عالية ومعايير أمان صارمة تضمن حماية بيانات عملائك'
-        : 'Leverage cutting-edge technology to manage cases, clients, and documents efficiently with strict security standards ensuring your client data protection',
-      cta: isRTL ? 'ابدأ تجربتك المجانية' : 'Start Your Free Trial',
-    },
-    {
-      title: isRTL ? 'تحكم في القضايا والموكلين والوثائق بسهولة' : 'Control Cases, Clients, and Documents with Ease',
-      subtitle: isRTL
-        ? 'نظام شامل يوفر لك جميع الأدوات اللازمة لإدارة مكتبك القانوني من مكان واحد مع واجهة بسيطة وسهلة الاستخدام'
-        : 'A comprehensive system providing all necessary tools to manage your law firm from one place with a simple and user-friendly interface',
-      cta: isRTL ? 'جرّب أفوكات الآن' : 'Try Avocat Now',
-    },
-    {
-      title: isRTL ? 'أمان ومعايير قانونية صارمة لحماية بيانات عملائك' : 'Security and Strict Legal Standards for Client Data Protection',
-      subtitle: isRTL
-        ? 'حماية متقدمة وتشفير عالي المستوى يضمن سرية وأمان جميع البيانات والوثائق القانونية وفقاً لأعلى المعايير الدولية'
-        : 'Advanced protection and high-level encryption ensuring confidentiality and security of all legal data and documents according to highest international standards',
-      cta: isRTL ? 'اكتشف المزيد' : 'Discover More',
-    },
-  ]) as Array<{ title: string; subtitle: string; cta: string }>;
+  const slides = useMemo(() => {
+    const data = t('landing.hero.slides', { returnObjects: true }) as Record<
+      string,
+      { title?: string; description?: string; cta?: string }
+    >;
+    const parsed = Object.values(data ?? {}).map((slide) => ({
+      title: slide.title ?? '',
+      subtitle: slide.description ?? '',
+      cta: slide.cta ?? '',
+    }));
+    return parsed.length > 0
+      ? parsed
+      : [
+          {
+            title: '',
+            subtitle: '',
+            cta: '',
+          },
+        ];
+  }, [t]);
 
   // Auto-play functionality
   useEffect(() => {

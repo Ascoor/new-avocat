@@ -34,6 +34,7 @@ interface SidebarProps {
 interface MenuItem {
   key: string;
   icon: React.ComponentType<{ className?: string }>;
+  path?: string;
   children?: MenuItem[];
 }
 
@@ -42,6 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+ 
 const menuItems: MenuItem[] = useMemo(
   () => [
     {
@@ -92,6 +94,7 @@ const menuItems: MenuItem[] = useMemo(
   ],
   [],
 );
+ 
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -100,8 +103,8 @@ const menuItems: MenuItem[] = useMemo(
     if (pathSegments.length >= 2) {
       const section = pathSegments[1];
 
-      const parentItem = menuItems.find(item =>
-        item.children?.some(child => String(child.key) === section)
+      const parentItem = menuItems.find((item) =>
+        item.children?.some((child) => String(child.path ?? child.key) === section)
       );
 
       if (parentItem && !expandedItems.includes(parentItem.key)) {
@@ -149,10 +152,10 @@ const menuItems: MenuItem[] = useMemo(
     const hasChildren = item.children && item.children.length > 0;
     const expanded = isExpanded(item.key);
     const IconComponent = item.icon;
-
-    const isCurrentRoute = location.pathname === `/dashboard/${item.key}`;
+    const itemPath = item.path ?? item.key;
+    const isCurrentRoute = location.pathname === `/dashboard/${itemPath}`;
     const hasActiveChild = hasChildren && item.children?.some(
-      child => location.pathname === `/dashboard/${child.key}`
+      (child) => location.pathname === `/dashboard/${child.path ?? child.key}`
     );
 
     return (
@@ -193,7 +196,7 @@ const menuItems: MenuItem[] = useMemo(
           </button>
         ) : (
           <NavLink
-            to={`/dashboard/${item.key}`}
+            to={`/dashboard/${itemPath}`}
             onClick={() => {
               if (isMobile && !isCollapsed) onToggle();
             }}
@@ -224,7 +227,7 @@ const menuItems: MenuItem[] = useMemo(
 
         {hasChildren && expanded && !isCollapsed && (
           <div className="mt-1 space-y-1 animate-accordion-down">
-            {item.children?.map(child => renderMenuItem(child, level + 1))}
+            {item.children?.map((child) => renderMenuItem(child, level + 1))}
           </div>
         )}
       </div>

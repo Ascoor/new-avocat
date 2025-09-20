@@ -49,6 +49,7 @@
     "error": "خطأ",
     "info": "تنبيه",
     "toggleLanguage": "تغيير اللغة",
+    "welcome": "مرحبًا بك مجددًا",
     "comingSoon": "قريبًا",
     "comingSoonDescription": "نعمل على إتاحة هذه التجربة لك قريبًا.",
     "backToDashboard": "العودة للوحة التحكم",
@@ -114,10 +115,8 @@
     "value": "قيمة القضية",
     "addCase": "إضافة قضية جديدة"
   },
-  " UnClients": {
+  "clients": {
     "title": "إدارة العملاء",
-
-    "unClients": "عملاء بدون وكالة",
     "name": "اسم العميل",
     "email": "البريد الإلكتروني",
     "phone": "الهاتف",
@@ -343,6 +342,7 @@
         "name": "الاسم الكامل",
         "email": "البريد الإلكتروني المهني",
         "phone": "رقم الهاتف",
+        "subject": "الموضوع",
         "message": "كيف يمكننا دعم مكتبك؟",
         "submit": "إرسال الرسالة",
         "success": "شكرًا لتواصلك معنا، سنعود إليك قريبًا.",
@@ -577,7 +577,94 @@
       "revenue": "الإيرادات الشهرية"
     },
     "recentActivity": "النشاط الأخير",
-    "casesByStatus": "القضايا حسب الحالة"
+    "casesByStatus": "القضايا حسب الحالة",
+    "home": {
+      "welcome": {
+        "title": "مرحبًا، سعيدون بعودتك",
+        "subtitle": "نظرة عامة على أحدث الأنشطة والإحصائيات"
+      },
+      "stats": [
+        {
+          "title": "إجمالي القضايا",
+          "value": "124",
+          "change": "+12%",
+          "icon": "cases",
+          "color": "text-primary"
+        },
+        {
+          "title": "العملاء النشطون",
+          "value": "89",
+          "change": "+8%",
+          "icon": "clients",
+          "color": "text-accent"
+        },
+        {
+          "title": "الجلسات القادمة",
+          "value": "23",
+          "change": "+5%",
+          "icon": "sessions",
+          "color": "text-success"
+        },
+        {
+          "title": "معدل النجاح",
+          "value": "94%",
+          "change": "+3%",
+          "icon": "performance",
+          "color": "text-warning"
+        }
+      ],
+      "activities": {
+        "title": "الأنشطة الحديثة",
+        "subtitle": "آخر التحديثات والحركات داخل النظام",
+        "items": [
+          {
+            "title": "قضية جديدة: نزاع تجاري",
+            "time": "منذ ساعة",
+            "type": "case"
+          },
+          {
+            "title": "جلسة محكمة مجدولة",
+            "time": "منذ 3 ساعات",
+            "type": "session"
+          },
+          {
+            "title": "تسجيل عميل جديد",
+            "time": "منذ يوم",
+            "type": "client"
+          },
+          {
+            "title": "التقرير الشهري جاهز",
+            "time": "منذ يومين",
+            "type": "report"
+          }
+        ]
+      },
+      "tasks": {
+        "title": "المهام العاجلة",
+        "subtitle": "المهام التي تحتاج إلى متابعة فورية",
+        "items": [
+          {
+            "title": "مراجعة عقد الشراكة",
+            "deadline": "اليوم",
+            "priority": "high"
+          },
+          {
+            "title": "تحضير مذكرة الدفاع",
+            "deadline": "غدًا",
+            "priority": "high"
+          },
+          {
+            "title": "متابعة قضية العقارات",
+            "deadline": "الأسبوع القادم",
+            "priority": "medium"
+          }
+        ],
+        "priorities": {
+          "high": "عاجل",
+          "medium": "متوسط"
+        }
+      }
+    }
   },
   "legalCases": {
     "title": "القضايا",
@@ -867,6 +954,75 @@
   "unClients": {
     "title": "عملاء بدون وكالة",
     "subtitle": "تابع الأفراد الذين لم يتم تمثيلهم بعد من قبل مكتبك."
+  },
+  "unclients": {
+    "list": {
+      "title": "العملاء المحتملون",
+      "subtitle": "أدر الأشخاص الذين لم يتم تسجيلهم بعد كعملاء لدى المكتب.",
+      "add": "إضافة عميل محتمل",
+      "empty": "لا يوجد عملاء محتملون حتى الآن.",
+      "table": {
+        "slug": "المرجع",
+        "name": "الاسم",
+        "identity": "رقم الهوية",
+        "phone": "رقم الهاتف",
+        "email": "البريد الإلكتروني",
+        "actions": "إجراءات"
+      },
+      "actions": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "confirmDeleteTitle": "حذف {name}؟",
+      "confirmDeleteDescription": "سيتم حذف هذا السجل بشكل نهائي.",
+      "confirmDelete": "حذف"
+    },
+    "form": {
+      "titleCreate": "إضافة عميل محتمل",
+      "titleEdit": "تعديل عميل محتمل",
+      "titleView": "تفاصيل العميل المحتمل",
+      "readOnlyNotice": "هذا السجل للعرض فقط.",
+      "labels": {
+        "slug": "رقم المرجع",
+        "name": "الاسم الكامل",
+        "identity": "رقم الهوية",
+        "phone": "رقم الهاتف",
+        "email": "البريد الإلكتروني",
+        "address": "العنوان",
+        "work": "المهنة",
+        "emergency": "هاتف الطوارئ",
+        "dateOfBirth": "تاريخ الميلاد",
+        "gender": "الجنس",
+        "religion": "الديانة"
+      },
+      "placeholders": {
+        "slug": "أدخل رقم المرجع",
+        "name": "أدخل الاسم الكامل"
+      },
+      "genderOptions": {
+        "male": "ذكر",
+        "female": "أنثى"
+      },
+      "religionOptions": {
+        "muslim": "مسلم",
+        "christian": "مسيحي"
+      },
+      "actions": {
+        "save": "حفظ"
+      },
+      "messages": {
+        "createSuccess": "تم إضافة العميل المحتمل بنجاح.",
+        "updateSuccess": "تم تحديث العميل المحتمل بنجاح.",
+        "errorTitle": "تعذر حفظ العميل المحتمل",
+        "errorDescription": "يرجى مراجعة البيانات والمحاولة مجددًا."
+      }
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف العميل المحتمل بنجاح.",
+      "deleteErrorTitle": "تعذر حذف العميل المحتمل",
+      "deleteErrorDescription": "يرجى المحاولة مرة أخرى لاحقًا."
+    }
   },
   "documents": {
     "title": "الوثائق",
