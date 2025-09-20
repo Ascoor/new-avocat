@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { ClipboardList, Eye, Pencil, Trash2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
+import PageHeader from '@/components/common/PageHeader';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import ServiceFormDialog from '@/components/services/ServiceFormDialog';
 import type { ServiceRecord } from '@/components/services/types';
@@ -142,11 +143,12 @@ const ServicesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="space-y-1">
-        <h1 className="text-2xl font-semibold text-foreground">{t('services.list.title')}</h1>
-        <p className="text-sm text-muted-foreground">{t('services.list.subtitle')}</p>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        icon={<ClipboardList className="h-6 w-6" />}
+        title={t('services.list.title')}
+        subtitle={t('services.list.subtitle')}
+      />
 
       <DetailsTable
         data={services}

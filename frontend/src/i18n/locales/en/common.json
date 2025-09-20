@@ -852,11 +852,16 @@
   },
   "clients": {
     "title": "Clients",
+    "subtitle": "Keep an overview of your represented clients and their mandates.",
     "addNew": "Add New Client",
     "name": "Name",
     "phone": "Phone",
     "email": "Email",
     "joinDate": "Join Date"
+  },
+  "unClients": {
+    "title": "Clients without Mandate",
+    "subtitle": "Track individuals who are not yet represented by your office."
   },
   "documents": {
     "title": "Documents",

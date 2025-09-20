@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, Pencil, Scale, Trash2 } from 'lucide-react';
 import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
+import PageHeader from '@/components/common/PageHeader';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -134,19 +135,11 @@ const LegalCases = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-border/60 bg-gradient-to-r from-primary/5 via-background to-background p-6 shadow-sm">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Scale className="h-6 w-6" />
-            </span>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">{t('legalCases.title')}</h1>
-              <p className="text-sm text-muted-foreground">{t('legalCases.subtitle')}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        icon={<Scale className="h-6 w-6" />}
+        title={t('legalCases.title')}
+        subtitle={t('legalCases.subtitle')}
+      />
 
       {error && (
         <div className="rounded-md border border-destructive/40 bg-destructive/10 p-4 text-destructive">
