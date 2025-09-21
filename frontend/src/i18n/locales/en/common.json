@@ -311,6 +311,7 @@
     },
     "contact": {
       "title": "Contact Us",
+      "subtitle": "We would love to hear from you. Share your questions and our team will respond shortly.",
       "form": {
         "namePlaceholder": "Your Name",
         "emailPlaceholder": "Your Email",
