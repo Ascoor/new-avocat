@@ -141,7 +141,7 @@ const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
           cn(
             'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200',
             'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground glow-hover',
-            (isActive || itemActive) && 'bg-sidebar-primary text-sidebar-primary-foreground shadow-elegant',
+            (isActive || itemActive) && 'bg-sidebar-primary text-sidebar-primary-foreground shadow-card',
             indentation,
             isCollapsed && 'justify-center px-2',
           )

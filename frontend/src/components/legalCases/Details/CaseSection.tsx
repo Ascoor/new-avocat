@@ -51,7 +51,7 @@ const CaseSection = ({
   return (
     <section
       className={cn(
-        'rounded-2xl border border-border/60 bg-card/60 p-6 shadow-sm backdrop-blur',
+        'rounded-2xl border border-border/60 bg-card/60 p-6 shadow-card backdrop-blur',
         className,
       )}
     >

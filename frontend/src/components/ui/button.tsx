@@ -4,56 +4,32 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-60 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        // Primary
         default:
-          "bg-primary text-primary-foreground hover:bg-primary-hover shadow-md hover:shadow-lg",
-
-        // Accent (Secondary brand)
+          "bg-primary text-primary-foreground shadow-card hover:bg-primary-hover hover:shadow-glow",
         accent:
-          "bg-accent text-accent-foreground hover:bg-accent/90 shadow-md hover:shadow-lg",
-
-        // Secondary Neutral
+          "bg-accent text-accent-foreground shadow-card hover:bg-accent/90 hover:shadow-glow",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-
-        // Outline (transparent background)
+          "bg-secondary text-secondary-foreground shadow-card hover:bg-secondary/85",
         outline:
-          "border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground",
-
-        // Ghost (like link but lighter)
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground text-foreground",
-
-        // Link style
-        link: "text-primary underline-offset-4 hover:underline",
-
-        // Destructive
+          "border border-border bg-transparent text-text-strong shadow-card hover:border-accent hover:bg-accent-soft hover:text-accent-foreground",
+        ghost: "text-text-muted hover:bg-surface-muted hover:text-text-strong",
+        link: "text-primary underline-offset-4 hover:text-primary/80 hover:underline",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg",
-
-        // Success
+          "bg-destructive text-destructive-foreground shadow-card hover:bg-destructive/90 hover:shadow-glow",
         success:
-          "bg-success text-success-foreground hover:bg-success/90 shadow-md hover:shadow-lg",
-
-        // Warning
+          "bg-success text-success-foreground shadow-card hover:bg-success/90 hover:shadow-glow",
         warning:
-          "bg-warning text-warning-foreground hover:bg-warning/90 shadow-md hover:shadow-lg",
-
-        // Hero (gradient primary)
+          "bg-warning text-warning-foreground shadow-card hover:bg-warning/90 hover:shadow-glow",
         hero:
-          "bg-gradient-primary text-white border-0 shadow-glow hover:scale-105 font-semibold",
-
-        // Glass style
+          "bg-gradient-hero text-text-inverse shadow-glow font-semibold hover:scale-102",
         glass:
-          "glass text-foreground hover:bg-accent/20 border-glass-border",
-
-        // Glow style
+          "glass text-text-strong shadow-card hover:border-accent/40 hover:shadow-glow",
         glow:
-          "bg-accent text-accent-foreground shadow-glow hover:scale-105 animate-pulseGlow",
+          "bg-accent text-accent-foreground shadow-glow hover:scale-102 animate-pulseGlow",
       },
       size: {
         default: "h-10 px-4 py-2",

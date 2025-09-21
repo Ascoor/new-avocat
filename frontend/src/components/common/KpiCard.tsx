@@ -34,15 +34,15 @@ const KpiCard: React.FC<KpiCardProps> = ({
     >
       <Card className={cn(
         'relative overflow-hidden transition-all duration-300',
-        'hover:shadow-lg hover:shadow-primary/5',
-        'border-border/50 bg-card/50 backdrop-blur',
+        'hover:shadow-glow',
+        'border-border/50 bg-card/60 backdrop-blur',
         className
       )}>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">
             {title}
           </CardTitle>
-          <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15">
             <Icon className="h-4 w-4 text-primary" />
           </div>
         </CardHeader>
@@ -52,10 +52,7 @@ const KpiCard: React.FC<KpiCardProps> = ({
           </div>
           {change && (
             <p className="text-xs text-muted-foreground">
-              <span className={cn(
-                'font-medium',
-                isPositive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
-              )}>
+              <span className={cn('font-medium', isPositive ? 'text-success' : 'text-destructive')}>
                 {isPositive ? '+' : ''}{change.value}%
               </span>
               {' '}

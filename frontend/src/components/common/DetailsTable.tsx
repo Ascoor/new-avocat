@@ -276,7 +276,7 @@ const DetailsTable = <T,>({
   const showingTo = enablePagination ? Math.min(page * pageSize, totalItems) : totalItems;
 
   return (
-    <div className="rounded-lg border border-border/60 bg-card/40 shadow-sm">
+    <div className="rounded-lg border border-border/60 bg-card/40 shadow-card">
       {controlsVisible && (
         <div className="flex flex-col gap-3 border-b border-border/60 bg-muted/30 px-4 py-3">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">

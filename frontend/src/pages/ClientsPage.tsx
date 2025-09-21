@@ -19,7 +19,7 @@ const ClientPage: React.FC = () => {
       />
 
       <Suspense fallback={<GlobalSpinner />}>
-        <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-sm">
+        <div className="rounded-2xl border border-border/60 bg-card p-6 shadow-card">
           <ClientList />
         </div>
       </Suspense>

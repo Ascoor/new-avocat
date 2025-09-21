@@ -130,7 +130,7 @@ const LegalCaseDetails = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="rounded-full border border-border/50 bg-surface-100/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
+              className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">{t('legalCaseDetails.back')}</span>
@@ -166,7 +166,7 @@ const LegalCaseDetails = () => {
               hover="glow"
               className="relative overflow-hidden border border-border/60 bg-gradient-card/10 p-6 md:p-8"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(7, 123, 255, 0.18),transparent_45%)]" />
+              <div className="pointer-events-none absolute inset-0 bg-card-highlight" />
               <div className="relative grid gap-8 md:grid-cols-2">
                 <InfoList
                   title={t('legalCaseDetails.sections.basicInfo')}
@@ -183,7 +183,7 @@ const LegalCaseDetails = () => {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35, delay: 0.15 }}
-                    className="md:col-span-2 rounded-2xl border border-border/60 bg-surface-100/80 p-5 shadow-inner"
+                    className="md:col-span-2 rounded-2xl border border-border/60 bg-surface-highlight/80 p-5 shadow-inner"
                   >
                     <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
                       {t('legalCaseDetails.fields.description')}
@@ -217,21 +217,21 @@ const LegalCaseDetails = () => {
               <TabsList className="flex flex-wrap justify-start gap-2 md:justify-center">
                 <TabsTrigger
                   value="procedures"
-                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-100/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
+                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-highlight/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
                 >
                   <ClipboardList className="h-4 w-4 transition group-data-[state=active]:text-primary" />
                   {t('legalCaseDetails.tabs.procedures')}
                 </TabsTrigger>
                 <TabsTrigger
                   value="sessions"
-                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-100/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
+                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-highlight/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
                 >
                   <CalendarClock className="h-4 w-4 transition group-data-[state=active]:text-primary" />
                   {t('legalCaseDetails.tabs.sessions')}
                 </TabsTrigger>
                 <TabsTrigger
                   value="ads"
-                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-100/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
+                  className="group flex items-center gap-2 rounded-full border border-border/50 bg-surface-highlight/70 px-4 py-2 text-sm font-semibold text-muted-foreground transition data-[state=active]:border-primary/60 data-[state=active]:bg-primary/10 data-[state=active]:text-primary"
                 >
                   <Megaphone className="h-4 w-4 transition group-data-[state=active]:text-primary" />
                   {t('legalCaseDetails.tabs.ads')}
@@ -282,10 +282,10 @@ const InfoList = ({
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.05 }}
-          className="group flex items-center gap-3 rounded-2xl border border-border/50 bg-surface-100/80 px-4 py-3 shadow-inner backdrop-blur-sm transition hover:border-primary/60 hover:bg-primary/5"
+          className="group flex items-center gap-3 rounded-2xl border border-border/50 bg-surface-highlight/80 px-4 py-3 shadow-inner backdrop-blur-sm transition hover:border-primary/60 hover:bg-primary/5"
         >
           {item.icon && (
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-card">
               <item.icon className="h-5 w-5" aria-hidden="true" />
             </span>
           )}

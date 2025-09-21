@@ -13,8 +13,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-hero flex items-center justify-center">
-        <div className="text-center text-white">
+      <div className="min-h-screen bg-gradient-hero flex items-center justify-center text-text-inverse">
+        <div className="text-center">
           <div className="h-8 w-8 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p>{t('common.loading')}</p>
         </div>

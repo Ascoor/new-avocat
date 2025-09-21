@@ -11,7 +11,7 @@ const About: React.FC = () => {
         </h2>
         <p className="text-lg text-text-body">{t("landing.about.description")}</p>
       </div>
-      <div className="overflow-hidden rounded-2xl shadow-elegant">
+      <div className="overflow-hidden rounded-2xl shadow-card">
         <img
           src="/images/law-team.jpg"
           alt={t("landing.about.imageAlt")}
