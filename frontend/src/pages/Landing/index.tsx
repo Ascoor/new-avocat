@@ -1,3 +1,4 @@
+import LandingNavbar from "./LandingNavbar";
 import Hero from "./Hero";
 import Features from "./Features";
 import Services from "./Services";
@@ -6,7 +7,6 @@ import Testimonials from "./Testimonials";
 import CallToAction from "./CallToAction";
 import Contact from "./Contact";
 import Footer from "./Footer";
-import LandingNavbar from "./LandingNavbar";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const footerServiceKeys = [
@@ -20,7 +20,7 @@ const LandingPage: React.FC = () => {
   const { t } = useLanguage();
 
   const footerServices = footerServiceKeys.map((key) =>
-    t(`landing.footer.services.${key}`),
+    t(`landing.footer.services.${key}`)
   );
 
   const footerContact = {

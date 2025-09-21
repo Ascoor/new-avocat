@@ -16,14 +16,12 @@ const LandingNavbar: React.FC = () => {
   const location = useLocation();
   const { theme } = useTheme();
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
@@ -48,14 +46,22 @@ const LandingNavbar: React.FC = () => {
     setLanguage(language === 'ar' ? 'en' : 'ar');
   };
 
+  // 🟢 وظيفة مساعدة لتحديد لون النصوص
+  const getNavTextColor = () => {
+    if (isScrolled) return "text-foreground hover:text-primary"; // بعد الـ scroll
+    return theme === "dark"
+      ? "text-text-inverse hover:text-text-subtle"
+      : "text-text-strong hover:text-primary";
+  };
+
   return (
     <>
       <nav
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-lg'
-            : 'bg-transparent'
+            ? "bg-background/90 backdrop-blur-lg border-b border-border shadow-lg"
+            : "bg-transparent"
         )}
       >
         <div className="container mx-auto px-4">
@@ -65,7 +71,7 @@ const LandingNavbar: React.FC = () => {
               variant="text"
               className="h-12"
               lang={language}
-              dark={!isScrolled ? true : theme === 'dark'}
+              dark={theme === 'dark'}
             />
 
             {/* Desktop Navigation */}
@@ -74,10 +80,7 @@ const LandingNavbar: React.FC = () => {
                 <button
                   key={item.key}
                   onClick={() => scrollToSection(item.href)}
-                  className={cn(
-                    'text-sm font-medium transition-colors hover:text-primary',
-                    isScrolled ? 'text-foreground' : 'text-white hover:text-white/80'
-                  )}
+                  className={cn("text-sm font-medium transition-colors", getNavTextColor())}
                 >
                   {item.label}
                 </button>
@@ -88,12 +91,19 @@ const LandingNavbar: React.FC = () => {
             <div className="hidden lg:flex items-center space-x-4 rtl:space-x-reverse">
               <ThemeToggle />
 
-              {/* Language Toggle as Button */}
+              {/* Language Toggle */}
               <Button
                 onClick={toggleLang}
                 size="sm"
                 variant="outline"
-                className="font-medium"
+                className={cn(
+                  "font-medium",
+                  isScrolled
+                    ? "border-border text-foreground hover:text-primary"
+                    : theme === "dark"
+                      ? "border-white text-text-inverse hover:bg-white/10"
+                      : "border-border text-text-strong hover:text-primary"
+                )}
               >
                 {language === 'ar' ? 'EN' : 'عربي'}
               </Button>
@@ -102,17 +112,12 @@ const LandingNavbar: React.FC = () => {
                 asChild
                 variant="ghost"
                 size="sm"
-                className={cn(
-                  'font-medium',
-                  isScrolled
-                    ? 'text-foreground hover:text-primary'
-                    : 'text-white hover:text-white/80 hover:bg-white/10'
-                )}
+                className={cn("font-medium", getNavTextColor())}
               >
                 <Link to="/login">{t('landing.nav.login')}</Link>
               </Button>
 
-              <Button asChild size="sm" className="font-medium">
+              <Button asChild size="sm" className="font-medium bg-primary text-primary-foreground hover:bg-primary-hover">
                 <Link to="/register">{t('landing.nav.signup')}</Link>
               </Button>
             </div>
@@ -124,12 +129,7 @@ const LandingNavbar: React.FC = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(!isOpen)}
-                className={cn(
-                  isScrolled
-                    ? 'text-foreground hover:text-primary'
-                    : 'text-white hover:text-white/80 hover:bg-white/10'
-                )}
-                aria-label={isOpen ? t('common.close') : t('common.menu')}
+                className={getNavTextColor()}
               >
                 {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
@@ -137,82 +137,6 @@ const LandingNavbar: React.FC = () => {
           </div>
         </div>
       </nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 lg:hidden"
-          >
-            {/* Backdrop */}
-            <div
-              className="absolute inset-0 bg-background/80 backdrop-blur-lg"
-              onClick={() => setIsOpen(false)}
-            />
-
-            {/* Menu Content */}
-            <motion.div
-              initial={{ x: isRTL ? '100%' : '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: isRTL ? '100%' : '-100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className={cn(
-                'absolute top-0 h-full w-80 max-w-sm bg-card border-border shadow-xl',
-                isRTL ? 'right-0 border-l' : 'left-0 border-r'
-              )}
-            >
-              <div className="flex flex-col h-full">
-                {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b border-border">
-                  <BrandLogo variant="full" className="h-8" lang={language} />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setIsOpen(false)}
-                    aria-label={t('common.close')}
-                  >
-                    <X className="h-6 w-6" />
-                  </Button>
-                </div>
-
-                {/* Navigation Items */}
-                <div className="flex-1 px-4 py-6">
-                  <nav className="space-y-4">
-                    {navItems.map((item) => (
-                      <button
-                        key={item.key}
-                        onClick={() => scrollToSection(item.href)}
-                        className="block w-full text-left px-4 py-3 text-lg font-medium text-foreground hover:text-primary hover:bg-accent/50 rounded-lg transition-colors"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </nav>
-                </div>
-
-                {/* Actions */}
-                <div className="p-4 border-t border-border space-y-3">
-                  <Button onClick={toggleLang} variant="outline" className="w-full">
-                    {language === 'ar' ? 'EN' : 'عربي'}
-                  </Button>
-
-                  <Button asChild variant="outline" className="w-full">
-                    <Link to="/login">{t('landing.nav.login')}</Link>
-                  </Button>
-
-                  <Button asChild className="w-full">
-                    <Link to="/register">{t('landing.nav.signup')}</Link>
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };

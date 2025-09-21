@@ -4,14 +4,10 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Sparkles, Mail } from "lucide-react";
 
 interface FooterProps {
-  services: string[]; // قائمة الخدمات
-  contact: {
-    email: string;
-    phone: string;
-    address: string;
-  };
-  logoVariant?: "text" | "full" | "icon"; // نوع اللوجو
-  year?: number; // السنة الافتراضية
+  services: string[];
+  contact: { email: string; phone: string; address: string };
+  logoVariant?: "text" | "full" | "icon";
+  year?: number;
 }
 
 const Footer: React.FC<FooterProps> = ({
@@ -23,43 +19,36 @@ const Footer: React.FC<FooterProps> = ({
   const { t, language } = useLanguage();
 
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="border-t border-border bg-layer-base">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          {/* Logo */}
           <div className="md:col-span-2">
-            <BrandLogo   className="h-12" lang={language} />
+            <BrandLogo className="h-12" lang={language} />
           </div>
-
-          {/* Services */}
           <div>
-            <h4 className="mb-4 flex items-center gap-2 font-semibold">
+            <h4 className="mb-4 flex items-center gap-2 font-semibold text-text-strong">
               <Sparkles className="h-5 w-5 text-primary" />
               {t("landing.footer.servicesTitle")}
             </h4>
-            <ul className="space-y-2 text-muted-foreground">
-              {services.map((service, index) => (
-                <li key={`${service}-${index}`}>{service}</li>
+            <ul className="space-y-2 text-text-muted">
+              {services.map((s, i) => (
+                <li key={`${s}-${i}`}>{s}</li>
               ))}
             </ul>
           </div>
-
-          {/* Contact */}
           <div>
-            <h4 className="mb-4 flex items-center gap-2 font-semibold">
+            <h4 className="mb-4 flex items-center gap-2 font-semibold text-text-strong">
               <Mail className="h-5 w-5 text-primary" />
               {t("landing.footer.contactTitle")}
             </h4>
-            <ul className="space-y-2 text-muted-foreground">
+            <ul className="space-y-2 text-text-muted">
               <li>{contact.email}</li>
               <li>{contact.phone}</li>
               <li>{contact.address}</li>
             </ul>
           </div>
         </div>
-
-        {/* Bottom Text */}
-        <div className="mt-8 border-t border-border pt-8 text-center text-muted-foreground">
+        <div className="mt-8 border-t border-border pt-8 text-center text-text-subtle">
           <p>
             &copy; {year} {t("brand.name")}. {t("landing.footer.rights")}.
           </p>
