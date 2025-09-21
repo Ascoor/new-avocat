@@ -7,8 +7,28 @@ import CallToAction from "./CallToAction";
 import Contact from "./Contact";
 import Footer from "./Footer";
 import LandingNavbar from "./LandingNavbar";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+const footerServiceKeys = [
+  "caseManagement",
+  "legalConsulting",
+  "digitalTraining",
+  "egovSupport",
+] as const;
 
 const LandingPage: React.FC = () => {
+  const { t } = useLanguage();
+
+  const footerServices = footerServiceKeys.map((key) =>
+    t(`landing.footer.services.${key}`),
+  );
+
+  const footerContact = {
+    email: t("landing.footer.contact.email"),
+    phone: t("landing.footer.contact.phone"),
+    address: t("landing.footer.contact.address"),
+  };
+
   return (
     <>
       <LandingNavbar />
@@ -22,12 +42,8 @@ const LandingPage: React.FC = () => {
         <Contact />
       </main>
       <Footer
-        services={["Case Management", "Legal Consulting", "Digital Training", "E-Gov Support"]}
-        contact={{
-          email: "info@avocat.com",
-          phone: "+20 111 222 3333",
-          address: "Cairo, Egypt",
-        }}
+        services={footerServices}
+        contact={footerContact}
         logoVariant="text"
       />
     </>

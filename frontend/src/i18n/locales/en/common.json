@@ -1,6 +1,6 @@
 {
-  "brand": { 
-    "name": "Avocat" 
+  "brand": {
+    "name": "Avocat"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -113,16 +113,13 @@
     "addCase": "Add New Case"
   },
   "clients": {
-    "title": "Clients Management",
-    "name": "Client Name",
-    "email": "Email",
+    "title": "Clients",
+    "subtitle": "Keep an overview of your represented clients and their mandates.",
+    "addNew": "Add New Client",
+    "name": "Name",
     "phone": "Phone",
-    "agent": "Agent",
-    "status": "Status",
-    "joinDate": "Join Date",
-    "totalCases": "Total Cases",
-    "addClient": "Add New Client",
-    "withoutAgent": "Clients without Agents"
+    "email": "Email",
+    "joinDate": "Join Date"
   },
   "agents": {
     "title": "Agents Management",
@@ -239,211 +236,104 @@
       "signup": "Create Account"
     },
     "hero": {
-      "slides": {
-        "slide1": {
-          "title": "Integrated platform for elite legal practice",
-          "description": "Orchestrate every case lifecycle from intake to closure with a unified digital workspace built for modern firms.",
-          "cta": "Start your free trial"
-        },
-        "slide2": {
-          "title": "Total control of matters, clients, and knowledge",
-          "description": "Coordinate teams, automate workflows, and stay proactive with intelligent reminders and dynamic dashboards.",
-          "cta": "Explore the platform"
-        },
-        "slide3": {
-          "title": "Bank-grade security tailored for legal data",
-          "description": "Safeguard privileged information with zero-trust access, full audit trails, and regionally compliant hosting.",
-          "cta": "Book a secure demo"
-        }
-      },
-      "ctaPrimary": "Start your free trial",
-      "ctaSecondary": "Speak to an expert"
+      "title": "Bridging Law & Digital Transformation",
+      "subtitle": "Avocat Law Firm empowers legal professionals with digital tools, secure data systems, and modern training for a new era of legal practice.",
+      "primaryCta": "Try Demo",
+      "secondaryCta": "Contact Us"
     },
     "features": {
-      "title": "Elite capabilities for modern law firms",
-      "subtitle": "Operate with confidence through a suite engineered for high-volume, high-value legal work.",
+      "title": "Core Features",
+      "subtitle": "Purpose-built capabilities for digital-first legal teams.",
       "items": {
-        "caseManagement": {
-          "title": "Strategic Matter Management",
-          "description": "Assign, track, and resolve cases with precision timelines, task automations, and outcome tracking."
+        "dataProtection": {
+          "title": "Data Protection",
+          "description": "Enterprise-grade legal data security."
         },
         "clientManagement": {
-          "title": "Client Relationship Intelligence",
-          "description": "Deliver premium client service with unified profiles, secure collaboration, and instant status updates."
+          "title": "Client Management",
+          "description": "Organize clients with or without power of attorney."
         },
-        "documentAutomation": {
-          "title": "Intelligent Document Archiving",
-          "description": "Centralize pleadings, evidence, and contracts with smart tagging, version trails, and granular permissions."
+        "caseTracking": {
+          "title": "Case Tracking",
+          "description": "Track cases, sessions, and legal procedures."
         },
-        "analytics": {
-          "title": "Executive Analytics & KPIs",
-          "description": "Read performance signals in real time with revenue insights, workload heatmaps, and utilization forecasting."
-        },
-        "security": {
-          "title": "Regulatory-Grade Security",
-          "description": "Protect confidential data through encryption, adaptive access controls, and comprehensive audit trails."
-        },
-        "cloudAccess": {
-          "title": "Always-On Cloud Access",
-          "description": "Empower distributed teams with Arabic-first experiences across desktop, tablet, and mobile."
+        "digitalTraining": {
+          "title": "Digital Training",
+          "description": "Prepare legal teams for digital transformation."
         }
       }
     },
     "services": {
-      "title": "Advisory & Enablement Services",
-      "subtitle": "A dedicated success squad supports your digital transformation from day one.",
+      "title": "Our Services",
+      "subtitle": "Support for every segment of the legal industry.",
       "items": {
-        "onboarding": {
-          "title": "Strategic Onboarding",
-          "description": "Launch in weeks with data migration, tailored templates, and change-management workshops for every department."
+        "lawFirms": {
+          "title": "For Law Firms",
+          "description": "Comprehensive law firm management solutions."
         },
-        "customization": {
-          "title": "Tailored Configuration",
-          "description": "Model your practice areas, approval chains, and compliance rules with precision tuning by Avocat experts."
+        "legalDepartments": {
+          "title": "For Legal Departments",
+          "description": "Streamlined operations for corporate legal teams."
         },
-        "support": {
-          "title": "Premium Support",
-          "description": "Benefit from 24/7 concierge assistance, SLA-backed responses, and proactive optimization reviews."
+        "lawyers": {
+          "title": "For Lawyers",
+          "description": "Tools for independent legal professionals."
+        },
+        "training": {
+          "title": "Training & E-Gov",
+          "description": "Capacity-building & government e-service support."
         }
       }
     },
-    "secondaryCta": {
-      "title": "Elevate your law firm today",
-      "subtitle": "Activate Avocat’s secure cloud suite and empower your attorneys to deliver more value in less time.",
-      "button": "Request a live demo"
-    },
     "about": {
-      "title": "Designed by lawyers for visionary law firms",
-      "subtitle": "Avocat modernises legal operations with elegant technology woven around regional regulations.",
-      "mission": "Our mission is to help every Gulf-based law practice scale client impact through seamless digital workflows.",
-      "highlights": {
-        "experience": "15+ years serving GCC legal leaders",
-        "compliance": "Full compliance with Saudi and regional regulations",
-        "delivery": "Dedicated success managers and certified trainers"
+      "title": "About Avocat Law Firm",
+      "description": "Avocat Law Firm is a leader in legal digital transformation, offering services that blend traditional legal excellence with modern technology. Our team empowers law firms, legal departments, and individual lawyers to succeed in the digital era.",
+      "imageAlt": "Law Team"
+    },
+    "testimonials": {
+      "title": "What Our Clients Say",
+      "items": {
+        "partner": {
+          "name": "Legal Partner",
+          "quote": "Avocat transformed how we manage cases and clients."
+        },
+        "corporate": {
+          "name": "Corporate Client",
+          "quote": "Professional, secure, and truly innovative services."
+        }
       }
     },
+    "cta": {
+      "title": "Ready to Transform Your Legal Practice?",
+      "subtitle": "Try our demo or get in touch today.",
+      "primary": "Try Demo",
+      "secondary": "Contact Us"
+    },
     "contact": {
-      "title": "Let’s discuss your digital firm",
-      "subtitle": "Reach us directly or send a message and one of our consultants will respond within one business day.",
-      "info": {
-        "emailLabel": "Email",
-        "phoneLabel": "Phone",
-        "addressLabel": "Address"
-      },
-      "details": {
-        "email": "info@avocat.com",
-        "phone": "+966 11 123 4567",
-        "address": "Riyadh, Saudi Arabia"
-      },
+      "title": "Contact Us",
       "form": {
-        "name": "Full name",
-        "email": "Work email",
-        "phone": "Phone number",
-        "subject": "Subject",
-        "message": "How can we support your practice?",
-        "submit": "Send message",
-        "success": "Thank you for reaching out. We will be in touch shortly.",
-        "error": "We couldn't send your message. Please try again."
+        "namePlaceholder": "Your Name",
+        "emailPlaceholder": "Your Email",
+        "messagePlaceholder": "Your Message",
+        "submit": "Send Message"
       }
     },
     "footer": {
       "tagline": "The trusted digital backbone for forward-thinking legal practices.",
       "servicesTitle": "Core capabilities",
       "contactTitle": "Head office",
-      "quickLinksTitle": "Quick links",
       "services": {
-        "caseManagement": "Matter lifecycle management",
-        "clientManagement": "Client relationship hub",
-        "reports": "Analytics & dashboards",
-        "archive": "Secure document vault"
-      },
-      "quickLinks": {
-        "privacy": "Privacy Policy",
-        "terms": "Terms of Use",
-        "support": "Support Center"
+        "caseManagement": "Case Management",
+        "legalConsulting": "Legal Consulting",
+        "digitalTraining": "Digital Training",
+        "egovSupport": "E-Gov Support"
       },
       "contact": {
         "email": "info@avocat.com",
-        "phone": "+966 11 123 4567",
-        "address": "Riyadh, Saudi Arabia"
+        "phone": "+20 111 222 3333",
+        "address": "Cairo, Egypt"
       },
       "rights": "All rights reserved"
-    },
-    "list": {
-      "title": "Services",
-      "subtitle": "Monitor service requests, clients, and fulfillment progress.",
-      "add": "Add Service",
-      "empty": "No services have been added yet.",
-      "table": {
-        "slug": "Service Number",
-        "type": "Service Type",
-        "place": "Service Place",
-        "year": "Year",
-        "status": "Status",
-        "actions": "Actions"
-      },
-      "actions": {
-        "view": "View",
-        "edit": "Edit",
-        "delete": "Delete"
-      },
-      "confirmDeleteTitle": "Delete {name}?",
-      "confirmDeleteDescription": "This will permanently remove the service.",
-      "confirmDelete": "Delete"
-    },
-    "form": {
-      "titleCreate": "Add Service",
-      "titleEdit": "Edit Service",
-      "titleView": "Service Details",
-      "readOnlyNotice": "This service is read-only.",
-      "labels": {
-        "slug": "Service Number",
-        "serviceType": "Service Type",
-        "description": "Description",
-        "place": "Service Place",
-        "year": "Service Year",
-        "associationType": "Association",
-        "client": "Registered Client",
-        "unclient": "Unregistered Client",
-        "status": "Status"
-      },
-      "placeholders": {
-        "slug": "Enter service number",
-        "serviceType": "Select a service type",
-        "description": "Describe the service",
-        "place": "Enter service place",
-        "year": "Enter service year",
-        "client": "Select a client",
-        "unclient": "Select an unregistered client"
-      },
-      "association": {
-        "client": "Registered client",
-        "unclient": "Unregistered client"
-      },
-      "actions": {
-        "create": "Create"
-      },
-      "messages": {
-        "loadErrorTitle": "Failed to load service data",
-        "loadErrorDescription": "Please refresh and try again.",
-        "createSuccess": "Service created successfully.",
-        "updateSuccess": "Service updated successfully.",
-        "errorTitle": "Unable to save service",
-        "errorDescription": "Check the form details and try again."
-      }
-    },
-    "messages": {
-      "deleteSuccess": "Service deleted successfully.",
-      "deleteErrorTitle": "Failed to delete service",
-      "deleteErrorDescription": "Please try again later."
-    },
-    "status": {
-      "inProgress": "In progress",
-      "underExecution": "Under execution",
-      "completed": "Completed",
-      "circulating": "Circulating",
-      "settled": "Settled",
-      "unknown": "Unknown"
     }
   },
   "lawyers": {
@@ -938,15 +828,6 @@
       "updateButton": "Update",
       "createButton": "Save"
     }
-  },
-  "clients": {
-    "title": "Clients",
-    "subtitle": "Keep an overview of your represented clients and their mandates.",
-    "addNew": "Add New Client",
-    "name": "Name",
-    "phone": "Phone",
-    "email": "Email",
-    "joinDate": "Join Date"
   },
   "unClients": {
     "title": "Clients without Mandate",
