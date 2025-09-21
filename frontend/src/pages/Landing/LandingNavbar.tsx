@@ -29,11 +29,11 @@ const LandingNavbar: React.FC = () => {
   }, [location]);
 
   const navItems = [
-    { key: 'home', href: '#hero', label: t('nav.home') },
-    { key: 'features', href: '#features', label: t('nav.features') },
-    { key: 'services', href: '#services', label: t('nav.services') },
-    { key: 'about', href: '#about', label: t('nav.about') },
-    { key: 'contact', href: '#contact', label: t('nav.contact') },
+    { key: 'home', href: '#hero', label: t('landing.nav.home') },
+    { key: 'features', href: '#features', label: t('landing.nav.features') },
+    { key: 'services', href: '#services', label: t('landing.nav.services') },
+    { key: 'about', href: '#about', label: t('landing.nav.about') },
+    { key: 'contact', href: '#contact', label: t('landing.nav.contact') },
   ];
 
   const scrollToSection = (href: string) => {
@@ -109,11 +109,11 @@ const LandingNavbar: React.FC = () => {
                     : 'text-white hover:text-white/80 hover:bg-white/10'
                 )}
               >
-                <Link to="/login">{t('nav.login')}</Link>
+                <Link to="/login">{t('landing.nav.login')}</Link>
               </Button>
 
               <Button asChild size="sm" className="font-medium">
-                <Link to="/register">{t('nav.register')}</Link>
+                <Link to="/register">{t('landing.nav.signup')}</Link>
               </Button>
             </div>
 
@@ -201,11 +201,11 @@ const LandingNavbar: React.FC = () => {
                   </Button>
 
                   <Button asChild variant="outline" className="w-full">
-                    <Link to="/login">{t('nav.login')}</Link>
+                    <Link to="/login">{t('landing.nav.login')}</Link>
                   </Button>
 
                   <Button asChild className="w-full">
-                    <Link to="/register">{t('nav.register')}</Link>
+                    <Link to="/register">{t('landing.nav.signup')}</Link>
                   </Button>
                 </div>
               </div>

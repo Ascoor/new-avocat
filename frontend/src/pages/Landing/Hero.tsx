@@ -1,105 +1,25 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Scale, Shield, Users } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const Hero = () => {
-  const { t, isRTL } = useLanguage();
+const Hero: React.FC = () => {
+  const { t } = useLanguage();
 
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-hero"></div>
-
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-72 h-72 rounded-full bg-accent/30 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-primary/20 blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto">
-          {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent font-medium text-sm mb-8 animate-fadeIn">
-            <Shield className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0" />
-            {isRTL
-              ? 'خبراء التحول الرقمي المعتمدون'
-              : 'Certified Digital Transformation Experts'}
-          </div>
-
-          {/* Main Heading */}
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 leading-tight animate-fadeIn delay-200">
-            <span className="block">{t('heroTitle')}</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-muted mb-12 leading-relaxed max-w-3xl mx-auto animate-fadeIn delay-400">
-            {t('heroSubtitle')}
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-fadeIn delay-600">
-            <Button
-              size="lg"
-              className="bg-accent hover:bg-accent/80 text-accent-foreground font-semibold px-8 py-4 text-lg transition-transform duration-300 hover:scale-105 shadow-gold"
-            >
-              {t('getStarted')}
-              <ArrowRight
-                className={`w-5 h-5 ml-2 rtl:mr-2 rtl:ml-0 ${isRTL ? 'rotate-180' : ''}`}
-              />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-foreground/30 text-foreground hover:bg-foreground/10 px-8 py-4 text-lg transition-transform duration-300 hover:scale-105"
-            >
-              {t('learnMore')}
-            </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto animate-fadeIn delay-800">
-            <div className="text-center">
-              <div className="flex justify-center mb-3">
-                <Scale className="w-8 h-8 text-accent" />
-              </div>
-              <div className="text-3xl font-bold text-foreground mb-1">500+</div>
-              <div className="text-muted text-sm">
-                {isRTL ? 'قضية منجزة' : 'Cases Handled'}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="flex justify-center mb-3">
-                <Users className="w-8 h-8 text-accent" />
-              </div>
-              <div className="text-3xl font-bold text-foreground mb-1">50+</div>
-              <div className="text-muted text-sm">
-                {isRTL ? 'مكتب محاماة' : 'Law Firms'}
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="flex justify-center mb-3">
-                <Shield className="w-8 h-8 text-accent" />
-              </div>
-              <div className="text-3xl font-bold text-foreground mb-1">98%</div>
-              <div className="text-muted text-sm">
-                {isRTL ? 'معدل الرضا' : 'Satisfaction Rate'}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-foreground/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-foreground/50 rounded-full mt-2 animate-pulse"></div>
-        </div>
+      <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        {t("landing.hero.title")}
+      </h1>
+      <p className="max-w-2xl mx-auto mb-8 text-lg opacity-90">
+        {t("landing.hero.subtitle")}
+      </p>
+      <div className="flex gap-4 justify-center">
+        <Button size="lg">{t("landing.hero.primaryCta")}</Button>
+        <Button size="lg" variant="outline" className="text-white border-white">
+          {t("landing.hero.secondaryCta")}
+        </Button>
       </div>
     </section>
   );
