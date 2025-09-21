@@ -969,13 +969,89 @@
         "deleteErrorDescription": "Please try again later."
       }
     },
+    "generalSettings": {
+      "title": "Branding and identity",
+      "description": "Upload branded logo sets and control the office colors for light and dark modes.",
+      "form": {
+        "officeName": {
+          "label": "Office display name",
+          "placeholder": "Enter the office name as it should appear"
+        },
+        "actions": {
+          "save": "Save branding settings",
+          "submitting": "Saving...",
+          "reset": "Reload from server"
+        },
+        "status": {
+          "loading": "Loading branding details...",
+          "error": "We couldn't load the current settings. Try refreshing.",
+          "ready": "Branding settings are ready to update."
+        }
+      },
+      "metadata": {
+        "lastUpdated": "Last updated"
+      },
+      "messages": {
+        "updateSuccess": "Branding settings updated successfully.",
+        "saveErrorTitle": "Unable to save branding settings",
+        "saveErrorDescription": "Please review the form and try again."
+      },
+      "logos": {
+        "title": "Logo library",
+        "description": "Upload high-resolution logos for each supported context. Supported formats: SVG, PNG, JPG.",
+        "empty": "No logo selected yet",
+        "primary": {
+          "label": "Primary",
+          "description": "Full-color logo used on light backgrounds across the application and website headers.",
+          "constraints": "Recommended size 1024x320 px • Transparent background • Up to 1 MB"
+        },
+        "light": {
+          "label": "On dark",
+          "description": "Inverted logo optimised for dark backgrounds and night mode components.",
+          "constraints": "Recommended size 1024x320 px • Transparent background • Up to 1 MB"
+        },
+        "dark": {
+          "label": "On light",
+          "description": "Neutral logo for light backgrounds such as printed letters and PDF exports.",
+          "constraints": "Recommended size 1024x320 px • Transparent background • Up to 1 MB"
+        },
+        "icon": {
+          "label": "Icon",
+          "description": "Square mark for favicons, mobile shortcuts, and compact placements.",
+          "constraints": "Recommended size 512x512 px • Solid background • Up to 512 KB"
+        }
+      },
+      "theme": {
+        "title": "Color system",
+        "description": "Set precise colors for the interface in day (light) and night (dark) modes.",
+        "fields": {
+          "primary": "Primary",
+          "surface": "Surface",
+          "accent": "Accent"
+        },
+        "modes": {
+          "light": {
+            "title": "Day mode",
+            "description": "Applied across the web app and public website during daylight mode."
+          },
+          "dark": {
+            "title": "Night mode",
+            "description": "Used for dark UI surfaces and night-friendly layouts."
+          }
+        },
+        "preview": {
+          "title": "Live preview",
+          "placeholder": "Office name",
+          "badge": "Client area",
+          "message": "These colors represent how your logo will appear in context.",
+          "primary": "Primary {{color}}",
+          "accent": "Accent {{color}}"
+        }
+      }
+    },
     "placeholders": {
       "shared": {
         "message": "We are preparing this section. Stay tuned!"
-      },
-      "generalSettings": {
-        "title": "General settings",
-        "description": "Manage office-wide details and preferences."
       },
       "serviceTypes": {
         "title": "Service types",
