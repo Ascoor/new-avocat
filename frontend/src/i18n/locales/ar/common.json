@@ -917,6 +917,78 @@
     "dateRange": "نطاق التاريخ",
     "generate": "إنشاء تقرير"
   },
+  "officeSettings": {
+    "title": "إعدادات المكتب",
+    "subtitle": "قم بضبط الموارد المشتركة المستخدمة في مكتبك.",
+    "actions": {
+      "refresh": "تحديث البيانات"
+    },
+    "tabs": {
+      "expenseCategories": "أنواع المصروفات",
+      "generalSettings": "الإعدادات العامة",
+      "serviceTypes": "أنواع الخدمات",
+      "procedurePlaceTypes": "أماكن الإجراءات",
+      "procedureTypes": "أنواع الإجراءات"
+    },
+    "expenseCategories": {
+      "title": "أنواع المصروفات",
+      "description": "أنشئ وعدل التصنيفات التي تجمع مصروفات المكتب.",
+      "add": "إضافة نوع",
+      "table": {
+        "name": "اسم النوع",
+        "actions": "الإجراءات",
+        "empty": "لا توجد أنواع مصروفات مسجلة.",
+        "error": "تعذّر تحميل أنواع المصروفات، يرجى إعادة المحاولة."
+      },
+      "pagination": {
+        "label": "الصفحة {{current}} من {{total}}"
+      },
+      "dialog": {
+        "createTitle": "إضافة نوع مصروف",
+        "editTitle": "تعديل نوع المصروف"
+      },
+      "form": {
+        "nameLabel": "اسم نوع المصروف",
+        "namePlaceholder": "أدخل اسم نوع المصروف",
+        "submitCreate": "إضافة",
+        "submitUpdate": "حفظ التعديلات"
+      },
+      "delete": {
+        "title": "حذف {{name}}؟",
+        "description": "لا يمكن التراجع عن هذه العملية، سيتم حذف النوع نهائيًا."
+      },
+      "messages": {
+        "createSuccess": "تم إنشاء نوع المصروف بنجاح.",
+        "updateSuccess": "تم تحديث نوع المصروف بنجاح.",
+        "deleteSuccess": "تم حذف نوع المصروف بنجاح.",
+        "saveErrorTitle": "تعذّر حفظ نوع المصروف",
+        "saveErrorDescription": "يرجى مراجعة البيانات والمحاولة مرة أخرى.",
+        "deleteErrorTitle": "تعذّر حذف نوع المصروف",
+        "deleteErrorDescription": "يرجى المحاولة لاحقًا."
+      }
+    },
+    "placeholders": {
+      "shared": {
+        "message": "نقوم حالياً بتجهيز هذه الشاشة، ترقّبوا المزيد!"
+      },
+      "generalSettings": {
+        "title": "الإعدادات العامة",
+        "description": "أدر تفاصيل وتفضيلات المكتب المشتركة."
+      },
+      "serviceTypes": {
+        "title": "أنواع الخدمات",
+        "description": "عرّف أنواع الخدمات التي يقدمها المكتب."
+      },
+      "procedurePlaceTypes": {
+        "title": "أماكن الإجراءات",
+        "description": "حافظ على قائمة أماكن الإجراءات ضمن سير عملك."
+      },
+      "procedureTypes": {
+        "title": "أنواع الإجراءات",
+        "description": "نظّم أنواع الإجراءات المستخدمة في إدارة القضايا."
+      }
+    }
+  },
   "settings": {
     "title": "الإعدادات",
     "profile": "إعدادات الملف الشخصي",

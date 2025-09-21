@@ -13,6 +13,7 @@ import { LawyerDetails, LawyersList } from '@/pages/LawyersPage';
 import Login from '@/pages/Login';
 import NotFound from '@/pages/NotFound';
 import ServicesPage from '@/pages/ServicesPage';
+import OfficeSettingsPage from '@/pages/OfficeSettingsPage';
 import Signup from '@/pages/Signup';
 import UnClientsPage from '@/pages/UnClientsPage';
 
@@ -65,7 +66,7 @@ const App = () => {
           <Route path="procedures" element={<DashboardPlaceholder sectionKey="procedures" />} />
           <Route path="reports" element={<DashboardPlaceholder sectionKey="reports" />} />
           <Route path="settings" element={<DashboardPlaceholder sectionKey="settings" />} />
-          <Route path="office_settings" element={<DashboardPlaceholder sectionKey="office_settings" />} />
+          <Route path="office_settings" element={<OfficeSettingsPage />} />
           <Route path="users_roles" element={<DashboardPlaceholder sectionKey="users_roles" />} />
           <Route path="archive" element={<DashboardPlaceholder sectionKey="archive" />} />
           <Route path="courts_search" element={<DashboardPlaceholder sectionKey="courts_search" />} />
