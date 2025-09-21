@@ -1,10 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Scale, Shield, Users } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-const Hero: React.FC = () => {
-  const { t } = useLanguage();
+const Hero = () => {
+  const { t, isRTL } = useLanguage();
 
-  return (
+  return ( 
     <section
       id="hero"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center bg-gradient-hero"
@@ -33,7 +35,7 @@ const Hero: React.FC = () => {
             className="px-8 py-4 text-lg font-semibold transition-transform duration-300 ease-elegant hover:-translate-y-0.5 hover:scale-102"
           >
             {t("landing.hero.secondaryCta")}
-          </Button>
+          </Button> 
         </div>
       </div>
     </section>

@@ -82,16 +82,17 @@
     --header-button-hover-bg: 210 45% 95%;
     --header-button-hover-foreground: 210 70% 40%;
 
+
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(225 70% 23%), hsl(200 90% 45%));
     --gradient-hero: linear-gradient(
       135deg,
-      hsl(195 90% 92%) 0%,
-      hsl(200 95% 85%) 35%,
-      hsl(210 80% 80%) 70%,
-      hsl(220 70% 75%) 100%
+      hsl(210 80% 96%) 0%,
+      hsl(220 70% 90%) 40%,
+      hsl(225 73% 78%) 70%,
+      hsl(45 90% 92%) 100%
     );
-    --gradient-glass: linear-gradient(135deg, hsl(220 15% 100% / 0.95), hsl(220 20% 96% / 0.85));
+     --gradient-glass: linear-gradient(135deg, hsl(220 15% 100% / 0.95), hsl(220 20% 96% / 0.85));
     --gradient-sidebar: linear-gradient(180deg, hsl(220 25% 100% / 0.92) 0%, hsl(220 20% 92% / 0.85) 100%);
     --gradient-header: linear-gradient(135deg, hsl(220 40% 99% / 0.92), hsl(210 55% 96% / 0.88));
     --gradient-card: linear-gradient(135deg, hsl(220 25% 99%), hsl(210 40% 94%));
