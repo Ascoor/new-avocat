@@ -69,8 +69,8 @@ export default function StatsCards() {
         const Arrow = stat.change >= 0 ? ArrowUpRight : ArrowDownRight;
         const isPositive = stat.change >= 0;
         const changeBadge = isPositive
-          ? 'bg-[color:hsla(var(--success)/0.22)] text-white'
-          : 'bg-[color:hsla(var(--destructive)/0.18)] text-white';
+          ? 'bg-[color:hsla(var(--color-success)/0.22)] text-text-inverse'
+          : 'bg-[color:hsla(var(--color-destructive)/0.18)] text-text-inverse';
         const changeText = `${isPositive ? '+' : '−'}${Math.abs(stat.change)}%`;
 
         return (
@@ -79,7 +79,7 @@ export default function StatsCards() {
             variant="primary"
             hover="glow"
             className={cn(
-              'relative overflow-hidden border border-border/70 text-white shadow-lg transition-transform duration-300',
+              'relative overflow-hidden border border-border/70 text-text-inverse shadow-lg transition-transform duration-300',
               stat.background
             )}
           >
@@ -87,8 +87,8 @@ export default function StatsCards() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.25),transparent_45%)]" />
             <div className="relative flex flex-col gap-4 p-5">
               <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-white/85">{stat.label}</p>
-                <span className="rounded-full bg-white/15 p-2 shadow-inner">
+                <p className="text-sm font-medium text-text-inverse/85">{stat.label}</p>
+                <span className="rounded-full bg-text-inverse/15 p-2 shadow-inner">
                   <Icon className="h-5 w-5" />
                 </span>
               </div>
