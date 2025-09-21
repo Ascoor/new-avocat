@@ -8,6 +8,9 @@
 
 @layer base {
   :root {
+    --info: 210 90% 55%;
+--info-foreground: 0 0% 100%;
+
     /* Core Brand Colors */
     --background: 220 15% 97%;
     --foreground: 220 30% 12%;

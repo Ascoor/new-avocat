@@ -28,7 +28,7 @@ const Footer: React.FC<FooterProps> = ({
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Logo */}
           <div className="md:col-span-2">
-            <BrandLogo variant={logoVariant} className="h-12" lang={language} />
+            <BrandLogo   className="h-12" lang={language} />
           </div>
 
           {/* Services */}

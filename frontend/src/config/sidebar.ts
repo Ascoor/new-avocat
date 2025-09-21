@@ -106,6 +106,13 @@ export const sidebarItems: SidebarItem[] = [
         path: '/dashboard/office_settings',
       },
       {
+  id: 'courts_settings',
+  labelKey: 'nav.courts_settings',   // مفتاح الترجمة
+  icon: Gavel,
+  path: '/dashboard/courts_settings',
+},
+
+      {
         id: 'users_roles',
         labelKey: 'nav.users_roles',
         icon: Shield,
