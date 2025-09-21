@@ -136,7 +136,7 @@ await login(email, password);
 
         {/* محتوى متوسّط بالكامل */}
         <div className="relative z-10 flex items-center justify-center w-full h-full">
-          <div className="text-white text-center max-w-md">
+          <div className="text-text-inverse text-center max-w-md">
             <BrandLogo
               variant="text"
               lang={language}
@@ -157,7 +157,7 @@ await login(email, password);
           </div>
 
           {/* Login Card */}
-          <Card className="glass-card animate-fade-in border-x-0">
+          <Card className="glass-card animate-fadeIn border-x-0">
             <CardHeader className="text-center space-y-2">
               <BrandLogo className='mx-auto h-16 w-16 drop-shadow-none shadow-none' variant='icon' />
               <CardTitle className="heading-md">{t('auth.login.title')}</CardTitle>

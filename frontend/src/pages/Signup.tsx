@@ -67,10 +67,10 @@ const Signup: React.FC = () => {
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       
-      <GlassCard variant="primary" size="lg" className="w-full max-w-md relative z-10">
+      <GlassCard variant="primary" size="lg" className="relative z-10 w-full max-w-md">
         <GlassCardHeader className="text-center">
-          <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-gradient-primary flex items-center justify-center">
-            <User className="h-8 w-8 text-white" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary">
+            <User className="h-8 w-8 text-text-inverse" />
           </div>
           <GlassCardTitle className="text-2xl font-bold">
             {t('auth.signup.title')}

@@ -175,7 +175,7 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
                 placeholder={t('legalCaseDetails.clients.searchPlaceholder')}
               />
               {searchTerm && filteredClients.length > 0 && (
-                <div className="max-h-48 overflow-y-auto rounded-md border border-border/60 bg-background shadow-sm">
+                <div className="max-h-48 overflow-y-auto rounded-md border border-border/60 bg-background shadow-card">
                   {filteredClients.map((option) => (
                     <button
                       key={option.id}

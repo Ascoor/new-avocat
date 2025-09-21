@@ -131,7 +131,7 @@ const LawyerDetails = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border/60 bg-surface-100/70 p-5">
+          <div className="rounded-2xl border border-border/60 bg-surface-highlight/70 p-5">
             <h2 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
               {t('lawyers.detail.contact')}
             </h2>

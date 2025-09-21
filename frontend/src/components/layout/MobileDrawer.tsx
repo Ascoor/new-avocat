@@ -92,7 +92,7 @@ const MobileDrawer: React.FC = () => {
             }}
             className={cn(
               'fixed top-0 z-50 h-full w-full max-w-[100vw] bg-sidebar-background border-border md:hidden',
-              'flex flex-col shadow-lg',
+              'flex flex-col shadow-card',
               isRTL ? 'right-0 border-l' : 'left-0 border-r'
             )}
           >

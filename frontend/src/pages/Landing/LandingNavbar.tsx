@@ -65,7 +65,7 @@ const LandingNavbar: React.FC = () => {
         className={cn(
           "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
           isScrolled
-            ? "border-b border-border bg-background/90 backdrop-blur-lg shadow-lg"
+            ? "border-b border-border bg-background/90 backdrop-blur-lg shadow-card"
             : "bg-transparent",
         )}
       >
@@ -118,7 +118,7 @@ const LandingNavbar: React.FC = () => {
                 <Link to="/login">{t("landing.nav.login")}</Link>
               </Button>
 
-              <Button asChild size="sm" className="font-medium bg-primary text-primary-foreground hover:bg-primary-hover">
+              <Button asChild size="sm" variant="hero" className="font-medium">
                 <Link to="/register">{t("landing.nav.signup")}</Link>
               </Button>
             </div>
@@ -148,13 +148,13 @@ const LandingNavbar: React.FC = () => {
             className="fixed inset-x-0 top-16 z-40 px-4 lg:hidden"
           >
             <div className="container mx-auto">
-              <div className="space-y-4 rounded-xl border border-border bg-layer-card p-4 shadow-card">
+              <div className="space-y-4 rounded-xl border border-border bg-surface-muted p-4 shadow-card">
                 <div className={cn("flex flex-col gap-2", isRTL ? "text-right" : "text-left")}>
                   {navItems.map((item) => (
                     <button
                       key={item.key}
                       onClick={() => scrollToSection(item.href)}
-                      className="rounded-lg px-3 py-2 text-sm font-medium text-text-strong transition-colors duration-200 ease-smooth hover:bg-accent/10"
+                      className="rounded-lg px-3 py-2 text-sm font-medium text-text-strong transition-colors duration-200 ease-smooth hover:bg-accent-soft"
                     >
                       {item.label}
                     </button>
@@ -176,7 +176,7 @@ const LandingNavbar: React.FC = () => {
                   >
                     <Link to="/login">{t("landing.nav.login")}</Link>
                   </Button>
-                  <Button asChild className="justify-center text-sm font-semibold">
+                  <Button asChild variant="hero" className="justify-center text-sm font-semibold">
                     <Link to="/register">{t("landing.nav.signup")}</Link>
                   </Button>
                 </div>

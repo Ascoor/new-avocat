@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact: React.FC = () => {
@@ -14,7 +15,7 @@ const Contact: React.FC = () => {
       </p>
 
       {/* Form */}
-      <form className="mx-auto max-w-xl space-y-6 rounded-2xl border border-border bg-layer-card p-8 shadow-card animate-fadeInUp">
+      <form className="mx-auto max-w-xl space-y-6 rounded-2xl border border-border bg-surface-muted p-8 shadow-card animate-fadeInUp">
         <input
           type="text"
           placeholder={t("landing.contact.form.namePlaceholder")}
@@ -29,12 +30,14 @@ const Contact: React.FC = () => {
           placeholder={t("landing.contact.form.messagePlaceholder")}
           className="h-36 w-full rounded-lg border border-border bg-input p-4 text-text-body transition-colors duration-300 ease-smooth focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/60"
         />
-        <button
+        <Button
           type="submit"
-          className="w-full rounded-lg bg-primary p-4 text-lg font-semibold text-primary-foreground shadow-card transition-transform duration-300 ease-elegant hover:-translate-y-1 hover:shadow-glow"
+          variant="hero"
+          size="lg"
+          className="w-full"
         >
           {t("landing.contact.form.submit")}
-        </button>
+        </Button>
       </form>
     </section>
   );

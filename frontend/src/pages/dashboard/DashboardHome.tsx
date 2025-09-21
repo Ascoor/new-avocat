@@ -53,8 +53,8 @@ const statIconMap: Record<string, LucideIcon> = {
 };
 
 const priorityStyleMap: Record<string, string> = {
-  high: 'bg-destructive/20 text-destructive',
-  medium: 'bg-warning/20 text-warning',
+  high: 'bg-destructive-soft text-destructive',
+  medium: 'bg-warning-soft text-warning',
 };
 
 const DashboardHome: React.FC = () => {
@@ -92,7 +92,7 @@ const DashboardHome: React.FC = () => {
             key={`${stat.title}-${index}`}
             variant="primary"
             hover="glow"
-            className="animate-fade-in"
+            className="animate-fadeIn"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
             <GlassCardContent className="p-6">
@@ -106,7 +106,7 @@ const DashboardHome: React.FC = () => {
                   </p>
                 </div>
                 <div className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-primary ${stat.colorClass}`}>
-                  <stat.Icon className="h-6 w-6 text-white" />
+                  <stat.Icon className="h-6 w-6 text-text-inverse" />
                 </div>
               </div>
             </GlassCardContent>
@@ -128,7 +128,7 @@ const DashboardHome: React.FC = () => {
               {activities.map((activity, index) => (
                 <div
                   key={`${activity.title}-${index}`}
-                  className="flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent/10"
+                  className="flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent-soft"
                 >
                   <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-accent" />
                   <div className="flex-1">
@@ -154,12 +154,12 @@ const DashboardHome: React.FC = () => {
               {(tasks.items ?? []).map((task, index) => {
                 const priority = task.priority ?? '';
                 const priorityLabel = tasks.priorities?.[priority] ?? priority;
-                const priorityClass = priorityStyleMap[priority] ?? 'bg-warning/20 text-warning';
+                const priorityClass = priorityStyleMap[priority] ?? 'bg-warning-soft text-warning';
 
                 return (
                   <div
                     key={`${task.title}-${index}`}
-                    className="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-accent/10"
+                    className="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-accent-soft"
                   >
                     <div className="flex-1">
                       <p className="text-sm font-medium">{task.title}</p>

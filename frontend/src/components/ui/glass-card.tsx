@@ -20,7 +20,7 @@ const glassCardVariants = cva(
       },
       hover: {
         none: "",
-        lift: "hover:scale-[1.02] hover:shadow-elegant",
+        lift: "hover:scale-[1.02] hover:shadow-card",
         glow: "hover:shadow-glow hover:border-accent/40",
         float: "hover:animate-float",
       }

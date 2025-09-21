@@ -26,12 +26,12 @@ const Features: React.FC = () => {
         {features.map(({ key, icon: Icon }, i) => (
           <div
             key={key}
-            className="group relative rounded-xl border border-border bg-layer-card p-6 shadow-card transition-all duration-500 ease-elegant hover:-translate-y-2 hover:shadow-glow animate-fadeInUp"
+            className="group relative rounded-xl border border-border bg-surface-muted p-6 shadow-card transition-all duration-500 ease-elegant hover:-translate-y-2 hover:shadow-glow animate-fadeInUp"
             style={{ animationDelay: `${i * 120}ms` }}
           >
             {/* Icon with Glow */}
             <div className="mb-4 flex items-center justify-center">
-              <div className="rounded-full bg-accent/10 p-4 transition-colors duration-300 ease-smooth group-hover:bg-accent/20">
+              <div className="rounded-full bg-accent-soft p-4 transition-colors duration-300 ease-smooth group-hover:bg-accent">
                 <Icon className="h-10 w-10 text-accent animate-float" />
               </div>
             </div>
