@@ -12,40 +12,37 @@ const Features: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="features" className="py-20 container mx-auto px-6">
+    <section id="features" className="container mx-auto px-6 py-20">
       {/* Section Title */}
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-text-strong animate-fadeInDown">
+      <h2 className="mb-4 text-center text-3xl font-bold text-text-strong md:text-4xl animate-fadeInDown">
         {t("landing.features.title")}
       </h2>
-      <p className="text-center text-text-muted max-w-2xl mx-auto mb-12 animate-fadeInDown delay-200">
+      <p className="mx-auto mb-12 max-w-2xl text-center text-text-muted animate-fadeInDown [animation-delay:200ms]">
         {t("landing.features.subtitle")}
       </p>
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         {features.map(({ key, icon: Icon }, i) => (
           <div
             key={key}
-            className="group relative p-6 bg-layer-card border border-border 
-                       rounded-xl shadow-card transition-elegant
-                       hover:shadow-glow hover-scale-md hover-tilt 
-                       animate-fadeInUp"
-            style={{ animationDelay: `${i * 150}ms` }}
+            className="group relative rounded-xl border border-border bg-layer-card p-6 shadow-card transition-all duration-500 ease-elegant hover:-translate-y-2 hover:shadow-glow animate-fadeInUp"
+            style={{ animationDelay: `${i * 120}ms` }}
           >
             {/* Icon with Glow */}
             <div className="mb-4 flex items-center justify-center">
-              <div className="p-4 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-smooth">
-                <Icon className="h-10 w-10 text-primary animate-float" />
+              <div className="rounded-full bg-accent/10 p-4 transition-colors duration-300 ease-smooth group-hover:bg-accent/20">
+                <Icon className="h-10 w-10 text-accent animate-float" />
               </div>
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold mb-2 text-text-strong group-hover:text-primary transition-smooth">
+            <h3 className="mb-2 text-xl font-semibold text-text-strong transition-colors duration-300 ease-smooth group-hover:text-primary">
               {t(`landing.features.items.${key}.title`)}
             </h3>
 
             {/* Description */}
-            <p className="text-text-body group-hover:text-text-muted transition-smooth">
+            <p className="text-text-body transition-colors duration-300 ease-smooth group-hover:text-text-muted">
               {t(`landing.features.items.${key}.description`)}
             </p>
           </div>

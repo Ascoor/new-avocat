@@ -7,34 +7,30 @@ const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden px-6 bg-gradient-hero"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center bg-gradient-hero"
     >
-      {/* Overlay for contrast */}
-      <div className="absolute inset-0 bg-[hsl(var(--hero-overlay-light))] dark:bg-[hsl(var(--hero-overlay-dark))]" />
+      <div className="absolute inset-0 bg-hero-overlay-light dark:bg-hero-overlay-dark" />
 
-      <div className="relative z-10 animate-fadeIn">
+      <div className="relative z-10 space-y-8 animate-fadeIn">
         {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-text-strong animate-fadeInUp">
+        <h1 className="text-4xl font-bold text-text-inverse md:text-6xl animate-fadeInUp">
           {t("landing.hero.title")}
         </h1>
 
         {/* Subtitle */}
-        <p className="max-w-2xl mx-auto mb-8 text-lg text-text-muted animate-fadeInUp delay-200">
+        <p className="mx-auto max-w-2xl text-lg text-text-inverse/90 md:text-xl animate-fadeInUp [animation-delay:200ms]">
           {t("landing.hero.subtitle")}
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex gap-4 justify-center animate-fadeInUp delay-400">
-          <Button
-            size="lg"
-            className="btn-primary px-8 py-4 text-lg font-semibold shadow-glow transition-smooth hover:scale-md"
-          >
+        <div className="flex flex-col justify-center gap-4 text-base sm:flex-row animate-fadeInUp [animation-delay:400ms]">
+          <Button size="lg" variant="hero" className="px-8 py-4 text-lg">
             {t("landing.hero.primaryCta")}
           </Button>
           <Button
             size="lg"
             variant="outline"
-            className="btn-outline px-8 py-4 text-lg font-semibold transition-elegant hover:transform hover:tilt"
+            className="px-8 py-4 text-lg font-semibold transition-transform duration-300 ease-elegant hover:-translate-y-0.5 hover:scale-102"
           >
             {t("landing.hero.secondaryCta")}
           </Button>

@@ -6,18 +6,18 @@ const Testimonials: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="testimonials" className="py-20 bg-layer-subtle">
+    <section id="testimonials" className="bg-layer-subtle py-20">
       <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-text-strong animate-fadeIn">
+        <h2 className="mb-12 text-3xl font-bold text-text-strong md:text-4xl animate-fadeIn">
           {t("landing.testimonials.title")}
         </h2>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid gap-8 md:grid-cols-2">
           {testimonials.map((key) => (
             <div
               key={key}
-              className="p-6 bg-card border border-border rounded-xl shadow-card hover:shadow-elegant smooth"
+              className="rounded-xl border border-border bg-card p-6 text-start shadow-card transition-shadow duration-500 ease-smooth hover:shadow-elegant"
             >
-              <p className="italic mb-4 text-text-body">
+              <p className="mb-4 text-lg italic text-text-body">
                 “{t(`landing.testimonials.items.${key}.quote`)}”
               </p>
               <span className="font-semibold text-text-strong">
