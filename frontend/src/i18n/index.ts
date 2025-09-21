@@ -20,8 +20,10 @@ i18n
   .init({
     resources,
     fallbackLng: 'en',
+    ns: ['common'],
+    defaultNS: 'common',
     debug: false,
-    
+
     interpolation: {
       escapeValue: false,
     },
