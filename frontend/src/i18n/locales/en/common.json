@@ -914,6 +914,78 @@
     "dateRange": "Date Range",
     "generate": "Generate Report"
   },
+  "officeSettings": {
+    "title": "Office settings",
+    "subtitle": "Configure shared resources used across your office.",
+    "actions": {
+      "refresh": "Refresh data"
+    },
+    "tabs": {
+      "expenseCategories": "Expense categories",
+      "generalSettings": "General settings",
+      "serviceTypes": "Service types",
+      "procedurePlaceTypes": "Procedure place types",
+      "procedureTypes": "Procedure types"
+    },
+    "expenseCategories": {
+      "title": "Expense categories",
+      "description": "Create and update the categories that group office expenses.",
+      "add": "Add category",
+      "table": {
+        "name": "Category name",
+        "actions": "Actions",
+        "empty": "No expense categories found.",
+        "error": "We couldn't load expense categories. Try refreshing."
+      },
+      "pagination": {
+        "label": "Page {{current}} of {{total}}"
+      },
+      "dialog": {
+        "createTitle": "Add expense category",
+        "editTitle": "Edit expense category"
+      },
+      "form": {
+        "nameLabel": "Category name",
+        "namePlaceholder": "Enter category name",
+        "submitCreate": "Create",
+        "submitUpdate": "Save changes"
+      },
+      "delete": {
+        "title": "Delete {{name}}?",
+        "description": "This action cannot be undone. The category will be permanently removed."
+      },
+      "messages": {
+        "createSuccess": "Expense category created successfully.",
+        "updateSuccess": "Expense category updated successfully.",
+        "deleteSuccess": "Expense category deleted successfully.",
+        "saveErrorTitle": "Unable to save expense category",
+        "saveErrorDescription": "Please review the information and try again.",
+        "deleteErrorTitle": "Unable to delete expense category",
+        "deleteErrorDescription": "Please try again later."
+      }
+    },
+    "placeholders": {
+      "shared": {
+        "message": "We are preparing this section. Stay tuned!"
+      },
+      "generalSettings": {
+        "title": "General settings",
+        "description": "Manage office-wide details and preferences."
+      },
+      "serviceTypes": {
+        "title": "Service types",
+        "description": "Define the types of services that your office provides."
+      },
+      "procedurePlaceTypes": {
+        "title": "Procedure place types",
+        "description": "Maintain the list of procedure locations for your workflow."
+      },
+      "procedureTypes": {
+        "title": "Procedure types",
+        "description": "Organize the procedure types used in case management."
+      }
+    }
+  },
   "settings": {
     "title": "Settings",
     "profile": "Profile Settings",
