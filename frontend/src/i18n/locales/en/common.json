@@ -233,7 +233,11 @@
       "about": "About",
       "contact": "Contact",
       "login": "Login",
-      "signup": "Create Account"
+      "signup": "Create Account",
+      "languageToggle": {
+        "toArabic": "عربي",
+        "toEnglish": "EN"
+      }
     },
     "hero": {
       "title": "Bridging Law & Digital Transformation",

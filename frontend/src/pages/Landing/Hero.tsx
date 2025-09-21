@@ -1,10 +1,9 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Scale, Shield, Users } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Hero = () => {
-  const { t, isRTL } = useLanguage();
+  const { t } = useLanguage();
 
   return ( 
     <section

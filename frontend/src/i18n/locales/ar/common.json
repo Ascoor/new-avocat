@@ -236,7 +236,11 @@
       "about": "من نحن",
       "contact": "تواصل معنا",
       "login": "تسجيل الدخول",
-      "signup": "إنشاء حساب"
+      "signup": "إنشاء حساب",
+      "languageToggle": {
+        "toArabic": "عربي",
+        "toEnglish": "EN"
+      }
     },
     "hero": {
       "title": "جسر بين القانون والتحول الرقمي",

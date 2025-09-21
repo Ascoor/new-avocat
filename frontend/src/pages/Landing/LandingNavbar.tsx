@@ -35,6 +35,11 @@ const LandingNavbar: React.FC = () => {
     { key: "contact", href: "#contact", label: t("landing.nav.contact") },
   ];
 
+  const languageToggleLabel =
+    language === "ar"
+      ? t("landing.nav.languageToggle.toEnglish")
+      : t("landing.nav.languageToggle.toArabic");
+
   const scrollToSection = (href: string) => {
     if (href.startsWith("#")) {
       const element = document.querySelector(href);
@@ -97,11 +102,11 @@ const LandingNavbar: React.FC = () => {
                   isScrolled
                     ? "border-border text-foreground hover:text-primary"
                     : theme === "dark"
-                      ? "border-white text-text-inverse hover:bg-white/10"
+                      ? "border-border text-foreground hover:bg-foreground/10"
                       : "border-border text-text-strong hover:text-primary",
                 )}
               >
-                {language === "ar" ? "EN" : "عربي"}
+                {languageToggleLabel}
               </Button>
 
               <Button
@@ -162,7 +167,7 @@ const LandingNavbar: React.FC = () => {
                     variant="outline"
                     className="justify-center border-border text-sm font-medium text-text-strong hover:text-primary"
                   >
-                    {language === "ar" ? "EN" : "عربي"}
+                    {languageToggleLabel}
                   </Button>
                   <Button
                     asChild
