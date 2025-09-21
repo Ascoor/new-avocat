@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Moon, Sun, Globe, ChevronDown, User, LogOut, Menu, X } from 'lucide-react';
+import { Moon, Sun,UserCircle ,Settings , Globe, ChevronDown, User, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -8,7 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuLabel 
 } from '@/components/ui/dropdown-menu';
+import ThemeToggle from '@/components/ui/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -16,7 +18,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useSidebar } from '@/contexts/SidebarContext';
 import BrandLogo from '@/components/common/BrandLogo';
 import { cn } from '@/lib/utils';
-
+import { Link } from 'react-router-dom';
 interface HeaderProps {
   title?: string;
   className?: string;
@@ -28,6 +30,10 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { toggleMobile, isMobileOpen } = useSidebar();
+
+    const toggleLang = () => {
+    setLanguage(language === 'ar' ? 'en' : 'ar');
+  };
       return (
      <header className={cn(
       'sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur',
@@ -66,69 +72,65 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
         {/* Right Side Controls */}
         <div className="flex items-center space-x-4 rtl:space-x-reverse">
           {/* Theme Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            className="rounded-full hover:bg-accent/20 glow-hover"
-          >
-            {theme === 'light' ? (
-              <Moon className="h-5 w-5" />
-            ) : (
-              <Sun className="h-5 w-5" />
-            )}
-          </Button>
+          <ThemeToggle />
 
-          {/* Language Toggle */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-accent/20 glow-hover">
-                <Globe className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="glass border-glass-border">
-              <DropdownMenuItem
-                onClick={() => setLanguage('ar')}
-                className={language === 'ar' ? 'bg-accent/20' : ''}
-              >
-                العربية
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => setLanguage('en')}
-                className={language === 'en' ? 'bg-accent/20' : ''}
-              >
-                English
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {/* Actions */}
+                <div className="p-4 border-t border-border space-y-3">
+                  <Button onClick={toggleLang} variant="outline" className="w-full">
+                    {language === 'ar' ? 'EN' : 'عربي'}
+                  </Button>
+
+                  
+                </div>
 
           {/* User Menu */}
           {user && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 rtl:space-x-reverse rounded-full hover:bg-accent/20 glow-hover">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="bg-gradient-primary text-white">
-                      {user.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="hidden md:block font-medium">{user.name}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="glass border-glass-border w-56">
-                <DropdownMenuItem className="flex items-center">
-                  <User className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
-                  {t('auth.profile')}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-glass-border" />
-                <DropdownMenuItem onClick={logout} className="flex items-center text-destructive">
-                  <LogOut className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
-                  {t('auth.logout')}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+           <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="flex items-center gap-2 text-muted-foreground hover:text-foreground">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <UserCircle className="h-5 w-5" />
+                </div>
+                <div className="hidden md:flex flex-col items-start">
+                  <span className="text-sm font-medium">
+                    {user?.user_metadata?.first_name || 'Demo'} {user?.user_metadata?.last_name || 'User'}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {user?.user_metadata?.role || 'Admin'}
+                  </span>
+                </div>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end">
+              <DropdownMenuLabel className="font-cairo">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium">
+                    {user?.user_metadata?.first_name || 'Demo'} {user?.user_metadata?.last_name || 'User'}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {user?.email || 'demo@avocat.law'}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="font-cairo">
+                <User className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                {language === 'ar' ? 'الملف الشخصي' : 'Profile'}
+              </DropdownMenuItem>
+              <DropdownMenuItem className="font-cairo">
+                <Settings className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                {language === 'ar' ? 'الإعدادات' : 'Settings'}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem 
+                className="font-cairo text-destructive focus:text-destructive"
+                onClick={logout}
+              >
+                <LogOut className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                {language === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           )}
         </div>
       </div>

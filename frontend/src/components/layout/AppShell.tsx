@@ -31,11 +31,10 @@ const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
           : 'md:pl-64';
 
   return (
-    <div
-      className="min-h-screen bg-background text-foreground"
-      dir={isRTL ? 'rtl' : 'ltr'}
-    >
-      <div className="flex h-screen">
+    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4"    dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="w-full max-w-md space-y-6">
+    
+ 
         <Sidebar isCollapsed={sidebarCollapsed} onToggle={handleSidebarToggle} />
 
         <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${desktopSpacingClass}`}>

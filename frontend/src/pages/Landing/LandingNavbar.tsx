@@ -4,15 +4,13 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import ThemeToggle from '@/components/ui/theme-toggle';
-// Import LanguageToggle component
-import LanguageToggle from '@/components/ui/language-toggle';
 import BrandLogo from '@/components/common/BrandLogo';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 
 const LandingNavbar: React.FC = () => {
-  const { t, isRTL, language } = useLanguage();
+  const { t, isRTL, language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -20,10 +18,7 @@ const LandingNavbar: React.FC = () => {
 
   // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -44,20 +39,22 @@ const LandingNavbar: React.FC = () => {
   const scrollToSection = (href: string) => {
     if (href.startsWith('#')) {
       const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
     setIsOpen(false);
   };
 
+  const toggleLang = () => {
+    setLanguage(language === 'ar' ? 'en' : 'ar');
+  };
+
   return (
     <>
-      <nav 
+      <nav
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          isScrolled 
-            ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-lg' 
+          isScrolled
+            ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-lg'
             : 'bg-transparent'
         )}
       >
@@ -70,8 +67,6 @@ const LandingNavbar: React.FC = () => {
               lang={language}
               dark={!isScrolled ? true : theme === 'dark'}
             />
-
- 
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 rtl:space-x-reverse">
@@ -92,27 +87,32 @@ const LandingNavbar: React.FC = () => {
             {/* Desktop Actions */}
             <div className="hidden lg:flex items-center space-x-4 rtl:space-x-reverse">
               <ThemeToggle />
-              <LanguageToggle />
-              
-              <Button 
-                asChild 
-                variant="ghost" 
+
+              {/* Language Toggle as Button */}
+              <Button
+                onClick={toggleLang}
+                size="sm"
+                variant="outline"
+                className="font-medium"
+              >
+                {language === 'ar' ? 'EN' : 'عربي'}
+              </Button>
+
+              <Button
+                asChild
+                variant="ghost"
                 size="sm"
                 className={cn(
                   'font-medium',
-                  isScrolled 
-                    ? 'text-foreground hover:text-primary' 
+                  isScrolled
+                    ? 'text-foreground hover:text-primary'
                     : 'text-white hover:text-white/80 hover:bg-white/10'
                 )}
               >
                 <Link to="/login">{t('nav.login')}</Link>
               </Button>
-              
-              <Button 
-                asChild 
-                size="sm"
-                className="font-medium"
-              >
+
+              <Button asChild size="sm" className="font-medium">
                 <Link to="/register">{t('nav.register')}</Link>
               </Button>
             </div>
@@ -120,15 +120,13 @@ const LandingNavbar: React.FC = () => {
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center space-x-2 rtl:space-x-reverse">
               <ThemeToggle />
-              <LanguageToggle />
-              
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
-                  isScrolled 
-                    ? 'text-foreground hover:text-primary' 
+                  isScrolled
+                    ? 'text-foreground hover:text-primary'
                     : 'text-white hover:text-white/80 hover:bg-white/10'
                 )}
                 aria-label={isOpen ? t('common.close') : t('common.menu')}
@@ -151,11 +149,11 @@ const LandingNavbar: React.FC = () => {
             className="fixed inset-0 z-40 lg:hidden"
           >
             {/* Backdrop */}
-            <div 
+            <div
               className="absolute inset-0 bg-background/80 backdrop-blur-lg"
               onClick={() => setIsOpen(false)}
             />
-            
+
             {/* Menu Content */}
             <motion.div
               initial={{ x: isRTL ? '100%' : '-100%' }}
@@ -198,18 +196,15 @@ const LandingNavbar: React.FC = () => {
 
                 {/* Actions */}
                 <div className="p-4 border-t border-border space-y-3">
-                  <Button 
-                    asChild 
-                    variant="outline" 
-                    className="w-full"
-                  >
+                  <Button onClick={toggleLang} variant="outline" className="w-full">
+                    {language === 'ar' ? 'EN' : 'عربي'}
+                  </Button>
+
+                  <Button asChild variant="outline" className="w-full">
                     <Link to="/login">{t('nav.login')}</Link>
                   </Button>
-                  
-                  <Button 
-                    asChild 
-                    className="w-full"
-                  >
+
+                  <Button asChild className="w-full">
                     <Link to="/register">{t('nav.register')}</Link>
                   </Button>
                 </div>
