@@ -2,13 +2,15 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { useTranslation } from 'react-i18next';
 
 export type Language = 'ar' | 'en';
+export type Direction = 'rtl' | 'ltr';
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  toggleLanguage: () => void; // ✅ الإضافة الجديدة
+  toggleLanguage: () => void;
   t: (key: string, vars?: Record<string, string | number>) => string;
   isRTL: boolean;
+  direction: Direction;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -40,8 +42,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   });
 
   useEffect(() => {
+    const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
+
     document.documentElement.lang = language;
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = direction;
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('avocat_language', language);
     }
@@ -77,12 +81,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLanguageState((prev) => (prev === 'ar' ? 'en' : 'ar'));
   }, []);
 
+  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
+
   const value: LanguageContextType = {
     language,
     setLanguage,
-    toggleLanguage, // ✅ إضافة الدالة
+    toggleLanguage,
     t,
-    isRTL: language === 'ar'
+    isRTL: language === 'ar',
+    direction,
   };
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
