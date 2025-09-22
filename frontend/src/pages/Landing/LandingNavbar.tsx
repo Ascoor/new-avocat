@@ -1,193 +1,133 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
-
-import BrandLogo from "@/components/common/BrandLogo";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import ThemeToggle from "@/components/ui/theme-toggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
-import { cn } from "@/lib/utils";
+import { 
+  Sun, Moon, Globe, Menu, X,
+  Scale, Shield, FileText, Users, Phone
+} from "lucide-react";
+import ThemeToggle from "@/components/ui/theme-toggle";
 
 const LandingNavbar: React.FC = () => {
-  const { t, isRTL, language, setLanguage } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation();
-  const { theme } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const { language, toggleLanguage, t } = useLanguage();
+  const { setTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    const handleScroll = () => setIsScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location]);
-
   const navItems = [
-    { key: "home", href: "#hero", label: t("landing.nav.home") },
-    { key: "features", href: "#features", label: t("landing.nav.features") },
-    { key: "services", href: "#services", label: t("landing.nav.services") },
-    { key: "about", href: "#about", label: t("landing.nav.about") },
-    { key: "contact", href: "#contact", label: t("landing.nav.contact") },
+    { key: "home", icon: Scale, href: "#home" },
+    { key: "features", icon: Shield, href: "#features" },
+    { key: "services", icon: FileText, href: "#services" },
+    { key: "about", icon: Users, href: "#about" },
+    { key: "contact", icon: Phone, href: "#contact" },
   ];
 
-  const languageToggleLabel =
-    language === "ar"
-      ? t("landing.nav.languageToggle.toEnglish")
-      : t("landing.nav.languageToggle.toArabic");
-
-  const scrollToSection = (href: string) => {
-    if (href.startsWith("#")) {
-      const element = document.querySelector(href);
-      if (element) element.scrollIntoView({ behavior: "smooth" });
-    }
+  const scrollTo = (href: string) => {
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
     setIsOpen(false);
-  };
-
-  const toggleLang = () => {
-    setLanguage(language === "ar" ? "en" : "ar");
-  };
-
-  const getNavTextColor = () => {
-    if (isScrolled) return "text-foreground hover:text-primary";
-    return theme === "dark"
-      ? "text-text-inverse hover:text-text-subtle"
-      : "text-text-strong hover:text-primary";
   };
 
   return (
-    <>
-      <nav
-        className={cn(
-          "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
-          isScrolled
-            ? "border-b border-border bg-background/90 backdrop-blur-lg shadow-card"
-            : "bg-transparent",
-        )}
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        isScrolled
+          ? "bg-background/90 backdrop-blur-md border-b border-border shadow-elevated"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-20">
+        {/* Logo */}
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          <div className="w-10 h-10 bg-gradient-gold rounded-lg flex items-center justify-center animate-glow">
+            <Scale className="w-6 h-6 text-accent-foreground" />
+          </div>
+          <span className="text-2xl font-display font-bold text-foreground">
+            Avocat {language === "ar" && <span className="text-accent">أفوكات</span>}
+          </span>
+        </div>
+
+        {/* Desktop Nav */}
+        <div className="hidden lg:flex items-center space-x-8 rtl:space-x-reverse">
+          {navItems.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => scrollTo(item.href)}
+              className="group flex items-center space-x-2 rtl:space-x-reverse text-foreground hover:text-primary transition"
+            >
+              <item.icon className="w-4 h-4 group-hover:scale-110 transition" />
+              <span className="relative font-medium">
+                {t(item.key)}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-gold transition-all duration-300 group-hover:w-full"></span>
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+              <ThemeToggle />
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleLanguage}
+            className="flex items-center space-x-2 hover:bg-accent/20"
+          >
+            <Globe className="w-4 h-4" />
+            <span className="text-sm">{language === "en" ? "العربية" : "English"}</span>
+          </Button>
+
+          <div className="hidden lg:flex space-x-3">
+            <Button variant="ghost">{t("login")}</Button>
+            <Button className="btn-premium">{t("signup")}</Button>
+          </div>
+
+          {/* Mobile Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden w-10 h-10 p-0"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </Button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`lg:hidden transition-all duration-300 overflow-hidden ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            {/* Display dark BrandLogo before scroll and theme-based after scroll */}
-            <BrandLogo
-              variant="text"
-              className="h-12"
-              lang={language}
-              dark={isScrolled ? theme === "dark" : true} // Ensure dark before scroll
-            />
- 
-
-            <div className="hidden items-center space-x-8 rtl:space-x-reverse lg:flex">
-              {navItems.map((item) => (
-                <button
-                  key={item.key}
-                  onClick={() => scrollToSection(item.href)}
-                  className={cn("text-sm font-medium transition-colors", getNavTextColor())}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="hidden items-center space-x-4 rtl:space-x-reverse lg:flex">
-              <ThemeToggle />
-
-              <Button
-                onClick={toggleLang}
-                size="sm"
-                variant="outline"
-                className={cn(
-                  "font-medium",
-                  isScrolled
-                    ? "border-border text-foreground hover:text-primary"
-                    : theme === "dark"
-                      ? "border-border text-foreground hover:bg-foreground/10"
-                      : "border-border text-text-strong hover:text-primary",
-                )}
+        <div className="py-6 border-t border-border bg-card/80 backdrop-blur-md rounded-b-xl">
+          <div className="flex flex-col space-y-4">
+            {navItems.map((item) => (
+              <button
+                key={item.key}
+                onClick={() => scrollTo(item.href)}
+                className="flex items-center space-x-3 px-4 py-3 text-foreground hover:text-primary hover:bg-accent/10 transition"
               >
-                {languageToggleLabel}
-              </Button>
+                <item.icon className="w-5 h-5" />
+                <span>{t(item.key)}</span>
+              </button>
+            ))}
 
-              <Button
-                asChild
-                variant="ghost"
-                size="sm"
-                className={cn("font-medium", getNavTextColor())}
-              >
-                <Link to="/login">{t("landing.nav.login")}</Link>
-              </Button>
-
-              <Button asChild size="sm" variant="hero" className="font-medium">
-                <Link to="/register">{t("landing.nav.signup")}</Link>
-              </Button>
-            </div>
-
-            <div className="flex items-center space-x-2 rtl:space-x-reverse lg:hidden">
-              <ThemeToggle />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsOpen((prev) => !prev)}
-                className={getNavTextColor()}
-              >
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </Button>
+            <div className="flex flex-col space-y-3 px-4 pt-4 border-t border-border">
+              <Button variant="ghost">{t("login")}</Button>
+              <Button className="btn-premium">{t("signup")}</Button>
             </div>
           </div>
         </div>
-      </nav>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed inset-x-0 top-16 z-40 px-4 lg:hidden"
-          >
-            <div className="container mx-auto">
-              <div className="space-y-4 rounded-xl border border-border bg-surface-muted p-4 shadow-card">
-                <div className={cn("flex flex-col gap-2", isRTL ? "text-right" : "text-left")}>
-                  {navItems.map((item) => (
-                    <button
-                      key={item.key}
-                      onClick={() => scrollToSection(item.href)}
-                      className="rounded-lg px-3 py-2 text-sm font-medium text-text-strong transition-colors duration-200 ease-smooth hover:bg-accent-soft"
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="flex flex-col gap-3 border-t border-border pt-4">
-                  <Button
-                    onClick={toggleLang}
-                    variant="outline"
-                    className="justify-center border-border text-sm font-medium text-text-strong hover:text-primary"
-                  >
-                    {languageToggleLabel}
-                  </Button>
-                  <Button
-                    asChild
-                    variant="ghost"
-                    className="justify-center text-sm font-medium text-text-strong hover:text-primary"
-                  >
-                    <Link to="/login">{t("landing.nav.login")}</Link>
-                  </Button>
-                  <Button asChild variant="hero" className="justify-center text-sm font-semibold">
-                    <Link to="/register">{t("landing.nav.signup")}</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      </div>
+    </nav>
   );
 };
 

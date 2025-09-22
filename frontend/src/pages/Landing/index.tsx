@@ -1,5 +1,5 @@
 import LandingNavbar from "./LandingNavbar";
-import Hero from "./Hero";
+import HeroCarousel from "./HeroCarousel";
 import Features from "./Features";
 import Services from "./Services";
 import About from "./About";
@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
     <>
       <LandingNavbar />
       <main className="bg-background text-text-body">
-        <Hero />
+        <HeroCarousel />
         <Features />
         <Services />
         <About />
