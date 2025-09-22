@@ -19,7 +19,7 @@ interface ProceduresSectionProps {
 
 const ProceduresSection = ({ caseId, onChanged }: ProceduresSectionProps) => {
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const [procedures, setProcedures] = useState<Procedure[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -99,25 +99,28 @@ const ProceduresSection = ({ caseId, onChanged }: ProceduresSectionProps) => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full border border-border/60 text-sm">
+            <table
+              dir={isRTL ? 'rtl' : 'ltr'}
+              className="min-w-full border border-border/60 text-sm shadow-inner"
+            >
               <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.procedures.columns.type')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.procedures.columns.lawyer')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.procedures.columns.endDate')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.procedures.columns.job')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.procedures.columns.result')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.procedures.columns.status')}
                   </th>
                   <th className="px-4 py-2 text-center">
@@ -134,26 +137,41 @@ const ProceduresSection = ({ caseId, onChanged }: ProceduresSectionProps) => {
                   </tr>
                 )}
                 {procedures.map((procedure) => (
-                  <tr key={procedure.id} className="border-t border-border/40">
-                    <td className="px-4 py-2 text-sm">
+                  <tr
+                    key={procedure.id}
+                    className="border-t border-border/40 transition-colors hover:bg-muted/20"
+                  >
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
                       {procedure.procedure_type?.name ?? '—'}
                     </td>
-                    <td className="px-4 py-2 text-sm">{procedure.lawyer?.name ?? '—'}</td>
-                    <td className="px-4 py-2 text-sm">{procedure.date_end ?? '—'}</td>
-                    <td className="px-4 py-2 text-sm">{procedure.job}</td>
-                    <td className="px-4 py-2 text-sm">{procedure.result ?? '—'}</td>
-                    <td className="px-4 py-2 text-sm">{procedure.status ?? '—'}</td>
-                    <td className="px-4 py-2 text-center space-x-2 rtl:space-x-reverse">
-                      <Button variant="outline" size="sm" onClick={() => openEditModal(procedure)}>
-                        {t('legalCaseDetails.procedures.editButton')}
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => setConfirmDelete(procedure)}
-                      >
-                        {t('legalCaseDetails.procedures.deleteButton')}
-                      </Button>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {procedure.lawyer?.name ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {procedure.date_end ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {procedure.job}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {procedure.result ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {procedure.status ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-center">
+                      <div className="flex flex-wrap items-center justify-center gap-2">
+                        <Button variant="outline" size="sm" onClick={() => openEditModal(procedure)}>
+                          {t('legalCaseDetails.procedures.editButton')}
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => setConfirmDelete(procedure)}
+                        >
+                          {t('legalCaseDetails.procedures.deleteButton')}
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}
