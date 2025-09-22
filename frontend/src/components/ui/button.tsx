@@ -30,6 +30,8 @@ const buttonVariants = cva(
           "glass text-text-strong shadow-ambient hover:border-accent/40 hover:shadow-glow",
         glow:
           "bg-accent text-accent-foreground shadow-glow hover:scale-102 animate-pulseGlow",
+        chromatic:
+          "relative overflow-hidden rounded-full border border-border/60 bg-transparent px-4 py-2 text-text-strong shadow-ambient transition-all duration-500 hover:border-accent/70 hover:shadow-glow before:pointer-events-none before:absolute before:inset-0 before:-translate-y-full before:bg-[var(--toggle-gradient)] before:opacity-0 before:transition-all before:duration-500 before:content-[''] before:z-0 after:pointer-events-none after:absolute after:inset-[1px] after:rounded-full after:border after:border-white/10 after:opacity-0 after:transition-opacity after:duration-500 after:content-[''] hover:before:translate-y-0 hover:before:opacity-100 hover:text-text-inverse hover:after:opacity-100",
       },
       size: {
         default: "h-10 px-4 py-2",
