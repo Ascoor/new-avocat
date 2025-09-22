@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import './styles/theme-tokens.css';
+@import './styles/radix-vars.css';
 
 @tailwind base;
 @tailwind components;
@@ -7,124 +9,6 @@
 /* Avocat Law Firm Design System - Premium Legal Theme
 All colors MUST be HSL for proper theme support.
 */
-
-@layer base {
-  :root {
-    /* Premium Legal Color Palette - Light Mode */
-    --background: 0 0% 100%;
-    --foreground: 215 75% 15%;
-    
-    /* Legal Dark Blue - Primary Brand Color */
-    --primary: 215 85% 17%;
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 215 75% 25%;
-    --primary-glow: 215 65% 35%;
-    
-    /* Premium Silver & Whites */
-    --secondary: 213 20% 82%;
-    --secondary-foreground: 215 75% 15%;
-    --secondary-dark: 213 20% 76%;
-    
-    /* Gold Accent for Premium Touch */
-    --accent: 45 85% 42%;
-    --accent-foreground: 215 85% 17%;
-    --accent-soft: 45 75% 75%;
-    --accent-glow: 45 85% 52%;
-    
-    /* Muted Tones */
-    --muted: 210 25% 95%;
-    --muted-foreground: 215 20% 45%;
-    --muted-dark: 210 25% 90%;
-    
-    /* Card & Surfaces */
-    --card: 0 0% 100%;
-    --card-foreground: 215 75% 15%;
-    --card-elevated: 210 25% 98%;
-    
-    /* Interactive Elements */
-    --popover: 0 0% 100%;
-    --popover-foreground: 215 75% 15%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 213 20% 88%;
-    --input: 213 20% 90%;
-    --ring: 215 85% 17%;
-    
-    /* Premium Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(215 85% 17%), hsl(215 75% 25%));
-    --gradient-secondary: linear-gradient(135deg, hsl(210 25% 98%), hsl(213 20% 90%));
-    --gradient-gold: linear-gradient(135deg, hsl(45 85% 42%), hsl(45 85% 52%));
-    --gradient-hero: linear-gradient(135deg, hsl(215 85% 12%), hsl(215 75% 20%));
-    
-    /* Premium Shadows */
-    --shadow-premium: 0 25px 50px -12px hsl(215 85% 17% / 0.15);
-    --shadow-gold: 0 10px 30px -5px hsl(45 85% 42% / 0.2);
-    --shadow-elevated: 0 10px 40px -10px hsl(215 85% 17% / 0.08);
-    
-    /* Transitions */
-    --transition-premium: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    /* Premium Legal Color Palette - Dark Mode */
-    --background: 215 100% 5%;
-    --foreground: 210 15% 91%;
-    
-    /* Deep Navy Base with Muted Bronze Accents */
-    --primary: 180 45% 60%;
-    --primary-foreground: 215 100% 5%;
-    --primary-light: 180 50% 65%;
-    --primary-glow: 180 55% 70%;
-    
-    /* Dark Surfaces with Navy Tone */
-    --secondary: 215 50% 8%;
-    --secondary-foreground: 210 15% 91%;
-    --secondary-dark: 215 60% 5%;
-    
-    /* Muted Bronze instead of bright gold */
-    --accent: 38 45% 58%;
-    --accent-foreground: 215 100% 5%;
-    --accent-soft: 38 35% 25%;
-    --accent-glow: 38 50% 63%;
-    
-    /* Dark Muted Tones */
-    --muted: 215 40% 10%;
-    --muted-foreground: 210 15% 65%;
-    --muted-dark: 215 50% 6%;
-    
-    /* Dark Cards & Surfaces */
-    --card: 215 50% 7%;
-    --card-foreground: 210 15% 91%;
-    --card-elevated: 215 40% 10%;
-    
-    /* Dark Interactive Elements */
-    --popover: 215 50% 7%;
-    --popover-foreground: 210 15% 91%;
-    
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 15% 91%;
-    
-    --border: 215 30% 15%;
-    --input: 215 40% 10%;
-    --ring: 180 45% 60%;
-    
-    /* Dark Mode Premium Gradients with Bronze/Teal */
-    --gradient-primary: linear-gradient(135deg, hsl(215 60% 5%), hsl(215 50% 8%));
-    --gradient-secondary: linear-gradient(135deg, hsl(215 50% 7%), hsl(215 40% 10%));
-    --gradient-gold: linear-gradient(135deg, hsl(38 45% 58%), hsl(38 50% 63%));
-    --gradient-hero: linear-gradient(135deg, hsl(215 100% 3%), hsl(215 60% 5%));
-    
-    /* Dark Mode Subtle Shadows */
-    --shadow-premium: 0 25px 50px -12px hsl(0 0% 0% / 0.3);
-    --shadow-gold: 0 10px 30px -5px hsl(38 45% 58% / 0.2);
-    --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.15);
-  }
-}
 
 @layer base {
   * {
@@ -175,39 +59,6 @@ All colors MUST be HSL for proper theme support.
 }
 
 @layer components {
-  /* Premium Button Variants */
-  .btn-premium {
-    @apply bg-gradient-to-r from-primary to-primary-light text-primary-foreground;
-    @apply shadow-lg hover:shadow-xl transform hover:scale-[1.02];
-    @apply transition-all duration-300 ease-out;
-    box-shadow: var(--shadow-premium);
-  }
-
-  .btn-gold {
-    @apply bg-gradient-to-r from-accent to-accent-glow text-accent-foreground;
-    @apply shadow-lg hover:shadow-xl transform hover:scale-[1.02];
-    @apply transition-all duration-300 ease-out;
-    box-shadow: var(--shadow-gold);
-  }
-
-  .btn-glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 text-white;
-    @apply hover:bg-white/20 transition-all duration-300;
-  }
-
-  /* Premium Card Styles */
-  .card-premium {
-    @apply bg-card border border-border rounded-xl;
-    @apply shadow-lg hover:shadow-xl transition-all duration-300;
-    box-shadow: var(--shadow-elevated);
-  }
-
-  .card-elevated {
-    @apply bg-card-elevated border border-border rounded-xl;
-    @apply shadow-2xl transition-all duration-300;
-    box-shadow: var(--shadow-premium);
-  }
-
   /* Hero Gradient Backgrounds */
   .hero-gradient {
     background: var(--gradient-hero);
@@ -217,7 +68,6 @@ All colors MUST be HSL for proper theme support.
     background: var(--gradient-gold);
   }
 
-  /* Premium Animations */
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
@@ -232,15 +82,14 @@ All colors MUST be HSL for proper theme support.
   }
 
   @keyframes glow {
-    from { 
+    from {
       box-shadow: 0 0 20px hsl(var(--accent) / 0.3);
     }
-    to { 
+    to {
       box-shadow: 0 0 30px hsl(var(--accent) / 0.5), 0 0 40px hsl(var(--accent) / 0.2);
     }
   }
 
-  /* RTL Support */
   [dir="rtl"] .text-left {
     text-align: right;
   }
@@ -249,7 +98,6 @@ All colors MUST be HSL for proper theme support.
     text-align: left;
   }
 
-  /* Carousel Styles */
   .carousel-slide {
     @apply transition-all duration-700 ease-in-out;
   }
@@ -262,8 +110,89 @@ All colors MUST be HSL for proper theme support.
     @apply opacity-0 scale-95;
   }
 }
+
 @layer utilities {
   .animate-spin-reverse {
     animation: spin 1s linear infinite reverse;
+  }
+
+  .sidebar-bg {
+    background: var(--sidebar-surface);
+  }
+
+  .sidebar-text {
+    color: var(--sidebar-text-strong);
+  }
+
+  .sidebar-muted-text {
+    color: var(--sidebar-text-muted);
+  }
+
+  .sidebar-width {
+    width: calc(var(--sidebar-width));
+  }
+
+  .sidebar-icon-width {
+    width: calc(var(--sidebar-width-icon));
+  }
+
+  .sidebar-shell-shadow {
+    box-shadow: var(--sidebar-shell-shadow);
+  }
+
+  .btn-premium {
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-premium);
+    transition: var(--transition-premium);
+    transform: translateZ(0);
+  }
+
+  .btn-premium:hover {
+    box-shadow: var(--shadow-glow);
+    transform: scale(1.02);
+  }
+
+  .btn-gold {
+    background: var(--gradient-gold);
+    color: hsl(var(--accent-foreground));
+    box-shadow: var(--shadow-gold);
+    transition: var(--transition-premium);
+    transform: translateZ(0);
+  }
+
+  .btn-gold:hover {
+    box-shadow: var(--shadow-glow-strong);
+    transform: scale(1.02);
+  }
+
+  .btn-glass {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: hsl(var(--text-inverse));
+    backdrop-filter: blur(12px);
+    transition: var(--transition-smooth);
+    transform: translateZ(0);
+  }
+
+  .btn-glass:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .card-premium {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-elevated);
+    transition: var(--transition-smooth);
+  }
+
+  .card-elevated {
+    background: hsl(var(--card-elevated));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-premium);
+    transition: var(--transition-premium);
   }
 }
