@@ -1,7 +1,8 @@
 import React from "react";
+import { Mail, Sparkles } from "lucide-react";
+
 import BrandLogo from "@/components/common/BrandLogo";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { Sparkles, Mail } from "lucide-react";
 
 interface FooterProps {
   services: string[];
@@ -19,26 +20,29 @@ const Footer: React.FC<FooterProps> = ({
   const { t, language } = useLanguage();
 
   return (
-    <footer className="border-t border-border bg-surface">
+    <footer className="border-t border-border bg-background">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          <div className="md:col-span-2">
-            <BrandLogo className="h-12" lang={language} />
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+          <div className="space-y-4 md:col-span-2">
+            <BrandLogo className="h-12" lang={language} variant={logoVariant} />
+            <p className="max-w-sm text-sm text-text-muted">
+              {t("landing.footer.tagline")}
+            </p>
           </div>
           <div>
             <h4 className="mb-4 flex items-center gap-2 font-semibold text-text-strong">
-              <Sparkles className="h-5 w-5 text-primary" />
+              <Sparkles className="h-5 w-5 text-primary" aria-hidden />
               {t("landing.footer.servicesTitle")}
             </h4>
             <ul className="space-y-2 text-text-muted">
-              {services.map((s, i) => (
-                <li key={`${s}-${i}`}>{s}</li>
+              {services.map((service, index) => (
+                <li key={`${service}-${index}`}>{service}</li>
               ))}
             </ul>
           </div>
           <div>
             <h4 className="mb-4 flex items-center gap-2 font-semibold text-text-strong">
-              <Mail className="h-5 w-5 text-primary" />
+              <Mail className="h-5 w-5 text-primary" aria-hidden />
               {t("landing.footer.contactTitle")}
             </h4>
             <ul className="space-y-2 text-text-muted">
@@ -48,7 +52,7 @@ const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
         </div>
-        <div className="mt-8 border-t border-border pt-8 text-center text-text-subtle">
+        <div className="mt-10 border-t border-border pt-8 text-center text-text-subtle">
           <p>
             &copy; {year} {t("brand.name")}. {t("landing.footer.rights")}.
           </p>

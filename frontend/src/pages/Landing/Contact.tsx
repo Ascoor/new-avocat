@@ -1,3 +1,6 @@
+import React from "react";
+
+import SectionHeader from "@/components/landing/SectionHeader";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -5,17 +8,17 @@ const Contact: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="contact" className="container mx-auto px-6 py-24">
-      {/* Title */}
-      <h2 className="mb-4 text-center text-3xl font-bold text-text-strong md:text-4xl animate-fadeInDown">
-        {t("landing.contact.title")}
-      </h2>
-      <p className="mx-auto mb-12 max-w-2xl text-center text-text-muted animate-fadeInDown [animation-delay:200ms]">
-        {t("landing.contact.subtitle")}
-      </p>
+    <section id="contact" className="container mx-auto px-6 py-24" aria-labelledby="contact-heading">
+      <SectionHeader
+        align="center"
+        title={t("landing.contact.title")}
+        subtitle={t("landing.contact.subtitle")}
+        eyebrow={t("landing.contact.eyebrow")}
+        titleId="contact-heading"
+        className="mb-12"
+      />
 
-      {/* Form */}
-      <form className="mx-auto max-w-xl space-y-6 rounded-2xl border border-border bg-surface-muted p-8 shadow-card animate-fadeInUp">
+      <form className="mx-auto max-w-xl space-y-6 rounded-2xl border border-border bg-surface-muted/90 p-8 shadow-card backdrop-blur" aria-label={t("landing.contact.title")}>
         <input
           type="text"
           placeholder={t("landing.contact.form.namePlaceholder")}
@@ -30,12 +33,7 @@ const Contact: React.FC = () => {
           placeholder={t("landing.contact.form.messagePlaceholder")}
           className="h-36 w-full rounded-lg border border-border bg-input p-4 text-text-body transition-colors duration-300 ease-smooth focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/60"
         />
-        <Button
-          type="submit"
-          variant="hero"
-          size="lg"
-          className="w-full"
-        >
+        <Button type="submit" variant="hero" size="lg" className="w-full">
           {t("landing.contact.form.submit")}
         </Button>
       </form>
