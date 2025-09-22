@@ -1,36 +1,51 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
-import { useToast } from '@/components/ui/use-toast';
-import { addLegalCaseClients, removeLegalCaseClient } from '@/api/legalCases.service';
+import {
+  addLegalCaseClients,
+  removeLegalCaseClient,
+} from '@/api/legalCases.service';
 import { getClients } from '@/api/clients.service';
+import type { Client as CaseClient } from '@/types/legalCase';
+import type { Client as ClientRecord } from '@/types/clients';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Users, ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'; // Chevron and Arrow icons
+import { Users } from 'lucide-react';
 import CaseSection from './CaseSection';
-import { useNavigate } from 'react-router-dom';
 
 interface ClientsSectionProps {
   caseId: string;
-  clients: any[]; // Define the client type properly
+  clients: CaseClient[];
   onChanged: () => void;
 }
+
+interface SelectableClient extends CaseClient {
+  client_id: string;
+}
+
+const mapToCaseClient = (client: ClientRecord): CaseClient => ({
+  id: String(client.id),
+  name: client.name,
+  phone: client.phone_number,
+  email: client.email,
+  slug: client.slug,
+});
 
 const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
-  const [allClients, setAllClients] = useState<any[]>([]);
+  const [allClients, setAllClients] = useState<CaseClient[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [pendingClients, setPendingClients] = useState<any[]>([]);
+  const [pendingClients, setPendingClients] = useState<SelectableClient[]>([]);
   const [confirmDelete, setConfirmDelete] = useState<{ id: string; name: string } | null>(null);
-  const [sectionOpen, setSectionOpen] = useState(true); // Section visibility state
-  const navigate = useNavigate();
+  const [sectionOpen, setSectionOpen] = useState(true);
 
   useEffect(() => {
     const fetchClients = async () => {
       try {
         const { data } = await getClients();
-        setAllClients(data ?? []);
+        setAllClients((data ?? []).map(mapToCaseClient));
       } catch (error) {
         console.error('Failed to load clients', error);
         toast({
@@ -48,7 +63,10 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
       return [];
     }
     const lower = searchTerm.trim().toLowerCase();
-    return allClients.filter((client) => client.name?.toLowerCase().includes(lower)).slice(0, 8);
+    return allClients
+      .filter((client) => client.name?.toLowerCase().includes(lower))
+      .slice(0, 8)
+      .map((client) => ({ ...client, client_id: client.id }));
   }, [allClients, searchTerm]);
 
   const handleAddRow = () => {
@@ -56,8 +74,8 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
     setPendingClients((prev) => [...prev, { client_id: '', id: '', name: '' }]);
   };
 
-  const handleSelectClient = (client: any, index: number) => {
-    if (clients.some((existingClient) => existingClient.id === client.id)) {
+  const handleSelectClient = (option: SelectableClient, index: number) => {
+    if (clients.some((client) => client.id === option.id)) {
       toast({
         title: t('legalCaseDetails.clients.duplicateClientTitle'),
         description: t('legalCaseDetails.clients.duplicateClientDescription'),
@@ -65,9 +83,10 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
       });
       return;
     }
+
     setPendingClients((prev) => {
       const next = [...prev];
-      next[index] = client;
+      next[index] = option;
       return next;
     });
     setSearchTerm('');
@@ -89,7 +108,10 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
     }
 
     try {
-      await addLegalCaseClients(caseId, validClients.map((client) => ({ client_id: client.client_id })));
+      await addLegalCaseClients(
+        caseId,
+        validClients.map((client) => ({ client_id: client.client_id })),
+      );
       toast({ title: t('legalCaseDetails.clients.addSuccess') });
       setPendingClients([]);
       onChanged();
@@ -128,26 +150,15 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
       subtitle={t('legalCaseDetails.clients.subtitle')}
       open={sectionOpen}
       onOpenChange={setSectionOpen}
+      toggleLabel={sectionOpen ? t('common.collapse') : t('common.expand')}
       actions={
-        <>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate(-1)} // Navigate back
-            className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">{t('legalCaseDetails.back')}</span>
-          </Button>
-          <Button variant="secondary" onClick={handleAddRow} className="self-start sm:self-auto">
-            {t('legalCaseDetails.clients.addClient')}
-          </Button>
-        </>
+        <Button variant="secondary" onClick={handleAddRow} className="self-start sm:self-auto">
+          {t('legalCaseDetails.clients.addClient')}
+        </Button>
       }
     >
-      {/* New clients input section */}
       {pendingClients.length > 0 && (
-        <div className="space-y-4 rounded-lg border border-dashed border-border/60 bg-muted/20 p-4">
+        <div className="space-y-3 rounded-lg border border-dashed border-border/60 bg-muted/20 p-4">
           {pendingClients.map((pending, index) => (
             <div key={`pending-${index}`} className="space-y-2">
               <Input
@@ -197,15 +208,22 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
         </div>
       )}
 
-      {/* Display list of existing clients */}
       <div className="overflow-x-auto">
         <table className="min-w-full border border-border/60 text-sm">
           <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
             <tr>
-              <th className="px-4 py-2 text-start">{t('legalCaseDetails.clients.columns.slug')}</th>
-              <th className="px-4 py-2 text-start">{t('legalCaseDetails.clients.columns.name')}</th>
-              <th className="px-4 py-2 text-start">{t('legalCaseDetails.clients.columns.phone')}</th>
-              <th className="px-4 py-2 text-center">{t('legalCaseDetails.clients.columns.actions')}</th>
+              <th className="px-4 py-2 text-start">
+                {t('legalCaseDetails.clients.columns.slug')}
+              </th>
+              <th className="px-4 py-2 text-start">
+                {t('legalCaseDetails.clients.columns.name')}
+              </th>
+              <th className="px-4 py-2 text-start">
+                {t('legalCaseDetails.clients.columns.phone')}
+              </th>
+              <th className="px-4 py-2 text-center">
+                {t('legalCaseDetails.clients.columns.actions')}
+              </th>
             </tr>
           </thead>
           <tbody>

@@ -7,7 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useLegalCase } from '@/hooks/useLegalCases';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Badge } from '@/components/ui/badge';
-
+ 
 import {
   ArrowLeft,
   BadgeCheck,
@@ -16,14 +16,15 @@ import {
   Gavel,
   Hash,
   Layers,
-  LucideIcon,
   Megaphone,
   Phone,
   Scale,
   UserCircle2,
   ChevronDown,
-  ChevronUp,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass-card';
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -48,8 +49,13 @@ const LegalCaseDetails = () => {
   const { t, isRTL } = useLanguage();
   const [activeTab, setActiveTab] = useState('procedures');
   const [overviewExpanded, setOverviewExpanded] = useState(true);
-
-  const OverviewToggleIcon = overviewExpanded ? ChevronDown : ChevronUp;
+ 
+  const OverviewToggleIcon = overviewExpanded
+    ? ChevronDown
+    : isRTL
+    ? ChevronLeft
+    : ChevronRight;
+ 
 
   const {
     data: legCase,
@@ -137,7 +143,7 @@ const LegalCaseDetails = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate(-1)} // Navigate back
+            onClick={() => navigate(-1)}
             className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -212,6 +218,7 @@ const LegalCaseDetails = () => {
                   >
                     <OverviewToggleIcon className="h-4 w-4" />
                   </Button>
+ 
                 </div>
 
                 <AnimatePresence initial={false}>
@@ -311,6 +318,7 @@ const LegalCaseDetails = () => {
               </TabsContent>
             </Tabs>
           </Suspense>
+
         </div>
       )}
     </div>
