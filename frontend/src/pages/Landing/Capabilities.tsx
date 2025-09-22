@@ -1,4 +1,4 @@
-import { Cpu, Layers, ShieldLock } from "lucide-react";
+import { Cpu, Layers, ShieldEllipsis } from "lucide-react";
 
 type Capability = {
   icon: typeof Layers;
@@ -46,7 +46,7 @@ const capabilities: Capability[] = [
     ],
   },
   {
-    icon: ShieldLock,
+    icon: ShieldEllipsis,
     enTitle: "Cybersecurity & Digital Trust",
     arTitle: "الأمن السيبراني والثقة الرقمية",
     enDescription:
