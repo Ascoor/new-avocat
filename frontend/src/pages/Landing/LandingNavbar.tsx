@@ -71,12 +71,14 @@ const LandingNavbar: React.FC = () => {
       >
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
+            {/* Display dark BrandLogo before scroll and theme-based after scroll */}
             <BrandLogo
               variant="text"
               className="h-12"
               lang={language}
-              dark={theme === "dark"}
+              dark={isScrolled ? theme === "dark" : true} // Ensure dark before scroll
             />
+ 
 
             <div className="hidden items-center space-x-8 rtl:space-x-reverse lg:flex">
               {navItems.map((item) => (

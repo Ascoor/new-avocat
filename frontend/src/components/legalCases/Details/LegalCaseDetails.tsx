@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useLegalCase } from '@/hooks/useLegalCases';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Badge } from '@/components/ui/badge';
+ 
 import {
   ArrowLeft,
   BadgeCheck,
@@ -48,12 +49,13 @@ const LegalCaseDetails = () => {
   const { t, isRTL } = useLanguage();
   const [activeTab, setActiveTab] = useState('procedures');
   const [overviewExpanded, setOverviewExpanded] = useState(true);
-
+ 
   const OverviewToggleIcon = overviewExpanded
     ? ChevronDown
     : isRTL
     ? ChevronLeft
     : ChevronRight;
+ 
 
   const {
     data: legCase,
@@ -205,7 +207,7 @@ const LegalCaseDetails = () => {
                         </Badge>
                       )}
                     </div>
-                  </div>
+                  </div> 
                   <Button
                     type="button"
                     variant="ghost"
@@ -216,6 +218,7 @@ const LegalCaseDetails = () => {
                   >
                     <OverviewToggleIcon className="h-4 w-4" />
                   </Button>
+ 
                 </div>
 
                 <AnimatePresence initial={false}>
