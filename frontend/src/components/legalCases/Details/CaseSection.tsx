@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { type LucideIcon } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, type LucideIcon } from 'lucide-react';
 import { type ReactNode, useEffect, useState } from 'react';
 
 import { Switch } from '@/components/ui/switch';
@@ -42,6 +42,7 @@ const CaseSection = ({
   }, [open, isControlled]);
 
   const isOpen = isControlled ? open : internalOpen;
+  const ToggleIcon = isOpen ? ChevronDown : isRTL ? ChevronLeft : ChevronRight;
 
   const handleToggle = (nextState?: boolean) => {
     const targetState = typeof nextState === 'boolean' ? nextState : !isOpen;
@@ -77,13 +78,15 @@ const CaseSection = ({
           <div className="flex flex-wrap items-center justify-end gap-2">
             {actions}
             {(toggleLabel || isControlled) && (
-              <div className="flex items-center gap-3 rounded-full border border-border/50 bg-surface-highlight/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <div className="flex items-center gap-2 rounded-full border border-border/50 bg-surface-highlight/70 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 <button
                   type="button"
                   onClick={() => handleToggle()}
-                  className="cursor-pointer select-none text-current"
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-current transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                  aria-label={toggleLabel ?? (isOpen ? 'Collapse section' : 'Expand section')}
                 >
-                  {toggleLabel ?? (isOpen ? 'Collapse' : 'Expand')}
+                  <ToggleIcon className="h-4 w-4" />
+                  <span className="sr-only">{toggleLabel ?? (isOpen ? 'Collapse section' : 'Expand section')}</span>
                 </button>
                 <Switch
                   checked={isOpen}
