@@ -32,13 +32,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (stored === 'ar' || stored === 'en') {
         return stored;
       }
+
+      const browserLanguage =
+        window.navigator.language || window.navigator.languages?.[0] || '';
+      if (browserLanguage) {
+        return browserLanguage.toLowerCase().startsWith('ar') ? 'ar' : 'en';
+      }
     }
 
     if (i18n.language) {
       return i18n.language.startsWith('ar') ? 'ar' : 'en';
     }
 
-    return 'ar';
+    return 'en';
   });
 
   useEffect(() => {
