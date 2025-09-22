@@ -19,7 +19,7 @@ interface AdsSectionProps {
 
 const AdsSection = ({ caseId, onChanged }: AdsSectionProps) => {
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, isRTL } = useLanguage();
   const [ads, setAds] = useState<LegalAd[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -99,22 +99,25 @@ const AdsSection = ({ caseId, onChanged }: AdsSectionProps) => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full border border-border/60 text-sm">
+            <table
+              dir={isRTL ? 'rtl' : 'ltr'}
+              className="min-w-full border border-border/60 text-sm shadow-inner"
+            >
               <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.ads.columns.type')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.ads.columns.number')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.ads.columns.date')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.ads.columns.status')}
                   </th>
-                  <th className="px-4 py-2 text-start">
+                  <th className="px-4 py-2 text-left rtl:text-right">
                     {t('legalCaseDetails.ads.columns.details')}
                   </th>
                   <th className="px-4 py-2 text-center">
@@ -131,23 +134,38 @@ const AdsSection = ({ caseId, onChanged }: AdsSectionProps) => {
                   </tr>
                 )}
                 {ads.map((ad) => (
-                  <tr key={ad.id} className="border-t border-border/40">
-                    <td className="px-4 py-2 text-sm">{ad.legal_ad_type?.name ?? '—'}</td>
-                    <td className="px-4 py-2 text-sm">{ad.number ?? '—'}</td>
-                    <td className="px-4 py-2 text-sm">{ad.date ?? '—'}</td>
-                    <td className="px-4 py-2 text-sm">{ad.status ?? '—'}</td>
-                    <td className="px-4 py-2 text-sm">{ad.details ?? ad.description ?? '—'}</td>
-                    <td className="px-4 py-2 text-center space-x-2 rtl:space-x-reverse">
-                      <Button variant="outline" size="sm" onClick={() => openEditModal(ad)}>
-                        {t('legalCaseDetails.ads.editButton')}
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => setConfirmDelete(ad)}
-                      >
-                        {t('legalCaseDetails.ads.deleteButton')}
-                      </Button>
+                  <tr
+                    key={ad.id}
+                    className="border-t border-border/40 transition-colors hover:bg-muted/20"
+                  >
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {ad.legal_ad_type?.name ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {ad.number ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {ad.date ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {ad.status ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-foreground text-left rtl:text-right">
+                      {ad.details ?? ad.description ?? '—'}
+                    </td>
+                    <td className="px-4 py-2 text-center">
+                      <div className="flex flex-wrap items-center justify-center gap-2">
+                        <Button variant="outline" size="sm" onClick={() => openEditModal(ad)}>
+                          {t('legalCaseDetails.ads.editButton')}
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => setConfirmDelete(ad)}
+                        >
+                          {t('legalCaseDetails.ads.deleteButton')}
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}
