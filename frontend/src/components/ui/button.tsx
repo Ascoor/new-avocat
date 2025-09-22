@@ -15,7 +15,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-card hover:bg-secondary/85",
         outline:
-          "border border-border bg-transparent text-text-strong shadow-card hover:border-accent hover:bg-accent-soft hover:text-accent-foreground",
+          "border border-border bg-transparent text-text-strong shadow-ambient hover:border-accent hover:bg-accent-soft hover:text-accent-foreground hover:shadow-glow",
         ghost: "text-text-muted hover:bg-surface-muted hover:text-text-strong",
         link: "text-primary underline-offset-4 hover:text-primary/80 hover:underline",
         destructive:
@@ -25,9 +25,9 @@ const buttonVariants = cva(
         warning:
           "bg-warning text-warning-foreground shadow-card hover:bg-warning/90 hover:shadow-glow",
         hero:
-          "bg-gradient-hero text-text-inverse shadow-glow font-semibold hover:scale-102",
+          "bg-gradient-hero text-text-inverse shadow-glow-strong font-semibold hover:scale-102 hover:shadow-glow-strong",
         glass:
-          "glass text-text-strong shadow-card hover:border-accent/40 hover:shadow-glow",
+          "glass text-text-strong shadow-ambient hover:border-accent/40 hover:shadow-glow",
         glow:
           "bg-accent text-accent-foreground shadow-glow hover:scale-102 animate-pulseGlow",
       },
