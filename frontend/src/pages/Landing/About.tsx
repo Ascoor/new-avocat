@@ -1,4 +1,4 @@
-import { Building2, Compass, Handshake, Target } from "lucide-react";
+import { Building2, Compass, Handshake, Target } from "lucide-react"; 
 import { useLanguage } from "@/contexts/LanguageContext";
 
 type Pillar = {
@@ -12,6 +12,7 @@ type Pillar = {
 };
 
 const pillars: Pillar[] = [
+ 
   {
     icon: Building2,
     enTitle: "Foundation & Heritage",
@@ -76,6 +77,7 @@ const pillars: Pillar[] = [
       "Ethical governance that safeguards confidentiality, transparency, and accountability.",
     ],
     arPoints: [
+ 
       "بوابات آمنة وتقارير دقيقة ومؤشرات أداء قابلة للقياس في كل مهمة.",
       "حوكمة أخلاقية تضمن السرية والشفافية والمساءلة.",
     ],
@@ -119,11 +121,12 @@ const About: React.FC = () => {
             {copy.title}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
+ 
         </div>
 
         <div className="grid gap-8 md:grid-cols-2">
           {pillars.map((pillar) => {
-            const Icon = pillar.icon;
+            const Icon = pillar.icon; 
             const title = isArabic ? pillar.arTitle : pillar.enTitle;
             const description = isArabic ? pillar.arDescription : pillar.enDescription;
             const points = isArabic ? pillar.arPoints : pillar.enPoints;
@@ -146,11 +149,12 @@ const About: React.FC = () => {
                         }`}
                       >
                         {detailLabel[language]}
+ 
                       </p>
                     </div>
                   </div>
-                </div>
-
+                  <span className="font-arabic text-lg text-accent">{pillar.arTitle}</span>
+                </div> 
                 <div className={`space-y-3 text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
                   <p>{description}</p>
                   <ul className="space-y-2 text-sm">
@@ -163,7 +167,7 @@ const About: React.FC = () => {
                         <span>{point}</span>
                       </li>
                     ))}
-                  </ul>
+                  </ul> 
                 </div>
               </div>
             );

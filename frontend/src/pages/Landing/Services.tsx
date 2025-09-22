@@ -1,8 +1,9 @@
 import type { ComponentType, SVGProps } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { BrainCircuit, CircuitBoard, Scale, ShieldCheck } from "lucide-react";
+import { BrainCircuit, CircuitBoard, Scale, ShieldCheck } from "lucide-react"; 
 import { useLanguage } from "@/contexts/LanguageContext";
+ 
 
 type ServiceItem = {
   en: string;
@@ -55,8 +56,7 @@ const serviceGroups: ServiceGroup[] = [
       { en: "Digital Evidence Forensics", ar: "الأدلة الجنائية الرقمية" },
     ],
   },
-];
-
+]; 
 const highlights = [
   {
     icon: ShieldCheck,
@@ -99,27 +99,30 @@ const Services: React.FC = () => {
           </div>
           <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
           <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
+ 
         </div>
 
         <div className="grid gap-10 lg:grid-cols-2">
           {serviceGroups.map((group) => {
-            const Icon = group.icon;
+            const Icon = group.icon; 
             const title = isArabic ? group.arTitle : group.enTitle;
             const description = isArabic ? group.arDescription : group.enDescription;
             const items = group.items.map((item) => (isArabic ? item.ar : item.en));
 
+ 
             return (
               <Card
                 key={group.enTitle}
                 className="h-full border-border/80 bg-card/80 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
               >
-                <CardContent className="space-y-8 p-8">
+                <CardContent className="space-y-8 p-8"> 
                   <div className="flex items-center gap-3">
                     <div className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold">
                       <Icon className="h-6 w-6" />
+ 
                     </div>
                     <h3 className="text-2xl font-semibold text-foreground">{title}</h3>
-                  </div>
+                  </div> 
 
                   <div className={`space-y-4 text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
                     <p>{description}</p>
@@ -135,13 +138,14 @@ const Services: React.FC = () => {
                       ))}
                     </div>
                   </div>
+ 
                 </CardContent>
               </Card>
             );
           })}
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-12 grid gap-6 md:grid-cols-2"> 
           {highlights.map(({ icon: Icon, en, ar }) => {
             const text = isArabic ? ar : en;
             return (
@@ -158,6 +162,7 @@ const Services: React.FC = () => {
               </div>
             );
           })}
+ 
         </div>
       </div>
     </section>

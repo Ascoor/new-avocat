@@ -1,4 +1,6 @@
+
 import { useLanguage } from "@/contexts/LanguageContext";
+
 import { Cpu, Layers, ShieldLock } from "lucide-react";
 
 type Capability = {
@@ -65,6 +67,7 @@ const capabilities: Capability[] = [
   },
 ];
 
+ 
 const sectionCopy = {
   en: {
     badge: "Capabilities",
@@ -95,20 +98,12 @@ const Capabilities: React.FC = () => {
           </div>
           <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
           <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-3">
-          {capabilities.map((capability) => {
-            const Icon = capability.icon;
-            const title = isArabic ? capability.arTitle : capability.enTitle;
-            const description = isArabic ? capability.arDescription : capability.enDescription;
-            const points = isArabic ? capability.arPoints : capability.enPoints;
-
+ 
             return (
               <div
                 key={capability.enTitle}
                 className="h-full rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
-              >
+              > 
                 <div className="mb-6 flex items-center gap-3">
                   <div className="rounded-2xl bg-primary/10 p-3 text-primary">
                     <Icon className="h-6 w-6" />
@@ -128,7 +123,7 @@ const Capabilities: React.FC = () => {
                         <span>{point}</span>
                       </li>
                     ))}
-                  </ul>
+                  </ul> 
                 </div>
               </div>
             );

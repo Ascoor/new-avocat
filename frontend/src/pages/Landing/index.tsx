@@ -10,9 +10,9 @@ import Insights from "./Insights";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
-const LandingPage: React.FC = () => {
+const LandingPage: React.FC = () => { 
   const { direction } = useLanguage();
-
+ 
   return (
     <>
       <LandingNavbar />

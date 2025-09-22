@@ -1,3 +1,4 @@
+ 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Gavel, MessageSquareQuote, Trophy } from "lucide-react";
 
@@ -12,6 +13,7 @@ type Achievement = {
 };
 
 const achievements: Achievement[] = [
+ 
   {
     icon: Gavel,
     enTitle: "Landmark Cases",
@@ -41,8 +43,9 @@ const achievements: Achievement[] = [
       "96% client satisfaction with bilingual reporting and secured collaboration rooms.",
       "Dedicated digital concierge supporting ministries, sovereign funds, and innovation hubs.",
     ],
-    arDetails: [
+    arDetails: [ 
       "رضا العملاء بنسبة 96٪ بفضل التقارير الدقيقة وغرف التعاون المؤمنة.",
+ 
       "فريق دعم رقمي متخصص لخدمة الوزارات والصناديق السيادية وحاضنات الابتكار.",
     ],
   },
@@ -66,7 +69,7 @@ const achievements: Achievement[] = [
 ];
 
 const metrics = [
-  {
+  { 
     en: "98% digital adoption across client mandates",
     ar: "نسبة تحول رقمي 98٪ في ملفات العملاء",
   },
@@ -123,11 +126,12 @@ const Achievements: React.FC = () => {
               </div>
             );
           })}
+ 
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-3">
           {achievements.map((achievement) => {
-            const Icon = achievement.icon;
+            const Icon = achievement.icon; 
             const title = isArabic ? achievement.arTitle : achievement.enTitle;
             const summary = isArabic ? achievement.arSummary : achievement.enSummary;
             const details = isArabic ? achievement.arDetails : achievement.enDetails;
@@ -158,7 +162,7 @@ const Achievements: React.FC = () => {
                       <span>{detail}</span>
                     </li>
                   ))}
-                </ul>
+                </ul> 
               </div>
             );
           })}

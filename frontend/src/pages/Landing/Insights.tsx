@@ -1,3 +1,4 @@
+ 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { BrainCircuit, Newspaper, ShieldAlert } from "lucide-react";
 
@@ -12,6 +13,7 @@ type Article = {
 };
 
 const articles: Article[] = [
+ 
   {
     icon: BrainCircuit,
     enTitle: "AI Governance for the Modern Law Firm",
@@ -40,13 +42,13 @@ const articles: Article[] = [
     arTitle: "أدلة مكافحة الجرائم الإلكترونية للقطاعات المنظمة",
     enSummary:
       "From financial services to healthcare, explore compliant digital forensics, incident response, and cross-border notification strategies.",
-    arSummary:
+    arSummary: 
       "من الخدمات المالية إلى الرعاية الصحية، استكشف التحقيقات الرقمية المتوافقة، والاستجابة للحوادث، واستراتيجيات الإخطار العابرة للحدود.",
+ 
     enTag: "Cybersecurity",
     arTag: "الأمن السيبراني",
   },
-];
-
+]; 
 const sectionCopy = {
   en: {
     badge: "Insights & Blog",
@@ -78,15 +80,16 @@ const Insights: React.FC = () => {
           </div>
           <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
           <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
+ 
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
           {articles.map((article) => {
-            const Icon = article.icon;
+            const Icon = article.icon; 
             const title = isArabic ? article.arTitle : article.enTitle;
             const summary = isArabic ? article.arSummary : article.enSummary;
             const tag = isArabic ? article.arTag : article.enTag;
-
+ 
             return (
               <article
                 key={article.enTitle}
@@ -95,7 +98,7 @@ const Insights: React.FC = () => {
                 <div className="mb-6 flex items-center gap-3">
                   <div className="rounded-2xl bg-primary/10 p-3 text-primary">
                     <Icon className="h-6 w-6" />
-                  </div>
+                  </div> 
                   <span className="text-xs uppercase tracking-widest text-muted-foreground">{tag}</span>
                 </div>
                 <div className={`space-y-4 ${isArabic ? "text-right" : "text-left"}`}>
@@ -104,6 +107,7 @@ const Insights: React.FC = () => {
                 </div>
                 <div className={`mt-6 flex-1 border-t border-border pt-4 text-sm text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
                   {copy.cta}
+ 
                 </div>
               </article>
             );

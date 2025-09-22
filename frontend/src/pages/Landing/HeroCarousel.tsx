@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; 
 import { useLanguage } from "@/contexts/LanguageContext";
+ 
 import { ChevronLeft, ChevronRight, Mail, Play, ShieldCheck, Sparkles } from "lucide-react";
 
 import heroLegal1 from "@/assets/slides/hero-legal-1.png";
@@ -16,19 +17,20 @@ type SlideCopy = {
 type Slide = {
   id: number;
   image: string;
-  overlay: string;
+  overlay: string; 
   badge: {
     en: string;
     ar: string;
   };
   copy: Record<"en" | "ar", SlideCopy>;
+ 
 };
 
 const slides: Slide[] = [
   {
     id: 1,
     image: heroLegal1,
-    overlay: "bg-gradient-to-r from-primary/90 via-primary/70 to-transparent",
+    overlay: "bg-gradient-to-r from-primary/90 via-primary/70 to-transparent", 
     badge: {
       en: "Legal Digital Transformation",
       ar: "التحول الرقمي القانوني",
@@ -54,12 +56,13 @@ const slides: Slide[] = [
           "سلاسل أدلة رقمية محفوظة مع سجلات تدقيق موثوقة.",
         ],
       },
+ 
     },
   },
   {
     id: 2,
     image: heroDigital2,
-    overlay: "bg-gradient-to-r from-primary-light/90 via-primary/60 to-accent/20",
+    overlay: "bg-gradient-to-r from-primary-light/90 via-primary/60 to-accent/20", 
     badge: {
       en: "AI-Driven Counsel",
       ar: "استشارات مدعومة بالذكاء الاصطناعي",
@@ -116,15 +119,16 @@ const slides: Slide[] = [
           "مراقبة على مدار الساعة تحمي من الاحتيال والتزوير والجرائم السيبرانية.",
         ],
       },
-    },
+    }, 
   },
 ];
 
 const HeroCarousel: React.FC = () => {
   const [current, setCurrent] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
+  const [autoPlay, setAutoPlay] = useState(true); 
   const { language, direction } = useLanguage();
   const isArabic = language === "ar";
+ 
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -136,7 +140,7 @@ const HeroCarousel: React.FC = () => {
 
   const handlePrev = () => {
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-    setAutoPlay(false);
+    setAutoPlay(false); 
   };
 
   const handleNext = () => {
@@ -164,7 +168,7 @@ const HeroCarousel: React.FC = () => {
   const contactLabel = isArabic ? "تواصل مع الخبراء" : "Speak to Counsel";
 
   return (
-    <section id="home" className="relative h-[90vh] min-h-[640px] overflow-hidden" dir={direction}>
+    <section id="home" className="relative h-[90vh] min-h-[640px] overflow-hidden" dir={direction}> 
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
           <div
@@ -177,11 +181,11 @@ const HeroCarousel: React.FC = () => {
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${slide.image})` }}
             />
-            <div className={`absolute inset-0 ${slide.overlay}`} />
+            <div className={`absolute inset-0 ${slide.overlay}`} />  
           </div>
-        ))}
+        </div>
       </div>
-
+ 
       <div className="relative z-10 flex h-full items-center">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-4xl rounded-3xl bg-background/70 p-6 shadow-ambient backdrop-blur lg:p-10">
@@ -232,7 +236,7 @@ const HeroCarousel: React.FC = () => {
           </div>
         </div>
       </div>
-
+ 
       <button
         onClick={handlePrev}
         className="absolute left-6 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-background/30 backdrop-blur transition-all duration-300 hover:border-white/70 hover:bg-background/50"

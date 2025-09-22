@@ -20,7 +20,6 @@ const serviceHighlights = [
   { en: "AI Legal Research", ar: "البحث القانوني بالذكاء الاصطناعي" },
   { en: "Cybersecurity Advisory", ar: "استشارات الأمن السيبراني" },
 ];
-
 const contactDetails = [
   {
     icon: MapPin,
@@ -76,13 +75,16 @@ const Footer: React.FC = () => {
   const isArabic = language === "ar";
   const copy = footerCopy[language];
 
+
   const scrollTo = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
+ 
     <footer className="relative mt-24 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/95 text-white" dir={direction}>
+
       <div className="absolute inset-0 opacity-20">
         <div className="absolute left-10 top-16 h-48 w-48 rounded-full bg-accent/70 blur-3xl" />
         <div className="absolute right-0 bottom-10 h-56 w-56 rounded-full bg-white/50 blur-3xl" />
@@ -91,11 +93,11 @@ const Footer: React.FC = () => {
         <div className="container mx-auto grid gap-12 px-4 py-16 lg:grid-cols-4 lg:px-8">
           <div className="space-y-6">
             <BrandLogo variant="full" className="h-12" lang={language} dark />
-            <p className="text-sm leading-relaxed text-white/80">{copy.mission}</p>
+<            <p className="text-sm leading-relaxed text-white/80">{copy.mission}</p>
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
                 <Scale className="h-6 w-6" />
-              </div>
+               </div>
               <div className="text-xs uppercase tracking-widest text-white/70">{copy.highlight}</div>
             </div>
             <div className="flex gap-3">
@@ -125,11 +127,11 @@ const Footer: React.FC = () => {
                   </li>
                 );
               })}
-            </ul>
+             </ul>
           </div>
 
           <div>
-            <h3 className="font-display text-lg font-semibold text-white">{copy.services}</h3>
+              <h3 className="font-display text-lg font-semibold text-white">{copy.services}</h3>
             <ul className="mt-6 space-y-3 text-sm text-white/80">
               {serviceHighlights.map((service) => {
                 const text = isArabic ? service.ar : service.en;
@@ -143,10 +145,9 @@ const Footer: React.FC = () => {
             <div className="mt-6 rounded-3xl border border-white/20 bg-white/10 p-5">
               <h4 className="font-display text-base font-semibold text-white">{copy.subscribeTitle}</h4>
               <p className="mt-2 text-xs text-white/80">{copy.subscribeBody}</p>
-            </div>
+              </div>
           </div>
-
-          <div className="space-y-5">
+         <div className="space-y-5">
             <h3 className="font-display text-lg font-semibold text-white">{copy.contact}</h3>
             <div className="space-y-4 text-sm text-white/80">
               {contactDetails.map((detail) => {
@@ -166,7 +167,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-white/10 bg-primary/95">
           <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-6 text-xs text-white/80 lg:flex-row lg:px-8">
             <p>{copy.bottom(new Date().getFullYear())}</p>
-          </div>
+           </div>
         </div>
       </div>
     </footer>

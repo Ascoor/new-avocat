@@ -1,3 +1,4 @@
+ 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { GraduationCap, Scale, ShieldCheck, UserCircle2 } from "lucide-react";
 
@@ -11,7 +12,7 @@ type TeamMember = {
   highlights: { en: string; ar: string }[];
 };
 
-const teamMembers: TeamMember[] = [
+const teamMembers: TeamMember[] = [ 
   {
     nameEn: "Mr. Sami Mohamed El-Gamal",
     nameAr: "الأستاذ سامي محمد الجمل",
@@ -52,8 +53,7 @@ const teamMembers: TeamMember[] = [
       },
     ],
   },
-];
-
+]; 
 const leadershipBadges = [
   {
     icon: Scale,
@@ -135,10 +135,11 @@ const Team: React.FC = () => {
                       >
                         <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
                         <span>{highlight}</span>
+ 
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> 
 
                 <div className={`grid gap-4 md:grid-cols-3 ${isArabic ? "text-right" : "text-left"}`}>
                   {leadershipBadges.map(({ icon: Icon, en, ar }) => {
@@ -157,6 +158,7 @@ const Team: React.FC = () => {
               </div>
             );
           })}
+ 
         </div>
       </div>
     </section>
