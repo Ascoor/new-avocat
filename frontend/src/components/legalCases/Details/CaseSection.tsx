@@ -1,10 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { type LucideIcon } from 'lucide-react';
 import { type ReactNode, useEffect, useState } from 'react';
-
-import { Switch } from '@/components/ui/switch';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { cn } from '@/lib/utils';
+import { ChevronDown, ChevronUp } from 'lucide-react'; // استيراد الأسهم المناسبة
 
 interface CaseSectionProps {
   icon: LucideIcon;
@@ -33,7 +30,6 @@ const CaseSection = ({
 }: CaseSectionProps) => {
   const isControlled = typeof onOpenChange === 'function';
   const [internalOpen, setInternalOpen] = useState(open);
-  const { isRTL } = useLanguage();
 
   useEffect(() => {
     if (!isControlled) {
@@ -54,13 +50,8 @@ const CaseSection = ({
 
   return (
     <section
-      dir={isRTL ? 'rtl' : 'ltr'}
-      className={cn(
-        'relative overflow-hidden rounded-3xl border border-border/70 bg-card/60 p-6 shadow-card backdrop-blur',
-        className,
-      )}
+      className={`relative overflow-hidden rounded-3xl border border-border/70 bg-card/60 p-6 shadow-card backdrop-blur ${className}`}
     >
-      <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-70" />
       <div className="relative flex flex-col gap-4">
         <div className="flex flex-col gap-4 border-b border-border/60 pb-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
@@ -69,30 +60,23 @@ const CaseSection = ({
             </div>
             <div className="space-y-1">
               <h2 className="text-lg font-semibold text-foreground">{title}</h2>
-              {subtitle && (
-                <p className="text-sm text-muted-foreground">{subtitle}</p>
-              )}
+              {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
             </div>
           </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            {actions}
-            {(toggleLabel || isControlled) && (
-              <div className="flex items-center gap-3 rounded-full border border-border/50 bg-surface-highlight/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                <button
-                  type="button"
-                  onClick={() => handleToggle()}
-                  className="cursor-pointer select-none text-current"
-                >
-                  {toggleLabel ?? (isOpen ? 'Collapse' : 'Expand')}
-                </button>
-                <Switch
-                  checked={isOpen}
-                  onCheckedChange={(value) => handleToggle(value)}
-                  aria-label={toggleLabel ?? (isOpen ? 'Collapse' : 'Expand')}
-                  className="data-[state=checked]:bg-primary"
-                />
-              </div>
-            )}
+          <div className="flex items-center gap-3">
+            {/* زر العرض/إخفاء مع السهم */}
+            <button
+              type="button"
+              onClick={() => handleToggle()}
+              className="flex items-center gap-2 text-sm font-semibold text-muted-foreground"
+            >
+              {isOpen ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+              {isOpen ? 'Collapse' : 'Expand'}
+            </button>
           </div>
         </div>
 
@@ -106,7 +90,7 @@ const CaseSection = ({
               transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
               className="overflow-hidden"
             >
-              <div className={cn('mt-1 space-y-4', contentClassName)}>{children}</div>
+              <div className={contentClassName}>{children}</div>
             </motion.div>
           )}
         </AnimatePresence>

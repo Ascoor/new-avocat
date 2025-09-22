@@ -7,34 +7,31 @@ import {
   addLegalCaseCourts,
   removeLegalCaseCourt,
 } from '@/api/legalCases.service';
+import { ArrowLeft } from 'lucide-react'; // Import the ArrowLeft icon
+import { useNavigate } from 'react-router-dom'; // For navigation
+
 import { getCourts } from '@/api/courts.service';
 import { Court } from '@/types/legalCase';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Landmark } from 'lucide-react';
+import { Landmark, ChevronDown, ChevronUp } from 'lucide-react'; // Chevron icons for toggle
 import CaseSection from './CaseSection';
+
+const YEARS = Array.from({ length: 50 }, (_, index) => String(2000 + index));
 
 interface CourtsSectionProps {
   caseId: string;
-  courts: Court[];
+  courts: any[]; // Define the court type properly
   onChanged: () => void;
 }
-
-interface NewCourt {
-  case_number: string;
-  case_year: string;
-  court_level_id: string;
-  court_id: string;
-}
-
-const YEARS = Array.from({ length: 50 }, (_, index) => String(2000 + index));
 
 const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
   const { toast } = useToast();
   const { t } = useLanguage();
   const [availableCourts, setAvailableCourts] = useState<Court[]>([]);
-  const [newCourts, setNewCourts] = useState<NewCourt[]>([]);
+  const [newCourts, setNewCourts] = useState<any[]>([]); // Define new court type properly
   const [confirmDelete, setConfirmDelete] = useState<{ id: string; name: string } | null>(null);
-  const [sectionOpen, setSectionOpen] = useState(true);
+  const [sectionOpen, setSectionOpen] = useState(true); // Track section visibility
+  const navigate = useNavigate(); // For navigating back
 
   useEffect(() => {
     const fetchCourts = async () => {
@@ -84,7 +81,7 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
     ]);
   };
 
-  const updateNewCourt = (index: number, field: keyof NewCourt, value: string) => {
+  const updateNewCourt = (index: number, field: string, value: string) => {
     setNewCourts((prev) => {
       const next = [...prev];
       next[index] = { ...next[index], [field]: value };
@@ -170,13 +167,21 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
         </Button>
       }
     >
+             <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate(-1)} // Navigate back to the previous page
+            className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">{t('legalCaseDetails.back')}</span>
+          </Button>
+          
+      {/* New courts input section */}
       {newCourts.length > 0 && (
         <div className="space-y-4 rounded-lg border border-dashed border-border/60 bg-muted/20 p-4">
           {newCourts.map((court, index) => (
-            <div
-              key={`new-court-${index}`}
-              className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
-            >
+            <div key={`new-court-${index}`} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               <Input
                 value={court.case_number}
                 onChange={(event) => updateNewCourt(index, 'case_number', event.target.value)}
@@ -232,25 +237,16 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
         </div>
       )}
 
+      {/* Display list of existing courts */}
       <div className="overflow-x-auto">
         <table className="min-w-full border border-border/60 text-sm">
           <thead className="bg-muted/40 text-xs uppercase text-muted-foreground">
             <tr>
-              <th className="px-4 py-2 text-start">
-                {t('legalCaseDetails.courts.columns.court')}
-              </th>
-              <th className="px-4 py-2 text-start">
-                {t('legalCaseDetails.courts.columns.level')}
-              </th>
-              <th className="px-4 py-2 text-start">
-                {t('legalCaseDetails.courts.columns.caseNumber')}
-              </th>
-              <th className="px-4 py-2 text-start">
-                {t('legalCaseDetails.courts.columns.caseYear')}
-              </th>
-              <th className="px-4 py-2 text-center">
-                {t('legalCaseDetails.courts.columns.actions')}
-              </th>
+              <th className="px-4 py-2 text-start">{t('legalCaseDetails.courts.columns.court')}</th>
+              <th className="px-4 py-2 text-start">{t('legalCaseDetails.courts.columns.level')}</th>
+              <th className="px-4 py-2 text-start">{t('legalCaseDetails.courts.columns.caseNumber')}</th>
+              <th className="px-4 py-2 text-start">{t('legalCaseDetails.courts.columns.caseYear')}</th>
+              <th className="px-4 py-2 text-center">{t('legalCaseDetails.courts.columns.actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -282,6 +278,7 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
         </table>
       </div>
 
+      {/* Confirm deletion dialog */}
       <ConfirmDialog
         open={!!confirmDelete}
         title={t('legalCaseDetails.courts.deleteConfirmTitle', {

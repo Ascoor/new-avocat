@@ -302,7 +302,7 @@ const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
               'flex h-16 items-center border-b border-sidebar-border/50 px-4 backdrop-blur-sm',
               isCollapsed ? 'justify-center' : 'justify-between',
             )}
-            style={{ borderColor: 'var(--sidebar-border-color)' }}
+            style={{ borderColor: 'var(--sidebar-border-col or)' }}
           >
             {!isCollapsed && (
               <NavLink
