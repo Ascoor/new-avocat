@@ -7,7 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useLegalCase } from '@/hooks/useLegalCases';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
+ 
 import {
   ArrowLeft,
   BadgeCheck,
@@ -20,6 +20,9 @@ import {
   Phone,
   Scale,
   UserCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass-card';
@@ -46,6 +49,13 @@ const LegalCaseDetails = () => {
   const { t, isRTL } = useLanguage();
   const [activeTab, setActiveTab] = useState('procedures');
   const [overviewExpanded, setOverviewExpanded] = useState(true);
+ 
+  const OverviewToggleIcon = overviewExpanded
+    ? ChevronDown
+    : isRTL
+    ? ChevronLeft
+    : ChevronRight;
+ 
 
   const {
     data: legCase,
@@ -197,18 +207,18 @@ const LegalCaseDetails = () => {
                         </Badge>
                       )}
                     </div>
-                  </div>
-                  <div className="flex items-center gap-3 rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                    <span className="cursor-pointer select-none" onClick={() => setOverviewExpanded((prev) => !prev)}>
-                      {overviewExpanded ? t('common.collapse') : t('common.expand')}
-                    </span>
-                    <Switch
-                      checked={overviewExpanded}
-                      onCheckedChange={setOverviewExpanded}
-                      aria-label={overviewExpanded ? t('common.collapse') : t('common.expand')}
-                      className="data-[state=checked]:bg-primary"
-                    />
-                  </div>
+                  </div> 
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setOverviewExpanded((prev) => !prev)}
+                    aria-label={overviewExpanded ? t('common.collapse') : t('common.expand')}
+                    className="h-10 w-10 rounded-full border border-border/60 bg-background/60 text-muted-foreground transition hover:border-primary/60 hover:bg-primary/10 hover:text-primary"
+                  >
+                    <OverviewToggleIcon className="h-4 w-4" />
+                  </Button>
+ 
                 </div>
 
                 <AnimatePresence initial={false}>
