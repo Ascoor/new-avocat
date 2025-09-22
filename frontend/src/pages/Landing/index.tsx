@@ -1,51 +1,29 @@
 import LandingNavbar from "./LandingNavbar";
 import HeroCarousel from "./HeroCarousel";
-import Features from "./Features";
-import Services from "./Services";
 import About from "./About";
-import Testimonials from "./Testimonials";
-import CallToAction from "./CallToAction";
+import Services from "./Services";
+import Capabilities from "./Capabilities";
+import Achievements from "./Achievements";
+import Team from "./Team";
+import Insights from "./Insights";
 import Contact from "./Contact";
 import Footer from "./Footer";
-import { useLanguage } from "@/contexts/LanguageContext";
-
-const footerServiceKeys = [
-  "caseManagement",
-  "legalConsulting",
-  "digitalTraining",
-  "egovSupport",
-] as const;
 
 const LandingPage: React.FC = () => {
-  const { t } = useLanguage();
-
-  const footerServices = footerServiceKeys.map((key) =>
-    t(`landing.footer.services.${key}`)
-  );
-
-  const footerContact = {
-    email: t("landing.footer.contact.email"),
-    phone: t("landing.footer.contact.phone"),
-    address: t("landing.footer.contact.address"),
-  };
-
   return (
     <>
       <LandingNavbar />
       <main className="bg-background text-text-body">
         <HeroCarousel />
-        <Features />
-        <Services />
         <About />
-        <Testimonials />
-        <CallToAction />
+        <Services />
+        <Capabilities />
+        <Achievements />
+        <Team />
+        <Insights />
         <Contact />
       </main>
-      <Footer
-        services={footerServices}
-        contact={footerContact}
-        logoVariant="text"
-      />
+      <Footer />
     </>
   );
 };
