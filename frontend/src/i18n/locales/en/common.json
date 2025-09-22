@@ -240,12 +240,14 @@
       }
     },
     "hero": {
+      "eyebrow": "Digital legal ops",
       "title": "Bridging Law & Digital Transformation",
       "subtitle": "Avocat Law Firm empowers legal professionals with digital tools, secure data systems, and modern training for a new era of legal practice.",
       "primaryCta": "Try Demo",
       "secondaryCta": "Contact Us"
     },
     "features": {
+      "eyebrow": "Platform pillars",
       "title": "Core Features",
       "subtitle": "Purpose-built capabilities for digital-first legal teams.",
       "items": {
@@ -268,6 +270,7 @@
       }
     },
     "services": {
+      "eyebrow": "Who we serve",
       "title": "Our Services",
       "subtitle": "Support for every segment of the legal industry.",
       "items": {
@@ -290,12 +293,15 @@
       }
     },
     "about": {
+      "eyebrow": "Our mission",
       "title": "About Avocat Law Firm",
       "description": "Avocat Law Firm is a leader in legal digital transformation, offering services that blend traditional legal excellence with modern technology. Our team empowers law firms, legal departments, and individual lawyers to succeed in the digital era.",
       "imageAlt": "Law Team"
     },
     "testimonials": {
+      "eyebrow": "Trusted voices",
       "title": "What Our Clients Say",
+      "subtitle": "Modern legal teams that rely on Avocat to stay ahead.",
       "items": {
         "partner": {
           "name": "Legal Partner",
@@ -314,6 +320,7 @@
       "secondary": "Contact Us"
     },
     "contact": {
+      "eyebrow": "Let's connect",
       "title": "Contact Us",
       "subtitle": "We would love to hear from you. Share your questions and our team will respond shortly.",
       "form": {

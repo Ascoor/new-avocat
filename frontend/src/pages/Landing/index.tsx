@@ -32,7 +32,7 @@ const LandingPage: React.FC = () => {
   return (
     <>
       <LandingNavbar />
-      <main>
+      <main className="bg-background text-text-body">
         <Hero />
         <Features />
         <Services />
