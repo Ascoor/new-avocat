@@ -1,3 +1,4 @@
+import { useLanguage } from "@/contexts/LanguageContext";
 import LandingNavbar from "./LandingNavbar";
 import HeroCarousel from "./HeroCarousel";
 import About from "./About";
@@ -9,11 +10,13 @@ import Insights from "./Insights";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
-const LandingPage: React.FC = () => {
+const LandingPage: React.FC = () => { 
+  const { direction } = useLanguage();
+ 
   return (
     <>
       <LandingNavbar />
-      <main className="bg-background text-text-body">
+      <main dir={direction} className="bg-background text-text-body">
         <HeroCarousel />
         <About />
         <Services />

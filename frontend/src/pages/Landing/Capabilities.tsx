@@ -1,3 +1,6 @@
+
+import { useLanguage } from "@/contexts/LanguageContext";
+
 import { Cpu, Layers, ShieldLock } from "lucide-react";
 
 type Capability = {
@@ -64,75 +67,63 @@ const capabilities: Capability[] = [
   },
 ];
 
+ 
+const sectionCopy = {
+  en: {
+    badge: "Capabilities",
+    title: "Intelligence, Security, and Digital Mastery",
+    description:
+      "Tailored operating models unite legal excellence, predictive analytics, and uncompromising cybersecurity.",
+  },
+  ar: {
+    badge: "الإمكانيات",
+    title: "الذكاء والحماية والتمكن الرقمي",
+    description:
+      "نماذج تشغيل مخصصة توحد التميز القانوني والتحليلات التنبؤية والأمن السيبراني الصارم.",
+  },
+};
+
 const Capabilities: React.FC = () => {
+  const { language, direction } = useLanguage();
+  const isArabic = language === "ar";
+  const copy = sectionCopy[language];
+
   return (
-    <section id="capabilities" className="relative overflow-hidden py-24">
+    <section id="capabilities" className="relative overflow-hidden py-24" dir={direction}>
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/15 to-background" />
       <div className="container relative mx-auto px-4 lg:px-8">
         <div className="mb-16 text-center">
-          <div className="inline-flex items-center space-x-3 rounded-full border border-border bg-card px-5 py-2 text-xs uppercase tracking-widest text-muted-foreground">
-            <span className="font-english">Capabilities</span>
-            <span className="text-muted-foreground">|</span>
-            <span className="font-arabic">الإمكانيات</span>
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
+            <span>{copy.badge}</span>
           </div>
-          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">
-            <span className="font-english">Intelligence, Security, and Digital Mastery</span>
-            <span className="font-arabic text-accent">الذكاء والحماية والتمكن الرقمي</span>
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
-            Tailored operating models unite legal excellence, predictive analytics, and uncompromising cybersecurity.
-          </p>
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-3">
-          {capabilities.map((capability) => {
-            const Icon = capability.icon;
+          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
+          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
+ 
             return (
               <div
                 key={capability.enTitle}
                 className="h-full rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
-              >
-                <div className="mb-6 flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="rounded-2xl bg-primary/10 p-3 text-primary">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-english text-xl font-semibold text-foreground">
-                        {capability.enTitle}
-                      </h3>
-                      <p className="font-arabic text-lg text-accent">{capability.arTitle}</p>
-                    </div>
+              > 
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                    <Icon className="h-6 w-6" />
                   </div>
+                  <h3 className="text-xl font-semibold text-foreground">{title}</h3>
                 </div>
 
-                <div className="space-y-4">
-                  <div dir="ltr" className="space-y-3 text-left">
-                    <p className="font-english text-base leading-relaxed text-muted-foreground">
-                      {capability.enDescription}
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {capability.enPoints.map((point) => (
-                        <li key={point} className="flex items-start space-x-2">
-                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                          <span className="font-english leading-relaxed">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div dir="rtl" className="space-y-3 text-right">
-                    <p className="font-arabic text-base leading-relaxed text-muted-foreground">
-                      {capability.arDescription}
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {capability.arPoints.map((point) => (
-                        <li key={point} className="flex items-start space-x-2 space-x-reverse">
-                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent" />
-                          <span className="font-arabic leading-relaxed">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className={`space-y-3 text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
+                  <p>{description}</p>
+                  <ul className="space-y-2 text-sm">
+                    {points.map((point) => (
+                      <li
+                        key={point}
+                        className={`flex items-start gap-2 ${isArabic ? "flex-row-reverse text-right" : ""}`}
+                      >
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul> 
                 </div>
               </div>
             );

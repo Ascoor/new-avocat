@@ -1,7 +1,9 @@
 import type { ComponentType, SVGProps } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { BrainCircuit, CircuitBoard, Scale, ShieldCheck } from "lucide-react";
+import { BrainCircuit, CircuitBoard, Scale, ShieldCheck } from "lucide-react"; 
+import { useLanguage } from "@/contexts/LanguageContext";
+ 
 
 type ServiceItem = {
   en: string;
@@ -54,8 +56,7 @@ const serviceGroups: ServiceGroup[] = [
       { en: "Digital Evidence Forensics", ar: "الأدلة الجنائية الرقمية" },
     ],
   },
-];
-
+]; 
 const highlights = [
   {
     icon: ShieldCheck,
@@ -69,105 +70,99 @@ const highlights = [
   },
 ];
 
+const sectionCopy = {
+  en: {
+    badge: "Legal & Digital Services",
+    title: "Full-Spectrum Counsel and Intelligent Platforms",
+    description:
+      "Precision-crafted services blending advocacy, governance, and digital acceleration for ambitious institutions.",
+  },
+  ar: {
+    badge: "الخدمات القانونية والرقمية",
+    title: "منظومة متكاملة من الاستشارات والمنصات الذكية",
+    description:
+      "خدمات مصممة بعناية تمزج بين المرافعة والحوكمة والتسريع الرقمي للمؤسسات الطموحة.",
+  },
+};
+
 const Services: React.FC = () => {
+  const { language, direction } = useLanguage();
+  const isArabic = language === "ar";
+  const copy = sectionCopy[language];
+
   return (
-    <section id="services" className="bg-surface-highlight/60 py-24">
+    <section id="services" className="bg-surface-highlight/60 py-24" dir={direction}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className="mb-16 text-center">
-          <div className="inline-flex items-center space-x-3 rounded-full border border-border bg-card px-5 py-2 text-xs uppercase tracking-widest text-muted-foreground">
-            <span className="font-english">Legal & Digital Services</span>
-            <span className="text-muted-foreground">|</span>
-            <span className="font-arabic">خدمات قانونية ورقمية</span>
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
+            <span>{copy.badge}</span>
           </div>
-          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">
-            <span className="block font-english">Full-Spectrum Counsel and Intelligent Platforms</span>
-            <span className="font-arabic text-accent">منظومة متكاملة من الاستشارات والمنصات الذكية</span>
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
-            Precision-crafted services blending advocacy, governance, and digital acceleration for ambitious institutions.
-          </p>
+          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
+          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
+ 
         </div>
 
         <div className="grid gap-10 lg:grid-cols-2">
           {serviceGroups.map((group) => {
-            const Icon = group.icon;
+            const Icon = group.icon; 
+            const title = isArabic ? group.arTitle : group.enTitle;
+            const description = isArabic ? group.arDescription : group.enDescription;
+            const items = group.items.map((item) => (isArabic ? item.ar : item.en));
+
+ 
             return (
               <Card
                 key={group.enTitle}
                 className="h-full border-border/80 bg-card/80 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
               >
-                <CardContent className="space-y-8 p-8">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold">
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <div className="text-left">
-                        <h3 className="font-english text-2xl font-semibold text-foreground">
-                          {group.enTitle}
-                        </h3>
-                        <span className="font-arabic text-lg text-accent">{group.arTitle}</span>
-                      </div>
+                <CardContent className="space-y-8 p-8"> 
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold">
+                      <Icon className="h-6 w-6" />
+ 
                     </div>
-                  </div>
+                    <h3 className="text-2xl font-semibold text-foreground">{title}</h3>
+                  </div> 
 
-                  <div className="grid gap-6 md:grid-cols-2">
-                    <div dir="ltr" className="space-y-4 text-left">
-                      <p className="font-english text-base leading-relaxed text-muted-foreground">
-                        {group.enDescription}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {group.items.map((item) => (
-                          <Badge
-                            key={item.en}
-                            variant="outline"
-                            className="border-border bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground/90"
-                          >
-                            <span className="font-english">{item.en}</span>
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <div dir="rtl" className="space-y-4 text-right">
-                      <p className="font-arabic text-base leading-relaxed text-muted-foreground">
-                        {group.arDescription}
-                      </p>
-                      <div className="flex flex-wrap justify-end gap-2">
-                        {group.items.map((item) => (
-                          <Badge
-                            key={item.ar}
-                            variant="outline"
-                            className="border-border bg-background/60 px-4 py-2 text-xs font-semibold tracking-wide text-muted-foreground/90"
-                          >
-                            <span className="font-arabic">{item.ar}</span>
-                          </Badge>
-                        ))}
-                      </div>
+                  <div className={`space-y-4 text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
+                    <p>{description}</p>
+                    <div className={`flex flex-wrap gap-2 ${isArabic ? "justify-end" : ""}`}>
+                      {items.map((item) => (
+                        <Badge
+                          key={item}
+                          variant="outline"
+                          className="border-border bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground/90"
+                        >
+                          {item}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
+ 
                 </CardContent>
               </Card>
             );
           })}
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {highlights.map(({ icon: Icon, en, ar }) => (
-            <div
-              key={en}
-              className="rounded-3xl border border-border bg-gradient-to-br from-background via-card to-background p-6 shadow-ambient"
-            >
-              <div className="flex items-start gap-4">
-                <div className="rounded-2xl bg-primary/10 p-3 text-primary">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <div className="space-y-2">
-                  <p className="font-english text-sm text-muted-foreground">{en}</p>
-                  <p className="font-arabic text-sm text-muted-foreground">{ar}</p>
+        <div className="mt-12 grid gap-6 md:grid-cols-2"> 
+          {highlights.map(({ icon: Icon, en, ar }) => {
+            const text = isArabic ? ar : en;
+            return (
+              <div
+                key={en}
+                className="rounded-3xl border border-border bg-gradient-to-br from-background via-card to-background p-6 shadow-ambient"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <p className={`text-sm text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>{text}</p>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
+ 
         </div>
       </div>
     </section>

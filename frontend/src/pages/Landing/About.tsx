@@ -1,6 +1,18 @@
-import { Building2, Compass, Handshake, Target } from "lucide-react";
+import { Building2, Compass, Handshake, Target } from "lucide-react"; 
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const pillars = [
+type Pillar = {
+  icon: typeof Building2;
+  enTitle: string;
+  arTitle: string;
+  enDescription: string;
+  arDescription: string;
+  enPoints: string[];
+  arPoints: string[];
+};
+
+const pillars: Pillar[] = [
+ 
   {
     icon: Building2,
     enTitle: "Foundation & Heritage",
@@ -65,84 +77,97 @@ const pillars = [
       "Ethical governance that safeguards confidentiality, transparency, and accountability.",
     ],
     arPoints: [
-      "بوابات آمنة وتقارير ثنائية اللغة ومؤشرات أداء قابلة للقياس في كل مهمة.",
+ 
+      "بوابات آمنة وتقارير دقيقة ومؤشرات أداء قابلة للقياس في كل مهمة.",
       "حوكمة أخلاقية تضمن السرية والشفافية والمساءلة.",
     ],
   },
 ];
 
+const introCopy = {
+  en: {
+    badge: "About Avocat",
+    title: "Prestige, Innovation, and Trusted Counsel",
+    description:
+      "We champion digital legal transformation that honours heritage while unlocking smarter, faster justice for every client.",
+  },
+  ar: {
+    badge: "عن أفوكات",
+    title: "الفخامة والابتكار وخدمات موثوقة",
+    description:
+      "نقود التحول الرقمي القانوني مع الحفاظ على الإرث وتقديم عدالة أذكى وأسرع لكل عميل.",
+  },
+};
+
+const detailLabel = {
+  en: "Digital Leadership",
+  ar: "ريادة رقمية",
+};
+
 const About: React.FC = () => {
+  const { language, direction } = useLanguage();
+  const isArabic = language === "ar";
+  const copy = introCopy[language];
+
   return (
-    <section id="about" className="relative overflow-hidden py-24">
+    <section id="about" className="relative overflow-hidden py-24" dir={direction}>
       <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-background to-background" />
       <div className="container relative mx-auto px-4 lg:px-8">
         <div className="mb-16 text-center">
-          <div className="inline-flex items-center space-x-3 rounded-full border border-border bg-card px-5 py-2 text-xs uppercase tracking-widest text-muted-foreground">
-            <span className="font-english">About Avocat</span>
-            <span className="text-muted-foreground">|</span>
-            <span className="font-arabic">عن أفوكات</span>
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
+            <span>{copy.badge}</span>
           </div>
           <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">
-            <span className="font-english block">Prestige, Innovation, and Trusted Counsel</span>
-            <span className="font-arabic text-accent">الفخامة والابتكار وثقة العملاء</span>
+            {copy.title}
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
-            We champion digital legal transformation that honours heritage while unlocking smarter, faster justice for every client.
-          </p>
+          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
+ 
         </div>
 
         <div className="grid gap-8 md:grid-cols-2">
           {pillars.map((pillar) => {
-            const Icon = pillar.icon;
+            const Icon = pillar.icon; 
+            const title = isArabic ? pillar.arTitle : pillar.enTitle;
+            const description = isArabic ? pillar.arDescription : pillar.enDescription;
+            const points = isArabic ? pillar.arPoints : pillar.enPoints;
+
             return (
               <div
                 key={pillar.enTitle}
-                className="card-elevated group flex h-full flex-col gap-6 rounded-3xl border border-border bg-card/70 p-8 shadow-ambient backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
+                className="group flex h-full flex-col gap-6 rounded-3xl border border-border bg-card/70 p-8 shadow-ambient backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
                     <div className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold">
                       <Icon className="h-6 w-6" />
                     </div>
-                    <div className="text-left">
-                      <h3 className="font-english text-xl font-semibold text-foreground">
-                        {pillar.enTitle}
-                      </h3>
-                      <p className="text-sm uppercase tracking-widest text-muted-foreground">
-                        Excellence | تميز
+                    <div className={`${isArabic ? "text-right" : "text-left"}`}>
+                      <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+                      <p
+                        className={`text-sm text-muted-foreground ${
+                          isArabic ? "" : "uppercase tracking-widest"
+                        }`}
+                      >
+                        {detailLabel[language]}
+ 
                       </p>
                     </div>
                   </div>
                   <span className="font-arabic text-lg text-accent">{pillar.arTitle}</span>
-                </div>
-
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div dir="ltr" className="space-y-3 text-left">
-                    <p className="font-english text-base leading-relaxed text-muted-foreground">
-                      {pillar.enDescription}
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {pillar.enPoints.map((point) => (
-                        <li key={point} className="flex items-start space-x-2">
-                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                          <span className="font-english leading-relaxed">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div dir="rtl" className="space-y-3 text-right">
-                    <p className="font-arabic text-base leading-relaxed text-muted-foreground">
-                      {pillar.arDescription}
-                    </p>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {pillar.arPoints.map((point) => (
-                        <li key={point} className="flex items-start space-x-2 space-x-reverse">
-                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent" />
-                          <span className="font-arabic leading-relaxed">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                </div> 
+                <div className={`space-y-3 text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
+                  <p>{description}</p>
+                  <ul className="space-y-2 text-sm">
+                    {points.map((point) => (
+                      <li
+                        key={point}
+                        className={`flex items-start gap-2 ${isArabic ? "flex-row-reverse text-right" : ""}`}
+                      >
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul> 
                 </div>
               </div>
             );

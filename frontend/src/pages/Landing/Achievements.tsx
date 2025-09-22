@@ -1,6 +1,19 @@
+ 
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Gavel, MessageSquareQuote, Trophy } from "lucide-react";
 
-const achievements = [
+type Achievement = {
+  icon: typeof Gavel;
+  enTitle: string;
+  arTitle: string;
+  enSummary: string;
+  arSummary: string;
+  enDetails: string[];
+  arDetails: string[];
+};
+
+const achievements: Achievement[] = [
+ 
   {
     icon: Gavel,
     enTitle: "Landmark Cases",
@@ -30,8 +43,9 @@ const achievements = [
       "96% client satisfaction with bilingual reporting and secured collaboration rooms.",
       "Dedicated digital concierge supporting ministries, sovereign funds, and innovation hubs.",
     ],
-    arDetails: [
-      "رضا العملاء بنسبة 96٪ بفضل التقارير ثنائية اللغة وغرف التعاون المؤمنة.",
+    arDetails: [ 
+      "رضا العملاء بنسبة 96٪ بفضل التقارير الدقيقة وغرف التعاون المؤمنة.",
+ 
       "فريق دعم رقمي متخصص لخدمة الوزارات والصناديق السيادية وحاضنات الابتكار.",
     ],
   },
@@ -55,97 +69,100 @@ const achievements = [
 ];
 
 const metrics = [
-  {
-    labelEn: "98% digital adoption across client mandates",
-    labelAr: "نسبة تحول رقمي 98٪ في ملفات العملاء",
+  { 
+    en: "98% digital adoption across client mandates",
+    ar: "نسبة تحول رقمي 98٪ في ملفات العملاء",
   },
   {
-    labelEn: "45+ jurisdictions coordinated with multilingual teams",
-    labelAr: "أكثر من 45 ولاية قضائية بدعم فرق متعددة اللغات",
+    en: "45+ jurisdictions coordinated with multilingual teams",
+    ar: "أكثر من 45 ولاية قضائية بدعم فرق متعددة اللغات",
   },
   {
-    labelEn: "24/7 incident response and legal command centers",
-    labelAr: "مراكز قيادة واستجابة قانونية على مدار الساعة",
+    en: "24/7 incident response and legal command centers",
+    ar: "مراكز قيادة واستجابة قانونية على مدار الساعة",
   },
 ];
 
+const sectionCopy = {
+  en: {
+    badge: "Achievements",
+    title: "Proven Outcomes, Trusted by Leaders",
+    description:
+      "Landmark victories, transformative partnerships, and digitally-enabled judgments that redefine legal excellence.",
+  },
+  ar: {
+    badge: "الإنجازات",
+    title: "نتائج مثبتة يثق بها القادة",
+    description:
+      "انتصارات مفصلية وشراكات تحولية وأحكام رقمية تعيد تعريف التميز القانوني.",
+  },
+};
+
 const Achievements: React.FC = () => {
+  const { language, direction } = useLanguage();
+  const isArabic = language === "ar";
+  const copy = sectionCopy[language];
+
   return (
-    <section id="achievements" className="bg-background py-24">
+    <section id="achievements" className="bg-background py-24" dir={direction}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className="mb-16 text-center">
-          <div className="inline-flex items-center space-x-3 rounded-full border border-border bg-card px-5 py-2 text-xs uppercase tracking-widest text-muted-foreground">
-            <span className="font-english">Achievements</span>
-            <span className="text-muted-foreground">|</span>
-            <span className="font-arabic">الإنجازات</span>
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
+            <span>{copy.badge}</span>
           </div>
-          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">
-            <span className="font-english">Proven Outcomes, Trusted by Leaders</span>
-            <span className="font-arabic text-accent">نتائج مثبتة يثق بها القادة</span>
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
-            Landmark victories, transformative partnerships, and digitally-enabled judgments that redefine legal excellence.
-          </p>
+          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
+          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {metrics.map((metric) => (
-            <div
-              key={metric.labelEn}
-              className="rounded-3xl border border-border bg-gradient-to-br from-primary/5 via-background to-background p-6 text-center shadow-ambient"
-            >
-              <p className="font-english text-sm font-semibold text-primary">{metric.labelEn}</p>
-              <p className="font-arabic text-sm text-muted-foreground">{metric.labelAr}</p>
-            </div>
-          ))}
+          {metrics.map((metric) => {
+            const label = isArabic ? metric.ar : metric.en;
+            return (
+              <div
+                key={metric.en}
+                className="rounded-3xl border border-border bg-gradient-to-br from-primary/5 via-background to-background p-6 text-center shadow-ambient"
+              >
+                <p className="text-sm font-semibold text-primary">{label}</p>
+              </div>
+            );
+          })}
+ 
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-3">
           {achievements.map((achievement) => {
-            const Icon = achievement.icon;
+            const Icon = achievement.icon; 
+            const title = isArabic ? achievement.arTitle : achievement.enTitle;
+            const summary = isArabic ? achievement.arSummary : achievement.enSummary;
+            const details = isArabic ? achievement.arDetails : achievement.enDetails;
+
             return (
               <div
                 key={achievement.enTitle}
-                className="flex h-full flex-col rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
+                className="flex h-full flex-col gap-6 rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
               >
-                <div className="mb-6 flex items-center space-x-3">
+                <div className="flex items-center gap-3">
                   <div className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <div>
-                    <h3 className="font-english text-xl font-semibold text-foreground">{achievement.enTitle}</h3>
-                    <p className="font-arabic text-lg text-accent">{achievement.arTitle}</p>
-                  </div>
+                  <h3 className="text-xl font-semibold text-foreground">{title}</h3>
                 </div>
 
-                <div className="flex flex-1 flex-col justify-between space-y-6">
-                  <div className="space-y-4">
-                    <p className="font-english text-base leading-relaxed text-muted-foreground">
-                      {achievement.enSummary}
-                    </p>
-                    <p className="font-arabic text-base leading-relaxed text-muted-foreground">
-                      {achievement.arSummary}
-                    </p>
-                  </div>
-                  <div className="grid gap-4">
-                    <div dir="ltr" className="space-y-2 text-left text-sm text-muted-foreground">
-                      {achievement.enDetails.map((detail) => (
-                        <div key={detail} className="flex items-start space-x-2">
-                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                          <span className="font-english leading-relaxed">{detail}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div dir="rtl" className="space-y-2 text-right text-sm text-muted-foreground">
-                      {achievement.arDetails.map((detail) => (
-                        <div key={detail} className="flex items-start space-x-2 space-x-reverse">
-                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-accent" />
-                          <span className="font-arabic leading-relaxed">{detail}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <p className={`text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
+                  {summary}
+                </p>
+
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  {details.map((detail) => (
+                    <li
+                      key={detail}
+                      className={`flex items-start gap-2 ${isArabic ? "flex-row-reverse text-right" : ""}`}
+                    >
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span>{detail}</span>
+                    </li>
+                  ))}
+                </ul> 
               </div>
             );
           })}

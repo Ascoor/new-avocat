@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; 
+import { useLanguage } from "@/contexts/LanguageContext";
+ 
 import { ChevronLeft, ChevronRight, Mail, Play, ShieldCheck, Sparkles } from "lucide-react";
 
 import heroLegal1 from "@/assets/slides/hero-legal-1.png";
@@ -15,100 +17,118 @@ type SlideCopy = {
 type Slide = {
   id: number;
   image: string;
-  overlay: string;
-  badgeEn: string;
-  badgeAr: string;
-  english: SlideCopy;
-  arabic: SlideCopy;
+  overlay: string; 
+  badge: {
+    en: string;
+    ar: string;
+  };
+  copy: Record<"en" | "ar", SlideCopy>;
+ 
 };
 
 const slides: Slide[] = [
   {
     id: 1,
     image: heroLegal1,
-    overlay: "bg-gradient-to-r from-primary/90 via-primary/70 to-transparent",
-    badgeEn: "Legal Digital Transformation",
-    badgeAr: "التحول الرقمي القانوني",
-    english: {
-      title: "Prestige Meets Predictive Legal Intelligence",
-      subtitle:
-        "Founded in 2013, Avocat Law Firm bridges traditional expertise with digital innovation to deliver justice that is safer, more transparent, and more efficient.",
-      bullets: [
-        "Heritage-grade litigation strategies enhanced with secure analytics.",
-        "Trusted counsel for ministries, financial institutions, and innovators.",
-        "Digitally preserved evidence chains with verifiable audit trails.",
-      ],
+    overlay: "bg-gradient-to-r from-primary/90 via-primary/70 to-transparent", 
+    badge: {
+      en: "Legal Digital Transformation",
+      ar: "التحول الرقمي القانوني",
     },
-    arabic: {
-      title: "الفخامة تلتقي بالذكاء القانوني الاستباقي",
-      subtitle:
-        "تأسس مكتب أفوكات عام 2013 ليكون جسراً بين الخبرة القانونية التقليدية والابتكار الرقمي، بهدف تقديم عدالة أكثر أماناً وشفافية وفعالية.",
-      bullets: [
-        "استراتيجيات تقاضٍ عريقة مدعومة بتحليلات آمنة.",
-        "استشارات موثوقة للوزارات والمؤسسات المالية ورواد الابتكار.",
-        "سلاسل أدلة رقمية محفوظة مع سجلات تدقيق موثوقة.",
-      ],
+    copy: {
+      en: {
+        title: "Prestige Meets Predictive Legal Intelligence",
+        subtitle:
+          "Founded in 2013, Avocat Law Firm bridges traditional expertise with digital innovation to deliver justice that is safer, more transparent, and more efficient.",
+        bullets: [
+          "Heritage-grade litigation strategies enhanced with secure analytics.",
+          "Trusted counsel for ministries, financial institutions, and innovators.",
+          "Digitally preserved evidence chains with verifiable audit trails.",
+        ],
+      },
+      ar: {
+        title: "الفخامة تلتقي بالذكاء القانوني الاستباقي",
+        subtitle:
+          "تأسس مكتب أفوكات عام 2013 ليكون جسراً بين الخبرة القانونية التقليدية والابتكار الرقمي، بهدف تقديم عدالة أكثر أماناً وشفافية وفعالية.",
+        bullets: [
+          "استراتيجيات تقاضٍ عريقة مدعومة بتحليلات آمنة.",
+          "استشارات موثوقة للوزارات والمؤسسات المالية ورواد الابتكار.",
+          "سلاسل أدلة رقمية محفوظة مع سجلات تدقيق موثوقة.",
+        ],
+      },
+ 
     },
   },
   {
     id: 2,
     image: heroDigital2,
-    overlay: "bg-gradient-to-r from-primary-light/90 via-primary/60 to-accent/20",
-    badgeEn: "AI-Driven Counsel",
-    badgeAr: "استشارات مدعومة بالذكاء الاصطناعي",
-    english: {
-      title: "AI-Enhanced Advocacy Without Compromise",
-      subtitle:
-        "Intelligent systems for case management, precedent research, and data-driven legal strategies.",
-      bullets: [
-        "Predictive analytics anticipates judicial patterns before hearings.",
-        "Augmented research assistant surfaces decisive precedents instantly.",
-        "Secure collaboration keeps partners, experts, and clients aligned.",
-      ],
+    overlay: "bg-gradient-to-r from-primary-light/90 via-primary/60 to-accent/20", 
+    badge: {
+      en: "AI-Driven Counsel",
+      ar: "استشارات مدعومة بالذكاء الاصطناعي",
     },
-    arabic: {
-      title: "مرافعات مدعومة بالذكاء الاصطناعي دون تنازل",
-      subtitle:
-        "أنظمة ذكية لإدارة القضايا، البحث في السوابق، وبناء استراتيجيات قانونية قائمة على البيانات.",
-      bullets: [
-        "تحليلات تنبؤية تستشرف توجهات القضاء قبل الجلسة.",
-        "مساعد بحث معزز يستحضر السوابق الحاسمة فوراً.",
-        "تعاون مؤمن يحافظ على مواءمة الشركاء والخبراء والعملاء.",
-      ],
+    copy: {
+      en: {
+        title: "AI-Enhanced Advocacy Without Compromise",
+        subtitle:
+          "Intelligent systems for case management, precedent research, and data-driven legal strategies.",
+        bullets: [
+          "Predictive analytics anticipates judicial patterns before hearings.",
+          "Augmented research assistant surfaces decisive precedents instantly.",
+          "Secure collaboration keeps partners, experts, and clients aligned.",
+        ],
+      },
+      ar: {
+        title: "مرافعات مدعومة بالذكاء الاصطناعي دون تنازل",
+        subtitle:
+          "أنظمة ذكية لإدارة القضايا، البحث في السوابق، وبناء استراتيجيات قانونية قائمة على البيانات.",
+        bullets: [
+          "تحليلات تنبؤية تستشرف توجهات القضاء قبل الجلسة.",
+          "مساعد بحث معزز يستحضر السوابق الحاسمة فوراً.",
+          "تعاون مؤمن يحافظ على مواءمة الشركاء والخبراء والعملاء.",
+        ],
+      },
     },
   },
   {
     id: 3,
     image: heroPartnership3,
     overlay: "bg-gradient-to-r from-primary/95 via-primary/70 to-secondary/30",
-    badgeEn: "Secure Digital Justice",
-    badgeAr: "عدالة رقمية آمنة",
-    english: {
-      title: "Leaders of Secure Digital Justice Ecosystems",
-      subtitle:
-        "Integrated platforms with e-signatures, secure archiving, dashboards, and paperless smart justice.",
-      bullets: [
-        "ISO-aligned cybersecurity architecture for cross-border operations.",
-        "Real-time governance dashboards for executives and compliance officers.",
-        "24/7 monitoring shield against fraud, forgery, and cybercrime.",
-      ],
+    badge: {
+      en: "Secure Digital Justice",
+      ar: "عدالة رقمية آمنة",
     },
-    arabic: {
-      title: "روّاد منظومات العدالة الرقمية الآمنة",
-      subtitle:
-        "منصات متكاملة بالتوقيع الإلكتروني، الأرشفة الآمنة، لوحات تحكم تفاعلية، وعدالة رقمية بلا ورق.",
-      bullets: [
-        "بنية أمن سيبراني متوافقة مع المعايير الدولية للعمليات العابرة للحدود.",
-        "لوحات حوكمة لحظية للمديرين والتنفيذيين ومسؤولي الامتثال.",
-        "مراقبة على مدار الساعة تحمي من الاحتيال والتزوير والجرائم السيبرانية.",
-      ],
-    },
+    copy: {
+      en: {
+        title: "Leaders of Secure Digital Justice Ecosystems",
+        subtitle:
+          "Integrated platforms with e-signatures, secure archiving, dashboards, and paperless smart justice.",
+        bullets: [
+          "ISO-aligned cybersecurity architecture for cross-border operations.",
+          "Real-time governance dashboards for executives and compliance officers.",
+          "24/7 monitoring shield against fraud, forgery, and cybercrime.",
+        ],
+      },
+      ar: {
+        title: "روّاد منظومات العدالة الرقمية الآمنة",
+        subtitle:
+          "منصات متكاملة بالتوقيع الإلكتروني، الأرشفة الآمنة، لوحات تحكم تفاعلية، وعدالة رقمية بلا ورق.",
+        bullets: [
+          "بنية أمن سيبراني متوافقة مع المعايير الدولية للعمليات العابرة للحدود.",
+          "لوحات حوكمة لحظية للمديرين والتنفيذيين ومسؤولي الامتثال.",
+          "مراقبة على مدار الساعة تحمي من الاحتيال والتزوير والجرائم السيبرانية.",
+        ],
+      },
+    }, 
   },
 ];
 
 const HeroCarousel: React.FC = () => {
   const [current, setCurrent] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
+  const [autoPlay, setAutoPlay] = useState(true); 
+  const { language, direction } = useLanguage();
+  const isArabic = language === "ar";
+ 
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -120,7 +140,7 @@ const HeroCarousel: React.FC = () => {
 
   const handlePrev = () => {
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-    setAutoPlay(false);
+    setAutoPlay(false); 
   };
 
   const handleNext = () => {
@@ -134,19 +154,21 @@ const HeroCarousel: React.FC = () => {
   };
 
   const handleDemoClick = () => {
-    const element = document.querySelector("#capabilities");
-    element?.scrollIntoView({ behavior: "smooth" });
+    document.querySelector("#capabilities")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleContactClick = () => {
-    const element = document.querySelector("#contact");
-    element?.scrollIntoView({ behavior: "smooth" });
+    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const activeSlide = slides[current];
+  const slideCopy = activeSlide.copy[isArabic ? "ar" : "en"];
+  const badge = activeSlide.badge[isArabic ? "ar" : "en"];
+  const demoLabel = isArabic ? "اطلب العرض التفاعلي" : "Request Live Demo";
+  const contactLabel = isArabic ? "تواصل مع الخبراء" : "Speak to Counsel";
 
   return (
-    <section id="home" className="relative h-[90vh] min-h-[640px] overflow-hidden">
+    <section id="home" className="relative h-[90vh] min-h-[640px] overflow-hidden" dir={direction}> 
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
           <div
@@ -159,66 +181,48 @@ const HeroCarousel: React.FC = () => {
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${slide.image})` }}
             />
-            <div className={`absolute inset-0 ${slide.overlay}`} />
+            <div className={`absolute inset-0 ${slide.overlay}`} />  
           </div>
-        ))}
+        </div>
       </div>
-
+ 
       <div className="relative z-10 flex h-full items-center">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-6xl rounded-3xl bg-background/70 p-6 shadow-ambient backdrop-blur lg:p-10">
-            <div className="mb-6 flex items-center space-x-3 rounded-full border border-border/80 bg-card/80 px-4 py-2 text-xs uppercase tracking-widest text-muted-foreground/90 shadow-inner backdrop-blur">
+          <div className="max-w-4xl rounded-3xl bg-background/70 p-6 shadow-ambient backdrop-blur lg:p-10">
+            <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-border/80 bg-card/80 px-4 py-2 text-xs font-semibold text-white/90 shadow-inner backdrop-blur">
               <Sparkles className="h-4 w-4 text-accent" />
-              <span className="font-english">{activeSlide.badgeEn}</span>
-              <span className="text-muted-foreground">|</span>
-              <span className="font-arabic">{activeSlide.badgeAr}</span>
+              <span>{badge}</span>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-              <div dir="ltr" className="space-y-6 text-left text-white">
-                <h1 className="text-4xl font-display font-semibold leading-tight drop-shadow lg:text-5xl">
-                  {activeSlide.english.title}
-                </h1>
-                <p className="text-lg leading-relaxed text-white/85">
-                  {activeSlide.english.subtitle}
-                </p>
-                <ul className="space-y-3 text-base">
-                  {activeSlide.english.bullets.map((item) => (
-                    <li key={item} className="flex items-start space-x-3">
-                      <ShieldCheck className="mt-1 h-5 w-5 flex-shrink-0 text-accent" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div dir="rtl" className="space-y-6 text-right text-white">
-                <h2 className="text-4xl font-display font-semibold leading-tight drop-shadow lg:text-5xl">
-                  {activeSlide.arabic.title}
-                </h2>
-                <p className="text-lg leading-relaxed text-white/85">
-                  {activeSlide.arabic.subtitle}
-                </p>
-                <ul className="space-y-3 text-base">
-                  {activeSlide.arabic.bullets.map((item) => (
-                    <li key={item} className="flex items-start space-x-3 space-x-reverse">
-                      <ShieldCheck className="mt-1 h-5 w-5 flex-shrink-0 text-accent" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className={`space-y-6 text-white ${isArabic ? "text-right" : "text-left"}`}>
+              <h1 className="text-4xl font-display font-semibold leading-tight drop-shadow lg:text-5xl">
+                {slideCopy.title}
+              </h1>
+              <p className="text-lg leading-relaxed text-white/85">{slideCopy.subtitle}</p>
+              <ul className="space-y-3 text-base">
+                {slideCopy.bullets.map((item) => (
+                  <li
+                    key={item}
+                    className={`flex items-start gap-3 ${isArabic ? "flex-row-reverse text-right" : ""}`}
+                  >
+                    <ShieldCheck className="mt-1 h-5 w-5 flex-shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div
+              className={`mt-8 flex flex-col gap-4 sm:flex-row ${
+                isArabic ? "sm:flex-row-reverse" : ""
+              } sm:items-center`}
+            >
               <Button
                 onClick={handleDemoClick}
                 className="btn-gold flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold"
               >
                 <Play className="h-5 w-5" />
-                <span className="font-english">Request Live Demo</span>
-                <span className="text-muted-foreground">|</span>
-                <span className="font-arabic">اطلب العرض التفاعلي</span>
+                <span>{demoLabel}</span>
               </Button>
               <Button
                 onClick={handleContactClick}
@@ -226,15 +230,13 @@ const HeroCarousel: React.FC = () => {
                 className="btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 text-base font-semibold text-white"
               >
                 <Mail className="h-5 w-5" />
-                <span className="font-english">Speak to Counsel</span>
-                <span className="text-white/60">|</span>
-                <span className="font-arabic">تواصل مع الخبراء</span>
+                <span>{contactLabel}</span>
               </Button>
             </div>
           </div>
         </div>
       </div>
-
+ 
       <button
         onClick={handlePrev}
         className="absolute left-6 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-background/30 backdrop-blur transition-all duration-300 hover:border-white/70 hover:bg-background/50"
