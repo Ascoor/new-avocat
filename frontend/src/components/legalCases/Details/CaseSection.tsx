@@ -1,8 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronLeft, ChevronRight, type LucideIcon } from 'lucide-react';
 import { type ReactNode, useEffect, useState } from 'react';
-
-import { Switch } from '@/components/ui/switch';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
@@ -16,7 +14,6 @@ interface CaseSectionProps {
   contentClassName?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  toggleLabel?: string;
 }
 
 const CaseSection = ({
@@ -29,28 +26,22 @@ const CaseSection = ({
   contentClassName,
   open = true,
   onOpenChange,
-  toggleLabel,
 }: CaseSectionProps) => {
   const isControlled = typeof onOpenChange === 'function';
   const [internalOpen, setInternalOpen] = useState(open);
   const { isRTL } = useLanguage();
 
   useEffect(() => {
-    if (!isControlled) {
-      setInternalOpen(open);
-    }
+    if (!isControlled) setInternalOpen(open);
   }, [open, isControlled]);
 
   const isOpen = isControlled ? open : internalOpen;
   const ToggleIcon = isOpen ? ChevronDown : isRTL ? ChevronLeft : ChevronRight;
 
-  const handleToggle = (nextState?: boolean) => {
-    const targetState = typeof nextState === 'boolean' ? nextState : !isOpen;
-    if (isControlled) {
-      onOpenChange?.(targetState);
-      return;
-    }
-    setInternalOpen(targetState);
+  const handleToggle = () => {
+    const next = !isOpen;
+    if (isControlled) onOpenChange?.(next);
+    else setInternalOpen(next);
   };
 
   return (
@@ -58,47 +49,43 @@ const CaseSection = ({
       dir={isRTL ? 'rtl' : 'ltr'}
       className={cn(
         'relative overflow-hidden rounded-3xl border border-border/70 bg-card/60 p-6 shadow-card backdrop-blur',
-        className,
+        className
       )}
     >
+      {/* Gradient overlay */}
       <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-70" />
+
+      {/* Header */}
       <div className="relative flex flex-col gap-4">
         <div className="flex flex-col gap-4 border-b border-border/60 pb-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-start gap-3">
+          <div className="flex items-center gap-3">
+            {/* Arrow toggle before icon */}
+            <button
+              type="button"
+              onClick={handleToggle}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-surface-highlight/70 text-muted-foreground transition hover:text-primary"
+              aria-label={isOpen ? 'Collapse section' : 'Expand section'}
+            >
+              <ToggleIcon className="h-5 w-5" />
+            </button>
+
+            {/* Section icon */}
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 text-primary">
               <Icon className="h-5 w-5" />
             </div>
+
+            {/* Title & subtitle */}
             <div className="space-y-1">
               <h2 className="text-lg font-semibold text-foreground">{title}</h2>
-              {subtitle && (
-                <p className="text-sm text-muted-foreground">{subtitle}</p>
-              )}
+              {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
             </div>
           </div>
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            {actions}
-            {(toggleLabel || isControlled) && (
-              <div className="flex items-center gap-2 rounded-full border border-border/50 bg-surface-highlight/70 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                <button
-                  type="button"
-                  onClick={() => handleToggle()}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-current transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-                  aria-label={toggleLabel ?? (isOpen ? 'Collapse section' : 'Expand section')}
-                >
-                  <ToggleIcon className="h-4 w-4" />
-                  <span className="sr-only">{toggleLabel ?? (isOpen ? 'Collapse section' : 'Expand section')}</span>
-                </button>
-                <Switch
-                  checked={isOpen}
-                  onCheckedChange={(value) => handleToggle(value)}
-                  aria-label={toggleLabel ?? (isOpen ? 'Collapse' : 'Expand')}
-                  className="data-[state=checked]:bg-primary"
-                />
-              </div>
-            )}
-          </div>
+
+          {/* Right-side actions */}
+          <div className="flex items-center gap-3">{actions}</div>
         </div>
 
+        {/* Collapsible content */}
         <AnimatePresence initial={false}>
           {isOpen && (
             <motion.div

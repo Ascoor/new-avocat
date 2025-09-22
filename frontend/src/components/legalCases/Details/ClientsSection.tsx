@@ -11,7 +11,7 @@ import { getClients } from '@/api/clients.service';
 import type { Client as CaseClient } from '@/types/legalCase';
 import type { Client as ClientRecord } from '@/types/clients';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Users } from 'lucide-react';
+import { Users, ChevronDown, ChevronUp } from 'lucide-react';
 import CaseSection from './CaseSection';
 
 interface ClientsSectionProps {
@@ -150,13 +150,14 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
       subtitle={t('legalCaseDetails.clients.subtitle')}
       open={sectionOpen}
       onOpenChange={setSectionOpen}
-      toggleLabel={sectionOpen ? t('common.collapse') : t('common.expand')}
       actions={
         <Button variant="secondary" onClick={handleAddRow} className="self-start sm:self-auto">
           {t('legalCaseDetails.clients.addClient')}
         </Button>
       }
     >
+    
+
       {pendingClients.length > 0 && (
         <div className="space-y-3 rounded-lg border border-dashed border-border/60 bg-muted/20 p-4">
           {pendingClients.map((pending, index) => (

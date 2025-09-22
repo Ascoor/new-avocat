@@ -160,23 +160,14 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
       subtitle={t('legalCaseDetails.courts.subtitle')}
       open={sectionOpen}
       onOpenChange={setSectionOpen}
-      toggleLabel={sectionOpen ? t('common.collapse') : t('common.expand')}
+ 
       actions={
         <Button variant="secondary" onClick={handleAddRow} className="self-start sm:self-auto">
           {t('legalCaseDetails.courts.addCourt')}
         </Button>
       }
     >
-             <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate(-1)} // Navigate back to the previous page
-            className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">{t('legalCaseDetails.back')}</span>
-          </Button>
-          
+ 
       {/* New courts input section */}
       {newCourts.length > 0 && (
         <div className="space-y-4 rounded-lg border border-dashed border-border/60 bg-muted/20 p-4">
