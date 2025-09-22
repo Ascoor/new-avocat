@@ -1,245 +1,151 @@
-import React from "react";
 import BrandLogo from "@/components/common/BrandLogo";
 import { useLanguage } from "@/contexts/LanguageContext";
-import {
-  Scale,
-  MapPin,
-  Mail,
-  Phone,
-  Globe,
-  Linkedin,
-  Twitter,
-  Facebook,
-  Instagram,
-  ArrowUp,
-  Shield,
-  FileText,
-  Users,
-  BookOpen,
-} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Linkedin, Mail, MapPin, Phone, Scale, Shield, Twitter } from "lucide-react";
 
-type FooterProps = {
-  services: string[];
-  contact: {
-    email: string;
-    phone: string;
-    address: string;
-  };
-  logoVariant: "text" | "icon"; // 👈 نفس النوع اللي متوقعه BrandLogo
-};
+const quickLinks = [
+  { href: "#home", en: "Home", ar: "الرئيسية" },
+  { href: "#about", en: "About", ar: "من نحن" },
+  { href: "#services", en: "Services", ar: "الخدمات" },
+  { href: "#capabilities", en: "Capabilities", ar: "الإمكانيات" },
+  { href: "#achievements", en: "Achievements", ar: "الإنجازات" },
+  { href: "#team", en: "Team", ar: "الفريق" },
+  { href: "#insights", en: "Insights", ar: "المدونة" },
+  { href: "#contact", en: "Contact", ar: "اتصل بنا" },
+];
 
-const Footer: React.FC<FooterProps> = ({ services, contact, logoVariant }) => {
-  const { t, isRTL, language } = useLanguage();
+const serviceHighlights = [
+  { en: "Litigation & Arbitration", ar: "التقاضي والتحكيم" },
+  { en: "Digital Case Management", ar: "إدارة القضايا الرقمية" },
+  { en: "AI Legal Research", ar: "البحث القانوني بالذكاء الاصطناعي" },
+  { en: "Cybersecurity Advisory", ar: "استشارات الأمن السيبراني" },
+];
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+const Footer: React.FC = () => {
+  const { language } = useLanguage();
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.querySelector(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const scrollTo = (href: string) => {
+    const element = document.querySelector(href);
+    element?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <footer className="bg-gradient-primary text-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-72 h-72 bg-accent rounded-full mix-blend-overlay blur-3xl animate-float"></div>
-        <div
-          className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full mix-blend-overlay blur-3xl animate-float"
-          style={{ animationDelay: "3s" }}
-        ></div>
+    <footer className="relative mt-24 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/95 text-white">
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute left-10 top-16 h-48 w-48 rounded-full bg-accent/70 blur-3xl" />
+        <div className="absolute right-0 bottom-10 h-56 w-56 rounded-full bg-white/50 blur-3xl" />
       </div>
-
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        {/* Main Footer Content */}
-        <div className="py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            {/* Company Info */}
-            <div className="lg:col-span-1 animate-fade-in">
-              <div className="flex items-center space-x-3 rtl:space-x-reverse mb-6">
-                   <div className="text-2xl font-display font-bold">
-             <BrandLogo
-              variant="full"
-              className="h-12"
-              lang={language}
-              dark={true} // Ensure dark before scroll
-            />
- 
-                </div>
-              </div>
- 
-
-              {/* Social Links */}
-              <div className="flex space-x-4 rtl:space-x-reverse">
-                {[
-                  { icon: Linkedin, href: "#", color: "hover:bg-blue-600" },
-                  { icon: Twitter, href: "#", color: "hover:bg-blue-400" },
-                  { icon: Facebook, href: "#", color: "hover:bg-blue-700" },
-                  { icon: Instagram, href: "#", color: "hover:bg-pink-600" },
-                ].map((social, index) => {
-                  const IconComponent = social.icon;
-                  return (
-                    <a
-                      key={index}
-                      href={social.href}
-                      className={`w-10 h-10 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center ${social.color} transition-all duration-300 group`}
-                    >
-                      <IconComponent className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Services */}
-            <div
-              className="animate-slide-up"
-              style={{ animationDelay: "200ms" }}
-            >
-              <h3 className="text-xl font-display font-semibold text-white mb-6 flex items-center space-x-2 rtl:space-x-reverse">
-                <FileText className="w-5 h-5 text-accent" />
-                <span>{t("ourServices")}</span>
-              </h3>
-              <ul className="space-y-3">
-                {services.map((label, index) => (
-                  <li key={index}>
-                    <button
-                      onClick={() => scrollToSection("#services")}
-                      className="flex items-center space-x-2 rtl:space-x-reverse text-white/80 hover:text-accent transition-colors duration-300 group"
-                    >
-                      <Shield className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
-                      <span>{label}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Quick Links */}
-            <div
-              className="animate-slide-up"
-              style={{ animationDelay: "400ms" }}
-            >
-              <h3 className="text-xl font-display font-semibold text-white mb-6 flex items-center space-x-2 rtl:space-x-reverse">
-                <Globe className="w-5 h-5 text-accent" />
-                <span>Quick Links</span>
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  { label: t("home"), href: "#home" },
-                  { label: t("features"), href: "#features" },
-                  { label: t("about"), href: "#about" },
-                  { label: t("contact"), href: "#contact" },
-                ].map((link, index) => (
-                  <li key={index}>
-                    <button
-                      onClick={() => scrollToSection(link.href)}
-                      className="text-white/80 hover:text-accent transition-colors duration-300 hover:translate-x-1 rtl:hover:-translate-x-1"
-                    >
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Contact Info */}
-            <div
-              className="animate-slide-up"
-              style={{ animationDelay: "600ms" }}
-            >
-              <h3 className="text-xl font-display font-semibold text-white mb-6 flex items-center space-x-2 rtl:space-x-reverse">
-                <Phone className="w-5 h-5 text-accent" />
-                <span>{t("contactInfo")}</span>
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3 rtl:space-x-reverse">
-                  <MapPin className="w-5 h-5 text-accent mt-1 flex-shrink-0" />
-                  <div className="text-white/80 leading-relaxed">
-                    <div className="font-medium text-white mb-1">
-                      {t("headquarters")}
-                    </div>
-                    <div>{contact.address}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <Mail className="w-5 h-5 text-accent flex-shrink-0" />
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="text-white/80 hover:text-accent transition-colors duration-300"
-                  >
-                    {contact.email}
-                  </a>
-                </div>
-
-                <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <Phone className="w-5 h-5 text-accent flex-shrink-0" />
-                  <a
-                    href={`tel:${contact.phone}`}
-                    className="text-white/80 hover:text-accent transition-colors duration-300"
-                  >
-                    {contact.phone}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Newsletter Section */}
-        <div className="py-8 border-t border-white/20 animate-fade-in">
-          <div className="text-center">
-            <h3 className="text-2xl font-display font-semibold text-white mb-4">
-              Stay Updated on Legal Technology Trends
-            </h3>
-            <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-              Subscribe to our newsletter for the latest insights on legal
-              digital transformation
+      <div className="relative">
+        <div className="container mx-auto grid gap-12 px-4 py-16 lg:grid-cols-4 lg:px-8">
+          <div className="space-y-6">
+            <BrandLogo variant="full" className="h-12" lang={language} dark />
+            <p className="font-english text-sm leading-relaxed text-white/80">
+              Pioneering legal digital transformation across the Middle East and North Africa with prestige, innovation, and unwavering trust.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-300"
-              />
-              <button className="btn-gold px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all duration-300">
-                Subscribe
-              </button>
+            <p className="font-arabic text-sm leading-relaxed text-white/80">
+              رواد التحول الرقمي القانوني في الشرق الأوسط وشمال أفريقيا بفخامة وابتكار وثقة راسخة.
+            </p>
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
+                <Scale className="h-6 w-6" />
+              </div>
+              <div className="text-xs uppercase tracking-widest text-white/70">
+                <span className="font-english">Legal Digital Transformation</span>
+                <span className="mx-1 text-white/50">|</span>
+                <span className="font-arabic">التحول الرقمي القانوني</span>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <Button variant="ghost" className="h-10 w-10 rounded-full border border-white/30 text-white hover:bg-white/20">
+                <Linkedin className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" className="h-10 w-10 rounded-full border border-white/30 text-white hover:bg-white/20">
+                <Twitter className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-display text-lg font-semibold text-white">Quick Links | الروابط السريعة</h3>
+            <ul className="mt-6 space-y-3 text-sm text-white/80">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <button
+                    onClick={() => scrollTo(link.href)}
+                    className="flex w-full items-center justify-between rounded-xl border border-white/0 px-3 py-2 text-left transition-all duration-300 hover:border-white/40 hover:bg-white/10"
+                  >
+                    <span className="font-english">{link.en}</span>
+                    <span className="font-arabic">{link.ar}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-display text-lg font-semibold text-white">Signature Services | خدماتنا المميزة</h3>
+            <ul className="mt-6 space-y-3 text-sm text-white/80">
+              {serviceHighlights.map((service) => (
+                <li key={service.en} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                  <span className="font-english">{service.en}</span>
+                  <span className="mx-1 text-white/50">|</span>
+                  <span className="font-arabic">{service.ar}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 rounded-3xl border border-white/20 bg-white/10 p-5">
+              <h4 className="font-display text-base font-semibold text-white">Subscribe for Insights</h4>
+              <p className="mt-2 text-xs text-white/80">
+                Receive monthly briefings on AI in law, cybersecurity directives, and smart justice reforms.
+              </p>
+              <p className="text-xs text-white/80">
+                احصل على موجز شهري حول الذكاء الاصطناعي في القانون وتوجيهات الأمن السيبراني وإصلاحات العدالة الذكية.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-5">
+            <h3 className="font-display text-lg font-semibold text-white">Contact | تواصل</h3>
+            <div className="space-y-4 text-sm text-white/80">
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-1 h-5 w-5" />
+                <div>
+                  <p className="font-english">Downtown Cairo Smart District, Nile Corniche</p>
+                  <p className="font-arabic">منطقة القاهرة الذكية – كورنيش النيل</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Phone className="mt-1 h-5 w-5" />
+                <div>
+                  <p className="font-english">+20 2 1234 5678 | +971 4 567 8900</p>
+                  <p className="font-arabic">+٢٠ ٢ ١٢٣٤ ٥٦٧٨ | +٩٧١ ٤ ٥٦٧ ٨٩٠٠</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Mail className="mt-1 h-5 w-5" />
+                <div>
+                  <p className="font-english">contact@avocatlaw.com</p>
+                  <p className="font-arabic">contact@avocatlaw.com</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Shield className="mt-1 h-5 w-5" />
+                <div>
+                  <p className="font-english">GDPR, DIFC, and NCA compliant digital infrastructure.</p>
+                  <p className="font-arabic">بنية رقمية متوافقة مع لوائح GDPR وDIFC والهيئة الوطنية للأمن السيبراني.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="py-6 border-t border-white/20 flex flex-col md:flex-row items-center justify-between animate-fade-in">
-          <div className="text-white/60 text-sm mb-4 md:mb-0">
-            © 2024 Avocat. {t("allRightsReserved")}
-          </div>
-
-          <div className="flex items-center space-x-6 rtl:space-x-reverse text-sm text-white/60">
-            <a href="#" className="hover:text-accent transition-colors duration-300">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-accent transition-colors duration-300">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-accent transition-colors duration-300">
-              Cookie Policy
-            </a>
+        <div className="border-t border-white/10 bg-primary/95">
+          <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-6 text-xs text-white/80 lg:flex-row lg:px-8">
+            <p className="font-english">© {new Date().getFullYear()} Avocat Law Firm. All rights reserved.</p>
+            <p className="font-arabic">© {new Date().getFullYear()} مكتب أفوكات للمحاماة. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </div>
-
-      {/* Scroll to Top Button */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-gold text-accent-foreground rounded-full flex items-center justify-center shadow-gold hover:shadow-xl hover:scale-110 transition-all duration-300 z-50 group animate-glow"
-      >
-        <ArrowUp className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-      </button>
     </footer>
   );
 };
