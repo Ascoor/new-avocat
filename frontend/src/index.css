@@ -195,4 +195,12 @@ All colors MUST be HSL for proper theme support.
     box-shadow: var(--shadow-premium);
     transition: var(--transition-premium);
   }
+
+  .font-english {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-arabic {
+    font-family: 'Amiri', serif;
+  }
 }

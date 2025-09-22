@@ -1,156 +1,163 @@
-import React from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Building, Briefcase, User, BookOpen, ArrowRight, Star } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import type { ComponentType, SVGProps } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { BrainCircuit, CircuitBoard, Scale, ShieldCheck } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+type ServiceItem = {
+  en: string;
+  ar: string;
+};
+
+type ServiceGroup = {
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  enTitle: string;
+  arTitle: string;
+  enDescription: string;
+  arDescription: string;
+  items: ServiceItem[];
+};
+
+const serviceGroups: ServiceGroup[] = [
+  {
+    icon: Scale,
+    enTitle: "Legal Services",
+    arTitle: "الخدمات القانونية",
+    enDescription:
+      "Litigation & dispute resolution, international arbitration, contract drafting, corporate advisory, company formation, IP protection, and sector-specific compliance.",
+    arDescription:
+      "التقاضي وحل النزاعات، التحكيم التجاري والدولي، صياغة العقود، الاستشارات للشركات، تأسيس الشركات، حماية الملكية الفكرية، والامتثال المتخصص لكل قطاع.",
+    items: [
+      { en: "Litigation & Dispute Resolution", ar: "التقاضي وحل النزاعات" },
+      { en: "International Arbitration", ar: "التحكيم التجاري والدولي" },
+      { en: "Contract Drafting & Negotiation", ar: "صياغة العقود والتفاوض" },
+      { en: "Corporate Governance Advisory", ar: "استشارات الحوكمة للشركات" },
+      { en: "Company Incorporation", ar: "تأسيس الشركات" },
+      { en: "Intellectual Property Protection", ar: "حماية الملكية الفكرية" },
+      { en: "Regulatory Compliance", ar: "الامتثال للتشريعات" },
+    ],
+  },
+  {
+    icon: BrainCircuit,
+    enTitle: "Digital & AI Services",
+    arTitle: "الخدمات الرقمية والذكاء الاصطناعي",
+    enDescription:
+      "Digital case management, AI research assistants, e-signature workflows, compliance automation, cybercrime protection, and data privacy programs.",
+    arDescription:
+      "إدارة القضايا الرقمية، مساعدو البحث بالذكاء الاصطناعي، سير عمل التوقيع الإلكتروني، أتمتة الامتثال، مكافحة الجريمة الإلكترونية، وبرامج خصوصية البيانات.",
+    items: [
+      { en: "AI-Augmented Case Strategy", ar: "استراتيجيات القضايا المدعومة بالذكاء الاصطناعي" },
+      { en: "Digital Case Management Platforms", ar: "منصات إدارة القضايا الرقمية" },
+      { en: "Secure E-Signature Workflows", ar: "سير عمل التوقيع الإلكتروني الآمن" },
+      { en: "Compliance Automation Dashboards", ar: "لوحات أتمتة الامتثال" },
+      { en: "Cybercrime Protection", ar: "مكافحة الجريمة الإلكترونية" },
+      { en: "Data Privacy & Governance Audits", ar: "تدقيق خصوصية البيانات والحوكمة" },
+      { en: "Digital Evidence Forensics", ar: "الأدلة الجنائية الرقمية" },
+    ],
+  },
+];
+
+const highlights = [
+  {
+    icon: ShieldCheck,
+    en: "ISO 27001-aligned cybersecurity for sensitive case files.",
+    ar: "أمن سيبراني متوافق مع معيار ISO 27001 لحماية الملفات الحساسة.",
+  },
+  {
+    icon: CircuitBoard,
+    en: "Integrated analytics, reporting, and client transparency dashboards.",
+    ar: "تحليلات متكاملة وتقارير ولوحات شفافية للعملاء.",
+  },
+];
+
+const sectionCopy = {
+  en: {
+    badge: "Legal & Digital Services",
+    title: "Full-Spectrum Counsel and Intelligent Platforms",
+    description:
+      "Precision-crafted services blending advocacy, governance, and digital acceleration for ambitious institutions.",
+  },
+  ar: {
+    badge: "الخدمات القانونية والرقمية",
+    title: "منظومة متكاملة من الاستشارات والمنصات الذكية",
+    description:
+      "خدمات مصممة بعناية تمزج بين المرافعة والحوكمة والتسريع الرقمي للمؤسسات الطموحة.",
+  },
+};
 
 const Services: React.FC = () => {
-  const { t } = useLanguage();
-
-  const services = [
-    {
-      icon: Building,
-      titleKey: 'lawFirms',
-      descKey: 'lawFirmsDesc',
-      features: ['Case Management', 'Client Portal', 'Document Automation', 'Billing & Time Tracking'],
-      gradient: 'from-primary via-primary-light to-primary-glow',
-      popular: true
-    },
-    {
-      icon: Briefcase,
-      titleKey: 'corporateLegal',
-      descKey: 'corporateLegalDesc',
-      features: ['Contract Management', 'Compliance Tracking', 'Legal Analytics', 'Risk Assessment'],
-      gradient: 'from-accent via-accent-glow to-accent-soft',
-      popular: false
-    },
-    {
-      icon: User,
-      titleKey: 'independentLawyers',
-      descKey: 'independentLawyersDesc',
-      features: ['Solo Practice Tools', 'Client Acquisition', 'Mobile Access', 'Cloud Storage'],
-      gradient: 'from-primary-light via-primary to-primary-glow',
-      popular: false
-    },
-    {
-      icon: BookOpen,
-      titleKey: 'training',
-      descKey: 'trainingDesc',
-      features: ['Legal Tech Training', 'Certification Programs', 'E-Government Integration', 'Continuous Learning'],
-      gradient: 'from-accent-glow via-accent to-accent-soft',
-      popular: false
-    }
-  ];
+  const { language, direction } = useLanguage();
+  const isArabic = language === "ar";
+  const copy = sectionCopy[language];
 
   return (
-    <section id="services" className="py-24 bg-background relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary))_0%,transparent_50%)]"></div>
-      </div>
-
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-foreground mb-6">
-            {t('servicesTitle')}
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            {t('servicesSubtitle')}
-          </p>
+    <section id="services" className="bg-surface-highlight/60 py-24" dir={direction}>
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="mb-16 text-center">
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
+            <span>{copy.badge}</span>
+          </div>
+          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
+          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {services.map((service, index) => {
-            const IconComponent = service.icon;
+        <div className="grid gap-10 lg:grid-cols-2">
+          {serviceGroups.map((group) => {
+            const Icon = group.icon;
+            const title = isArabic ? group.arTitle : group.enTitle;
+            const description = isArabic ? group.arDescription : group.enDescription;
+            const items = group.items.map((item) => (isArabic ? item.ar : item.en));
+
             return (
-              <div
-                key={service.titleKey}
-                className={`group relative animate-slide-up card-premium hover:card-elevated transition-all duration-500 p-8 hover:-translate-y-1 ${
-                  service.popular ? 'ring-2 ring-accent/50 shadow-gold' : ''
-                }`}
-                style={{ animationDelay: `${index * 200}ms` }}
+              <Card
+                key={group.enTitle}
+                className="h-full border-border/80 bg-card/80 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
               >
-                {/* Popular Badge */}
-                {service.popular && (
-                  <div className="absolute -top-3 right-6 bg-gradient-gold text-accent-foreground px-4 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span>Most Popular</span>
-                  </div>
-                )}
-
-                <div className="flex flex-col h-full">
-                  {/* Header */}
-                  <div className="flex items-start space-x-4 rtl:space-x-reverse mb-6">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 animate-glow`}>
-                      <IconComponent className="w-8 h-8 text-white" />
+                <CardContent className="space-y-8 p-8">
+                  <div className="flex items-center gap-3">
+                    <div className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold">
+                      <Icon className="h-6 w-6" />
                     </div>
-                    
-                    <div className="flex-1">
-                      <h3 className="text-2xl font-display font-semibold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-                        {t(service.titleKey)}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {t(service.descKey)}
-                      </p>
-                    </div>
+                    <h3 className="text-2xl font-semibold text-foreground">{title}</h3>
                   </div>
 
-                  {/* Features List */}
-                  <div className="flex-1 mb-6">
-                    <ul className="space-y-3">
-                      {service.features.map((feature, featureIndex) => (
-                        <li 
-                          key={featureIndex}
-                          className="flex items-center space-x-3 rtl:space-x-reverse text-muted-foreground"
+                  <div className={`space-y-4 text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
+                    <p>{description}</p>
+                    <div className={`flex flex-wrap gap-2 ${isArabic ? "justify-end" : ""}`}>
+                      {items.map((item) => (
+                        <Badge
+                          key={item}
+                          variant="outline"
+                          className="border-border bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground/90"
                         >
-                          <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-                          <span>{feature}</span>
-                        </li>
+                          {item}
+                        </Badge>
                       ))}
-                    </ul>
+                    </div>
                   </div>
-
-                  {/* Action Button */}
-                  <Button 
-                    className={`w-full group-hover:btn-premium transition-all duration-300 ${
-                      service.popular ? 'btn-gold' : 'btn-premium'
-                    }`}
-                  >
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2 rtl:mr-2 rtl:ml-0 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform duration-300" />
-                  </Button>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
 
-        {/* Bottom Section - Why Choose Us */}
-        <div className="bg-gradient-secondary rounded-3xl p-8 lg:p-12 text-center animate-fade-in shadow-elevated">
-          <h3 className="text-3xl font-display font-bold text-foreground mb-6">
-            Why Choose Avocat?
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            {[
-              { label: 'Trust & Confidentiality', value: '100%', icon: '🔒' },
-              { label: 'Client Satisfaction', value: '98%', icon: '⭐' },
-              { label: 'Innovation Leader', value: '#1', icon: '🚀' },
-              { label: 'Global Standards', value: 'ISO', icon: '🌍' },
-            ].map((stat, index) => (
-              <div key={index} className="animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="text-4xl mb-2">{stat.icon}</div>
-                <div className="text-3xl font-bold text-primary mb-2">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {highlights.map(({ icon: Icon, en, ar }) => {
+            const text = isArabic ? ar : en;
+            return (
+              <div
+                key={en}
+                className="rounded-3xl border border-border bg-gradient-to-br from-background via-card to-background p-6 shadow-ambient"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <p className={`text-sm text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>{text}</p>
+                </div>
               </div>
-            ))}
-          </div>
-
-          <Button size="lg" className="btn-gold px-8 py-4 text-lg">
-            Start Your Digital Transformation
-            <ArrowRight className="w-5 h-5 ml-2 rtl:mr-2 rtl:ml-0" />
-          </Button>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,238 +1,238 @@
-import React, { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Send, 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock,
-  CheckCircle,
-  MessageSquare,
-  User,
-  AtSign
-} from 'lucide-react';
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Clock3, Mail, MapPin, Phone, Send, ShieldCheck } from "lucide-react";
+
+const contactPoints = [
+  {
+    icon: MapPin,
+    enTitle: "Headquarters",
+    arTitle: "المقر الرئيسي",
+    enDetails: "Downtown Cairo Smart District, Nile Corniche",
+    arDetails: "منطقة القاهرة الذكية – كورنيش النيل",
+  },
+  {
+    icon: Phone,
+    enTitle: "Phone",
+    arTitle: "الهاتف",
+    enDetails: "+20 2 1234 5678 | +971 4 567 8900",
+    arDetails: "+٢٠ ٢ ١٢٣٤ ٥٦٧٨ | +٩٧١ ٤ ٥٦٧ ٨٩٠٠",
+  },
+  {
+    icon: Mail,
+    enTitle: "Email",
+    arTitle: "البريد الإلكتروني",
+    enDetails: "contact@avocatlaw.com",
+    arDetails: "contact@avocatlaw.com",
+  },
+  {
+    icon: Clock3,
+    enTitle: "Business Hours",
+    arTitle: "ساعات العمل",
+    enDetails: "Sunday – Thursday | 9:00 – 18:00",
+    arDetails: "الأحد – الخميس | ٩:٠٠ – ١٨:٠٠",
+  },
+];
+
+const formCopy = {
+  en: {
+    badge: "Contact",
+    title: "Connect with Avocat Law Firm",
+    description: "Schedule a consultation to explore legal digital transformation tailored to your organisation.",
+    labels: {
+      name: "Name",
+      email: "Email",
+      message: "Message",
+    },
+    placeholders: {
+      name: "Full Name",
+      email: "you@avocatlaw.com",
+      message: "Describe your legal technology needs",
+    },
+    submit: "Send Message",
+    submitting: "Sending...",
+    note: "Confidential & encrypted submissions",
+    conciergeTitle: "24/7 Digital Legal Desk",
+    conciergeBody:
+      "Dedicated transformation specialists monitor secure channels around the clock to support urgent cases, investigations, and executive briefings.",
+    toast: {
+      title: "Message sent successfully",
+      description: "Our legal transformation consultants will respond within one business day.",
+    },
+  },
+  ar: {
+    badge: "اتصل بنا",
+    title: "تواصل مع مكتب أفوكات للمحاماة",
+    description: "حدد موعداً لاستشارة تستكشف التحول الرقمي القانوني المصمم لمؤسستك.",
+    labels: {
+      name: "الاسم",
+      email: "البريد الإلكتروني",
+      message: "الرسالة",
+    },
+    placeholders: {
+      name: "الاسم الكامل",
+      email: "you@avocatlaw.com",
+      message: "صف احتياجاتك في التحول الرقمي القانوني",
+    },
+    submit: "إرسال الرسالة",
+    submitting: "جارٍ الإرسال...",
+    note: "إرساليات سرية ومشفرة",
+    conciergeTitle: "مكتب قانوني رقمي على مدار الساعة",
+    conciergeBody:
+      "فريق متخصص في التحول الرقمي القانوني يعمل على مدار الساعة لدعم القضايا العاجلة والتحقيقات والقيادات التنفيذية.",
+    toast: {
+      title: "تم إرسال الرسالة بنجاح",
+      description: "سيتواصل معك مستشارو التحول الرقمي القانوني خلال يوم عمل واحد.",
+    },
+  },
+};
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t, isRTL } = useLanguage();
   const { toast } = useToast();
+  const { language, direction } = useLanguage();
+  const isArabic = language === "ar";
+  const copy = formCopy[language];
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
     setTimeout(() => {
-      toast({
-        title: "Message Sent Successfully!",
-        description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-      });
-      setFormData({ name: '', email: '', message: '' });
+      toast({ title: copy.toast.title, description: copy.toast.description });
+      setFormData({ name: "", email: "", message: "" });
       setIsSubmitting(false);
-    }, 2000);
+    }, 1500);
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  const contactInfo = [
-    {
-      icon: MapPin,
-      title: 'Headquarters',
-      content: 'Dubai International Financial Centre\nDubai, UAE',
-      gradient: 'from-primary to-primary-light'
-    },
-    {
-      icon: Phone,
-      title: 'Phone',
-      content: '+971 4 123 4567\n+966 11 987 6543',
-      gradient: 'from-accent to-accent-glow'
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      content: 'info@avocat.com\nsupport@avocat.com',
-      gradient: 'from-primary-light to-primary-glow'
-    },
-    {
-      icon: Clock,
-      title: 'Business Hours',
-      content: 'Sunday - Thursday: 9:00 AM - 6:00 PM\nFriday - Saturday: Closed',
-      gradient: 'from-accent-glow to-accent'
-    }
-  ];
 
   return (
-    <section id="contact" className="py-24 bg-gradient-to-br from-background via-secondary/20 to-background relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-primary rounded-full mix-blend-multiply blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-accent rounded-full mix-blend-multiply blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+    <section id="contact" className="relative overflow-hidden bg-gradient-to-br from-background via-secondary/10 to-background py-24" dir={direction}>
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute -left-20 top-32 h-72 w-72 rounded-full bg-primary/40 blur-3xl" />
+        <div className="absolute -right-16 bottom-10 h-80 w-80 rounded-full bg-accent/40 blur-3xl" />
       </div>
-
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-display font-bold text-foreground mb-6">
-            {t('contactTitle')}
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            {t('contactSubtitle')}
-          </p>
+      <div className="container relative mx-auto px-4 lg:px-8">
+        <div className="mb-16 text-center">
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
+            <span>{copy.badge}</span>
+          </div>
+          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
+          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Contact Form */}
-          <div className="animate-slide-up">
-            <div className="card-elevated p-8 lg:p-10">
-              <div className="flex items-center space-x-3 rtl:space-x-reverse mb-8">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-light rounded-xl flex items-center justify-center animate-glow">
-                  <MessageSquare className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-2xl font-display font-semibold text-foreground">
-                  Send us a Message
-                </h3>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Field */}
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+          <div className="rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid gap-6 md:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="flex items-center space-x-2 rtl:space-x-reverse text-sm font-medium text-foreground">
-                    <User className="w-4 h-4 text-primary" />
-                    <span>{t('name')}</span>
+                  <label className="text-sm font-medium text-foreground" htmlFor="name">
+                    {copy.labels.name}
                   </label>
                   <Input
+                    required
+                    id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="h-12 border-border focus:border-primary focus:ring-primary/20 transition-all duration-300"
-                    placeholder="Your full name"
-                    required
+                    placeholder={copy.placeholders.name}
+                    className="h-12 rounded-2xl border-border bg-background/70"
                   />
                 </div>
-
-                {/* Email Field */}
                 <div className="space-y-2">
-                  <label className="flex items-center space-x-2 rtl:space-x-reverse text-sm font-medium text-foreground">
-                    <AtSign className="w-4 h-4 text-primary" />
-                    <span>{t('email')}</span>
+                  <label className="text-sm font-medium text-foreground" htmlFor="email">
+                    {copy.labels.email}
                   </label>
                   <Input
-                    name="email"
+                    required
+                    id="email"
                     type="email"
+                    name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="h-12 border-border focus:border-primary focus:ring-primary/20 transition-all duration-300"
-                    placeholder="your.email@example.com"
-                    required
+                    placeholder={copy.placeholders.email}
+                    className="h-12 rounded-2xl border-border bg-background/70"
                   />
-                </div>
-
-                {/* Message Field */}
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 rtl:space-x-reverse text-sm font-medium text-foreground">
-                    <MessageSquare className="w-4 h-4 text-primary" />
-                    <span>{t('message')}</span>
-                  </label>
-                  <Textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={6}
-                    className="border-border focus:border-primary focus:ring-primary/20 transition-all duration-300 resize-none"
-                    placeholder="Tell us about your legal technology needs..."
-                    required
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full btn-premium h-12 text-lg group"
-                >
-                  {isSubmitting ? (
-                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      <span>Sending...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                      <span>{t('submit')}</span>
-                      <Send className="w-5 h-5 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform duration-300" />
-                    </div>
-                  )}
-                </Button>
-              </form>
-
-              {/* Trust Indicators */}
-              <div className="mt-8 pt-8 border-t border-border">
-                <div className="flex items-center justify-center space-x-8 rtl:space-x-reverse text-sm text-muted-foreground">
-                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <CheckCircle className="w-4 h-4 text-accent" />
-                    <span>Secure & Confidential</span>
-                  </div>
-                  <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                    <CheckCircle className="w-4 h-4 text-accent" />
-                    <span>24h Response</span>
-                  </div>
                 </div>
               </div>
-            </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground" htmlFor="message">
+                  {copy.labels.message}
+                </label>
+                <Textarea
+                  required
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={6}
+                  placeholder={copy.placeholders.message}
+                  className="resize-none rounded-2xl border-border bg-background/70"
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-gold flex w-full items-center justify-center gap-2 py-3 text-base font-semibold"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center gap-2 text-sm">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    {copy.submitting}
+                  </span>
+                ) : (
+                  <>
+                    <Send className="h-5 w-5" />
+                    <span>{copy.submit}</span>
+                  </>
+                )}
+              </Button>
+
+              <div className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-background/60 px-6 py-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-primary" />
+                  <span>{copy.note}</span>
+                </div>
+              </div>
+            </form>
           </div>
 
-          {/* Contact Information */}
           <div className="space-y-6">
-            {contactInfo.map((info, index) => {
-              const IconComponent = info.icon;
+            {contactPoints.map((point) => {
+              const Icon = point.icon;
+              const title = isArabic ? point.arTitle : point.enTitle;
+              const details = isArabic ? point.arDetails : point.enDetails;
               return (
                 <div
-                  key={index}
-                  className="animate-slide-up card-premium p-6 hover:card-elevated transition-all duration-500 group hover:-translate-y-1"
-                  style={{ animationDelay: `${index * 150}ms` }}
+                  key={point.enTitle}
+                  className="rounded-3xl border border-border bg-background/70 p-6 shadow-ambient backdrop-blur"
                 >
-                  <div className="flex items-start space-x-4 rtl:space-x-reverse">
-                    <div className={`w-14 h-14 bg-gradient-to-br ${info.gradient} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 animate-glow`}>
-                      <IconComponent className="w-7 h-7 text-white" />
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                      <Icon className="h-6 w-6" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-display font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                        {info.title}
-                      </h4>
-                      <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                        {info.content}
-                      </p>
+                    <div className={`${isArabic ? "text-right" : "text-left"}`}>
+                      <p className="text-sm font-semibold text-foreground">{title}</p>
+                      <p className="text-sm text-muted-foreground">{details}</p>
                     </div>
                   </div>
                 </div>
               );
             })}
 
-            {/* Call to Action */}
-            <div className="card-elevated p-8 text-center bg-gradient-primary text-white animate-fade-in">
-              <h4 className="text-2xl font-display font-bold mb-4">
-                Ready to Get Started?
-              </h4>
-              <p className="text-white/90 mb-6 leading-relaxed">
-                Schedule a free consultation with our legal technology experts
-              </p>
-              <Button className="btn-gold">
-                Book Consultation
-                <Phone className="w-4 h-4 ml-2 rtl:mr-2 rtl:ml-0" />
-              </Button>
+            <div className="rounded-3xl border border-border bg-gradient-primary p-8 text-white shadow-premium">
+              <h3 className="font-display text-2xl font-semibold">{copy.conciergeTitle}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/80">{copy.conciergeBody}</p>
             </div>
           </div>
         </div>

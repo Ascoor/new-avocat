@@ -1,18 +1,52 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useTheme } from "@/contexts/ThemeContext";
-import { 
-  Sun, Moon, Globe, Menu, X,
-  Scale, Shield, FileText, Users, Phone
-} from "lucide-react";
 import ThemeToggle from "@/components/ui/theme-toggle";
+import BrandLogo from "@/components/common/BrandLogo";
+import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  Award,
+  BookOpenText,
+  Menu,
+  Phone,
+  Scale,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  X,
+} from "lucide-react";
+
+type NavItem = {
+  href: string;
+  icon: typeof Scale;
+  en: string;
+  ar: string;
+};
+
+const navItems: NavItem[] = [
+  { href: "#home", icon: Scale, en: "Home", ar: "الرئيسية" },
+  { href: "#about", icon: BookOpenText, en: "About", ar: "من نحن" },
+  { href: "#services", icon: ShieldCheck, en: "Services", ar: "الخدمات" },
+  { href: "#capabilities", icon: Sparkles, en: "Capabilities", ar: "الإمكانيات" },
+  { href: "#achievements", icon: Award, en: "Achievements", ar: "الإنجازات" },
+  { href: "#team", icon: Users, en: "Team", ar: "الفريق" },
+  { href: "#insights", icon: BookOpenText, en: "Insights", ar: "المدونة" },
+  { href: "#contact", icon: Phone, en: "Contact", ar: "اتصل بنا" },
+];
+
+const highlightCopy = {
+  en: "Legal Digital Transformation",
+  ar: "التحول الرقمي القانوني",
+};
+
+const toggleCopy = {
+  en: { label: "Switch to Arabic", aria: "Switch to Arabic" },
+  ar: { label: "التبديل إلى الإنجليزية", aria: "التبديل إلى الإنجليزية" },
+};
 
 const LandingNavbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { language, toggleLanguage, t } = useLanguage();
-  const { setTheme } = useTheme();
+  const { language, toggleLanguage, direction } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -20,111 +54,132 @@ const LandingNavbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems = [
-    { key: "home", icon: Scale, href: "#home" },
-    { key: "features", icon: Shield, href: "#features" },
-    { key: "services", icon: FileText, href: "#services" },
-    { key: "about", icon: Users, href: "#about" },
-    { key: "contact", icon: Phone, href: "#contact" },
-  ];
-
   const scrollTo = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     setIsOpen(false);
   };
 
+  const isArabic = language === "ar";
+  const highlight = isArabic ? highlightCopy.ar : highlightCopy.en;
+  const { label: toggleLabel, aria: toggleAria } = toggleCopy[language];
+
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      dir={direction}
+      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
         isScrolled
-          ? "bg-background/90 backdrop-blur-md border-b border-border shadow-elevated"
-          : "bg-transparent"
+          ? "bg-background/90 backdrop-blur-lg border-b border-border shadow-elevated"
+          : "bg-background/20 backdrop-blur"
       }`}
     >
-      <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-20">
-        {/* Logo */}
-        <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <div className="w-10 h-10 bg-gradient-gold rounded-lg flex items-center justify-center animate-glow">
-            <Scale className="w-6 h-6 text-accent-foreground" />
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 lg:px-8">
+        <button
+          onClick={() => scrollTo("#home")}
+          className="flex items-center gap-3"
+        >
+          <div className="hidden sm:block">
+            <BrandLogo variant="full" className="h-10" lang={language} />
           </div>
-          <span className="text-2xl font-display font-bold text-foreground">
-            Avocat {language === "ar" && <span className="text-accent">أفوكات</span>}
-          </span>
+          <div className="text-lg font-semibold text-foreground sm:hidden">Avocat</div>
+        </button>
+
+        <div className="hidden items-center gap-6 lg:flex">
+          {navItems.map(({ href, icon: Icon, en, ar }) => {
+            const label = isArabic ? ar : en;
+            return (
+              <button
+                key={href}
+                onClick={() => scrollTo(href)}
+                className="group flex items-center gap-2 text-muted-foreground transition hover:text-primary"
+              >
+                <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+                <span className="text-sm font-medium tracking-wide">{label}</span>
+                <span className="block h-0.5 w-0 bg-gradient-gold transition-all duration-300 group-hover:w-full" />
+              </button>
+            );
+          })}
         </div>
 
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center space-x-8 rtl:space-x-reverse">
-          {navItems.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => scrollTo(item.href)}
-              className="group flex items-center space-x-2 rtl:space-x-reverse text-foreground hover:text-primary transition"
-            >
-              <item.icon className="w-4 h-4 group-hover:scale-110 transition" />
-              <span className="relative font-medium">
-                {t(item.key)}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-gold transition-all duration-300 group-hover:w-full"></span>
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <ThemeToggle />
-
+        <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-3 rounded-full border border-border bg-card/60 px-3 py-1.5 text-xs uppercase tracking-widest text-muted-foreground backdrop-blur lg:flex">
+            <Sparkles className="h-3 w-3 text-accent" />
+            <span>{highlight}</span>
+          </div>
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleLanguage}
+            aria-label={toggleAria}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 lg:hidden"
+          >
+            <span className="text-xs font-semibold">{isArabic ? "EN" : "AR"}</span>
+          </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={toggleLanguage}
-            className="flex items-center space-x-2 hover:bg-accent/20"
+            aria-label={toggleAria}
+            className="hidden items-center justify-center rounded-full border border-border/60 px-4 py-2 text-sm font-medium lg:inline-flex"
           >
-            <Globe className="w-4 h-4" />
-            <span className="text-sm">{language === "en" ? "العربية" : "English"}</span>
+            {toggleLabel}
           </Button>
-
-          <div className="hidden lg:flex space-x-3">
-            <Button variant="ghost">{t("login")}</Button>
-            <Button className="btn-premium">{t("signup")}</Button>
-          </div>
-
-          {/* Mobile Toggle */}
           <Button
             variant="ghost"
-            size="sm"
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden w-10 h-10 p-0"
+            size="icon"
+            className="lg:hidden"
+            onClick={() => setIsOpen((prev) => !prev)}
+            aria-label={isOpen ? "Close navigation" : "Open navigation"}
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
-        className={`lg:hidden transition-all duration-300 overflow-hidden ${
-          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        className={`overflow-hidden border-t border-border bg-background/95 backdrop-blur transition-all duration-300 lg:hidden ${
+          isOpen ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="py-6 border-t border-border bg-card/80 backdrop-blur-md rounded-b-xl">
-          <div className="flex flex-col space-y-4">
-            {navItems.map((item) => (
-              <button
-                key={item.key}
-                onClick={() => scrollTo(item.href)}
-                className="flex items-center space-x-3 px-4 py-3 text-foreground hover:text-primary hover:bg-accent/10 transition"
-              >
-                <item.icon className="w-5 h-5" />
-                <span>{t(item.key)}</span>
-              </button>
-            ))}
-
-            <div className="flex flex-col space-y-3 px-4 pt-4 border-t border-border">
-              <Button variant="ghost">{t("login")}</Button>
-              <Button className="btn-premium">{t("signup")}</Button>
+        <div className="space-y-1 px-4 py-6">
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+              <Sparkles className="h-3 w-3 text-accent" />
+              <span>{highlight}</span>
             </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label={toggleAria}
+              onClick={() => {
+                toggleLanguage();
+                setIsOpen(false);
+              }}
+            >
+              {toggleLabel}
+            </Button>
           </div>
+          {navItems.map(({ href, icon: Icon, en, ar }) => {
+            const label = isArabic ? ar : en;
+            return (
+              <button
+                key={href}
+                onClick={() => scrollTo(href)}
+                className="flex w-full items-center justify-between rounded-xl border border-transparent px-4 py-3 text-left transition-all duration-300 hover:border-accent/40 hover:bg-accent/10"
+              >
+                <div className="flex items-center gap-3 text-foreground">
+                  <Icon className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium">{label}</span>
+                </div>
+                <span className="text-xs uppercase tracking-widest text-muted-foreground">
+                  {href.replace('#', '')}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </nav>
