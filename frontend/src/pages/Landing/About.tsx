@@ -22,7 +22,7 @@ const About: React.FC = () => {
       <div className="relative overflow-hidden rounded-2xl shadow-card">
         <div className="pointer-events-none absolute inset-0 bg-gradient-card opacity-60 mix-blend-screen" />
         <img
-          src="/images/law-team.jpg"
+          src="/images/lawFirm.png"
           alt={t("landing.about.imageAlt")}
           className="h-full w-full object-cover transition-transform duration-500 ease-smooth hover:scale-103"
         />
