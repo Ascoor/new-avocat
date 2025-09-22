@@ -6,6 +6,8 @@ import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLegalCase } from '@/hooks/useLegalCases';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
 import {
   ArrowLeft,
   BadgeCheck,
@@ -21,7 +23,8 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass-card';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 const ClientsSection = lazy(() => import('./ClientsSection'));
 const CourtsSection = lazy(() => import('./CourtsSection'));
@@ -42,6 +45,7 @@ const LegalCaseDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { t, isRTL } = useLanguage();
   const [activeTab, setActiveTab] = useState('procedures');
+  const [overviewExpanded, setOverviewExpanded] = useState(true);
 
   const {
     data: legCase,
@@ -130,7 +134,7 @@ const LegalCaseDetails = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-              className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
+            className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">{t('legalCaseDetails.back')}</span>
@@ -164,35 +168,90 @@ const LegalCaseDetails = () => {
             <GlassCard
               variant="primary"
               hover="glow"
-              className="relative overflow-hidden border border-border/60 bg-gradient-card/10 p-6 md:p-8"
+              className="relative overflow-hidden border border-border/60 bg-surface-muted/80 p-6 md:p-8"
             >
-              <div className="pointer-events-none absolute inset-0 bg-card-highlight" />
-              <div className="relative grid gap-8 md:grid-cols-2">
-                <InfoList
-                  title={t('legalCaseDetails.sections.basicInfo')}
-                  items={basicInfo}
-                  direction={isRTL ? 'rtl' : 'ltr'}
-                />
-                <InfoList
-                  title={t('legalCaseDetails.sections.opponentInfo')}
-                  items={opponentInfo}
-                  direction={isRTL ? 'rtl' : 'ltr'}
-                />
-                {legCase.description && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.15 }}
-                    className="md:col-span-2 rounded-2xl border border-border/60 bg-surface-highlight/80 p-5 shadow-inner"
-                  >
-                    <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
-                      {t('legalCaseDetails.fields.description')}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-text-strong">
-                      {legCase.description}
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+              <div className="relative flex flex-col gap-6">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                      {t('legalCaseDetails.sections.basicInfo')}
                     </p>
-                  </motion.div>
-                )}
+                    <h2 className="text-2xl font-bold text-foreground">
+                      {legCase.title ?? t('legalCaseDetails.title')}
+                    </h2>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {legCase.slug && (
+                        <Badge variant="outline" className="border-primary/40 bg-primary/10 text-primary">
+                          #{legCase.slug}
+                        </Badge>
+                      )}
+                      {legCase.status && (
+                        <Badge variant="secondary" className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">
+                          {legCase.status}
+                        </Badge>
+                      )}
+                      {legCase.case_type?.name && (
+                        <Badge variant="outline" className="border-border/60 bg-surface-highlight/70 text-foreground">
+                          {legCase.case_type.name}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 rounded-full border border-border/50 bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <span className="cursor-pointer select-none" onClick={() => setOverviewExpanded((prev) => !prev)}>
+                      {overviewExpanded ? t('common.collapse') : t('common.expand')}
+                    </span>
+                    <Switch
+                      checked={overviewExpanded}
+                      onCheckedChange={setOverviewExpanded}
+                      aria-label={overviewExpanded ? t('common.collapse') : t('common.expand')}
+                      className="data-[state=checked]:bg-primary"
+                    />
+                  </div>
+                </div>
+
+                <AnimatePresence initial={false}>
+                  {overviewExpanded && (
+                    <motion.div
+                      key="overview-content"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid gap-8 md:grid-cols-2">
+                        <InfoList
+                          title={t('legalCaseDetails.sections.basicInfo')}
+                          items={basicInfo}
+                          direction={isRTL ? 'rtl' : 'ltr'}
+                        />
+                        <InfoList
+                          title={t('legalCaseDetails.sections.opponentInfo')}
+                          items={opponentInfo}
+                          direction={isRTL ? 'rtl' : 'ltr'}
+                        />
+                      </div>
+                      {legCase.description && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.35, delay: 0.1 }}
+                          className="mt-6 rounded-2xl border border-border/60 bg-surface-highlight/80 p-5 shadow-inner"
+                        >
+                          <h3 className="text-sm font-semibold uppercase tracking-wide text-text-muted">
+                            {t('legalCaseDetails.fields.description')}
+                          </h3>
+                          <p className="mt-2 text-sm leading-relaxed text-text-strong">
+                            {legCase.description}
+                          </p>
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </GlassCard>
           </motion.div>
@@ -262,6 +321,13 @@ interface InfoItem {
   icon?: LucideIcon;
 }
 
+const INFO_ACCENT_CLASSES = [
+  'from-primary/20 via-primary/10 to-transparent',
+  'from-sky-500/20 via-sky-500/10 to-transparent',
+  'from-emerald-500/20 via-emerald-500/10 to-transparent',
+  'from-amber-500/20 via-amber-500/10 to-transparent',
+] as const;
+
 const InfoList = ({
   title,
   items,
@@ -276,29 +342,47 @@ const InfoList = ({
       {title}
     </h3>
     <div className="grid gap-3 sm:grid-cols-2">
-      {items.map((item, index) => (
-        <motion.div
-          key={item.label}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.05 }}
-          className="group flex items-center gap-3 rounded-2xl border border-border/50 bg-surface-highlight/80 px-4 py-3 shadow-inner backdrop-blur-sm transition hover:border-primary/60 hover:bg-primary/5"
-        >
-          {item.icon && (
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-card">
-              <item.icon className="h-5 w-5" aria-hidden="true" />
-            </span>
-          )}
-          <div className="flex flex-1 flex-col gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-text-muted">
-              {item.label}
-            </span>
-            <span className="text-sm font-semibold text-text-strong text-end">
-              {item.value || '—'}
-            </span>
-          </div>
-        </motion.div>
-      ))}
+      {items.map((item, index) => {
+        return (
+          <motion.div
+            key={item.label}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+            className={cn(
+              'group relative overflow-hidden rounded-2xl border border-border/60 bg-surface-highlight/80 p-4 shadow-inner backdrop-blur-sm transition hover:border-primary/60',
+              direction === 'rtl' ? 'text-right' : 'text-left',
+            )}
+          >
+            <div
+              className={cn(
+                'pointer-events-none absolute inset-0 bg-gradient-to-br opacity-80',
+                INFO_ACCENT_CLASSES[index % INFO_ACCENT_CLASSES.length],
+              )}
+            />
+            <div className="relative flex items-center gap-3">
+              {item.icon && (
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-background/80 text-primary shadow-card ring-1 ring-primary/20">
+                  <item.icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+              )}
+              <div className="flex flex-1 flex-col gap-1">
+                <span className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+                  {item.label}
+                </span>
+                <span
+                  className={cn(
+                    'text-sm font-semibold text-text-strong',
+                    direction === 'rtl' ? 'text-left' : 'text-right',
+                  )}
+                >
+                  {item.value || '—'}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
     </div>
   </div>
 );
