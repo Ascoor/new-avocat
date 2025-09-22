@@ -102,6 +102,10 @@ export default {
       boxShadow: {
         card: "var(--shadow-card)",
         glow: "var(--shadow-glow)",
+        ambient: "var(--shadow-ambient)",
+        "inner-glow": "var(--shadow-inner)",
+        "focus-ring": "var(--shadow-focus)",
+        "glow-strong": "var(--shadow-glow-strong)",
       },
       backgroundImage: {
         "gradient-primary": "var(--gradient-primary)",
@@ -114,6 +118,12 @@ export default {
         "hero-overlay-light": "var(--gradient-hero-overlay-light)",
         "hero-overlay-dark": "var(--gradient-hero-overlay-dark)",
         "card-highlight": "var(--gradient-card-highlight)",
+        "gradient-aurora": "var(--gradient-aurora)",
+        "gradient-ambient": "var(--gradient-ambient)",
+        "gradient-midnight": "var(--gradient-midnight)",
+      },
+      backgroundSize: {
+        aurora: "200% 200%",
       },
       keyframes: {
         fadeIn: {
@@ -136,6 +146,19 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-6px)" },
         },
+        aurora: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+        glowPulse: {
+          "0%, 100%": { opacity: "0.5", transform: "translate3d(0, 0, 0) scale(1)" },
+          "50%": { opacity: "1", transform: "translate3d(0, -8px, 0) scale(1.02)" },
+        },
+        slowSpin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.6s ease-out both",
@@ -143,6 +166,9 @@ export default {
         fadeInDown: "fadeInDown 0.6s cubic-bezier(0.33, 1, 0.68, 1) both",
         pulseGlow: "pulseGlow 2.4s ease-in-out infinite",
         float: "float 6s ease-in-out infinite",
+        aurora: "aurora 16s ease-in-out infinite",
+        glowPulse: "glowPulse 8s ease-in-out infinite",
+        slowSpin: "slowSpin 28s linear infinite",
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
