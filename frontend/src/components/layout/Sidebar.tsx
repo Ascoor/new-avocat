@@ -24,6 +24,7 @@ const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
   type SidebarCSSProperties = CSSProperties & Record<`--${string}`, string>;
 
   const themeStyles = useMemo<SidebarCSSProperties>(() => {
+
     if (theme === 'dark') {
       return {
         '--sidebar-surface':
@@ -35,7 +36,9 @@ const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
         '--sidebar-ambient-glow': 'rgba(56, 189, 248, 0.35)',
         '--sidebar-border-color': 'rgba(56, 189, 248, 0.18)',
         '--sidebar-text-muted': 'rgba(226, 232, 240, 0.7)',
+
       } satisfies SidebarCSSProperties;
+
     }
 
     return {
@@ -47,8 +50,9 @@ const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
       '--sidebar-hover-glow': '0 18px 40px -26px rgba(14, 116, 144, 0.28)',
       '--sidebar-ambient-glow': 'rgba(14, 165, 233, 0.32)',
       '--sidebar-border-color': 'rgba(14, 165, 233, 0.24)',
-      '--sidebar-text-muted': 'rgba(71, 85, 105, 0.78)',
+      '--sidebar-text-muted': 'rgba(71, 85, 105, 0.78)', 
     } satisfies SidebarCSSProperties;
+
   }, [theme]);
 
   const interactiveBaseClasses = useMemo(
@@ -210,7 +214,8 @@ const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
               'border-[var(--sidebar-border-color)] bg-[var(--sidebar-item-bg)] text-sidebar-primary-foreground shadow-[var(--sidebar-active-glow)]',
           )
         }
-        style={!isCollapsed && itemActive ? { boxShadow: 'var(--sidebar-active-glow)' } : undefined}
+     style={!isCollapsed && itemActive ? { boxShadow: 'var(--sidebar-active-glow)' } : undefined}
+ 
       >
         <Icon
           className={cn(
@@ -223,7 +228,8 @@ const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
             className={cn(
               'flex-1 truncate transition-colors duration-300',
               isRTL ? 'text-right' : 'text-left',
-              itemActive && 'text-sidebar-primary-foreground',
+      itemActive && 'text-sidebar-primary-foreground',
+ 
             )}
           >
             {getItemLabel(item.labelKey)}
