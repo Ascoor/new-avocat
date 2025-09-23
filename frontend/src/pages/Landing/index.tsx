@@ -9,6 +9,7 @@ import Team from "./Team";
 import Insights from "./Insights";
 import Contact from "./Contact";
 import Footer from "./Footer";
+import ScrollToTopButton from "@/components/common/ScrollToTopButton";
 
 const LandingPage: React.FC = () => { 
   const { direction } = useLanguage();
@@ -26,6 +27,7 @@ const LandingPage: React.FC = () => {
         <Insights />
         <Contact />
       </main>
+      <ScrollToTopButton />
       <Footer />
     </>
   );

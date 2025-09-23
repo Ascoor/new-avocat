@@ -1,6 +1,7 @@
 import BrandLogo from "@/components/common/BrandLogo";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext"; 
+import { SocialGroup } from "./SocialGroup";  
+import { smoothScrollToElement } from "@/utils/smoothScroll";
 import { Linkedin, Mail, MapPin, Phone, Scale, Shield, Twitter } from "lucide-react";
 
 const quickLinks = [
@@ -77,8 +78,10 @@ const Footer: React.FC = () => {
 
 
   const scrollTo = (href: string) => {
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: "smooth" });
+    const element = document.querySelector<HTMLElement>(href);
+    if (element) {
+      smoothScrollToElement(element, { offset: 90, duration: 950 });
+    }
   };
 
   return (
@@ -93,20 +96,10 @@ const Footer: React.FC = () => {
         <div className="container mx-auto grid gap-12 px-4 py-16 lg:grid-cols-4 lg:px-8">
           <div className="space-y-6">
             <BrandLogo variant="full" className="h-12" lang={language} dark /> 
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
-                <Scale className="h-6 w-6" />
-               </div>
-              <div className="text-xs uppercase tracking-widest text-white/70">{copy.highlight}</div>
-            </div>
-            <div className="flex gap-3">
-              <Button variant="ghost" className="h-10 w-10 rounded-full border border-white/30 text-white hover:bg-white/20">
-                <Linkedin className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" className="h-10 w-10 rounded-full border border-white/30 text-white hover:bg-white/20">
-                <Twitter className="h-5 w-5" />
-              </Button>
-            </div>
+             
+  <SocialGroup />
+ 
+
           </div>
 
           <div>

@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import LanguageToggle from '@/components/ui/language-toggle';
-import { Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight, AlertCircle, ShieldCheck, Fingerprint, Clock3, Lock, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import authBackground from '@/assets/auth-background.jpg';
 import BrandLogo from '@/components/common/BrandLogo';
@@ -21,7 +21,7 @@ const emailRegex = /\S+@\S+\.\S+/;
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
-  const { isRTL, language } = useLanguage();
+  const { isRTL, language, direction } = useLanguage();
   const { login, loading } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -118,54 +118,154 @@ await login(email, password);
     }
   };
 
+  const heroCopy = useMemo(() => {
+    if (isRTL) {
+      return {
+        badge: 'ولوج رقمي مؤمن',
+        headline: 'دخول آمن يواكب سرعتك القانونية',
+        subheadline:
+          'إدارة القضايا، مراقبة لوحات التحكم، والتعاون مع الشركاء بضغطة واحدة عبر منصة أفوكات السحابية.',
+        highlights: [
+          { icon: ShieldCheck, text: 'مصادقة متعددة العوامل مع مراقبة فورية للتهديدات' },
+          { icon: Fingerprint, text: 'بصمة رقمية وتدقيق ذكي للهوية دون تعطيل التجربة' },
+          { icon: Clock3, text: 'تشغيل فوري ودعم تنفيذي على مدار الساعة' },
+        ],
+        stats: [
+          { value: '99.99%', label: 'جاهزية الخدمة' },
+          { value: '≤ 2 دقيقة', label: 'متوسط تسجيل الدخول' },
+        ],
+      };
+    }
+
+    return {
+      badge: 'Trusted Digital Access',
+      headline: 'Secure entry for high-stakes legal operations',
+      subheadline:
+        'Command matters, monitor dashboards, and collaborate instantly inside Avocat’s encrypted workspace.',
+      highlights: [
+        { icon: ShieldCheck, text: 'Adaptive MFA with live threat monitoring' },
+        { icon: Fingerprint, text: 'Biometric-ready identity checks without friction' },
+        { icon: Clock3, text: 'Instant onboarding and 24/7 concierge support' },
+      ],
+      stats: [
+        { value: '99.99%', label: 'Cloud uptime' },
+        { value: '≤ 2 min', label: 'Average sign-in time' },
+      ],
+    };
+  }, [isRTL]);
+
   return (
-    <div className={cn('min-h-screen flex', isRTL ? 'flex-row-reverse' : '')} dir={isRTL ? 'rtl' : 'ltr'}>
-      {/* Top language toggle overlay */}
-      <div className={cn('fixed top-4 z-50', isRTL ? 'left-4' : 'right-4')}>
+    <div
+      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background/95 to-background"
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
+      {/* ambient gradients */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-primary/30 blur-3xl" />
+        <div className="absolute bottom-12 right-16 h-72 w-72 rounded-full bg-accent/20 blur-3xl" />
+        <div className="absolute -bottom-28 left-16 h-80 w-80 rounded-full bg-primary/20 blur-3xl" />
+      </div>
+
+      {/* language toggle */}
+      <div className={cn('fixed top-6 z-50', isRTL ? 'left-6' : 'right-6')}>
         <LanguageToggle />
       </div>
-      {/* Background Image Section */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        {/* الخلفية + التدرج */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${authBackground})` }}
-        >
-          <div className="absolute inset-0 hero-gradient opacity-80"></div>
-        </div>
 
-        {/* محتوى متوسّط بالكامل */}
-        <div className="relative z-10 flex items-center justify-center w-full h-full">
-          <div className="text-text-inverse text-center max-w-md">
-            <BrandLogo
-              variant="text"
-              lang={language}
-              dark={true}
-              className="mx-auto h-16"
+      <div
+        className={cn(
+          'relative z-10 flex min-h-screen flex-col lg:flex-row',
+          isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'
+        )}
+      >
+        {/* Hero / Storytelling side */}
+        <section className="relative hidden flex-1 overflow-hidden rounded-br-[48px] lg:flex">
+          <div className="absolute inset-0">
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-70"
+              style={{ backgroundImage: `url(${authBackground})` }}
             />
-          </div>
-        </div>
-      </div>
-
-
-      {/* Form Section */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
-        <div className="w-full max-w-md space-y-6">
-          {/* Header (kept minimal with brand link) */}
-          <div className="flex justify-between items-center mb-8">
-            <Link to="/" className="text-2xl font-bold gradient-text" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/55 to-background/95" />
           </div>
 
-          {/* Login Card */}
-          <Card className="glass-card animate-fadeIn border-x-0">
-            <CardHeader className="text-center space-y-2">
-              <BrandLogo className='mx-auto h-16 w-16 drop-shadow-none shadow-none' variant='icon' />
-              <CardTitle className="heading-md">{t('auth.login.title')}</CardTitle>
-              <CardDescription>{t('auth.login.subtitle')}</CardDescription>
-            </CardHeader>
+          <div className="relative z-10 flex w-full flex-col justify-between px-8 py-14 lg:px-16" dir={direction}>
+            <div className="flex items-center justify-between">
+              <BrandLogo variant="text" className="h-12" lang={language} dark />
+              <span className="rounded-full border border-white/20 bg-white/10 px-4 py-1 text-[11px] uppercase tracking-[0.4rem] text-white/80">
+                Avocat Cloud Access
+              </span>
+            </div>
 
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/80 backdrop-blur">
+                <Sparkles className="h-4 w-4 text-accent" />
+                <span>{heroCopy.badge}</span>
+              </div>
+              <h1 className="text-4xl font-display font-semibold text-white drop-shadow-xl lg:text-5xl xl:text-6xl">
+                {heroCopy.headline}
+              </h1>
+              <p className="max-w-xl text-lg text-white/85 lg:text-xl">{heroCopy.subheadline}</p>
+
+              <div className="grid gap-4 lg:grid-cols-2">
+                {heroCopy.highlights.map(({ icon: HighlightIcon, text }) => (
+                  <div
+                    key={text}
+                    className={cn(
+                      'group flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/10',
+                      isRTL ? 'flex-row-reverse text-right' : 'text-left'
+                    )}
+                  >
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white">
+                      <HighlightIcon className="h-5 w-5" />
+                    </span>
+                    <p className="text-sm leading-relaxed text-white/85">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 grid grid-cols-2 gap-4 text-white/90">
+              {heroCopy.stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-lg"
+                >
+                  <p className="text-3xl font-bold">{stat.value}</p>
+                  <p className="mt-1 text-xs uppercase tracking-widest text-white/70">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Form side */}
+        <section className="relative flex flex-1 items-center justify-center px-6 py-14 lg:px-12">
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background/95 lg:bg-transparent" />
+          <div className="relative z-10 w-full max-w-lg space-y-10" dir={direction}>
+            {/* mobile hero snippet */}
+            <div className="space-y-5 text-center text-white lg:hidden">
+              <BrandLogo variant="text" className="mx-auto h-12" lang={language} />
+              <h1 className="text-3xl font-display font-semibold text-foreground">
+                {heroCopy.headline}
+              </h1>
+              <p className="text-base text-white/80">{heroCopy.subheadline}</p>
+            </div>
+
+            <Card className="relative overflow-hidden border border-border/60 bg-card/90 shadow-2xl backdrop-blur">
+              <div className="pointer-events-none absolute -top-32 right-0 h-52 w-52 rounded-full bg-primary/20 blur-3xl" />
+              <CardHeader className="relative space-y-3 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <Lock className="h-6 w-6" />
+                </div>
+                <div className="space-y-1">
+                  <CardTitle className="text-2xl font-semibold">
+                    {t('auth.login.title')}
+                  </CardTitle>
+                  <CardDescription>{t('auth.login.subtitle')}</CardDescription>
+                </div>
+              </CardHeader>
+
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                 {/* Email */}
                 <div className="space-y-2">
                   <Label htmlFor="email">{t('auth.login.email')}</Label>
@@ -283,6 +383,8 @@ await login(email, password);
           </Card>
           {/* no demo alert */}
         </div>
+        
+    </section>
       </div>
     </div>
   );

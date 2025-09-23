@@ -2,14 +2,15 @@ import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from "@/components/ui/button";
 import { Play, ArrowRight, Sparkles, Zap } from 'lucide-react';
+import { smoothScrollToElement } from "@/utils/smoothScroll";
 
 const CallToAction: React.FC = () => {
   const { t, isRTL } = useLanguage();
 
   const scrollToContact = () => {
-    const element = document.querySelector('#contact');
+    const element = document.querySelector<HTMLElement>('#contact');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      smoothScrollToElement(element, { offset: 90, duration: 950 });
     }
   };
 
