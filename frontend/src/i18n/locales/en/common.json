@@ -294,7 +294,11 @@
       "error": "We couldn't sign you in. Please try again.",
       "after_register": "Account created successfully. Please sign in.",
       "register_prompt": "Don't have an account?",
-      "register_cta": "Create one"
+      "register_cta": "Create one",
+      "swap_layout": "Swap sides",
+      "swap_layout_aria": "Swap the hero and form panels",
+      "signup_highlight_title": "New to Avocat?",
+      "signup_highlight_description": "Create your secure workspace and unlock premium legal operations tools."
     },
     "signup": {
       "title": "Create your account",
@@ -313,7 +317,9 @@
       "error_title": "Something went wrong",
       "error_message": "We couldn't complete your registration. Please try again.",
       "have_account": "Already have an account?",
-      "back_to_home": "Back to homepage"
+      "back_to_home": "Back to homepage",
+      "security_title": "Enterprise-grade protection",
+      "security_description": "Your credentials and client records are encrypted end-to-end."
     },
     "register": {
       "title": "Create account"
