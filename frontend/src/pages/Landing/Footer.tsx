@@ -92,8 +92,7 @@ const Footer: React.FC = () => {
       <div className="relative">
         <div className="container mx-auto grid gap-12 px-4 py-16 lg:grid-cols-4 lg:px-8">
           <div className="space-y-6">
-            <BrandLogo variant="full" className="h-12" lang={language} dark />
-<            <p className="text-sm leading-relaxed text-white/80">{copy.mission}</p>
+            <BrandLogo variant="full" className="h-12" lang={language} dark /> 
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
                 <Scale className="h-6 w-6" />

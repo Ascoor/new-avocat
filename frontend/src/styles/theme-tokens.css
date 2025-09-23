@@ -9,7 +9,7 @@
 
 :root {
   /* 🎨 الألوان (Colors) */
-  --background: 0 0% 100%;
+  --background: 215 42% 94%;
   --foreground: 215 75% 15%;
 
   --primary: 215 85% 17%;
@@ -18,9 +18,9 @@
   --primary-glow: 215 65% 35%;
   --primary-hover: 215 75% 22%;
 
-  --secondary: 213 20% 82%;
+  --secondary: 213 28% 88%;
   --secondary-foreground: 215 75% 15%;
-  --secondary-dark: 213 20% 76%;
+  --secondary-dark: 213 24% 80%;
 
   --accent: 45 85% 42%;
   --accent-foreground: 215 85% 17%;
@@ -31,11 +31,11 @@
   --muted-foreground: 215 20% 45%;
   --muted-dark: 210 25% 90%;
 
-  --card: 0 0% 100%;
+  --card: 215 36% 97%;
   --card-foreground: 215 75% 15%;
-  --card-elevated: 210 25% 98%;
+  --card-elevated: 215 30% 94%;
 
-  --popover: 0 0% 100%;
+  --popover: 215 34% 95%;
   --popover-foreground: 215 75% 15%;
 
   --destructive: 0 84% 60%;
@@ -49,8 +49,8 @@
   --warning-foreground: 215 90% 16%;
   --warning-soft: 38 100% 92%;
 
-  --border: 213 20% 88%;
-  --input: 213 20% 90%;
+  --border: 213 24% 82%;
+  --input: 213 26% 86%;
   --ring: 215 85% 17%;
 
   --text-strong: 215 75% 15%;
@@ -58,12 +58,12 @@
   --text-body: 215 18% 35%;
   --text-inverse: 0 0% 100%;
 
-  --surface-muted: 210 25% 95%;
-  --surface-highlight: 210 25% 98%;
-  --surface-glass: 210 50% 99% / 0.35;
+  --surface-muted: 215 30% 92%;
+  --surface-highlight: 215 36% 96%;
+  --surface-glass: 215 38% 92% / 0.45;
 
   --gradient-primary: linear-gradient(135deg, hsl(215 85% 17%), hsl(215 75% 25%));
-  --gradient-secondary: linear-gradient(135deg, hsl(210 25% 98%), hsl(213 20% 90%));
+  --gradient-secondary: linear-gradient(135deg, hsl(215 40% 96%), hsl(213 26% 86%));
   --gradient-gold: linear-gradient(135deg, hsl(45 85% 42%), hsl(45 85% 52%));
   --gradient-hero: linear-gradient(135deg, hsl(215 85% 12%), hsl(215 75% 20%));
   --gradient-success: linear-gradient(135deg, hsl(156 72% 40%), hsl(156 64% 48%));

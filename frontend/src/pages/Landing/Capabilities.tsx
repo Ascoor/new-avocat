@@ -1,4 +1,6 @@
 import { Cpu, Layers, ShieldEllipsis } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+
 
 type Capability = {
   icon: typeof Layers;
@@ -64,19 +66,17 @@ const capabilities: Capability[] = [
   },
 ];
 
- 
-const sectionCopy = {
+const sectionCopy: Record<"en" | "ar", { badge: string; title: string; subtitle: string }> = {
   en: {
     badge: "Capabilities",
     title: "Intelligence, Security, and Digital Mastery",
-    description:
+    subtitle:
       "Tailored operating models unite legal excellence, predictive analytics, and uncompromising cybersecurity.",
   },
   ar: {
     badge: "الإمكانيات",
     title: "الذكاء والحماية والتمكن الرقمي",
-    description:
-      "نماذج تشغيل مخصصة توحد التميز القانوني والتحليلات التنبؤية والأمن السيبراني الصارم.",
+    subtitle: "نماذج تشغيل مصممة توحد التميز القانوني والتحليلات التنبؤية والأمن السيبراني الصارم.",
   },
 };
 
@@ -86,41 +86,98 @@ const Capabilities: React.FC = () => {
   const copy = sectionCopy[language];
 
   return (
-    <section id="capabilities" className="relative overflow-hidden py-24" dir={direction}>
+    <section
+      id="capabilities"
+      className="relative overflow-hidden py-24"
+      dir={direction}
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/15 to-background" />
       <div className="container relative mx-auto px-4 lg:px-8">
         <div className="mb-16 text-center">
-          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
-            <span>{copy.badge}</span>
+          <div className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-2 text-xs uppercase tracking-widest text-muted-foreground">
+            <span className={isArabic ? "font-arabic" : "font-english"}>{copy.badge}</span>
           </div>
-          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{copy.title}</h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{copy.description}</p>
- 
+          <h2 className={`mt-6 text-4xl font-display font-bold lg:text-5xl ${isArabic ? "text-accent" : "text-foreground"}`}>
+            <span className={isArabic ? "font-arabic" : "font-english"}>{copy.title}</span>
+          </h2>
+          <p
+            className={`mt-4 text-lg text-muted-foreground lg:text-xl ${
+              isArabic ? "font-arabic" : "font-english"
+            }`}
+          >
+            {copy.subtitle}
+          </p>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          {capabilities.map((capability) => {
+            const Icon = capability.icon;
+            const cardTitle = isArabic ? capability.arTitle : capability.enTitle;
+            const cardDescription = isArabic
+              ? capability.arDescription
+              : capability.enDescription;
+            const cardPoints = isArabic ? capability.arPoints : capability.enPoints;
+            const bulletColor = isArabic ? "bg-accent" : "bg-primary";
             return (
               <div
                 key={capability.enTitle}
                 className="h-full rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
-              > 
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="rounded-2xl bg-primary/10 p-3 text-primary">
-                    <Icon className="h-6 w-6" />
+              >
+                <div className="mb-6 flex items-center justify-between">
+                  <div className={`flex items-center ${isArabic ? "flex-row-reverse" : ""} gap-3`}>
+                    <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div className={isArabic ? "text-right" : "text-left"}>
+                      <h3
+                        className={`${
+                          isArabic
+                            ? "font-arabic text-lg font-semibold text-accent"
+                            : "font-english text-xl font-semibold text-foreground"
+                        }`}
+                      >
+                        {cardTitle}
+                      </h3>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-foreground">{title}</h3>
                 </div>
 
-                <div className={`space-y-3 text-base leading-relaxed text-muted-foreground ${isArabic ? "text-right" : "text-left"}`}>
-                  <p>{description}</p>
-                  <ul className="space-y-2 text-sm">
-                    {points.map((point) => (
-                      <li
-                        key={point}
-                        className={`flex items-start gap-2 ${isArabic ? "flex-row-reverse text-right" : ""}`}
-                      >
-                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul> 
+                <div className="space-y-4">
+                  <div
+                    dir={isArabic ? "rtl" : "ltr"}
+                    className={`space-y-3 ${isArabic ? "text-right" : "text-left"}`}
+                  >
+                    <p
+                      className={`${
+                        isArabic
+                          ? "font-arabic text-base leading-relaxed text-muted-foreground"
+                          : "font-english text-base leading-relaxed text-muted-foreground"
+                      }`}
+                    >
+                      {cardDescription}
+                    </p>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {cardPoints.map((point) => (
+                        <li
+                          key={point}
+                          className={`flex items-start gap-2 ${
+                            isArabic ? "flex-row-reverse" : ""
+                          }`}
+                        >
+                          <span
+                            className={`mt-1 h-1.5 w-1.5 rounded-full ${bulletColor}`}
+                          />
+                          <span
+                            className={`leading-relaxed ${
+                              isArabic ? "font-arabic text-right" : "font-english"
+                            }`}
+                          >
+                            {point}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             );

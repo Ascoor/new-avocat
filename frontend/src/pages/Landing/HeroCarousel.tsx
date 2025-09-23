@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"; 
 import { useLanguage } from "@/contexts/LanguageContext";
- 
 import { ChevronLeft, ChevronRight, Mail, Play, ShieldCheck, Sparkles } from "lucide-react";
 
 import heroLegal1 from "@/assets/slides/hero-legal-1.png";
 import heroDigital2 from "@/assets/slides/hero-digital-2.png";
 import heroPartnership3 from "@/assets/slides/hero-partnership-3.png";
+import HeroTeam from "@/assets/slides/hero-team-4..png";
 
 type SlideCopy = {
   title: string;
@@ -23,69 +23,65 @@ type Slide = {
     ar: string;
   };
   copy: Record<"en" | "ar", SlideCopy>;
- 
 };
 
 const slides: Slide[] = [
   {
     id: 1,
     image: heroLegal1,
-    overlay: "bg-gradient-to-r from-primary/90 via-primary/70 to-transparent", 
+    overlay: "bg-gradient-to-r from-black/80 via-slate-900/60 to-transparent",
     badge: {
-      en: "Legal Digital Transformation",
-      ar: "التحول الرقمي القانوني",
+      en: "Flagship Litigation Unit",
+      ar: "وحدة التقاضي الرئيسية",
     },
     copy: {
       en: {
-        title: "Prestige Meets Predictive Legal Intelligence",
+        title: "Elite trial counsel for high-stakes mandates",
         subtitle:
-          "Founded in 2013, Avocat Law Firm bridges traditional expertise with digital innovation to deliver justice that is safer, more transparent, and more efficient.",
+          "Seasoned advocates and digital workflows protect your interests across MENA courts.",
         bullets: [
-          "Heritage-grade litigation strategies enhanced with secure analytics.",
-          "Trusted counsel for ministries, financial institutions, and innovators.",
-          "Digitally preserved evidence chains with verifiable audit trails.",
+          "Strategic command of commercial, administrative, and criminal disputes.",
+          "Secure evidence rooms and filings orchestrated with military precision.",
+          "24/7 bilingual crisis desk for urgent injunctions and enforcement.",
         ],
       },
       ar: {
-        title: "الفخامة تلتقي بالذكاء القانوني الاستباقي",
-        subtitle:
-          "تأسس مكتب أفوكات عام 2013 ليكون جسراً بين الخبرة القانونية التقليدية والابتكار الرقمي، بهدف تقديم عدالة أكثر أماناً وشفافية وفعالية.",
+        title: "محامون نخبة للقضايا المصيرية",
+        subtitle: "محامون مخضرمون وسير عمل رقمية تحمي مصالحك عبر محاكم المنطقة.",
         bullets: [
-          "استراتيجيات تقاضٍ عريقة مدعومة بتحليلات آمنة.",
-          "استشارات موثوقة للوزارات والمؤسسات المالية ورواد الابتكار.",
-          "سلاسل أدلة رقمية محفوظة مع سجلات تدقيق موثوقة.",
+          "إدارة استراتيجية للنزاعات التجارية والإدارية والجنائية.",
+          "غرف أدلة مؤمنة وإيداعات منظمة بدقة عالية.",
+          "مكتب طوارئ ثنائي اللغة على مدار الساعة للأوامر العاجلة والتنفيذ.",
         ],
       },
- 
     },
   },
   {
     id: 2,
     image: heroDigital2,
-    overlay: "bg-gradient-to-r from-primary-light/90 via-primary/60 to-accent/20", 
+    overlay: "bg-gradient-to-r from-black/75 via-slate-900/55 to-transparent",
     badge: {
-      en: "AI-Driven Counsel",
-      ar: "استشارات مدعومة بالذكاء الاصطناعي",
+      en: "Digital Transformation",
+      ar: "التحول الرقمي",
     },
     copy: {
       en: {
-        title: "AI-Enhanced Advocacy Without Compromise",
+        title: "Operate your firm on a unified digital backbone",
         subtitle:
-          "Intelligent systems for case management, precedent research, and data-driven legal strategies.",
+          "AI-enabled matter management delivers clarity, compliance, and profitability.",
         bullets: [
-          "Predictive analytics anticipates judicial patterns before hearings.",
-          "Augmented research assistant surfaces decisive precedents instantly.",
-          "Secure collaboration keeps partners, experts, and clients aligned.",
+          "Predictive analytics score risk, value, and timelines before filing.",
+          "Client dashboards report progress, fees, and key metrics in real time.",
+          "Automated document assembly executes compliant contracts instantly.",
         ],
       },
       ar: {
-        title: "مرافعات مدعومة بالذكاء الاصطناعي دون تنازل",
-        subtitle:
-          "أنظمة ذكية لإدارة القضايا، البحث في السوابق، وبناء استراتيجيات قانونية قائمة على البيانات.",
+        title: "شغّل مكتبك على بنية رقمية موحدة",
+        subtitle: "إدارة القضايا بالذكاء الاصطناعي تمنحك الوضوح والامتثال والربحية.",
         bullets: [
-          "تحليلات تنبؤية تستشرف توجهات القضاء قبل الجلسة.",
-          "مساعد بحث معزز يستحضر السوابق الحاسمة فوراً.",
-          "تعاون مؤمن يحافظ على مواءمة الشركاء والخبراء والعملاء.",
+          "تحليلات تنبؤية تقيم المخاطر والقيمة والزمن قبل التقديم.",
+          "لوحات عملاء تعرض التقدم والرسوم والمؤشرات لحظة بلحظة.",
+          "تجميع عقود آلي ينفذ مستندات متوافقة فوراً.",
         ],
       },
     },
@@ -93,62 +89,64 @@ const slides: Slide[] = [
   {
     id: 3,
     image: heroPartnership3,
-    overlay: "bg-gradient-to-r from-primary/95 via-primary/70 to-secondary/30",
+    overlay: "bg-gradient-to-r from-black/85 via-slate-900/55 to-transparent",
     badge: {
-      en: "Secure Digital Justice",
-      ar: "عدالة رقمية آمنة",
+      en: "Trusted Cross-Border Partner",
+      ar: "شريك عبر الحدود",
     },
     copy: {
       en: {
-        title: "Leaders of Secure Digital Justice Ecosystems",
+        title: "Partnerships that scale across jurisdictions",
         subtitle:
-          "Integrated platforms with e-signatures, secure archiving, dashboards, and paperless smart justice.",
+          "Collaborative models align your teams with regulators, investors, and clients.",
         bullets: [
-          "ISO-aligned cybersecurity architecture for cross-border operations.",
-          "Real-time governance dashboards for executives and compliance officers.",
-          "24/7 monitoring shield against fraud, forgery, and cybercrime.",
+          "Integrated GCC and EU counsel network for seamless cross-border execution.",
+          "Cybersecure collaboration rooms keep regulators and stakeholders in sync.",
+          "Tailored playbooks align governance, compliance, and dispute strategies.",
         ],
       },
       ar: {
-        title: "روّاد منظومات العدالة الرقمية الآمنة",
-        subtitle:
-          "منصات متكاملة بالتوقيع الإلكتروني، الأرشفة الآمنة، لوحات تحكم تفاعلية، وعدالة رقمية بلا ورق.",
+        title: "شراكات تتمدد عبر الولايات القضائية",
+        subtitle: "نماذج تعاونية تنسق فرقك مع الجهات التنظيمية والمستثمرين والعملاء.",
         bullets: [
-          "بنية أمن سيبراني متوافقة مع المعايير الدولية للعمليات العابرة للحدود.",
-          "لوحات حوكمة لحظية للمديرين والتنفيذيين ومسؤولي الامتثال.",
-          "مراقبة على مدار الساعة تحمي من الاحتيال والتزوير والجرائم السيبرانية.",
+          "شبكة مستشارين في الخليج وأوروبا لتنفيذ عابر للحدود بلا انقطاع.",
+          "غرف تعاون مؤمنة تحافظ على تزامن الجهات الرقابية وأصحاب المصلحة.",
+          "دليل تشغيلي مصمم ينسق الحوكمة والامتثال واستراتيجيات النزاع.",
         ],
       },
-    }, 
+    },
   },
 ];
 
 const HeroCarousel: React.FC = () => {
   const [current, setCurrent] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true); 
+  const [autoPlay, setAutoPlay] = useState(true);
   const { language, direction } = useLanguage();
   const isArabic = language === "ar";
- 
+  const slidesCount = slides.length;
 
   useEffect(() => {
-    if (!autoPlay) return;
+    if (!autoPlay || slidesCount <= 1) return;
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
+      setCurrent((prev) => (prev + 1) % slidesCount);
     }, 6000);
     return () => clearInterval(timer);
-  }, [autoPlay]);
+  }, [autoPlay, slidesCount]);
 
   const handlePrev = () => {
-    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-    setAutoPlay(false); 
+    if (!slidesCount) return;
+    setCurrent((prev) => (prev - 1 + slidesCount) % slidesCount);
+    setAutoPlay(false);
   };
 
   const handleNext = () => {
-    setCurrent((prev) => (prev + 1) % slides.length);
+    if (!slidesCount) return;
+    setCurrent((prev) => (prev + 1) % slidesCount);
     setAutoPlay(false);
   };
 
   const goTo = (index: number) => {
+    if (!slidesCount) return;
     setCurrent(index);
     setAutoPlay(false);
   };
@@ -161,7 +159,12 @@ const HeroCarousel: React.FC = () => {
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const activeSlide = slides[current];
+  const activeSlide = slidesCount ? slides[current % slidesCount] : undefined;
+
+  if (!activeSlide) {
+    return null;
+  }
+
   const slideCopy = activeSlide.copy[isArabic ? "ar" : "en"];
   const badge = activeSlide.badge[isArabic ? "ar" : "en"];
   const demoLabel = isArabic ? "اطلب العرض التفاعلي" : "Request Live Demo";
@@ -183,12 +186,11 @@ const HeroCarousel: React.FC = () => {
             />
             <div className={`absolute inset-0 ${slide.overlay}`} />  
           </div>
-        </div>
+        ))}
       </div>
- 
       <div className="relative z-10 flex h-full items-center">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl rounded-3xl bg-background/70 p-6 shadow-ambient backdrop-blur lg:p-10">
+          <div className="max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur lg:p-10 dark:bg-background/70">
             <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-border/80 bg-card/80 px-4 py-2 text-xs font-semibold text-white/90 shadow-inner backdrop-blur">
               <Sparkles className="h-4 w-4 text-accent" />
               <span>{badge}</span>
@@ -276,6 +278,7 @@ const HeroCarousel: React.FC = () => {
           <Play className="h-4 w-4 text-white" />
         )}
       </button>
+ 
     </section>
   );
 };
