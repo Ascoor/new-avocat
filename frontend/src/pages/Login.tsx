@@ -10,7 +10,19 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import LanguageToggle from '@/components/ui/language-toggle';
-import { Eye, EyeOff, ArrowRight, AlertCircle, ShieldCheck, Fingerprint, Clock3, Lock, Sparkles } from 'lucide-react';
+import {
+  Eye,
+  EyeOff,
+  ArrowRight,
+  AlertCircle,
+  ShieldCheck,
+  Fingerprint,
+  Clock3,
+  Lock,
+  Sparkles,
+  ArrowLeftRight,
+  UserPlus,
+} from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import authBackground from '@/assets/auth-background.jpg';
 import BrandLogo from '@/components/common/BrandLogo';
@@ -35,6 +47,7 @@ const Login: React.FC = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [mirrored, setMirrored] = useState(false);
 
   // helpers
   const setField = <K extends keyof typeof formData>(key: K, value: (typeof formData)[K]) =>
@@ -154,6 +167,8 @@ await login(email, password);
     };
   }, [isRTL]);
 
+  const shouldReverse = useMemo(() => (isRTL ? !mirrored : mirrored), [isRTL, mirrored]);
+
   return (
     <div
       className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background/95 to-background"
@@ -166,19 +181,41 @@ await login(email, password);
         <div className="absolute -bottom-28 left-16 h-80 w-80 rounded-full bg-primary/20 blur-3xl" />
       </div>
 
-      {/* language toggle */}
-      <div className={cn('fixed top-6 z-50', isRTL ? 'left-6' : 'right-6')}>
+      {/* controls */}
+      <div
+        className={cn(
+          'fixed top-6 z-50 flex items-center gap-2',
+          isRTL ? 'left-6 flex-row-reverse' : 'right-6'
+        )}
+      >
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="border-border/50 bg-background/70 text-xs font-medium backdrop-blur"
+          onClick={() => setMirrored((prev) => !prev)}
+          aria-pressed={mirrored}
+          aria-label={t('auth.login.swap_layout_aria')}
+        >
+          <ArrowLeftRight className="h-4 w-4" />
+          <span>{t('auth.login.swap_layout')}</span>
+        </Button>
         <LanguageToggle />
       </div>
 
       <div
         className={cn(
           'relative z-10 flex min-h-screen flex-col lg:flex-row',
-          isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row'
+          shouldReverse ? 'lg:flex-row-reverse' : 'lg:flex-row'
         )}
       >
         {/* Hero / Storytelling side */}
-        <section className="relative hidden flex-1 overflow-hidden rounded-br-[48px] lg:flex">
+        <section
+          className={cn(
+            'relative hidden flex-1 overflow-hidden lg:flex',
+            shouldReverse ? 'rounded-bl-[48px]' : 'rounded-br-[48px]'
+          )}
+        >
           <div className="absolute inset-0">
             <div
               className="absolute inset-0 bg-cover bg-center opacity-70"
@@ -264,11 +301,11 @@ await login(email, password);
                 </div>
               </CardHeader>
 
-              <CardContent>
+              <CardContent className="space-y-6">
                 <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                {/* Email */}
-                <div className="space-y-2">
-                  <Label htmlFor="email">{t('auth.login.email')}</Label>
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <Label htmlFor="email">{t('auth.login.email')}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -295,28 +332,34 @@ await login(email, password);
                 </div>
 
                 {/* Password */}
-                <div className="space-y-2">
-                  <Label htmlFor="password">{t('auth.login.password')}</Label>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      value={formData.password}
-                      onChange={(e) => setField('password', e.target.value)}
-                      className={errors.password ? 'border-destructive pr-10' : 'pr-10'}
-                      placeholder={t('auth.login.password_placeholder')}
-                      autoComplete="current-password"
-                      aria-invalid={!!errors.password}
-                      aria-describedby={errors.password ? 'password-error' : undefined}
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                      onClick={() => setShowPassword((s) => !s)}
-                      aria-pressed={showPassword}
-                      aria-label={showPassword ? t('auth.login.hide_password') : t('auth.login.show_password')}
+                  <div className="space-y-2">
+                    <Label htmlFor="password">{t('auth.login.password')}</Label>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={formData.password}
+                        onChange={(e) => setField('password', e.target.value)}
+                        className={cn(
+                          errors.password ? 'border-destructive' : '',
+                          isRTL ? 'pl-10' : 'pr-10'
+                        )}
+                        placeholder={t('auth.login.password_placeholder')}
+                        autoComplete="current-password"
+                        aria-invalid={!!errors.password}
+                        aria-describedby={errors.password ? 'password-error' : undefined}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className={cn(
+                          'absolute top-0 h-full px-3 py-2 hover:bg-transparent',
+                          isRTL ? 'left-0' : 'right-0'
+                        )}
+                        onClick={() => setShowPassword((s) => !s)}
+                        aria-pressed={showPassword}
+                        aria-label={showPassword ? t('auth.login.hide_password') : t('auth.login.show_password')}
                     >
                       {showPassword ? (
                         <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -368,23 +411,45 @@ await login(email, password);
                     </>
                   )}
                 </Button>
+              </form>
 
-                {/* Register CTA */}
-                <div className="text-center">
-                  <p className="text-sm text-muted-foreground">
-                    {t('auth.login.register_prompt')}{' '}
-                    <Link to="/signup" className="font-medium text-primary hover:underline">
+                <div
+                  className={cn(
+                    'flex flex-col items-center gap-4 rounded-2xl border border-dashed border-primary/50 bg-primary/5 p-5 text-center transition-all duration-300 hover:border-primary/60 hover:bg-primary/10 hover:shadow-lg sm:flex-row sm:justify-between',
+                    isRTL ? 'sm:flex-row-reverse' : ''
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'flex flex-1 items-center justify-center gap-3',
+                      isRTL ? 'sm:flex-row-reverse' : ''
+                    )}
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10">
+                      <BrandLogo variant="icon" className="h-8 w-8" lang={language} />
+                    </div>
+                    <div className={cn('space-y-1', isRTL ? 'text-right' : 'text-left')}>
+                      <p className="text-sm font-semibold text-foreground">
+                        {t('auth.login.signup_highlight_title')}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {t('auth.login.signup_highlight_description')}
+                      </p>
+                    </div>
+                  </div>
+                  <Button asChild variant="secondary" size="sm" className="w-full sm:w-auto">
+                    <Link to="/signup" className="inline-flex items-center justify-center gap-2">
+                      <UserPlus className="h-4 w-4" />
                       {t('auth.login.register_cta')}
                     </Link>
-                  </p>
+                  </Button>
                 </div>
-              </form>
-            </CardContent>
-          </Card>
-          {/* no demo alert */}
-        </div>
-        
-    </section>
+              </CardContent>
+            </Card>
+            {/* no demo alert */}
+          </div>
+
+        </section>
       </div>
     </div>
   );
