@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
 
   return (
  
-    <footer className="relative mt-24 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/95 text-white" dir={direction}>
+    <footer className="relative mt-24 bg-gradient-to-t from-primary/90 via-primary/80 to-primary/95 text-white" dir={direction}>
 
       <div className="absolute inset-0 opacity-20">
         <div className="absolute left-10 top-16 h-48 w-48 rounded-full bg-accent/70 blur-3xl" />

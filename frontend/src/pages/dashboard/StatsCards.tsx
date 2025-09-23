@@ -37,6 +37,8 @@ export default function StatsCards() {
       value: totalCases.toLocaleString(),
       icon: Briefcase,
       background: 'bg-gradient-primary',
+      iconBg: 'bg-primary/15',
+      iconColor: 'text-primary/90',
       change: 12,
     },
     {
@@ -44,6 +46,8 @@ export default function StatsCards() {
       value: activeClients.toLocaleString(),
       icon: Users,
       background: 'bg-gradient-success',
+      iconBg: 'bg-success/15',
+      iconColor: 'text-success/90',
       change: 5,
     },
     {
@@ -51,6 +55,8 @@ export default function StatsCards() {
       value: upcomingSessions.toLocaleString(),
       icon: Calendar,
       background: 'bg-gradient-accent',
+      iconBg: 'bg-accent/20',
+      iconColor: 'text-accent/90',
       change: -2,
     },
     {
@@ -58,6 +64,8 @@ export default function StatsCards() {
       value: `$${totalRevenue.toLocaleString()}`,
       icon: DollarSign,
       background: 'bg-gradient-warning',
+      iconBg: 'bg-warning/20',
+      iconColor: 'text-warning/90',
       change: 8,
     },
   ];
@@ -83,13 +91,13 @@ export default function StatsCards() {
               stat.background
             )}
           >
-            <div className="absolute inset-0 opacity-70 mix-blend-screen" />
-            <div className="absolute inset-0 bg-card-highlight opacity-80" />
+            <div className="absolute inset-0 opacity-60 mix-blend-screen" />
+            <div className="absolute inset-0 bg-card-highlight/60" />
             <div className="relative flex flex-col gap-4 p-5">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium text-text-inverse/85">{stat.label}</p>
-                <span className="rounded-full bg-text-inverse/15 p-2 shadow-inner">
-                  <Icon className="h-5 w-5" />
+                <span className={cn('rounded-full p-2 shadow-inner backdrop-blur-sm', stat.iconBg)}>
+                  <Icon className={cn('h-5 w-5', stat.iconColor)} />
                 </span>
               </div>
               <div className="text-2xl font-semibold tracking-tight">
