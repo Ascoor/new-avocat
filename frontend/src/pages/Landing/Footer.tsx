@@ -3,6 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { SocialGroup } from "./SocialGroup";  
 import { smoothScrollToElement } from "@/utils/smoothScroll";
 import { Linkedin, Mail, MapPin, Phone, Scale, Shield, Twitter } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const quickLinks = [
   { href: "#home", en: "Home", ar: "الرئيسية" },
@@ -86,11 +87,18 @@ const Footer: React.FC = () => {
 
   return (
  
-    <footer className="relative mt-24 bg-gradient-to-t from-primary/90 via-primary/80 to-primary/95 text-white" dir={direction}>
+    <footer
+      className={cn(
+        "relative mt-24 overflow-hidden transition-colors",
+        "bg-gradient-to-t from-primary/90 via-primary/80 to-primary/95 text-white",
+        "dark:bg-gradient-to-t dark:from-background/96 dark:via-background/92 dark:to-background/98 dark:text-foreground"
+      )}
+      dir={direction}
+    >
 
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute left-10 top-16 h-48 w-48 rounded-full bg-accent/70 blur-3xl" />
-        <div className="absolute right-0 bottom-10 h-56 w-56 rounded-full bg-white/50 blur-3xl" />
+        <div className="absolute left-10 top-16 h-48 w-48 rounded-full bg-accent/70 blur-3xl dark:bg-accent/40" />
+        <div className="absolute right-0 bottom-10 h-56 w-56 rounded-full bg-white/50 blur-3xl dark:bg-primary/30" />
       </div>
       <div className="relative">
         <div className="container mx-auto grid gap-12 px-4 py-16 lg:grid-cols-4 lg:px-8">
@@ -103,18 +111,20 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="font-display text-lg font-semibold text-white">{copy.quickLinks}</h3>
-            <ul className="mt-6 space-y-3 text-sm text-white/80">
+            <h3 className="font-display text-lg font-semibold text-white dark:text-foreground">{copy.quickLinks}</h3>
+            <ul className="mt-6 space-y-3 text-sm text-white/80 dark:text-foreground/70">
               {quickLinks.map((link) => {
                 const label = isArabic ? link.ar : link.en;
                 return (
                   <li key={link.href}>
                     <button
                       onClick={() => scrollTo(link.href)}
-                      className="flex w-full items-center justify-between rounded-xl border border-transparent px-3 py-2 text-left transition-all duration-300 hover:border-white/40 hover:bg-white/10"
+                      className="flex w-full items-center justify-between rounded-xl border border-transparent px-3 py-2 text-left transition-all duration-300 hover:border-white/40 hover:bg-white/10 dark:hover:border-foreground/30 dark:hover:bg-foreground/10"
                     >
                       <span>{label}</span>
-                      <span className="text-xs uppercase tracking-widest text-white/60">{link.href.replace('#', '')}</span>
+                      <span className="text-xs uppercase tracking-widest text-white/60 dark:text-foreground/50">
+                        {link.href.replace('#', '')}
+                      </span>
                     </button>
                   </li>
                 );
@@ -123,20 +133,23 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-              <h3 className="font-display text-lg font-semibold text-white">{copy.services}</h3>
-            <ul className="mt-6 space-y-3 text-sm text-white/80">
+              <h3 className="font-display text-lg font-semibold text-white dark:text-foreground">{copy.services}</h3>
+            <ul className="mt-6 space-y-3 text-sm text-white/80 dark:text-foreground/70">
               {serviceHighlights.map((service) => {
                 const text = isArabic ? service.ar : service.en;
                 return (
-                  <li key={service.en} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
+                  <li
+                    key={service.en}
+                    className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 dark:border-foreground/20 dark:bg-foreground/5"
+                  >
                     {text}
                   </li>
                 );
               })}
             </ul>
-            <div className="mt-6 rounded-3xl border border-white/20 bg-white/10 p-5">
-              <h4 className="font-display text-base font-semibold text-white">{copy.subscribeTitle}</h4>
-              <p className="mt-2 text-xs text-white/80">{copy.subscribeBody}</p>
+            <div className="mt-6 rounded-3xl border border-white/20 bg-white/10 p-5 dark:border-foreground/20 dark:bg-foreground/5">
+              <h4 className="font-display text-base font-semibold text-white dark:text-foreground">{copy.subscribeTitle}</h4>
+              <p className="mt-2 text-xs text-white/80 dark:text-foreground/70">{copy.subscribeBody}</p>
               </div>
           </div>
          <div className="space-y-5">
