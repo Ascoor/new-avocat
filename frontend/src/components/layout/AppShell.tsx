@@ -1,11 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-
 import Sidebar from "./Sidebar";
+import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
-import { useSidebar } from "@/contexts/SidebarContext";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -15,26 +12,21 @@ interface AppShellProps {
 const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
   const { i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
-  const isMobile = useIsMobile();
-  const { isCollapsed, isMobileOpen } = useSidebar();
-
-  const collapsed = isMobile ? !isMobileOpen : isCollapsed;
 
   return (
-    <div className="flex min-h-screen bg-[hsl(var(--background))]" dir={isRTL ? "rtl" : "ltr"}>
-      <Sidebar />
-      <div
-        className={cn(
-          "flex min-h-screen flex-1 flex-col bg-[hsl(var(--background))] transition-all duration-300",
-          !isMobile && (collapsed ? (isRTL ? "pr-16" : "pl-16") : (isRTL ? "pr-72" : "pl-72")),
-        )}
-      >
+    <div className="flex min-h-screen bg-background" dir={isRTL ? "rtl" : "ltr"}>
+      {/* Sidebar */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
+
+      {/* Mobile Drawer */}
+      <MobileDrawer />
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col min-h-screen transition-all duration-300">
         <Header title={title} />
-        <main className="flex-1 overflow-y-auto">
-          <div className="p-6">
-            {children}
-          </div>
-        </main>
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
   );

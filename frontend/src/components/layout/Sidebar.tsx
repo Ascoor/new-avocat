@@ -1,293 +1,160 @@
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import {
-  BarChart3,
-  BookOpen,
-  Briefcase,
-  CalendarClock,
-  FileText,
-  Home,
-  LogOut,
-  PanelLeft,
-  Scale,
-  Search,
-  Settings,
-  Shield,
-  UserCheck,
-  UserX,
-  Database,
-  Bell,
-} from "lucide-react";
-
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import BrandLogo from "../common/BrandLogo";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
-
-type SidebarLink = {
-  title: string;
-  url: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
+import { sidebarItems, SidebarItem as SidebarItemType, translateKey } from "@/config/sidebar";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
-  const { language } = useLanguage();
-  const { logout, user } = useAuth();
-  const { isCollapsed, isMobileOpen, toggleCollapsed, toggleMobile, closeMobile } = useSidebar();
+  const { language, isRTL } = useLanguage();
+  const { logout } = useAuth();
+  const { isCollapsed, isMobileOpen, toggleMobile } = useSidebar();
 
-  const collapsed = isMobile ? !isMobileOpen : isCollapsed;
+  const collapsed = isMobile ? false : isCollapsed;
 
-  const mainLinks: SidebarLink[] = useMemo(
-    () => [
-      { title: language === "ar" ? "لوحة التحكم" : "Dashboard", url: "/dashboard", icon: Home },
-      { title: language === "ar" ? "القضايا" : "Cases", url: "/dashboard/cases", icon: Briefcase },
-      {
-        title: language === "ar" ? "الجلسات" : "Sessions",
-        url: "/dashboard/sessions",
-        icon: CalendarClock,
-      },
-      {
-        title: language === "ar" ? "الإجراءات" : "Procedures",
-        url: "/dashboard/procedures",
-        icon: FileText,
-      },
-      {
-        title: language === "ar" ? "العملاء" : "Clients",
-        url: "/dashboard/clients",
-        icon: UserCheck,
-      },
-      {
-        title: language === "ar" ? "عملاء محتملون" : "Prospects",
-        url: "/dashboard/unClients",
-        icon: UserX,
-      },
-      {
-        title: language === "ar" ? "المحامون" : "Lawyers",
-        url: "/dashboard/lawyers",
-        icon: Scale,
-      },
-      {
-        title: language === "ar" ? "الخدمات" : "Services",
-        url: "/dashboard/services",
-        icon: Briefcase,
-      },
-      {
-        title: language === "ar" ? "التقارير" : "Reports",
-        url: "/dashboard/reports",
-        icon: BarChart3,
-      },
-    ],
-    [language],
-  );
+  const isActive = (url: string) =>
+    location.pathname === url || location.pathname.startsWith(`${url}/`);
 
-  const managementLinks: SidebarLink[] = useMemo(
-    () => [
-      {
-        title: language === "ar" ? "إعدادات المكتب" : "Office Settings",
-        url: "/dashboard/office_settings",
-        icon: Settings,
-      },
-      {
-        title: language === "ar" ? "محاكم" : "Courts",
-        url: "/dashboard/courts_settings",
-        icon: Scale,
-      },
-      {
-        title: language === "ar" ? "الأدوار والصلاحيات" : "Users & Roles",
-        url: "/dashboard/users_roles",
-        icon: Shield,
-      },
-      {
-        title: language === "ar" ? "الأرشيف" : "Archive",
-        url: "/dashboard/archive",
-        icon: BookOpen,
-      },
-      {
-        title: language === "ar" ? "البحث القضائي" : "Courts Search",
-        url: "/dashboard/courts_search",
-        icon: Search,
-      },
-    ],
-    [language],
-  );
-
-  const secondaryLinks: SidebarLink[] = useMemo(
-    () => [
-      {
-        title: language === "ar" ? "قواعد البيانات" : "Database",
-        url: "/dashboard/database",
-        icon: Database,
-      },
-      {
-        title: language === "ar" ? "التنبيهات" : "Notifications",
-        url: "/dashboard/notifications",
-        icon: Bell,
-      },
-    ],
-    [language],
-  );
-
-  const isActive = (url: string) => {
-    if (url === "/dashboard") {
-      return location.pathname === url;
-    }
-    return location.pathname === url || location.pathname.startsWith(`${url}/`);
-  };
-
-  const handleLinkClick = () => {
-    if (isMobile && isMobileOpen) {
-      toggleMobile();
-    }
-  };
-
-  const handleToggle = () => {
-    if (isMobile) {
-      toggleMobile();
-    } else {
-      toggleCollapsed();
-    }
-  };
-
-  const menuButton = (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={handleToggle}
-      className="h-8 w-8 rounded-full border border-transparent text-sidebar-foreground transition-all duration-300 hover:border-sidebar-border hover:bg-sidebar-item"
-      aria-label={collapsed ? (language === "ar" ? "توسيع" : "Expand") : language === "ar" ? "تصغير" : "Collapse"}
-    >
-      {collapsed ? <PanelLeft className="h-4 w-4" /> : <PanelLeft className="h-4 w-4 rotate-180" />}
-    </Button>
-  );
+  const handleLogout = () => logout();
 
   return (
-    <>
-      {isMobile && isMobileOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
-          role="presentation"
-          onClick={closeMobile}
-        />
+    <motion.aside
+      initial={{ width: collapsed ? 80 : 288 }}
+      animate={{ width: collapsed ? 80 : 288 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.8, 0.25, 1] }}
+      className={cn(
+        "hidden md:flex flex-col h-screen border-r border-sidebar-border bg-sidebar-background"
       )}
-
-      <aside
-        className={cn(
-          "sidebar-shell-shadow fixed top-0 h-full border-r border-sidebar-border bg-sidebar-background transition-all duration-300 ease-in-out lg:static",
-          collapsed ? "w-16" : "w-72",
-          isMobile ? (isMobileOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0",
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      {/* Logo */}
+      <div className="flex items-center gap-3 px-4 py-4 border-b border-sidebar-border">
+        {collapsed ? (
+          <BrandLogo variant="icon" className="h-8 w-8" />
+        ) : (
+          <>
+            <BrandLogo variant="full" className="h-8" />
+            <p className="text-[11px] uppercase tracking-[0.28em] text-sidebar-text-muted">
+              {language === "ar" ? "منصة إدارة قانونية" : "Legal Management"}
+            </p>
+          </>
         )}
-        dir={language === "ar" ? "rtl" : "ltr"}
-      >
-        <div className="flex h-full flex-col">
-          <div className="flex items-center gap-3 border-b border-sidebar-border px-4 py-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sidebar-primary/10 text-sidebar-primary">
-              <Scale className="h-6 w-6" />
-            </div>
-            {!collapsed && (
-              <div className="flex-1 min-w-0">
-                <h1 className="truncate text-lg font-semibold text-sidebar-text-strong">
-                  {language === "ar" ? "أفوكات" : "Avocat"}
-                </h1>
-                <p className="truncate text-xs text-sidebar-text-muted">
-                  {language === "ar" ? "منصة إدارة قانونية" : "Legal Management Platform"}
-                </p>
-              </div>
-            )}
-            {menuButton}
-          </div>
+      </div>
 
-          {!collapsed && user?.email && (
-            <div className="mx-4 mt-3 rounded-xl border border-sidebar-border bg-sidebar-surface px-3 py-2">
-              <p className="truncate text-xs text-sidebar-text-muted">{user.email}</p>
-            </div>
-          )}
+      {/* Links */}
+      <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-6">
+        {sidebarItems.map((item) => (
+          <SidebarItem
+            key={item.key}
+            item={item}
+            collapsed={collapsed}
+            isActive={isActive}
+            isRTL={isRTL}
+            language={language}
+          />
+        ))}
+      </nav>
 
-          <nav className="flex-1 space-y-6 overflow-y-auto px-4 py-6">
-            <SidebarSection
-              title={collapsed ? undefined : language === "ar" ? "الرئيسية" : "Main"}
-              links={mainLinks}
-              collapsed={collapsed}
-              onNavigate={handleLinkClick}
-              isActive={isActive}
-            />
-
-            <SidebarSection
-              title={collapsed ? undefined : language === "ar" ? "الإدارة" : "Management"}
-              links={managementLinks}
-              collapsed={collapsed}
-              onNavigate={handleLinkClick}
-              isActive={isActive}
-            />
-
-            <SidebarSection
-              title={collapsed ? undefined : language === "ar" ? "النظام" : "System"}
-              links={secondaryLinks}
-              collapsed={collapsed}
-              onNavigate={handleLinkClick}
-              isActive={isActive}
-            />
-          </nav>
-
-          <div className="border-t border-sidebar-border px-4 py-4">
-            <Button
-              onClick={logout}
-              variant="ghost"
-              className={cn(
-                "w-full justify-start text-sidebar-text-muted transition-colors hover:bg-destructive/10 hover:text-destructive",
-                collapsed ? "px-0" : "px-3",
-              )}
-            >
-              <LogOut className="h-5 w-5" />
-              {!collapsed && <span className="ml-2">{language === "ar" ? "تسجيل الخروج" : "Sign Out"}</span>}
-            </Button>
-          </div>
-        </div>
-      </aside>
-    </>
+      {/* Logout */}
+      <div className="border-t border-sidebar-border px-4 py-4">
+        <Button
+          onClick={handleLogout}
+          variant="ghost"
+          className="w-full justify-start text-sidebar-text-muted hover:bg-destructive/10 hover:text-destructive"
+        >
+          ⏻ {!collapsed && (language === "ar" ? "تسجيل الخروج" : "Sign Out")}
+        </Button>
+      </div>
+    </motion.aside>
   );
 };
 
-interface SectionProps {
-  title?: string;
-  links: SidebarLink[];
+interface SidebarItemProps {
+  item: SidebarItemType;
+  parentKey?: string;
   collapsed: boolean;
-  onNavigate: () => void;
   isActive: (url: string) => boolean;
+  isRTL: boolean;
+  language: string;
 }
 
-const SidebarSection: React.FC<SectionProps> = ({ title, links, collapsed, onNavigate, isActive }) => {
+const buildPath = (key: string, parentKey?: string) =>
+  key === "dashboard"
+    ? "/dashboard"
+    : parentKey
+    ? `/dashboard/${parentKey}/${key}`
+    : `/dashboard/${key}`;
+
+const SidebarItem: React.FC<SidebarItemProps> = ({
+  item,
+  parentKey,
+  collapsed,
+  isActive,
+  isRTL,
+  language,
+}) => {
+  const [open, setOpen] = useState(false);
+  const url = buildPath(item.key, parentKey);
+  const active =
+    item.key === "dashboard"
+      ? location.pathname === "/dashboard"
+      : isActive(url);
+
+  const hasChildren = item.children?.length > 0;
+
   return (
-    <div className="space-y-3">
-      {title ? <p className="text-xs font-semibold uppercase text-sidebar-text-muted">{title}</p> : null}
-      <div className="space-y-1">
-        {links.map((link) => {
-          const active = isActive(link.url);
-          return (
-            <NavLink
-              key={link.url}
-              to={link.url}
-              end={link.url === "/dashboard"}
-              onClick={onNavigate}
-              className={({ isActive }) =>
-                cn(
-                  "flex items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-sm font-medium text-sidebar-text-muted transition-all",
-                  "hover:-translate-y-px hover:bg-sidebar-item hover:text-sidebar-text-strong hover:shadow-sidebar-hover",
-                  collapsed ? "justify-center px-2" : "justify-start",
-                  (isActive || active) &&
-                    "border-sidebar-border bg-sidebar-item text-sidebar-text-strong shadow-sidebar-active",
-                )
-              }
-            >
-              <link.icon className="h-5 w-5 flex-shrink-0" />
-              {!collapsed && <span className="truncate">{link.title}</span>}
-            </NavLink>
-          );
-        })}
+    <div>
+      <div
+        className={cn(
+          "flex items-center justify-between rounded-xl px-3 py-2 cursor-pointer text-sm text-sidebar-text-muted hover:bg-sidebar-hover-glow hover:text-sidebar-hover-foreground",
+          collapsed ? "justify-center" : "gap-3",
+          active &&
+            "bg-sidebar-active-glow text-sidebar-primary font-medium shadow-sidebar-active",
+          isRTL
+            ? "border-l-2 border-sidebar-primary"
+            : "border-r-2 border-sidebar-primary"
+        )}
+        onClick={() => (hasChildren ? setOpen(!open) : null)}
+      >
+        <NavLink to={hasChildren ? "#" : url} className="flex items-center gap-3 flex-1">
+          <item.icon className="h-5 w-5 flex-shrink-0" />
+          {!collapsed && <span>{translateKey(item.key, language)}</span>}
+        </NavLink>
+        {!collapsed && hasChildren && (
+          open ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
+        )}
       </div>
+
+      {!collapsed && hasChildren && open && (
+        <div className="ml-6 mt-1 space-y-1">
+          {item.children.map((child) => {
+            const childUrl = buildPath(child.key, item.key);
+            return (
+              <NavLink
+                key={child.key}
+                to={childUrl}
+                className={({ isActive }) =>
+                  cn(
+                    "flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-sidebar-text-muted hover:text-sidebar-hover-foreground",
+                    isActive && "text-sidebar-primary font-medium"
+                  )
+                }
+              >
+                <child.icon className="h-4 w-4" />
+                <span>{translateKey(child.key, language)}</span>
+              </NavLink>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

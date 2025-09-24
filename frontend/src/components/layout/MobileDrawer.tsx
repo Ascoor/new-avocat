@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { X } from 'lucide-react';
-import * as LucideIcons from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useSidebar } from '@/contexts/SidebarContext';
-import { menuItems } from '@/config/sidebar';
-import BrandLogo from '@/components/common/BrandLogo';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import React, { useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { sidebarItems, translateKey } from "@/config/sidebar";
+import BrandLogo from "@/components/common/BrandLogo";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const MobileDrawer: React.FC = () => {
-  const { t, i18n } = useTranslation('common');
+  const { i18n } = useTranslation();
   const { isMobileOpen, closeMobile } = useSidebar();
   const location = useLocation();
-  const isRTL = i18n.language === 'ar';
+  const isRTL = i18n.language === "ar";
 
   // Close drawer on route change
   useEffect(() => {
@@ -24,39 +23,26 @@ const MobileDrawer: React.FC = () => {
   // Close drawer on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMobileOpen) {
+      if (e.key === "Escape" && isMobileOpen) {
         closeMobile();
       }
     };
-
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [isMobileOpen, closeMobile]);
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
-    if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
+    document.body.style.overflow = isMobileOpen ? "hidden" : "";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isMobileOpen]);
 
-  const getIcon = (iconName: string) => {
-    const Icon = (LucideIcons as any)[iconName];
-    return Icon ? <Icon className="h-5 w-5" /> : null;
-  };
+  const isActive = (path?: string) => location.pathname === path;
 
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
-
-  const regularItems = menuItems.filter(item => !item.bottom);
-  const bottomItems = menuItems.filter(item => item.bottom);
+  const regularItems = sidebarItems.filter((item) => !item.bottom);
+  const bottomItems = sidebarItems.filter((item) => item.bottom);
 
   return (
     <AnimatePresence>
@@ -73,27 +59,14 @@ const MobileDrawer: React.FC = () => {
 
           {/* Drawer */}
           <motion.aside
-            initial={{ 
-              x: isRTL ? '100%' : '-100%',
-              opacity: 0 
-            }}
-            animate={{ 
-              x: 0,
-              opacity: 1 
-            }}
-            exit={{ 
-              x: isRTL ? '100%' : '-100%',
-              opacity: 0 
-            }}
-            transition={{ 
-              type: 'spring',
-              damping: 25,
-              stiffness: 200 
-            }}
+            initial={{ x: isRTL ? "100%" : "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: isRTL ? "100%" : "-100%", opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className={cn(
-              'fixed top-0 z-50 h-full w-full max-w-[100vw] bg-sidebar-background border-border md:hidden',
-              'flex flex-col shadow-card',
-              isRTL ? 'right-0 border-l' : 'left-0 border-r'
+              "fixed top-0 z-50 h-full w-full max-w-[100vw] bg-sidebar-background border-border md:hidden",
+              "flex flex-col shadow-card",
+              isRTL ? "right-0 border-l" : "left-0 border-r"
             )}
           >
             {/* Header */}
@@ -104,7 +77,7 @@ const MobileDrawer: React.FC = () => {
                 size="icon"
                 onClick={closeMobile}
                 className="h-8 w-8"
-                aria-label={t('close')}
+                aria-label="close"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -117,19 +90,21 @@ const MobileDrawer: React.FC = () => {
                 {regularItems.map((item) => (
                   <NavLink
                     key={item.key}
-                    to={item.to}
+                    to={item.to || "#"}
                     onClick={closeMobile}
-                    className={({ isActive: navIsActive }) => cn(
-                      'flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition-colors',
-                      'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
-                      navIsActive || isActive(item.to)
-                        ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                        : 'text-sidebar-foreground'
-                    )}
+                    className={({ isActive: navIsActive }) =>
+                      cn(
+                        "flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition-colors",
+                        "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+                        navIsActive || isActive(item.to)
+                          ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                          : "text-sidebar-foreground"
+                      )
+                    }
                   >
-                    {getIcon(item.icon)}
-                    <span>{t(item.labelKey)}</span>
+                    <item.icon className="h-5 w-5" />
+                    <span>{translateKey(item.key, i18n.language)}</span>
                   </NavLink>
                 ))}
               </div>
@@ -143,19 +118,21 @@ const MobileDrawer: React.FC = () => {
                   {bottomItems.map((item) => (
                     <NavLink
                       key={item.key}
-                      to={item.to}
+                      to={item.to || "#"}
                       onClick={closeMobile}
-                      className={({ isActive: navIsActive }) => cn(
-                        'flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition-colors',
-                        'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
-                        navIsActive || isActive(item.to)
-                          ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                          : 'text-sidebar-foreground'
-                      )}
+                      className={({ isActive: navIsActive }) =>
+                        cn(
+                          "flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition-colors",
+                          "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+                          navIsActive || isActive(item.to)
+                            ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                            : "text-sidebar-foreground"
+                        )
+                      }
                     >
-                      {getIcon(item.icon)}
-                      <span>{t(item.labelKey)}</span>
+                      <item.icon className="h-5 w-5" />
+                      <span>{translateKey(item.key, i18n.language)}</span>
                     </NavLink>
                   ))}
                 </div>

@@ -1,14 +1,5 @@
 import type { Config } from "tailwindcss";
-import animate from "tailwindcss-animate";
-
-const withOpacityValue = (variable: string) => {
-  return ({ opacityValue }: { opacityValue?: string }) => {
-    if (opacityValue === undefined) {
-      return `hsl(var(${variable}))`;
-    }
-    return `hsl(var(${variable}) / ${opacityValue})`;
-  };
-};
+import animate from "tailwindcss-animate";  
 
 const config: Config = {
   darkMode: ["class"],
@@ -26,102 +17,74 @@ const config: Config = {
         "2xl": "1400px",
       },
     },
-    extend: {
+    extend: { 
       colors: {
-        border: withOpacityValue("--border"),
-        input: withOpacityValue("--input"),
-        ring: withOpacityValue("--ring"),
-        background: withOpacityValue("--background"),
-        foreground: withOpacityValue("--foreground"),
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: withOpacityValue("--primary"),
-          foreground: withOpacityValue("--primary-foreground"),
-          light: withOpacityValue("--primary-light"),
-          glow: withOpacityValue("--primary-glow"),
-          hover: withOpacityValue("--primary-hover"),
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          light: "hsl(var(--primary-light))",
+          glow: "hsl(var(--primary-glow))",
+          hover: "hsl(var(--primary-hover))",
         },
         secondary: {
-          DEFAULT: withOpacityValue("--secondary"),
-          foreground: withOpacityValue("--secondary-foreground"),
-          dark: withOpacityValue("--secondary-dark"),
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+          dark: "hsl(var(--secondary-dark))",
         },
         destructive: {
-          DEFAULT: withOpacityValue("--destructive"),
-          foreground: withOpacityValue("--destructive-foreground"),
-        },
-        muted: {
-          DEFAULT: withOpacityValue("--muted"),
-          foreground: withOpacityValue("--muted-foreground"),
-          dark: withOpacityValue("--muted-dark"),
-        },
-        accent: {
-          DEFAULT: withOpacityValue("--accent"),
-          foreground: withOpacityValue("--accent-foreground"),
-          soft: withOpacityValue("--accent-soft"),
-          glow: withOpacityValue("--accent-glow"),
-        },
-        popover: {
-          DEFAULT: withOpacityValue("--popover"),
-          foreground: withOpacityValue("--popover-foreground"),
-        },
-        card: {
-          DEFAULT: withOpacityValue("--card"),
-          foreground: withOpacityValue("--card-foreground"),
-          elevated: withOpacityValue("--card-elevated"),
-        },
-        text: {
-          strong: withOpacityValue("--text-strong"),
-          muted: withOpacityValue("--text-muted"),
-          body: withOpacityValue("--text-body"),
-          inverse: withOpacityValue("--text-inverse"),
-        },
-        surface: {
-          muted: withOpacityValue("--surface-muted"),
-          highlight: withOpacityValue("--surface-highlight"),
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
         success: {
-          DEFAULT: withOpacityValue("--success"),
-          foreground: withOpacityValue("--success-foreground"),
-          soft: withOpacityValue("--success-soft"),
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+          soft: "hsl(var(--success-soft))",
         },
         warning: {
-          DEFAULT: withOpacityValue("--warning"),
-          foreground: withOpacityValue("--warning-foreground"),
-          soft: withOpacityValue("--warning-soft"),
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+          soft: "hsl(var(--warning-soft))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+          dark: "hsl(var(--muted-dark))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+          soft: "hsl(var(--accent-soft))",
+          glow: "hsl(var(--accent-glow))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+          elevated: "hsl(var(--card-elevated))",
         },
         sidebar: {
-          DEFAULT: withOpacityValue("--sidebar-background"),
-          foreground: withOpacityValue("--sidebar-foreground"),
-          primary: {
-            DEFAULT: withOpacityValue("--sidebar-primary"),
-            foreground: withOpacityValue("--sidebar-primary-foreground"),
-          },
-          accent: {
-            DEFAULT: withOpacityValue("--sidebar-accent"),
-            foreground: withOpacityValue("--sidebar-accent-foreground"),
-          },
-          muted: {
-            DEFAULT: withOpacityValue("--sidebar-muted"),
-            foreground: withOpacityValue("--sidebar-muted-foreground"),
-          },
-          border: withOpacityValue("--sidebar-border"),
-          ring: withOpacityValue("--sidebar-ring"),
-          item: "var(--sidebar-item-bg)",
-          surface: "var(--sidebar-surface)",
-          highlight: "var(--sidebar-hover-highlight)",
-          text: {
-            strong: "var(--sidebar-text-strong)",
-            muted: "var(--sidebar-text-muted)",
-          },
-          icon: {
-            active: "var(--sidebar-icon-active)",
-            muted: "var(--sidebar-icon-muted)",
-          },
-        },
-        chart: {
-          datasetA: "var(--color-datasetA)",
-          datasetB: "var(--color-datasetB)",
-          datasetC: "var(--color-datasetC)",
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+          surface: "hsl(var(--sidebar-surface))",
+          "text-muted": "hsl(var(--sidebar-text-muted))",
+          "text-strong": "hsl(var(--sidebar-text-strong))",
+          "hover-glow": "hsl(var(--sidebar-hover-glow))",
+          "hover-foreground": "hsl(var(--sidebar-hover-foreground))",
+          "active-glow": "hsl(var(--sidebar-active-glow))",
         },
       },
       fontFamily: {
@@ -146,19 +109,11 @@ const config: Config = {
         'glow': 'var(--shadow-glow)',
         'glow-strong': 'var(--shadow-glow-strong)',
         'inner-glow': 'var(--shadow-inner-glow)',
-        'sidebar-active': 'var(--sidebar-active-glow)',
-        'sidebar-hover': 'var(--sidebar-hover-glow)',
-        'sidebar-shell': 'var(--sidebar-shell-shadow)',
-      },
-      transitionDuration: {
-        premium: '400ms',
-        smooth: '300ms',
-        elegant: '450ms',
       },
       transitionTimingFunction: {
-        premium: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        smooth: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        elegant: 'cubic-bezier(0.23, 1, 0.32, 1)',
+        'premium': 'var(--transition-premium)',
+        'smooth': 'var(--transition-smooth)',
+        'elegant': 'var(--transition-elegant)',
       },
       borderRadius: {
         lg: "var(--radius)",

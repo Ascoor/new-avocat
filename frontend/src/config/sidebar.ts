@@ -1,7 +1,6 @@
-import type { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from "lucide-react";
 import {
   Archive,
-  BarChart3,
   Briefcase,
   Building,
   CalendarClock,
@@ -15,121 +14,73 @@ import {
   UserCheck,
   Users,
   UserX,
-} from 'lucide-react';
+} from "lucide-react";
 
 export interface SidebarItem {
-  id: string;
-  labelKey: string;
+  key: string;
   icon: LucideIcon;
-  path?: string;
+  to?: string;
+  labelKey?: string;
+  bottom?: boolean;
   children?: SidebarItem[];
 }
 
 export const sidebarItems: SidebarItem[] = [
+  { key: "dashboard", icon: LayoutDashboard, to: "/dashboard", labelKey: "dashboard" },
+  { key: "cases", icon: Gavel, to: "/dashboard/cases", labelKey: "cases" },
+  { key: "services", icon: ClipboardList, to: "/dashboard/services", labelKey: "services" },
   {
-    id: 'dashboard',
-    labelKey: 'nav.dashboard',
-    icon: LayoutDashboard,
-    path: '/dashboard',
-  },
-  {
-    id: 'cases',
-    labelKey: 'nav.cases',
-    icon: Gavel,
-    path: '/dashboard/cases',
-  },
-  {
-    id: 'work_tracking',
-    labelKey: 'nav.followUpWork',
+    key: "work_tracking",
     icon: Briefcase,
+    labelKey: "work_tracking",
     children: [
-      {
-        id: 'sessions',
-        labelKey: 'nav.sessions',
-        icon: CalendarClock,
-        path: '/dashboard/sessions',
-      },
-      {
-        id: 'procedures',
-        labelKey: 'nav.procedures',
-        icon: ClipboardList,
-        path: '/dashboard/procedures',
-      },
+      { key: "sessions", icon: CalendarClock, to: "/dashboard/work_tracking/sessions", labelKey: "sessions" },
+      { key: "procedures", icon: ClipboardList, to: "/dashboard/work_tracking/procedures", labelKey: "procedures" },
     ],
   },
   {
-    id: 'customer_service',
-    labelKey: 'nav.customer_service',
+    key: "customer_service",
     icon: Users,
+    labelKey: "customer_service",
     children: [
-      {
-        id: 'clients',
-        labelKey: 'nav.clients',
-        icon: UserCheck,
-        path: '/dashboard/clients',
-      },
-      {
-        id: 'unClients',
-        labelKey: 'nav.unClients',
-        icon: UserX,
-        path: '/dashboard/unClients',
-      },
+      { key: "clients", icon: UserCheck, to: "/dashboard/customer_service/clients", labelKey: "clients" },
+      { key: "unClients", icon: UserX, to: "/dashboard/customer_service/unClients", labelKey: "unClients" },
     ],
   },
+  { key: "archive", icon: Archive, to: "/dashboard/archive", labelKey: "archive", bottom: true },
+  { key: "courts_search", icon: Search, to: "/dashboard/courts_search", labelKey: "courts_search", bottom: true },
   {
-    id: 'lawyers',
-    labelKey: 'nav.lawyers',
-    icon: Scale,
-    path: '/dashboard/lawyers',
-  },
-  {
-    id: 'services',
-    labelKey: 'nav.services',
-    icon: ClipboardList,
-    path: '/dashboard/services',
-  },
-  {
-    id: 'reports',
-    labelKey: 'nav.reports',
-    icon: BarChart3,
-    path: '/dashboard/reports',
-  },
-  {
-    id: 'settings',
-    labelKey: 'nav.settings',
+    key: "settings",
     icon: Settings,
+    labelKey: "settings",
     children: [
-      {
-        id: 'office_settings',
-        labelKey: 'nav.office_settings',
-        icon: Building,
-        path: '/dashboard/office_settings',
-      },
-      {
-  id: 'courts_settings',
-  labelKey: 'nav.courts_settings',   // مفتاح الترجمة
-  icon: Gavel,
-  path: '/dashboard/courts_settings',
-},
-
-      {
-        id: 'users_roles',
-        labelKey: 'nav.users_roles',
-        icon: Shield,
-        path: '/dashboard/users_roles',
-      },
+      { key: "office_settings", icon: Building, to: "/dashboard/settings/office_settings", labelKey: "office_settings" },
+      { key: "courts_settings", icon: Gavel, to: "/dashboard/settings/courts_settings", labelKey: "courts_settings" },
+      { key: "lawyers", icon: Scale, to: "/dashboard/settings/lawyers", labelKey: "lawyers" },
+      { key: "users_roles", icon: Shield, to: "/dashboard/settings/users_roles", labelKey: "users_roles" },
     ],
-  },
-  {
-    id: 'archive',
-    labelKey: 'nav.archive',
-    icon: Archive,
-    path: '/dashboard/archive',
-  },
-  {
-    id: 'courts_search',
-    labelKey: 'nav.courts_search',
-    icon: Search,
-    path: '/dashboard/courts_search',
   },
 ];
+
+export const translateKey = (key: string, lang: string) => {
+  const labels: Record<string, { ar: string; en: string }> = {
+    dashboard: { ar: "لوحة التحكم", en: "Dashboard" },
+    cases: { ar: "القضايا", en: "Cases" },
+    lawyers: { ar: "المحامون", en: "Lawyers" },
+    customer_service: { ar: "خدمة العملاء", en: "Customer Service" },
+    clients: { ar: "الوكلاء", en: "Clients" },
+    unClients: { ar: "العملاء بدون وكالة", en: "Prospects" },
+    services: { ar: "الخدمات", en: "Services" },
+    work_tracking: { ar: "متابعة العمل", en: "Work Tracking" },
+    sessions: { ar: "الجلسات", en: "Sessions" },
+    procedures: { ar: "الإجراءات", en: "Procedures" },
+    settings: { ar: "الإعدادات", en: "Settings" },
+    courts_settings: { ar: "المحاكم", en: "Courts" },
+    office_settings: { ar: "إعدادات المكتب", en: "Office Settings" },
+    users_roles: { ar: "الأدوار والصلاحيات", en: "Users & Roles" },
+    archive: { ar: "الأرشيف", en: "Archive" },
+    courts_search: { ar: "البحث القضائي", en: "Courts Search" },
+  };
+
+  return labels[key]?.[lang] || key;
+};
