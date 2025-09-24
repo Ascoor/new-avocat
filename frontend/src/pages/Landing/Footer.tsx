@@ -89,9 +89,7 @@ const Footer: React.FC = () => {
  
     <footer
       className={cn(
-        "relative mt-24 overflow-hidden transition-colors",
-        "bg-gradient-to-t from-primary/90 via-primary/80 to-primary/95 text-white",
-        "dark:bg-gradient-to-t dark:from-background/96 dark:via-background/92 dark:to-background/98 dark:text-foreground"
+        "relative mt-24 overflow-hidden transition-colors bg-gradient-to-t from-primary/90 via-primary/90 to-primary/95 text-white   dark:text-foreground"
       )}
       dir={direction}
     >
@@ -153,14 +151,14 @@ const Footer: React.FC = () => {
               </div>
           </div>
          <div className="space-y-5">
-            <h3 className="font-display text-lg font-semibold text-white">{copy.contact}</h3>
-            <div className="space-y-4 text-sm text-white/80">
+            <h3 className="font-display text-lg font-semibold text-white dark:text-foreground">{copy.contact}</h3>
+            <div className="space-y-4 text-sm text-white/80 dark:text-foreground/70">
               {contactDetails.map((detail) => {
                 const Icon = detail.icon;
                 const text = isArabic ? detail.ar : detail.en;
                 return (
                   <div key={detail.en} className="flex items-start gap-3">
-                    <Icon className="mt-1 h-5 w-5" />
+                    <Icon className="mt-1 h-5 w-5 text-white/80 dark:text-foreground/70" />
                     <p>{text}</p>
                   </div>
                 );
@@ -169,8 +167,8 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/10 bg-primary/95">
-          <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-6 text-xs text-white/80 lg:flex-row lg:px-8">
+        <div className="border-t border-white/10 bg-primary/95 dark:border-foreground/20 dark:bg-background/95">
+          <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-6 text-xs text-white/80 dark:text-foreground/60 lg:flex-row lg:px-8">
             <p>{copy.bottom(new Date().getFullYear())}</p>
            </div>
         </div>

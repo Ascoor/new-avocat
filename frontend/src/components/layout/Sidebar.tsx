@@ -1,282 +1,294 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+import React, { useMemo } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import {
+  BarChart3,
+  BookOpen,
+  Briefcase,
+  CalendarClock,
+  FileText,
+  Home,
+  LogOut,
+  PanelLeft,
+  Scale,
+  Search,
+  Settings,
+  Shield,
+  UserCheck,
+  UserX,
+  Database,
+  Bell,
+} from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { sidebarItems, type SidebarItem } from '@/config/sidebar';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { useSidebar } from "@/contexts/SidebarContext";
 
-interface SidebarProps {
-  isCollapsed: boolean;
-  onToggle: () => void;
-}
+type SidebarLink = {
+  title: string;
+  url: string;
+  icon: React.ComponentType<{ className?: string }>;
+};
 
-const Sidebar = ({ isCollapsed, onToggle }: SidebarProps) => {
-  const { t, isRTL } = useLanguage();
+const Sidebar: React.FC = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
-  const interactiveBaseClasses = useMemo(
-    () =>
-      cn(
-        'group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-text-muted transition-all duration-300 ease-out',
-        'overflow-hidden border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
-        'hover:-translate-y-px hover:scale-[1.01] active:scale-[0.99]',
-        "before:absolute before:inset-0 before:-z-10 before:rounded-2xl before:bg-sidebar-highlight before:opacity-0 before:transition-opacity before:duration-300 before:ease-out before:content-[''] group-hover:before:opacity-100",
-        'hover:shadow-sidebar-hover group-hover:text-sidebar-accent-foreground',
+  const { language } = useLanguage();
+  const { logout, user } = useAuth();
+  const { isCollapsed, isMobileOpen, toggleCollapsed, toggleMobile, closeMobile } = useSidebar();
 
-      ),
-    [],
+  const collapsed = isMobile ? !isMobileOpen : isCollapsed;
+
+  const mainLinks: SidebarLink[] = useMemo(
+    () => [
+      { title: language === "ar" ? "لوحة التحكم" : "Dashboard", url: "/dashboard", icon: Home },
+      { title: language === "ar" ? "القضايا" : "Cases", url: "/dashboard/cases", icon: Briefcase },
+      {
+        title: language === "ar" ? "الجلسات" : "Sessions",
+        url: "/dashboard/sessions",
+        icon: CalendarClock,
+      },
+      {
+        title: language === "ar" ? "الإجراءات" : "Procedures",
+        url: "/dashboard/procedures",
+        icon: FileText,
+      },
+      {
+        title: language === "ar" ? "العملاء" : "Clients",
+        url: "/dashboard/clients",
+        icon: UserCheck,
+      },
+      {
+        title: language === "ar" ? "عملاء محتملون" : "Prospects",
+        url: "/dashboard/unClients",
+        icon: UserX,
+      },
+      {
+        title: language === "ar" ? "المحامون" : "Lawyers",
+        url: "/dashboard/lawyers",
+        icon: Scale,
+      },
+      {
+        title: language === "ar" ? "الخدمات" : "Services",
+        url: "/dashboard/services",
+        icon: Briefcase,
+      },
+      {
+        title: language === "ar" ? "التقارير" : "Reports",
+        url: "/dashboard/reports",
+        icon: BarChart3,
+      },
+    ],
+    [language],
   );
 
-  const isPathActive = (path?: string) => {
-    if (!path) return false;
-    if (path === '/dashboard') {
-      return location.pathname === '/dashboard';
-    }
+  const managementLinks: SidebarLink[] = useMemo(
+    () => [
+      {
+        title: language === "ar" ? "إعدادات المكتب" : "Office Settings",
+        url: "/dashboard/office_settings",
+        icon: Settings,
+      },
+      {
+        title: language === "ar" ? "محاكم" : "Courts",
+        url: "/dashboard/courts_settings",
+        icon: Scale,
+      },
+      {
+        title: language === "ar" ? "الأدوار والصلاحيات" : "Users & Roles",
+        url: "/dashboard/users_roles",
+        icon: Shield,
+      },
+      {
+        title: language === "ar" ? "الأرشيف" : "Archive",
+        url: "/dashboard/archive",
+        icon: BookOpen,
+      },
+      {
+        title: language === "ar" ? "البحث القضائي" : "Courts Search",
+        url: "/dashboard/courts_search",
+        icon: Search,
+      },
+    ],
+    [language],
+  );
 
-    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  const secondaryLinks: SidebarLink[] = useMemo(
+    () => [
+      {
+        title: language === "ar" ? "قواعد البيانات" : "Database",
+        url: "/dashboard/database",
+        icon: Database,
+      },
+      {
+        title: language === "ar" ? "التنبيهات" : "Notifications",
+        url: "/dashboard/notifications",
+        icon: Bell,
+      },
+    ],
+    [language],
+  );
+
+  const isActive = (url: string) => {
+    if (url === "/dashboard") {
+      return location.pathname === url;
+    }
+    return location.pathname === url || location.pathname.startsWith(`${url}/`);
   };
 
-  const hasActiveChild = useMemo(() => {
-    const visit = (item: SidebarItem): boolean => {
-      if (isPathActive(item.path)) return true;
-      return item.children?.some(visit) ?? false;
-    };
-
-    return (item: SidebarItem) => item.children?.some(visit) ?? false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const activeParentIds = sidebarItems
-      .filter((item) => hasActiveChild(item))
-      .map((item) => item.id);
-
-    setExpandedItems((prev) => {
-      const merged = new Set(prev);
-      activeParentIds.forEach((id) => merged.add(id));
-      return Array.from(merged);
-    });
-  }, [hasActiveChild, location.pathname]);
-
-  const toggleExpanded = (id: string) => {
-    setExpandedItems((prev) =>
-      prev.includes(id) ? prev.filter((value) => value !== id) : [...prev, id],
-    );
+  const handleLinkClick = () => {
+    if (isMobile && isMobileOpen) {
+      toggleMobile();
+    }
   };
 
-  const previousPath = useRef(location.pathname);
-  useEffect(() => {
-    if (!isMobile) {
-      previousPath.current = location.pathname;
-      return;
+  const handleToggle = () => {
+    if (isMobile) {
+      toggleMobile();
+    } else {
+      toggleCollapsed();
     }
-
-    if (location.pathname !== previousPath.current && !isCollapsed) {
-      onToggle();
-    }
-
-    previousPath.current = location.pathname;
-  }, [isMobile, isCollapsed, location.pathname, onToggle]);
-
-  const getItemLabel = (labelKey: string) => {
-    const label = t(labelKey as never);
-    return label === labelKey ? labelKey : label;
   };
 
-  const renderItem = (item: SidebarItem, level = 0) => {
-    const hasChildren = !!item.children?.length;
-    const expanded = expandedItems.includes(item.id);
-    const Icon = item.icon;
-    const itemActive = isPathActive(item.path);
-    const childActive = hasChildren && hasActiveChild(item);
-    const indentation = level > 0 && !isCollapsed ? (isRTL ? 'mr-4' : 'ml-4') : '';
-
-    if (hasChildren) {
-      return (
-        <div key={item.id} className="w-full">
-          <button
-            type="button"
-            onClick={() => {
-              if (!isCollapsed) toggleExpanded(item.id);
-            }}
-            className={cn(
-              interactiveBaseClasses,
-              'transition-[background,transform,box-shadow] duration-300',
-              indentation,
-              isCollapsed &&
-                "justify-center px-2 before:opacity-0 before:transition-none hover:scale-100 hover:shadow-none",
-              (childActive || itemActive) &&
-                'border-sidebar-border bg-sidebar-item text-sidebar-text-strong shadow-sidebar-active',
-            )}
-            data-active={!isCollapsed && (childActive || itemActive)}
-          >
-            <Icon
-              className={cn(
-                'h-5 w-5 flex-shrink-0 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:rotate-3 group-hover:text-sidebar-accent-foreground',
-                isCollapsed && 'h-6 w-6',
-                (childActive || itemActive)
-                  ? 'text-sidebar-icon-active'
-                  : 'text-sidebar-icon-muted',
-
-              )}
-            />
-            {!isCollapsed && (
-              <>
-                <span
-                  className={cn(
-                    'flex-1 truncate transition-colors duration-300',
-                    isRTL ? 'text-right' : 'text-left',
-                    (childActive || itemActive) && 'text-sidebar-text-strong',
-                  )}
-                >
-                  {getItemLabel(item.labelKey)}
-                </span>
-                {expanded ? (
-                  <ChevronDown className="h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover:-rotate-180" />
-                ) : (
-                  <ChevronRight
-                    className={cn(
-                      'h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-0.5',
-                      isRTL && 'rotate-180',
-                    )}
-                  />
-                )}
-              </>
-            )}
-          </button>
-
-          {expanded && !isCollapsed && (
-            <div className="mt-1 space-y-1 animate-accordion-down pl-2">
-              {item.children?.map((child) => renderItem(child, level + 1))}
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    if (!item.path) {
-      return null;
-    }
-
-    return (
-      <NavLink
-        key={item.id}
-        to={item.path}
-        end={item.path === '/dashboard'}
-        onClick={() => {
-          if (isMobile && !isCollapsed) onToggle();
-        }}
-        className={({ isActive }) =>
-          cn(
-            interactiveBaseClasses,
-            'transition-[background,transform,box-shadow] duration-300',
-            indentation,
-            isCollapsed &&
-              "justify-center px-2 before:opacity-0 before:transition-none hover:scale-100 hover:shadow-none",
-            (isActive || itemActive) &&
-              'border-sidebar-border bg-sidebar-item text-sidebar-text-strong shadow-sidebar-active',
-          )
-        }
-        data-active={!isCollapsed && itemActive}
-      >
-        <Icon
-          className={cn(
-            'h-5 w-5 flex-shrink-0 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-3 group-hover:text-sidebar-accent-foreground',
-            isCollapsed && 'h-6 w-6',
-            itemActive ? 'text-sidebar-icon-active' : 'text-sidebar-icon-muted',
-
-          )}
-        />
-        {!isCollapsed && (
-          <span
-            className={cn(
-              'flex-1 truncate transition-colors duration-300',
-              isRTL ? 'text-right' : 'text-left',
-              itemActive && 'text-sidebar-text-strong',
-            )}
-          >
-            {getItemLabel(item.labelKey)}
-          </span>
-        )}
-      </NavLink>
-    );
-  };
+  const menuButton = (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={handleToggle}
+      className="h-8 w-8 rounded-full border border-transparent text-sidebar-foreground transition-all duration-300 hover:border-sidebar-border hover:bg-sidebar-item"
+      aria-label={collapsed ? (language === "ar" ? "توسيع" : "Expand") : language === "ar" ? "تصغير" : "Collapse"}
+    >
+      {collapsed ? <PanelLeft className="h-4 w-4" /> : <PanelLeft className="h-4 w-4 rotate-180" />}
+    </Button>
+  );
 
   return (
     <>
-      {isMobile && !isCollapsed && (
+      {isMobile && isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
-          onClick={onToggle}
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
           role="presentation"
+          onClick={closeMobile}
         />
       )}
 
       <aside
-        dir={isRTL ? 'rtl' : 'ltr'}
         className={cn(
-          'sidebar-bg sidebar-shell-shadow sidebar-muted-text relative isolate fixed top-0 z-50 h-full overflow-hidden border-r border-sidebar-border transition-all duration-300',
-          'lg:relative lg:translate-x-0',
-          isRTL ? 'right-0' : 'left-0',
-          isMobile
-            ? isCollapsed
-              ? 'pointer-events-none w-0 overflow-hidden'
-              : 'sidebar-width'
-            : isCollapsed
-              ? 'sidebar-icon-width'
-              : 'sidebar-width',
-          isMobile && isCollapsed && (isRTL ? 'translate-x-full' : '-translate-x-full'),
-          isMobile && !isCollapsed && 'translate-x-0',
-          !isMobile && 'translate-x-0',
+          "sidebar-shell-shadow fixed top-0 h-full border-r border-sidebar-border bg-sidebar-background transition-all duration-300 ease-in-out lg:static",
+          collapsed ? "w-16" : "w-72",
+          isMobile ? (isMobileOpen ? "translate-x-0" : "-translate-x-full") : "translate-x-0",
         )}
+        dir={language === "ar" ? "rtl" : "ltr"}
       >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,var(--sidebar-ambient-glow)_0%,transparent_55%)] opacity-80"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -left-10 top-1/3 -z-10 h-64 w-64 rounded-full bg-[radial-gradient(circle,var(--sidebar-ambient-glow)_0%,transparent_70%)] blur-3xl"
-        />
-        <div className="relative z-10 flex h-full flex-col backdrop-blur-xl">
-          <div
-            className={cn(
-              'flex h-16 items-center border-b border-sidebar-border/50 px-4 backdrop-blur-sm',
-              isCollapsed ? 'justify-center' : 'justify-between',
+        <div className="flex h-full flex-col">
+          <div className="flex items-center gap-3 border-b border-sidebar-border px-4 py-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sidebar-primary/10 text-sidebar-primary">
+              <Scale className="h-6 w-6" />
+            </div>
+            {!collapsed && (
+              <div className="flex-1 min-w-0">
+                <h1 className="truncate text-lg font-semibold text-sidebar-text-strong">
+                  {language === "ar" ? "أفوكات" : "Avocat"}
+                </h1>
+                <p className="truncate text-xs text-sidebar-text-muted">
+                  {language === "ar" ? "منصة إدارة قانونية" : "Legal Management Platform"}
+                </p>
+              </div>
             )}
-          >
-            {!isCollapsed && (
-              <NavLink
-                to="/dashboard"
-                onClick={() => {
-                  if (isMobile && !isCollapsed) onToggle();
-                }}
-                className="text-lg font-semibold bg-gradient-primary bg-clip-text text-transparent truncate hover:opacity-80"
-              >
-                {t('nav.dashboard')}
-              </NavLink>
-            )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onToggle}
-              className="h-8 w-8 flex-shrink-0 rounded-full border border-transparent bg-transparent text-sidebar-foreground transition-all duration-300 hover:border-sidebar-border hover:bg-sidebar-item hover:shadow-sidebar-hover"
-              aria-label={isCollapsed ? t('common.expand') : t('common.collapse')}
-            >
-              {isCollapsed ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
-            </Button>
+            {menuButton}
           </div>
 
-          <nav className="custom-scrollbar flex-1 space-y-2.5 overflow-y-auto p-4">
-            {sidebarItems.map((item) => renderItem(item))}
+          {!collapsed && user?.email && (
+            <div className="mx-4 mt-3 rounded-xl border border-sidebar-border bg-sidebar-surface px-3 py-2">
+              <p className="truncate text-xs text-sidebar-text-muted">{user.email}</p>
+            </div>
+          )}
+
+          <nav className="flex-1 space-y-6 overflow-y-auto px-4 py-6">
+            <SidebarSection
+              title={collapsed ? undefined : language === "ar" ? "الرئيسية" : "Main"}
+              links={mainLinks}
+              collapsed={collapsed}
+              onNavigate={handleLinkClick}
+              isActive={isActive}
+            />
+
+            <SidebarSection
+              title={collapsed ? undefined : language === "ar" ? "الإدارة" : "Management"}
+              links={managementLinks}
+              collapsed={collapsed}
+              onNavigate={handleLinkClick}
+              isActive={isActive}
+            />
+
+            <SidebarSection
+              title={collapsed ? undefined : language === "ar" ? "النظام" : "System"}
+              links={secondaryLinks}
+              collapsed={collapsed}
+              onNavigate={handleLinkClick}
+              isActive={isActive}
+            />
           </nav>
+
+          <div className="border-t border-sidebar-border px-4 py-4">
+            <Button
+              onClick={logout}
+              variant="ghost"
+              className={cn(
+                "w-full justify-start text-sidebar-text-muted transition-colors hover:bg-destructive/10 hover:text-destructive",
+                collapsed ? "px-0" : "px-3",
+              )}
+            >
+              <LogOut className="h-5 w-5" />
+              {!collapsed && <span className="ml-2">{language === "ar" ? "تسجيل الخروج" : "Sign Out"}</span>}
+            </Button>
+          </div>
         </div>
       </aside>
     </>
+  );
+};
+
+interface SectionProps {
+  title?: string;
+  links: SidebarLink[];
+  collapsed: boolean;
+  onNavigate: () => void;
+  isActive: (url: string) => boolean;
+}
+
+const SidebarSection: React.FC<SectionProps> = ({ title, links, collapsed, onNavigate, isActive }) => {
+  return (
+    <div className="space-y-3">
+      {title ? <p className="text-xs font-semibold uppercase text-sidebar-text-muted">{title}</p> : null}
+      <div className="space-y-1">
+        {links.map((link) => {
+          const active = isActive(link.url);
+          return (
+            <NavLink
+              key={link.url}
+              to={link.url}
+              end={link.url === "/dashboard"}
+              onClick={onNavigate}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-sm font-medium text-sidebar-text-muted transition-all",
+                  "hover:-translate-y-px hover:bg-sidebar-item hover:text-sidebar-text-strong hover:shadow-sidebar-hover",
+                  collapsed ? "justify-center px-2" : "justify-start",
+                  (isActive || active) &&
+                    "border-sidebar-border bg-sidebar-item text-sidebar-text-strong shadow-sidebar-active",
+                )
+              }
+            >
+              <link.icon className="h-5 w-5 flex-shrink-0" />
+              {!collapsed && <span className="truncate">{link.title}</span>}
+            </NavLink>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

@@ -4,12 +4,7 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
-
-/* Avocat Law Firm Design System - Premium Legal Theme
-All colors MUST be HSL for proper theme support.
-*/
-
+@tailwind utilities; 
 @layer base {
   * {
     @apply border-border;
@@ -59,6 +54,39 @@ All colors MUST be HSL for proper theme support.
 }
 
 @layer components {
+  /* Premium Button Variants */
+  .btn-premium {
+    @apply bg-gradient-to-r from-primary to-primary-light text-primary-foreground;
+    @apply shadow-lg hover:shadow-xl transform hover:scale-[1.02];
+    @apply transition-all duration-300 ease-out;
+    box-shadow: var(--shadow-premium);
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-r from-accent to-accent-glow text-accent-foreground;
+    @apply shadow-lg hover:shadow-xl transform hover:scale-[1.02];
+    @apply transition-all duration-300 ease-out;
+    box-shadow: var(--shadow-gold);
+  }
+
+  .btn-glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 text-white;
+    @apply hover:bg-white/20 transition-all duration-300;
+  }
+
+  /* Premium Card Styles */
+  .card-premium {
+    @apply bg-card border border-border rounded-xl;
+    @apply shadow-lg hover:shadow-xl transition-all duration-300;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .card-elevated {
+    @apply bg-card-elevated border border-border rounded-xl;
+    @apply shadow-2xl transition-all duration-300;
+    box-shadow: var(--shadow-premium);
+  }
+
   /* Hero Gradient Backgrounds */
   .hero-gradient {
     background: var(--gradient-hero);
@@ -68,6 +96,7 @@ All colors MUST be HSL for proper theme support.
     background: var(--gradient-gold);
   }
 
+  /* Premium Animations */
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
@@ -82,14 +111,15 @@ All colors MUST be HSL for proper theme support.
   }
 
   @keyframes glow {
-    from {
+    from { 
       box-shadow: 0 0 20px hsl(var(--accent) / 0.3);
     }
-    to {
+    to { 
       box-shadow: 0 0 30px hsl(var(--accent) / 0.5), 0 0 40px hsl(var(--accent) / 0.2);
     }
   }
 
+  /* RTL Support */
   [dir="rtl"] .text-left {
     text-align: right;
   }
@@ -98,6 +128,7 @@ All colors MUST be HSL for proper theme support.
     text-align: left;
   }
 
+  /* Carousel Styles */
   .carousel-slide {
     @apply transition-all duration-700 ease-in-out;
   }
@@ -108,99 +139,5 @@ All colors MUST be HSL for proper theme support.
 
   .carousel-slide.inactive {
     @apply opacity-0 scale-95;
-  }
-}
-
-@layer utilities {
-  .animate-spin-reverse {
-    animation: spin 1s linear infinite reverse;
-  }
-
-  .sidebar-bg {
-    background: var(--sidebar-surface);
-  }
-
-  .sidebar-text {
-    color: var(--sidebar-text-strong);
-  }
-
-  .sidebar-muted-text {
-    color: var(--sidebar-text-muted);
-  }
-
-  .sidebar-width {
-    width: calc(var(--sidebar-width));
-  }
-
-  .sidebar-icon-width {
-    width: calc(var(--sidebar-width-icon));
-  }
-
-  .sidebar-shell-shadow {
-    box-shadow: var(--sidebar-shell-shadow);
-  }
-
-  .btn-premium {
-    background: var(--gradient-primary);
-    color: hsl(var(--primary-foreground));
-    box-shadow: var(--shadow-premium);
-    transition: var(--transition-premium);
-    transform: translateZ(0);
-  }
-
-  .btn-premium:hover {
-    box-shadow: var(--shadow-glow);
-    transform: scale(1.02);
-  }
-
-  .btn-gold {
-    background: var(--gradient-gold);
-    color: hsl(var(--accent-foreground));
-    box-shadow: var(--shadow-gold);
-    transition: var(--transition-premium);
-    transform: translateZ(0);
-  }
-
-  .btn-gold:hover {
-    box-shadow: var(--shadow-glow-strong);
-    transform: scale(1.02);
-  }
-
-  .btn-glass {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: hsl(var(--text-inverse));
-    backdrop-filter: blur(12px);
-    transition: var(--transition-smooth);
-    transform: translateZ(0);
-  }
-
-  .btn-glass:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.35);
-  }
-
-  .card-premium {
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-elevated);
-    transition: var(--transition-smooth);
-  }
-
-  .card-elevated {
-    background: hsl(var(--card-elevated));
-    border: 1px solid hsl(var(--border));
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-premium);
-    transition: var(--transition-premium);
-  }
-
-  .font-english {
-    font-family: 'Inter', sans-serif;
-  }
-
-  .font-arabic {
-    font-family: 'Amiri', serif;
   }
 }

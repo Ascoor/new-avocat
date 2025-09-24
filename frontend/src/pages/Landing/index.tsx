@@ -20,11 +20,10 @@ const LandingPage: React.FC = () => {
       <main dir={direction} className="bg-background text-text-body">
         <HeroCarousel />
         <About />
-        <Services />
-        <Capabilities />
+        <Services /> 
         <Achievements />
         <Team />
-        <Insights />
+      
         <Contact />
       </main>
       <ScrollToTopButton />

@@ -1,180 +1,349 @@
-import React, { useMemo } from 'react';
-import type { LucideIcon } from 'lucide-react';
-import { AlertCircle, BarChart3, Calendar, Gavel, TrendingUp, Users } from 'lucide-react';
-
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
 import {
-  GlassCard,
-  GlassCardContent,
-  GlassCardDescription,
-  GlassCardHeader,
-  GlassCardTitle,
-} from '@/components/ui/glass-card';
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+} from 'recharts';
+import {
+  Users,
+  FileText,
+  Briefcase,
+  Calendar,
+  TrendingUp,
+  AlertCircle,
+  CheckCircle,
+  Clock,
+  DollarSign,
+  Scale,
+} from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useAuth } from '@/contexts/AuthContext';
 
-type DashboardHomeTranslations = {
-  welcome?: {
-    title?: string;
-    subtitle?: string;
-  };
-  stats?: Array<{
-    title?: string;
-    value?: string;
-    change?: string;
-    icon?: string;
-    color?: string;
-  }>;
-  activities?: {
-    title?: string;
-    subtitle?: string;
-    items?: Array<{
-      title?: string;
-      time?: string;
-      type?: string;
-    }>;
-  };
-  tasks?: {
-    title?: string;
-    subtitle?: string;
-    items?: Array<{
-      title?: string;
-      deadline?: string;
-      priority?: string;
-    }>;
-    priorities?: Record<string, string>;
-  };
-};
+const DashboardHome = () => {
+  const { language } = useLanguage();
 
-const statIconMap: Record<string, LucideIcon> = {
-  cases: Gavel,
-  clients: Users,
-  sessions: Calendar,
-  performance: TrendingUp,
-};
+  // Sample data for charts
+  const caseData = [
+    { month: language === 'ar' ? 'يناير' : 'Jan', cases: 65, revenue: 12000 },
+    { month: language === 'ar' ? 'فبراير' : 'Feb', cases: 59, revenue: 15000 },
+    { month: language === 'ar' ? 'مارس' : 'Mar', cases: 80, revenue: 18000 },
+    { month: language === 'ar' ? 'أبريل' : 'Apr', cases: 81, revenue: 22000 },
+    { month: language === 'ar' ? 'مايو' : 'May', cases: 56, revenue: 19000 },
+    { month: language === 'ar' ? 'يونيو' : 'Jun', cases: 95, revenue: 25000 },
+  ];
 
-const priorityStyleMap: Record<string, string> = {
-  high: 'bg-destructive-soft text-destructive',
-  medium: 'bg-warning-soft text-warning',
-};
+  const caseStatusData = [
+    { name: language === 'ar' ? 'نشطة' : 'Active', value: 45, color: 'hsl(var(--primary))' },
+    { name: language === 'ar' ? 'مكتملة' : 'Completed', value: 30, color: 'hsl(var(--success))' },
+    { name: language === 'ar' ? 'معلقة' : 'Pending', value: 15, color: 'hsl(var(--warning))' },
+    { name: language === 'ar' ? 'مؤجلة' : 'On Hold', value: 10, color: 'hsl(var(--muted-foreground))' },
+  ];
 
-const DashboardHome: React.FC = () => {
-  const { t } = useLanguage();
-  const { user } = useAuth();
+  const stats = [
+    {
+      title: language === 'ar' ? 'إجمالي القضايا' : 'Total Cases',
+      value: '247',
+      change: '+12%',
+      icon: Briefcase,
+      color: 'text-primary',
+      bg: 'bg-primary/10',
+    },
+    {
+      title: language === 'ar' ? 'العملاء النشطون' : 'Active Clients',
+      value: '89',
+      change: '+8%',
+      icon: Users,
+      color: 'text-success',
+      bg: 'bg-success/10',
+    },
+    {
+      title: language === 'ar' ? 'الإيرادات الشهرية' : 'Monthly Revenue',
+      value: '$25,000',
+      change: '+15%',
+      icon: DollarSign,
+      color: 'text-accent',
+      bg: 'bg-accent/10',
+    },
+    {
+      title: language === 'ar' ? 'المواعيد القادمة' : 'Upcoming Appointments',
+      value: '12',
+      change: '+3',
+      icon: Calendar,
+      color: 'text-warning',
+      bg: 'bg-warning/10',
+    },
+  ];
 
-  const homeContent = useMemo(
-    () => t('dashboard.home', { returnObjects: true }) as DashboardHomeTranslations,
-    [t],
-  );
-
-  const stats = (homeContent?.stats ?? []).map((stat) => ({
-    ...stat,
-    Icon: stat.icon ? statIconMap[stat.icon] ?? TrendingUp : TrendingUp,
-    colorClass: stat.color ?? 'text-primary',
-  }));
-
-  const activities = homeContent?.activities?.items ?? [];
-  const tasks = homeContent?.tasks ?? { items: [], priorities: {} };
-  const welcome = homeContent?.welcome;
+  const recentActivities = [
+    {
+      id: 1,
+      action: language === 'ar' ? 'قضية جديدة مُضافة' : 'New case added',
+      client: language === 'ar' ? 'شركة الخليج' : 'Gulf Corporation',
+      time: language === 'ar' ? 'منذ 2 ساعة' : '2 hours ago',
+      status: 'new',
+    },
+    {
+      id: 2,
+      action: language === 'ar' ? 'تم إكمال المستند' : 'Document completed',
+      client: language === 'ar' ? 'أحمد المحمدي' : 'Ahmed Al-Mohammadi',
+      time: language === 'ar' ? 'منذ 4 ساعات' : '4 hours ago',
+      status: 'completed',
+    },
+    {
+      id: 3,
+      action: language === 'ar' ? 'موعد مجدول' : 'Appointment scheduled',
+      client: language === 'ar' ? 'شركة النور' : 'Al-Noor Company',
+      time: language === 'ar' ? 'منذ 6 ساعات' : '6 hours ago',
+      status: 'scheduled',
+    },
+  ];
 
   return (
-    <div className="space-y-6">
-      <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold text-transparent bg-gradient-primary bg-clip-text">
-          {welcome?.title ?? t('common.welcome')}
-          {user?.name ? `, ${user.name}` : ''}
-        </h1>
-        <p className="text-muted-foreground">{welcome?.subtitle}</p>
+    <div className="space-y-6" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      {/* Welcome Section */}
+      <div className="bg-gradient-to-r from-primary to-primary-light rounded-xl p-6 text-primary-foreground">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-display font-bold mb-2">
+              {language === 'ar' ? 'مرحباً بك في لوحة التحكم' : 'Welcome to Your Dashboard'}
+            </h1>
+            <p className="text-primary-foreground/80">
+              {language === 'ar' 
+                ? 'إليك نظرة عامة على أداءك القانوني اليوم' 
+                : 'Here\'s an overview of your legal practice today'
+              }
+            </p>
+          </div>
+          <Scale className="h-12 w-12 text-primary-foreground/60" />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
-          <GlassCard
-            key={`${stat.title}-${index}`}
-            variant="primary"
-            hover="glow"
-            className="animate-fadeIn"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            <GlassCardContent className="p-6">
+          <Card key={index} className="card-premium">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="mb-1 text-sm text-muted-foreground">{stat.title}</p>
-                  <p className="text-3xl font-bold">{stat.value}</p>
-                  <p className="mt-1 flex items-center text-sm text-success">
-                    <TrendingUp className="mr-1 h-3 w-3 rtl:ml-1 rtl:mr-0" />
-                    {stat.change}
+                  <p className="text-sm font-medium text-muted-foreground">
+                    {stat.title}
                   </p>
+                  <p className="text-2xl font-bold text-text-strong">
+                    {stat.value}
+                  </p>
+                  <Badge variant="secondary" className="mt-1">
+                    {stat.change}
+                  </Badge>
                 </div>
-                <div className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-primary ${stat.colorClass}`}>
-                  <stat.Icon className="h-6 w-6 text-text-inverse" />
+                <div className={`p-3 rounded-full ${stat.bg}`}>
+                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
                 </div>
               </div>
-            </GlassCardContent>
-          </GlassCard>
+            </CardContent>
+          </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <GlassCard variant="primary" hover="lift">
-          <GlassCardHeader>
-            <GlassCardTitle className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-accent" />
-              {homeContent?.activities?.title ?? t('dashboard.recentActivity')}
-            </GlassCardTitle>
-            <GlassCardDescription>{homeContent?.activities?.subtitle}</GlassCardDescription>
-          </GlassCardHeader>
-          <GlassCardContent>
-            <div className="space-y-4">
-              {activities.map((activity, index) => (
-                <div
-                  key={`${activity.title}-${index}`}
-                  className="flex items-start gap-3 rounded-lg p-3 transition-colors hover:bg-accent-soft"
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Cases & Revenue Chart */}
+        <Card className="card-premium">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" />
+              {language === 'ar' ? 'القضايا والإيرادات' : 'Cases & Revenue'}
+            </CardTitle>
+            <CardDescription>
+              {language === 'ar' 
+                ? 'نظرة عامة على الأداء الشهري' 
+                : 'Monthly performance overview'
+              }
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={caseData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                <YAxis stroke="hsl(var(--muted-foreground))" />
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                  }}
+                />
+                <Bar dataKey="cases" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Case Status Distribution */}
+        <Card className="card-premium">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Briefcase className="h-5 w-5" />
+              {language === 'ar' ? 'توزيع حالة القضايا' : 'Case Status Distribution'}
+            </CardTitle>
+            <CardDescription>
+              {language === 'ar' 
+                ? 'التوزيع الحالي للقضايا حسب الحالة' 
+                : 'Current distribution of cases by status'
+              }
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={caseStatusData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  dataKey="value"
                 >
-                  <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-accent" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">{activity.title}</p>
-                    <p className="text-xs text-muted-foreground">{activity.time}</p>
-                  </div>
+                  {caseStatusData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip 
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              {caseStatusData.map((item, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div 
+                    className="w-3 h-3 rounded-full" 
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="text-sm text-muted-foreground">{item.name}</span>
+                  <Badge variant="outline">{item.value}</Badge>
                 </div>
               ))}
             </div>
-          </GlassCardContent>
-        </GlassCard>
+          </CardContent>
+        </Card>
+      </div>
 
-        <GlassCard variant="primary" hover="lift">
-          <GlassCardHeader>
-            <GlassCardTitle className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-warning" />
-              {tasks?.title}
-            </GlassCardTitle>
-            <GlassCardDescription>{tasks?.subtitle}</GlassCardDescription>
-          </GlassCardHeader>
-          <GlassCardContent>
+      {/* Recent Activities & Quick Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Recent Activities */}
+        <Card className="lg:col-span-2 card-premium">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5" />
+              {language === 'ar' ? 'الأنشطة الأخيرة' : 'Recent Activities'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             <div className="space-y-4">
-              {(tasks.items ?? []).map((task, index) => {
-                const priority = task.priority ?? '';
-                const priorityLabel = tasks.priorities?.[priority] ?? priority;
-                const priorityClass = priorityStyleMap[priority] ?? 'bg-warning-soft text-warning';
-
-                return (
-                  <div
-                    key={`${task.title}-${index}`}
-                    className="flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-accent-soft"
-                  >
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{task.title}</p>
-                      <p className="text-xs text-muted-foreground">{task.deadline}</p>
-                    </div>
-                    <div className={`rounded-full px-2 py-1 text-xs font-medium ${priorityClass}`}>
-                      {priorityLabel}
+              {recentActivities.map((activity) => (
+                <div key={activity.id} className="flex items-center justify-between p-3 bg-surface-muted rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2 h-2 rounded-full ${
+                      activity.status === 'new' ? 'bg-primary' :
+                      activity.status === 'completed' ? 'bg-success' : 'bg-warning'
+                    }`} />
+                    <div>
+                      <p className="font-medium text-text-strong">{activity.action}</p>
+                      <p className="text-sm text-muted-foreground">{activity.client}</p>
                     </div>
                   </div>
-                );
-              })}
+                  <span className="text-xs text-muted-foreground">{activity.time}</span>
+                </div>
+              ))}
             </div>
-          </GlassCardContent>
-        </GlassCard>
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions */}
+        <Card className="card-premium">
+          <CardHeader>
+            <CardTitle>
+              {language === 'ar' ? 'إجراءات سريعة' : 'Quick Actions'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <Button className="w-full justify-start btn-premium">
+              <FileText className="h-4 w-4 mr-2" />
+              {language === 'ar' ? 'قضية جديدة' : 'New Case'}
+            </Button>
+            <Button variant="outline" className="w-full justify-start">
+              <Users className="h-4 w-4 mr-2" />
+              {language === 'ar' ? 'إضافة عميل' : 'Add Client'}
+            </Button>
+            <Button variant="outline" className="w-full justify-start">
+              <Calendar className="h-4 w-4 mr-2" />
+              {language === 'ar' ? 'جدولة موعد' : 'Schedule Meeting'}
+            </Button>
+            <Button variant="outline" className="w-full justify-start">
+              <FileText className="h-4 w-4 mr-2" />
+              {language === 'ar' ? 'إنشاء مستند' : 'Create Document'}
+            </Button>
+          </CardContent>
+        </Card>
       </div>
+
+      {/* Task Progress */}
+      <Card className="card-premium">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5" />
+            {language === 'ar' ? 'تقدم المهام' : 'Task Progress'}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium">
+                  {language === 'ar' ? 'مراجعة الوثائق' : 'Document Review'}
+                </span>
+                <span className="text-sm text-muted-foreground">75%</span>
+              </div>
+              <Progress value={75} className="h-2" />
+            </div>
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium">
+                  {language === 'ar' ? 'متابعة العملاء' : 'Client Follow-up'}
+                </span>
+                <span className="text-sm text-muted-foreground">60%</span>
+              </div>
+              <Progress value={60} className="h-2" />
+            </div>
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium">
+                  {language === 'ar' ? 'إعداد التقارير' : 'Report Preparation'}
+                </span>
+                <span className="text-sm text-muted-foreground">90%</span>
+              </div>
+              <Progress value={90} className="h-2" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
