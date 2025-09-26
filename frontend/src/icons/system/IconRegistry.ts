@@ -1,7 +1,7 @@
-import caseOutline from "@/../../icons/svg/outline/case-outline_24.svg?raw";
-import gavelOutline from "@/../../icons/svg/outline/gavel-outline_24.svg?raw";
-import scalesOutline from "@/../../icons/svg/outline/scales-outline_24.svg?raw";
-import courthouseOutline from "@/../../icons/svg/outline/courthouse-outline_24.svg?raw";
+import caseOutline from "../../../icons/svg/outline/case-outline_24.svg?raw";
+import gavelOutline from "../../../icons/svg/outline/gavel-outline_24.svg?raw";
+import scalesOutline from "../../../icons/svg/outline/scales-outline_24.svg?raw";
+import courthouseOutline from "../../../icons/svg/outline/courthouse-outline_24.svg?raw";
 
 export type IconVariant = "outline" | "filled" | "3d";
 
