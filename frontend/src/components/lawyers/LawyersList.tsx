@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Eye, Pencil, Trash2 ,Layers} from 'lucide-react';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -94,8 +94,8 @@ const LawyersList = () => {
 
   return (
     <div className="space-y-6 p-6">
-          <PageHeader
-        icon={<Layers className="h-6 w-6" />}
+      <PageHeader
+        iconKey="lawyers"
         title={t('lawyers.list.title')}
         subtitle={t('lawyers.list.subtitle')}
       />

@@ -2,6 +2,16 @@
   "brand": {
     "name": "أفوكات"
   },
+  "sidebar": {
+    "sections": {
+      "main": "الرئيسية",
+      "system": "النظام"
+    },
+    "toggle": {
+      "open": "توسيع القسم",
+      "close": "طي القسم"
+    }
+  },
   "nav": {
     "dashboard": "لوحة التحكم",
     "cases": "القضايا",
@@ -14,7 +24,7 @@
     "sessions": "الجلسات",
     "procedures": "الإجراءات",
     "services": "الخدمات",
-    "followUpWork": "متابعة العمل",
+    "work_tracking": "متابعة العمل",
     "reports": "التقارير",
     "settings": "الإعدادات",
     "office_settings": "إعدادات المكتب",
@@ -255,12 +265,42 @@
   },
   "services": {
     "title": "إدارة الخدمات",
+    "subtitle": "تابع وراجع وحدث قائمة الخدمات القانونية لديك.",
+    "messages": {
+      "deleteSuccess": "تم حذف الخدمة بنجاح.",
+      "deleteErrorTitle": "تعذر حذف الخدمة",
+      "deleteErrorDescription": "يرجى المحاولة مرة أخرى بعد تحديث الصفحة."
+    },
+    "status": {
+      "inProgress": "جارٍ التنفيذ",
+      "underExecution": "قيد التنفيذ",
+      "completed": "منتهية",
+      "circulating": "متداولة",
+      "settled": "استيفاء",
+      "unknown": "غير معروف"
+    },
+    "list": {
+      "add": "إضافة خدمة",
+      "empty": "لا توجد خدمات مسجلة. أضف خدمتك الأولى للبدء.",
+      "actions": {
+        "view": "عرض الخدمة",
+        "edit": "تعديل الخدمة",
+        "delete": "حذف الخدمة"
+      },
+      "table": {
+        "slug": "المرجع",
+        "type": "نوع الخدمة",
+        "place": "مكان الخدمة",
+        "year": "السنة",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      }
+    },
     "name": "اسم الخدمة",
-    "subtitle": "إدارة طلبات الخدمات ومتابعة تنفيذها.",
     "category": "الفئة",
     "price": "السعر",
     "duration": "المدة",
-    "status": "الحالة",
+    "statusLabel": "الحالة",
     "description": "الوصف",
     "addService": "إضافة خدمة جديدة"
   },

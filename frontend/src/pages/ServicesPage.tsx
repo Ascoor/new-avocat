@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ClipboardList, Eye, Pencil, Trash2 } from 'lucide-react';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -144,11 +144,7 @@ const ServicesPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        icon={<ClipboardList className="h-6 w-6" />}
-        title={t('services.title')}
-        subtitle={t('services.subtitle')}
-      />
+      <PageHeader iconKey="services" title={t('services.title')} subtitle={t('services.subtitle')} />
 
       <DetailsTable
         data={services}

@@ -3,6 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import LegalIcon from '@/components/common/LegalIcon';
+import { getIconDesign } from '@/config/iconography';
+import { cn } from '@/lib/utils';
 import {
   BarChart,
   Bar,
@@ -18,16 +21,10 @@ import {
   Cell,
 } from 'recharts';
 import {
-  Users,
-  FileText,
-  Briefcase,
-  Calendar,
   TrendingUp,
   AlertCircle,
   CheckCircle,
   Clock,
-  DollarSign,
-  Scale,
 } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -56,33 +53,25 @@ const DashboardHome = () => {
       title: language === 'ar' ? 'إجمالي القضايا' : 'Total Cases',
       value: '247',
       change: '+12%',
-      icon: Briefcase,
-      color: 'text-primary',
-      bg: 'bg-primary/10',
+      iconKey: 'cases' as const,
     },
     {
       title: language === 'ar' ? 'العملاء النشطون' : 'Active Clients',
       value: '89',
       change: '+8%',
-      icon: Users,
-      color: 'text-success',
-      bg: 'bg-success/10',
+      iconKey: 'clients' as const,
     },
     {
       title: language === 'ar' ? 'الإيرادات الشهرية' : 'Monthly Revenue',
       value: '$25,000',
       change: '+15%',
-      icon: DollarSign,
-      color: 'text-accent',
-      bg: 'bg-accent/10',
+      iconKey: 'reports' as const,
     },
     {
       title: language === 'ar' ? 'المواعيد القادمة' : 'Upcoming Appointments',
       value: '12',
       change: '+3',
-      icon: Calendar,
-      color: 'text-warning',
-      bg: 'bg-warning/10',
+      iconKey: 'sessions' as const,
     },
   ];
 
@@ -113,8 +102,8 @@ const DashboardHome = () => {
   return (
     <div className="space-y-6" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-primary to-primary-light rounded-xl p-6 text-primary-foreground">
-        <div className="flex items-center justify-between">
+      <div className="rounded-xl bg-gradient-to-r from-primary to-primary-light p-4 text-primary-foreground sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-display font-bold mb-2">
               {language === 'ar' ? 'مرحباً بك في لوحة التحكم' : 'Welcome to Your Dashboard'}
@@ -126,34 +115,46 @@ const DashboardHome = () => {
               }
             </p>
           </div>
-          <Scale className="h-12 w-12 text-primary-foreground/60" />
+          <LegalIcon iconKey="dashboard" width={48} height={48} />
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <Card key={index} className="card-premium">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {stat.title}
-                  </p>
-                  <p className="text-2xl font-bold text-text-strong">
-                    {stat.value}
-                  </p>
-                  <Badge variant="secondary" className="mt-1">
-                    {stat.change}
-                  </Badge>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat, index) => {
+          const design = getIconDesign(stat.iconKey);
+          return (
+            <Card key={index} className="card-premium">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      {stat.title}
+                    </p>
+                    <p className="text-2xl font-bold text-text-strong">
+                      {stat.value}
+                    </p>
+                    <Badge variant="secondary" className="mt-1">
+                      {stat.change}
+                    </Badge>
+                  </div>
+                  <div
+                    className={cn(
+                      "flex h-12 w-12 items-center justify-center rounded-2xl",
+                      design.badgeClass ?? "text-white",
+                    )}
+                    style={{
+                      background: design.badgeGradient,
+                      boxShadow: design.shadow,
+                    }}
+                  >
+                    <LegalIcon iconKey={stat.iconKey} width={28} height={28} />
+                  </div>
                 </div>
-                <div className={`p-3 rounded-full ${stat.bg}`}>
-                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       {/* Charts Row */}
@@ -195,7 +196,7 @@ const DashboardHome = () => {
         <Card className="card-premium">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Briefcase className="h-5 w-5" />
+              <LegalIcon iconKey="cases" width={20} height={20} />
               {language === 'ar' ? 'توزيع حالة القضايا' : 'Case Status Distribution'}
             </CardTitle>
             <CardDescription>
@@ -283,21 +284,21 @@ const DashboardHome = () => {
               {language === 'ar' ? 'إجراءات سريعة' : 'Quick Actions'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <Button className="w-full justify-start btn-premium">
-              <FileText className="h-4 w-4 mr-2" />
+         <CardContent className="space-y-3">
+            <Button className="w-full justify-start gap-2 btn-premium">
+              <LegalIcon iconKey="cases" width={20} height={20} />
               {language === 'ar' ? 'قضية جديدة' : 'New Case'}
             </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <Users className="h-4 w-4 mr-2" />
+            <Button variant="outline" className="w-full justify-start gap-2">
+              <LegalIcon iconKey="clients" width={20} height={20} />
               {language === 'ar' ? 'إضافة عميل' : 'Add Client'}
             </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <Calendar className="h-4 w-4 mr-2" />
+            <Button variant="outline" className="w-full justify-start gap-2">
+              <LegalIcon iconKey="sessions" width={20} height={20} />
               {language === 'ar' ? 'جدولة موعد' : 'Schedule Meeting'}
             </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <FileText className="h-4 w-4 mr-2" />
+            <Button variant="outline" className="w-full justify-start gap-2">
+              <LegalIcon iconKey="documents" width={20} height={20} />
               {language === 'ar' ? 'إنشاء مستند' : 'Create Document'}
             </Button>
           </CardContent>

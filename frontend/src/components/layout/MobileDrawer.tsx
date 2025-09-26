@@ -1,170 +1,220 @@
-import React, { useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { X } from 'lucide-react';
-import * as LucideIcons from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useSidebar } from '@/contexts/SidebarContext';
-import { menuItems } from '@/config/sidebar';
-import BrandLogo from '@/components/common/BrandLogo';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import React, { useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+
+import BrandLogo from "@/components/common/BrandLogo";
+import LegalIcon from "@/components/common/LegalIcon";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useSidebar } from "@/contexts/SidebarContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { sidebarGroups, type SidebarItem as SidebarItemType } from "@/config/sidebar";
+import { getIconDesign } from "@/config/iconography";
 
 const MobileDrawer: React.FC = () => {
-  const { t, i18n } = useTranslation('common');
-  const { isMobileOpen, closeMobile } = useSidebar();
   const location = useLocation();
-  const isRTL = i18n.language === 'ar';
+  const { t, language } = useLanguage();
+  const isRTL = language === "ar";
+  const { isMobileOpen, closeMobile } = useSidebar();
 
-  // Close drawer on route change
+  // إغلاق drawer عند تغيير المسار
   useEffect(() => {
     closeMobile();
   }, [location.pathname, closeMobile]);
 
-  // Close drawer on escape key
+  // إغلاق عند الضغط على زر Escape
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMobileOpen) {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isMobileOpen) {
         closeMobile();
       }
     };
-
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [isMobileOpen, closeMobile]);
 
-  // Prevent body scroll when drawer is open
+  // منع التمرير عند فتح القائمة
   useEffect(() => {
     if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
+      document.documentElement.classList.add("overflow-hidden");
+      return () => {
+        document.documentElement.classList.remove("overflow-hidden");
+      };
     }
 
-    return () => {
-      document.body.style.overflow = '';
-    };
+    document.documentElement.classList.remove("overflow-hidden");
+    return undefined;
   }, [isMobileOpen]);
 
-  const getIcon = (iconName: string) => {
-    const Icon = (LucideIcons as any)[iconName];
-    return Icon ? <Icon className="h-5 w-5" /> : null;
-  };
-
-  const isActive = (path: string) => {
-    return location.pathname === path;
-  };
-
-  const regularItems = menuItems.filter(item => !item.bottom);
-  const bottomItems = menuItems.filter(item => item.bottom);
+  const headerOffsetClass = "top-16"; // ارتفاع الـ Header (64px)
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isMobileOpen && (
         <>
-          {/* Backdrop */}
+          {/* الخلفية الشفافة */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeMobile}
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm md:hidden"
+            className={cn(
+              "fixed inset-x-0 z-[9998] bg-black/50 backdrop-blur-sm md:hidden",
+              headerOffsetClass,
+              "bottom-0"
+            )}
           />
 
-          {/* Drawer */}
+          {/* القائمة نفسها */}
           <motion.aside
-            initial={{ 
-              x: isRTL ? '100%' : '-100%',
-              opacity: 0 
-            }}
-            animate={{ 
-              x: 0,
-              opacity: 1 
-            }}
-            exit={{ 
-              x: isRTL ? '100%' : '-100%',
-              opacity: 0 
-            }}
-            transition={{ 
-              type: 'spring',
-              damping: 25,
-              stiffness: 200 
-            }}
+            initial={{ x: isRTL ? "100%" : "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: isRTL ? "100%" : "-100%", opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className={cn(
-              'fixed top-0 z-50 h-full w-full max-w-[100vw] bg-sidebar-background border-border md:hidden',
-              'flex flex-col shadow-card',
-              isRTL ? 'right-0 border-l' : 'left-0 border-r'
+              "fixed inset-x-0 z-[9998] w-full max-w-[100vw] border-border shadow-card md:hidden",
+              "flex h-[calc(100vh-4rem)] flex-col",
+              headerOffsetClass,
+              isRTL ? "right-0 border-l" : "left-0 border-r"
             )}
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(11, 18, 35, 0.96) 0%, rgba(13, 24, 45, 0.9) 60%, rgba(11, 18, 35, 0.96) 100%)",
+              boxShadow: "0 28px 48px rgba(8, 15, 34, 0.55)",
+              backdropFilter: "blur(18px)",
+            }}
+            dir={isRTL ? "rtl" : "ltr"}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+            {/* رأس القائمة */}
+            <div className="flex items-center justify-between border-b border-sidebar-border p-4">
               <BrandLogo variant="full" className="h-8" />
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={closeMobile}
                 className="h-8 w-8"
-                aria-label={t('close')}
+                aria-label={t("common.close")}
               >
                 <X className="h-4 w-4" />
               </Button>
             </div>
 
-            {/* Navigation */}
-            <nav className="flex-1 flex flex-col p-4">
-              {/* Regular menu items */}
-              <div className="space-y-2">
-                {regularItems.map((item) => (
-                  <NavLink
-                    key={item.key}
-                    to={item.to}
-                    onClick={closeMobile}
-                    className={({ isActive: navIsActive }) => cn(
-                      'flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition-colors',
-                      'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
-                      navIsActive || isActive(item.to)
-                        ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                        : 'text-sidebar-foreground'
-                    )}
-                  >
-                    {getIcon(item.icon)}
-                    <span>{t(item.labelKey)}</span>
-                  </NavLink>
-                ))}
-              </div>
-
-              {/* Spacer */}
-              <div className="flex-1" />
-
-              {/* Bottom menu items */}
-              {bottomItems.length > 0 && (
-                <div className="space-y-2 pt-4 border-t border-sidebar-border">
-                  {bottomItems.map((item) => (
-                    <NavLink
-                      key={item.key}
-                      to={item.to}
-                      onClick={closeMobile}
-                      className={({ isActive: navIsActive }) => cn(
-                        'flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition-colors',
-                        'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring',
-                        navIsActive || isActive(item.to)
-                          ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-                          : 'text-sidebar-foreground'
-                      )}
-                    >
-                      {getIcon(item.icon)}
-                      <span>{t(item.labelKey)}</span>
-                    </NavLink>
-                  ))}
+            {/* روابط القائمة */}
+            <nav className="flex flex-1 flex-col gap-6 overflow-y-auto p-4">
+              {sidebarGroups.map((group) => (
+                <div key={group.key} className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+                    {t(`sidebar.sections.${group.key}`)}
+                  </p>
+                  <div className="space-y-2">
+                    {group.items.map((item) => (
+                      <MobileNavItem key={item.key} item={item} onNavigate={closeMobile} t={t} />
+                    ))}
+                  </div>
                 </div>
-              )}
+              ))}
             </nav>
           </motion.aside>
         </>
       )}
     </AnimatePresence>
+  );
+};
+
+interface MobileNavItemProps {
+  item: SidebarItemType;
+  onNavigate: () => void;
+  t: (key: string) => string;
+}
+
+const MobileNavItem: React.FC<MobileNavItemProps> = ({ item, onNavigate, t }) => {
+  const hasChildren = item.children && item.children.length > 0;
+  const design = getIconDesign(item.iconKey);
+  const badgeStyle = {
+    background: design.badgeGradient,
+    boxShadow: design.shadow,
+  } as const;
+
+  if (hasChildren) {
+    return (
+      <div className="space-y-2 rounded-2xl border border-sidebar-border/60 bg-sidebar-surface/40 p-3">
+        <div className="flex items-center gap-3 text-sm font-medium text-sidebar-text-strong">
+          <span
+            className={cn(
+              "flex h-11 w-11 items-center justify-center rounded-2xl",
+              design.badgeClass ?? "text-white",
+            )}
+            style={badgeStyle}
+          >
+            <LegalIcon iconKey={item.iconKey} width={26} height={26} aria-hidden />
+          </span>
+          <span className="truncate">{t(`nav.${item.key}`)}</span>
+        </div>
+        <div className="space-y-1">
+          {item.children!.map((child) => {
+            const childDesign = getIconDesign(child.iconKey);
+            const childBadgeStyle = {
+              background: childDesign.badgeGradient,
+              boxShadow: childDesign.shadow,
+            } as const;
+
+            return (
+              <NavLink
+                key={child.key}
+                to={child.path ?? "#"}
+                onClick={onNavigate}
+                className={({ isActive }) =>
+                  cn(
+                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-sidebar-active-glow text-sidebar-primary"
+                      : "text-sidebar-foreground hover:bg-sidebar-hover-glow hover:text-sidebar-hover-foreground",
+                  )
+                }
+              >
+                <span
+                  className={cn(
+                    "flex h-9 w-9 items-center justify-center rounded-xl",
+                    childDesign.badgeClass ?? "text-white",
+                  )}
+                  style={childBadgeStyle}
+                >
+                  <LegalIcon iconKey={child.iconKey} width={20} height={20} aria-hidden />
+                </span>
+                <span className="truncate">{t(`nav.${child.key}`)}</span>
+              </NavLink>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <NavLink
+      to={item.path ?? "#"}
+      onClick={onNavigate}
+      className={({ isActive }) =>
+        cn(
+          "flex items-center gap-3 rounded-2xl px-4 py-3 text-base font-medium transition-colors",
+          isActive
+            ? "bg-sidebar-active-glow text-sidebar-primary"
+            : "text-sidebar-foreground hover:bg-sidebar-hover-glow hover:text-sidebar-hover-foreground",
+        )
+      }
+    >
+      <span
+        className={cn(
+          "flex h-11 w-11 items-center justify-center rounded-2xl",
+          design.badgeClass ?? "text-white",
+        )}
+        style={badgeStyle}
+      >
+        <LegalIcon iconKey={item.iconKey} width={24} height={24} aria-hidden />
+      </span>
+      <span className="truncate">{t(`nav.${item.key}`)}</span>
+    </NavLink>
   );
 };
 

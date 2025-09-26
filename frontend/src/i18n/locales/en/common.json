@@ -2,6 +2,16 @@
   "brand": {
     "name": "Avocat"
   },
+  "sidebar": {
+    "sections": {
+      "main": "Main",
+      "system": "System"
+    },
+    "toggle": {
+      "open": "Expand section",
+      "close": "Collapse section"
+    }
+  },
   "nav": {
     "dashboard": "Dashboard",
     "cases": "Cases",
@@ -11,12 +21,15 @@
     "clients_no_agents": "Clients without Agents",
     "lawyers": "Lawyers",
     "documents": "Documents",
+    "work_tracking": "Work Tracking",
     "sessions": "Sessions",
     "procedures": "Procedures",
     "services": "Services",
+    "unClients": "Prospects",
     "reports": "Reports",
     "settings": "Settings",
     "office_settings": "Office Settings",
+    "courts_settings": "Courts",
     "users_roles": "Users & Roles",
     "archive": "Archive",
     "courts_search": "Courts Search",
@@ -253,11 +266,42 @@
   },
   "services": {
     "title": "Services Management",
+    "subtitle": "Track, review, and maintain your legal service catalog.",
+    "messages": {
+      "deleteSuccess": "Service removed successfully.",
+      "deleteErrorTitle": "Unable to delete service",
+      "deleteErrorDescription": "Please try again after refreshing the page."
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "underExecution": "Under Execution",
+      "completed": "Completed",
+      "circulating": "In Circulation",
+      "settled": "Settled",
+      "unknown": "Unknown"
+    },
+    "list": {
+      "add": "Add Service",
+      "empty": "No services found. Add your first service to get started.",
+      "actions": {
+        "view": "View service",
+        "edit": "Edit service",
+        "delete": "Delete service"
+      },
+      "table": {
+        "slug": "Reference",
+        "type": "Service Type",
+        "place": "Service Location",
+        "year": "Year",
+        "status": "Status",
+        "actions": "Actions"
+      }
+    },
     "name": "Service Name",
     "category": "Category",
     "price": "Price",
     "duration": "Duration",
-    "status": "Status",
+    "statusLabel": "Status",
     "description": "Description",
     "addService": "Add New Service"
   },

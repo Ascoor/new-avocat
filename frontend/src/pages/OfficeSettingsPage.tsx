@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Building2, ImageDown, Moon, Pencil, Plus, Settings2, Sun, Trash2 } from 'lucide-react';
+import { ImageDown, Moon, Pencil, Plus, Settings2, Sun, Trash2 } from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import PageHeader from '@/components/common/PageHeader';
@@ -748,7 +748,7 @@ const OfficeSettingsPage = () => {
   return (
     <div className="space-y-6" dir={isRTL ? 'rtl' : 'ltr'}>
       <PageHeader
-        icon={<Building2 className="h-6 w-6" />}
+        iconKey="officeSettings"
         title={t('officeSettings.title')}
         subtitle={t('officeSettings.subtitle')}
         actions={

@@ -1,26 +1,46 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
+
+import LegalIcon from "./LegalIcon";
+import { getIconDesign, type IconKey } from "@/config/iconography";
+import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
-  icon: ReactNode;
+  icon?: ReactNode;
+  iconKey?: IconKey;
   title: string;
   subtitle?: string;
   actions?: ReactNode;
 }
 
-const PageHeader = ({ icon, title, subtitle, actions }: PageHeaderProps) => {
+const PageHeader = ({ icon, iconKey, title, subtitle, actions }: PageHeaderProps) => {
+  const design = getIconDesign(iconKey);
+  const resolvedIcon = icon ?? (iconKey ? <LegalIcon iconKey={iconKey} width={28} height={28} /> : null);
+  const badgeStyle = {
+    background: design.badgeGradient,
+    boxShadow: design.shadow,
+  } as const;
+
   return (
-    <div className="rounded-2xl border border-border/60 bg-gradient-to-r from-primary/5 via-background to-background p-6 shadow-card">
+    <div className="rounded-2xl border border-border/60 bg-gradient-to-r from-primary/5 via-background to-background p-4 shadow-card sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-            {icon}
-          </span>
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">{title}</h1>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          {resolvedIcon ? (
+            <span
+              className={cn(
+                "flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl transition-all",
+                design.badgeClass ?? "text-white",
+              )}
+              style={badgeStyle}
+            >
+              {resolvedIcon}
+            </span>
+          ) : null}
+          <div className="min-w-0">
+            <h1 className="truncate text-2xl font-bold text-foreground">{title}</h1>
             {subtitle ? <p className="text-sm text-muted-foreground">{subtitle}</p> : null}
           </div>
         </div>
-        {actions ? <div className="flex items-center gap-2">{actions}</div> : null}
+        {actions ? <div className="flex flex-wrap gap-2 sm:flex-nowrap sm:gap-3">{actions}</div> : null}
       </div>
     </div>
   );

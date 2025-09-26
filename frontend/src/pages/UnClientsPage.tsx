@@ -1,5 +1,4 @@
 import { Suspense, lazy } from 'react';
-import { UserMinus } from 'lucide-react';
 
 import PageHeader from '@/components/common/PageHeader';
 import GlobalSpinner from '@/components/common/GlobalSpinner';
@@ -13,7 +12,7 @@ const UnClientPage: React.FC = () => {
   return (
     <section className="space-y-6">
       <PageHeader
-        icon={<UserMinus className="h-6 w-6" />}
+        iconKey="prospects"
         title={t('unClients.title')}
         subtitle={t('unClients.subtitle')}
       />

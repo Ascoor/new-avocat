@@ -1,135 +1,59 @@
-import type { LucideIcon } from 'lucide-react';
-import {
-  Archive,
-  BarChart3,
-  Briefcase,
-  Building,
-  CalendarClock,
-  ClipboardList,
-  Gavel,
-  LayoutDashboard,
-  Scale,
-  Search,
-  Settings,
-  Shield,
-  UserCheck,
-  Users,
-  UserX,
-} from 'lucide-react';
+import type { IconKey } from "@/config/iconography";
+
+export type SidebarGroupKey = "main" | "system";
 
 export interface SidebarItem {
-  id: string;
-  labelKey: string;
-  icon: LucideIcon;
+  key: string;
+  iconKey: IconKey;
   path?: string;
   children?: SidebarItem[];
 }
 
-export const sidebarItems: SidebarItem[] = [
-  {
-    id: 'dashboard',
-    labelKey: 'nav.dashboard',
-    icon: LayoutDashboard,
-    path: '/dashboard',
-  },
-  {
-    id: 'cases',
-    labelKey: 'nav.cases',
-    icon: Gavel,
-    path: '/dashboard/cases',
-  },
-  {
-    id: 'work_tracking',
-    labelKey: 'nav.followUpWork',
-    icon: Briefcase,
-    children: [
-      {
-        id: 'sessions',
-        labelKey: 'nav.sessions',
-        icon: CalendarClock,
-        path: '/dashboard/sessions',
-      },
-      {
-        id: 'procedures',
-        labelKey: 'nav.procedures',
-        icon: ClipboardList,
-        path: '/dashboard/procedures',
-      },
-    ],
-  },
-  {
-    id: 'customer_service',
-    labelKey: 'nav.customer_service',
-    icon: Users,
-    children: [
-      {
-        id: 'clients',
-        labelKey: 'nav.clients',
-        icon: UserCheck,
-        path: '/dashboard/clients',
-      },
-      {
-        id: 'unClients',
-        labelKey: 'nav.unClients',
-        icon: UserX,
-        path: '/dashboard/unClients',
-      },
-    ],
-  },
-  {
-    id: 'lawyers',
-    labelKey: 'nav.lawyers',
-    icon: Scale,
-    path: '/dashboard/lawyers',
-  },
-  {
-    id: 'services',
-    labelKey: 'nav.services',
-    icon: ClipboardList,
-    path: '/dashboard/services',
-  },
-  {
-    id: 'reports',
-    labelKey: 'nav.reports',
-    icon: BarChart3,
-    path: '/dashboard/reports',
-  },
-  {
-    id: 'settings',
-    labelKey: 'nav.settings',
-    icon: Settings,
-    children: [
-      {
-        id: 'office_settings',
-        labelKey: 'nav.office_settings',
-        icon: Building,
-        path: '/dashboard/office_settings',
-      },
-      {
-  id: 'courts_settings',
-  labelKey: 'nav.courts_settings',   // مفتاح الترجمة
-  icon: Gavel,
-  path: '/dashboard/courts_settings',
-},
+export interface SidebarGroup {
+  key: SidebarGroupKey;
+  items: SidebarItem[];
+}
 
+export const sidebarGroups: SidebarGroup[] = [
+  {
+    key: "main",
+    items: [
+      { key: "dashboard", iconKey: "dashboard", path: "/dashboard" },
+      { key: "cases", iconKey: "cases", path: "/dashboard/cases" },
+      { key: "services", iconKey: "services", path: "/dashboard/services" },
       {
-        id: 'users_roles',
-        labelKey: 'nav.users_roles',
-        icon: Shield,
-        path: '/dashboard/users_roles',
+        key: "work_tracking",
+        iconKey: "workTracking",
+        children: [
+          { key: "sessions", iconKey: "sessions", path: "/dashboard/sessions" },
+          { key: "procedures", iconKey: "procedures", path: "/dashboard/procedures" },
+        ],
       },
+      {
+        key: "customer_service",
+        iconKey: "customerService",
+        children: [
+          { key: "clients", iconKey: "clients", path: "/dashboard/clients" },
+          { key: "unClients", iconKey: "prospects", path: "/dashboard/unClients" },
+        ],
+      },
+      { key: "archive", iconKey: "archive", path: "/dashboard/archive" },
+      { key: "courts_search", iconKey: "courtsSearch", path: "/dashboard/courts_search" },
     ],
   },
   {
-    id: 'archive',
-    labelKey: 'nav.archive',
-    icon: Archive,
-    path: '/dashboard/archive',
-  },
-  {
-    id: 'courts_search',
-    labelKey: 'nav.courts_search',
-    icon: Search,
-    path: '/dashboard/courts_search',
+    key: "system",
+    items: [
+      {
+        key: "settings",
+        iconKey: "settings",
+        children: [
+          { key: "office_settings", iconKey: "officeSettings", path: "/dashboard/office_settings" },
+          { key: "courts_settings", iconKey: "courtsSettings", path: "/dashboard/courts_settings" },
+          { key: "lawyers", iconKey: "lawyers", path: "/dashboard/lawyers" },
+          { key: "users_roles", iconKey: "usersRoles", path: "/dashboard/users_roles" },
+        ],
+      },
+    ],
   },
 ];

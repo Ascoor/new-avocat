@@ -2,10 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import Sidebar from "./Sidebar";
+import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
-import { useSidebar } from "@/contexts/SidebarContext";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -15,27 +13,25 @@ interface AppShellProps {
 const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
   const { i18n } = useTranslation();
   const isRTL = i18n.language === "ar";
-  const isMobile = useIsMobile();
-  const { isCollapsed, isMobileOpen } = useSidebar();
-
-  const collapsed = isMobile ? !isMobileOpen : isCollapsed;
 
   return (
-    <div className="flex min-h-screen bg-[hsl(var(--background))]" dir={isRTL ? "rtl" : "ltr"}>
+    <div
+      className="relative flex min-h-screen w-full min-w-0 bg-background"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
+      {/* Sidebar (Desktop only) */}
       <Sidebar />
-      <div
-        className={cn(
-          "flex min-h-screen flex-1 flex-col bg-[hsl(var(--background))] transition-all duration-300",
-          !isMobile && (collapsed ? (isRTL ? "pr-16" : "pl-16") : (isRTL ? "pr-72" : "pl-72")),
-        )}
-      >
+
+      {/* Main Content */}
+      <div className="flex min-h-screen w-full min-w-0 flex-1 flex-col transition-all duration-300 ease-in-out">
         <Header title={title} />
         <main className="flex-1 overflow-y-auto">
-          <div className="p-6">
-            {children}
-          </div>
+          <div className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">{children}</div>
         </main>
       </div>
+
+      {/* Drawer (Mobile only) */}
+      <MobileDrawer />
     </div>
   );
 };

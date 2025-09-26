@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, Pencil, Scale, Trash2 } from 'lucide-react';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
 import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import PageHeader from '@/components/common/PageHeader';
 import { Button } from '@/components/ui/button';
@@ -135,11 +135,7 @@ const LegalCases = () => {
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        icon={<Scale className="h-6 w-6" />}
-        title={t('legalCases.title')}
-        subtitle={t('legalCases.subtitle')}
-      />
+      <PageHeader iconKey="cases" title={t('legalCases.title')} subtitle={t('legalCases.subtitle')} />
 
       {error && (
         <div className="rounded-md border border-destructive/40 bg-destructive/10 p-4 text-destructive">
