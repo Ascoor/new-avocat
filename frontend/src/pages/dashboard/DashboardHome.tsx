@@ -349,5 +349,6 @@ const Dashboard: React.FC = () => {
     </div>
   );
 };
+};
 
 export default DashboardHome;
