@@ -14,6 +14,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
+import BrandLogo from "../common/BrandLogo";
 
 interface HeaderProps {
   title?: string;
@@ -34,10 +35,10 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
         className
       )}
     >
-      <div className="flex h-full items-center justify-between px-4 gap-4">
+      <div className="flex h-full items-center justify-between px-4">
         {/* Left side */}
         <div className={cn("flex items-center gap-3", isRTL ? "flex-row-reverse" : "flex-row")}>
-          {/* Mobile toggle */}
+          {/* Mobile menu button */}
           <Button
             variant="ghost"
             size="icon"
@@ -45,15 +46,20 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             className="md:hidden h-9 w-9"
             aria-label={isMobileOpen ? t("common.close") : t("common.menu")}
           >
-            {isMobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
+
+          {/* Desktop logo */}
+          <div className="hidden md:block">
+            <BrandLogo variant="icon" className="h-8" />
+          </div>
 
           {/* Desktop collapse toggle */}
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleCollapsed}
-            className="hidden md:inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-muted-foreground transition hover:border-border hover:bg-muted"
+            className="hidden md:flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-muted-foreground transition hover:border-border hover:bg-muted"
             aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
           >
             <PanelLeft
@@ -68,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+        <div className="flex items-center gap-4">
           <ThemeToggle />
           <Button onClick={toggleLang} variant="outline" size="sm">
             {language === "ar" ? "EN" : "عربي"}

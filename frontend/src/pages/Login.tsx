@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AlertCircle, Scale, Shield, Sparkles, UserCheck } from "lucide-react";
+import BrandLogo from "@/components/common/BrandLogo";
 
 const emailRegex = /\S+@\S+\.\S+/;
 
@@ -150,32 +151,15 @@ const Login: React.FC = () => {
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
         <div className="w-full max-w-lg space-y-8">
-          <div className="text-center">
-            <Link
-              to="/"
-              className="inline-flex items-center justify-center gap-2 text-[hsl(var(--primary))] transition-colors hover:text-[hsl(var(--primary-hover))]"
-            >
-              <Scale className="h-6 w-6" />
-              <span className="text-2xl font-semibold">
-                {language === "ar" ? "أفوكات" : "Avocat"}
-              </span>
-            </Link>
-            <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">
-              {language === "ar"
-                ? "منصة إدارة قانونية متقدمة"
-                : "Advanced legal operations workspace"}
-            </p>
-          </div>
 
           <div className="rounded-3xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]/95 p-8 shadow-[var(--shadow-elevated)] backdrop-blur">
             <div className="flex flex-col items-center text-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--primary))/20] bg-[hsl(var(--primary))/10] px-4 py-1 text-xs font-medium uppercase tracking-[.2em] text-[hsl(var(--primary))]">
-                <Sparkles className="h-4 w-4" />
-                {language === "ar" ? "بوابة المختبر" : "Lab Access"}
-              </span>
-              <h1 className="mt-4 text-3xl font-semibold text-[hsl(var(--foreground))]">
-                {activeTab === "signin" ? t("auth.login.title") : t("auth.signup.title")}
-              </h1>
+          <div className="text-center">
+<BrandLogo variant="icon" className="h-24"/>
+          </div>
+ 
+<BrandLogo variant="text" className="h-16"/>
+ 
               <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">
                 {activeTab === "signin" ? t("auth.login.subtitle") : t("auth.signup.subtitle")}
               </p>
@@ -301,16 +285,7 @@ const Login: React.FC = () => {
             </Tabs>
 
             <div className="mt-8 text-center text-sm text-[hsl(var(--muted-foreground))]">
-              <p>
-                {language === "ar"
-                  ? "🔒 محمي بتشفير 256-بت"
-                  : "🔒 Secured with 256-bit encryption"}
-              </p>
-              <p>
-                {language === "ar"
-                  ? "⚖️ متوافق مع المعايير القانونية للخصوصية"
-                  : "⚖️ Compliant with legal privacy standards"}
-              </p>
+ 
               <Link to="/" className="mt-3 inline-block transition-colors hover:text-[hsl(var(--primary))]">
                 {language === "ar" ? "← العودة إلى الصفحة الرئيسية" : "← Back to home"}
               </Link>

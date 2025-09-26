@@ -99,6 +99,7 @@ const DashboardHome = () => {
     },
   ];
 
+const Dashboard: React.FC = () => {
   return (
     <div className="space-y-6" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* Welcome Section */}

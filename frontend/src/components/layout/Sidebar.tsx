@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight, LogOut } from "lucide-react";
 
 import BrandLogo from "../common/BrandLogo";
 import { Button } from "@/components/ui/button";
+import BrandLogo from "../common/BrandLogo";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";

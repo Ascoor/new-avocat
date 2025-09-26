@@ -57,3 +57,26 @@ export const sidebarGroups: SidebarGroup[] = [
     ],
   },
 ];
+
+export const translateKey = (key: string, lang: string) => {
+  const labels: Record<string, { ar: string; en: string }> = {
+    dashboard: { ar: "لوحة التحكم", en: "Dashboard" },
+    cases: { ar: "القضايا", en: "Cases" },
+    lawyers: { ar: "المحامون", en: "Lawyers" },
+    customer_service: { ar: "خدمة العملاء", en: "Customer Service" },
+    clients: { ar: "الوكلاء", en: "Clients" },
+    unClients: { ar: "العملاء بدون وكالة", en: "Prospects" },
+    services: { ar: "الخدمات", en: "Services" },
+    work_tracking: { ar: "متابعة العمل", en: "Work Tracking" },
+    sessions: { ar: "الجلسات", en: "Sessions" },
+    procedures: { ar: "الإجراءات", en: "Procedures" },
+    settings: { ar: "الإعدادات", en: "Settings" },
+    courts_settings: { ar: "المحاكم", en: "Courts" },
+    office_settings: { ar: "إعدادات المكتب", en: "Office Settings" },
+    users_roles: { ar: "الأدوار والصلاحيات", en: "Users & Roles" },
+    archive: { ar: "الأرشيف", en: "Archive" },
+    courts_search: { ar: "البحث القضائي", en: "Courts Search" },
+  };
+
+  return labels[key]?.[lang] || key;
+};

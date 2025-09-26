@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-
 import Sidebar from "./Sidebar";
 import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
@@ -15,19 +14,19 @@ const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
   const isRTL = i18n.language === "ar";
 
   return (
-    <div
-      className="relative flex min-h-screen w-full min-w-0 bg-background"
-      dir={isRTL ? "rtl" : "ltr"}
-    >
-      {/* Sidebar (Desktop only) */}
-      <Sidebar />
+    <div className="flex min-h-screen bg-background" dir={isRTL ? "rtl" : "ltr"}>
+      {/* Sidebar */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
 
-      {/* Main Content */}
-      <div className="flex min-h-screen w-full min-w-0 flex-1 flex-col transition-all duration-300 ease-in-out">
+      {/* Mobile Drawer */}
+      <MobileDrawer />
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col min-h-screen transition-all duration-300">
         <Header title={title} />
-        <main className="flex-1 overflow-y-auto">
-          <div className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">{children}</div>
-        </main>
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
 
       {/* Drawer (Mobile only) */}

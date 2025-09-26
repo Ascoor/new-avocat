@@ -73,9 +73,8 @@ const MobileDrawer: React.FC = () => {
             exit={{ x: isRTL ? "100%" : "-100%", opacity: 0 }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className={cn(
-              "fixed inset-x-0 z-[9998] w-full max-w-[100vw] border-border shadow-card md:hidden",
-              "flex h-[calc(100vh-4rem)] flex-col",
-              headerOffsetClass,
+              "fixed top-0 z-50 h-full w-full max-w-[100vw] bg-sidebar-background border-border md:hidden",
+              "flex flex-col shadow-card",
               isRTL ? "right-0 border-l" : "left-0 border-r"
             )}
             style={{
