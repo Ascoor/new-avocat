@@ -98,8 +98,7 @@ const DashboardHome = () => {
       status: 'scheduled',
     },
   ];
-
-const Dashboard: React.FC = () => {
+ 
   return (
     <div className="space-y-6" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* Welcome Section */}
@@ -348,7 +347,7 @@ const Dashboard: React.FC = () => {
       </Card>
     </div>
   );
-};
+
 };
 
 export default DashboardHome;
