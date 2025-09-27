@@ -5,7 +5,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities; 
-
 @layer base {
   * {
     @apply border-border;
@@ -52,10 +51,23 @@
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--primary) / 0.5);
   }
+
+  /* Typography Defaults */
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-semibold;
+  }
+
+  p {
+    @apply text-sm md:text-base leading-relaxed;
+  }
 }
 
 @layer components {
-  /* Premium Button Variants */
+  /* ==================== BUTTONS ==================== */
   .btn-premium {
     @apply bg-gradient-to-r from-primary to-primary-light text-primary-foreground;
     @apply shadow-lg hover:shadow-xl transform hover:scale-[1.02];
@@ -75,7 +87,7 @@
     @apply hover:bg-white/20 transition-all duration-300;
   }
 
-  /* Premium Card Styles */
+  /* ==================== CARDS ==================== */
   .card-premium {
     @apply bg-card border border-border rounded-xl;
     @apply shadow-lg hover:shadow-xl transition-all duration-300;
@@ -88,7 +100,7 @@
     box-shadow: var(--shadow-premium);
   }
 
-  /* Hero Gradient Backgrounds */
+  /* ==================== GRADIENTS ==================== */
   .hero-gradient {
     background: var(--gradient-hero);
   }
@@ -97,7 +109,7 @@
     background: var(--gradient-gold);
   }
 
-  /* Premium Animations */
+  /* ==================== ANIMATIONS ==================== */
   .animate-float {
     animation: float 3s ease-in-out infinite;
   }
@@ -120,7 +132,7 @@
     }
   }
 
-  /* RTL Support */
+  /* ==================== RTL SUPPORT ==================== */
   [dir="rtl"] .text-left {
     text-align: right;
   }
@@ -129,7 +141,7 @@
     text-align: left;
   }
 
-  /* Carousel Styles */
+  /* ==================== CAROUSEL ==================== */
   .carousel-slide {
     @apply transition-all duration-700 ease-in-out;
   }
@@ -142,7 +154,7 @@
     @apply opacity-0 scale-95;
   }
 
-  /* Sidebar Shell */
+  /* ==================== SIDEBAR ==================== */
   .sidebar-shell {
     position: relative;
     overflow: hidden;
@@ -300,6 +312,7 @@
     );
   }
 
+  /* ==================== HEADER ==================== */
   .header-shell {
     position: relative;
     overflow: hidden;
@@ -329,18 +342,5 @@
     bottom: 0;
     height: 2px;
     background: var(--header-bottom-glow);
-  }
-}
-@layer base {
-  h1 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
-  }
-
-  h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl font-semibold;
-  }
-
-  p {
-    @apply text-sm md:text-base leading-relaxed;
   }
 }
