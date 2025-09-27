@@ -3,276 +3,161 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة إدارة المحتوى</title>
+  <title>لوحة مراقبة البنية السحابية</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Cairo', sans-serif; }
-    body.font-english { font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100">
-  <div class="min-h-screen flex flex-col lg:flex-row">
-    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">M</div>
-        <div>
-          <p data-role="mobile-brand-name" class="font-semibold"></p>
-          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
-        </div>
+<body class="bg-slate-950 text-slate-100"> 
+  <div class="min-h-screen">
+    <!-- الهيدر للموبايل -->
+    <div class="lg:hidden flex items-center justify-between border-b border-slate-800 bg-slate-900/80 px-4 py-4">
+      <div>
+        <p class="text-xs uppercase tracking-[0.4em] text-sky-300">Cloud Sentinel</p>
+        <h1 class="text-lg font-semibold">المراقبة الفورية</h1>
       </div>
-      <div class="flex items-center gap-3">
-        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
-        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <span data-role="open-label">فتح القائمة</span>
-        </button>
-      </div>
-    </header>
+      <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-sky-500 px-4 py-2 text-sm font-semibold text-slate-950">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <span>فتح القائمة</span>
+      </button>
+    </div>
 
-    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-slate-950/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
-    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
-      <div class="flex items-start justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">M</div>
+    <div class="lg:grid lg:grid-cols-[320px_1fr]">
+      <!-- الشريط الجانبي -->
+      <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-72 overflow-y-auto border-l border-slate-800 bg-slate-900/95 p-6 space-y-8 transform translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-sm lg:relative lg:translate-x-0 lg:w-full lg:max-w-[320px] lg:bg-slate-900/80">
+        <div class="flex items-start justify-between gap-3">
           <div>
-            <p data-role="brand-name" class="text-lg font-semibold"></p>
-            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+            <p class="text-xs uppercase tracking-[0.4em] text-sky-300">Cloud Sentinel</p>
+            <h1 class="text-2xl font-bold">المراقبة الفورية</h1>
+            <p class="text-sm text-slate-400 mt-2">لوحة موحدة للبنية التحتية السحابية.</p>
           </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
-          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
-            <span data-role="close-label">إغلاق</span>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-1 rounded-xl border border-slate-700 px-3 py-2 text-xs text-slate-300">
+            <span>إغلاق</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-      </div>
-      <nav data-role="sidebar-nav" class="space-y-2"></nav>
-      <div data-role="sidebar-highlight"></div>
-    </aside>
 
-    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
-      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
-      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
-      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
-    </main>
+        <!-- محتوى جانبي بسيط -->
+        <div class="space-y-4">
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+            <p class="text-xs text-slate-500">الحالة العامة</p>
+            <p class="text-lg font-semibold text-emerald-300 mt-2">مستقرة</p>
+            <p class="text-xs text-slate-500 mt-2">لا يوجد أعطال حرجة خلال آخر 24 ساعة.</p>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 space-y-3 text-sm">
+            <p class="text-slate-400">التنبيهات الحية</p>
+            <div class="flex items-center justify-between">
+              <span>CPU</span>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300">طبيعي</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Memory</span>
+              <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-300">انتباه</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Network</span>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300">طبيعي</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Storage</span>
+              <span class="px-3 py-1 rounded-full bg-rose-500/10 text-rose-300">حرج</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- المحتوى الرئيسي -->
+      <main class="p-6 lg:p-10 space-y-8 lg:pr-10"> 
+        <section class="grid gap-6 lg:grid-cols-3">
+          <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+              <div>
+                <h2 class="text-xl font-semibold">المراقبة الزمنية للأحمال</h2>
+                <p class="text-sm text-slate-400">CPU / Memory / Network</p>
+              </div>
+              <div class="flex gap-3 text-sm">
+                <button class="px-4 py-2 rounded-xl bg-slate-800">آخر ساعة</button>
+                <button class="px-4 py-2 rounded-xl bg-sky-500 text-slate-950 font-semibold">آخر 24 ساعة</button>
+              </div>
+            </div>
+            <div class="h-64 rounded-xl border border-slate-800 bg-gradient-to-br from-sky-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط متعدد المحاور</div>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold">مؤشر التوفر</h3>
+              <span class="text-xs text-slate-500">آخر تحديث: 12 ثانية</span>
+            </div>
+            <div class="space-y-4 text-sm">
+              <div class="flex items-center gap-4">
+                <span class="w-2 h-12 rounded-full bg-emerald-500"></span>
+                <div class="flex-1">
+                  <p class="font-semibold">المنطقة - أوروبا</p>
+                  <p class="text-xs text-slate-500">99.98% التوفر</p>
+                </div>
+                <span class="text-emerald-300">↑</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="w-2 h-12 rounded-full bg-emerald-400"></span>
+                <div class="flex-1">
+                  <p class="font-semibold">المنطقة - أمريكا</p>
+                  <p class="text-xs text-slate-500">99.94% التوفر</p>
+                </div>
+                <span class="text-emerald-300">↑</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <span class="w-2 h-12 rounded-full bg-amber-400"></span>
+                <div class="flex-1">
+                  <p class="font-semibold">المنطقة - آسيا</p>
+                  <p class="text-xs text-slate-500">99.71% التوفر</p>
+                </div>
+                <span class="text-amber-300">→</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
-
-  <script src="dashboard-common.js"></script>
+ 
   <script>
-    initDashboard({
-      defaultLang: 'ar',
-      meta: {
-        title: {
-          ar: 'لوحة إدارة المحتوى',
-          en: 'Content Operations Dashboard'
-        }
-      },
-      actions: {
-        open: {
-          ar: 'فتح القائمة',
-          en: 'Open menu'
-        },
-        close: {
-          ar: 'إغلاق',
-          en: 'Close'
-        }
-      },
-      brand: {
-        badge: 'M',
-        name: {
-          ar: 'إيقاع المحتوى',
-          en: 'Content Rhythm'
-        },
-        tagline: {
-          ar: 'تخطيط النشر وتجربة القراء',
-          en: 'Publishing cadence & reader experience'
-        }
-      },
-      theme: {
-        accentGradient: 'from-violet-500 via-purple-500 to-pink-500',
-        accentText: 'text-violet-200',
-        highlightBg: 'bg-fuchsia-500/10 border-fuchsia-400/30',
-        badgeBg: 'bg-fuchsia-500/20',
-        badgeText: 'text-white'
-      },
-      nav: [
-        {
-          id: 'overview',
-          icon: 'sparkles',
-          label: { ar: 'نظرة عامة', en: 'Overview' },
-          badge: { ar: 'تحرير', en: 'Editorial' }
-        },
-        {
-          id: 'calendar',
-          icon: 'calendar',
-          label: { ar: 'الجدول التحريري', en: 'Editorial calendar' }
-        },
-        {
-          id: 'authors',
-          icon: 'users',
-          label: { ar: 'المحررون والمؤلفون', en: 'Authors & editors' }
-        },
-        {
-          id: 'distribution',
-          icon: 'megaphone',
-          label: { ar: 'التوزيع والترويج', en: 'Distribution & promotion' }
-        }
-      ],
-      highlight: {
-        label: { ar: 'حملة الأسبوع', en: 'Campaign of the week' },
-        value: 'سلسلة التحولات الرقمية',
-        description: {
-          ar: 'ارتفعت القراءات العميقة بنسبة 26% بعد إطلاق السلسلة المكونة من خمسة أجزاء.',
-          en: 'Deep reads climbed 26% after launching the five-part digital transformation series.'
-        }
-      },
-      header: {
-        title: {
-          ar: 'لوحة إدارة المحتوى',
-          en: 'Content operations dashboard'
-        },
-        subtitle: {
-          ar: 'تنسيق جدول النشر، جودة المواد، وأداء القنوات.',
-          en: 'Coordinate publishing schedules, content quality, and channel performance.'
-        },
-        primary: {
-          ar: 'إطلاق موضوع خاص',
-          en: 'Launch special topic'
-        },
-        secondary: {
-          ar: 'مراجعة الخطة الأسبوعية',
-          en: 'Review weekly plan'
-        }
-      },
-      stats: [
-        {
-          icon: 'sparkles',
-          label: { ar: 'مقالات منشورة هذا الشهر', en: 'Articles published this month' },
-          value: '64',
-          delta: { ar: '+12 عن الشهر السابق', en: '+12 vs last month' },
-          trend: 'positive'
-        },
-        {
-          icon: 'heart',
-          label: { ar: 'معدل التفاعل', en: 'Engagement rate' },
-          value: '7.4%',
-          delta: { ar: '+1.2 نقطة', en: '+1.2 pts' },
-          trend: 'positive'
-        },
-        {
-          icon: 'folder',
-          label: { ar: 'مسودات قيد المراجعة', en: 'Drafts in review' },
-          value: '18',
-          delta: { ar: '-6 مقارنة بالأسبوع الماضي', en: '-6 vs last week' },
-          trend: 'positive'
-        },
-        {
-          icon: 'users',
-          label: { ar: 'مساهمون نشطون', en: 'Active contributors' },
-          value: '27',
-          delta: { ar: '+4 أصوات جديدة', en: '+4 new voices' },
-          trend: 'positive'
-        }
-      ],
-      panels: [
-        {
-          id: 'overview',
-          type: 'chart',
-          span: 'xl:col-span-2',
-          title: { ar: 'منحنى التفاعل اليومي', en: 'Daily engagement curve' },
-          subtitle: { ar: 'مقارنة التفاعل بين المقالات الطويلة والقصيرة عبر القنوات.', en: 'Long-form vs short-form engagement across channels.' },
-          action: { ar: 'عرض حسب الفئة', en: 'Segment by category' },
-          placeholder: { ar: 'مخطط التفاعل', en: 'Engagement chart' }
-        },
-        {
-          id: 'stories',
-          type: 'list',
-          title: { ar: 'مواضيع رائجة', en: 'Trending stories' },
-          action: { ar: 'آخر تحديث 15 دقيقة', en: 'Updated 15 minutes ago' },
-          items: [
-            {
-              icon: 'sparkles',
-              title: { ar: 'مستقبل الذكاء الاصطناعي التوليدي', en: 'Future of generative AI' },
-              subtitle: { ar: '3 أجزاء | 12 دقيقة قراءة', en: '3-part | 12 min read' },
-              value: '24K',
-              delta: { ar: 'معدل إكمال 68%', en: 'Completion rate 68%' }
-            },
-            {
-              icon: 'book-open',
-              title: { ar: 'دليل استراتيجيات المحتوى لعام 2024', en: '2024 content strategy guide' },
-              subtitle: { ar: 'PDF قابل للتنزيل', en: 'Downloadable PDF' },
-              value: '18K',
-              delta: { ar: '600 مشاركة اجتماعية', en: '600 social shares' }
-            },
-            {
-              icon: 'megaphone',
-              title: { ar: 'بودكاست صوت الصناعة', en: 'Industry voice podcast' },
-              subtitle: { ar: 'حلقة جديدة كل ثلاثاء', en: 'New episode every Tuesday' },
-              value: '9.3K',
-              delta: { ar: 'متوسط استماع 21 دقيقة', en: 'Avg listen 21 mins' }
-            }
-          ]
-        },
-        {
-          id: 'pipeline',
-          type: 'progress',
-          title: { ar: 'خط إنتاج المحتوى', en: 'Content production pipeline' },
-          items: [
-            {
-              title: { ar: 'البحث وتحديد الفكرة', en: 'Research & ideation' },
-              subtitle: { ar: 'جلسات عصف أسبوعية', en: 'Weekly brainstorming sessions' },
-              value: '88%',
-              percent: '88%'
-            },
-            {
-              title: { ar: 'الكتابة والتحرير', en: 'Writing & editing' },
-              subtitle: { ar: 'قوالب مراجعة جديدة', en: 'New review templates' },
-              value: '62%',
-              percent: '62%'
-            },
-            {
-              title: { ar: 'التصميم والنشر', en: 'Design & publishing' },
-              subtitle: { ar: 'اختبارات A/B للعناوين', en: 'Headline A/B testing' },
-              value: '48%',
-              percent: '48%'
-            }
-          ]
-        },
-        {
-          id: 'timeline',
-          type: 'timeline',
-          span: 'xl:col-span-3',
-          title: { ar: 'تحديثات تحريرية', en: 'Editorial updates' },
-          items: [
-            {
-              icon: 'calendar',
-              title: { ar: 'إطلاق جدول النشر الجديد', en: 'New publishing calendar launched' },
-              subtitle: { ar: 'أولويات موجهة نحو القصص المتعمقة', en: 'Focus on deep-dive features' },
-              time: { ar: 'اليوم', en: 'Today' }
-            },
-            {
-              icon: 'users',
-              title: { ar: 'تعيين محرر ضيف', en: 'Guest editor assignment' },
-              subtitle: { ar: 'سلسلة ريادة الأعمال الناشئة', en: 'Emerging founders series' },
-              time: { ar: 'أمس', en: 'Yesterday' }
-            },
-            {
-              icon: 'megaphone',
-              title: { ar: 'حملة النشرة الأسبوعية', en: 'Weekly newsletter push' },
-              subtitle: { ar: 'زيادة معدل الفتح إلى 41%', en: 'Open rate up to 41%' },
-              time: { ar: 'قبل يومين', en: '2 days ago' }
-            }
-          ]
-        }
-      ]
-    });
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const toggle = document.getElementById('sidebarToggle');
+      const close = document.getElementById('sidebarClose');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const body = document.body;
+
+      if (!sidebar || !toggle || !close || !backdrop) return;
+
+      const openSidebar = () => {
+        sidebar.classList.remove('translate-x-full');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100');
+        body.classList.add('overflow-hidden');
+      };
+
+      const closeSidebar = () => {
+        sidebar.classList.add('translate-x-full');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+        backdrop.classList.remove('opacity-100');
+        body.classList.remove('overflow-hidden');
+      };
+
+      toggle.addEventListener('click', openSidebar);
+      close.addEventListener('click', closeSidebar);
+      backdrop.addEventListener('click', closeSidebar);
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeSidebar();
+      });
+    })();
   </script>
 </body>
 </html>

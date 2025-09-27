@@ -3,276 +3,222 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة التعليم الإلكتروني</title>
+  <title>لوحة إدارة التعليم الإلكتروني</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Cairo', sans-serif; }
-    body.font-english { font-family: 'Inter', sans-serif; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div class="min-h-screen flex flex-col lg:flex-row">
-    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">L</div>
+  <div class="min-h-screen flex flex-col">
+    <!-- الهيدر -->
+    <header class="border-b border-slate-800 bg-gradient-to-r from-blue-500/10 via-slate-950 to-slate-950">
+      <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p data-role="mobile-brand-name" class="font-semibold"></p>
-          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+          <p class="text-xs uppercase tracking-[0.4em] text-blue-300">LearnSphere</p>
+          <h1 class="text-3xl font-bold">لوحة التحليلات التعليمية</h1>
+          <p class="text-slate-300 mt-2">متابعة أداء المتعلمين، الدورات، ونسب الإكمال.</p>
         </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
-        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <span data-role="open-label">فتح القائمة</span>
-        </button>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">إضافة دورة</button>
+          <button class="px-4 py-2 rounded-xl bg-blue-500 text-sm text-slate-950 font-semibold">تحميل التقارير</button>
+        </div>
       </div>
     </header>
 
-    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10 space-y-8">
+      <!-- إحصائيات -->
+      <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">إجمالي المتعلمين</p>
+          <p class="mt-3 text-3xl font-semibold">18,420</p>
+          <p class="mt-2 text-emerald-300 text-sm">+640 خلال الأسبوع</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">نسبة الإكمال</p>
+          <p class="mt-3 text-3xl font-semibold">72%</p>
+          <p class="mt-2 text-xs text-slate-500">الهدف: 78%</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">الساعات التدريبية</p>
+          <p class="mt-3 text-3xl font-semibold">4,860</p>
+          <p class="mt-2 text-emerald-300 text-sm">+18% مقارنة بالربع السابق</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">المهام المرسلة</p>
+          <p class="mt-3 text-3xl font-semibold">2,430</p>
+          <p class="mt-2 text-amber-300 text-sm">94% معدل تقييم</p>
+        </div>
+      </section>
 
-    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
-      <div class="flex items-start justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">L</div>
-          <div>
-            <p data-role="brand-name" class="text-lg font-semibold"></p>
-            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+      <!-- منحنى المشاركة + الدورات الأعلى -->
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div>
+              <h2 class="text-xl font-semibold">منحنى مشاركة المتعلمين</h2>
+              <p class="text-sm text-slate-400">نشاط المنصة خلال آخر 30 يوم</p>
+            </div>
+            <div class="flex gap-3 text-sm">
+              <button class="px-4 py-2 rounded-xl bg-slate-800">أسبوع</button>
+              <button class="px-4 py-2 rounded-xl bg-blue-500 text-slate-950 font-semibold">شهر</button>
+            </div>
+          </div>
+          <div class="h-64 rounded-xl border border-slate-800 bg-gradient-to-br from-blue-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط نشاط</div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">الدورات الأعلى تقييمًا</h3>
+            <span class="text-xs text-slate-500">تحديث 1 ساعة</span>
+          </div>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">أساسيات علوم البيانات</p>
+              <p class="text-amber-300 text-xs mt-1">تقييم 4.9 / 5</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">تصميم واجهات حديثة</p>
+              <p class="text-amber-300 text-xs mt-1">تقييم 4.8 / 5</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">إدارة المنتجات الرقمية</p>
+              <p class="text-amber-300 text-xs mt-1">تقييم 4.7 / 5</p>
+            </div>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
-          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
-            <span data-role="close-label">إغلاق</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      </div>
-      <nav data-role="sidebar-nav" class="space-y-2"></nav>
-      <div data-role="sidebar-highlight"></div>
-    </aside>
+      </section>
 
-    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
-      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
-      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
-      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+      <!-- قائمة المتعلمين -->
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold">قائمة المتعلمين النشطين</h2>
+            <p class="text-sm text-slate-400">أعلى معدل تقدم خلال هذا الأسبوع</p>
+          </div>
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">تحميل CSV</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[720px] text-sm">
+            <thead>
+              <tr class="text-slate-400">
+                <th class="text-right pb-3 font-medium">المتعلم</th>
+                <th class="text-right pb-3 font-medium">الدورة</th>
+                <th class="text-right pb-3 font-medium">نسبة التقدم</th>
+                <th class="text-right pb-3 font-medium">آخر نشاط</th>
+                <th class="text-right pb-3 font-medium">الحالة</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-blue-500/20 text-blue-200 flex items-center justify-center text-xs">SA</span>
+                  <span>سارة الأنصاري</span>
+                </td>
+                <td>برمجة Python المتقدمة</td>
+                <td class="text-emerald-300">94%</td>
+                <td>قبل 2 ساعة</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">مكتمل تقريبًا</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-blue-500/20 text-blue-200 flex items-center justify-center text-xs">HM</span>
+                  <span>حسين مطر</span>
+                </td>
+                <td>التسويق الرقمي الاحترافي</td>
+                <td class="text-emerald-300">88%</td>
+                <td>قبل 5 ساعات</td>
+                <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">في التقدم</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-blue-500/20 text-blue-200 flex items-center justify-center text-xs">NR</span>
+                  <span>نور الراشد</span>
+                </td>
+                <td>تحليل البيانات باستخدام SQL</td>
+                <td class="text-emerald-300">81%</td>
+                <td>قبل يوم</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">في المسار</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- أقسام إضافية -->
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">قنوات التعلم</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>مسارات التعلم</p>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-200">52%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>فصول مباشرة</p>
+              <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-200">33%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>تدريب ذاتي</p>
+              <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-200">15%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">معدلات النجاح حسب المستوى</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>مبتدئ</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[78%] bg-emerald-400"></div>
+                </div>
+                <span class="text-emerald-300">78%</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>متوسط</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[68%] bg-blue-400"></div>
+                </div>
+                <span class="text-emerald-300">68%</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>متقدم</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[58%] bg-rose-400"></div>
+                </div>
+                <span class="text-emerald-300">58%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">خطط المحتوى المقبلة</h3>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">برنامج تحليل البيانات المتقدم</p>
+              <p class="text-slate-400 text-xs mt-1">الإطلاق: يونيو</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">معسكر الأمن السيبراني للمبتدئين</p>
+              <p class="text-slate-400 text-xs mt-1">الإطلاق: يوليو</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">سلسلة إدارة المنتجات</p>
+              <p class="text-slate-400 text-xs mt-1">الإطلاق: أغسطس</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
-
-  <script src="dashboard-common.js"></script>
-  <script>
-    initDashboard({
-      defaultLang: 'ar',
-      meta: {
-        title: {
-          ar: 'لوحة التعليم الإلكتروني',
-          en: 'E-learning Experience Dashboard'
-        }
-      },
-      actions: {
-        open: {
-          ar: 'فتح القائمة',
-          en: 'Open menu'
-        },
-        close: {
-          ar: 'إغلاق',
-          en: 'Close'
-        }
-      },
-      brand: {
-        badge: 'L',
-        name: {
-          ar: 'منصة التعلم الذكي',
-          en: 'Smart Learning Hub'
-        },
-        tagline: {
-          ar: 'تعليم ذاتي، بث مباشر، وشهادات احترافية',
-          en: 'Self-paced, live cohorts, and pro certifications'
-        }
-      },
-      theme: {
-        accentGradient: 'from-blue-500 via-indigo-500 to-violet-500',
-        accentText: 'text-indigo-200',
-        highlightBg: 'bg-blue-500/10 border-blue-400/30',
-        badgeBg: 'bg-indigo-500/20',
-        badgeText: 'text-white'
-      },
-      nav: [
-        {
-          id: 'overview',
-          icon: 'book-open',
-          label: { ar: 'نظرة عامة', en: 'Overview' },
-          badge: { ar: 'تعلم', en: 'Learning' }
-        },
-        {
-          id: 'courses',
-          icon: 'sparkles',
-          label: { ar: 'الدورات والبرامج', en: 'Courses & programs' }
-        },
-        {
-          id: 'learners',
-          icon: 'users',
-          label: { ar: 'المتعلمون', en: 'Learners' }
-        },
-        {
-          id: 'certs',
-          icon: 'trophy',
-          label: { ar: 'الشهادات', en: 'Certifications' }
-        }
-      ],
-      highlight: {
-        label: { ar: 'أبرز برنامج', en: 'Featured program' },
-        value: 'قادة المنتجات الاحترافية',
-        description: {
-          ar: 'مسار من 8 أسابيع مع إرشاد مباشر ارتفع معدل إكماله إلى 84%.',
-          en: 'Eight-week mentored track now reaching 84% completion.'
-        }
-      },
-      header: {
-        title: {
-          ar: 'لوحة التعليم الإلكتروني',
-          en: 'E-learning experience dashboard'
-        },
-        subtitle: {
-          ar: 'حلّل مشاركة المتعلمين، فعالية المحتوى، وأداء البرامج الحية.',
-          en: 'Analyse learner engagement, content effectiveness, and live cohort performance.'
-        },
-        primary: {
-          ar: 'إطلاق فصل جديد',
-          en: 'Launch new cohort'
-        },
-        secondary: {
-          ar: 'تصدير تقدم المتعلمين',
-          en: 'Export learner progress'
-        }
-      },
-      stats: [
-        {
-          icon: 'users',
-          label: { ar: 'متعلمين نشطين', en: 'Active learners' },
-          value: '6,480',
-          delta: { ar: '+18% نمو خلال 90 يوماً', en: '+18% growth over 90 days' },
-          trend: 'positive'
-        },
-        {
-          icon: 'book-open',
-          label: { ar: 'معدل إكمال الدورات', en: 'Course completion rate' },
-          value: '82%',
-          delta: { ar: '+7 نقاط بفضل التفاعل', en: '+7 pts after interactivity' },
-          trend: 'positive'
-        },
-        {
-          icon: 'play',
-          label: { ar: 'جلسات مباشرة هذا الأسبوع', en: 'Live sessions this week' },
-          value: '34',
-          delta: { ar: '+9 جلسات مقارنة بالأسبوع الماضي', en: '+9 sessions vs last week' },
-          trend: 'positive'
-        },
-        {
-          icon: 'heart',
-          label: { ar: 'رضا المتعلمين', en: 'Learner satisfaction' },
-          value: '4.6/5',
-          delta: { ar: '+0.3 بعد تحسين التقييم', en: '+0.3 after feedback revamp' },
-          trend: 'positive'
-        }
-      ],
-      panels: [
-        {
-          id: 'overview',
-          type: 'chart',
-          span: 'xl:col-span-2',
-          title: { ar: 'مشاركة التعلم الأسبوعية', en: 'Weekly learning engagement' },
-          subtitle: { ar: 'الوقت المستغرق والتفاعل عبر مسارات التعلم.', en: 'Time spent and interactions across learning paths.' },
-          action: { ar: 'عرض حسب المسار', en: 'View by track' },
-          placeholder: { ar: 'مخطط المشاركة', en: 'Engagement plot' }
-        },
-        {
-          id: 'courses',
-          type: 'list',
-          title: { ar: 'الدورات الأعلى أداءً', en: 'Top performing courses' },
-          action: { ar: 'تحديث تلقائي', en: 'Auto refreshed' },
-          items: [
-            {
-              icon: 'sparkles',
-              title: { ar: 'تصميم المنتج المعتمد', en: 'Certified product design' },
-              subtitle: { ar: 'نسبة إكمال 86%', en: 'Completion rate 86%' },
-              value: '1,240 متعلم',
-              delta: { ar: '+320 تسجيل جديد', en: '+320 new enrollments' }
-            },
-            {
-              icon: 'book-open',
-              title: { ar: 'تحليل البيانات المتقدم', en: 'Advanced data analytics' },
-              subtitle: { ar: 'مشروع تخرج فعلي', en: 'Capstone project' },
-              value: '980 متعلم',
-              delta: { ar: '+14% معدل نجاح', en: '+14% success rate' }
-            },
-            {
-              icon: 'trophy',
-              title: { ar: 'شهادة الأمن السيبراني', en: 'Cybersecurity certification' },
-              subtitle: { ar: 'مختبرات عملية مباشرة', en: 'Hands-on live labs' },
-              value: '760 متعلم',
-              delta: { ar: 'تحقيق 92% رضا', en: 'Achieved 92% satisfaction' }
-            }
-          ]
-        },
-        {
-          id: 'journey',
-          type: 'progress',
-          title: { ar: 'مسار تقدم المتعلمين', en: 'Learner progress stages' },
-          items: [
-            {
-              title: { ar: 'الاستكشاف والتسجيل', en: 'Discovery & enrolment' },
-              subtitle: { ar: 'رحلات بريدية مخصصة', en: 'Personalised nurture journeys' },
-              value: '91%',
-              percent: '91%'
-            },
-            {
-              title: { ar: 'التفاعل داخل الدورة', en: 'In-course engagement' },
-              subtitle: { ar: 'أنشطة تفاعلية وألعاب تعليمية', en: 'Interactive labs & gamification' },
-              value: '74%',
-              percent: '74%'
-            },
-            {
-              title: { ar: 'الحصول على الشهادة', en: 'Certification attainment' },
-              subtitle: { ar: 'جلسات مراجعة مباشرة', en: 'Live review bootcamps' },
-              value: '58%',
-              percent: '58%'
-            }
-          ]
-        },
-        {
-          id: 'timeline',
-          type: 'timeline',
-          span: 'xl:col-span-3',
-          title: { ar: 'تحديثات المنصة التعليمية', en: 'Platform updates timeline' },
-          items: [
-            {
-              icon: 'play',
-              title: { ar: 'إطلاق استوديو البث الجديد', en: 'New live studio launch' },
-              subtitle: { ar: 'جودة بث 4K ودعم متعدد اللغات', en: '4K streaming with multi-language support' },
-              time: { ar: 'اليوم', en: 'Today' }
-            },
-            {
-              icon: 'sparkles',
-              title: { ar: 'تحسين تجربة التطبيق', en: 'Mobile app refresh' },
-              subtitle: { ar: 'إشعارات تقدم ذكية', en: 'Smart progress alerts' },
-              time: { ar: 'أمس', en: 'Yesterday' }
-            },
-            {
-              icon: 'trophy',
-              title: { ar: 'شراكة اعتماد جديدة', en: 'New accreditation partner' },
-              subtitle: { ar: 'اعتماد دولي للبرامج التقنية', en: 'Global certification for tech tracks' },
-              time: { ar: 'قبل يومين', en: '2 days ago' }
-            }
-          ]
-        }
-      ]
-    });
-  </script>
 </body>
 </html>

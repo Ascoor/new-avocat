@@ -13,6 +13,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100">
   <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">F</div>
@@ -32,8 +33,10 @@
       </div>
     </header>
 
+    <!-- Mobile Backdrop -->
     <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
+    <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -57,6 +60,7 @@
       <div data-role="sidebar-highlight"></div>
     </aside>
 
+    <!-- Main -->
     <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
       <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
       <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
@@ -75,21 +79,12 @@
         }
       },
       actions: {
-        open: {
-          ar: 'فتح القائمة',
-          en: 'Open menu'
-        },
-        close: {
-          ar: 'إغلاق',
-          en: 'Close'
-        }
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' }
       },
       brand: {
         badge: 'F',
-        name: {
-          ar: 'إيقاع التمويل',
-          en: 'Finance Pulse'
-        },
+        name: { ar: 'إيقاع التمويل', en: 'Finance Pulse' },
         tagline: {
           ar: 'إدارة الأصول، المخاطر، والعوائد في الوقت الفعلي',
           en: 'Real-time asset, risk, and revenue management'
@@ -103,27 +98,10 @@
         badgeText: 'text-white'
       },
       nav: [
-        {
-          id: 'overview',
-          icon: 'bank',
-          label: { ar: 'نظرة عامة', en: 'Overview' },
-          badge: { ar: 'أساسي', en: 'Core' }
-        },
-        {
-          id: 'portfolios',
-          icon: 'chart-bar',
-          label: { ar: 'المحافظ', en: 'Portfolios' }
-        },
-        {
-          id: 'risk',
-          icon: 'scale',
-          label: { ar: 'المخاطر', en: 'Risk' }
-        },
-        {
-          id: 'revenue',
-          icon: 'sparkles',
-          label: { ar: 'الإيرادات', en: 'Revenue' }
-        }
+        { id: 'overview', icon: 'bank', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'أساسي', en: 'Core' } },
+        { id: 'portfolios', icon: 'chart-bar', label: { ar: 'المحافظ', en: 'Portfolios' } },
+        { id: 'risk', icon: 'scale', label: { ar: 'المخاطر', en: 'Risk' } },
+        { id: 'revenue', icon: 'sparkles', label: { ar: 'الإيرادات', en: 'Revenue' } }
       ],
       highlight: {
         label: { ar: 'مؤشر الأداء', en: 'Performance index' },
@@ -134,143 +112,34 @@
         }
       },
       header: {
-        title: {
-          ar: 'لوحة الخدمات المالية',
-          en: 'Financial services dashboard'
-        },
-        subtitle: {
-          ar: 'مراقبة الأصول المدارة، العائدات، والمخاطر التشغيلية.',
-          en: 'Monitor assets under management, returns, and operational risk.'
-        },
-        primary: {
-          ar: 'إرسال تقرير تنفيذي',
-          en: 'Send executive brief'
-        },
-        secondary: {
-          ar: 'مقارنة بالمؤشرات',
-          en: 'Compare to benchmarks'
-        }
+        title: { ar: 'لوحة الخدمات المالية', en: 'Financial services dashboard' },
+        subtitle: { ar: 'مراقبة الأصول المدارة، العائدات، والمخاطر التشغيلية.', en: 'Monitor assets under management, returns, and operational risk.' },
+        primary: { ar: 'إرسال تقرير تنفيذي', en: 'Send executive brief' },
+        secondary: { ar: 'مقارنة بالمؤشرات', en: 'Compare to benchmarks' }
       },
       stats: [
-        {
-          icon: 'bank',
-          label: { ar: 'الأصول تحت الإدارة', en: 'Assets under management' },
-          value: '$3.8B',
-          delta: { ar: '+6.2% منذ بداية العام', en: '+6.2% year-to-date' },
-          trend: 'positive'
-        },
-        {
-          icon: 'sparkles',
-          label: { ar: 'الإيرادات اليومية', en: 'Daily revenue' },
-          value: '$12.4M',
-          delta: { ar: '+1.3M عن المتوسط', en: '+1.3M vs average' },
-          trend: 'positive'
-        },
-        {
-          icon: 'scale',
-          label: { ar: 'التعرّض للمخاطر', en: 'Risk exposure' },
-          value: '0.78',
-          delta: { ar: '-0.05 مقارنة بالربع الماضي', en: '-0.05 vs last quarter' },
-          trend: 'positive'
-        },
-        {
-          icon: 'heart',
-          label: { ar: 'احتفاظ العملاء', en: 'Client retention' },
-          value: '97%',
-          delta: { ar: '+2 نقاط بعد مبادرة تجربة العملاء', en: '+2 pts after CX initiative' },
-          trend: 'positive'
-        }
+        { icon: 'bank', label: { ar: 'الأصول تحت الإدارة', en: 'Assets under management' }, value: '$3.8B', delta: { ar: '+6.2% منذ بداية العام', en: '+6.2% year-to-date' }, trend: 'positive' },
+        { icon: 'sparkles', label: { ar: 'الإيرادات اليومية', en: 'Daily revenue' }, value: '$12.4M', delta: { ar: '+1.3M عن المتوسط', en: '+1.3M vs average' }, trend: 'positive' },
+        { icon: 'scale', label: { ar: 'التعرّض للمخاطر', en: 'Risk exposure' }, value: '0.78', delta: { ar: '-0.05 مقارنة بالربع الماضي', en: '-0.05 vs last quarter' }, trend: 'positive' },
+        { icon: 'heart', label: { ar: 'احتفاظ العملاء', en: 'Client retention' }, value: '97%', delta: { ar: '+2 نقاط بعد مبادرة تجربة العملاء', en: '+2 pts after CX initiative' }, trend: 'positive' }
       ],
       panels: [
-        {
-          id: 'overview',
-          type: 'chart',
-          span: 'xl:col-span-2',
-          title: { ar: 'أداء المحافظ', en: 'Portfolio performance' },
-          subtitle: { ar: 'العوائد الشهرية مقارنة بالمؤشرات الرئيسية.', en: 'Monthly returns vs key benchmarks.' },
-          action: { ar: 'تنزيل CSV', en: 'Download CSV' },
-          placeholder: { ar: 'مخطط العوائد', en: 'Performance chart' }
-        },
-        {
-          id: 'portfolios',
-          type: 'list',
-          title: { ar: 'محافظ قيد المراقبة', en: 'Portfolios on watch' },
-          action: { ar: 'تحديث كل ساعتين', en: 'Updated every 2 hours' },
-          items: [
-            {
-              icon: 'chart-bar',
-              title: { ar: 'محفظة النمو العالمية', en: 'Global growth fund' },
-              subtitle: { ar: 'عائد سنوي 14.2%', en: '14.2% annual return' },
-              value: '$820M',
-              delta: { ar: '+1.8% هذا الشهر', en: '+1.8% this month' }
-            },
-            {
-              icon: 'scale',
-              title: { ar: 'محفظة الدخل المتوازن', en: 'Balanced income fund' },
-              subtitle: { ar: 'انحراف معياري 0.62', en: 'Std deviation 0.62' },
-              value: '$610M',
-              delta: { ar: '+0.9% نمو صافي', en: '+0.9% net growth' }
-            },
-            {
-              icon: 'bank',
-              title: { ar: 'صندوق البنية التحتية', en: 'Infrastructure fund' },
-              subtitle: { ar: 'مشاريع طاقة وخدمات', en: 'Energy and utilities projects' },
-              value: '$480M',
-              delta: { ar: 'تدفقات جديدة 42M$', en: 'New inflows $42M' }
-            }
-          ]
-        },
-        {
-          id: 'risk',
-          type: 'progress',
-          title: { ar: 'حالة الامتثال والمخاطر', en: 'Risk & compliance status' },
-          items: [
-            {
-              title: { ar: 'التقارير التنظيمية', en: 'Regulatory filings' },
-              subtitle: { ar: 'مكتمل مع مراجعة قانونية', en: 'Completed with legal review' },
-              value: '92%',
-              percent: '92%'
-            },
-            {
-              title: { ar: 'التدقيق الداخلي', en: 'Internal audit actions' },
-              subtitle: { ar: '14 عنصر قيد التنفيذ', en: '14 items in progress' },
-              value: '68%',
-              percent: '68%'
-            },
-            {
-              title: { ar: 'اختبارات الضغط', en: 'Stress testing coverage' },
-              subtitle: { ar: 'ثلاث سيناريوهات جديدة', en: 'Three new scenarios' },
-              value: '54%',
-              percent: '54%'
-            }
-          ]
-        },
-        {
-          id: 'timeline',
-          type: 'timeline',
-          span: 'xl:col-span-3',
-          title: { ar: 'أحداث مالية حديثة', en: 'Recent financial events' },
-          items: [
-            {
-              icon: 'bank',
-              title: { ar: 'إغلاق صفقة استحواذ', en: 'Acquisition deal closed' },
-              subtitle: { ar: 'تم دمج منصة إدارة الثروات', en: 'Wealth platform integrated' },
-              time: { ar: 'اليوم', en: 'Today' }
-            },
-            {
-              icon: 'sparkles',
-              title: { ar: 'إطلاق منتج استثماري جديد', en: 'New investment product launch' },
-              subtitle: { ar: 'محفظة خضراء بعائد مستهدف 11%', en: 'Green portfolio targeting 11% yield' },
-              time: { ar: 'أمس', en: 'Yesterday' }
-            },
-            {
-              icon: 'scale',
-              title: { ar: 'اعتماد سياسة مخاطر محدثة', en: 'Updated risk policy adopted' },
-              subtitle: { ar: 'يشمل تغطية الأصول الرقمية', en: 'Includes digital asset coverage' },
-              time: { ar: 'قبل يومين', en: '2 days ago' }
-            }
-          ]
-        }
+        { id: 'overview', type: 'chart', span: 'xl:col-span-2', title: { ar: 'أداء المحافظ', en: 'Portfolio performance' }, subtitle: { ar: 'العوائد الشهرية مقارنة بالمؤشرات الرئيسية.', en: 'Monthly returns vs key benchmarks.' }, action: { ar: 'تنزيل CSV', en: 'Download CSV' }, placeholder: { ar: 'مخطط العوائد', en: 'Performance chart' } },
+        { id: 'portfolios', type: 'list', title: { ar: 'محافظ قيد المراقبة', en: 'Portfolios on watch' }, action: { ar: 'تحديث كل ساعتين', en: 'Updated every 2 hours' }, items: [
+          { icon: 'chart-bar', title: { ar: 'محفظة النمو العالمية', en: 'Global growth fund' }, subtitle: { ar: 'عائد سنوي 14.2%', en: '14.2% annual return' }, value: '$820M', delta: { ar: '+1.8% هذا الشهر', en: '+1.8% this month' } },
+          { icon: 'scale', title: { ar: 'محفظة الدخل المتوازن', en: 'Balanced income fund' }, subtitle: { ar: 'انحراف معياري 0.62', en: 'Std deviation 0.62' }, value: '$610M', delta: { ar: '+0.9% نمو صافي', en: '+0.9% net growth' } },
+          { icon: 'bank', title: { ar: 'صندوق البنية التحتية', en: 'Infrastructure fund' }, subtitle: { ar: 'مشاريع طاقة وخدمات', en: 'Energy and utilities projects' }, value: '$480M', delta: { ar: 'تدفقات جديدة 42M$', en: 'New inflows $42M' } }
+        ]},
+        { id: 'risk', type: 'progress', title: { ar: 'حالة الامتثال والمخاطر', en: 'Risk & compliance status' }, items: [
+          { title: { ar: 'التقارير التنظيمية', en: 'Regulatory filings' }, subtitle: { ar: 'مكتمل مع مراجعة قانونية', en: 'Completed with legal review' }, value: '92%', percent: '92%' },
+          { title: { ar: 'التدقيق الداخلي', en: 'Internal audit actions' }, subtitle: { ar: '14 عنصر قيد التنفيذ', en: '14 items in progress' }, value: '68%', percent: '68%' },
+          { title: { ar: 'اختبارات الضغط', en: 'Stress testing coverage' }, subtitle: { ar: 'ثلاث سيناريوهات جديدة', en: 'Three new scenarios' }, value: '54%', percent: '54%' }
+        ]},
+        { id: 'timeline', type: 'timeline', span: 'xl:col-span-3', title: { ar: 'أحداث مالية حديثة', en: 'Recent financial events' }, items: [
+          { icon: 'bank', title: { ar: 'إغلاق صفقة استحواذ', en: 'Acquisition deal closed' }, subtitle: { ar: 'تم دمج منصة إدارة الثروات', en: 'Wealth platform integrated' }, time: { ar: 'اليوم', en: 'Today' } },
+          { icon: 'sparkles', title: { ar: 'إطلاق منتج استثماري جديد', en: 'New investment product launch' }, subtitle: { ar: 'محفظة خضراء بعائد مستهدف 11%', en: 'Green portfolio targeting 11% yield' }, time: { ar: 'أمس', en: 'Yesterday' } },
+          { icon: 'scale', title: { ar: 'اعتماد سياسة مخاطر محدثة', en: 'Updated risk policy adopted' }, subtitle: { ar: 'يشمل تغطية الأصول الرقمية', en: 'Includes digital asset coverage' }, time: { ar: 'قبل يومين', en: '2 days ago' } }
+        ]}
       ]
     });
   </script>
