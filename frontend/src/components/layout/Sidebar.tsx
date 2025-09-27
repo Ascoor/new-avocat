@@ -38,17 +38,13 @@ const Sidebar: React.FC = () => {
       animate={{ width: collapsed ? 64 : 256 }}
       transition={{ duration: 0.3, ease: [0.25, 0.8, 0.25, 1] }}
       className={cn(
-        "hidden h-screen flex-shrink-0 flex-col border-r border-sidebar-border md:sticky md:top-0 md:flex"
+        "sidebar-shell hidden h-screen flex-shrink-0 flex-col border-r border-sidebar-border md:sticky md:top-0 md:flex"
       )}
-      style={{
-        background: "var(--sidebar-background)",
-        boxShadow: "var(--sidebar-shell-shadow)",
-        backdropFilter: "blur(18px)"
-      }}
       dir={isRTL ? "rtl" : "ltr"}
+      data-collapsed={collapsed}
     >
       {/* Brand Section */}
-      <div className="flex items-center gap-3 border-b border-sidebar-border px-6 py-4">
+      <div className="sidebar-brand flex items-center gap-3 border-b border-transparent px-6 py-4">
         <BrandLogo
           variant={collapsed ? "icon" : "full"}
           className={collapsed ? "h-8 w-8" : "h-8 w-auto"}
@@ -81,7 +77,7 @@ const Sidebar: React.FC = () => {
       </nav>
 
       {/* Logout Section */}
-      <div className="border-t border-sidebar-border px-3 py-4">
+      <div className="sidebar-footer border-t border-transparent px-3 py-4">
         <Button
           onClick={logout}
           variant="ghost"
@@ -127,7 +123,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   const iconBadge = (
     <span
       className={cn(
-        "flex items-center justify-center rounded-xl transition-all duration-300",
+        "sidebar-icon-badge flex items-center justify-center rounded-xl transition-all duration-300",
         collapsed
           ? "w-[var(--icon-size-collapsed)] h-[var(--icon-size-collapsed)]"
           : "w-[var(--icon-size-expanded)] h-[var(--icon-size-expanded)]",
@@ -155,16 +151,16 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   };
 
   return (
-    <div>
+    <div className="relative">
       {/* Parent Item */}
       <div
         className={cn(
-          "group relative flex items-center rounded-2xl text-sm transition-all duration-300",
+          "sidebar-nav-item group relative flex items-center rounded-2xl text-sm transition-all duration-300",
           collapsed ? "justify-center py-2" : "px-1 py-1.5",
-          isActive
-            ? "bg-sidebar-active-glow text-sidebar-primary"
-            : "text-sidebar-text-muted hover:bg-sidebar-hover-glow hover:text-sidebar-hover-foreground"
+          isActive ? "text-sidebar-primary" : "text-sidebar-text-muted"
         )}
+        data-active={isActive}
+        data-collapsed={collapsed}
       >
         <NavLink
           to={
@@ -172,7 +168,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
           }
           end={!hasChildren}
           className={cn(
-            "flex w-full items-center gap-3 rounded-2xl px-3 py-2 transition-all duration-300",
+            "sidebar-nav-link flex w-full items-center gap-3 rounded-2xl px-3 py-2",
             collapsed && "justify-center px-0"
           )}
           onClick={(event) => {
@@ -222,15 +218,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                 to={child.path ?? "#"}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors",
-                    isActive
-                      ? "bg-sidebar-active-glow text-sidebar-primary"
-                      : "text-sidebar-text-muted hover:bg-sidebar-hover-glow hover:text-sidebar-hover-foreground"
+                    "sidebar-subitem flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm",
+                    isActive ? "is-active" : "text-sidebar-text-muted"
                   )
                 }
               >
                 <span
-                  className="flex h-8 w-8 items-center justify-center rounded-lg"
+                  className="sidebar-icon-badge flex h-8 w-8 items-center justify-center rounded-lg"
                   style={{
                     background: childDesign.badgeGradient,
                     boxShadow: "var(--legal-icon-shadow-soft)"
