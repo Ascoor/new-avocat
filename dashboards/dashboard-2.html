@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة إدارة المشاريع</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">P</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">P</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة إدارة المشاريع',
+          en: 'Project Portfolio Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'P',
+        name: {
+          ar: 'تحكم المشاريع',
+          en: 'Project Pulse'
+        },
+        tagline: {
+          ar: 'متابعة التسليم متعدد الفرق',
+          en: 'Multi-team delivery monitor'
+        }
+      },
+      theme: {
+        accentGradient: 'from-cyan-500 via-sky-500 to-blue-500',
+        accentText: 'text-cyan-200',
+        highlightBg: 'bg-cyan-500/10 border-cyan-400/30',
+        badgeBg: 'bg-cyan-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'presentation-chart',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'حالي', en: 'Current' }
+        },
+        {
+          id: 'roadmap',
+          icon: 'map',
+          label: { ar: 'خارطة الطريق', en: 'Roadmap' }
+        },
+        {
+          id: 'resources',
+          icon: 'users',
+          label: { ar: 'إدارة الموارد', en: 'Resource management' }
+        },
+        {
+          id: 'risks',
+          icon: 'shield',
+          label: { ar: 'المخاطر', en: 'Risks' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'إنجاز الربع', en: 'Quarter delivery' },
+        value: '78%',
+        description: {
+          ar: 'ثلاث مبادرات استراتيجية تسير وفق الخطة الزمنية.',
+          en: 'Three strategic initiatives remain on schedule.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة إدارة المشاريع',
+          en: 'Project delivery dashboard'
+        },
+        subtitle: {
+          ar: 'تتبع الإنجاز والمخاطر والاعتمادات عبر المحافظ.',
+          en: 'Track completion, risks, and dependencies across the portfolio.'
+        },
+        primary: {
+          ar: 'تصدير مخطط السعة',
+          en: 'Export capacity plan'
+        },
+        secondary: {
+          ar: 'عرض خط الأساس',
+          en: 'View baseline'
+        }
+      },
+      stats: [
+        {
+          icon: 'folder',
+          label: { ar: 'مشاريع جارية', en: 'Active projects' },
+          value: '18',
+          delta: { ar: '+3 مبادرات جديدة هذا الربع', en: '+3 new initiatives this quarter' },
+          trend: 'positive'
+        },
+        {
+          icon: 'chart-bar',
+          label: { ar: 'الالتزام بالموعد', en: 'On-time delivery' },
+          value: '86%',
+          delta: { ar: '+4% تحسن عن الشهر الماضي', en: '+4% improvement vs last month' },
+          trend: 'positive'
+        },
+        {
+          icon: 'users',
+          label: { ar: 'استخدام الفرق', en: 'Team utilisation' },
+          value: '74%',
+          delta: { ar: '+6% توزيع أفضل للقدرات', en: '+6% better allocation of capacity' },
+          trend: 'positive'
+        },
+        {
+          icon: 'shield',
+          label: { ar: 'مخاطر مفتوحة', en: 'Open risks' },
+          value: '5',
+          delta: { ar: 'تمت معالجة خطرين هذا الأسبوع', en: 'Mitigated two risks this week' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'السرعة التراكمية', en: 'Cumulative velocity' },
+          subtitle: { ar: 'مقارنة المخرجات لكل فريق عبر ثمانية أسابيع.', en: 'Team output comparison across eight weeks.' },
+          action: { ar: 'مشاركة', en: 'Share link' },
+          placeholder: { ar: 'مخطط السرعة', en: 'Velocity chart' }
+        },
+        {
+          id: 'projects',
+          type: 'list',
+          title: { ar: 'أهم المشاريع', en: 'Top projects' },
+          action: { ar: 'تحديث منذ 10 دقائق', en: 'Updated 10 minutes ago' },
+          items: [
+            {
+              icon: 'briefcase',
+              title: { ar: 'منصة البيانات المؤسسية', en: 'Enterprise data platform' },
+              subtitle: { ar: 'مرحلة التطوير', en: 'Development phase' },
+              value: '92%',
+              delta: { ar: 'جاهز للتسليم', en: 'Ready for launch' }
+            },
+            {
+              icon: 'cloud',
+              title: { ar: 'ترحيل البنية السحابية', en: 'Cloud migration' },
+              subtitle: { ar: 'اكتمل 6 من 8 موجات', en: '6 of 8 waves completed' },
+              value: '75%',
+              delta: { ar: 'لا توجد مخاطر حرجة', en: 'No critical risks' }
+            },
+            {
+              icon: 'users',
+              title: { ar: 'برنامج تبني المنصة', en: 'Platform adoption program' },
+              subtitle: { ar: 'ورش تدريب أسبوعية', en: 'Weekly enablement workshops' },
+              value: '61%',
+              delta: { ar: 'يتطلب موارد إضافية', en: 'Needs additional capacity' }
+            }
+          ]
+        },
+        {
+          id: 'phases',
+          type: 'progress',
+          title: { ar: 'تقدم مراحل خارطة الطريق', en: 'Roadmap phase progress' },
+          items: [
+            {
+              title: { ar: 'مرحلة الاكتشاف', en: 'Discovery phase' },
+              subtitle: { ar: 'المخرجات معتمدة', en: 'Deliverables approved' },
+              value: '90%',
+              percent: '90%'
+            },
+            {
+              title: { ar: 'مرحلة البناء', en: 'Build phase' },
+              subtitle: { ar: 'دمج مستمر واختبارات جودة', en: 'Continuous integration and QA' },
+              value: '68%',
+              percent: '68%'
+            },
+            {
+              title: { ar: 'النشر والتبني', en: 'Rollout & adoption' },
+              subtitle: { ar: 'جاهزية خطة الاتصال', en: 'Communication plan ready' },
+              value: '54%',
+              percent: '54%'
+            }
+          ]
+        },
+        {
+          id: 'milestones',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'آخر المستجدات', en: 'Latest updates' },
+          items: [
+            {
+              icon: 'sparkles',
+              title: { ar: 'اعتماد خارطة طريق الربع الثالث', en: 'Q3 roadmap approved' },
+              subtitle: { ar: 'تم اعتماد الميزانية المتعددة الفرق', en: 'Cross-team budget secured' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'users',
+              title: { ar: 'اكتمال تدريب الفريق الجديد', en: 'New team onboarding complete' },
+              subtitle: { ar: '14 عضواً أنهوا برنامج السرعة', en: '14 members finished velocity bootcamp' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            },
+            {
+              icon: 'shield',
+              title: { ar: 'خفض مستوى مخاطر الاندماج', en: 'Integration risk downgraded' },
+              subtitle: { ar: 'تم تنفيذ خطة التخفيف', en: 'Mitigation plan implemented' },
+              time: { ar: 'قبل يومين', en: '2 days ago' }
+            }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>
