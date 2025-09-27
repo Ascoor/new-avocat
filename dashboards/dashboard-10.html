@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة الخدمات المالية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col">
+    <header class="border-b border-slate-800 bg-gradient-to-r from-cyan-500/10 via-slate-950 to-slate-950">
+      <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-cyan-300">FinSight</p>
+          <h1 class="text-3xl font-bold">لوحة الخدمات المالية والتحليل</h1>
+          <p class="text-slate-300 mt-2">مراقبة التدفق النقدي، الربحية، والمخاطر في الوقت الفعلي.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">تقرير مخصص</button>
+          <button class="px-4 py-2 rounded-xl bg-cyan-500 text-sm text-slate-950 font-semibold">تحميل البيانات</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10 space-y-8">
+      <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">صافي الربح</p>
+          <p class="mt-3 text-3xl font-semibold">$1.2M</p>
+          <p class="mt-2 text-emerald-300 text-sm">+14% مقارنة بالربع السابق</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">الهامش الإجمالي</p>
+          <p class="mt-3 text-3xl font-semibold">58%</p>
+          <p class="mt-2 text-xs text-slate-500">الهدف 60%</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">التدفق النقدي الحر</p>
+          <p class="mt-3 text-3xl font-semibold">$480K</p>
+          <p class="mt-2 text-emerald-300 text-sm">+9% على أساس شهري</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">نسبة السيولة</p>
+          <p class="mt-3 text-3xl font-semibold">1.9</p>
+          <p class="mt-2 text-emerald-300 text-sm">ضمن النطاق الآمن</p>
+        </div>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div>
+              <h2 class="text-xl font-semibold">تحليل التدفق النقدي</h2>
+              <p class="text-sm text-slate-400">المصادر والاستخدامات خلال 12 شهر</p>
+            </div>
+            <div class="flex gap-3 text-sm">
+              <button class="px-4 py-2 rounded-xl bg-slate-800">شهر</button>
+              <button class="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-semibold">ربع</button>
+            </div>
+          </div>
+          <div class="h-64 rounded-xl border border-slate-800 bg-gradient-to-br from-cyan-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط تدفق</div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">مصادر الإيرادات</h3>
+            <span class="text-xs text-slate-500">آخر 30 يوم</span>
+          </div>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>الاشتراكات</p>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">46%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>الخدمات الاستشارية</p>
+              <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-200">32%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>الشراكات</p>
+              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">12%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold">قائمة الحسابات الرئيسية</h2>
+            <p class="text-sm text-slate-400">الرصيد الحالي وأهم الحركات</p>
+          </div>
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">تصدير Excel</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[720px] text-sm">
+            <thead>
+              <tr class="text-slate-400">
+                <th class="text-right pb-3 font-medium">الحساب</th>
+                <th class="text-right pb-3 font-medium">الرصيد</th>
+                <th class="text-right pb-3 font-medium">التغير الشهري</th>
+                <th class="text-right pb-3 font-medium">الإنفاق</th>
+                <th class="text-right pb-3 font-medium">المخاطر</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4">النقد وما في حكمه</td>
+                <td>$780K</td>
+                <td class="text-emerald-300">+11%</td>
+                <td>$120K</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">منخفض</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4">الذمم المدينة</td>
+                <td>$320K</td>
+                <td class="text-amber-300">+6%</td>
+                <td>$60K</td>
+                <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">متوسط</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4">الاستثمارات قصيرة الأجل</td>
+                <td>$540K</td>
+                <td class="text-emerald-300">+4%</td>
+                <td>$0</td>
+                <td><span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-200">مستقر</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">مؤشرات المخاطر</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>التعرض للعملات</p>
+              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">متوسط</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>الديون قصيرة الأجل</p>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">منخفض</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>نقاط الائتمان</p>
+              <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-200">مراقبة</span>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">أداء القطاعات</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>التقنية</p>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">+12%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>الخدمات</p>
+              <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-200">+9%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>الأسواق الناشئة</p>
+              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">+6%</span>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">أحداث قادمة</h3>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">15 مايو</p>
+              <p class="font-semibold">إعلان أرباح الربع الثاني</p>
+              <p class="text-xs text-emerald-300 mt-1">جلسة مع المستثمرين</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">22 مايو</p>
+              <p class="font-semibold">تحديث خطة الميزانية</p>
+              <p class="text-xs text-emerald-300 mt-1">إدارة المالية</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">29 مايو</p>
+              <p class="font-semibold">مراجعة المخاطر السنوية</p>
+              <p class="text-xs text-emerald-300 mt-1">لجنة المخاطر</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة إدارة التعليم الإلكتروني</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col">
+    <header class="border-b border-slate-800 bg-gradient-to-r from-blue-500/10 via-slate-950 to-slate-950">
+      <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-blue-300">LearnSphere</p>
+          <h1 class="text-3xl font-bold">لوحة التحليلات التعليمية</h1>
+          <p class="text-slate-300 mt-2">متابعة أداء المتعلمين، الدورات، ونسب الإكمال.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">إضافة دورة</button>
+          <button class="px-4 py-2 rounded-xl bg-blue-500 text-sm text-slate-950 font-semibold">تحميل التقارير</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10 space-y-8">
+      <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">إجمالي المتعلمين</p>
+          <p class="mt-3 text-3xl font-semibold">18,420</p>
+          <p class="mt-2 text-emerald-300 text-sm">+640 خلال الأسبوع</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">نسبة الإكمال</p>
+          <p class="mt-3 text-3xl font-semibold">72%</p>
+          <p class="mt-2 text-xs text-slate-500">الهدف: 78%</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">الساعات التدريبية</p>
+          <p class="mt-3 text-3xl font-semibold">4,860</p>
+          <p class="mt-2 text-emerald-300 text-sm">+18% مقارنة بالربع السابق</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">المهام المرسلة</p>
+          <p class="mt-3 text-3xl font-semibold">2,430</p>
+          <p class="mt-2 text-amber-300 text-sm">94% معدل تقييم</p>
+        </div>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div>
+              <h2 class="text-xl font-semibold">منحنى مشاركة المتعلمين</h2>
+              <p class="text-sm text-slate-400">نشاط المنصة خلال آخر 30 يوم</p>
+            </div>
+            <div class="flex gap-3 text-sm">
+              <button class="px-4 py-2 rounded-xl bg-slate-800">أسبوع</button>
+              <button class="px-4 py-2 rounded-xl bg-blue-500 text-slate-950 font-semibold">شهر</button>
+            </div>
+          </div>
+          <div class="h-64 rounded-xl border border-slate-800 bg-gradient-to-br from-blue-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط نشاط</div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">الدورات الأعلى تقييمًا</h3>
+            <span class="text-xs text-slate-500">تحديث 1 ساعة</span>
+          </div>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">أساسيات علوم البيانات</p>
+              <p class="text-amber-300 text-xs mt-1">تقييم 4.9 / 5</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">تصميم واجهات حديثة</p>
+              <p class="text-amber-300 text-xs mt-1">تقييم 4.8 / 5</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">إدارة المنتجات الرقمية</p>
+              <p class="text-amber-300 text-xs mt-1">تقييم 4.7 / 5</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold">قائمة المتعلمين النشطين</h2>
+            <p class="text-sm text-slate-400">أعلى معدل تقدم خلال هذا الأسبوع</p>
+          </div>
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">تحميل CSV</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[720px] text-sm">
+            <thead>
+              <tr class="text-slate-400">
+                <th class="text-right pb-3 font-medium">المتعلم</th>
+                <th class="text-right pb-3 font-medium">الدورة</th>
+                <th class="text-right pb-3 font-medium">نسبة التقدم</th>
+                <th class="text-right pb-3 font-medium">آخر نشاط</th>
+                <th class="text-right pb-3 font-medium">الحالة</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-blue-500/20 text-blue-200 flex items-center justify-center text-xs">SA</span>
+                  <span>سارة الأنصاري</span>
+                </td>
+                <td>برمجة Python المتقدمة</td>
+                <td class="text-emerald-300">94%</td>
+                <td>قبل 2 ساعة</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">مكتمل تقريبًا</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-blue-500/20 text-blue-200 flex items-center justify-center text-xs">HM</span>
+                  <span>حسين مطر</span>
+                </td>
+                <td>التسويق الرقمي الاحترافي</td>
+                <td class="text-emerald-300">88%</td>
+                <td>قبل 5 ساعات</td>
+                <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">في التقدم</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-blue-500/20 text-blue-200 flex items-center justify-center text-xs">NR</span>
+                  <span>نور الراشد</span>
+                </td>
+                <td>تحليل البيانات باستخدام SQL</td>
+                <td class="text-emerald-300">81%</td>
+                <td>قبل يوم</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">في المسار</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">قنوات التعلم</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>مسارات التعلم</p>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-200">52%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>فصول مباشرة</p>
+              <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-200">33%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>تدريب ذاتي</p>
+              <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-200">15%</span>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">معدلات النجاح حسب المستوى</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>مبتدئ</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[78%] bg-emerald-400"></div>
+                </div>
+                <span class="text-emerald-300">78%</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>متوسط</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[68%] bg-blue-400"></div>
+                </div>
+                <span class="text-emerald-300">68%</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>متقدم</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[58%] bg-rose-400"></div>
+                </div>
+                <span class="text-emerald-300">58%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">خطط المحتوى المقبلة</h3>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">برنامج تحليل البيانات المتقدم</p>
+              <p class="text-slate-400 text-xs mt-1">الإطلاق: يونيو</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">معسكر الأمن السيبراني للمبتدئين</p>
+              <p class="text-slate-400 text-xs mt-1">الإطلاق: يوليو</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">سلسلة إدارة المنتجات</p>
+              <p class="text-slate-400 text-xs mt-1">الإطلاق: أغسطس</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة إدارة المشاريع</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col">
+    <header class="border-b border-slate-800 bg-slate-900/70 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-emerald-300">Project Pulse</p>
+          <h1 class="text-3xl font-bold">لوحة إدارة المشاريع</h1>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">إنشاء مشروع</button>
+          <button class="px-4 py-2 rounded-xl bg-emerald-500 text-sm text-slate-950 font-semibold">تقرير أسبوعي</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10 space-y-8">
+      <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div class="p-5 rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50">
+          <p class="text-sm text-slate-400">المشاريع الفعالة</p>
+          <div class="mt-3 flex items-baseline gap-2">
+            <span class="text-3xl font-semibold">42</span>
+            <span class="text-xs text-emerald-400">+3 جديدة</span>
+          </div>
+          <div class="mt-4 flex -space-x-2 rtl:space-x-reverse">
+            <div class="h-9 w-9 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-200 text-xs">PM</div>
+            <div class="h-9 w-9 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-200 text-xs">UX</div>
+            <div class="h-9 w-9 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-200 text-xs">DEV</div>
+          </div>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50">
+          <p class="text-sm text-slate-400">نسبة الإنجاز المتوسطة</p>
+          <div class="mt-3 flex items-center gap-3">
+            <div class="flex-1 h-2 rounded-full bg-slate-800 overflow-hidden">
+              <div class="h-full w-3/4 bg-emerald-400"></div>
+            </div>
+            <span class="text-2xl font-semibold">76%</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">الهدف: 85% خلال هذا الربع.</p>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50">
+          <p class="text-sm text-slate-400">المهام المتأخرة</p>
+          <p class="mt-3 text-3xl font-semibold text-amber-300">18</p>
+          <p class="text-xs text-amber-400 mt-2">تنبيه: مراجعة sprint team beta</p>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-900/50">
+          <p class="text-sm text-slate-400">الميزانية المستخدمة</p>
+          <p class="mt-3 text-3xl font-semibold">$480K</p>
+          <p class="text-xs text-emerald-400 mt-2">58% من الميزانية السنوية</p>
+        </div>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80">
+          <div class="px-6 py-5 border-b border-slate-800 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 class="text-xl font-semibold">لوح الحالة الفوري</h2>
+              <p class="text-sm text-slate-400">توزيع المشاريع حسب المرحلة</p>
+            </div>
+            <div class="flex gap-3 text-sm">
+              <button class="px-4 py-2 rounded-xl bg-slate-800">هذا الأسبوع</button>
+              <button class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-semibold">هذا الشهر</button>
+            </div>
+          </div>
+          <div class="p-6 grid gap-6 lg:grid-cols-3">
+            <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4">
+              <p class="text-xs text-slate-500">الاكتشاف</p>
+              <p class="mt-3 text-2xl font-semibold">12</p>
+              <p class="text-xs text-emerald-400 mt-2">+2 منذ الأمس</p>
+            </div>
+            <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4">
+              <p class="text-xs text-slate-500">التطوير</p>
+              <p class="mt-3 text-2xl font-semibold">18</p>
+              <p class="text-xs text-emerald-400 mt-2">+1 sprint</p>
+            </div>
+            <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4">
+              <p class="text-xs text-slate-500">إطلاق</p>
+              <p class="mt-3 text-2xl font-semibold">9</p>
+              <p class="text-xs text-amber-400 mt-2">-3 بحاجة دعم</p>
+            </div>
+            <div class="lg:col-span-3 rounded-xl border border-dashed border-emerald-500/40 bg-emerald-500/5 p-6 text-sm text-slate-300">
+              <p class="font-semibold text-emerald-200 mb-2">رسالة PM</p>
+              <p>"يرجى التأكد من تحديث حالة المشروع قبل نهاية اليوم لضمان دقة التقرير الأسبوعي".</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">المواعيد المهمة</h3>
+            <button class="text-xs text-emerald-300">عرض الكل</button>
+          </div>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">12 مايو</p>
+              <p class="font-semibold">تسليم الإصدار 2.1 لتطبيق الهواتف</p>
+              <p class="text-xs text-emerald-400 mt-1">Team Phoenix</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">17 مايو</p>
+              <p class="font-semibold">ورشة تجربة المستخدم</p>
+              <p class="text-xs text-emerald-400 mt-1">مع فريق Growth</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">24 مايو</p>
+              <p class="font-semibold">اعتماد ميزانية الربع الثالث</p>
+              <p class="text-xs text-emerald-400 mt-1">مجلس الإدارة</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold">جدول الفرق</h2>
+            <p class="text-sm text-slate-400">أعضاء الفرق ونسبة الالتزام</p>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <button class="px-4 py-2 rounded-xl bg-slate-800">كل الفرق</button>
+            <button class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-semibold">الفرق النشطة</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[720px] text-sm">
+            <thead>
+              <tr class="text-slate-400">
+                <th class="text-right pb-3 font-medium">الفريق</th>
+                <th class="text-right pb-3 font-medium">قائد الفريق</th>
+                <th class="text-right pb-3 font-medium">المشاريع الحالية</th>
+                <th class="text-right pb-3 font-medium">نسبة الالتزام</th>
+                <th class="text-right pb-3 font-medium">مستوى الضغط</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-emerald-500/20 text-emerald-200 flex items-center justify-center text-xs">UX</span>
+                  <span>فريق تجربة المستخدم</span>
+                </td>
+                <td>داليا الشامي</td>
+                <td>4</td>
+                <td class="text-emerald-400">92%</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">مستقر</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-emerald-500/20 text-emerald-200 flex items-center justify-center text-xs">ENG</span>
+                  <span>فريق التطوير</span>
+                </td>
+                <td>سالم الراشد</td>
+                <td>6</td>
+                <td class="text-emerald-400">85%</td>
+                <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">مرتفعة</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-emerald-500/20 text-emerald-200 flex items-center justify-center text-xs">QA</span>
+                  <span>فريق الجودة</span>
+                </td>
+                <td>ميساء فهد</td>
+                <td>3</td>
+                <td class="text-emerald-400">78%</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">مستقر</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4 flex items-center gap-3">
+                  <span class="h-10 w-10 rounded-xl bg-emerald-500/20 text-emerald-200 flex items-center justify-center text-xs">OPS</span>
+                  <span>عمليات المشاريع</span>
+                </td>
+                <td>طارق المدني</td>
+                <td>5</td>
+                <td class="text-emerald-400">81%</td>
+                <td><span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300">متوسط</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

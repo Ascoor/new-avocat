@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة إدارة المحتوى</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col">
+    <header class="border-b border-slate-800 bg-gradient-to-r from-rose-500/10 via-slate-950 to-slate-950">
+      <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-rose-300">Content Orbit</p>
+          <h1 class="text-3xl font-bold">لوحة إدارة المحتوى المتكاملة</h1>
+          <p class="text-slate-300 mt-2">تخطيط وجدولة المحتوى لكل القنوات في مكان واحد.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">إنشاء منشور</button>
+          <button class="px-4 py-2 rounded-xl bg-rose-500 text-sm text-slate-950 font-semibold">استيراد تقويم</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto w-full px-6 py-10 space-y-8">
+      <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">مقالات قيد النشر</p>
+          <p class="mt-3 text-3xl font-semibold">28</p>
+          <p class="mt-2 text-emerald-300 text-sm">+6 مقارنة بالأسبوع الماضي</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">منشورات التواصل</p>
+          <p class="mt-3 text-3xl font-semibold">64</p>
+          <p class="mt-2 text-rose-300 text-sm">متوسط تفاعل 5.2%</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">الفيديوهات المجدولة</p>
+          <p class="mt-3 text-3xl font-semibold">12</p>
+          <p class="mt-2 text-emerald-300 text-sm">جاهزة للنشر خلال 48 ساعة</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">رسائل البريد</p>
+          <p class="mt-3 text-3xl font-semibold">4</p>
+          <p class="mt-2 text-amber-300 text-sm">حملة رئيسية يوم الأحد</p>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/80">
+        <div class="px-6 py-5 border-b border-slate-800 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 class="text-xl font-semibold">تقويم التحرير</h2>
+            <p class="text-sm text-slate-400">عرض أسبوعي للمهام القابلة للتنفيذ</p>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <button class="px-4 py-2 rounded-xl bg-slate-800">أسبوع</button>
+            <button class="px-4 py-2 rounded-xl bg-rose-500 text-slate-950 font-semibold">شهر</button>
+          </div>
+        </div>
+        <div class="p-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3 text-sm">
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 space-y-2">
+            <p class="text-slate-400">الأحد</p>
+            <p class="font-semibold text-lg">إطلاق سلسلة المقالات التقنية</p>
+            <p class="text-xs text-slate-500">3 مسودات تنتظر المراجعة النهائية</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 space-y-2">
+            <p class="text-slate-400">الإثنين</p>
+            <p class="font-semibold text-lg">حملة البريد للنشرة الأسبوعية</p>
+            <p class="text-xs text-slate-500">معدل فتح مستهدف 38%</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 space-y-2">
+            <p class="text-slate-400">الثلاثاء</p>
+            <p class="font-semibold text-lg">بث مباشر على Instagram</p>
+            <p class="text-xs text-slate-500">ضيف: فريق المنتج</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 space-y-2">
+            <p class="text-slate-400">الأربعاء</p>
+            <p class="font-semibold text-lg">مدونة الضيوف</p>
+            <p class="text-xs text-slate-500">المحرر: هالة التميمي</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 space-y-2">
+            <p class="text-slate-400">الخميس</p>
+            <p class="font-semibold text-lg">مراجعة تقارير الأداء الاجتماعي</p>
+            <p class="text-xs text-slate-500">تفعيل الإعلانات المدفوعة</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 space-y-2">
+            <p class="text-slate-400">الجمعة</p>
+            <p class="font-semibold text-lg">تسجيل بودكاست</p>
+            <p class="text-xs text-slate-500">موضوع: قصص نجاح العملاء</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid gap-6 lg:grid-cols-3">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">لوحة الإلهام</h3>
+            <button class="text-xs text-rose-300">تحديث</button>
+          </div>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">موضوعات ناشئة</p>
+              <p class="text-slate-400 text-xs mt-1">الذكاء الاصطناعي، التحليل التنبؤي، قصص العملاء</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">صور مقترحة</p>
+              <p class="text-slate-400 text-xs mt-1">مرئيات ثلاثية الأبعاد، إضاءة نيون، جداول بيانات أنيقة</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">نغمات الصوت</p>
+              <p class="text-slate-400 text-xs mt-1">مُلهم، استباقي، ودي</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">أداء القنوات</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between">
+              <p>المدونة</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[64%] bg-rose-400"></div>
+                </div>
+                <span class="text-emerald-300">64K زيارة</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>LinkedIn</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[52%] bg-emerald-400"></div>
+                </div>
+                <span class="text-emerald-300">52K تفاعل</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <p>YouTube</p>
+              <div class="flex items-center gap-3">
+                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full w-[44%] bg-amber-400"></div>
+                </div>
+                <span class="text-emerald-300">44K مشاهدة</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">مهام الفريق</h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-start gap-3">
+              <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-200 text-xs">كتابة</span>
+              <div>
+                <p class="font-semibold">تحديث دليل الأسلوب التحريري</p>
+                <p class="text-xs text-slate-500 mt-1">المسؤول: مريم قاسم - موعد التسليم الثلاثاء</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200 text-xs">تصميم</span>
+              <div>
+                <p class="font-semibold">تجهيز قوالب عروض الشرائح</p>
+                <p class="text-xs text-slate-500 mt-1">المسؤول: فهد الوابل - موعد التسليم الأربعاء</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 text-xs">توزيع</span>
+              <div>
+                <p class="font-semibold">تنسيق النشر مع المؤثرين</p>
+                <p class="text-xs text-slate-500 mt-1">المسؤول: أنس الشريف - موعد التسليم الخميس</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
