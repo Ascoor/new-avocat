@@ -12,6 +12,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100"> 
   <div class="min-h-screen">
+    <!-- هيدر الموبايل -->
     <div class="lg:hidden flex items-center justify-between border-b border-slate-800 bg-slate-900/80 px-4 py-4">
       <div>
         <p class="text-xs uppercase tracking-[0.4em] text-fuchsia-300">Customer Pulse</p>
@@ -25,9 +26,11 @@
       </button>
     </div>
 
+    <!-- خلفية جانبية -->
     <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-slate-950/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
     <div class="lg:flex lg:flex-row">
+      <!-- الشريط الجانبي -->
       <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-72 overflow-y-auto border-l border-slate-800 bg-gradient-to-b from-fuchsia-500/20 via-slate-950 to-slate-950 p-6 space-y-8 transform translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-sm lg:static lg:w-80 lg:translate-x-0 lg:border-l lg:bg-gradient-to-b lg:from-fuchsia-500/10 lg:via-slate-950 lg:to-slate-950">
         <div class="flex items-start justify-between gap-3">
           <div>
@@ -42,6 +45,8 @@
             </svg>
           </button>
         </div>
+
+        <!-- مقاييس جانبية -->
         <div class="space-y-4 text-sm">
           <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-4">
             <p class="text-slate-400">مؤشر رضا العملاء</p>
@@ -54,186 +59,48 @@
             <p class="text-xs text-amber-300 mt-2">انخفاض 14%</p>
           </div>
         </div>
-        <div class="space-y-3 text-sm">
-          <p class="text-xs uppercase text-slate-500">التجزئة</p>
-          <button class="w-full px-4 py-3 rounded-xl bg-slate-800/60 text-right">مستوى الخدمة المميز</button>
-          <button class="w-full px-4 py-3 rounded-xl bg-slate-800/20 text-right">المستخدمون الجدد</button>
-          <button class="w-full px-4 py-3 rounded-xl bg-slate-800/20 text-right">الأسواق الدولية</button>
-        </div>
       </aside>
 
+      <!-- المحتوى الرئيسي -->
       <main class="flex-1 p-6 lg:p-10 space-y-8 lg:pr-10"> 
-      <section class="grid gap-6 lg:grid-cols-3">
-        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <div>
-              <h2 class="text-xl font-semibold">موجز المشاعر</h2>
-              <p class="text-sm text-slate-400">تحليل تلقائي للانطباعات عبر القنوات</p>
+        <section class="grid gap-6 lg:grid-cols-3">
+          <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+              <div>
+                <h2 class="text-xl font-semibold">موجز المشاعر</h2>
+                <p class="text-sm text-slate-400">تحليل تلقائي للانطباعات عبر القنوات</p>
+              </div>
+              <div class="flex gap-3 text-sm">
+                <button class="px-4 py-2 rounded-xl bg-slate-800">7 أيام</button>
+                <button class="px-4 py-2 rounded-xl bg-fuchsia-500 text-slate-950 font-semibold">30 يوم</button>
+              </div>
             </div>
-            <div class="flex gap-3 text-sm">
-              <button class="px-4 py-2 rounded-xl bg-slate-800">7 أيام</button>
-              <button class="px-4 py-2 rounded-xl bg-fuchsia-500 text-slate-950 font-semibold">30 يوم</button>
-            </div>
+            <div class="h-56 rounded-xl border border-slate-800 bg-gradient-to-br from-fuchsia-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط مشاعر</div>
           </div>
-          <div class="grid gap-4 md:grid-cols-3">
-            <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
-              <p class="text-slate-400">إيجابي</p>
-              <p class="text-2xl font-semibold text-emerald-300">64%</p>
-              <p class="text-xs text-slate-500">+8% منذ التحديث السابق</p>
+
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold">مؤشرات الخدمة</h3>
+              <span class="text-xs text-slate-500">تحديث مباشر</span>
             </div>
-            <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
-              <p class="text-slate-400">محايد</p>
-              <p class="text-2xl font-semibold text-amber-300">21%</p>
-              <p class="text-xs text-slate-500">-4% بعد حملة التوعية</p>
-            </div>
-            <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
-              <p class="text-slate-400">سلبي</p>
-              <p class="text-2xl font-semibold text-rose-300">15%</p>
-              <p class="text-xs text-slate-500">تم إحالة الحالات إلى فريق الخبراء</p>
-            </div>
-          </div>
-          <div class="mt-6 h-56 rounded-xl border border-slate-800 bg-gradient-to-br from-fuchsia-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط مشاعر</div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">مؤشرات الخدمة</h3>
-            <span class="text-xs text-slate-500">تحديث مباشر</span>
-          </div>
-          <div class="space-y-4 text-sm">
-            <div>
-              <p class="text-slate-400">متوسط زمن الاستجابة</p>
-              <p class="text-xl font-semibold text-fuchsia-200">2:14 دقيقة</p>
-              <p class="text-xs text-emerald-300">-38 ثانية هذا الأسبوع</p>
-            </div>
-            <div>
-              <p class="text-slate-400">معدل الحل من أول اتصال</p>
-              <p class="text-xl font-semibold text-emerald-300">78%</p>
-            </div>
-            <div>
-              <p class="text-slate-400">قنوات الخدمة</p>
-              <div class="mt-2 space-y-2">
-                <div class="flex items-center justify-between">
-                  <span>الدردشة</span>
-                  <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-200">92%</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span>المكالمات</span>
-                  <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-200">71%</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span>البريد</span>
-                  <span class="px-3 py-1 rounded-full bg-rose-500/10 text-rose-200">64%</span>
-                </div>
+            <div class="space-y-4 text-sm">
+              <div>
+                <p class="text-slate-400">متوسط زمن الاستجابة</p>
+                <p class="text-xl font-semibold text-fuchsia-200">2:14 دقيقة</p>
+                <p class="text-xs text-emerald-300">-38 ثانية هذا الأسبوع</p>
+              </div>
+              <div>
+                <p class="text-slate-400">معدل الحل من أول اتصال</p>
+                <p class="text-xl font-semibold text-emerald-300">78%</p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section class="grid gap-6 xl:grid-cols-3">
-        <div class="xl:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80">
-          <div class="px-6 py-5 border-b border-slate-800 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h2 class="text-xl font-semibold">قائمة التذاكر ذات الأولوية</h2>
-              <p class="text-sm text-slate-400">ترتيب تفاعلي حسب التأثير</p>
-            </div>
-            <div class="flex gap-3 text-sm">
-              <button class="px-4 py-2 rounded-xl bg-slate-800">كل التذاكر</button>
-              <button class="px-4 py-2 rounded-xl bg-fuchsia-500 text-slate-950 font-semibold">الحرجة</button>
-            </div>
-          </div>
-          <div class="p-6 overflow-x-auto">
-            <table class="w-full min-w-[720px] text-sm">
-              <thead>
-                <tr class="text-slate-400">
-                  <th class="text-right pb-3 font-medium">المعرف</th>
-                  <th class="text-right pb-3 font-medium">العميل</th>
-                  <th class="text-right pb-3 font-medium">القناة</th>
-                  <th class="text-right pb-3 font-medium">المدة</th>
-                  <th class="text-right pb-3 font-medium">الحالة</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-800">
-                <tr class="hover:bg-slate-800/40">
-                  <td class="py-4">#CX-1892</td>
-                  <td>ريم علي</td>
-                  <td>الدردشة الفورية</td>
-                  <td>1 ساعة</td>
-                  <td><span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-200">بانتظار التصعيد</span></td>
-                </tr>
-                <tr class="hover:bg-slate-800/40">
-                  <td class="py-4">#CX-1887</td>
-                  <td>شركة سما</td>
-                  <td>إيميل</td>
-                  <td>3 ساعات</td>
-                  <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">قيد المتابعة</span></td>
-                </tr>
-                <tr class="hover:bg-slate-800/40">
-                  <td class="py-4">#CX-1881</td>
-                  <td>وليد بخيت</td>
-                  <td>مكالمة</td>
-                  <td>12 دقيقة</td>
-                  <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">تم الحل</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
-          <h3 class="text-lg font-semibold">ملاحظات العملاء اللحظية</h3>
-          <div class="space-y-4 text-sm">
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">"الدعم الفني سريع"</p>
-              <p class="text-slate-400 text-xs mt-1">تم حل مشكلتي خلال دقائق. شكرًا للفريق.</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">"نحتاج بوابة معرفة"</p>
-              <p class="text-slate-400 text-xs mt-1">اقتراح بإضافة دروس مصورة لحلول شائعة.</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">"التطبيق رائع"</p>
-              <p class="text-slate-400 text-xs mt-1">أحببت التحديث الأخير، التصميم مميز.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-          <div>
-            <h2 class="text-xl font-semibold">المعرفة الذاتية</h2>
-            <p class="text-sm text-slate-400">أداء مقالات قاعدة المعرفة</p>
-          </div>
-          <div class="flex gap-3 text-sm">
-            <button class="px-4 py-2 rounded-xl bg-slate-800">7 أيام</button>
-            <button class="px-4 py-2 rounded-xl bg-fuchsia-500 text-slate-950 font-semibold">شهر</button>
-          </div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4 text-sm">
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">التثبيت الأولي</p>
-            <p class="text-2xl font-semibold">14K مشاهدة</p>
-            <p class="text-xs text-emerald-300 mt-1">92% رضا</p>
-          </div>
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">تكاملات API</p>
-            <p class="text-2xl font-semibold">9K مشاهدة</p>
-            <p class="text-xs text-emerald-300 mt-1">88% رضا</p>
-          </div>
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">إدارة الحسابات</p>
-            <p class="text-2xl font-semibold">6K مشاهدة</p>
-            <p class="text-xs text-emerald-300 mt-1">84% رضا</p>
-          </div>
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">المشكلات الشائعة</p>
-            <p class="text-2xl font-semibold">5K مشاهدة</p>
-            <p class="text-xs text-emerald-300 mt-1">81% رضا</p>
-          </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
   </div> 
+
+  <!-- التحكم في القائمة الجانبية -->
   <script>
     (function () {
       const sidebar = document.getElementById('sidebar');
@@ -242,9 +109,7 @@
       const backdrop = document.getElementById('sidebarBackdrop');
       const body = document.body;
 
-      if (!sidebar || !toggle || !close || !backdrop) {
-        return;
-      }
+      if (!sidebar || !toggle || !close || !backdrop) return;
 
       const openSidebar = () => {
         sidebar.classList.remove('translate-x-full');
@@ -263,11 +128,8 @@
       toggle.addEventListener('click', openSidebar);
       close.addEventListener('click', closeSidebar);
       backdrop.addEventListener('click', closeSidebar);
-
       window.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-          closeSidebar();
-        }
+        if (event.key === 'Escape') closeSidebar();
       });
     })();
   </script> 

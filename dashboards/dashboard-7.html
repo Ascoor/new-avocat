@@ -12,6 +12,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100">
   <div class="min-h-screen flex flex-col">
+    <!-- الهيدر -->
     <header class="border-b border-slate-800 bg-gradient-to-r from-lime-500/10 via-slate-950 to-slate-950">
       <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
@@ -26,7 +27,9 @@
       </div>
     </header>
 
+    <!-- المحتوى الرئيسي -->
     <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10 space-y-8">
+      <!-- إحصائيات -->
       <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
           <p class="text-sm text-slate-400">عدد الموظفين</p>
@@ -54,6 +57,7 @@
         </div>
       </section>
 
+      <!-- توزيع القوى العاملة -->
       <section class="rounded-2xl border border-slate-800 bg-slate-900/80">
         <div class="px-6 py-5 border-b border-slate-800 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
@@ -66,30 +70,26 @@
           </div>
         </div>
         <div class="p-6 grid gap-6 lg:grid-cols-3">
-          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm">
             <p class="text-slate-400">الهندسة</p>
             <p class="text-2xl font-semibold">94 موظف</p>
             <p class="text-xs text-emerald-300">+6 هذا الربع</p>
           </div>
-          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm">
             <p class="text-slate-400">المنتج</p>
             <p class="text-2xl font-semibold">42 موظف</p>
             <p class="text-xs text-emerald-300">+3 هذا الربع</p>
           </div>
-          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm">
             <p class="text-slate-400">المبيعات</p>
             <p class="text-2xl font-semibold">58 موظف</p>
             <p class="text-xs text-emerald-300">+1 هذا الربع</p>
-          </div>
-          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
-            <p class="text-slate-400">الدعم</p>
-            <p class="text-2xl font-semibold">36 موظف</p>
-            <p class="text-xs text-emerald-300">-2 بعد الأتمتة</p>
           </div>
           <div class="lg:col-span-3 h-56 rounded-xl border border-slate-800 bg-gradient-to-br from-lime-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط تراكمي</div>
         </div>
       </section>
 
+      <!-- قائمة الوظائف المفتوحة + نبض الموظفين -->
       <section class="grid gap-6 xl:grid-cols-3">
         <div class="xl:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80">
           <div class="px-6 py-5 border-b border-slate-800 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
@@ -125,17 +125,11 @@
                   <td>مراجعة محفظة</td>
                   <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">متوسطة</span></td>
                 </tr>
-                <tr class="hover:bg-slate-800/40">
-                  <td class="py-4">أخصائي نجاح العملاء</td>
-                  <td>الدعم</td>
-                  <td>9</td>
-                  <td>اختبار عملي</td>
-                  <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">منخفضة</span></td>
-                </tr>
               </tbody>
             </table>
           </div>
         </div>
+
         <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
           <h3 class="text-lg font-semibold">نبض الموظفين</h3>
           <div class="space-y-4 text-sm">
@@ -147,14 +141,11 @@
               <p class="font-semibold">مبادرات الرفاهية</p>
               <p class="text-slate-400 text-xs mt-1">إطلاق برنامج التدريب الذهني الأسبوع المقبل</p>
             </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">جلسات التطوير</p>
-              <p class="text-slate-400 text-xs mt-1">حجوزات 46 جلسة إرشاد فردي</p>
-            </div>
           </div>
         </div>
       </section>
 
+      <!-- مؤشرات الأداء -->
       <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>

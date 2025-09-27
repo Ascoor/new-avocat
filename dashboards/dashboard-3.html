@@ -3,213 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة مبيعات التجارة الإلكترونية</title>
+  <title>لوحة تجارة إلكترونية</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div class="min-h-screen">
-    <header class="border-b border-slate-800 bg-gradient-to-br from-amber-500/10 via-slate-950 to-slate-950">
-      <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Header -->
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">E</div>
         <div>
-          <p class="text-xs uppercase tracking-[0.4em] text-amber-300">Commerce Insight</p>
-          <h1 class="text-4xl font-bold">لوحة تحليلات المتجر الرقمي</h1>
-          <p class="text-slate-300 mt-3 max-w-2xl">
-            نظرة فورية على الطلبات، العائدات، وولاء العملاء عبر جميع القنوات الرقمية.
-          </p>
-        </div>
-        <div class="flex flex-wrap gap-3">
-          <button class="px-4 py-2 rounded-xl bg-slate-900 text-sm">نطاق مخصص</button>
-          <button class="px-4 py-2 rounded-xl bg-amber-500 text-sm text-slate-950 font-semibold">تحميل التقرير PDF</button>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
         </div>
       </div>
+      <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <span>فتح القائمة</span>
+      </button>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-10 space-y-10">
-      <section class="grid gap-6 lg:grid-cols-4">
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">إجمالي المبيعات</p>
-          <p class="mt-3 text-3xl font-semibold">$284K</p>
-          <p class="mt-2 text-emerald-400 text-sm">+18% مقارنة بالشهر الماضي</p>
-          <div class="mt-4 h-16 bg-gradient-to-r from-amber-500/20 via-amber-500/5 to-transparent rounded-xl"></div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">متوسط قيمة الطلب</p>
-          <p class="mt-3 text-3xl font-semibold">$86.50</p>
-          <p class="mt-2 text-emerald-400 text-sm">+7.2% نمو أسبوعي</p>
-          <div class="mt-4 flex items-center gap-2 text-xs text-slate-500">
-            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-200">متاجر التطبيق</span>
-            <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-200">الموقع</span>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">نسبة سلة الشراء</p>
-          <div class="mt-3 flex items-center gap-3">
-            <div class="h-14 w-14 rounded-full bg-amber-500/15 flex items-center justify-center">
-              <span class="text-xl font-semibold text-amber-300">42%</span>
-            </div>
-            <div class="space-y-1 text-xs text-slate-400">
-              <p>الهدف الشهري: 40%</p>
-              <p class="text-emerald-300">+3.4% بعد تحسين التجربة</p>
-            </div>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">العملاء المتكررون</p>
-          <p class="mt-3 text-3xl font-semibold">62%</p>
-          <p class="mt-2 text-emerald-400 text-sm">+5% خلال 90 يوم</p>
-          <div class="mt-4 flex -space-x-3 rtl:space-x-reverse">
-            <div class="h-10 w-10 rounded-full bg-emerald-500/10 border border-emerald-500/20"></div>
-            <div class="h-10 w-10 rounded-full bg-amber-500/10 border border-amber-500/20"></div>
-            <div class="h-10 w-10 rounded-full bg-rose-500/10 border border-rose-500/20"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="grid gap-6 lg:grid-cols-3">
-        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <div>
-              <h2 class="text-xl font-semibold">منحنى الإيرادات متعدد القنوات</h2>
-              <p class="text-sm text-slate-400">مقارنة بين الموقع، التطبيق، ومتجر السوق</p>
-            </div>
-            <div class="flex gap-3 text-sm">
-              <button class="px-4 py-2 rounded-xl bg-slate-800">7 أيام</button>
-              <button class="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-semibold">30 يوم</button>
-            </div>
-          </div>
-          <div class="h-64 rounded-xl border border-slate-800 bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">منطقة المخطط</div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">المنتجات الأعلى أداءً</h3>
-            <span class="text-xs text-slate-500">آخر تحديث قبل 3 دقائق</span>
-          </div>
-          <div class="space-y-4 text-sm">
-            <div class="flex items-center gap-3">
-              <div class="h-12 w-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20"></div>
-              <div class="flex-1">
-                <p class="font-semibold">سماعات Pro X</p>
-                <p class="text-xs text-slate-500">$84K مبيعات</p>
-              </div>
-              <span class="text-emerald-300">+22%</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <div class="h-12 w-12 rounded-xl bg-amber-500/10 border border-amber-500/20"></div>
-              <div class="flex-1">
-                <p class="font-semibold">ساعة ذكية</p>
-                <p class="text-xs text-slate-500">$61K مبيعات</p>
-              </div>
-              <span class="text-emerald-300">+18%</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <div class="h-12 w-12 rounded-xl bg-rose-500/10 border border-rose-500/20"></div>
-              <div class="flex-1">
-                <p class="font-semibold">حقيبة سفر</p>
-                <p class="text-xs text-slate-500">$47K مبيعات</p>
-              </div>
-              <span class="text-emerald-300">+9%</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 transition-transform duration-300 lg:static lg:translate-x-0">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">E</div>
           <div>
-            <h2 class="text-xl font-semibold">قنوات اكتساب العملاء</h2>
-            <p class="text-sm text-slate-400">تحليل الأداء للمصادر الرئيسية</p>
-          </div>
-          <div class="flex gap-3 text-sm">
-            <button class="px-4 py-2 rounded-xl bg-slate-800">شهر</button>
-            <button class="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-semibold">ربع</button>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4 text-sm">
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">إعلانات محركات البحث</p>
-            <p class="text-2xl font-semibold mt-2">$94K</p>
-            <p class="text-emerald-300 text-xs mt-1">+26% معدل العائد</p>
-          </div>
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">وسائل التواصل</p>
-            <p class="text-2xl font-semibold mt-2">$58K</p>
-            <p class="text-emerald-300 text-xs mt-1">+18% معدل التفاعل</p>
-          </div>
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">التسويق بالبريد</p>
-            <p class="text-2xl font-semibold mt-2">$36K</p>
-            <p class="text-emerald-300 text-xs mt-1">+8% معدل الفتح</p>
-          </div>
-          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
-            <p class="text-slate-400">الشراكات</p>
-            <p class="text-2xl font-semibold mt-2">$24K</p>
-            <p class="text-emerald-300 text-xs mt-1">+11% معدل التحويل</p>
-          </div>
-        </div>
-      </section>
+        <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+          إغلاق
+        </button>
+      </div>
+      <nav data-role="sidebar-nav" class="mt-6 space-y-2"></nav>
+    </aside>
 
-      <section class="grid gap-6 lg:grid-cols-3">
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">تقييمات العملاء</h3>
-            <span class="text-xs text-slate-500">آخر 24 ساعة</span>
-          </div>
-          <div class="space-y-4 text-sm">
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">منى القحطاني</p>
-              <p class="text-amber-300 text-xs">★★★★★</p>
-              <p class="text-slate-400 mt-1">خدمة التوصيل سريعة والمنتج مطابق للوصف!</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">أحمد الشمراني</p>
-              <p class="text-amber-300 text-xs">★★★★☆</p>
-              <p class="text-slate-400 mt-1">نحتاج المزيد من خيارات الشحن الدولي.</p>
-            </div>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
-          <h3 class="text-lg font-semibold">التحويل حسب الجهاز</h3>
-          <div class="space-y-4 text-sm">
-            <div class="flex items-center justify-between">
-              <p>الهاتف</p>
-              <div class="flex items-center gap-3">
-                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
-                  <div class="h-full w-[72%] bg-amber-400"></div>
-                </div>
-                <span class="text-emerald-300">72%</span>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <p>الويب</p>
-              <div class="flex items-center gap-3">
-                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
-                  <div class="h-full w-[54%] bg-emerald-400"></div>
-                </div>
-                <span class="text-emerald-300">54%</span>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <p>التطبيق اللوحي</p>
-              <div class="flex items-center gap-3">
-                <div class="h-2 w-24 bg-slate-800 rounded-full overflow-hidden">
-                  <div class="h-full w-[38%] bg-rose-400"></div>
-                </div>
-                <span class="text-emerald-300">38%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
-          <h3 class="text-lg font-semibold">معدل التخلي عن السلة</h3>
-          <div class="h-48 rounded-xl border border-slate-800 bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط دائري</div>
-          <p class="text-sm text-slate-400">تحسن بمقدار 6% بعد إضافة خيارات الدفع السريع.</p>
-        </div>
-      </section>
+    <!-- Main -->
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
     </main>
   </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: { title: { ar: 'لوحة تجارة إلكترونية', en: 'E-commerce Intelligence Dashboard' } },
+      brand: {
+        badge: 'E',
+        name: { ar: 'نبض التجارة', en: 'Commerce Pulse' },
+        tagline: { ar: 'تحليلات المبيعات وتجربة العملاء', en: 'Sales and experience analytics' }
+      },
+      theme: {
+        accentGradient: 'from-amber-500 via-orange-500 to-rose-500',
+        accentText: 'text-amber-200',
+        highlightBg: 'bg-amber-500/10 border-amber-400/30',
+        badgeBg: 'bg-amber-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        { id: 'overview', icon: 'shopping-bag', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'موسمي', en: 'Seasonal' } },
+        { id: 'sales', icon: 'chart-bar', label: { ar: 'المبيعات', en: 'Sales' } },
+        { id: 'marketing', icon: 'megaphone', label: { ar: 'التسويق', en: 'Marketing' } },
+        { id: 'fulfilment', icon: 'truck', label: { ar: 'التنفيذ والشحن', en: 'Fulfilment & shipping' } }
+      ],
+      highlight: {
+        label: { ar: 'إيرادات اليوم', en: 'Today’s revenue' },
+        value: '$482K',
+        description: { ar: 'حملة الصيف رفعت متوسط قيمة السلة 18%.', en: 'Summer campaign lifted order value 18%.' }
+      },
+      stats: [
+        { icon: 'shopping-bag', label: { ar: 'قيمة المبيعات اليومية', en: 'Daily sales value' }, value: '$482K', delta: { ar: '+14% مقارنة بالأسبوع الماضي', en: '+14% vs previous week' }, trend: 'positive' },
+        { icon: 'cursor-arrow', label: { ar: 'نسبة التحويل', en: 'Conversion rate' }, value: '3.9%', delta: { ar: '+0.6 نقطة عن المتوسط', en: '+0.6 pts above average' }, trend: 'positive' },
+        { icon: 'heart', label: { ar: 'متوسط قيمة السلة', en: 'Average order value' }, value: '$126', delta: { ar: '+18% بعد الحملات', en: '+18% after campaigns' }, trend: 'positive' },
+        { icon: 'truck', label: { ar: 'طلبات جاهزة للشحن', en: 'Orders ready to ship' }, value: '1,280', delta: { ar: 'تم تسليم 92% خلال 24 ساعة', en: '92% delivered within 24h' }, trend: 'positive' }
+      ]
+    });
+  </script>
 </body>
 </html>

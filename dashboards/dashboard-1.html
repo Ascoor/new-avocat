@@ -5,300 +5,140 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>لوحة تحليلات النمو</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100"> 
-  <div class="min-h-screen">
-    <div class="lg:hidden flex items-center justify-between border-b border-slate-800 bg-slate-900/80 px-4 py-4">
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-lg font-bold">G</div>
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">G</div>
         <div>
-          <p class="font-semibold">Growth Metrics</p>
-          <p class="text-slate-400 text-xs">لوحة تحليلات النمو</p>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
         </div>
       </div>
-      <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-        <span>فتح القائمة</span>
-      </button>
-    </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
 
-    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-slate-950/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+    <!-- Mobile Backdrop -->
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
-    <div class="lg:flex lg:flex-row">
-      <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-72 overflow-y-auto border-l border-slate-800 bg-slate-900/95 p-6 space-y-8 transform translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-sm lg:static lg:translate-x-0 lg:bg-slate-900 lg:shadow-none">
-        <div class="flex items-start justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xl font-bold">G</div>
-            <div>
-              <p class="font-semibold text-lg">Growth Metrics</p>
-              <p class="text-slate-400 text-sm">لوحة تحليلات النمو</p>
-            </div>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">G</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
-          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-1 rounded-xl border border-slate-700 px-3 py-2 text-xs text-slate-300">
-            <span>إغلاق</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-        <nav class="space-y-1 text-sm">
-          <a class="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/60" href="#overview">
-            <span>نظرة عامة</span>
-            <span class="text-indigo-300">•</span>
-          </a>
-          <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#trends">
-            <span>الاتجاهات</span>
-            <span class="text-slate-600">→</span>
-          </a>
-          <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#segments">
-            <span>شرائح المستخدمين</span>
-            <span class="text-slate-600">→</span>
-          </a>
-          <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#retention">
-            <span>الاحتفاظ</span>
-            <span class="text-slate-600">→</span>
-          </a>
-        </nav>
-        <div class="bg-slate-800/50 rounded-2xl p-4">
-          <p class="text-sm text-slate-400">خطة العمل</p>
-          <p class="text-lg font-semibold text-white mt-2">+32% نمو خلال الربع الحالي</p>
-          <p class="text-sm text-slate-400 mt-2">قم بتحسين مسار التحويل مع حملات مستهدفة جديدة.</p>
-        </div>
-      </aside>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
 
-      <main class="flex-1 p-6 lg:p-10 space-y-8 lg:pr-10"> 
-      <header class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 class="text-3xl font-bold">نظرة عامة على النمو</h1>
-          <p class="text-slate-400">متابعة مؤشرات الأداء الرئيسية للشهر الحالي</p>
-        </div>
-        <div class="flex flex-wrap gap-3">
-          <button class="px-4 py-2 rounded-xl bg-slate-800 text-slate-200">آخر 30 يوم</button>
-          <button class="px-4 py-2 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/30">تقرير مخصص</button>
-        </div>
-      </header>
-
-      <section id="overview" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">مستخدمون نشطون</p>
-          <p class="mt-3 text-3xl font-semibold">128,940</p>
-          <p class="mt-2 text-emerald-400 text-sm">+6.4% من الأسبوع الماضي</p>
-          <div class="mt-4 h-16 rounded-xl bg-gradient-to-r from-indigo-500/20 via-indigo-500/10 to-transparent"></div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">نسبة التحويل</p>
-          <p class="mt-3 text-3xl font-semibold">4.87%</p>
-          <p class="mt-2 text-emerald-400 text-sm">+0.42 نقطة مئوية</p>
-          <div class="mt-4 flex items-center gap-2">
-            <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
-              <div class="h-full w-4/5 bg-indigo-500"></div>
-            </div>
-            <span class="text-xs text-slate-400">هدف 6%</span>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">قيمة عمر العميل</p>
-          <p class="mt-3 text-3xl font-semibold">$1,240</p>
-          <p class="mt-2 text-amber-400 text-sm">+12% نمو سنوي</p>
-          <div class="mt-4 grid grid-cols-5 gap-2 text-center text-xs text-slate-500">
-            <span class="py-2 bg-slate-800 rounded-lg">Q1</span>
-            <span class="py-2 bg-indigo-500/40 text-indigo-100 rounded-lg">Q2</span>
-            <span class="py-2 bg-indigo-500/60 text-indigo-100 rounded-lg">Q3</span>
-            <span class="py-2 bg-indigo-500/80 text-indigo-100 rounded-lg">Q4</span>
-            <span class="py-2 bg-slate-800 rounded-lg">Q1</span>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
-          <p class="text-sm text-slate-400">صافي نقاط الترويج</p>
-          <p class="mt-3 text-3xl font-semibold">68</p>
-          <p class="mt-2 text-emerald-400 text-sm">+4 نقاط خلال الشهر</p>
-          <div class="mt-4 flex items-center gap-4">
-            <div class="h-14 w-14 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-lg font-bold">82%</div>
-            <p class="text-xs text-slate-400">العملاء المروجين ارتفعوا بعد إطلاق تجربة الترحيب.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="trends" class="grid gap-6 lg:grid-cols-3">
-        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-          <div class="flex items-center justify-between mb-6">
-            <div>
-              <h2 class="text-xl font-semibold">منحنى النمو الأسبوعي</h2>
-              <p class="text-slate-400 text-sm">معدل النمو مقابل معدل الزوار الجدد</p>
-            </div>
-            <button class="px-4 py-2 text-sm rounded-xl bg-slate-800">تصدير CSV</button>
-          </div>
-          <div class="h-60 rounded-xl bg-gradient-to-br from-indigo-500/10 via-slate-900 to-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">مخطط خطي</div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-6">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">أهم القنوات</h3>
-            <span class="text-xs text-slate-500">آخر تحديث 5 دقائق</span>
-          </div>
-          <div class="space-y-4 text-sm">
-            <div class="flex items-center gap-3">
-              <span class="h-2 w-2 rounded-full bg-indigo-400"></span>
-              <p class="flex-1">إعلانات البحث</p>
-              <span class="text-emerald-400">46%</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="h-2 w-2 rounded-full bg-purple-400"></span>
-              <p class="flex-1">الإحالات</p>
-              <span class="text-emerald-400">32%</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="h-2 w-2 rounded-full bg-amber-400"></span>
-              <p class="flex-1">وسائل التواصل</p>
-              <span class="text-emerald-400">18%</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="h-2 w-2 rounded-full bg-rose-400"></span>
-              <p class="flex-1">البريد الإلكتروني</p>
-              <span class="text-emerald-400">12%</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="segments" class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
-          <div>
-            <h2 class="text-xl font-semibold">شرائح المستخدمين النشطة</h2>
-            <p class="text-sm text-slate-400">أهم الشرائح التي تساهم في الإيرادات</p>
-          </div>
-          <div class="flex gap-3">
-            <button class="px-4 py-2 rounded-xl bg-slate-800 text-slate-200">الشهر</button>
-            <button class="px-4 py-2 rounded-xl bg-indigo-500 text-white">الربع</button>
-          </div>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full min-w-[640px] text-sm">
-            <thead>
-              <tr class="text-slate-400">
-                <th class="text-right font-medium pb-3">الشريحة</th>
-                <th class="text-right font-medium pb-3">المستخدمون</th>
-                <th class="text-right font-medium pb-3">القيمة الدورية</th>
-                <th class="text-right font-medium pb-3">نمو 30 يوم</th>
-                <th class="text-right font-medium pb-3">الحالة</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-800">
-              <tr class="hover:bg-slate-800/40">
-                <td class="py-4">فرق المنتجات الناشئة</td>
-                <td>24,870</td>
-                <td>$420K</td>
-                <td class="text-emerald-400">+14%</td>
-                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300">متسارع</span></td>
-              </tr>
-              <tr class="hover:bg-slate-800/40">
-                <td class="py-4">وكالات التسويق</td>
-                <td>12,430</td>
-                <td>$180K</td>
-                <td class="text-emerald-400">+9%</td>
-                <td><span class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300">مستقر</span></td>
-              </tr>
-              <tr class="hover:bg-slate-800/40">
-                <td class="py-4">الشركات التقنية الكبرى</td>
-                <td>7,320</td>
-                <td>$310K</td>
-                <td class="text-amber-400">+3%</td>
-                <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300">يحتاج تحفيز</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="retention" class="grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-6">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold">تحليل الاحتفاظ</h3>
-            <span class="text-xs text-slate-500">آخر تحديث 2 دقائق</span>
-          </div>
-          <div class="h-56 rounded-xl bg-gradient-to-br from-indigo-500/10 via-slate-900 to-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">مخطط احتفاظ</div>
-          <div class="grid grid-cols-2 gap-4 text-sm">
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="text-slate-400">اليوم 7</p>
-              <p class="text-xl font-semibold">42%</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="text-slate-400">اليوم 30</p>
-              <p class="text-xl font-semibold">28%</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="text-slate-400">اليوم 60</p>
-              <p class="text-xl font-semibold">19%</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="text-slate-400">التجديدات</p>
-              <p class="text-xl font-semibold text-emerald-400">+8%</p>
-            </div>
-          </div>
-        </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-4">
-          <h3 class="text-lg font-semibold">ملاحظات العملاء الأخيرة</h3>
-          <div class="space-y-4 text-sm">
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">"منصة رائعة"</p>
-              <p class="text-slate-400 mt-1">تم تحسين تجربة الإعداد بشكل كبير، مما ساعدنا على إطلاق حملات أسرع.</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">"نحتاج تكاملات إضافية"</p>
-              <p class="text-slate-400 mt-1">اقتراح بإضافة تكامل مع Slack لمتابعة التنبيهات.</p>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-800/60">
-              <p class="font-semibold">"واجهة سهلة"</p>
-              <p class="text-slate-400 mt-1">لوحة التحكم واضحة وتعرض البيانات التي نحتاجها فورًا.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    <!-- Main -->
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
     </main>
-  </div> 
+  </div>
 
+  <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const sidebar = document.getElementById('sidebar');
-      const toggle = document.getElementById('sidebarToggle');
-      const close = document.getElementById('sidebarClose');
-      const backdrop = document.getElementById('sidebarBackdrop');
-      const body = document.body;
-
-      if (!sidebar || !toggle || !close || !backdrop) {
-        return;
-      }
-
-      const openSidebar = () => {
-        sidebar.classList.remove('translate-x-full');
-        backdrop.classList.remove('opacity-0', 'pointer-events-none');
-        backdrop.classList.add('opacity-100');
-        body.classList.add('overflow-hidden');
-      };
-
-      const closeSidebar = () => {
-        sidebar.classList.add('translate-x-full');
-        backdrop.classList.add('opacity-0', 'pointer-events-none');
-        backdrop.classList.remove('opacity-100');
-        body.classList.remove('overflow-hidden');
-      };
-
-      toggle.addEventListener('click', openSidebar);
-      close.addEventListener('click', closeSidebar);
-      backdrop.addEventListener('click', closeSidebar);
-
-      window.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-          closeSidebar();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة تحليلات النمو',
+          en: 'Growth Analytics Dashboard'
         }
-      });
-    })();
+      },
+      actions: {
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' }
+      },
+      brand: {
+        badge: 'G',
+        name: { ar: 'مؤشرات النمو', en: 'Growth Metrics' },
+        tagline: { ar: 'لوحة أداء الشركات الناشئة', en: 'Startup performance cockpit' }
+      },
+      theme: {
+        accentGradient: 'from-indigo-500 via-purple-500 to-blue-500',
+        accentText: 'text-indigo-300',
+        highlightBg: 'bg-indigo-500/10 border-indigo-500/20',
+        badgeBg: 'bg-indigo-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مباشر', en: 'Live' } },
+        { id: 'acquisition', icon: 'cursor-arrow', label: { ar: 'الاكتساب', en: 'Acquisition' } },
+        { id: 'segments', icon: 'users', label: { ar: 'شرائح العملاء', en: 'Customer Segments' } },
+        { id: 'retention', icon: 'sparkles', label: { ar: 'الاحتفاظ', en: 'Retention' } }
+      ],
+      highlight: {
+        label: { ar: 'نمو ربع سنوي', en: 'Quarterly growth' },
+        value: '+32%',
+        description: {
+          ar: 'الحملات المخصصة رفعت التسجيلات وتحويلات القنوات المدفوعة.',
+          en: 'Personalised campaigns boosted signups and paid channel conversions.'
+        }
+      },
+      header: {
+        title: { ar: 'لوحة تحليلات النمو', en: 'Growth analytics dashboard' },
+        subtitle: { ar: 'تتبع مؤشرات الأداء الرئيسية ومصادر النمو في الوقت الفعلي.', en: 'Monitor key KPIs and growth sources in real time.' },
+        primary: { ar: 'إنشاء تقرير تنفيذي', en: 'Create executive report' },
+        secondary: { ar: 'آخر 30 يوماً', en: 'Last 30 days' }
+      },
+      stats: [
+        { icon: 'users', label: { ar: 'مستخدمون نشطون', en: 'Active users' }, value: '128,940', delta: { ar: '+6.4% مقارنة بالأسبوع الماضي', en: '+6.4% vs last week' }, trend: 'positive' },
+        { icon: 'cursor-arrow', label: { ar: 'نسبة التحويل', en: 'Conversion rate' }, value: '4.87%', delta: { ar: '+0.42 نقطة مئوية', en: '+0.42 percentage points' }, trend: 'positive' },
+        { icon: 'sparkles', label: { ar: 'قيمة عمر العميل', en: 'Customer lifetime value' }, value: '$1,240', delta: { ar: '+12% نمو سنوي', en: '+12% YoY growth' }, trend: 'positive' },
+        { icon: 'chart-bar', label: { ar: 'صافي نقاط الترويج', en: 'Net promoter score' }, value: '68', delta: { ar: '+4 نقاط خلال الشهر', en: '+4 points this month' }, trend: 'positive' }
+      ],
+      panels: [
+        { id: 'overview', type: 'chart', span: 'xl:col-span-2', title: { ar: 'منحنى النمو الأسبوعي', en: 'Weekly growth curve' }, subtitle: { ar: 'مقارنة الاكتساب والاحتفاظ عبر القنوات الأساسية.', en: 'Acquisition vs retention across primary channels.' }, action: { ar: 'تحميل CSV', en: 'Download CSV' }, placeholder: { ar: 'مخطط موجه', en: 'Insightful chart' } },
+        { id: 'channels', type: 'list', title: { ar: 'أفضل القنوات', en: 'Top channels' }, action: { ar: 'تحديث قبل 5 دقائق', en: 'Updated 5 minutes ago' }, items: [
+          { icon: 'megaphone', title: { ar: 'إعلانات البحث', en: 'Search ads' }, subtitle: { ar: 'تكلفة الاكتساب 12.4$', en: 'Acquisition cost $12.4' }, value: '46%', delta: { ar: '+5% نمو', en: '+5% growth' } },
+          { icon: 'sparkles', title: { ar: 'الإحالات', en: 'Referrals' }, subtitle: { ar: 'تجربة ترحيب جديدة', en: 'New welcome experience' }, value: '32%', delta: { ar: '+8% نمو', en: '+8% growth' } },
+          { icon: 'tv', title: { ar: 'وسائل التواصل', en: 'Social media' }, subtitle: { ar: 'حملات المؤثرين', en: 'Influencer campaigns' }, value: '18%', delta: { ar: '+2% نمو', en: '+2% growth' } }
+        ]},
+        { id: 'journey', type: 'progress', title: { ar: 'رحلة التحويل', en: 'Conversion journey' }, items: [
+          { title: { ar: 'زيارة الصفحة المقصودة', en: 'Landing page visit' }, subtitle: { ar: 'زمن تحميل أقل من 1.2 ثانية', en: 'Load time under 1.2s' }, value: '82%', percent: '82%' },
+          { title: { ar: 'التسجيل التجريبي', en: 'Trial signup' }, subtitle: { ar: 'اختبار A/B للعرض', en: 'Offer A/B testing' }, value: '47%', percent: '47%' },
+          { title: { ar: 'التحويل المدفوع', en: 'Paid conversion' }, subtitle: { ar: 'تحفيز الترقيات السنوية', en: 'Incentivise annual upgrades' }, value: '22%', percent: '22%' }
+        ]},
+        { id: 'milestones', type: 'timeline', span: 'xl:col-span-3', title: { ar: 'أحداث رئيسية', en: 'Key milestones' }, items: [
+          { icon: 'sparkles', title: { ar: 'إطلاق لوحة القيادة الجديدة', en: 'New dashboard launch' }, subtitle: { ar: 'رفع تفاعل العملاء 18%', en: 'Raised customer engagement by 18%' }, time: { ar: 'قبل ساعتين', en: '2 hours ago' } },
+          { icon: 'users', title: { ar: 'تجزئة جمهور جديدة', en: 'New audience cohort' }, subtitle: { ar: 'تمت إضافة شريحة مستخدمين مخلصين', en: 'Loyal user segment added' }, time: { ar: 'اليوم', en: 'Today' } },
+          { icon: 'chart-bar', title: { ar: 'إنجاز هدف النمو', en: 'Growth target reached' }, subtitle: { ar: 'تحقيق هدف MRR للأسبوع', en: 'Met weekly MRR target' }, time: { ar: 'أمس', en: 'Yesterday' } }
+        ]}
+      ]
+    });
   </script>
- 
 </body>
 </html>
