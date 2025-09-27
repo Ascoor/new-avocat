@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تحليلات النمو</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <aside class="w-full lg:w-72 bg-slate-900 border-b lg:border-b-0 lg:border-l border-slate-800 p-6 space-y-8">
+      <div class="flex items-center gap-3">
+        <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xl font-bold">G</div>
+        <div>
+          <p class="font-semibold text-lg">Growth Metrics</p>
+          <p class="text-slate-400 text-sm">لوحة تحليلات النمو</p>
+        </div>
+      </div>
+      <nav class="space-y-1 text-sm">
+        <a class="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/60" href="#overview">
+          <span>نظرة عامة</span>
+          <span class="text-indigo-300">•</span>
+        </a>
+        <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#trends">
+          <span>الاتجاهات</span>
+          <span class="text-slate-600">→</span>
+        </a>
+        <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#segments">
+          <span>شرائح المستخدمين</span>
+          <span class="text-slate-600">→</span>
+        </a>
+        <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#retention">
+          <span>الاحتفاظ</span>
+          <span class="text-slate-600">→</span>
+        </a>
+      </nav>
+      <div class="bg-slate-800/50 rounded-2xl p-4">
+        <p class="text-sm text-slate-400">خطة العمل</p>
+        <p class="text-lg font-semibold text-white mt-2">+32% نمو خلال الربع الحالي</p>
+        <p class="text-sm text-slate-400 mt-2">قم بتحسين مسار التحويل مع حملات مستهدفة جديدة.</p>
+      </div>
+    </aside>
+
+    <main class="flex-1 p-6 lg:p-10 space-y-8">
+      <header class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold">نظرة عامة على النمو</h1>
+          <p class="text-slate-400">متابعة مؤشرات الأداء الرئيسية للشهر الحالي</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-slate-200">آخر 30 يوم</button>
+          <button class="px-4 py-2 rounded-xl bg-indigo-500 text-white shadow-lg shadow-indigo-500/30">تقرير مخصص</button>
+        </div>
+      </header>
+
+      <section id="overview" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">مستخدمون نشطون</p>
+          <p class="mt-3 text-3xl font-semibold">128,940</p>
+          <p class="mt-2 text-emerald-400 text-sm">+6.4% من الأسبوع الماضي</p>
+          <div class="mt-4 h-16 rounded-xl bg-gradient-to-r from-indigo-500/20 via-indigo-500/10 to-transparent"></div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">نسبة التحويل</p>
+          <p class="mt-3 text-3xl font-semibold">4.87%</p>
+          <p class="mt-2 text-emerald-400 text-sm">+0.42 نقطة مئوية</p>
+          <div class="mt-4 flex items-center gap-2">
+            <div class="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full w-4/5 bg-indigo-500"></div>
+            </div>
+            <span class="text-xs text-slate-400">هدف 6%</span>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">قيمة عمر العميل</p>
+          <p class="mt-3 text-3xl font-semibold">$1,240</p>
+          <p class="mt-2 text-amber-400 text-sm">+12% نمو سنوي</p>
+          <div class="mt-4 grid grid-cols-5 gap-2 text-center text-xs text-slate-500">
+            <span class="py-2 bg-slate-800 rounded-lg">Q1</span>
+            <span class="py-2 bg-indigo-500/40 text-indigo-100 rounded-lg">Q2</span>
+            <span class="py-2 bg-indigo-500/60 text-indigo-100 rounded-lg">Q3</span>
+            <span class="py-2 bg-indigo-500/80 text-indigo-100 rounded-lg">Q4</span>
+            <span class="py-2 bg-slate-800 rounded-lg">Q1</span>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">صافي نقاط الترويج</p>
+          <p class="mt-3 text-3xl font-semibold">68</p>
+          <p class="mt-2 text-emerald-400 text-sm">+4 نقاط خلال الشهر</p>
+          <div class="mt-4 flex items-center gap-4">
+            <div class="h-14 w-14 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-lg font-bold">82%</div>
+            <p class="text-xs text-slate-400">العملاء المروجين ارتفعوا بعد إطلاق تجربة الترحيب.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="trends" class="grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h2 class="text-xl font-semibold">منحنى النمو الأسبوعي</h2>
+              <p class="text-slate-400 text-sm">معدل النمو مقابل معدل الزوار الجدد</p>
+            </div>
+            <button class="px-4 py-2 text-sm rounded-xl bg-slate-800">تصدير CSV</button>
+          </div>
+          <div class="h-60 rounded-xl bg-gradient-to-br from-indigo-500/10 via-slate-900 to-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">مخطط خطي</div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">أهم القنوات</h3>
+            <span class="text-xs text-slate-500">آخر تحديث 5 دقائق</span>
+          </div>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center gap-3">
+              <span class="h-2 w-2 rounded-full bg-indigo-400"></span>
+              <p class="flex-1">إعلانات البحث</p>
+              <span class="text-emerald-400">46%</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="h-2 w-2 rounded-full bg-purple-400"></span>
+              <p class="flex-1">الإحالات</p>
+              <span class="text-emerald-400">32%</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+              <p class="flex-1">وسائل التواصل</p>
+              <span class="text-emerald-400">18%</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="h-2 w-2 rounded-full bg-rose-400"></span>
+              <p class="flex-1">البريد الإلكتروني</p>
+              <span class="text-emerald-400">12%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="segments" class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold">شرائح المستخدمين النشطة</h2>
+            <p class="text-sm text-slate-400">أهم الشرائح التي تساهم في الإيرادات</p>
+          </div>
+          <div class="flex gap-3">
+            <button class="px-4 py-2 rounded-xl bg-slate-800 text-slate-200">الشهر</button>
+            <button class="px-4 py-2 rounded-xl bg-indigo-500 text-white">الربع</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[640px] text-sm">
+            <thead>
+              <tr class="text-slate-400">
+                <th class="text-right font-medium pb-3">الشريحة</th>
+                <th class="text-right font-medium pb-3">المستخدمون</th>
+                <th class="text-right font-medium pb-3">القيمة الدورية</th>
+                <th class="text-right font-medium pb-3">نمو 30 يوم</th>
+                <th class="text-right font-medium pb-3">الحالة</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800">
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4">فرق المنتجات الناشئة</td>
+                <td>24,870</td>
+                <td>$420K</td>
+                <td class="text-emerald-400">+14%</td>
+                <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300">متسارع</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4">وكالات التسويق</td>
+                <td>12,430</td>
+                <td>$180K</td>
+                <td class="text-emerald-400">+9%</td>
+                <td><span class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300">مستقر</span></td>
+              </tr>
+              <tr class="hover:bg-slate-800/40">
+                <td class="py-4">الشركات التقنية الكبرى</td>
+                <td>7,320</td>
+                <td>$310K</td>
+                <td class="text-amber-400">+3%</td>
+                <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300">يحتاج تحفيز</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="retention" class="grid gap-6 lg:grid-cols-2">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold">تحليل الاحتفاظ</h3>
+            <span class="text-xs text-slate-500">آخر تحديث 2 دقائق</span>
+          </div>
+          <div class="h-56 rounded-xl bg-gradient-to-br from-indigo-500/10 via-slate-900 to-slate-900 border border-slate-800 flex items-center justify-center text-slate-500">مخطط احتفاظ</div>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">اليوم 7</p>
+              <p class="text-xl font-semibold">42%</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">اليوم 30</p>
+              <p class="text-xl font-semibold">28%</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">اليوم 60</p>
+              <p class="text-xl font-semibold">19%</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="text-slate-400">التجديدات</p>
+              <p class="text-xl font-semibold text-emerald-400">+8%</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-4">
+          <h3 class="text-lg font-semibold">ملاحظات العملاء الأخيرة</h3>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">"منصة رائعة"</p>
+              <p class="text-slate-400 mt-1">تم تحسين تجربة الإعداد بشكل كبير، مما ساعدنا على إطلاق حملات أسرع.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">"نحتاج تكاملات إضافية"</p>
+              <p class="text-slate-400 mt-1">اقتراح بإضافة تكامل مع Slack لمتابعة التنبيهات.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">"واجهة سهلة"</p>
+              <p class="text-slate-400 mt-1">لوحة التحكم واضحة وتعرض البيانات التي نحتاجها فورًا.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
