@@ -10,42 +10,69 @@
     body { font-family: 'Cairo', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100">
-  <div class="min-h-screen flex flex-col lg:flex-row">
-    <aside class="w-full lg:w-72 bg-slate-900 border-b lg:border-b-0 lg:border-l border-slate-800 p-6 space-y-8">
+<body class="bg-slate-950 text-slate-100"> 
+  <div class="min-h-screen">
+    <div class="lg:hidden flex items-center justify-between border-b border-slate-800 bg-slate-900/80 px-4 py-4">
       <div class="flex items-center gap-3">
-        <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xl font-bold">G</div>
+        <div class="h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-lg font-bold">G</div>
         <div>
-          <p class="font-semibold text-lg">Growth Metrics</p>
-          <p class="text-slate-400 text-sm">لوحة تحليلات النمو</p>
+          <p class="font-semibold">Growth Metrics</p>
+          <p class="text-slate-400 text-xs">لوحة تحليلات النمو</p>
         </div>
       </div>
-      <nav class="space-y-1 text-sm">
-        <a class="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/60" href="#overview">
-          <span>نظرة عامة</span>
-          <span class="text-indigo-300">•</span>
-        </a>
-        <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#trends">
-          <span>الاتجاهات</span>
-          <span class="text-slate-600">→</span>
-        </a>
-        <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#segments">
-          <span>شرائح المستخدمين</span>
-          <span class="text-slate-600">→</span>
-        </a>
-        <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#retention">
-          <span>الاحتفاظ</span>
-          <span class="text-slate-600">→</span>
-        </a>
-      </nav>
-      <div class="bg-slate-800/50 rounded-2xl p-4">
-        <p class="text-sm text-slate-400">خطة العمل</p>
-        <p class="text-lg font-semibold text-white mt-2">+32% نمو خلال الربع الحالي</p>
-        <p class="text-sm text-slate-400 mt-2">قم بتحسين مسار التحويل مع حملات مستهدفة جديدة.</p>
-      </div>
-    </aside>
+      <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <span>فتح القائمة</span>
+      </button>
+    </div>
 
-    <main class="flex-1 p-6 lg:p-10 space-y-8">
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-slate-950/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <div class="lg:flex lg:flex-row">
+      <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-72 overflow-y-auto border-l border-slate-800 bg-slate-900/95 p-6 space-y-8 transform translate-x-full transition-transform duration-300 ease-in-out backdrop-blur-sm lg:static lg:translate-x-0 lg:bg-slate-900 lg:shadow-none">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xl font-bold">G</div>
+            <div>
+              <p class="font-semibold text-lg">Growth Metrics</p>
+              <p class="text-slate-400 text-sm">لوحة تحليلات النمو</p>
+            </div>
+          </div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-1 rounded-xl border border-slate-700 px-3 py-2 text-xs text-slate-300">
+            <span>إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <nav class="space-y-1 text-sm">
+          <a class="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/60" href="#overview">
+            <span>نظرة عامة</span>
+            <span class="text-indigo-300">•</span>
+          </a>
+          <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#trends">
+            <span>الاتجاهات</span>
+            <span class="text-slate-600">→</span>
+          </a>
+          <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#segments">
+            <span>شرائح المستخدمين</span>
+            <span class="text-slate-600">→</span>
+          </a>
+          <a class="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-slate-800/40 transition" href="#retention">
+            <span>الاحتفاظ</span>
+            <span class="text-slate-600">→</span>
+          </a>
+        </nav>
+        <div class="bg-slate-800/50 rounded-2xl p-4">
+          <p class="text-sm text-slate-400">خطة العمل</p>
+          <p class="text-lg font-semibold text-white mt-2">+32% نمو خلال الربع الحالي</p>
+          <p class="text-sm text-slate-400 mt-2">قم بتحسين مسار التحويل مع حملات مستهدفة جديدة.</p>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-6 lg:p-10 space-y-8 lg:pr-10"> 
       <header class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 class="text-3xl font-bold">نظرة عامة على النمو</h1>
@@ -233,6 +260,45 @@
         </div>
       </section>
     </main>
-  </div>
+  </div> 
+
+  <script>
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const toggle = document.getElementById('sidebarToggle');
+      const close = document.getElementById('sidebarClose');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const body = document.body;
+
+      if (!sidebar || !toggle || !close || !backdrop) {
+        return;
+      }
+
+      const openSidebar = () => {
+        sidebar.classList.remove('translate-x-full');
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100');
+        body.classList.add('overflow-hidden');
+      };
+
+      const closeSidebar = () => {
+        sidebar.classList.add('translate-x-full');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+        backdrop.classList.remove('opacity-100');
+        body.classList.remove('overflow-hidden');
+      };
+
+      toggle.addEventListener('click', openSidebar);
+      close.addEventListener('click', closeSidebar);
+      backdrop.addEventListener('click', closeSidebar);
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeSidebar();
+        }
+      });
+    })();
+  </script>
+ 
 </body>
 </html>
