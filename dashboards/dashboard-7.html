@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة الموارد البشرية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col">
+    <header class="border-b border-slate-800 bg-gradient-to-r from-lime-500/10 via-slate-950 to-slate-950">
+      <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p class="text-xs uppercase tracking-[0.4em] text-lime-300">People Vision</p>
+          <h1 class="text-3xl font-bold">لوحة الموارد البشرية الشاملة</h1>
+          <p class="text-slate-300 mt-2">مؤشرات الأداء، الحضور، والتوظيف في واجهة واحدة.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">إضافة موظف</button>
+          <button class="px-4 py-2 rounded-xl bg-lime-500 text-sm text-slate-950 font-semibold">تحميل التقرير</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-10 space-y-8">
+      <section class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">عدد الموظفين</p>
+          <p class="mt-3 text-3xl font-semibold">268</p>
+          <p class="mt-2 text-emerald-300 text-sm">+12 تعيين جديد</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">معدل الحضور</p>
+          <div class="mt-3 flex items-center gap-3">
+            <div class="h-14 w-14 rounded-full bg-lime-500/15 flex items-center justify-center">
+              <span class="text-xl font-semibold text-lime-200">96%</span>
+            </div>
+            <p class="text-xs text-slate-500">تحسن بنسبة 4% هذا الشهر</p>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">نسبة الدوران</p>
+          <p class="mt-3 text-3xl font-semibold text-amber-300">7.4%</p>
+          <p class="mt-2 text-xs text-slate-500">أقل من متوسط الصناعة</p>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-5">
+          <p class="text-sm text-slate-400">برامج التدريب</p>
+          <p class="mt-3 text-3xl font-semibold">18</p>
+          <p class="mt-2 text-emerald-300 text-sm">معدل إكمال 82%</p>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/80">
+        <div class="px-6 py-5 border-b border-slate-800 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 class="text-xl font-semibold">مخطط القوى العاملة</h2>
+            <p class="text-sm text-slate-400">توزيع الموظفين حسب الإدارات</p>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <button class="px-4 py-2 rounded-xl bg-slate-800">السنة الحالية</button>
+            <button class="px-4 py-2 rounded-xl bg-lime-500 text-slate-950 font-semibold">السنة الماضية</button>
+          </div>
+        </div>
+        <div class="p-6 grid gap-6 lg:grid-cols-3">
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
+            <p class="text-slate-400">الهندسة</p>
+            <p class="text-2xl font-semibold">94 موظف</p>
+            <p class="text-xs text-emerald-300">+6 هذا الربع</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
+            <p class="text-slate-400">المنتج</p>
+            <p class="text-2xl font-semibold">42 موظف</p>
+            <p class="text-xs text-emerald-300">+3 هذا الربع</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
+            <p class="text-slate-400">المبيعات</p>
+            <p class="text-2xl font-semibold">58 موظف</p>
+            <p class="text-xs text-emerald-300">+1 هذا الربع</p>
+          </div>
+          <div class="rounded-xl border border-slate-800/60 bg-slate-900/60 p-4 text-sm space-y-2">
+            <p class="text-slate-400">الدعم</p>
+            <p class="text-2xl font-semibold">36 موظف</p>
+            <p class="text-xs text-emerald-300">-2 بعد الأتمتة</p>
+          </div>
+          <div class="lg:col-span-3 h-56 rounded-xl border border-slate-800 bg-gradient-to-br from-lime-500/10 via-slate-900 to-slate-900 flex items-center justify-center text-slate-500">مخطط تراكمي</div>
+        </div>
+      </section>
+
+      <section class="grid gap-6 xl:grid-cols-3">
+        <div class="xl:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/80">
+          <div class="px-6 py-5 border-b border-slate-800 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 class="text-xl font-semibold">قائمة التوظيف المفتوحة</h2>
+              <p class="text-sm text-slate-400">الحالة الراهنة للوظائف</p>
+            </div>
+            <button class="px-4 py-2 rounded-xl bg-slate-800 text-sm">تصدير</button>
+          </div>
+          <div class="p-6 overflow-x-auto">
+            <table class="w-full min-w-[720px] text-sm">
+              <thead>
+                <tr class="text-slate-400">
+                  <th class="text-right pb-3 font-medium">المسمى الوظيفي</th>
+                  <th class="text-right pb-3 font-medium">الفريق</th>
+                  <th class="text-right pb-3 font-medium">عدد المرشحين</th>
+                  <th class="text-right pb-3 font-medium">المرحلة</th>
+                  <th class="text-right pb-3 font-medium">الأولوية</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800">
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-4">قائد فريق الهندسة</td>
+                  <td>الهندسة</td>
+                  <td>12</td>
+                  <td>مقابلات نهائية</td>
+                  <td><span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-200">عاجلة</span></td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-4">مصمم تجربة المستخدم</td>
+                  <td>المنتج</td>
+                  <td>18</td>
+                  <td>مراجعة محفظة</td>
+                  <td><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200">متوسطة</span></td>
+                </tr>
+                <tr class="hover:bg-slate-800/40">
+                  <td class="py-4">أخصائي نجاح العملاء</td>
+                  <td>الدعم</td>
+                  <td>9</td>
+                  <td>اختبار عملي</td>
+                  <td><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200">منخفضة</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 space-y-5">
+          <h3 class="text-lg font-semibold">نبض الموظفين</h3>
+          <div class="space-y-4 text-sm">
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">استبيان الرضا</p>
+              <p class="text-slate-400 text-xs mt-1">معدل استجابة 78% - الموضوع: التوازن الوظيفي</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">مبادرات الرفاهية</p>
+              <p class="text-slate-400 text-xs mt-1">إطلاق برنامج التدريب الذهني الأسبوع المقبل</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-800/60">
+              <p class="font-semibold">جلسات التطوير</p>
+              <p class="text-slate-400 text-xs mt-1">حجوزات 46 جلسة إرشاد فردي</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-semibold">مؤشرات الأداء الرئيسية</h2>
+            <p class="text-sm text-slate-400">تتبع أهداف الموارد البشرية</p>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <button class="px-4 py-2 rounded-xl bg-slate-800">ربع</button>
+            <button class="px-4 py-2 rounded-xl bg-lime-500 text-slate-950 font-semibold">سنة</button>
+          </div>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4 text-sm">
+          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
+            <p class="text-slate-400">زمن التوظيف</p>
+            <p class="text-2xl font-semibold">28 يوم</p>
+            <p class="text-xs text-emerald-300 mt-1">مستهدف 30 يوم</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
+            <p class="text-slate-400">التكلفة لكل تعيين</p>
+            <p class="text-2xl font-semibold">$1,840</p>
+            <p class="text-xs text-emerald-300 mt-1">انخفاض 12%</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
+            <p class="text-slate-400">المشاركة</p>
+            <p class="text-2xl font-semibold">89%</p>
+            <p class="text-xs text-emerald-300 mt-1">أعلى من الهدف بـ 5%</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800/60 bg-slate-900/60">
+            <p class="text-slate-400">الترقيات الداخلية</p>
+            <p class="text-2xl font-semibold">28</p>
+            <p class="text-xs text-emerald-300 mt-1">45% من إجمالي التعيينات</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
