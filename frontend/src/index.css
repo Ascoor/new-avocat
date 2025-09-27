@@ -141,6 +141,195 @@
   .carousel-slide.inactive {
     @apply opacity-0 scale-95;
   }
+
+  /* Sidebar Shell */
+  .sidebar-shell {
+    position: relative;
+    overflow: hidden;
+    background: var(--sidebar-surface-gradient);
+    box-shadow: var(--sidebar-shell-shadow);
+    backdrop-filter: blur(var(--sidebar-shell-blur));
+    -webkit-backdrop-filter: blur(var(--sidebar-shell-blur));
+    transition: var(--transition-elegant);
+  }
+
+  .sidebar-shell::before,
+  .sidebar-shell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .sidebar-shell::before {
+    background: var(--sidebar-ambient-glow);
+    opacity: 0.85;
+  }
+
+  .sidebar-shell::after {
+    inset-inline-start: auto;
+    inset-inline-end: -35%;
+    inset-block: 0;
+    width: 60%;
+    background: var(--sidebar-edge-highlight);
+    opacity: 0.6;
+  }
+
+  .sidebar-shell > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .sidebar-brand {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary) / 0.08) 0%,
+      transparent 70%
+    );
+    box-shadow: inset 0 -1px 0 hsl(var(--sidebar-border) / 0.8);
+  }
+
+  .sidebar-brand::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsl(var(--accent) / 0.2) 0%,
+      transparent 70%
+    );
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .sidebar-footer {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      hsl(var(--primary) / 0.08) 100%
+    );
+    box-shadow: inset 0 1px 0 hsl(var(--sidebar-border) / 0.7);
+  }
+
+  .sidebar-nav-item {
+    position: relative;
+    border-radius: 1rem;
+    transition: var(--transition-smooth);
+  }
+
+  .sidebar-nav-item[data-active="true"] {
+    background: var(--sidebar-item-active-bg);
+    box-shadow: var(--sidebar-item-active-shadow);
+    color: hsl(var(--sidebar-primary));
+  }
+
+  .sidebar-nav-item[data-active="true"] .sidebar-nav-link {
+    color: inherit;
+  }
+
+  .sidebar-nav-item[data-collapsed="true"] {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .sidebar-nav-item[data-collapsed="true"][data-active="true"] .sidebar-icon-badge {
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.35),
+      0 16px 32px -20px hsl(var(--primary) / 0.55);
+  }
+
+  .sidebar-nav-item:not([data-active="true"]):not([data-collapsed="true"]):hover {
+    background: var(--sidebar-item-hover-bg);
+    color: hsl(var(--sidebar-hover-foreground));
+  }
+
+  .sidebar-nav-link {
+    position: relative;
+    transition: var(--transition-smooth);
+  }
+
+  .sidebar-icon-badge {
+    transition: var(--transition-premium);
+  }
+
+  .sidebar-nav-item[data-active="true"] .sidebar-icon-badge {
+    transform: translateY(-1px);
+  }
+
+  .sidebar-nav-item[data-collapsed="true"] .sidebar-nav-link:hover {
+    color: hsl(var(--sidebar-hover-foreground));
+  }
+
+  .sidebar-nav-item[data-collapsed="true"] .sidebar-nav-link:hover .sidebar-icon-badge {
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  }
+
+  .sidebar-subitem {
+    position: relative;
+    border-radius: 0.75rem;
+    transition: var(--transition-smooth);
+  }
+
+  .sidebar-subitem::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: transparent;
+    transition: inherit;
+    pointer-events: none;
+  }
+
+  .sidebar-subitem:hover {
+    background: var(--sidebar-subitem-hover-bg);
+    color: hsl(var(--sidebar-hover-foreground));
+  }
+
+  .sidebar-subitem.is-active {
+    background: var(--sidebar-subitem-active-bg);
+    box-shadow: var(--sidebar-subitem-shadow);
+    color: hsl(var(--sidebar-primary));
+  }
+
+  .sidebar-subitem.is-active::after {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary) / 0.18) 0%,
+      transparent 100%
+    );
+  }
+
+  .header-shell {
+    position: relative;
+    overflow: hidden;
+    background: var(--header-surface-gradient);
+    box-shadow: var(--header-shell-shadow);
+    backdrop-filter: blur(var(--header-shell-blur));
+    -webkit-backdrop-filter: blur(var(--header-shell-blur));
+    border-bottom: 1px solid var(--header-shell-border);
+    transition: var(--transition-elegant);
+  }
+
+  .header-shell::before,
+  .header-shell::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    pointer-events: none;
+  }
+
+  .header-shell::before {
+    inset-block: 0;
+    background: var(--header-ambient-glow);
+    opacity: 0.8;
+  }
+
+  .header-shell::after {
+    bottom: 0;
+    height: 2px;
+    background: var(--header-bottom-glow);
+  }
 }
 @layer base {
   h1 {

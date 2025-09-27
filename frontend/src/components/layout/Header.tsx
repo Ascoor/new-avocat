@@ -31,11 +31,11 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur transition-all duration-300",
+        "header-shell sticky top-0 z-50 h-16 transition-all duration-500",
         className
       )}
     >
-      <div className="flex h-full items-center justify-between px-4">
+      <div className="relative z-[1] flex h-full items-center justify-between px-4">
         {/* Left side */}
         <div className={cn("flex items-center gap-3", isRTL ? "flex-row-reverse" : "flex-row")}>
           {/* Mobile menu button */}
