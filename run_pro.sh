@@ -21,7 +21,7 @@ if [ ! -d "vendor" ]; then
   composer install
   cp .env.example .env 2>/dev/null || true
   php artisan key:generate
-fi
+fi  
 php artisan serve --host=127.0.0.1 --port=8000 &
 
 # Wait so both servers run in background
