@@ -130,6 +130,56 @@
   "termsOfService": "Terms of Service",
   "cookiePolicy": "Cookie Policy",
   "complianceStatement": "GDPR & Regional Compliance Ready",
+  "showcase": {
+    "pageTitle": "Dashboard Showcase — Avocat",
+    "header": {
+      "tagline": "Immersive dashboard gallery"
+    },
+    "hero": {
+      "badge": "25 premium dashboards",
+      "title": "Explore bilingual dashboards ready for light and dark mode",
+      "subtitle": "Pick from industry-specific control centres crafted with Tailwind CSS.",
+      "description": "Every layout is responsive, RTL-friendly, and tuned for Arabic & English experiences with native theme toggles."
+    },
+    "actions": {
+      "backToLanding": "Back to landing",
+      "backToGallery": "Back to gallery",
+      "goToApp": "Enter client platform",
+      "jumpToExample": "View featured dashboard",
+      "viewDashboard": "View dashboard",
+      "openInNewTab": "Open full preview",
+      "previousDashboard": "Previous dashboard",
+      "nextDashboard": "Next dashboard"
+    },
+    "filters": {
+      "searchPlaceholder": "Search dashboards by industry or feature",
+      "all": "All dashboards"
+    },
+    "stats": {
+      "totalDashboards": "Dashboards included",
+      "totalDashboardsHint": "Unique responsive layouts with RTL/LTR shells.",
+      "uniqueIndustries": "Industries covered",
+      "uniqueIndustriesHint": "Spanning legal ops, finance, product, and sustainability."
+    },
+    "labels": {
+      "industryTag": "Industry focus"
+    },
+    "empty": {
+      "title": "No dashboards match your filters",
+      "subtitle": "Try updating the search text or clear the industry filter to explore the full collection."
+    },
+    "notFound": {
+      "title": "Dashboard not found",
+      "subtitle": "The layout you were looking for is not part of the showcase. Pick another design from the gallery."
+    },
+    "detail": {
+      "badgeLabel": "Industry focus",
+      "featuresTitle": "What you'll get",
+      "previewTitle": "Live interactive preview",
+      "previewHint": "Use the theme and language toggles inside the frame to explore the dashboard.",
+      "footerLead": "Keep browsing curated dashboards or continue to the Avocat platform."
+    }
+  },
   "common": {
     "theme": "Theme",
     "language": "Language",

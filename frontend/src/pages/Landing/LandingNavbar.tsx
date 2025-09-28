@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Award,
   BookOpenText,
+  LayoutDashboard,
   Menu,
   Phone,
   Scale,
@@ -15,12 +16,13 @@ import {
   Users,
   X,
 } from "lucide-react";
- 
+
 type NavItem = {
   href: string;
   icon: typeof Scale;
   en: string;
   ar: string;
+  type?: "anchor" | "route";
 };
 
 const navItems: NavItem[] = [
@@ -32,6 +34,13 @@ const navItems: NavItem[] = [
   { href: "#team", icon: Users, en: "Team", ar: "الفريق" },
   // { href: "#insights", icon: BookOpenText, en: "Insights", ar: "المدونة" },
   { href: "#contact", icon: Phone, en: "Contact", ar: "اتصل بنا" },
+  {
+    href: "/showcase",
+    icon: LayoutDashboard,
+    en: "Dashboard Showcase",
+    ar: "معرض لوحات التحكم",
+    type: "route",
+  },
 ];
 
 const highlightCopy = {
@@ -58,12 +67,21 @@ const LandingNavbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollTo = (href: string) => {
+  const scrollToAnchor = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setIsOpen(false);
+  };
+
+  const handleNavClick = (item: NavItem) => {
+    if (item.type === "route") {
+      setIsOpen(false);
+      navigate(item.href);
+      return;
+    }
+    scrollToAnchor(item.href);
   };
  
   const isArabic = language === "ar";
@@ -108,7 +126,7 @@ const LandingNavbar: React.FC = () => {
       <div className="container mx-auto flex h-20 items-center justify-between px-4 lg:px-8">
         <button
           type="button"
-          onClick={() => scrollTo("#home")} 
+          onClick={() => scrollToAnchor("#home")}
           className="flex items-center gap-3" 
         >
           <div className="hidden sm:block">
@@ -122,13 +140,14 @@ const LandingNavbar: React.FC = () => {
         </button>
 
         <div className="hidden items-center gap-6 lg:flex">
-          {navItems.map(({ href, icon: Icon, en, ar }) => {
+          {navItems.map((item) => {
+            const { href, icon: Icon, en, ar } = item;
             const label = isArabic ? ar : en;
             return (
               <button
                 key={href}
                 type="button"
-                onClick={() => scrollTo(href)}
+                onClick={() => handleNavClick(item)}
                 className={`group relative flex items-center gap-2 text-sm font-medium tracking-wide transition-colors duration-300 ${navTextColorClass}`}
               >
                 <Icon
@@ -216,13 +235,16 @@ const LandingNavbar: React.FC = () => {
               {toggleLabel}
             </Button>
           </div>
-          {navItems.map(({ href, icon: Icon, en, ar }) => {
+          {navItems.map((item) => {
+            const { href, icon: Icon, en, ar, type } = item;
             const label = isArabic ? ar : en;
+            const indicator =
+              type === "route" ? (isArabic ? "المعرض" : "showcase") : href.replace("#", "");
             return (
               <button
                 key={href}
                 type="button"
-                onClick={() => scrollTo(href)}
+                onClick={() => handleNavClick(item)}
                 className={`group flex w-full items-center justify-between rounded-xl border border-transparent px-4 py-3 text-left transition-all duration-300 hover:border-accent/40 hover:bg-accent/10 ${
                   isArabic ? "text-right" : ""
                 }`}
@@ -237,7 +259,7 @@ const LandingNavbar: React.FC = () => {
                   </span>
                 </div>
                 <span className="text-xs uppercase tracking-widest text-muted-foreground">
-                  {href.replace('#', '')}
+                  {indicator}
                 </span>
               </button>
             );
