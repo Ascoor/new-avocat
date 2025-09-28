@@ -12,7 +12,7 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">RE</div>
@@ -22,7 +22,6 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -44,8 +43,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -66,16 +64,251 @@
     </main>
   </div>
 
-  <script src="dashboard-blueprints.js"></script>
   <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const base = (window.DASHBOARD_BLUEPRINTS && window.DASHBOARD_BLUEPRINTS['energy']) || {};
-      const blueprint = typeof structuredClone === 'function'
-        ? structuredClone(base)
-        : JSON.parse(JSON.stringify(base));
-      initDashboard(blueprint);
-    })();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة الطاقة المتجددة',
+          en: 'Renewable Energy Operations Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'RE',
+        name: {
+          ar: 'شبكة الطاقة الخضراء',
+          en: 'Green Grid Alliance'
+        },
+        tagline: {
+          ar: 'طاقة شمسية، رياح، وتخزين ذكي للشبكات',
+          en: 'Solar, wind, and intelligent storage orchestration'
+        }
+      },
+      theme: {
+        accentGradient: 'from-emerald-500 via-teal-500 to-sky-500',
+        accentText: 'text-emerald-200',
+        highlightBg: 'bg-emerald-500/10 border-emerald-400/30',
+        badgeBg: 'bg-emerald-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'chart-bar',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'تشغيل', en: 'Ops' }
+        },
+        {
+          id: 'generation',
+          icon: 'sun',
+          label: { ar: 'الإنتاج المباشر', en: 'Live generation' }
+        },
+        {
+          id: 'grid',
+          icon: 'cloud',
+          label: { ar: 'الشبكة والتخزين', en: 'Grid & storage' }
+        },
+        {
+          id: 'maintenance',
+          icon: 'cog',
+          label: { ar: 'الصيانة والمشاريع', en: 'Maintenance & projects' }
+        },
+        {
+          id: 'sustainability',
+          icon: 'leaf',
+          label: { ar: 'الاستدامة والأثر', en: 'Sustainability impact' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'تنبيه الشبكة', en: 'Grid alert' },
+        value: 'سحابة رملية تؤثر على محطات الطاقة الشمسية',
+        description: {
+          ar: 'انخفاض إنتاجية الألواح بنسبة 9% خلال الساعتين القادمتين، إعادة التوزيع مطلوبة.',
+          en: 'Solar output forecasted -9% for next 2 hours, redistribute load accordingly.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة عمليات الطاقة المتجددة',
+          en: 'Renewable operations overview'
+        },
+        subtitle: {
+          ar: 'راقب إنتاج الطاقة، توازن الشبكة، ومبادرات الاستدامة في الوقت الفعلي.',
+          en: 'Track generation, grid balance, and sustainability programs in real time.'
+        },
+        primary: {
+          ar: 'إعادة ضبط توزيع الأحمال',
+          en: 'Rebalance grid dispatch'
+        },
+        secondary: {
+          ar: 'استعراض خطة الصيانة',
+          en: 'Review maintenance plan'
+        }
+      },
+      stats: [
+        {
+          icon: 'sun',
+          label: { ar: 'الإنتاج الشمسي الحالي', en: 'Current solar output' },
+          value: '612 MW',
+          delta: { ar: '-5% بسبب الغبار', en: '-5% due to dust' },
+          trend: 'negative'
+        },
+        {
+          icon: 'cloud',
+          label: { ar: 'طاقة الرياح قيد الاستخدام', en: 'Wind capacity utilized' },
+          value: '74%',
+          delta: { ar: '+11% خلال آخر 24 ساعة', en: '+11% over 24h' },
+          trend: 'positive'
+        },
+        {
+          icon: 'leaf',
+          label: { ar: 'انبعاثات تم تجنبها اليوم', en: 'Emissions avoided today' },
+          value: '1.9 kt CO₂e',
+          delta: { ar: '+0.4 مقارنة بالهدف', en: '+0.4 vs target' },
+          trend: 'positive'
+        },
+        {
+          icon: 'chart-bar',
+          label: { ar: 'كفاءة التخزين', en: 'Storage efficiency' },
+          value: '91%',
+          delta: { ar: '+3 نقاط عن المتوسط الشهري', en: '+3 pts vs monthly avg.' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'مؤشرات توليد الطاقة المباشرة', en: 'Live generation overview' },
+          subtitle: { ar: 'مزيج الطاقة حسب المصدر والموقع، مع توقعات الساعات الأربع القادمة.', en: 'Generation mix by source and site with 4-hour forecast.' },
+          action: { ar: 'تفاصيل محطات الطاقة', en: 'View plant details' },
+          placeholder: { ar: 'مخطط الإنتاج الفوري', en: 'Real-time output chart' }
+        },
+        {
+          id: 'generation',
+          type: 'list',
+          title: { ar: 'أعلى المزارع إنتاجاً', en: 'Top producing farms' },
+          action: { ar: 'عرض كامل المحفظة', en: 'View full portfolio' },
+          items: [
+            {
+              icon: 'sun',
+              title: { ar: 'مجمع شمس الجنوب', en: 'Southern Sun Complex' },
+              subtitle: { ar: 'إنتاج 182 ميجاوات | انحراف -4%', en: '182 MW output | -4% deviation' },
+              value: 'إتاحة 96%',
+              delta: { ar: 'عمليات التنظيف تبدأ خلال ساعة', en: 'Cleaning crews in 1 hr' }
+            },
+            {
+              icon: 'cloud',
+              title: { ar: 'محطة رياح الساحل', en: 'Coastal Wind Hub' },
+              subtitle: { ar: 'إنتاج 154 ميجاوات | انحراف +7%', en: '154 MW output | +7% deviation' },
+              value: 'إتاحة 99%',
+              delta: { ar: 'سرعة رياح مستقرة', en: 'Stable wind speeds' }
+            },
+            {
+              icon: 'leaf',
+              title: { ar: 'مختبر التخزين الأخضر', en: 'Green Storage Lab' },
+              subtitle: { ar: 'شحن 68 ميجاوات | تفريغ 52 ميجاوات', en: 'Charging 68 MW | Discharging 52 MW' },
+              value: 'دورة 18%',
+              delta: { ar: 'وضع تحسين ذاتي', en: 'Auto-optimization active' }
+            }
+          ]
+        },
+        {
+          id: 'grid',
+          type: 'progress',
+          title: { ar: 'صحة الشبكة والتخزين', en: 'Grid & storage health' },
+          items: [
+            {
+              title: { ar: 'مستوى امتلاء البطاريات الإقليمية', en: 'Regional battery state of charge' },
+              subtitle: { ar: 'متوسط 82% عبر 14 موقع تخزين.', en: 'Averaging 82% across 14 storage sites.' },
+              value: '82%',
+              percent: '82%'
+            },
+            {
+              title: { ar: 'مرونة الشبكة الذكية', en: 'Smart grid flexibility' },
+              subtitle: { ar: 'قدرة تحويل أحمال فورية تصل إلى 320 ميجاوات.', en: 'Instant demand response up to 320 MW.' },
+              value: '76%',
+              percent: '76%'
+            },
+            {
+              title: { ar: 'مؤشر انقطاعات العملاء', en: 'Customer outage index' },
+              subtitle: { ar: 'أقل من 3 دقائق انقطاع متوسط لكل عميل.', en: 'Under 3 min interruption per customer.' },
+              value: '98%',
+              percent: '98%'
+            }
+          ]
+        },
+        {
+          id: 'maintenance',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'جدول الصيانة الحرجة', en: 'Critical maintenance schedule' },
+          action: { ar: 'تحميل خطة العمل', en: 'Download work plan' },
+          headers: [
+            { ar: 'الموقع', en: 'Site' },
+            { ar: 'الأولوية', en: 'Priority' },
+            { ar: 'التغير', en: 'Change' }
+          ],
+          rows: [
+            {
+              name: { ar: 'توربين رياح - خليج الشمال', en: 'Wind Turbine - North Bay' },
+              metric: 'حرجة خلال 18 ساعة | Critical in 18h',
+              delta: { ar: '-12% إنتاج', en: '-12% output' },
+              trend: 'negative'
+            },
+            {
+              name: { ar: 'محطة شمسية - الواحة', en: 'Solar Field - Oasis' },
+              metric: 'تنظيف الانعكاس العالي | High-reflection cleaning',
+              delta: { ar: '+6% كفاءة متوقعة', en: '+6% efficiency' },
+              trend: 'positive'
+            },
+            {
+              name: { ar: 'بطارية - مركز المدن', en: 'Battery - Urban Core' },
+              metric: 'ترقية برمجية الليلة | Firmware tonight',
+              delta: { ar: 'لا تغيير', en: 'No change' },
+              trend: 'neutral'
+            }
+          ]
+        },
+        {
+          id: 'sustainability',
+          type: 'timeline',
+          title: { ar: 'مبادرات الاستدامة اليوم', en: 'Today’s sustainability actions' },
+          items: [
+            {
+              icon: 'leaf',
+              title: { ar: 'تدشين حملة الترشيد', en: 'Demand reduction launch' },
+              subtitle: { ar: 'إشعار للمنازل الذكية لتقليل الاستهلاك المسائي.', en: 'Smart homes notified to trim evening usage.' },
+              time: { ar: '08:00 صباحاً', en: '08:00 AM' }
+            },
+            {
+              icon: 'sparkles',
+              title: { ar: 'تجربة خلايا تخزين جديدة', en: 'Pilot of new storage cells' },
+              subtitle: { ar: 'اختبار تقنية تبريد سائل للهياكل المعيارية.', en: 'Testing liquid-cooled modular racks.' },
+              time: { ar: '02:15 ظهراً', en: '02:15 PM' }
+            },
+            {
+              icon: 'users',
+              title: { ar: 'ورشة تعليم مجتمعية', en: 'Community energy workshop' },
+              subtitle: { ar: 'جلسة تعريفية حول طاقة الأسطح للمراكز الحضرية.', en: 'Urban centers intro to rooftop solar.' },
+              time: { ar: '06:30 مساءً', en: '06:30 PM' }
+            }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>

@@ -43,13 +43,19 @@ const Sidebar: React.FC = () => {
       dir={isRTL ? "rtl" : "ltr"}
       data-collapsed={collapsed}
     >
-      {/* Brand Section */}
-      <div className="sidebar-brand flex items-center gap-3 border-b border-transparent px-6 py-4">
-        <BrandLogo
-          variant={collapsed ? "icon" : "full"}
-          className={collapsed ? "h-8 w-8" : "h-8 w-auto"}
-        />
-      </div>
+       {/* Brand Section */}
+<div
+  className={cn(
+    "sidebar-brand flex items-center justify-center gap-3  transition-all duration-300",
+    collapsed ? "px-4 py-2" : "px-6 py-4"
+  )}
+>
+  <BrandLogo
+    variant={collapsed ? "icon" : "full"}
+    className={collapsed ? "h-12 w-12 transition-all duration-300" : "h-8 w-auto transition-all duration-300"}
+  />
+</div>
+
 
       {/* Navigation Groups */}
       <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-4 sidebar-scroll">

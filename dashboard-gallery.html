@@ -11,11 +11,6 @@
   <style>
     body { font-family: 'Cairo', sans-serif; }
     body.font-english { font-family: 'Inter', sans-serif; }
-    body.theme-light { background-color: rgb(248 250 252); color: rgb(15 23 42); }
-    body.theme-light header .absolute { background: linear-gradient(135deg, rgba(129, 140, 248, 0.2), rgba(255, 255, 255, 0.95)); }
-    body.theme-light footer { background-color: rgba(255, 255, 255, 0.85); border-color: rgba(148, 163, 184, 0.25); color: rgb(71 85 105); }
-    body.theme-light footer a { color: rgb(51 65 85); }
-    body.theme-light footer a:hover { color: rgb(15 23 42); }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen">
@@ -34,8 +29,7 @@
           </div>
           <div data-role="hero-badges" class="flex flex-wrap gap-3"></div>
         </div>
-        <div class="self-start flex flex-col items-end gap-3">
-          <button data-role="theme-toggle" class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200">وضع النهار</button>
+        <div class="self-start">
           <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
         </div>
       </div>
@@ -57,7 +51,6 @@
     </div>
   </footer>
 
-  <script src="dashboards/dashboard-blueprints.js"></script>
   <script>
     (function () {
       const html = document.documentElement;
@@ -96,14 +89,6 @@
           ar: 'شروط الاستخدام',
           en: 'Terms of use'
         },
-        themeLight: {
-          ar: 'الوضع النهاري',
-          en: 'Day mode'
-        },
-        themeDark: {
-          ar: 'الوضع الليلي',
-          en: 'Night mode'
-        },
         linkLabel: {
           ar: 'استعراض التصميم →',
           en: 'View dashboard →'
@@ -111,7 +96,6 @@
         badges: [
           {
             classes: 'px-4 py-2 bg-indigo-500/20 text-indigo-200 rounded-full text-sm',
-            classesLight: 'px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm',
             text: {
               ar: 'متجاوبة بالكامل',
               en: 'Fully responsive'
@@ -119,7 +103,6 @@
           },
           {
             classes: 'px-4 py-2 bg-emerald-500/20 text-emerald-200 rounded-full text-sm',
-            classesLight: 'px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm',
             text: {
               ar: 'واجهات غنية بالبيانات',
               en: 'Data-rich interfaces'
@@ -127,7 +110,6 @@
           },
           {
             classes: 'px-4 py-2 bg-amber-500/20 text-amber-200 rounded-full text-sm',
-            classesLight: 'px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm',
             text: {
               ar: 'دعم عربي وإنجليزي',
               en: 'Arabic & English support'
@@ -136,227 +118,528 @@
         ]
       };
 
-      function getText(value, lang) {
-        if (!value) return '';
-        if (typeof value === 'string') return value;
-        if (value[lang]) return value[lang];
-        return value.ar || value.en || '';
-      }
+      const copyTargets = {
+        'hero-tag': translations.heroTag,
+        'hero-title': translations.heroTitle,
+        'hero-description': translations.heroDescription,
+        'section-title': translations.sectionTitle,
+        'footer-text': translations.footerText,
+        'footer-privacy': translations.footerPrivacy,
+        'footer-terms': translations.footerTerms
+      };
 
-      const blueprints = Object.values(window.DASHBOARD_BLUEPRINTS || {});
-      const dashboards = blueprints
-        .slice()
-        .sort((a, b) => {
-          const aSlug = a.slug || '';
-          const bSlug = b.slug || '';
-          const aNum = parseInt((aSlug.match(/\d+/) || ['0'])[0], 10);
-          const bNum = parseInt((bSlug.match(/\d+/) || ['0'])[0], 10);
-          if (aNum !== bNum) return aNum - bNum;
-          return (a.id || '').localeCompare(b.id || '');
-        })
-        .map((blueprint, index) => ({
-          index,
-          number: String(index + 1).padStart(2, '0'),
-          slug: blueprint.slug || `${blueprint.id}.html`,
-          blueprint,
-          gradient: {
-            dark: `bg-gradient-to-br ${blueprint.theme?.dark?.accentGradient || 'from-indigo-500 via-purple-500 to-slate-900'}`,
-            light: `bg-gradient-to-br ${blueprint.theme?.light?.accentGradient || blueprint.theme?.dark?.accentGradient || 'from-indigo-400 via-purple-400 to-slate-100'}`
+      const dashboards = [
+        {
+          id: 1,
+          slug: 'dashboard-1',
+          accent: 'from-indigo-500/30 via-purple-500/20 to-slate-900/60',
+          badge: { ar: 'النمو', en: 'Growth' },
+          category: { ar: 'منتجات SaaS', en: 'SaaS products' },
+          title: { ar: 'لوحة تحليلات النمو', en: 'Growth analytics dashboard' },
+          description: {
+            ar: 'مراقبة مؤشرات النمو والاكتساب والاحتفاظ لمنتج SaaS ناشئ.',
+            en: 'Track growth, acquisition, and retention signals for a scaling SaaS product.'
           },
-          accent: {
-            dark: blueprint.theme?.dark?.accentText || 'text-indigo-300',
-            light: blueprint.theme?.light?.accentText || 'text-indigo-600'
+          features: [
+            { ar: 'مخططات نمو أسبوعية', en: 'Weekly growth curves' },
+            { ar: 'تحليلات قنوات الاكتساب', en: 'Acquisition channel analytics' },
+            { ar: 'جدول أحداث الانطلاق', en: 'Launch milestone timeline' }
+          ],
+          metrics: {
+            label: { ar: 'محتويات جاهزة', en: 'Production-ready sections' },
+            value: { ar: '5 وحدات', en: '5 sections' }
           }
-        }));
+        },
+        {
+          id: 2,
+          slug: 'dashboard-2',
+          accent: 'from-cyan-500/30 via-sky-500/20 to-slate-900/60',
+          badge: { ar: 'المشاريع', en: 'Projects' },
+          category: { ar: 'إدارة المحافظ', en: 'Portfolio management' },
+          title: { ar: 'لوحة إدارة المشاريع', en: 'Project portfolio dashboard' },
+          description: {
+            ar: 'تنسيق خارطة الطريق، المخاطر، وسعة الفرق عبر مبادرات متعددة.',
+            en: 'Coordinate roadmaps, risks, and team capacity across strategic initiatives.'
+          },
+          features: [
+            { ar: 'منحنى السرعة التراكمية', en: 'Cumulative velocity chart' },
+            { ar: 'لوحة متابعة المخاطر', en: 'Risk tracking board' },
+            { ar: 'قوائم المشاريع ذات الأولوية', en: 'Prioritised project lists' }
+          ],
+          metrics: {
+            label: { ar: 'قوالب جاهزة', en: 'Reusable layouts' },
+            value: { ar: '6 لوحات', en: '6 layouts' }
+          }
+        },
+        {
+          id: 3,
+          slug: 'dashboard-3',
+          accent: 'from-amber-500/35 via-orange-500/20 to-slate-900/60',
+          badge: { ar: 'تجارة', en: 'Commerce' },
+          category: { ar: 'متاجر رقمية', en: 'Digital retail' },
+          title: { ar: 'لوحة تجارة إلكترونية', en: 'E-commerce intelligence dashboard' },
+          description: {
+            ar: 'لوحة مبيعات متكاملة تجمع الإيرادات، القنوات، وتجربة العملاء.',
+            en: 'A commerce control centre blending revenue, channels, and customer experience.'
+          },
+          features: [
+            { ar: 'إيرادات يومية مباشرة', en: 'Live daily revenue' },
+            { ar: 'ترتيب القنوات الأعلى أداءً', en: 'Top-performing channel ranking' },
+            { ar: 'متابعة حالة الشحنات', en: 'Fulfilment status tracking' }
+          ],
+          metrics: {
+            label: { ar: 'عناصر الواجهة', en: 'Interface components' },
+            value: { ar: '6 عناصر', en: '6 components' }
+          }
+        },
+        {
+          id: 4,
+          slug: 'dashboard-4',
+          accent: 'from-sky-500/30 via-cyan-500/20 to-slate-900/70',
+          badge: { ar: 'البنية السحابية', en: 'Cloud ops' },
+          category: { ar: 'مركز العمليات', en: 'Operations centre' },
+          title: { ar: 'لوحة مراقبة البنية السحابية', en: 'Cloud infrastructure monitor' },
+          description: {
+            ar: 'رصد موحد لحمل الموارد، التنبيهات الحية، وتوافر المناطق.',
+            en: 'Unified monitoring for resource load, live alerts, and regional availability.'
+          },
+          features: [
+            { ar: 'تنبيهات الخدمات الحرجة', en: 'Critical service alerts' },
+            { ar: 'مخططات الأداء الزمني', en: 'Time-series performance panels' },
+            { ar: 'بطاقات توافر المناطق', en: 'Regional availability cards' }
+          ],
+          metrics: {
+            label: { ar: 'شرائح جاهزة', en: 'Drop-in widgets' },
+            value: { ar: '4 أقسام', en: '4 sections' }
+          }
+        },
+        {
+          id: 5,
+          slug: 'dashboard-5',
+          accent: 'from-sky-400/25 via-emerald-400/20 to-slate-900/70',
+          badge: { ar: 'الاستمرارية', en: 'Resilience' },
+          category: { ar: 'الاستجابة للحوادث', en: 'Incident response' },
+          title: { ar: 'لوحة مراقبة البنية السحابية', en: 'Cloud reliability war-room' },
+          description: {
+            ar: 'إدارة الأعطال والسعة مع جداول الحوادث وخطط التوسع.',
+            en: 'Manage outages and capacity with incident logs and scaling readiness.'
+          },
+          features: [
+            { ar: 'قائمة الحوادث المباشرة', en: 'Live incident roster' },
+            { ar: 'مؤشرات حالة الموارد', en: 'Resource health badges' },
+            { ar: 'خيارات توسيع فورية', en: 'On-demand scaling actions' }
+          ],
+          metrics: {
+            label: { ar: 'حزم مدمجة', en: 'Embedded blocks' },
+            value: { ar: '3 لوحات', en: '3 blocks' }
+          }
+        },
+        {
+          id: 6,
+          slug: 'dashboard-6',
+          accent: 'from-fuchsia-500/30 via-pink-500/20 to-slate-900/70',
+          badge: { ar: 'العملاء', en: 'CX' },
+          category: { ar: 'نجاح العملاء', en: 'Customer success' },
+          title: { ar: 'لوحة تجربة العملاء', en: 'Customer experience cockpit' },
+          description: {
+            ar: 'قياس المشاعر، مؤشرات SLA، وتجربة الدعم في الوقت الفعلي.',
+            en: 'Measure sentiment, SLA performance, and support workload in real time.'
+          },
+          features: [
+            { ar: 'تحليل المشاعر الآلي', en: 'Automated sentiment analysis' },
+            { ar: 'مؤشرات زمن الاستجابة', en: 'Response-time indicators' },
+            { ar: 'لوحات التذاكر المفتوحة', en: 'Open ticket panels' }
+          ],
+          metrics: {
+            label: { ar: 'مقاطع محسّنة', en: 'Optimised modules' },
+            value: { ar: '6 عناصر', en: '6 modules' }
+          }
+        },
+        {
+          id: 7,
+          slug: 'dashboard-7',
+          accent: 'from-lime-500/25 via-emerald-500/20 to-slate-900/70',
+          badge: { ar: 'الموظفون', en: 'People' },
+          category: { ar: 'إدارة المواهب', en: 'Talent management' },
+          title: { ar: 'لوحة الموارد البشرية', en: 'People operations dashboard' },
+          description: {
+            ar: 'تحليلات القوى العاملة، التوظيف، وبرامج التطوير في لوحة واحدة.',
+            en: 'Workforce analytics, hiring pipelines, and development programs in one view.'
+          },
+          features: [
+            { ar: 'مؤشرات القوى العاملة', en: 'Workforce KPIs' },
+            { ar: 'جداول الوظائف المفتوحة', en: 'Open role matrices' },
+            { ar: 'لوحة نبض الموظفين', en: 'Employee pulse board' }
+          ],
+          metrics: {
+            label: { ar: 'عناصر تحليلات', en: 'Analytic cards' },
+            value: { ar: '7 بطاقات', en: '7 cards' }
+          }
+        },
+        {
+          id: 8,
+          slug: 'dashboard-8',
+          accent: 'from-blue-500/30 via-sky-400/20 to-slate-900/70',
+          badge: { ar: 'التعليم', en: 'Learning' },
+          category: { ar: 'منصات تعليمية', en: 'Learning platforms' },
+          title: { ar: 'لوحة إدارة التعليم الإلكتروني', en: 'E-learning analytics dashboard' },
+          description: {
+            ar: 'متابعة المتعلمين، نسب الإكمال، وتفاعل المحتوى للمنصات التعليمية.',
+            en: 'Monitor learners, completion rates, and content engagement for academies.'
+          },
+          features: [
+            { ar: 'مخطط نشاط المتعلمين', en: 'Learner activity curve' },
+            { ar: 'قائمة الدورات المتميزة', en: 'Top-rated courses list' },
+            { ar: 'جدول تقدم المتعلمين', en: 'Learner progress table' }
+          ],
+          metrics: {
+            label: { ar: 'مقاطع تعليمية', en: 'Learning widgets' },
+            value: { ar: '6 وحدات', en: '6 widgets' }
+          }
+        },
+        {
+          id: 9,
+          slug: 'dashboard-9',
+          accent: 'from-slate-600/40 via-emerald-500/10 to-slate-900/80',
+          badge: { ar: 'الأمن', en: 'Security' },
+          category: { ar: 'مركز الدفاع', en: 'Security centre' },
+          title: { ar: 'لوحة أمن المعلومات', en: 'Cyber security dashboard' },
+          description: {
+            ar: 'مراقبة التهديدات، الامتثال، ووقت الاستجابة للهجمات الرقمية.',
+            en: 'Monitor threats, compliance posture, and cyber incident response times.'
+          },
+          features: [
+            { ar: 'مستويات الخطر المباشرة', en: 'Live threat levels' },
+            { ar: 'توزيع الحوادث حسب النظام', en: 'Incidents by surface' },
+            { ar: 'مخطط الاستجابة للحوادث', en: 'Incident response chart' }
+          ],
+          metrics: {
+            label: { ar: 'لوحات أمنية', en: 'Security panels' },
+            value: { ar: '5 عروض', en: '5 panels' }
+          }
+        },
+        {
+          id: 10,
+          slug: 'dashboard-10',
+          accent: 'from-violet-500/30 via-indigo-500/20 to-slate-900/70',
+          badge: { ar: 'المالية', en: 'Finance' },
+          category: { ar: 'الخدمات المالية', en: 'Financial services' },
+          title: { ar: 'لوحة الخدمات المالية', en: 'Financial services performance' },
+          description: {
+            ar: 'عرض المحافظ، المخاطر، والأحداث التنظيمية لفرق الاستثمار.',
+            en: 'Visualise portfolios, risk posture, and regulatory events for investment teams.'
+          },
+          features: [
+            { ar: 'مخطط أداء المحافظ', en: 'Portfolio performance graph' },
+            { ar: 'لوحة المخاطر والامتثال', en: 'Risk & compliance board' },
+            { ar: 'خط زمني للأحداث المالية', en: 'Financial events timeline' }
+          ],
+          metrics: {
+            label: { ar: 'مكونات جاهزة', en: 'Ready components' },
+            value: { ar: '6 أقسام', en: '6 sections' }
+          }
+        },
+        {
+          id: 11,
+          slug: 'dashboard-11',
+          accent: 'from-emerald-500/30 via-teal-500/20 to-slate-900/70',
+          badge: { ar: 'الصحة', en: 'Health' },
+          category: { ar: 'العمليات السريرية', en: 'Clinical ops' },
+          title: { ar: 'لوحة عمليات الرعاية الصحية', en: 'Healthcare operations dashboard' },
+          description: {
+            ar: 'تنسيق تدفق المرضى، تنبيهات سريرية، واستعداد الخدمات للمستشفيات.',
+            en: 'Coordinate patient flow, clinical alerts, and service readiness for hospitals.'
+          },
+          features: [
+            { ar: 'مخطط تدفق المرضى', en: 'Patient flow chart' },
+            { ar: 'تنبيهات طبية حرجة', en: 'Critical clinical alerts' },
+            { ar: 'قوائم جاهزية الأقسام', en: 'Service readiness lists' }
+          ],
+          metrics: {
+            label: { ar: 'مقاييس متخصصة', en: 'Specialised metrics' },
+            value: { ar: '5 عناصر', en: '5 items' }
+          }
+        },
+        {
+          id: 12,
+          slug: 'dashboard-12',
+          accent: 'from-rose-500/30 via-fuchsia-500/20 to-slate-900/70',
+          badge: { ar: 'التسويق', en: 'Marketing' },
+          category: { ar: 'قنوات متعددة', en: 'Omnichannel' },
+          title: { ar: 'لوحة حملات التسويق', en: 'Marketing campaigns dashboard' },
+          description: {
+            ar: 'مراقبة الإنفاق، الأداء متعدد القنوات، وأتمتة الحملات.',
+            en: 'Monitor spend, multi-channel performance, and campaign automation.'
+          },
+          features: [
+            { ar: 'مخطط الأداء متعدد القنوات', en: 'Omnichannel performance chart' },
+            { ar: 'قائمة الحملات البارزة', en: 'Highlighted campaign list' },
+            { ar: 'جدول رحلات الأتمتة', en: 'Automation journey table' }
+          ],
+          metrics: {
+            label: { ar: 'شرائح حملات', en: 'Campaign blocks' },
+            value: { ar: '6 مقاطع', en: '6 blocks' }
+          }
+        },
+        {
+          id: 13,
+          slug: 'dashboard-13',
+          accent: 'from-amber-500/25 via-emerald-500/20 to-slate-900/70',
+          badge: { ar: 'اللوجستيات', en: 'Logistics' },
+          category: { ar: 'سلسلة الإمداد', en: 'Supply chain' },
+          title: { ar: 'لوحة سلسلة الإمداد', en: 'Supply chain command' },
+          description: {
+            ar: 'رؤية الشحنات، مخزون المستودعات، وتنبيهات الموردين عالميًا.',
+            en: 'Global view of shipments, warehouse inventory, and supplier alerts.'
+          },
+          features: [
+            { ar: 'خريطة التقدم اليومي', en: 'Daily shipment tracker' },
+            { ar: 'بطاقات مستويات المخزون', en: 'Inventory health cards' },
+            { ar: 'خط زمني للأحداث اللوجستية', en: 'Logistics updates timeline' }
+          ],
+          metrics: {
+            label: { ar: 'عناصر لوجستية', en: 'Logistics widgets' },
+            value: { ar: '6 عناصر', en: '6 widgets' }
+          }
+        },
+        {
+          id: 14,
+          slug: 'dashboard-14',
+          accent: 'from-emerald-500/25 via-lime-500/20 to-slate-900/70',
+          badge: { ar: 'العقارات', en: 'Property' },
+          category: { ar: 'استثمار عقاري', en: 'Real estate investing' },
+          title: { ar: 'لوحة إدارة العقارات', en: 'Real estate portfolio dashboard' },
+          description: {
+            ar: 'مراقبة الإشغال، الإيرادات، وأعمال الصيانة عبر المحافظ.',
+            en: 'Monitor occupancy, cashflow, and maintenance across property portfolios.'
+          },
+          features: [
+            { ar: 'مخطط العوائد الشهرية', en: 'Monthly returns chart' },
+            { ar: 'قائمة العقارات البارزة', en: 'Property spotlight list' },
+            { ar: 'لوحة الصيانة والعمليات', en: 'Operations and upkeep board' }
+          ],
+          metrics: {
+            label: { ar: 'قوالب استثمار', en: 'Investment tiles' },
+            value: { ar: '6 بطاقات', en: '6 tiles' }
+          }
+        },
+        {
+          id: 15,
+          slug: 'dashboard-15',
+          accent: 'from-orange-500/30 via-rose-500/20 to-slate-900/70',
+          badge: { ar: 'التصنيع', en: 'Manufacturing' },
+          category: { ar: 'عمليات المصانع', en: 'Factory operations' },
+          title: { ar: 'لوحة العمليات التصنيعية', en: 'Manufacturing operations dashboard' },
+          description: {
+            ar: 'تحليل الأداء، الجودة، والصيانة على خطوط الإنتاج.',
+            en: 'Analyse performance, quality, and maintenance across production lines.'
+          },
+          features: [
+            { ar: 'مخطط الإنتاج الفعلي', en: 'Actual vs plan production chart' },
+            { ar: 'تنبيهات أعطال حرجة', en: 'Critical downtime alerts' },
+            { ar: 'تقدم مبادرات التحسين', en: 'Improvement program tracker' }
+          ],
+          metrics: {
+            label: { ar: 'مقاطع تشغيلية', en: 'Operational blocks' },
+            value: { ar: '6 وحدات', en: '6 units' }
+          }
+        },
+        {
+          id: 16,
+          slug: 'dashboard-16',
+          accent: 'from-purple-500/30 via-indigo-500/20 to-slate-900/70',
+          badge: { ar: 'البث', en: 'Streaming' },
+          category: { ar: 'منصات المحتوى', en: 'Content platforms' },
+          title: { ar: 'لوحة منصة البث', en: 'Streaming service dashboard' },
+          description: {
+            ar: 'قياس المشتركين، أداء المحتوى، وصحة الشبكة لخدمة البث.',
+            en: 'Measure subscribers, content performance, and network health for OTT.'
+          },
+          features: [
+            { ar: 'نمو المشتركين', en: 'Subscriber growth cards' },
+            { ar: 'لوحة أداء العناوين', en: 'Title performance board' },
+            { ar: 'جودة التجربة التقنية', en: 'Experience quality metrics' }
+          ],
+          metrics: {
+            label: { ar: 'مقاطع وسائط', en: 'Media widgets' },
+            value: { ar: '6 عناصر', en: '6 widgets' }
+          }
+        },
+        {
+          id: 17,
+          slug: 'dashboard-17',
+          accent: 'from-emerald-500/25 via-cyan-500/20 to-slate-900/70',
+          badge: { ar: 'المدن الذكية', en: 'Smart city' },
+          category: { ar: 'البنية الحضرية', en: 'Urban infrastructure' },
+          title: { ar: 'لوحة المدينة الذكية', en: 'Smart city operations' },
+          description: {
+            ar: 'إدارة التنقل، الطاقة، والاستدامة داخل المدينة الرقمية.',
+            en: 'Manage mobility, energy, and sustainability across a digital city.'
+          },
+          features: [
+            { ar: 'مؤشرات التنقل اليومي', en: 'Daily mobility indicators' },
+            { ar: 'بطاقات الاستدامة', en: 'Sustainability scorecards' },
+            { ar: 'خط زمني لمشاريع المدينة', en: 'City initiatives timeline' }
+          ],
+          metrics: {
+            label: { ar: 'محاور حضرية', en: 'Urban modules' },
+            value: { ar: '6 محاور', en: '6 modules' }
+          }
+        },
+        {
+          id: 18,
+          slug: 'dashboard-18',
+          accent: 'from-amber-500/25 via-rose-500/20 to-slate-900/70',
+          badge: { ar: 'الضيافة', en: 'Hospitality' },
+          category: { ar: 'إدارة الفنادق', en: 'Hotel management' },
+          title: { ar: 'لوحة تجربة الضيافة', en: 'Hospitality experience dashboard' },
+          description: {
+            ar: 'مؤشرات الإشغال، رضا الضيوف، وجدولة الخدمات عبر ممتلكات الضيافة.',
+            en: 'Occupancy, guest sentiment, and service schedules across hospitality assets.'
+          },
+          features: [
+            { ar: 'مخطط الأداء اليومي', en: 'Daily performance chart' },
+            { ar: 'قائمة الفنادق الأعلى', en: 'Top property spotlight' },
+            { ar: 'جدول مبادرات التجربة', en: 'Guest experience roadmap' }
+          ],
+          metrics: {
+            label: { ar: 'مقاطع ضيافة', en: 'Hospitality blocks' },
+            value: { ar: '6 شرائح', en: '6 blocks' }
+          }
+        },
+        {
+          id: 19,
+          slug: 'dashboard-19',
+          accent: 'from-emerald-500/30 via-lime-500/20 to-slate-900/70',
+          badge: { ar: 'الطاقة', en: 'Energy' },
+          category: { ar: 'الطاقة المتجددة', en: 'Renewables' },
+          title: { ar: 'لوحة الطاقة المتجددة', en: 'Renewable energy operations' },
+          description: {
+            ar: 'تشغيل محطات الطاقة النظيفة، موازنة الشبكة، ومشاريع الاستدامة.',
+            en: 'Operate clean generation sites, balance the grid, and track sustainability.'
+          },
+          features: [
+            { ar: 'مؤشرات توليد الطاقة', en: 'Generation KPI tiles' },
+            { ar: 'مراقبة توازن الشبكة', en: 'Grid balance monitoring' },
+            { ar: 'لوحة المبادرات الخضراء', en: 'Green initiatives board' }
+          ],
+          metrics: {
+            label: { ar: 'عناصر الطاقة', en: 'Energy widgets' },
+            value: { ar: '6 عناصر', en: '6 widgets' }
+          }
+        },
+        {
+          id: 20,
+          slug: 'dashboard-20',
+          accent: 'from-orange-500/25 via-rose-500/20 to-slate-900/70',
+          badge: { ar: 'الرياضة', en: 'Sports' },
+          category: { ar: 'أندية محترفة', en: 'Pro clubs' },
+          title: { ar: 'لوحة إدارة الرياضة', en: 'Sports management analytics' },
+          description: {
+            ar: 'نتائج المباريات، جاهزية اللاعبين، وتفاعل الجماهير طوال الموسم.',
+            en: 'Match outcomes, player readiness, and fan engagement across the season.'
+          },
+          features: [
+            { ar: 'تحليلات المباريات', en: 'Match analytics' },
+            { ar: 'لوحة صحة اللاعبين', en: 'Player wellness board' },
+            { ar: 'مؤشرات جماهيرية مباشرة', en: 'Live fan engagement KPIs' }
+          ],
+          metrics: {
+            label: { ar: 'مقاطع رياضية', en: 'Sports modules' },
+            value: { ar: '6 شرائح', en: '6 modules' }
+          }
+        }
+      ];
 
-      const heroTagEl = document.querySelector('[data-i18n="hero-tag"]');
-      const heroTitleEl = document.querySelector('[data-i18n="hero-title"]');
-      const heroDescriptionEl = document.querySelector('[data-i18n="hero-description"]');
-      const sectionTitleEl = document.querySelector('[data-i18n="section-title"]');
-      const footerTextEl = document.querySelector('[data-i18n="footer-text"]');
-      const footerPrivacyEl = document.querySelector('[data-i18n="footer-privacy"]');
-      const footerTermsEl = document.querySelector('[data-i18n="footer-terms"]');
-      const badgesContainer = document.querySelector('[data-role="hero-badges"]');
-      const cardsContainer = document.querySelector('[data-role="card-grid"]');
-      const themeToggle = document.querySelector('[data-role="theme-toggle"]');
       const languageSwitchers = document.querySelectorAll('[data-role="language-switcher"]');
+      const heroBadgesContainer = document.querySelector('[data-role="hero-badges"]');
+      const cardGrid = document.querySelector('[data-role="card-grid"]');
       const langButtons = [];
 
-      let currentLang = 'ar';
-      const themeStorageKey = 'gallery:theme';
-      let currentTheme = 'dark';
-      try {
-        const storedTheme = localStorage.getItem(themeStorageKey);
-        if (storedTheme === 'light' || storedTheme === 'dark') {
-          currentTheme = storedTheme;
-        }
-      } catch (error) {
-        currentTheme = 'dark';
-      }
-
-      languageSwitchers.forEach(container => {
-        container.innerHTML = '';
-        ['ar', 'en'].forEach(lang => {
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.dataset.lang = lang;
-          button.textContent = lang === 'ar' ? 'ع' : 'En';
-          button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition';
-          button.addEventListener('click', () => setLanguage(lang));
-          container.appendChild(button);
-          langButtons.push(button);
-        });
-      });
-
-      function updateSwitcherButtons() {
-        langButtons.forEach(btn => {
-          const active = btn.dataset.lang === currentLang;
-          const base = 'px-3 py-1 text-xs font-semibold rounded-lg transition';
-          const themeClasses = currentTheme === 'light'
-            ? 'border border-slate-300 text-slate-700 hover:bg-slate-100'
-            : 'border border-white/10 text-slate-200 hover:bg-white/10';
-          const activeClasses = currentTheme === 'light'
-            ? 'bg-slate-900/10 text-slate-900'
-            : 'bg-white/10 text-white';
-          const inactiveOpacity = currentTheme === 'light' ? 'opacity-80' : 'opacity-70';
-          btn.className = `${base} ${themeClasses}`;
-          if (active) {
-            btn.classList.add(...activeClasses.split(' '));
-          } else {
-            btn.classList.add(inactiveOpacity);
-          }
-        });
-      }
-
-      function renderBadges(lang) {
-        if (!badgesContainer) return;
-        badgesContainer.innerHTML = translations.badges.map(badge => `
-          <span class="${currentTheme === 'light' ? badge.classesLight : badge.classes}">${getText(badge.text, lang)}</span>
-        `).join('');
+      function renderHeroBadges(lang) {
+        if (!heroBadgesContainer) return;
+        heroBadgesContainer.innerHTML = translations.badges
+          .map(badge => `<span class="${badge.classes}">${badge.text[lang]}</span>`)
+          .join('');
       }
 
       function renderCards(lang) {
-        if (!cardsContainer) return;
-        const cardsMarkup = dashboards.map(card => {
-          const surfaceBase = 'group relative rounded-2xl overflow-hidden transition-all duration-300';
-          const surfaceClass = currentTheme === 'light'
-            ? `${surfaceBase} border border-slate-200 bg-white/90 hover:bg-white`
-            : `${surfaceBase} border border-slate-700/50 bg-slate-800/60 hover:bg-slate-800`;
-          const numberClass = currentTheme === 'light'
-            ? 'text-4xl font-bold text-slate-800/85 drop-shadow-sm'
-            : 'text-4xl font-bold text-white/90 drop-shadow-lg';
-          const descriptionClass = currentTheme === 'light'
-            ? 'text-slate-600 text-sm leading-relaxed'
-            : 'text-slate-300 text-sm leading-relaxed';
-          const accentClass = currentTheme === 'light' ? card.accent.light : card.accent.dark;
-          const gradientClass = currentTheme === 'light' ? card.gradient.light : card.gradient.dark;
-          const overlayClass = currentTheme === 'light' ? 'bg-white/45' : 'bg-slate-950/35';
-
-          const blueprint = card.blueprint;
-          const gallery = blueprint.gallery || {};
-          const brand = blueprint.brand || {};
-          const hrefTarget = card.slug.startsWith('http') ? card.slug : `dashboards/${card.slug.replace(/^\//, '')}`;
-          const badgeLabel = getText(gallery.badge, lang) || '';
-          const title = getText(gallery.title, lang) || getText(brand.name, lang) || blueprint.id || '';
-          const description = getText(gallery.description, lang) || getText(brand.tagline, lang) || '';
-          const rawTags = Array.isArray(gallery.tags) ? gallery.tags : [];
-          const tagMarkup = rawTags.length
-            ? `<div class="flex flex-wrap gap-2">${rawTags.map(tag => `<span class="px-3 py-1 text-xs rounded-full ${currentTheme === 'light' ? 'bg-slate-100 text-slate-600 border border-slate-200/80' : 'bg-white/10 text-slate-200/90 border border-white/10'}">${getText(tag, lang)}</span>`).join('')}</div>`
-            : '';
-          const badgeChip = badgeLabel
-            ? `<span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full ${currentTheme === 'light' ? 'bg-slate-900/5 text-slate-700 border border-slate-200' : 'bg-white/10 text-slate-100 border border-white/10'}">${badgeLabel}</span>`
-            : '';
-          const brandToken = getText(brand.badge, lang) || (badgeLabel ? badgeLabel.charAt(0) : title.charAt(0) || card.number);
-
-          return `
-          <a href="${hrefTarget}" class="${surfaceClass}">
-            <div class="relative h-44 ${gradientClass} overflow-hidden">
-              <div class="absolute inset-0 ${overlayClass}"></div>
-              <div class="relative flex h-full w-full flex-col items-center justify-center gap-3">
-                <span class="${numberClass}">${card.number}</span>
-                <span class="rounded-full border border-white/30 px-3 py-1 text-xs tracking-[0.4em] uppercase text-white/90">${brandToken}</span>
+        if (!cardGrid) return;
+        cardGrid.innerHTML = '';
+        dashboards.forEach(dashboard => {
+          const article = document.createElement('article');
+          article.className = 'group overflow-hidden rounded-2xl border border-white/5 bg-slate-900/60 backdrop-blur-xl flex flex-col transition hover:border-white/15 hover:bg-slate-900/70';
+          article.innerHTML = `
+            <div class="relative h-32 overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-br ${dashboard.accent} opacity-80"></div>
+              <div class="relative h-full w-full flex items-start justify-between p-4 text-xs text-white/80">
+                <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 font-semibold">
+                  ${dashboard.badge[lang]}
+                </span>
+                <span class="font-semibold tracking-[0.3em] text-white/70">${String(dashboard.id).padStart(2, '0')}</span>
               </div>
             </div>
-            <div class="p-5 space-y-4">
-              ${badgeChip}
-              <h3 class="text-xl font-semibold">${title}</h3>
-              <p class="${descriptionClass}">${description}</p>
-              ${tagMarkup}
-              <span class="mt-3 inline-flex items-center gap-2 ${accentClass} text-sm font-semibold transition group-hover:translate-x-1">
+            <div class="flex-1 p-5 space-y-5">
+              <div class="space-y-2">
+                <p class="text-xs uppercase tracking-wide text-slate-400">${dashboard.category[lang]}</p>
+                <h3 class="text-lg font-semibold text-white">${dashboard.title[lang]}</h3>
+                <p class="text-sm text-slate-300">${dashboard.description[lang]}</p>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                ${dashboard.features.map(feature => `<span class="inline-flex items-center rounded-full bg-white/5 px-3 py-1 text-xs text-slate-200">${feature[lang]}</span>`).join('')}
+              </div>
+              <div class="flex items-center justify-between rounded-xl border border-white/5 bg-white/5 px-3 py-2 text-xs text-slate-300">
+                <span>${dashboard.metrics.label[lang]}</span>
+                <span class="font-semibold text-white">${dashboard.metrics.value[lang]}</span>
+              </div>
+              <a href="dashboards/${dashboard.slug}.html" class="inline-flex items-center gap-2 text-sm font-semibold text-indigo-300 transition hover:text-indigo-200">
                 ${translations.linkLabel[lang]}
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">
+                  <path d="M5.25 4.5a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 .75.75v12a.75.75 0 0 1-1.5 0V6.31l-9.72 9.72a.75.75 0 0 1-1.06-1.06l9.72-9.72H6a.75.75 0 0 1-.75-.75z" />
                 </svg>
-              </span>
+              </a>
             </div>
-          </a>`;
-        }).join('');
-        cardsContainer.innerHTML = cardsMarkup;
+          `;
+          cardGrid.appendChild(article);
+        });
       }
 
-      function updateThemeToggleLabel() {
-        if (!themeToggle) return;
-        const label = currentTheme === 'dark' ? translations.themeLight[currentLang] : translations.themeDark[currentLang];
-        const base = 'inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition';
-        const themeClass = currentTheme === 'light'
-          ? 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
-          : 'border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10';
-        themeToggle.textContent = label;
-        themeToggle.setAttribute('aria-label', label);
-        themeToggle.setAttribute('title', label);
-        themeToggle.className = `${base} ${themeClass}`;
+      function renderCopy(lang) {
+        Object.entries(copyTargets).forEach(([key, value]) => {
+          document.querySelectorAll(`[data-i18n="${key}"]`).forEach(node => {
+            node.textContent = value[lang];
+          });
+        });
       }
 
-      function applyTheme(theme, persist = false) {
-        const nextTheme = theme === 'light' ? 'light' : 'dark';
-        currentTheme = nextTheme;
-        body.classList.toggle('theme-light', nextTheme === 'light');
-        body.classList.toggle('theme-dark', nextTheme === 'dark');
-        if (nextTheme === 'light') {
-          body.classList.remove('bg-slate-900', 'text-slate-100');
-          body.classList.add('bg-slate-50', 'text-slate-900');
-          if (heroDescriptionEl) {
-            heroDescriptionEl.classList.remove('text-slate-300');
-            heroDescriptionEl.classList.add('text-slate-600');
-          }
-          if (heroTagEl) {
-            heroTagEl.classList.remove('text-indigo-300');
-            heroTagEl.classList.add('text-indigo-600');
-          }
-          [footerTextEl, footerPrivacyEl, footerTermsEl].forEach(el => {
-            if (!el) return;
-            el.classList.remove('text-slate-400');
-            el.classList.add('text-slate-500');
+      function renderLanguageSwitchers(lang) {
+        langButtons.length = 0;
+        languageSwitchers.forEach(container => {
+          container.innerHTML = '';
+          ['ar', 'en'].forEach(code => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.dataset.langButton = code;
+            button.textContent = code === 'ar' ? 'ع' : 'En';
+            button.className = 'px-3 py-1 text-xs font-semibold rounded-lg border border-white/10 text-slate-200 bg-transparent hover:bg-white/10 transition';
+            button.addEventListener('click', () => setLanguage(code));
+            container.appendChild(button);
+            langButtons.push(button);
           });
-        } else {
-          body.classList.remove('bg-slate-50', 'text-slate-900');
-          body.classList.add('bg-slate-900', 'text-slate-100');
-          if (heroDescriptionEl) {
-            heroDescriptionEl.classList.remove('text-slate-600');
-            heroDescriptionEl.classList.add('text-slate-300');
-          }
-          if (heroTagEl) {
-            heroTagEl.classList.remove('text-indigo-600');
-            heroTagEl.classList.add('text-indigo-300');
-          }
-          [footerTextEl, footerPrivacyEl, footerTermsEl].forEach(el => {
-            if (!el) return;
-            el.classList.remove('text-slate-500');
-            el.classList.add('text-slate-400');
-          });
-        }
-        updateThemeToggleLabel();
-        renderBadges(currentLang);
-        renderCards(currentLang);
-        updateSwitcherButtons();
-        if (persist) {
-          try {
-            localStorage.setItem(themeStorageKey, nextTheme);
-          } catch (error) {
-            // ignore storage issues
-          }
-        }
+        });
+        updateLanguageButtons(lang);
       }
+
+      function updateLanguageButtons(lang) {
+        langButtons.forEach(button => {
+          const active = button.dataset.langButton === lang;
+          button.classList.toggle('bg-white/10', active);
+          button.classList.toggle('text-white', active);
+          button.classList.toggle('opacity-60', !active);
+        });
+      }
+
+      let currentLang = 'ar';
 
       function setLanguage(lang) {
         currentLang = lang;
@@ -364,30 +647,14 @@
         html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
         body.classList.toggle('font-english', lang === 'en');
         document.title = translations.pageTitle[lang];
-
-        if (heroTagEl) heroTagEl.textContent = translations.heroTag[lang];
-        if (heroTitleEl) heroTitleEl.textContent = translations.heroTitle[lang];
-        if (heroDescriptionEl) heroDescriptionEl.textContent = translations.heroDescription[lang];
-        if (sectionTitleEl) sectionTitleEl.textContent = translations.sectionTitle[lang];
-        if (footerTextEl) footerTextEl.textContent = translations.footerText[lang];
-        if (footerPrivacyEl) footerPrivacyEl.textContent = translations.footerPrivacy[lang];
-        if (footerTermsEl) footerTermsEl.textContent = translations.footerTerms[lang];
-
-        renderBadges(lang);
+        renderCopy(lang);
+        renderHeroBadges(lang);
         renderCards(lang);
-        updateSwitcherButtons();
-        updateThemeToggleLabel();
+        updateLanguageButtons(lang);
       }
 
-      if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-          const next = currentTheme === 'dark' ? 'light' : 'dark';
-          applyTheme(next, true);
-        });
-      }
-
+      renderLanguageSwitchers(currentLang);
       setLanguage(currentLang);
-      applyTheme(currentTheme);
     })();
   </script>
 </body>

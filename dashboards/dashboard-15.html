@@ -12,7 +12,7 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">MF</div>
@@ -22,7 +22,6 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -44,8 +43,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -66,16 +64,215 @@
     </main>
   </div>
 
-  <script src="dashboard-blueprints.js"></script>
   <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const base = (window.DASHBOARD_BLUEPRINTS && window.DASHBOARD_BLUEPRINTS['manufacturing']) || {};
-      const blueprint = typeof structuredClone === 'function'
-        ? structuredClone(base)
-        : JSON.parse(JSON.stringify(base));
-      initDashboard(blueprint);
-    })();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة العمليات التصنيعية',
+          en: 'Manufacturing Operations Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'MF',
+        name: {
+          ar: 'مركز الإنتاج',
+          en: 'Production Hub'
+        },
+        tagline: {
+          ar: 'الإنتاجية، الجودة، وصيانة المصنع في الوقت الفعلي',
+          en: 'Productivity, quality, and plant maintenance in real time'
+        }
+      },
+      theme: {
+        accentGradient: 'from-slate-800 via-amber-500 to-orange-500',
+        accentText: 'text-amber-200',
+        highlightBg: 'bg-amber-500/10 border-amber-400/30',
+        badgeBg: 'bg-orange-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'factory',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'مصنع', en: 'Plant' }
+        },
+        {
+          id: 'production',
+          icon: 'chart-bar',
+          label: { ar: 'أداء الإنتاج', en: 'Production performance' }
+        },
+        {
+          id: 'quality',
+          icon: 'scale',
+          label: { ar: 'الجودة والعيوب', en: 'Quality & defects' }
+        },
+        {
+          id: 'maintenance',
+          icon: 'cog',
+          label: { ar: 'الصيانة والجاهزية', en: 'Maintenance & readiness' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'حالة المصنع', en: 'Plant status' },
+        value: 'تشغيل مستقر',
+        description: {
+          ar: 'خط الإنتاج 3 يعمل بالطاقة القصوى، خطة صيانة وقائية تبدأ غداً.',
+          en: 'Line 3 running at peak load, preventive maintenance scheduled tomorrow.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة العمليات التصنيعية',
+          en: 'Manufacturing operations dashboard'
+        },
+        subtitle: {
+          ar: 'راقب الإنتاج، الجودة، والصيانة في جميع الخطوط.',
+          en: 'Monitor output, quality, and maintenance across lines.'
+        },
+        primary: {
+          ar: 'ضبط خطة الإنتاج',
+          en: 'Adjust production plan'
+        },
+        secondary: {
+          ar: 'إرسال تقرير المصنع',
+          en: 'Send plant report'
+        }
+      },
+      stats: [
+        {
+          icon: 'factory',
+          label: { ar: 'معدل الإنتاج اللحظي', en: 'Real-time throughput' },
+          value: '1,240 وحدة/ساعة',
+          delta: { ar: '+6% عن متوسط الأسبوع', en: '+6% vs weekly average' },
+          trend: 'positive'
+        },
+        {
+          icon: 'chart-bar',
+          label: { ar: 'الكفاءة الشاملة للمعدات', en: 'Overall equipment effectiveness' },
+          value: '87%',
+          delta: { ar: '+4 نقاط بعد تحسين الإعداد', en: '+4 pts after setup optimisation' },
+          trend: 'positive'
+        },
+        {
+          icon: 'scale',
+          label: { ar: 'نسبة الهدر', en: 'Scrap rate' },
+          value: '2.1%',
+          delta: { ar: '-0.7 نقطة بفضل مراقبة الجودة', en: '-0.7 pts with inline QA' },
+          trend: 'positive'
+        },
+        {
+          icon: 'cog',
+          label: { ar: 'توقف مخطط للأسبوع', en: 'Planned downtime this week' },
+          value: '18 ساعة',
+          delta: { ar: '3 ساعات أقل من الميزانية', en: '3 hours under budget' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'إنتاج خطوط التصنيع', en: 'Production by line' },
+          subtitle: { ar: 'ساعات العمل الفعلية مقابل المخطط لكل خط.', en: 'Actual vs planned runtime for each line.' },
+          action: { ar: 'تفاصيل حسب الوردية', en: 'View by shift' },
+          placeholder: { ar: 'مخطط الإنتاج', en: 'Production chart' }
+        },
+        {
+          id: 'alerts',
+          type: 'list',
+          title: { ar: 'تنبيهات حرجة', en: 'Critical alerts' },
+          action: { ar: 'آخر تحديث 10 دقائق', en: 'Updated 10 minutes ago' },
+          items: [
+            {
+              icon: 'cog',
+              title: { ar: 'اهتزاز عالٍ على خط التغليف', en: 'High vibration on packaging line' },
+              subtitle: { ar: 'تم تخفيض السرعة حتى المعاينة', en: 'Speed reduced pending inspection' },
+              value: 'قيد المعالجة',
+              delta: { ar: 'فريق الصيانة في الطريق', en: 'Maintenance en route' }
+            },
+            {
+              icon: 'scale',
+              title: { ar: 'زيادة عيوب الجودة في خط 2', en: 'Quality spike on line 2' },
+              subtitle: { ar: 'التحليل يشير إلى مادة خام جديدة', en: 'Linked to new raw batch' },
+              value: 'تم التحقيق',
+              delta: { ar: 'جارٍ تعديل المورد', en: 'Supplier adjustment underway' }
+            },
+            {
+              icon: 'factory',
+              title: { ar: 'استهلاك طاقة أعلى من المتوقع', en: 'Energy consumption above target' },
+              subtitle: { ar: 'قيد المراقبة مع فريق الطاقة', en: 'Energy team monitoring' },
+              value: 'تنبيه متوسط',
+              delta: { ar: 'توصية بتحديث المحركات', en: 'Recommendation: motor upgrade' }
+            }
+          ]
+        },
+        {
+          id: 'maintenance',
+          type: 'progress',
+          title: { ar: 'جاهزية الصيانة', en: 'Maintenance readiness' },
+          items: [
+            {
+              title: { ar: 'الصيانة الوقائية', en: 'Preventive schedule' },
+              subtitle: { ar: 'اكتملت 28 من 30 مهمة', en: '28 of 30 tasks complete' },
+              value: '93%',
+              percent: '93%'
+            },
+            {
+              title: { ar: 'قطع الغيار الحرجة', en: 'Critical spare parts' },
+              subtitle: { ar: 'تغطية لمدة 21 يوم', en: 'Coverage for 21 days' },
+              value: '76%',
+              percent: '76%'
+            },
+            {
+              title: { ar: 'تدريب فرق الصيانة', en: 'Technician training' },
+              subtitle: { ar: 'دورات السلامة والروبوتات', en: 'Safety & robotics modules' },
+              value: '64%',
+              percent: '64%'
+            }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'أخبار المصنع', en: 'Plant news timeline' },
+          items: [
+            {
+              icon: 'factory',
+              title: { ar: 'تشغيل خط التغليف الجديد', en: 'New packaging line launched' },
+              subtitle: { ar: 'زيادة الطاقة بمقدار 14%', en: 'Capacity up 14%' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'sparkles',
+              title: { ar: 'تجربة نظام رؤية بالذكاء الاصطناعي', en: 'AI vision pilot deployed' },
+              subtitle: { ar: 'رصد العيوب في الوقت الحقيقي', en: 'Real-time defect detection' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            },
+            {
+              icon: 'cog',
+              title: { ar: 'تحديث لوحة التشغيل', en: 'Operations dashboard update' },
+              subtitle: { ar: 'مؤشرات الأداء المباشرة لكل خط', en: 'Live KPIs for each line' },
+              time: { ar: 'قبل يومين', en: '2 days ago' }
+            }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>

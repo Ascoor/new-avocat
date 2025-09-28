@@ -1,343 +1,297 @@
 
 @layer base {
   :root {
-    /* 🎨 Colors */
+    /* 🎨 Core Brand Colors - Day Mode */
     --background: 0 0% 100%;
-    --foreground: 215 75% 15%;
+    --foreground: 215 85% 12%;
 
-    --primary: 215 85% 17%;
+    /* 🔵 Primary: Deep Legal Blue */
+    --primary: 215 100% 15%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 215 75% 25%;
-    --primary-glow: 215 65% 35%;
-    --primary-hover: 215 85% 22%;
+    --primary-light: 215 85% 25%;
+    --primary-glow: 215 75% 35%;
+    --primary-hover: 215 100% 18%;
 
-    --secondary: 213 20% 82%;
-    --secondary-foreground: 215 75% 15%;
-    --secondary-dark: 213 20% 76%;
+    /* ⚫ Secondary: Sophisticated Charcoal */
+    --secondary: 210 15% 85%;
+    --secondary-foreground: 215 85% 12%;
+    --secondary-dark: 210 20% 75%;
 
-    --accent: 45 85% 42%;
-    --accent-foreground: 215 85% 17%;
-    --accent-soft: 45 75% 75%;
-    --accent-glow: 45 85% 52%;
+    /* 🟡 Accent: Professional Gold */
+    --accent: 42 95% 45%;
+    --accent-foreground: 215 85% 12%;
+    --accent-soft: 42 85% 85%;
+    --accent-glow: 42 100% 55%;
 
-    --muted: 210 25% 95%;
-    --muted-foreground: 215 20% 45%;
+    /* 🔘 Neutral Surfaces */
+    --muted: 210 30% 96%;
+    --muted-foreground: 215 25% 45%;
     --muted-dark: 210 25% 90%;
 
+    /* 🃏 Cards & Containers */
     --card: 0 0% 100%;
-    --card-foreground: 215 75% 15%;
-    --card-elevated: 210 25% 98%;
+    --card-foreground: 215 85% 12%;
+    --card-elevated: 210 30% 98%;
 
+    /* 💬 Popovers */
     --popover: 0 0% 100%;
-    --popover-foreground: 215 75% 15%;
+    --popover-foreground: 215 85% 12%;
 
-    --destructive: 0 84% 60%;
+    /* 🚨 Status Colors */
+    --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --success: 142 76% 36%;
+    --success: 142 80% 40%;
     --success-foreground: 0 0% 98%;
-    --success-soft: 142 76% 90%;
+    --success-soft: 142 70% 92%;
 
-    --warning: 38 92% 50%;
+    --warning: 35 95% 55%;
     --warning-foreground: 0 0% 98%;
-    --warning-soft: 38 92% 90%;
+    --warning-soft: 35 85% 92%;
 
-    --border: 213 20% 88%;
-    --input: 213 20% 90%;
-    --ring: 215 85% 17%;
+    /* 🔲 Interactive Elements */
+    --border: 210 25% 88%;
+    --input: 210 30% 92%;
+    --ring: 215 100% 15%;
 
-    --text-strong: 215 75% 15%;
-    --text-muted: 215 20% 45%;
-    --text-body: 215 30% 25%;
+    /* 📝 Typography Hierarchy */
+    --text-strong: 215 85% 12%;
+    --text-muted: 215 30% 45%;
+    --text-body: 215 40% 20%;
     --text-inverse: 0 0% 100%;
 
-    --surface-muted: 210 25% 95%;
-    --surface-highlight: 210 25% 98%;
-    --surface-glass: 0 0% 100% / 0.1;
+    /* 🌅 Surface System */
+    --surface-muted: 210 35% 96%;
+    --surface-highlight: 210 35% 98%;
+    --surface-glass: 0 0% 100% / 0.15;
 
-    --gradient-primary: linear-gradient(135deg, hsl(215 85% 17%), hsl(215 75% 25%));
-    --gradient-secondary: linear-gradient(135deg, hsl(210 25% 98%), hsl(213 20% 90%));
-    --gradient-gold: linear-gradient(135deg, hsl(45 85% 42%), hsl(45 85% 52%));
-    --gradient-hero: linear-gradient(135deg, hsl(215 85% 12%), hsl(215 75% 20%));
-    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 46%));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 25% 98%));
-    --gradient-aurora: linear-gradient(135deg, hsl(215 85% 17%), hsl(180 45% 60%), hsl(45 85% 42%));
+    /* 🌈 Premium Gradient System */
+    --gradient-primary: linear-gradient(135deg, hsl(215 100% 15%), hsl(215 85% 25%));
+    --gradient-secondary: linear-gradient(135deg, hsl(210 30% 98%), hsl(210 25% 88%));
+    --gradient-gold: linear-gradient(135deg, hsl(42 95% 45%), hsl(42 100% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(215 100% 10%), hsl(215 85% 20%));
+    --gradient-success: linear-gradient(135deg, hsl(142 80% 40%), hsl(142 75% 50%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 30% 98%));
+    --gradient-aurora: linear-gradient(135deg, hsl(215 100% 15%), hsl(180 50% 65%), hsl(42 95% 45%));
+    --gradient-legal: linear-gradient(135deg, hsl(215 100% 8%), hsl(215 85% 15%), hsl(42 95% 45%));
 
-    --toggle-gradient: linear-gradient(135deg, hsl(215 85% 17%), hsl(45 85% 42%));
+    --toggle-gradient: linear-gradient(135deg, hsl(215 100% 15%), hsl(42 95% 45%));
 
-    --color-datasetA: 215 85% 17%;
-    --color-datasetB: 45 85% 42%;
-    --color-datasetC: 180 45% 60%;
+    /* 📊 Chart Data Colors */
+    --color-datasetA: 215 100% 15%;
+    --color-datasetB: 42 95% 45%;
+    --color-datasetC: 180 50% 65%;
 
-    /* 🧭 Sidebar */
+    /* 🧭 Premium Sidebar System */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 75% 15%;
-    --sidebar-primary: 215 85% 17%;
+    --sidebar-foreground: 215 85% 12%;
+    --sidebar-primary: 215 100% 15%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 45 85% 42%;
-    --sidebar-accent-foreground: 215 85% 17%;
-    --sidebar-muted: 210 25% 95%;
-    --sidebar-muted-foreground: 215 20% 45%;
-    --sidebar-border: 213 20% 88%;
-    --sidebar-ring: 215 85% 17%;
-    --sidebar-hover-highlight: 210 25% 90%;
+    --sidebar-accent: 42 95% 45%;
+    --sidebar-accent-foreground: 215 85% 12%;
+    --sidebar-muted: 210 35% 96%;
+    --sidebar-muted-foreground: 215 30% 45%;
+    --sidebar-border: 210 25% 85%;
+    --sidebar-ring: 215 100% 15%;
+    --sidebar-hover-highlight: 210 30% 92%;
     --sidebar-item-bg: 0 0% 100%;
-    --sidebar-surface: 210 25% 98%;
-    --sidebar-text-muted: 215 20% 45%;
-    --sidebar-text-strong: 215 75% 15%;
-    --sidebar-hover-foreground: 215 85% 17%;
-    --sidebar-icon-muted: 215 20% 45%;
-    --sidebar-icon-active: 215 85% 17%;
-    --sidebar-active-glow: 215 85% 17% / 0.1;
-    --sidebar-hover-glow: 45 85% 42% / 0.05;
-    --sidebar-ambient-glow: 215 85% 17% / 0.03;
-    --sidebar-shell-shadow: 0 10px 40px -10px hsl(215 85% 17% / 0.08);
-    --sidebar-surface-gradient: linear-gradient(
-      180deg,
-      hsl(215 75% 98% / 0.98) 0%,
-      hsl(215 65% 97% / 0.96) 38%,
-      hsl(215 60% 95% / 0.94) 100%
-    );
-    --sidebar-edge-highlight: linear-gradient(
-      90deg,
-      hsl(215 85% 80% / 0.45) 0%,
-      transparent 65%
-    );
-    --sidebar-ambient-glow: radial-gradient(
-      circle at 18% 12%,
-      hsl(45 85% 60% / 0.22) 0%,
-      transparent 60%
-    );
-    --sidebar-shell-blur: 18px;
-    --sidebar-item-active-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.16) 0%,
-      hsl(var(--primary-glow) / 0.08) 100%
-    );
-    --sidebar-item-hover-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.08) 0%,
-      transparent 65%
-    );
-    --sidebar-item-active-shadow: 0 16px 35px -24px hsl(var(--primary) / 0.4);
-    --sidebar-subitem-hover-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.12) 0%,
-      transparent 70%
-    );
-    --sidebar-subitem-active-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.18) 0%,
-      hsl(var(--primary-glow) / 0.1) 100%
-    );
-    --sidebar-subitem-shadow: 0 12px 28px -24px hsl(var(--primary) / 0.35);
+    --sidebar-surface: 210 35% 98%;
+    --sidebar-text-muted: 215 30% 45%;
+    --sidebar-text-strong: 215 85% 12%;
+    --sidebar-hover-foreground: 215 100% 15%;
+    --sidebar-icon-muted: 215 30% 45%;
+    --sidebar-icon-active: 215 100% 15%;
+    --sidebar-active-glow: 215 100% 15% / 0.12;
+    --sidebar-hover-glow: 42 95% 45% / 0.08;
+    --sidebar-ambient-glow: 215 100% 15% / 0.05;
+    --sidebar-shell-shadow: 0 20px 60px -15px hsl(215 100% 15% / 0.12);
 
-    --header-surface-gradient: linear-gradient(
-      90deg,
-      hsl(215 75% 98% / 0.95) 0%,
-      hsl(215 65% 97% / 0.95) 100%
-    );
-    --header-ambient-glow: radial-gradient(
-      circle at 12% 40%,
-      hsl(var(--primary-glow) / 0.12) 0%,
-      transparent 62%
-    );
-    --header-bottom-glow: linear-gradient(
-      90deg,
-      hsl(var(--primary) / 0.25) 0%,
-      hsl(var(--accent) / 0.18) 100%
-    );
-    --header-shell-shadow: 0 10px 28px -18px hsl(var(--primary) / 0.25);
-    --header-shell-border: hsl(var(--border) / 0.8);
-    --header-shell-blur: 16px;
+    /* 🧭 Enhanced Sidebar States */
+    --sidebar-surface-gradient: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 35% 98%));
+    --sidebar-edge-highlight: 0 1px 0 hsl(0 0% 100% / 0.8);
+    --sidebar-shell-blur: blur(20px);
+    --sidebar-item-active-bg: linear-gradient(135deg, hsl(215 100% 15% / 0.08), hsl(42 95% 45% / 0.05));
+    --sidebar-item-hover-bg: hsl(210 30% 92%);
+    --sidebar-item-active-shadow: 0 4px 12px hsl(215 100% 15% / 0.15);
+    --sidebar-subitem-hover-bg: hsl(210 25% 94%);
+    --sidebar-subitem-active-bg: hsl(215 100% 15% / 0.05);
+    --sidebar-subitem-shadow: 0 2px 8px hsl(215 100% 15% / 0.08);
 
-    --color-sidebar-border: 213 20% 88%;
-    --color-sidebar-accent: 45 85% 42%;
+    /* 🎯 Header System */
+    --header-surface-gradient: linear-gradient(180deg, hsl(0 0% 100% / 0.95), hsl(210 35% 98% / 0.9));
+    --header-ambient-glow: 0 0 40px hsl(215 100% 15% / 0.05);
+    --header-bottom-glow: 0 1px 0 hsl(42 95% 45% / 0.2);
+    --header-shell-shadow: 0 4px 20px hsl(215 100% 15% / 0.08);
+    --header-shell-border: 1px solid hsl(210 25% 88%);
+    --header-shell-blur: blur(24px);
 
-    /* 🔲 Layout & Spacing */
-    --sidebar-width: 280px;
-    --sidebar-width-icon: 60px;
-    --sidebar-width-mobile: 320px;
-    --sidebar-width-tablet: 240px;
-    --sidebar-padding-inline: 1rem;
-    --sidebar-section-gap: 2rem;
+    /* 🔲 Layout & Spacing System */
+    --sidebar-width: 320px;
+    --sidebar-width-icon: 72px;
+    --sidebar-width-mobile: 280px;
+    --sidebar-width-tablet: 260px;
+    --sidebar-padding-inline: 1.5rem;
+    --sidebar-section-gap: 2.5rem;
 
-    --content-max-width: 1200px;
-    --layout-gutter: 2rem;
+    --content-max-width: 1400px;
+    --layout-gutter: 2.5rem;
 
-    /* ⚡ Effects & Motion */
-    --shadow-premium: 0 25px 50px -12px hsl(215 85% 17% / 0.15);
-    --shadow-gold: 0 10px 30px -5px hsl(45 85% 42% / 0.2);
-    --shadow-elevated: 0 10px 40px -10px hsl(215 85% 17% / 0.08);
-    --shadow-ambient: 0 5px 20px -5px hsl(215 85% 17% / 0.1);
-    --shadow-glow: 0 0 30px hsl(45 85% 42% / 0.3);
-    --shadow-glow-strong: 0 0 50px hsl(45 85% 42% / 0.5);
-    --shadow-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.1);
+    /* 🎯 Icon System */
+    --icon-size-collapsed: 20px;
+    --icon-size-expanded: 24px;
 
-    --transition-premium: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-elegant: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    /* ⚡ Premium Effects & Motion */
+    --shadow-premium: 0 32px 64px -12px hsl(215 100% 15% / 0.2);
+    --shadow-gold: 0 16px 40px -8px hsl(42 95% 45% / 0.25);
+    --shadow-elevated: 0 12px 48px -12px hsl(215 100% 15% / 0.12);
+    --shadow-ambient: 0 8px 32px -8px hsl(215 100% 15% / 0.15);
+    --shadow-glow: 0 0 40px hsl(42 95% 45% / 0.35);
+    --shadow-glow-strong: 0 0 64px hsl(42 95% 45% / 0.6);
+    --shadow-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.15);
+    --shadow-legal-depth: 0 20px 80px -20px hsl(215 100% 8% / 0.3);
 
-    --radius: 0.75rem;
+    --transition-premium: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-elegant: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-theme: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    --radius: 0.875rem;
   }
 
   .dark {
-    /* 🎨 Colors - Dark Mode */
-    --background: 215 100% 5%;
-    --foreground: 210 15% 91%;
+    /* 🌙 Night Mode - Premium Legal Dark Theme */
+    --background: 215 100% 3%;
+    --foreground: 210 20% 95%;
 
-    --primary: 180 45% 60%;
-    --primary-foreground: 215 100% 5%;
-    --primary-light: 180 50% 65%;
-    --primary-glow: 180 55% 70%;
-    --primary-hover: 180 45% 65%;
+    /* 🔵 Primary: Sophisticated Teal */
+    --primary: 180 55% 65%;
+    --primary-foreground: 215 100% 3%;
+    --primary-light: 180 50% 70%;
+    --primary-glow: 180 60% 75%;
+    --primary-hover: 180 55% 70%;
 
-    --secondary: 215 50% 8%;
-    --secondary-foreground: 210 15% 91%;
-    --secondary-dark: 215 60% 5%;
+    /* ⚫ Secondary: Rich Charcoal */
+    --secondary: 215 60% 8%;
+    --secondary-foreground: 210 20% 95%;
+    --secondary-dark: 215 80% 4%;
 
-    --accent: 38 45% 58%;
-    --accent-foreground: 215 100% 5%;
-    --accent-soft: 38 35% 25%;
-    --accent-glow: 38 50% 63%;
+    /* 🥉 Accent: Muted Bronze */
+    --accent: 35 45% 65%;
+    --accent-foreground: 215 100% 3%;
+    --accent-soft: 35 40% 25%;
+    --accent-glow: 35 50% 70%;
 
-    --muted: 215 40% 10%;
-    --muted-foreground: 210 15% 65%;
-    --muted-dark: 215 50% 6%;
+    /* 🔘 Neutral Surfaces */
+    --muted: 215 50% 8%;
+    --muted-foreground: 210 20% 70%;
+    --muted-dark: 215 70% 5%;
 
-    --card: 215 50% 7%;
-    --card-foreground: 210 15% 91%;
-    --card-elevated: 215 40% 10%;
+    /* 🃏 Cards & Containers */
+    --card: 215 60% 6%;
+    --card-foreground: 210 20% 95%;
+    --card-elevated: 215 50% 10%;
 
-    --popover: 215 50% 7%;
-    --popover-foreground: 210 15% 91%;
+    /* 💬 Popovers */
+    --popover: 215 60% 6%;
+    --popover-foreground: 210 20% 95%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 15% 91%;
+    /* 🚨 Status Colors */
+    --destructive: 0 85% 65%;
+    --destructive-foreground: 210 20% 95%;
 
-    --success: 142 71% 45%;
-    --success-foreground: 210 15% 91%;
-    --success-soft: 142 71% 15%;
+    --success: 142 75% 50%;
+    --success-foreground: 210 20% 95%;
+    --success-soft: 142 70% 15%;
 
-    --warning: 38 92% 60%;
-    --warning-foreground: 210 15% 91%;
-    --warning-soft: 38 92% 15%;
+    --warning: 35 90% 65%;
+    --warning-foreground: 210 20% 95%;
+    --warning-soft: 35 85% 15%;
 
-    --border: 215 30% 15%;
-    --input: 215 40% 10%;
-    --ring: 180 45% 60%;
+    /* 🔲 Interactive Elements */
+    --border: 215 40% 15%;
+    --input: 215 50% 8%;
+    --ring: 180 55% 65%;
 
-    --text-strong: 210 15% 91%;
-    --text-muted: 210 15% 65%;
-    --text-body: 210 15% 75%;
-    --text-inverse: 215 100% 5%;
+    /* 📝 Typography Hierarchy */
+    --text-strong: 210 20% 95%;
+    --text-muted: 210 20% 70%;
+    --text-body: 210 20% 80%;
+    --text-inverse: 215 100% 3%;
 
-    --surface-muted: 215 40% 10%;
-    --surface-highlight: 215 40% 12%;
-    --surface-glass: 0 0% 0% / 0.1;
+    /* 🌅 Surface System */
+    --surface-muted: 215 50% 8%;
+    --surface-highlight: 215 45% 12%;
+    --surface-glass: 0 0% 0% / 0.2;
 
-    --gradient-primary: linear-gradient(135deg, hsl(215 60% 5%), hsl(215 50% 8%));
-    --gradient-secondary: linear-gradient(135deg, hsl(215 50% 7%), hsl(215 40% 10%));
-    --gradient-gold: linear-gradient(135deg, hsl(38 45% 58%), hsl(38 50% 63%));
-    --gradient-hero: linear-gradient(135deg, hsl(215 100% 3%), hsl(215 60% 5%));
-    --gradient-footer-night: linear-gradient(135deg, hsl(215 100% 3%), hsl(215 50% 6%));
-    --gradient-success: linear-gradient(135deg, hsl(142 71% 45%), hsl(142 71% 55%));
-    --gradient-card: linear-gradient(135deg, hsl(215 50% 7%), hsl(215 40% 10%));
-    --gradient-aurora: linear-gradient(135deg, hsl(215 60% 5%), hsl(180 45% 60%), hsl(38 45% 58%));
+    /* 🌈 Premium Night Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(215 80% 4%), hsl(215 60% 8%));
+    --gradient-secondary: linear-gradient(135deg, hsl(215 60% 6%), hsl(215 50% 10%));
+    --gradient-gold: linear-gradient(135deg, hsl(35 45% 65%), hsl(35 50% 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(215 100% 2%), hsl(215 80% 4%));
+    --gradient-footer-night: linear-gradient(135deg, hsl(215 100% 2%), hsl(215 70% 5%));
+    --gradient-success: linear-gradient(135deg, hsl(142 75% 50%), hsl(142 70% 60%));
+    --gradient-card: linear-gradient(135deg, hsl(215 60% 6%), hsl(215 50% 10%));
+    --gradient-aurora: linear-gradient(135deg, hsl(215 80% 4%), hsl(180 55% 65%), hsl(35 45% 65%));
+    --gradient-legal: linear-gradient(135deg, hsl(215 100% 1%), hsl(215 80% 4%), hsl(35 45% 65%));
 
-    --toggle-gradient: linear-gradient(135deg, hsl(180 45% 60%), hsl(38 45% 58%));
+    --toggle-gradient: linear-gradient(135deg, hsl(180 55% 65%), hsl(35 45% 65%));
 
-    --sidebar-background: 215 50% 7%;
-    --sidebar-foreground: 210 15% 91%;
-    --sidebar-primary: 180 45% 60%;
-    --sidebar-primary-foreground: 215 100% 5%;
-    --sidebar-accent: 38 45% 58%;
-    --sidebar-accent-foreground: 215 100% 5%;
-    --sidebar-muted: 215 40% 10%;
-    --sidebar-muted-foreground: 210 15% 65%;
-    --sidebar-border: 215 30% 15%;
-    --sidebar-ring: 180 45% 60%;
-    --sidebar-hover-highlight: 215 40% 12%;
-    --sidebar-item-bg: 215 50% 7%;
-    --sidebar-surface: 215 40% 10%;
-    --sidebar-text-muted: 210 15% 65%;
-    --sidebar-text-strong: 210 15% 91%;
-    --sidebar-hover-foreground: 180 45% 60%;
-    --sidebar-icon-muted: 210 15% 65%;
-    --sidebar-icon-active: 180 45% 60%;
-    --sidebar-active-glow: 180 45% 60% / 0.1;
-    --sidebar-hover-glow: 38 45% 58% / 0.05;
-    --sidebar-ambient-glow: 180 45% 60% / 0.03;
-    --sidebar-shell-shadow: 0 10px 40px -10px hsl(0 0% 0% / 0.15);
-    --sidebar-surface-gradient: linear-gradient(
-      180deg,
-      hsl(215 40% 12% / 0.98) 0%,
-      hsl(215 45% 9% / 0.97) 55%,
-      hsl(215 55% 6% / 0.95) 100%
-    );
-    --sidebar-edge-highlight: linear-gradient(
-      90deg,
-      hsl(180 45% 55% / 0.18) 0%,
-      transparent 70%
-    );
-    --sidebar-ambient-glow: radial-gradient(
-      circle at 20% 18%,
-      hsl(38 45% 58% / 0.18) 0%,
-      transparent 60%
-    );
-    --sidebar-shell-blur: 22px;
-    --sidebar-item-active-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.45) 0%,
-      hsl(var(--primary) / 0.22) 100%
-    );
-    --sidebar-item-hover-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.25) 0%,
-      hsl(var(--primary) / 0.12) 100%
-    );
-    --sidebar-item-active-shadow: 0 18px 40px -20px hsl(var(--primary) / 0.55);
-    --sidebar-subitem-hover-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.28) 0%,
-      hsl(var(--accent) / 0.12) 100%
-    );
-    --sidebar-subitem-active-bg: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.42) 0%,
-      hsl(var(--accent) / 0.18) 100%
-    );
-    --sidebar-subitem-shadow: 0 16px 38px -24px hsl(var(--primary) / 0.6);
+    /* 🧭 Premium Night Sidebar */
+    --sidebar-background: 215 60% 6%;
+    --sidebar-foreground: 210 20% 95%;
+    --sidebar-primary: 180 55% 65%;
+    --sidebar-primary-foreground: 215 100% 3%;
+    --sidebar-accent: 35 45% 65%;
+    --sidebar-accent-foreground: 215 100% 3%;
+    --sidebar-muted: 215 50% 8%;
+    --sidebar-muted-foreground: 210 20% 70%;
+    --sidebar-border: 215 40% 15%;
+    --sidebar-ring: 180 55% 65%;
+    --sidebar-hover-highlight: 215 45% 12%;
+    --sidebar-item-bg: 215 60% 6%;
+    --sidebar-surface: 215 50% 10%;
+    --sidebar-text-muted: 210 20% 70%;
+    --sidebar-text-strong: 210 20% 95%;
+    --sidebar-hover-foreground: 180 55% 65%;
+    --sidebar-icon-muted: 210 20% 70%;
+    --sidebar-icon-active: 180 55% 65%;
+    --sidebar-active-glow: 180 55% 65% / 0.15;
+    --sidebar-hover-glow: 35 45% 65% / 0.08;
+    --sidebar-ambient-glow: 180 55% 65% / 0.05;
+    --sidebar-shell-shadow: 0 20px 60px -15px hsl(0 0% 0% / 0.25);
 
-    --header-surface-gradient: linear-gradient(
-      90deg,
-      hsl(215 55% 7% / 0.9) 0%,
-      hsl(215 60% 5% / 0.92) 100%
-    );
-    --header-ambient-glow: radial-gradient(
-      circle at 18% 45%,
-      hsl(var(--primary) / 0.32) 0%,
-      transparent 65%
-    );
-    --header-bottom-glow: linear-gradient(
-      90deg,
-      hsl(var(--primary) / 0.5) 0%,
-      hsl(var(--accent) / 0.2) 100%
-    );
-    --header-shell-shadow: 0 12px 28px -16px hsl(0 0% 0% / 0.65);
-    --header-shell-border: hsl(var(--border) / 0.6);
-    --header-shell-blur: 22px;
+    /* 🧭 Enhanced Night Sidebar States */
+    --sidebar-surface-gradient: linear-gradient(180deg, hsl(215 60% 6%), hsl(215 50% 10%));
+    --sidebar-edge-highlight: 0 1px 0 hsl(180 55% 65% / 0.1);
+    --sidebar-shell-blur: blur(24px);
+    --sidebar-item-active-bg: linear-gradient(135deg, hsl(180 55% 65% / 0.12), hsl(35 45% 65% / 0.08));
+    --sidebar-item-hover-bg: hsl(215 45% 12%);
+    --sidebar-item-active-shadow: 0 6px 16px hsl(180 55% 65% / 0.2);
+    --sidebar-subitem-hover-bg: hsl(215 40% 14%);
+    --sidebar-subitem-active-bg: hsl(180 55% 65% / 0.08);
+    --sidebar-subitem-shadow: 0 3px 12px hsl(180 55% 65% / 0.12);
 
-    --shadow-premium: 0 25px 50px -12px hsl(0 0% 0% / 0.3);
-    --shadow-gold: 0 10px 30px -5px hsl(38 45% 58% / 0.2);
-    --shadow-elevated: 0 10px 40px -10px hsl(0 0% 0% / 0.15);
-    --shadow-ambient: 0 5px 20px -5px hsl(0 0% 0% / 0.2);
-    --shadow-glow: 0 0 30px hsl(38 45% 58% / 0.3);
-    --shadow-glow-strong: 0 0 50px hsl(38 45% 58% / 0.5);
-    --shadow-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.05);
+    /* 🎯 Night Header System */
+    --header-surface-gradient: linear-gradient(180deg, hsl(215 60% 6% / 0.95), hsl(215 50% 8% / 0.9));
+    --header-ambient-glow: 0 0 48px hsl(180 55% 65% / 0.08);
+    --header-bottom-glow: 0 1px 0 hsl(35 45% 65% / 0.25);
+    --header-shell-shadow: 0 6px 24px hsl(0 0% 0% / 0.15);
+    --header-shell-border: 1px solid hsl(215 40% 15%);
+    --header-shell-blur: blur(32px);
 
-    --transition-premium: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-elegant: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    /* ⚡ Premium Night Effects */
+    --shadow-premium: 0 40px 80px -16px hsl(0 0% 0% / 0.4);
+    --shadow-gold: 0 20px 48px -12px hsl(35 45% 65% / 0.3);
+    --shadow-elevated: 0 16px 64px -16px hsl(0 0% 0% / 0.2);
+    --shadow-ambient: 0 12px 48px -12px hsl(0 0% 0% / 0.3);
+    --shadow-glow: 0 0 48px hsl(35 45% 65% / 0.4);
+    --shadow-glow-strong: 0 0 80px hsl(35 45% 65% / 0.7);
+    --shadow-inner-glow: inset 0 1px 0 hsl(180 55% 65% / 0.08);
+    --shadow-legal-depth: 0 32px 120px -24px hsl(0 0% 0% / 0.5);
+
+    --transition-premium: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-elegant: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-theme: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 }

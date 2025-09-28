@@ -12,7 +12,7 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">SC</div>
@@ -22,7 +22,6 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -44,8 +43,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -66,16 +64,215 @@
     </main>
   </div>
 
-  <script src="dashboard-blueprints.js"></script>
   <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const base = (window.DASHBOARD_BLUEPRINTS && window.DASHBOARD_BLUEPRINTS['supply']) || {};
-      const blueprint = typeof structuredClone === 'function'
-        ? structuredClone(base)
-        : JSON.parse(JSON.stringify(base));
-      initDashboard(blueprint);
-    })();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة سلسلة الإمداد',
+          en: 'Supply Chain Command Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'SC',
+        name: {
+          ar: 'نبض الإمداد',
+          en: 'Supply Pulse'
+        },
+        tagline: {
+          ar: 'العمليات اللوجستية، المخزون، والشركاء',
+          en: 'Logistics, inventory, and supplier orchestration'
+        }
+      },
+      theme: {
+        accentGradient: 'from-amber-500 via-lime-500 to-emerald-500',
+        accentText: 'text-emerald-200',
+        highlightBg: 'bg-lime-500/10 border-lime-400/30',
+        badgeBg: 'bg-emerald-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'truck',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'سلسلة', en: 'Chain' }
+        },
+        {
+          id: 'logistics',
+          icon: 'map',
+          label: { ar: 'العمليات اللوجستية', en: 'Logistics' }
+        },
+        {
+          id: 'inventory',
+          icon: 'cube',
+          label: { ar: 'المخزون', en: 'Inventory' }
+        },
+        {
+          id: 'suppliers',
+          icon: 'factory',
+          label: { ar: 'الموردون والشركاء', en: 'Suppliers & partners' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'مستوى المخاطر', en: 'Risk level' },
+        value: 'متوسط منخفض',
+        description: {
+          ar: 'لا توجد اختناقات كبرى، تم تأمين النقل البري للربع القادم.',
+          en: 'No major bottlenecks, road haulage secured for next quarter.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة سلسلة الإمداد',
+          en: 'Supply chain dashboard'
+        },
+        subtitle: {
+          ar: 'تتبع تدفق الشحنات، تغطية المخزون، وأداء الموردين.',
+          en: 'Track shipments, inventory coverage, and supplier performance.'
+        },
+        primary: {
+          ar: 'إنشاء أمر شراء جماعي',
+          en: 'Create bulk purchase order'
+        },
+        secondary: {
+          ar: 'عرض سيناريوهات المخاطر',
+          en: 'View risk scenarios'
+        }
+      },
+      stats: [
+        {
+          icon: 'truck',
+          label: { ar: 'التسليم في الوقت', en: 'On-time deliveries' },
+          value: '94%',
+          delta: { ar: '+3% بعد تحسين المسارات', en: '+3% after route optimisation' },
+          trend: 'positive'
+        },
+        {
+          icon: 'map',
+          label: { ar: 'شحنات قيد النقل', en: 'Shipments in transit' },
+          value: '128',
+          delta: { ar: '37% عبر البحر، 63% بري', en: '37% ocean, 63% road' },
+          trend: 'positive'
+        },
+        {
+          icon: 'cube',
+          label: { ar: 'تغطية المخزون', en: 'Inventory coverage' },
+          value: '32 يوم',
+          delta: { ar: '+4 أيام عن الهدف', en: '+4 days vs target' },
+          trend: 'positive'
+        },
+        {
+          icon: 'factory',
+          label: { ar: 'تقييم الموردين', en: 'Supplier quality score' },
+          value: '87',
+          delta: { ar: '+6 نقاط في ربع واحد', en: '+6 points in one quarter' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'تقدم الشحنات اليومية', en: 'Daily shipment progress' },
+          subtitle: { ar: 'حالة الشحنات حسب القارة ونوع النقل.', en: 'Shipment status by region and mode.' },
+          action: { ar: 'عرض تفاصيل المسارات', en: 'View route details' },
+          placeholder: { ar: 'مخطط الشحنات', en: 'Shipments chart' }
+        },
+        {
+          id: 'routes',
+          type: 'list',
+          title: { ar: 'ممرات يجب مراقبتها', en: 'Lanes to monitor' },
+          action: { ar: 'تحديث كل ساعة', en: 'Updated hourly' },
+          items: [
+            {
+              icon: 'truck',
+              title: { ar: 'شنغهاي → روتردام', en: 'Shanghai → Rotterdam' },
+              subtitle: { ar: 'ETA خمسة أيام', en: 'ETA five days' },
+              value: 'حاويات 220',
+              delta: { ar: 'في الميناء 96 ساعة', en: 'Port dwell 96h' }
+            },
+            {
+              icon: 'map',
+              title: { ar: 'شيكاغو → تورنتو', en: 'Chicago → Toronto' },
+              subtitle: { ar: 'تسليم سريع عبر السكك الحديدية', en: 'Express rail service' },
+              value: 'شحنات 78',
+              delta: { ar: 'في الموعد', en: 'On schedule' }
+            },
+            {
+              icon: 'factory',
+              title: { ar: 'مورد الإلكترونيات - فيتنام', en: 'Electronics vendor - Vietnam' },
+              subtitle: { ar: 'زيادة الطاقة 12%', en: 'Capacity up 12%' },
+              value: 'POD الأسبوع المقبل',
+              delta: { ar: 'يتطلب فحص جودة إضافي', en: 'Extra QA required' }
+            }
+          ]
+        },
+        {
+          id: 'inventory',
+          type: 'progress',
+          title: { ar: 'صحة مستويات المخزون', en: 'Inventory health' },
+          items: [
+            {
+              title: { ar: 'مستودع الساحل الشرقي', en: 'East coast DC' },
+              subtitle: { ar: 'استخدام السعة 78%', en: 'Capacity usage 78%' },
+              value: '78%',
+              percent: '78%'
+            },
+            {
+              title: { ar: 'مستودع أوروبا', en: 'Europe hub' },
+              subtitle: { ar: 'أسابيع الغطاء 4.2', en: 'Weeks of cover 4.2' },
+              value: '68%',
+              percent: '68%'
+            },
+            {
+              title: { ar: 'مستودع أمريكا اللاتينية', en: 'LATAM hub' },
+              subtitle: { ar: 'يتطلب إعادة تخزين', en: 'Restock triggered' },
+              value: '42%',
+              percent: '42%'
+            }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'أخبار سلسلة الإمداد', en: 'Supply chain updates' },
+          items: [
+            {
+              icon: 'truck',
+              title: { ar: 'تفعيل شحنات خضراء', en: 'Green freight activated' },
+              subtitle: { ar: 'استخدام وقود منخفض الانبعاث', en: 'Low-emission fuel adoption' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'cube',
+              title: { ar: 'إطلاق أداة رؤية جديدة', en: 'Inventory visibility tool' },
+              subtitle: { ar: 'بيانات زمن فعلي للمخزون', en: 'Real-time inventory insights' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            },
+            {
+              icon: 'factory',
+              title: { ar: 'تدقيق سلسلة التوريد', en: 'Supply audit completed' },
+              subtitle: { ar: 'تحسين اتفاقيات الخدمة', en: 'Service-level agreements improved' },
+              time: { ar: 'قبل يومين', en: '2 days ago' }
+            }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>

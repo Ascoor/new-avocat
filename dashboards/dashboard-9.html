@@ -12,7 +12,8 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">S</div>
@@ -22,7 +23,6 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -33,8 +33,10 @@
       </div>
     </header>
 
+    <!-- Mobile Backdrop -->
     <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
+    <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -44,8 +46,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -59,6 +60,7 @@
       <div data-role="sidebar-highlight"></div>
     </aside>
 
+    <!-- Main -->
     <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
       <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
       <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
@@ -66,16 +68,124 @@
     </main>
   </div>
 
-  <script src="dashboard-blueprints.js"></script>
   <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const base = (window.DASHBOARD_BLUEPRINTS && window.DASHBOARD_BLUEPRINTS['security']) || {};
-      const blueprint = typeof structuredClone === 'function'
-        ? structuredClone(base)
-        : JSON.parse(JSON.stringify(base));
-      initDashboard(blueprint);
-    })();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة أمن المعلومات',
+          en: 'Cyber Security Dashboard'
+        }
+      },
+      actions: {
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' },
+        collapse: { ar: 'طي الشريط الجانبي', en: 'Collapse sidebar' },
+        expand: { ar: 'توسيع الشريط الجانبي', en: 'Expand sidebar' }
+      },
+      brand: {
+        badge: 'S',
+        name: { ar: 'Security Nexus', en: 'Security Nexus' },
+        tagline: { ar: 'مركز القيادة والامتثال', en: 'Threat & compliance command' }
+      },
+      theme: {
+        accentGradient: 'from-slate-600 via-emerald-500 to-slate-800',
+        accentText: 'text-emerald-300',
+        highlightBg: 'bg-emerald-500/10 border-emerald-400/30',
+        badgeBg: 'bg-emerald-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        { id: 'overview', icon: 'shield', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مراقبة', en: 'Monitoring' } },
+        { id: 'threats', icon: 'sparkles', label: { ar: 'التهديدات', en: 'Threats' } },
+        { id: 'compliance', icon: 'scale', label: { ar: 'الامتثال', en: 'Compliance' } },
+        { id: 'response', icon: 'calendar', label: { ar: 'الاستجابة', en: 'Response' } }
+      ],
+      highlight: {
+        label: { ar: 'مستوى الخطر الحالي', en: 'Current risk level' },
+        value: { ar: 'مرتفع معتدل', en: 'Elevated' },
+        description: {
+          ar: 'نشاط برمجيات خبيثة في مركز بيانات أوروبا، تم تفعيل العزل.',
+          en: 'Malware activity in EU datacentre, containment activated.'
+        }
+      },
+      header: {
+        title: { ar: 'لوحة قيادة الأمن السيبراني', en: 'Cyber defence cockpit' },
+        subtitle: {
+          ar: 'تابع التهديدات، الامتثال، وسرعة الاستجابة لحوادث الأمن الرقمي.',
+          en: 'Track threats, compliance posture, and incident response velocity.'
+        },
+        primary: { ar: 'إطلاق تحليل الأصول', en: 'Launch asset scan' },
+        secondary: { ar: 'عرض بروتوكول الطوارئ', en: 'View emergency protocol' }
+      },
+      stats: [
+        { icon: 'sparkles', label: { ar: 'تهديدات نشطة', en: 'Active threats' }, value: '12', delta: { ar: '−5 خلال 24 ساعة', en: '−5 in 24h' }, trend: 'positive' },
+        { icon: 'clock', label: { ar: 'متوسط زمن الاستجابة', en: 'Average response time' }, value: '14 دقيقة', delta: { ar: 'الهدف 20 دقيقة', en: 'Target 20 minutes' }, trend: 'positive' },
+        { icon: 'scale', label: { ar: 'حالات الامتثال', en: 'Compliance cases' }, value: '3', delta: { ar: 'تحت المراجعة', en: 'Under review' }, trend: 'neutral' },
+        { icon: 'shield', label: { ar: 'الحوادث خلال 24 ساعة', en: 'Incidents last 24h' }, value: '4', delta: { ar: '+1 مقارنة بالأمس', en: '+1 vs yesterday' }, trend: 'negative' }
+      ].map(stat => ({ ...stat, icon: stat.icon === 'clock' ? 'calendar' : stat.icon })),
+      panels: [
+        {
+          id: 'threat-levels',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'مستويات التهديد حسب السطح', en: 'Threat levels by surface' },
+          subtitle: { ar: 'الشبكة، المستخدمون المميزون، وواجهات التطبيقات.', en: 'Network, privileged users, and application interfaces.' },
+          action: { ar: 'تصدير JSON', en: 'Export JSON' },
+          placeholder: { ar: 'مخطط مستويات التهديد', en: 'Threat level chart' }
+        },
+        {
+          id: 'alerts',
+          type: 'list',
+          title: { ar: 'تنبيهات ذات أولوية', en: 'Priority alerts' },
+          action: { ar: 'تحديث منذ دقيقة', en: 'Updated 1 minute ago' },
+          items: [
+            { icon: 'sparkles', title: { ar: 'Ransomware - خدمة الملفات', en: 'Ransomware - file service' }, subtitle: { ar: 'تم عزل عقدة التخزين', en: 'Storage node isolated' }, value: 'P1', delta: { ar: 'فريق الاستجابة يعمل', en: 'IR team engaged' } },
+            { icon: 'shield', title: { ar: 'توقيع دخول مريب', en: 'Suspicious privileged login' }, subtitle: { ar: 'مستخدم من سنغافورة', en: 'User from Singapore' }, value: 'مراقبة', delta: { ar: 'يتطلب MFA إضافي', en: 'Extra MFA required' } },
+            { icon: 'cloud', title: { ar: 'كشف نشاط API غير معتاد', en: 'Anomalous API activity' }, subtitle: { ar: 'معدل مكالمات مرتفع', en: 'Elevated call rate' }, value: 'P2', delta: { ar: 'أرسل إلى فريق المنصة', en: 'Forwarded to platform team' } }
+          ]
+        },
+        {
+          id: 'response-readiness',
+          type: 'progress',
+          title: { ar: 'جاهزية الاستجابة للحوادث', en: 'Incident response readiness' },
+          items: [
+            { title: { ar: 'تحليل الحوادث', en: 'Triage analysis' }, subtitle: { ar: 'تغطية 24/7 عبر 3 فرق', en: '24/7 coverage across 3 squads' }, value: '88%', percent: '88%' },
+            { title: { ar: 'التصعيد والاحتواء', en: 'Escalation & containment' }, subtitle: { ar: 'أتمتة قواعد العزل', en: 'Automated isolation rules' }, value: '74%', percent: '74%' },
+            { title: { ar: 'المراجعة اللاحقة', en: 'Post-incident review' }, subtitle: { ar: 'سجل تقارير آخر 90 يوم', en: 'Reviews logged for last 90 days' }, value: '61%', percent: '61%' }
+          ]
+        },
+        {
+          id: 'attack-surface',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'مراقبة سطح الهجوم', en: 'Attack surface watchlist' },
+          action: { ar: 'مزامنة مع CMDB', en: 'Sync with CMDB' },
+          headers: [
+            { ar: 'الأصل', en: 'Asset' },
+            { ar: 'الحالة', en: 'Status' },
+            { ar: 'التغير', en: 'Change' }
+          ],
+          rows: [
+            { name: { ar: 'بوابة العملاء', en: 'Customer gateway' }, metric: 'متصل بنظام WAF', delta: { ar: 'تقليل 32% من الهجمات', en: 'Blocked 32% attacks' }, trend: 'positive' },
+            { name: { ar: 'نظام الموارد البشرية', en: 'HR platform' }, metric: 'تحديث تصحيحات متأخر', delta: { ar: 'قيد النشر هذا المساء', en: 'Patch roll-out tonight' }, trend: 'neutral' },
+            { name: { ar: 'خدمة التخزين السحابي', en: 'Cloud storage service' }, metric: 'إشعار نشاط عالي', delta: { ar: '+12% عمليات تحميل غير معتادة', en: '+12% anomalous uploads' }, trend: 'negative' }
+          ]
+        },
+        {
+          id: 'incident-timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'خط زمني للحوادث الأخيرة', en: 'Latest incident timeline' },
+          items: [
+            { icon: 'sparkles', title: { ar: 'احتواء ملف خبيث', en: 'Malicious file contained' }, subtitle: { ar: 'تم إيقاف الحاويات المتأثرة', en: 'Impacted containers halted' }, time: { ar: 'قبل 20 دقيقة', en: '20 minutes ago' } },
+            { icon: 'scale', title: { ar: 'مراجعة امتثال PCI', en: 'PCI compliance audit' }, subtitle: { ar: 'إغلاق ملاحظتين ثانويتين', en: 'Closed two minor findings' }, time: { ar: 'اليوم', en: 'Today' } },
+            { icon: 'calendar', title: { ar: 'اختبار خطة الطوارئ', en: 'Disaster recovery drill' }, subtitle: { ar: 'اجتياز الاختبار دون تأثير', en: 'Passed without impact' }, time: { ar: 'أمس', en: 'Yesterday' } }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>

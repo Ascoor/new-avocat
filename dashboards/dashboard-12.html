@@ -12,7 +12,7 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">MK</div>
@@ -22,7 +22,6 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -44,8 +43,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -66,16 +64,215 @@
     </main>
   </div>
 
-  <script src="dashboard-blueprints.js"></script>
   <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const base = (window.DASHBOARD_BLUEPRINTS && window.DASHBOARD_BLUEPRINTS['marketing']) || {};
-      const blueprint = typeof structuredClone === 'function'
-        ? structuredClone(base)
-        : JSON.parse(JSON.stringify(base));
-      initDashboard(blueprint);
-    })();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة حملات التسويق',
+          en: 'Marketing Campaigns Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'MK',
+        name: {
+          ar: 'نبض الحملات',
+          en: 'Campaign Pulse'
+        },
+        tagline: {
+          ar: 'إدارة الأداء، القنوات، والأتمتة الذكية',
+          en: 'Performance, channels, and smart automation'
+        }
+      },
+      theme: {
+        accentGradient: 'from-purple-500 via-pink-500 to-red-500',
+        accentText: 'text-pink-200',
+        highlightBg: 'bg-pink-500/10 border-pink-400/30',
+        badgeBg: 'bg-pink-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'megaphone',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'مباشر', en: 'Live' }
+        },
+        {
+          id: 'campaigns',
+          icon: 'sparkles',
+          label: { ar: 'الحملات النشطة', en: 'Active campaigns' }
+        },
+        {
+          id: 'channels',
+          icon: 'tv',
+          label: { ar: 'القنوات والإعلانات', en: 'Channels & ads' }
+        },
+        {
+          id: 'automation',
+          icon: 'cog',
+          label: { ar: 'الأتمتة والتحسين', en: 'Automation & optimisation' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'حملة مميزة', en: 'Featured campaign' },
+        value: 'إطلاق الخدمة السحابية',
+        description: {
+          ar: 'تجاوز الهدف بنسبة 32% مع تكلفة اكتساب 18$.',
+          en: 'Exceeded goal by 32% with $18 CPA.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة حملات التسويق',
+          en: 'Marketing campaigns dashboard'
+        },
+        subtitle: {
+          ar: 'تتبع أداء القنوات، تحويل الحملات، وتجارب الرسائل.',
+          en: 'Track channel performance, campaign conversions, and messaging experiments.'
+        },
+        primary: {
+          ar: 'إطلاق حملة جديدة',
+          en: 'Launch new campaign'
+        },
+        secondary: {
+          ar: 'تصدير تقرير الأداء',
+          en: 'Export performance report'
+        }
+      },
+      stats: [
+        {
+          icon: 'megaphone',
+          label: { ar: 'العملاء المحتملون', en: 'Qualified leads' },
+          value: '48,200',
+          delta: { ar: '+11% مقابل الشهر الماضي', en: '+11% vs last month' },
+          trend: 'positive'
+        },
+        {
+          icon: 'sparkles',
+          label: { ar: 'عائد الإنفاق الإعلاني', en: 'Return on ad spend' },
+          value: '4.3x',
+          delta: { ar: '+0.6 زيادة', en: '+0.6 lift' },
+          trend: 'positive'
+        },
+        {
+          icon: 'tv',
+          label: { ar: 'معدل فتح البريد', en: 'Email open rate' },
+          value: '38%',
+          delta: { ar: '+5 نقاط بفضل التخصيص', en: '+5 pts due to personalisation' },
+          trend: 'positive'
+        },
+        {
+          icon: 'heart',
+          label: { ar: 'تفاعل اجتماعي', en: 'Social engagement' },
+          value: '67K',
+          delta: { ar: '+14% نمو أسبوعي', en: '+14% weekly growth' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'أداء القنوات المتعددة', en: 'Omnichannel performance' },
+          subtitle: { ar: 'الإنفاق، الزيارات، والتحويلات لكل قناة.', en: 'Spend, visits, and conversions by channel.' },
+          action: { ar: 'تفاصيل حسب المنطقة', en: 'View by region' },
+          placeholder: { ar: 'مخطط الأداء', en: 'Performance chart' }
+        },
+        {
+          id: 'campaigns',
+          type: 'list',
+          title: { ar: 'حملات يجب مراقبتها', en: 'Campaigns to watch' },
+          action: { ar: 'مزامنة كل 30 دقيقة', en: 'Synced every 30 minutes' },
+          items: [
+            {
+              icon: 'sparkles',
+              title: { ar: 'سلسلة الويب المباشر', en: 'Live webinar series' },
+              subtitle: { ar: 'نسبة التحويل 12%', en: '12% conversion rate' },
+              value: '$420K',
+              delta: { ar: '+18% نمو', en: '+18% growth' }
+            },
+            {
+              icon: 'megaphone',
+              title: { ar: 'حملة المؤثرين الإقليمية', en: 'Regional influencer push' },
+              subtitle: { ar: 'تكلفة النقر 1.8$', en: 'CPC $1.8' },
+              value: '$260K',
+              delta: { ar: '+9% وصول', en: '+9% reach' }
+            },
+            {
+              icon: 'tv',
+              title: { ar: 'سلسلة الإعلانات التلفزيونية المتصلة', en: 'Connected TV flight' },
+              subtitle: { ar: 'نسبة مشاهدة 91%', en: '91% completion rate' },
+              value: '$310K',
+              delta: { ar: '+4.2 ROAS', en: 'ROAS 4.2' }
+            }
+          ]
+        },
+        {
+          id: 'automation',
+          type: 'progress',
+          title: { ar: 'رحلات الأتمتة', en: 'Automation journeys' },
+          items: [
+            {
+              title: { ar: 'استبقاء العملاء الجدد', en: 'New customer nurture' },
+              subtitle: { ar: '4 خطوات بريدية + رسائل تطبيق', en: '4 emails + in-app prompts' },
+              value: '82%',
+              percent: '82%'
+            },
+            {
+              title: { ar: 'إعادة استهداف المتسوقين', en: 'Cart retargeting' },
+              subtitle: { ar: 'تكامل مع عروض الوقت الحقيقي', en: 'Real-time offer sync' },
+              value: '61%',
+              percent: '61%'
+            },
+            {
+              title: { ar: 'تنشيط العملاء الخاملين', en: 'Dormant account activation' },
+              subtitle: { ar: 'تجربة محتوى ديناميكي', en: 'Dynamic content experiment' },
+              value: '47%',
+              percent: '47%'
+            }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'تحديثات التسويق', en: 'Marketing updates timeline' },
+          items: [
+            {
+              icon: 'sparkles',
+              title: { ar: 'إطلاق نسخة الصفحة الرئيسية', en: 'Homepage variant launch' },
+              subtitle: { ar: 'اختبار A/B على 40% من الزوار', en: 'A/B test across 40% traffic' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'megaphone',
+              title: { ar: 'توقيع شراكة إعلامية', en: 'Media partnership signed' },
+              subtitle: { ar: 'حزم محتوى مشتركة للربع القادم', en: 'Co-branded content packages' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            },
+            {
+              icon: 'cog',
+              title: { ar: 'تحديث منصة الأتمتة', en: 'Automation platform update' },
+              subtitle: { ar: 'محرك تنبؤي لحجم الجمهور', en: 'Predictive audience sizing' },
+              time: { ar: 'قبل يومين', en: '2 days ago' }
+            }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>

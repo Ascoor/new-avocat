@@ -12,7 +12,7 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">RE</div>
@@ -22,7 +22,6 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -44,8 +43,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -66,16 +64,215 @@
     </main>
   </div>
 
-  <script src="dashboard-blueprints.js"></script>
   <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const base = (window.DASHBOARD_BLUEPRINTS && window.DASHBOARD_BLUEPRINTS['realestate']) || {};
-      const blueprint = typeof structuredClone === 'function'
-        ? structuredClone(base)
-        : JSON.parse(JSON.stringify(base));
-      initDashboard(blueprint);
-    })();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة إدارة العقارات',
+          en: 'Real Estate Portfolio Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'RE',
+        name: {
+          ar: 'مركز الأصول',
+          en: 'Asset Center'
+        },
+        tagline: {
+          ar: 'الإشغال، الإيرادات، وصحة الأصول العقارية',
+          en: 'Occupancy, revenue, and asset health insights'
+        }
+      },
+      theme: {
+        accentGradient: 'from-blue-500 via-slate-600 to-rose-500',
+        accentText: 'text-blue-200',
+        highlightBg: 'bg-blue-500/10 border-blue-400/30',
+        badgeBg: 'bg-rose-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'building',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'محفظة', en: 'Portfolio' }
+        },
+        {
+          id: 'listings',
+          icon: 'map',
+          label: { ar: 'العقارات والإدراجات', en: 'Properties & listings' }
+        },
+        {
+          id: 'occupancy',
+          icon: 'users',
+          label: { ar: 'الإشغال والإيجارات', en: 'Occupancy & leasing' }
+        },
+        {
+          id: 'revenue',
+          icon: 'bank',
+          label: { ar: 'الإيرادات والتكاليف', en: 'Revenue & costs' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'أولوية الأسبوع', en: 'Priority of the week' },
+        value: 'خطة تحديث برج المينا',
+        description: {
+          ar: 'رفع جودة الخدمات للمستأجرين المميزين وتحسين استدامة الطاقة.',
+          en: 'Enhancing premium tenant services and improving energy efficiency.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة إدارة العقارات',
+          en: 'Real estate management dashboard'
+        },
+        subtitle: {
+          ar: 'مراقبة الإشغال، التدفقات المالية، وحالة الأصول عبر المحافظ.',
+          en: 'Monitor occupancy, financial flows, and asset condition across portfolios.'
+        },
+        primary: {
+          ar: 'إطلاق حملة تأجير',
+          en: 'Launch leasing campaign'
+        },
+        secondary: {
+          ar: 'تحميل تقرير الملاك',
+          en: 'Download owner report'
+        }
+      },
+      stats: [
+        {
+          icon: 'building',
+          label: { ar: 'نسبة الإشغال', en: 'Portfolio occupancy' },
+          value: '91%',
+          delta: { ar: '+2 نقاط منذ الربع الماضي', en: '+2 pts vs last quarter' },
+          trend: 'positive'
+        },
+        {
+          icon: 'sparkles',
+          label: { ar: 'عقود جديدة هذا الشهر', en: 'New leases this month' },
+          value: '38',
+          delta: { ar: '+9 عقود مقارنة بالسنة الماضية', en: '+9 YoY' },
+          trend: 'positive'
+        },
+        {
+          icon: 'bank',
+          label: { ar: 'صفقات قيد التفاوض', en: 'Deals in pipeline' },
+          value: '$124M',
+          delta: { ar: 'زيادة 18M$ خلال أسبوعين', en: '$18M increase in 2 weeks' },
+          trend: 'positive'
+        },
+        {
+          icon: 'cog',
+          label: { ar: 'طلبات الصيانة المفتوحة', en: 'Open maintenance requests' },
+          value: '54',
+          delta: { ar: '-22% بعد نظام التتبع', en: '-22% after tracking rollout' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'العوائد الشهرية للمحافظ', en: 'Monthly returns by portfolio' },
+          subtitle: { ar: 'المباني المكتبية، السكنية، والتجارية.', en: 'Office, residential, and retail assets.' },
+          action: { ar: 'عرض حسب المنطقة', en: 'View by region' },
+          placeholder: { ar: 'مخطط العوائد', en: 'Returns chart' }
+        },
+        {
+          id: 'properties',
+          type: 'list',
+          title: { ar: 'عقارات تستحق الانتباه', en: 'Properties to watch' },
+          action: { ar: 'تحديث مرتين يومياً', en: 'Updated twice daily' },
+          items: [
+            {
+              icon: 'building',
+              title: { ar: 'برج الخليج للأعمال', en: 'Gulf Business Tower' },
+              subtitle: { ar: 'تجديد طابق كامل قيد التنفيذ', en: 'Floor refurbishment in progress' },
+              value: 'إشغال 96%',
+              delta: { ar: 'متوسط إيجار 64$/قدم²', en: 'Avg rent $64/sqft' }
+            },
+            {
+              icon: 'map',
+              title: { ar: 'حدائق السكن الذكية', en: 'Smart Gardens Residences' },
+              subtitle: { ar: 'قائمة انتظار إيجار 41 عائلة', en: 'Waitlist of 41 families' },
+              value: 'إشغال 99%',
+              delta: { ar: 'تقييم رضا 4.8/5', en: 'Satisfaction 4.8/5' }
+            },
+            {
+              icon: 'bank',
+              title: { ar: 'مجمع الميناء اللوجستي', en: 'Harbour Logistics Park' },
+              subtitle: { ar: 'تجديد عقد مع مستأجر رئيسي', en: 'Renewal with anchor tenant' },
+              value: 'عائد 12%',
+              delta: { ar: 'فرصة توسعة 45K متر²', en: 'Expansion opportunity 45K sqm' }
+            }
+          ]
+        },
+        {
+          id: 'occupancy',
+          type: 'progress',
+          title: { ar: 'مؤشرات الإشغال والصيانة', en: 'Occupancy & maintenance KPIs' },
+          items: [
+            {
+              title: { ar: 'الصيانة الوقائية', en: 'Preventive maintenance' },
+              subtitle: { ar: 'تم تنفيذ 92% من الجدول', en: '92% of plan executed' },
+              value: '92%',
+              percent: '92%'
+            },
+            {
+              title: { ar: 'سير الأعمال في العقود', en: 'Lease workflow completion' },
+              subtitle: { ar: 'إدارة رقمية جديدة للتوقيع', en: 'New digital signing process' },
+              value: '74%',
+              percent: '74%'
+            },
+            {
+              title: { ar: 'تجربة المستأجرين', en: 'Tenant experience actions' },
+              subtitle: { ar: 'استبيانات شهرية وتحسينات مشتركة', en: 'Monthly surveys & shared upgrades' },
+              value: '58%',
+              percent: '58%'
+            }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'أحداث العقارات الأخيرة', en: 'Recent real estate events' },
+          items: [
+            {
+              icon: 'sparkles',
+              title: { ar: 'افتتاح صالة المستأجرين الجديدة', en: 'Tenant lounge opening' },
+              subtitle: { ar: 'تجربة ضيافة متكاملة في وسط المدينة', en: 'Hospitality experience in downtown tower' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'cog',
+              title: { ar: 'تحديث نظام إدارة الممتلكات', en: 'Property management system update' },
+              subtitle: { ar: 'تكامل مع واجهة تحليلات البيانات', en: 'Integrated with analytics workspace' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            },
+            {
+              icon: 'bank',
+              title: { ar: 'تمويل تطوير جديد', en: 'New development financing' },
+              subtitle: { ar: 'تسهيلات بقيمة 220M$', en: '$220M facility secured' },
+              time: { ar: 'قبل يومين', en: '2 days ago' }
+            }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>

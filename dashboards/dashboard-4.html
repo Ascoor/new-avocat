@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة البنية السحابية</title>
+  <title>لوحة مراقبة البنية السحابية</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -12,7 +12,8 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">C</div>
@@ -22,7 +23,6 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
-        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -33,8 +33,10 @@
       </div>
     </header>
 
+    <!-- Mobile Backdrop -->
     <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
+    <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -44,8 +46,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -59,6 +60,7 @@
       <div data-role="sidebar-highlight"></div>
     </aside>
 
+    <!-- Main -->
     <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
       <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
       <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
@@ -66,16 +68,127 @@
     </main>
   </div>
 
-  <script src="dashboard-blueprints.js"></script>
   <script src="dashboard-common.js"></script>
   <script>
-    (function () {
-      const base = (window.DASHBOARD_BLUEPRINTS && window.DASHBOARD_BLUEPRINTS['cloud']) || {};
-      const blueprint = typeof structuredClone === 'function'
-        ? structuredClone(base)
-        : JSON.parse(JSON.stringify(base));
-      initDashboard(blueprint);
-    })();
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة مراقبة البنية السحابية',
+          en: 'Cloud Infrastructure Monitor'
+        }
+      },
+      actions: {
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' },
+        collapse: { ar: 'طي الشريط الجانبي', en: 'Collapse sidebar' },
+        expand: { ar: 'توسيع الشريط الجانبي', en: 'Expand sidebar' }
+      },
+      brand: {
+        badge: 'C',
+        name: { ar: 'Cloud Sentinel', en: 'Cloud Sentinel' },
+        tagline: { ar: 'قيادة عمليات البنية السحابية', en: 'Cloud operations command' }
+      },
+      theme: {
+        accentGradient: 'from-sky-500 via-cyan-500 to-blue-500',
+        accentText: 'text-sky-200',
+        highlightBg: 'bg-sky-500/10 border-sky-400/30',
+        badgeBg: 'bg-sky-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مباشر', en: 'Live' } },
+        { id: 'services', icon: 'cloud', label: { ar: 'الخدمات', en: 'Services' } },
+        { id: 'incidents', icon: 'shield', label: { ar: 'الحوادث', en: 'Incidents' } },
+        { id: 'regions', icon: 'map', label: { ar: 'المناطق', en: 'Regions' } }
+      ],
+      highlight: {
+        label: { ar: 'الحالة العامة', en: 'Overall status' },
+        value: { ar: 'مستقر', en: 'Stable' },
+        description: {
+          ar: 'حمل منخفض على الخدمات الحرجة واستجابة تلقائية فعالة.',
+          en: 'Low load across critical services with healthy auto-healing.'
+        }
+      },
+      header: {
+        title: { ar: 'مركز مراقبة البنية', en: 'Infrastructure monitoring centre' },
+        subtitle: {
+          ar: 'راقب الحمل، التنبيهات، وتوافر المناطق من لوحة تحكم واحدة.',
+          en: 'Track load, alerts, and regional availability from a single control plane.'
+        },
+        primary: { ar: 'إطلاق خطة تعافي', en: 'Launch recovery plan' },
+        secondary: { ar: 'آخر 24 ساعة', en: 'Last 24 hours' }
+      },
+      stats: [
+        { icon: 'cpu-chip', label: { ar: 'متوسط استخدام المعالج', en: 'Avg CPU utilisation' }, value: '62%', delta: { ar: 'مستقر خلال الساعة', en: 'Stable past hour' }, trend: 'positive' },
+        { icon: 'alert', label: { ar: 'تنبيهات حرجة', en: 'Critical alerts' }, value: '3', delta: { ar: 'تم حل حالتين اليوم', en: '2 resolved today' }, trend: 'positive' },
+        { icon: 'clock', label: { ar: 'زمن الاستجابة', en: 'Edge latency' }, value: '184ms', delta: { ar: '−12% مقارنة بالأمس', en: '−12% vs yesterday' }, trend: 'positive' },
+        { icon: 'sun', label: { ar: 'توافر المنصة', en: 'Platform availability' }, value: '99.96%', delta: { ar: 'هدف الشهر 99.9%', en: 'Monthly target 99.9%' }, trend: 'positive' }
+      ].map(stat => ({
+        ...stat,
+        icon: stat.icon === 'cpu-chip' ? 'cog' : stat.icon === 'alert' ? 'sparkles' : stat.icon === 'clock' ? 'calendar' : stat.icon
+      })),
+      panels: [
+        {
+          id: 'load',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'منحنى الحمل الزمني', en: 'Service load timeline' },
+          subtitle: { ar: 'CPU / Memory / I/O لكل طبقة خلال 24 ساعة.', en: 'CPU, memory, and I/O by tier across 24 hours.' },
+          action: { ar: 'تحميل المخطط', en: 'Download chart' },
+          placeholder: { ar: 'مخطط الحمل', en: 'Load chart' }
+        },
+        {
+          id: 'alerts',
+          type: 'list',
+          title: { ar: 'أهم التنبيهات', en: 'Top alerts' },
+          action: { ar: 'آخر تحديث منذ 3 دقائق', en: 'Updated 3 minutes ago' },
+          items: [
+            { icon: 'shield', title: { ar: 'API Gateway', en: 'API gateway' }, subtitle: { ar: 'زيادة زمن الاستجابة', en: 'Latency increase detected' }, value: 'مرتفع', delta: { ar: 'تم التوجيه للفريق الأزرق', en: 'Escalated to blue team' } },
+            { icon: 'database', title: { ar: 'Managed DB', en: 'Managed DB' }, subtitle: { ar: 'استهلاك اتصال 82%', en: 'Connection usage 82%' }, value: 'متوسط', delta: { ar: 'ضبط التجميع الليلي', en: 'Nightly compaction tuned' } },
+            { icon: 'cloud', title: { ar: 'Compute Cluster', en: 'Compute cluster' }, subtitle: { ar: 'عقدة واحدة غير مستقرة', en: 'One node unstable' }, value: 'مراقبة', delta: { ar: 'تحت المراقبة', en: 'Under observation' } }
+          ].map(item => ({ ...item, icon: item.icon === 'database' ? 'cube' : item.icon }))
+        },
+        {
+          id: 'playbooks',
+          type: 'progress',
+          title: { ar: 'خطة الاستجابة للحوادث', en: 'Incident response playbook' },
+          items: [
+            { title: { ar: 'التقييم والتصنيف', en: 'Assess & classify' }, subtitle: { ar: 'مراجعة تلقائية للحساسية', en: 'Automated severity scoring' }, value: '90%', percent: '90%' },
+            { title: { ar: 'التخفيف', en: 'Mitigation' }, subtitle: { ar: 'تنفيذ سياسات التدرج التلقائي', en: 'Auto-scaling policies executed' }, value: '64%', percent: '64%' },
+            { title: { ar: 'التحقق والتوثيق', en: 'Verification & logs' }, subtitle: { ar: 'تقارير ما بعد الحادث قيد الإعداد', en: 'Postmortem drafts pending' }, value: '38%', percent: '38%' }
+          ]
+        },
+        {
+          id: 'regions',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'توافر المناطق', en: 'Regional availability' },
+          action: { ar: 'مزامنة مع مركز NOC', en: 'Sync with NOC' },
+          headers: [
+            { ar: 'المنطقة', en: 'Region' },
+            { ar: 'التوفر', en: 'Availability' },
+            { ar: 'التغير', en: 'Change' }
+          ],
+          rows: [
+            { name: { ar: 'أوروبا - غرب', en: 'EU West' }, metric: '99.98%', delta: { ar: '+0.02% اليوم', en: '+0.02% today' }, trend: 'positive' },
+            { name: { ar: 'أمريكا - شرق', en: 'US East' }, metric: '99.92%', delta: { ar: 'بدون تغيير', en: 'Unchanged' }, trend: 'neutral' },
+            { name: { ar: 'آسيا - جنوب شرق', en: 'APAC Southeast' }, metric: '99.71%', delta: { ar: '−0.08% بسبب الصيانة', en: '−0.08% maintenance' }, trend: 'negative' }
+          ]
+        },
+        {
+          id: 'incidents',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'سجل الحوادث الأخير', en: 'Recent incident log' },
+          items: [
+            { icon: 'sparkles', title: { ar: 'إعادة موازنة حركة المرور', en: 'Traffic rebalancing' }, subtitle: { ar: 'توجيه 18% من الحمل إلى أوروبا', en: 'Shifted 18% load to EU' }, time: { ar: 'قبل 30 دقيقة', en: '30 minutes ago' } },
+            { icon: 'cog', title: { ar: 'تصحيح تلقائي لحاوية', en: 'Automated container patch' }, subtitle: { ar: 'تم توقيف الحاوية المتأثرة وإعادة تشغيلها', en: 'Impacted pod drained & restarted' }, time: { ar: 'قبل ساعة', en: '1 hour ago' } },
+            { icon: 'map', title: { ar: 'اختبار خطة التعافي', en: 'Disaster recovery drill' }, subtitle: { ar: 'نجاح التمرين دون تأثير على العملاء', en: 'Successful drill without customer impact' }, time: { ar: 'أمس', en: 'Yesterday' } }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>
