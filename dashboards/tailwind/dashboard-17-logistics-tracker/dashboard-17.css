@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .simple-card {
+    @apply rounded-2xl border border-white/10 bg-blue-900/60 p-5;
+  }
+}
