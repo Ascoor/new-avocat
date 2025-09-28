@@ -21,6 +21,7 @@
     'tv': 'M4.5 3.75A2.25 2.25 0 0 1 6.75 1.5h10.5A2.25 2.25 0 0 1 19.5 3.75V16.5h1.5a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.5V3.75z',
     'map': 'M9.75 2.25a.75.75 0 0 1 .45.15l2.55 1.913 2.55-1.913a.75.75 0 0 1 .9 0l3 2.25a.75.75 0 0 1 .3.6v14.25a.75.75 0 0 1-1.2.6l-2.55-1.913-2.55 1.913a.75.75 0 0 1-.9 0l-2.55-1.913-2.55 1.913a.75.75 0 0 1-.9 0l-3-2.25a.75.75 0 0 1-.3-.6V3.15a.75.75 0 0 1 1.2-.6l2.55 1.913 2.55-1.913a.75.75 0 0 1 .45-.15z',
     'sun': 'M12 3.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V4.5a.75.75 0 0 1 .75-.75zm6.364 1.636a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm8.25 3a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75zM6.75 12a.75.75 0 0 1-.75.75H4.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75zm13.114 4.886a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 1 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zM12 18.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75zm-6.364-1.364a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zM5.114 6.614a.75.75 0 0 1 0-1.06l1.06-1.061a.75.75 0 1 1 1.061 1.06L6.175 6.614a.75.75 0 0 1-1.061 0z',
+    'moon': 'M21.752 15.002A9.718 9.718 0 0 1 12 21.75 9.75 9.75 0 0 1 7.5 3.307a.75.75 0 0 1 .976.79 7.501 7.501 0 0 0 9.427 8.427.75.75 0 0 1 .849.478z',
     'trophy': 'M5.25 3A2.25 2.25 0 0 1 7.5.75h9A2.25 2.25 0 0 1 18.75 3v1.5H21a.75.75 0 0 1 .75.75 4.5 4.5 0 0 1-4.365 4.497A6.753 6.753 0 0 1 13.5 13.2v2.55h2.25a.75.75 0 0 1 0 1.5H8.25a.75.75 0 0 1 0-1.5H10.5V13.2a6.753 6.753 0 0 1-3.885-3.453A4.5 4.5 0 0 1 2.25 5.25a.75.75 0 0 1 .75-.75h2.25V3zm0 3h-1.5a3 3 0 0 0 2.829 2.987A6.717 6.717 0 0 1 5.25 6zm12 0a6.717 6.717 0 0 1-1.329 2.987A3 3 0 0 0 18.75 6h-1.5z',
     'book-open': 'M12 4.5c-1.07-1-2.534-1.5-4.364-1.5C4.221 3 2 4.586 2 7.5v9a.75.75 0 0 0 .75.75c2.59 0 4.36.353 5.386 1.223.884.748 1.36 1.789 1.864 3.259a.75.75 0 0 0 1.4 0c.504-1.47.98-2.511 1.864-3.259 1.026-.87 2.795-1.223 5.386-1.223a.75.75 0 0 0 .75-.75v-9c0-2.914-2.221-4.5-5.636-4.5C14.534 3 13.07 3.5 12 4.5z',
     'presentation-chart': 'M3 3.75A2.25 2.25 0 0 1 5.25 1.5h13.5A2.25 2.25 0 0 1 21 3.75V9H3V3.75zm0 7.5h18v4.5A2.25 2.25 0 0 1 18.75 18H13.5v2.25H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5h1.5V18H5.25A2.25 2.25 0 0 1 3 15.75v-4.5z',
@@ -43,7 +44,11 @@
   }
 
   function formatDelta(delta, trend) {
-    const base = trend === 'negative' ? 'text-rose-400' : trend === 'neutral' ? 'text-amber-400' : 'text-emerald-400';
+    const base = trend === 'negative'
+      ? 'text-rose-600 dark:text-rose-300'
+      : trend === 'neutral'
+        ? 'text-amber-600 dark:text-amber-300'
+        : 'text-emerald-600 dark:text-emerald-300';
     return `${base} text-sm font-medium`;
   }
 
@@ -52,14 +57,18 @@
     const body = document.body;
     const theme = Object.assign({
       body: '',
-      cardBg: 'bg-slate-900/80',
-      cardBorder: 'border-slate-800',
-      accentGradient: 'from-indigo-500 to-purple-500',
-      accentText: 'text-indigo-400',
-      highlightBg: 'bg-indigo-500/10 border-indigo-500/20',
-      badgeBg: 'bg-white/10',
-      badgeText: 'text-white'
+      cardBg: 'bg-white/80 dark:bg-slate-900/70 backdrop-blur',
+      cardBorder: 'border-slate-200/70 dark:border-white/10',
+      accentGradient: 'from-indigo-500 via-purple-500 to-sky-500',
+      accentText: 'text-indigo-600 dark:text-indigo-300',
+      highlightBg: 'bg-slate-900/5 border-slate-200/70 dark:bg-white/5 dark:border-white/10',
+      badgeBg: 'bg-slate-900/10 dark:bg-white/10',
+      badgeText: 'text-slate-900 dark:text-white'
     }, config.theme || {});
+
+    let currentLang = config.defaultLang || 'ar';
+
+    const toggleButtonBaseClass = 'px-3 py-1 text-xs font-semibold rounded-lg transition border border-slate-300/70 text-slate-600 bg-white/70 hover:bg-slate-200/60 dark:border-white/10 dark:text-slate-200 dark:bg-white/5 dark:hover:bg-white/10 flex items-center gap-2';
 
     if (theme.body) {
       theme.body.split(' ').forEach(cls => cls && body.classList.add(cls));
@@ -122,6 +131,16 @@
       config.actions[key] = Object.assign({}, defaultActions[key], providedActions[key] || {});
     });
 
+    const defaultThemeLabels = {
+      light: { ar: 'الوضع النهاري', en: 'Light mode' },
+      dark: { ar: 'الوضع الليلي', en: 'Dark mode' }
+    };
+    const providedThemeLabels = config.themeLabels || {};
+    const themeLabels = {
+      light: Object.assign({}, defaultThemeLabels.light, providedThemeLabels.light || {}),
+      dark: Object.assign({}, defaultThemeLabels.dark, providedThemeLabels.dark || {})
+    };
+
     const sidebar = document.getElementById('sidebar');
     const sidebarBackdrop = document.getElementById('sidebarBackdrop');
     const sidebarToggle = document.getElementById('sidebarToggle');
@@ -136,6 +155,102 @@
     }
 
     let collapseButton = null;
+
+    const themeContainers = document.querySelectorAll('[data-role="theme-switcher"]');
+    const themeButtons = [];
+    const themeStorageKey = config.themeStorageKey || `dashboard-theme-${window.location.pathname}`;
+    const prefersDark = typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-color-scheme: dark)')
+      : { matches: false };
+    let storedTheme = null;
+    try {
+      storedTheme = window.localStorage.getItem(themeStorageKey);
+    } catch (error) {
+      storedTheme = null;
+    }
+    let hasManualThemeSelection = !!storedTheme;
+    let currentTheme = (storedTheme || config.defaultTheme || (prefersDark.matches ? 'dark' : 'light'));
+    currentTheme = (typeof currentTheme === 'string' && currentTheme.toLowerCase() === 'dark') ? 'dark' : 'light';
+
+    themeContainers.forEach(container => {
+      if (!container) return;
+      container.innerHTML = '';
+      ['light', 'dark'].forEach(mode => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.dataset.themeButton = mode;
+        button.className = `${toggleButtonBaseClass}`;
+        const label = document.createElement('span');
+        label.dataset.themeLabel = '';
+        label.className = 'hidden sm:inline';
+        label.textContent = themeLabels[mode][currentLang];
+        button.innerHTML = `${createIcon(mode === 'light' ? 'sun' : 'moon', 'h-4 w-4')} `;
+        button.appendChild(label);
+        container.appendChild(button);
+        themeButtons.push(button);
+      });
+    });
+
+    function updateThemeButtons(lang = currentLang) {
+      themeButtons.forEach(btn => {
+        const mode = btn.dataset.themeButton;
+        const active = mode === currentTheme;
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        btn.setAttribute('data-active', active ? '1' : '0');
+        btn.classList.toggle('bg-slate-900', active);
+        btn.classList.toggle('text-white', active);
+        btn.classList.toggle('border-slate-900', active);
+        btn.classList.toggle('shadow-lg', active);
+        btn.classList.toggle('shadow-none', !active);
+        btn.classList.toggle('dark:bg-white/20', active);
+        btn.classList.toggle('dark:text-white', active);
+        btn.classList.toggle('dark:border-white/20', active);
+        btn.classList.toggle('dark:shadow-indigo-900/50', active);
+        const label = btn.querySelector('[data-theme-label]');
+        if (label) {
+          label.textContent = themeLabels[mode][lang];
+        }
+        btn.setAttribute('aria-label', themeLabels[mode][lang]);
+        btn.setAttribute('title', themeLabels[mode][lang]);
+      });
+    }
+
+    function applyTheme(themeName, { persist = true } = {}) {
+      currentTheme = (themeName === 'dark') ? 'dark' : 'light';
+      if (currentTheme === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+      if (persist) {
+        hasManualThemeSelection = true;
+        try {
+          window.localStorage.setItem(themeStorageKey, currentTheme);
+        } catch (error) {
+          /* ignore persistence issues */
+        }
+      }
+      updateThemeButtons(currentLang);
+    }
+
+    themeButtons.forEach(btn => {
+      btn.addEventListener('click', () => applyTheme(btn.dataset.themeButton));
+    });
+
+    try {
+      const listener = event => {
+        if (!hasManualThemeSelection) {
+          applyTheme(event.matches ? 'dark' : 'light', { persist: false });
+        }
+      };
+      if (typeof prefersDark.addEventListener === 'function') {
+        prefersDark.addEventListener('change', listener);
+      } else if (typeof prefersDark.addListener === 'function') {
+        prefersDark.addListener(listener);
+      }
+    } catch (error) {
+      /* ignore listener issues */
+    }
 
     function updateCollapseButton(lang) {
       if (!collapseButton) return;
@@ -211,14 +326,12 @@
         const button = document.createElement('button');
         button.type = 'button';
         button.dataset.langButton = lang;
-        button.textContent = lang === 'ar' ? 'ع' : 'En';
-        button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition border border-white/10 text-slate-200 bg-transparent hover:bg-white/10';
+        button.className = `${toggleButtonBaseClass}`;
+        button.innerHTML = `<span class="font-semibold">${lang === 'ar' ? 'ع' : 'En'}</span>`;
         container.appendChild(button);
         langButtons.push(button);
       });
     });
-
-    let currentLang = config.defaultLang || 'ar';
 
     langButtons.forEach(btn => {
       btn.addEventListener('click', () => setLanguage(btn.dataset.langButton));
@@ -227,10 +340,17 @@
     function updateLanguageButtons() {
       langButtons.forEach(btn => {
         const active = btn.dataset.langButton === currentLang;
-        btn.classList.toggle('bg-white/10', active);
+        btn.classList.toggle('bg-slate-900', active);
         btn.classList.toggle('text-white', active);
-        btn.classList.toggle('border-white/10', active);
+        btn.classList.toggle('border-slate-900', active);
+        btn.classList.toggle('shadow-lg', active);
+        btn.classList.toggle('shadow-none', !active);
+        btn.classList.toggle('dark:bg-white/20', active);
+        btn.classList.toggle('dark:text-white', active);
+        btn.classList.toggle('dark:border-white/20', active);
+        btn.classList.toggle('dark:shadow-indigo-900/40', active);
         btn.classList.toggle('opacity-70', !active);
+        btn.classList.toggle('opacity-100', active);
       });
     }
 
@@ -246,6 +366,7 @@
       brandNameElements.forEach(el => {
         if (el) {
           el.textContent = config.brand.name[lang];
+          el.classList.add('text-slate-900', 'dark:text-white');
         }
       });
 
@@ -253,6 +374,8 @@
       taglineElements.forEach(el => {
         if (el) {
           el.textContent = config.brand.tagline[lang];
+          el.classList.add('text-slate-600', 'dark:text-slate-300');
+          el.classList.remove('text-slate-300');
         }
       });
     }
@@ -264,15 +387,24 @@
       (config.nav || []).forEach((item, index) => {
         const link = document.createElement('a');
         link.href = `#${item.id}`;
-        link.className = `flex items-center justify-between px-4 py-3 rounded-xl border ${index === 0 ? 'bg-white/10 border-white/10' : 'border-white/5 hover:bg-white/5'} transition`;
+        const isActive = index === 0;
+        const baseClasses = 'group flex items-center justify-between px-4 py-3 rounded-xl border transition backdrop-blur-sm';
+        const activeClasses = 'bg-slate-900 text-white border-slate-900 shadow-lg dark:bg-white/15 dark:text-white dark:border-white/20';
+        const inactiveClasses = 'bg-white/70 border-slate-200/70 hover:bg-slate-200/60 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10';
+        link.className = `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`;
+        const labelClass = isActive ? 'font-medium sidebar-label text-white' : 'font-medium sidebar-label text-slate-700 dark:text-slate-200';
+        const iconWrapClass = isActive
+          ? 'h-9 w-9 rounded-xl flex items-center justify-center bg-slate-900/30 text-white dark:bg-white/20 dark:text-white sidebar-icon'
+          : 'h-9 w-9 rounded-xl flex items-center justify-center bg-slate-900/10 text-slate-700 dark:bg-white/5 dark:text-white sidebar-icon';
+        const badgeClass = isActive ? 'text-xs text-white/80 sidebar-badge' : 'text-xs text-slate-500 dark:text-slate-400 sidebar-badge';
         link.innerHTML = `
           <span class="flex items-center gap-3 text-sm sidebar-link-content">
-            <span class="h-9 w-9 rounded-xl flex items-center justify-center bg-white/5 sidebar-icon">
+            <span class="${iconWrapClass}">
               ${createIcon(item.icon, `h-5 w-5 ${theme.accentText}`)}
             </span>
-            <span class="font-medium sidebar-label">${item.label[lang]}</span>
+            <span class="${labelClass}">${item.label[lang]}</span>
           </span>
-          <span class="text-xs text-slate-400 sidebar-badge">${item.badge ? item.badge[lang] : ''}</span>
+          <span class="${badgeClass}">${item.badge ? item.badge[lang] : ''}</span>
         `;
         link.setAttribute('aria-label', item.label[lang]);
         link.title = item.label[lang];
@@ -288,9 +420,9 @@
         : config.highlight.value;
       highlight.innerHTML = `
         <div class="rounded-2xl border ${theme.highlightBg} p-5 space-y-3">
-          <p class="text-xs uppercase tracking-wide text-slate-400">${config.highlight.label[lang]}</p>
-          <p class="text-2xl font-semibold">${highlightValue}</p>
-          <p class="text-sm text-slate-300">${config.highlight.description[lang]}</p>
+          <p class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">${config.highlight.label[lang]}</p>
+          <p class="text-2xl font-semibold text-slate-900 dark:text-white">${highlightValue}</p>
+          <p class="text-sm text-slate-600 dark:text-slate-300">${config.highlight.description[lang]}</p>
         </div>
       `;
     }
@@ -298,12 +430,12 @@
     function renderHeader(lang) {
       const header = document.querySelector('[data-role="main-header"]');
       if (!header) return;
-      const primary = config.header.primary ? `<button class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20">${config.header.primary[lang]}</button>` : '';
-      const secondary = config.header.secondary ? `<button class="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-white/5">${config.header.secondary[lang]}</button>` : '';
+      const primary = config.header.primary ? `<button class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-900/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">${config.header.primary[lang]}</button>` : '';
+      const secondary = config.header.secondary ? `<button class="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10">${config.header.secondary[lang]}</button>` : '';
       header.innerHTML = `
         <div>
-          <h1 class="text-3xl font-bold">${config.header.title[lang]}</h1>
-          <p class="mt-2 text-slate-300">${config.header.subtitle[lang]}</p>
+          <h1 class="text-3xl font-bold text-slate-900 dark:text-white">${config.header.title[lang]}</h1>
+          <p class="mt-2 text-slate-600 dark:text-slate-300">${config.header.subtitle[lang]}</p>
         </div>
         <div class="flex flex-wrap gap-3">
           ${secondary}
@@ -318,14 +450,14 @@
       statsContainer.innerHTML = '';
       (config.stats || []).forEach(stat => {
         const card = document.createElement('div');
-        card.className = `rounded-2xl border ${theme.cardBorder} ${theme.cardBg} p-5 space-y-4`;
+        card.className = `rounded-2xl border ${theme.cardBorder} ${theme.cardBg} p-5 space-y-4 shadow-sm dark:shadow-none`;
         card.innerHTML = `
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-slate-400">${stat.label[lang]}</p>
-              <p class="mt-3 text-3xl font-semibold">${stat.value}</p>
+              <p class="text-sm text-slate-500 dark:text-slate-300">${stat.label[lang]}</p>
+              <p class="mt-3 text-3xl font-semibold text-slate-900 dark:text-white">${stat.value}</p>
             </div>
-            <span class="h-12 w-12 rounded-xl flex items-center justify-center bg-white/5">
+            <span class="h-12 w-12 rounded-xl flex items-center justify-center bg-slate-900/10 text-slate-700 dark:bg-white/10 dark:text-white">
               ${createIcon(stat.icon, `h-6 w-6 ${theme.accentText}`)}
             </span>
           </div>
@@ -341,44 +473,44 @@
       panelsContainer.innerHTML = '';
       (config.panels || []).forEach(panel => {
         const section = document.createElement('section');
-        section.className = `rounded-2xl border ${theme.cardBorder} ${theme.cardBg} p-6 space-y-6 ${panel.span || ''}`;
+        section.className = `rounded-2xl border ${theme.cardBorder} ${theme.cardBg} p-6 space-y-6 shadow-sm dark:shadow-none ${panel.span || ''}`;
         let content = '';
         if (panel.type === 'chart') {
           content = `
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 class="text-xl font-semibold">${panel.title[lang]}</h2>
-                <p class="text-sm text-slate-300">${panel.subtitle[lang]}</p>
+                <h2 class="text-xl font-semibold text-slate-900 dark:text-white">${panel.title[lang]}</h2>
+                <p class="text-sm text-slate-600 dark:text-slate-300">${panel.subtitle[lang]}</p>
               </div>
-              ${panel.action ? `<button class="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-200 hover:bg-white/5">${panel.action[lang]}</button>` : ''}
+              ${panel.action ? `<button class="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200/60 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/10">${panel.action[lang]}</button>` : ''}
             </div>
-            <div class="h-56 rounded-2xl border border-dashed border-white/10 bg-gradient-to-br ${theme.accentGradient} opacity-80 flex items-center justify-center text-sm text-white/80">
+            <div class="h-56 rounded-2xl border border-dashed border-slate-300/60 bg-gradient-to-br ${theme.accentGradient} opacity-90 flex items-center justify-center text-sm text-white/80 dark:border-white/10">
               ${panel.placeholder[lang]}
             </div>
           `;
         } else if (panel.type === 'list') {
           const items = (panel.items || []).map(item => `
-            <div class="flex items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3">
+            <div class="flex items-center justify-between rounded-xl border border-slate-200/70 bg-white/70 px-4 py-3 shadow-sm dark:border-white/10 dark:bg-white/5">
               <div class="flex items-center gap-3">
-                <span class="h-10 w-10 rounded-xl flex items-center justify-center bg-white/5">
+                <span class="h-10 w-10 rounded-xl flex items-center justify-center bg-slate-900/10 text-slate-700 dark:bg-white/10 dark:text-white">
                   ${createIcon(item.icon || 'sparkles', `h-5 w-5 ${theme.accentText}`)}
                 </span>
                 <div>
-                  <p class="text-sm font-semibold">${item.title[lang]}</p>
-                  <p class="text-xs text-slate-400">${item.subtitle[lang]}</p>
+                  <p class="text-sm font-semibold text-slate-900 dark:text-white">${item.title[lang]}</p>
+                  <p class="text-xs text-slate-500 dark:text-slate-400">${item.subtitle[lang]}</p>
                 </div>
               </div>
               <div class="text-right">
-                <p class="text-base font-semibold">${item.value}</p>
-                <p class="text-xs text-slate-400">${item.delta[lang]}</p>
+                <p class="text-base font-semibold text-slate-900 dark:text-white">${item.value}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">${item.delta[lang]}</p>
               </div>
             </div>
           `).join('');
           content = `
             <div class="space-y-4">
               <div class="flex items-center justify-between">
-                <h2 class="text-lg font-semibold">${panel.title[lang]}</h2>
-                ${panel.action ? `<span class="text-xs text-slate-400">${panel.action[lang]}</span>` : ''}
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">${panel.title[lang]}</h2>
+                ${panel.action ? `<span class="text-xs text-slate-500 dark:text-slate-400">${panel.action[lang]}</span>` : ''}
               </div>
               ${items}
             </div>
@@ -387,37 +519,37 @@
           const items = (panel.items || []).map(item => `
             <div class="space-y-2">
               <div class="flex items-center justify-between text-sm">
-                <span>${item.title[lang]}</span>
-                <span class="text-slate-400">${item.value}</span>
+                <span class="text-slate-900 dark:text-white">${item.title[lang]}</span>
+                <span class="text-slate-600 dark:text-slate-300">${item.value}</span>
               </div>
-              <div class="h-2 rounded-full bg-white/5 overflow-hidden">
+              <div class="h-2 rounded-full bg-slate-200/70 dark:bg-white/10 overflow-hidden">
                 <div class="h-full rounded-full bg-gradient-to-r ${theme.accentGradient}" style="width:${item.percent}"></div>
               </div>
-              <p class="text-xs text-slate-400">${item.subtitle[lang]}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">${item.subtitle[lang]}</p>
             </div>
           `).join('');
           content = `
             <div class="space-y-4">
-              <h2 class="text-lg font-semibold">${panel.title[lang]}</h2>
+              <h2 class="text-lg font-semibold text-slate-900 dark:text-white">${panel.title[lang]}</h2>
               ${items}
             </div>
           `;
         } else if (panel.type === 'table') {
-          const headers = (panel.headers || []).map(header => `<th class="px-4 py-2 text-left text-xs font-semibold text-slate-400">${header[lang]}</th>`).join('');
-          const rows = (panel.rows || []).map(row => `<tr class="border-t border-white/5">
-              <td class="px-4 py-3 text-sm font-medium">${row.name[lang]}</td>
-              <td class="px-4 py-3 text-sm text-slate-300">${row.metric}</td>
-              <td class="px-4 py-3 text-sm ${row.trend === 'negative' ? 'text-rose-400' : 'text-emerald-400'}">${row.delta[lang]}</td>
+          const headers = (panel.headers || []).map(header => `<th class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">${header[lang]}</th>`).join('');
+          const rows = (panel.rows || []).map(row => `<tr class="border-t border-slate-200/70 dark:border-white/10">
+              <td class="px-4 py-3 text-sm font-semibold text-slate-900 dark:text-white">${row.name[lang]}</td>
+              <td class="px-4 py-3 text-sm text-slate-600 dark:text-slate-300">${row.metric}</td>
+              <td class="px-4 py-3 ${formatDelta('', row.trend)}">${row.delta[lang]}</td>
             </tr>`).join('');
           content = `
             <div class="space-y-4 overflow-hidden">
               <div class="flex items-center justify-between">
-                <h2 class="text-lg font-semibold">${panel.title[lang]}</h2>
-                ${panel.action ? `<span class="text-xs text-slate-400">${panel.action[lang]}</span>` : ''}
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">${panel.title[lang]}</h2>
+                ${panel.action ? `<span class="text-xs text-slate-500 dark:text-slate-400">${panel.action[lang]}</span>` : ''}
               </div>
               <div class="overflow-x-auto">
                 <table class="min-w-full text-left">
-                  <thead class="bg-white/5">
+                  <thead class="bg-slate-200/60 dark:bg-white/5">
                     <tr>${headers}</tr>
                   </thead>
                   <tbody>${rows}</tbody>
@@ -429,19 +561,19 @@
           const items = (panel.items || []).map(item => `
             <div class="flex gap-4">
               <div class="flex flex-col items-center">
-                <span class="h-10 w-10 rounded-xl flex items-center justify-center bg-white/5">${createIcon(item.icon || 'sparkles', `h-5 w-5 ${theme.accentText}`)}</span>
-                <span class="flex-1 w-px bg-white/10"></span>
+                <span class="h-10 w-10 rounded-xl flex items-center justify-center bg-slate-900/10 text-slate-700 dark:bg-white/10 dark:text-white">${createIcon(item.icon || 'sparkles', `h-5 w-5 ${theme.accentText}`)}</span>
+                <span class="flex-1 w-px bg-slate-200/70 dark:bg-white/10"></span>
               </div>
               <div class="pb-6">
-                <p class="text-sm font-semibold">${item.title[lang]}</p>
-                <p class="text-xs text-slate-400 mt-1">${item.subtitle[lang]}</p>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1 text-xs text-slate-300 mt-3">${item.time[lang]}</span>
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">${item.title[lang]}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${item.subtitle[lang]}</p>
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-200/60 px-3 py-1 text-xs text-slate-700 mt-3 dark:bg-white/10 dark:text-slate-200">${item.time[lang]}</span>
               </div>
             </div>
           `).join('');
           content = `
             <div class="space-y-4">
-              <h2 class="text-lg font-semibold">${panel.title[lang]}</h2>
+              <h2 class="text-lg font-semibold text-slate-900 dark:text-white">${panel.title[lang]}</h2>
               <div class="space-y-4">${items}</div>
             </div>
           `;
@@ -463,6 +595,7 @@
       renderHeader(lang);
       renderStats(lang);
       renderPanels(lang);
+      updateThemeButtons(lang);
       const title = document.querySelector('title');
       if (title) {
         title.textContent = config.meta.title[lang];
@@ -474,6 +607,7 @@
       applyMiniState(isMini, lang);
     }
 
+    applyTheme(currentTheme, { persist: false });
     applyMiniState(isMini, currentLang);
     setLanguage(currentLang);
   }
