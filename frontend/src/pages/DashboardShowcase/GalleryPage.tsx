@@ -17,6 +17,9 @@ import {
   type DashboardCatalog,
   type LocalizedText,
 } from '@/data/dashboard-showcase';
+import { cn } from '@/lib/utils';
+
+import './gallery.css';
 
 const getLocalizedText = (language: Language, value: LocalizedText) => value[language];
 
@@ -70,16 +73,16 @@ const DashboardGalleryPage = () => {
   }, [activeCategory, language, query]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100" dir={direction}>
-      <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-20 pt-10 sm:px-6 lg:px-8">
-        <header className="flex flex-wrap items-center justify-between gap-4">
+    <div className="gallery-shell" dir={direction}>
+      <div className="gallery-content">
+        <header className="gallery-header">
           <Link to="/" className="inline-flex items-center gap-3">
             <BrandLogo variant="text" className="h-12" lang={language} />
             <span className="text-sm font-medium text-slate-400">
               {t('showcase.header.tagline')}
             </span>
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="gallery-actions">
             <ThemeToggle />
             <LanguageToggle />
             <Button variant="outline" asChild>
@@ -88,7 +91,7 @@ const DashboardGalleryPage = () => {
           </div>
         </header>
 
-        <section className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+        <section className="gallery-hero">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-indigo-200">
               <Sparkles className="h-4 w-4" />
@@ -117,17 +120,17 @@ const DashboardGalleryPage = () => {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur">
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="space-y-2">
-                <p className="text-sm text-slate-300">{t('showcase.stats.totalDashboards')}</p>
-                <p className="text-4xl font-bold text-white">25</p>
-                <p className="text-xs text-slate-400">{t('showcase.stats.totalDashboardsHint')}</p>
+          <div className="gallery-hero-card">
+            <div className="gallery-stats-grid">
+              <div className="gallery-stat">
+                <h3>{t('showcase.stats.totalDashboards')}</h3>
+                <strong>25</strong>
+                <p>{t('showcase.stats.totalDashboardsHint')}</p>
               </div>
-              <div className="space-y-2">
-                <p className="text-sm text-slate-300">{t('showcase.stats.uniqueIndustries')}</p>
-                <p className="text-4xl font-bold text-white">{categories.length}</p>
-                <p className="text-xs text-slate-400">{t('showcase.stats.uniqueIndustriesHint')}</p>
+              <div className="gallery-stat">
+                <h3>{t('showcase.stats.uniqueIndustries')}</h3>
+                <strong>{categories.length}</strong>
+                <p>{t('showcase.stats.uniqueIndustriesHint')}</p>
               </div>
             </div>
             <div className="mt-8 grid gap-3">
@@ -148,16 +151,16 @@ const DashboardGalleryPage = () => {
 
         <section className="mt-14 space-y-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex w-full max-w-xl items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-2">
+            <div className="gallery-search">
               <Search className="h-4 w-4 text-slate-300" />
               <Input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={t('showcase.filters.searchPlaceholder')}
-                className="border-0 bg-transparent text-sm text-white placeholder:text-slate-400 focus-visible:ring-0"
+                className="gallery-search__input"
               />
             </div>
-            <div className="flex flex-wrap gap-2" dir={direction}>
+            <div className="gallery-filters" dir={direction}>
               <Button
                 type="button"
                 variant={activeCategory === 'all' ? 'accent' : 'ghost'}
@@ -180,7 +183,7 @@ const DashboardGalleryPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="gallery-grid">
             {filteredDashboards.length > 0 ? (
               filteredDashboards.map((dashboard) => (
                 <GalleryCard
@@ -191,7 +194,7 @@ const DashboardGalleryPage = () => {
                 />
               ))
             ) : (
-              <div className="col-span-full flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-12 text-center text-slate-300">
+              <div className="gallery-empty">
                 <Sparkles className="mb-4 h-10 w-10 text-indigo-200" />
                 <h2 className="text-2xl font-semibold text-white">
                   {t('showcase.empty.title')}
@@ -221,34 +224,39 @@ const GalleryCard = ({ dashboard, language, ctaLabel }: GalleryCardProps) => {
   const localizedBadge = getLocalizedText(language, dashboard.badge);
 
   return (
-    <Card className="group relative overflow-hidden border border-white/10 bg-white/5 text-white shadow-xl transition-all hover:-translate-y-1 hover:border-indigo-400/40 hover:bg-indigo-500/10 hover:shadow-2xl">
-      <div className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br ${dashboard.accent}`}></div>
-      <CardHeader className="relative space-y-4">
-        <div className="flex items-center justify-between">
-          <Badge className="bg-white/10 text-indigo-100">
+    <Card className="gallery-card">
+      <div className="gallery-card__preview">
+        <div className={cn('gallery-card__previewGradient bg-gradient-to-br', dashboard.preview.gradient)} />
+        <div className="gallery-card__previewOverlay" />
+        <div className="gallery-card__previewContent">
+          <Badge variant="outline" className={cn('gallery-card__previewBadge', dashboard.preview.accentText)}>
             {localizedBadge}
           </Badge>
-          <span className="text-xs text-indigo-200">{localizedCategory}</span>
+          <span className="gallery-card__previewCategory">{localizedCategory}</span>
         </div>
-        <div className="space-y-2">
-          <h2 className="text-2xl font-semibold text-white">{localizedTitle}</h2>
-          <p className="text-sm text-slate-200">{localizedSummary}</p>
-        </div>
+      </div>
+      <CardHeader className="gallery-card__header">
+        <h2 className="gallery-card__title">{localizedTitle}</h2>
+        <p className="gallery-card__summary">{localizedSummary}</p>
       </CardHeader>
-      <CardContent className="relative space-y-5">
-        <ul className="space-y-2 text-sm text-slate-200">
+      <CardContent className="gallery-card__content">
+        <ul className="gallery-card__features">
           {dashboard.features.slice(0, 3).map((feature) => (
-            <li key={feature.en} className="flex items-start gap-2 text-sm">
-              <span className="mt-1 h-2 w-2 rounded-full bg-indigo-300"></span>
-              <span>{getLocalizedText(language, feature)}</span>
+            <li key={feature.en} className="gallery-card__feature">
+              {getLocalizedText(language, feature)}
             </li>
           ))}
+          {dashboard.features.length > 3 ? (
+            <li className="gallery-card__feature gallery-card__feature--more text-indigo-100">
+              +{dashboard.features.length - 3}
+            </li>
+          ) : null}
         </ul>
-        <div className="flex items-center justify-between text-sm text-indigo-200">
+        <div className="gallery-card__metrics">
           <span>{getLocalizedText(language, dashboard.metrics.label)}</span>
           <strong>{getLocalizedText(language, dashboard.metrics.value)}</strong>
         </div>
-        <Button asChild variant="accent" className="w-full rounded-full">
+        <Button asChild variant="accent" className="gallery-card__cta">
           <Link to={`/showcase/${dashboard.slug}`}>{ctaLabel}</Link>
         </Button>
       </CardContent>
