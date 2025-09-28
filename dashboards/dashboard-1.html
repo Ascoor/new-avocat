@@ -23,6 +23,7 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
+        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -46,7 +47,8 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div data-role="sidebar-actions" class="flex items-center gap-2">
+        <div class="flex items-center gap-2">
+          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -88,12 +90,47 @@
         tagline: { ar: 'لوحة أداء الشركات الناشئة', en: 'Startup performance cockpit' }
       },
       theme: {
-        accentGradient: 'from-indigo-500 via-purple-500 to-blue-500',
-        accentText: 'text-indigo-300',
-        highlightBg: 'bg-indigo-500/10 border-indigo-500/20',
-        badgeBg: 'bg-indigo-500/20',
-        badgeText: 'text-white'
+        defaultMode: 'dark',
+        dark: {
+          bodyGradient: 'from-slate-950 via-indigo-950 to-purple-950',
+          sidebarGradient: 'from-slate-950 via-indigo-950 to-purple-900',
+          cardBg: 'bg-slate-900/70 backdrop-blur-xl',
+          cardBorder: 'border-indigo-500/30',
+          accentGradient: 'from-indigo-500 via-purple-500 to-blue-500',
+          accentText: 'text-indigo-300',
+          highlightBg: 'bg-indigo-500/10 border-indigo-500/20',
+          badgeBg: 'bg-indigo-500/20',
+          badgeText: 'text-white',
+          navActive: 'border border-indigo-400/40 bg-indigo-500/10',
+          navIconBg: 'bg-indigo-500/10',
+          navBadgeText: 'text-indigo-200',
+          listBorder: 'border border-indigo-500/20',
+          listBg: 'bg-slate-900/70',
+          timelineIconBg: 'bg-indigo-500/10',
+          timelineChip: 'bg-indigo-500/10 text-indigo-200',
+          tableHeaderBg: 'bg-indigo-500/10'
+        },
+        light: {
+          bodyGradient: 'from-indigo-50 via-white to-slate-100',
+          sidebarGradient: 'from-white via-indigo-50 to-blue-100',
+          cardBg: 'bg-white/90 backdrop-blur-xl',
+          cardBorder: 'border-indigo-200',
+          accentGradient: 'from-indigo-500 via-purple-500 to-blue-500',
+          accentText: 'text-indigo-600',
+          highlightBg: 'bg-indigo-500/10 border-indigo-200/60',
+          badgeBg: 'bg-indigo-500/10',
+          badgeText: 'text-indigo-700',
+          navActive: 'border border-indigo-300 bg-indigo-500/10',
+          navIconBg: 'bg-indigo-100',
+          navBadgeText: 'text-indigo-600',
+          listBorder: 'border border-indigo-100',
+          listBg: 'bg-white',
+          timelineIconBg: 'bg-indigo-100',
+          timelineChip: 'bg-indigo-100 text-indigo-700',
+          tableHeaderBg: 'bg-indigo-50/80'
+        }
       },
+
       nav: [
         { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مباشر', en: 'Live' } },
         { id: 'acquisition', icon: 'cursor-arrow', label: { ar: 'الاكتساب', en: 'Acquisition' } },
