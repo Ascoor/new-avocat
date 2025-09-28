@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
   <title>لوحة Inventory & Stockroom</title>
+=======
+  <title>لوحة الاستدامة المناخية</title>
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -15,7 +19,11 @@
   <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
+<<<<<<< HEAD
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">IS</div>
+=======
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">CS</div>
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
         <div>
           <p data-role="mobile-brand-name" class="font-semibold"></p>
           <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
@@ -37,7 +45,11 @@
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
+<<<<<<< HEAD
           <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">IS</div>
+=======
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">CS</div>
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
           <div>
             <p data-role="brand-name" class="text-lg font-semibold"></p>
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
@@ -70,6 +82,7 @@
       defaultLang: 'ar',
       meta: {
         title: {
+<<<<<<< HEAD
           ar: 'لوحة Inventory & Stockroom',
           en: 'Inventory & Stockroom Dashboard'
         }
@@ -168,6 +181,243 @@
             { icon: 'truck', title: { ar: 'وصول شحنة الحقيبة', en: 'Bag shipment received' }, subtitle: { ar: '120 وحدة دخلت المخزون', en: '120 units checked in' }, time: { ar: 'قبل ساعة', en: '1 hour ago' } },
             { icon: 'megaphone', title: { ar: 'تنبيه ترويج الصيف', en: 'Summer promo alert' }, subtitle: { ar: 'زيادة الطلب على PulseMax', en: 'PulseMax demand spike' }, time: { ar: 'اليوم', en: 'Today' } },
             { icon: 'bank', title: { ar: 'دفعة للمورد Vision', en: 'Vision supplier payment' }, subtitle: { ar: 'تم تحرير 18,000$', en: '$18,000 released' }, time: { ar: 'أمس', en: 'Yesterday' } }
+=======
+          ar: 'لوحة الاستدامة المناخية',
+          en: 'Climate sustainability dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'CS',
+        name: {
+          ar: 'مركز أثر الاستدامة',
+          en: 'Sustainability Impact Hub'
+        },
+        tagline: {
+          ar: 'تحليل الانبعاثات والتقدم نحو صافي الصفر',
+          en: 'Analysing emissions and net-zero progress'
+        }
+      },
+      theme: {
+        accentGradient: 'from-emerald-500 via-lime-500 to-teal-500',
+        accentText: 'text-emerald-200',
+        highlightBg: 'bg-emerald-500/10 border-emerald-400/30',
+        badgeBg: 'bg-emerald-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'leaf',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'الهدف 2030', en: '2030 goal' }
+        },
+        {
+          id: 'emissions',
+          icon: 'globe-alt',
+          label: { ar: 'الانبعاثات', en: 'Emissions' }
+        },
+        {
+          id: 'projects',
+          icon: 'sparkles',
+          label: { ar: 'المشاريع الخضراء', en: 'Green projects' }
+        },
+        {
+          id: 'impact',
+          icon: 'chart-bar',
+          label: { ar: 'أثر المبادرات', en: 'Impact metrics' }
+        },
+        {
+          id: 'operations',
+          icon: 'calendar',
+          label: { ar: 'العمليات', en: 'Operations' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'نقطة تحول الانبعاثات', en: 'Emission turning point' },
+        value: 'انخفاض انبعاثات النطاق 2 بنسبة 28%',
+        description: {
+          ar: 'حققنا أفضل أداء تاريخي بعد ربط مواقع الإنتاج بعقود الطاقة المتجددة طويلة الأجل.',
+          en: 'Best performance to date after switching production sites to long-term renewable PPAs.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة مسار صافي الصفر',
+          en: 'Net-zero trajectory board'
+        },
+        subtitle: {
+          ar: 'تابع انبعاثات النطاقات، برامج التعويض، ومؤشرات الأثر البيئي في الوقت الفعلي.',
+          en: 'Track scope emissions, offset programmes, and environmental impact metrics in real time.'
+        },
+        primary: {
+          ar: 'اعتماد خطة خفض جديدة',
+          en: 'Approve new reduction plan'
+        },
+        secondary: {
+          ar: 'عرض تقرير الاستدامة',
+          en: 'View sustainability report'
+        }
+      },
+      stats: [
+        {
+          icon: 'leaf',
+          label: { ar: 'اجمالي الانبعاثات الشهرية', en: 'Monthly emissions total' },
+          value: '18.4 ktCO₂e',
+          delta: { ar: '-3.2 kt منذ الشهر الماضي', en: '-3.2 kt vs last month' },
+          trend: 'positive'
+        },
+        {
+          icon: 'globe-alt',
+          label: { ar: 'تغطية الطاقة المتجددة', en: 'Renewable energy coverage' },
+          value: '72%',
+          delta: { ar: '+12 نقاط مئوية', en: '+12 pts' },
+          trend: 'positive'
+        },
+        {
+          icon: 'sparkles',
+          label: { ar: 'مشاريع التعويض النشطة', en: 'Active offset projects' },
+          value: '14',
+          delta: { ar: '+3 مشاريع', en: '+3 projects' },
+          trend: 'positive'
+        },
+        {
+          icon: 'chart-bar',
+          label: { ar: 'تخفيض الكثافة الكربونية', en: 'Carbon intensity reduction' },
+          value: '38%',
+          delta: { ar: '+5% عن المسار', en: '+5% vs pathway' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'مسار الانبعاثات إلى صافي الصفر', en: 'Emissions pathway to net-zero' },
+          subtitle: { ar: 'عرض توقعات الانبعاثات حتى عام 2035 مقارنة بالهدف العلمي.', en: 'Projected emissions vs science-based target through 2035.' },
+          action: { ar: 'تنزيل نموذج التوقع', en: 'Download forecast model' },
+          placeholder: { ar: 'مخطط خطي للتقدم نحو صافي الصفر', en: 'Net-zero progress line chart' }
+        },
+        {
+          id: 'emissions',
+          type: 'list',
+          title: { ar: 'تفصيل الانبعاثات حسب النطاق', en: 'Emissions breakdown by scope' },
+          action: { ar: 'إدارة بيانات الانبعاثات', en: 'Manage emissions data' },
+          items: [
+            {
+              icon: 'leaf',
+              title: { ar: 'النطاق 1 | عمليات التصنيع', en: 'Scope 1 | Manufacturing operations' },
+              subtitle: { ar: '6.1 ktCO₂e | انخفاض 19%', en: '6.1 ktCO₂e | Down 19%' },
+              value: 'على المسار',
+              delta: { ar: 'استخدام وقود بديل', en: 'Alternative fuels adopted' }
+            },
+            {
+              icon: 'globe-alt',
+              title: { ar: 'النطاق 2 | الطاقة المشتراة', en: 'Scope 2 | Purchased energy' },
+              subtitle: { ar: '4.8 ktCO₂e | انخفاض 28%', en: '4.8 ktCO₂e | Down 28%' },
+              value: 'تفوق على الهدف',
+              delta: { ar: 'اتفاقيات طاقة متجددة', en: 'Renewable PPAs active' }
+            },
+            {
+              icon: 'truck',
+              title: { ar: 'النطاق 3 | سلسلة التوريد', en: 'Scope 3 | Supply chain' },
+              subtitle: { ar: '7.5 ktCO₂e | انخفاض 8%', en: '7.5 ktCO₂e | Down 8%' },
+              value: 'يتطلب تسريع',
+              delta: { ar: 'برامج الموردين الخضراء', en: 'Supplier decarbonisation programmes' }
+            }
+          ]
+        },
+        {
+          id: 'projects',
+          type: 'progress',
+          title: { ar: 'مبادرات الاستدامة الجارية', en: 'Ongoing sustainability initiatives' },
+          items: [
+            {
+              title: { ar: 'تركيب الألواح الشمسية في المصانع', en: 'Plant rooftop solar rollout' },
+              subtitle: { ar: 'تغطية 6 مواقع صناعية ضمن المرحلة الحالية.', en: 'Covering six industrial sites this phase.' },
+              value: '63%',
+              percent: '63%'
+            },
+            {
+              title: { ar: 'تحويل أسطول النقل للكهرباء', en: 'Fleet electrification programme' },
+              subtitle: { ar: 'إحلال 120 مركبة ببدائل كهربائية.', en: 'Replacing 120 vehicles with EV alternatives.' },
+              value: '52%',
+              percent: '52%'
+            },
+            {
+              title: { ar: 'زراعة الغابات المجتمعية', en: 'Community forestation projects' },
+              subtitle: { ar: 'غرس 1.5 مليون شجرة في 3 بلدان.', en: 'Planting 1.5M trees across three countries.' },
+              value: '41%',
+              percent: '41%'
+            }
+          ]
+        },
+        {
+          id: 'impact',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'مؤشرات الأثر البيئي', en: 'Environmental impact indicators' },
+          action: { ar: 'تحميل لوحة الأثر', en: 'Download impact board' },
+          headers: [
+            { ar: 'المؤشر', en: 'Indicator' },
+            { ar: 'القيمة', en: 'Value' },
+            { ar: 'الاتجاه', en: 'Trend' }
+          ],
+          rows: [
+            {
+              name: { ar: 'كفاءة استخدام المياه', en: 'Water efficiency' },
+              metric: '74 لتر/وحدة إنتاج | -9%',
+              delta: { ar: 'تحسن مستمر', en: 'Improving steadily' },
+              trend: 'positive'
+            },
+            {
+              name: { ar: 'معدل النفايات إلى المكبات', en: 'Landfill waste rate' },
+              metric: '12% | -3% هذا الربع',
+              delta: { ar: 'مستقر', en: 'Holding steady' },
+              trend: 'neutral'
+            },
+            {
+              name: { ar: 'كثافة الطاقة', en: 'Energy intensity' },
+              metric: '0.82 ميجاوات ساعة/طن | -5%',
+              delta: { ar: 'بحاجة لتسريع', en: 'Needs acceleration' },
+              trend: 'negative'
+            }
+          ]
+        },
+        {
+          id: 'operations',
+          type: 'timeline',
+          title: { ar: 'أنشطة الاستدامة القادمة', en: 'Upcoming sustainability actions' },
+          items: [
+            {
+              icon: 'calendar',
+              title: { ar: 'مراجعة التقدم ربع السنوية', en: 'Quarterly progress review' },
+              subtitle: { ar: 'تقييم الأهداف والميزانيات مع فرق المناطق.', en: 'Evaluate goals and budgets with regional teams.' },
+              time: { ar: '09:00 صباحاً', en: '09:00 AM' }
+            },
+            {
+              icon: 'leaf',
+              title: { ar: 'ورشة تصميم حلول إزالة الكربون', en: 'Decarbonisation design workshop' },
+              subtitle: { ar: 'مشاريع جديدة لخفض الانبعاثات في سلسلة التوريد.', en: 'New reduction concepts for supply chain.' },
+              time: { ar: '01:00 ظهراً', en: '01:00 PM' }
+            },
+            {
+              icon: 'sparkles',
+              title: { ar: 'إطلاق تقرير الاستدامة التفاعلي', en: 'Launch interactive sustainability report' },
+              subtitle: { ar: 'إشراك المستثمرين عبر لوحة معلومات مباشرة.', en: 'Engage investors with a live data story.' },
+              time: { ar: '05:30 مساءً', en: '05:30 PM' }
+            }
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
           ]
         }
       ]

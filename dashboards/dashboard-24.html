@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
   <title>لوحة Finance Ledger</title>
+=======
+  <title>لوحة الامتثال المالي</title>
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -15,7 +19,11 @@
   <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
+<<<<<<< HEAD
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FL</div>
+=======
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FC</div>
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
         <div>
           <p data-role="mobile-brand-name" class="font-semibold"></p>
           <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
@@ -37,7 +45,11 @@
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
+<<<<<<< HEAD
           <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FL</div>
+=======
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FC</div>
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
           <div>
             <p data-role="brand-name" class="text-lg font-semibold"></p>
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
@@ -70,6 +82,7 @@
       defaultLang: 'ar',
       meta: {
         title: {
+<<<<<<< HEAD
           ar: 'لوحة Finance Ledger',
           en: 'Finance Ledger Dashboard'
         }
@@ -177,6 +190,243 @@
             { icon: 'calendar', title: { ar: 'اجتماع لجنة الميزانية', en: 'Budget committee sync' }, subtitle: { ar: 'تحليل نتائج الربع الأول', en: 'Review Q1 actuals' }, time: { ar: 'اليوم', en: 'Today' } },
             { icon: 'bank', title: { ar: 'تحويل احتياطي الطوارئ', en: 'Emergency reserve top-up' }, subtitle: { ar: '$120K تحويل تلقائي', en: '$120K automated transfer' }, time: { ar: 'غداً', en: 'Tomorrow' } },
             { icon: 'megaphone', title: { ar: 'مراجعة حملة مدفوعة', en: 'Paid campaign audit' }, subtitle: { ar: 'تتبع التكلفة مقابل العائد', en: 'Track spend vs ROAS' }, time: { ar: 'الخميس', en: 'Thursday' } }
+=======
+          ar: 'لوحة الامتثال المالي',
+          en: 'Financial compliance monitor'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        }
+      },
+      brand: {
+        badge: 'FC',
+        name: {
+          ar: 'غرفة تحكم الامتثال',
+          en: 'Compliance Command Room'
+        },
+        tagline: {
+          ar: 'مراقبة الضوابط والتنبيهات التنظيمية لحظياً',
+          en: 'Live oversight of controls and regulatory alerts'
+        }
+      },
+      theme: {
+        accentGradient: 'from-amber-500 via-slate-700 to-slate-900',
+        accentText: 'text-amber-200',
+        highlightBg: 'bg-amber-500/10 border-amber-400/30',
+        badgeBg: 'bg-amber-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'scale',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'وضع الامتثال', en: 'Compliance status' }
+        },
+        {
+          id: 'controls',
+          icon: 'shield',
+          label: { ar: 'ضوابط المخاطر', en: 'Risk controls' }
+        },
+        {
+          id: 'kyc',
+          icon: 'folder',
+          label: { ar: 'اختبارات KYC', en: 'KYC testing' }
+        },
+        {
+          id: 'risk',
+          icon: 'chart-bar',
+          label: { ar: 'مراقبة المخاطر', en: 'Risk monitoring' }
+        },
+        {
+          id: 'operations',
+          icon: 'calendar',
+          label: { ar: 'العمليات', en: 'Operations' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'تنبيه تنظيمي جديد', en: 'New regulatory notice' },
+        value: 'مجلس الخدمات المالية | لائحة الامتثال الرقمي',
+        description: {
+          ar: 'دخلت تغييرات الامتثال الرقمي حيز التنفيذ هذا الأسبوع وتتطلب تحديث سجلات الموافقات خلال 48 ساعة.',
+          en: 'Digital compliance amendments became active this week and require approval logs within 48 hours.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'مركز مراقبة الامتثال المالي',
+          en: 'Financial compliance control centre'
+        },
+        subtitle: {
+          ar: 'راقب الامتثال التنظيمي، اختبارات KYC، وإشارات المخاطر في الزمن الحقيقي.',
+          en: 'Track regulatory adherence, KYC testing, and risk signals in real time.'
+        },
+        primary: {
+          ar: 'تسجيل استجابة الامتثال',
+          en: 'Log compliance response'
+        },
+        secondary: {
+          ar: 'مراجعة خطة التدقيق',
+          en: 'Review audit plan'
+        }
+      },
+      stats: [
+        {
+          icon: 'scale',
+          label: { ar: 'مستوى المخاطر', en: 'Risk posture' },
+          value: 'منخفض',
+          delta: { ar: '-12 نقاط أساس', en: '-12 basis pts' },
+          trend: 'positive'
+        },
+        {
+          icon: 'folder',
+          label: { ar: 'اختبارات KYC المنجزة', en: 'Completed KYC checks' },
+          value: '1,482',
+          delta: { ar: '+164 هذا اليوم', en: '+164 today' },
+          trend: 'positive'
+        },
+        {
+          icon: 'chart-bar',
+          label: { ar: 'تنبيهات المخاطر المفتوحة', en: 'Open risk alerts' },
+          value: '11',
+          delta: { ar: '-3 هذا الأسبوع', en: '-3 this week' },
+          trend: 'positive'
+        },
+        {
+          icon: 'shield',
+          label: { ar: 'ضوابط تحتاج تحديثاً', en: 'Controls pending update' },
+          value: '5',
+          delta: { ar: '+2 بعد المراجعة', en: '+2 post review' },
+          trend: 'negative'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'لوحة وضع الامتثال', en: 'Compliance posture dashboard' },
+          subtitle: { ar: 'قياس الامتثال عبر المنتجات، المناطق، ومتطلبات التقارير.', en: 'Gauge compliance across products, regions, and reporting obligations.' },
+          action: { ar: 'تحميل بطاقة الامتثال', en: 'Download compliance card' },
+          placeholder: { ar: 'مخطط مؤشر الامتثال متعدد الطبقات', en: 'Layered compliance index chart' }
+        },
+        {
+          id: 'controls',
+          type: 'list',
+          title: { ar: 'أبرز ضوابط المخاطر', en: 'Key risk controls' },
+          action: { ar: 'تحديث حالة الضبط', en: 'Update control status' },
+          items: [
+            {
+              icon: 'shield',
+              title: { ar: 'مراقبة تحويلات المدفوعات الفورية', en: 'Instant payment screening' },
+              subtitle: { ar: 'تغطية 99.3% من المعاملات | آخر تحديث اليوم', en: 'Covers 99.3% of transactions | Updated today' },
+              value: 'سليم',
+              delta: { ar: 'متوافق مع لائحة AML', en: 'Aligned with AML rule' }
+            },
+            {
+              icon: 'bank',
+              title: { ar: 'ضوابط الحسابات المراسلة', en: 'Correspondent banking controls' },
+              subtitle: { ar: 'تمت مراجعة 12 مؤسسة شريكة', en: '12 partner institutions reviewed' },
+              value: 'تحديث مطلوب',
+              delta: { ar: 'نطاق مستندات ناقصة', en: 'Missing documentation range' }
+            },
+            {
+              icon: 'folder',
+              title: { ar: 'لوائح حماية البيانات', en: 'Data protection controls' },
+              subtitle: { ar: 'مراجعة سياسة الوصول في الربع الحالي', en: 'Access policy review in current quarter' },
+              value: 'قيد المراجعة',
+              delta: { ar: 'موعد التسليم خلال 5 أيام', en: 'Due in 5 days' }
+            }
+          ]
+        },
+        {
+          id: 'kyc',
+          type: 'progress',
+          title: { ar: 'تقدم اختبارات KYC', en: 'KYC testing progress' },
+          items: [
+            {
+              title: { ar: 'عملاء المؤسسات', en: 'Institutional clients' },
+              subtitle: { ar: 'إعادة التحقق السنوي للكيانات عالية المخاطر.', en: 'Annual refresh for high-risk entities.' },
+              value: '81%',
+              percent: '81%'
+            },
+            {
+              title: { ar: 'العملاء الأفراد', en: 'Retail customers' },
+              subtitle: { ar: 'التوثيق البيومتري والتوقيع الرقمي.', en: 'Biometric verification and digital signature.' },
+              value: '64%',
+              percent: '64%'
+            },
+            {
+              title: { ar: 'الشركاء الخارجيون', en: 'Third-party partners' },
+              subtitle: { ar: 'مراجعة عقود الامتثال ومراقبة واجهات API.', en: 'Review compliance clauses and API monitoring.' },
+              value: '47%',
+              percent: '47%'
+            }
+          ]
+        },
+        {
+          id: 'risk',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'تقريرات التنبيهات الحرجة', en: 'Critical alert reports' },
+          action: { ar: 'تحميل سجل المخاطر', en: 'Download risk log' },
+          headers: [
+            { ar: 'التنبيه', en: 'Alert' },
+            { ar: 'الحالة', en: 'Status' },
+            { ar: 'الاتجاه', en: 'Trend' }
+          ],
+          rows: [
+            {
+              name: { ar: 'تجاوز حد المعاملات', en: 'Transaction limit breach' },
+              metric: 'جارٍ التحقيق | مهلة 12 ساعة',
+              delta: { ar: 'انخفاض 32%', en: 'Down 32%' },
+              trend: 'positive'
+            },
+            {
+              name: { ar: 'نشاط حساب نائم', en: 'Dormant account activity' },
+              metric: 'تم التصعيد | قيد المتابعة',
+              delta: { ar: 'ثابت', en: 'Stable' },
+              trend: 'neutral'
+            },
+            {
+              name: { ar: 'طلبات وصول غير مصرح بها', en: 'Unauthorised access attempts' },
+              metric: 'قيد التحليل | 3 مواقع',
+              delta: { ar: '+18% منذ أمس', en: '+18% since yesterday' },
+              trend: 'negative'
+            }
+          ]
+        },
+        {
+          id: 'operations',
+          type: 'timeline',
+          title: { ar: 'جدول عمليات الامتثال', en: 'Compliance operations timeline' },
+          items: [
+            {
+              icon: 'calendar',
+              title: { ar: 'اجتماع مراجعة اللوائح الإقليمية', en: 'Regional regulation review' },
+              subtitle: { ar: 'تقييم تحديثات التشريعات في آسيا وأوروبا.', en: 'Assess regulatory updates across Asia and Europe.' },
+              time: { ar: '09:45 صباحاً', en: '09:45 AM' }
+            },
+            {
+              icon: 'presentation-chart',
+              title: { ar: 'إحاطة مجلس الإدارة', en: 'Board compliance briefing' },
+              subtitle: { ar: 'تلخيص حالات الامتثال عالية المخاطر والتوصيات.', en: 'Summarise high-risk cases and recommendations.' },
+              time: { ar: '02:15 ظهراً', en: '02:15 PM' }
+            },
+            {
+              icon: 'folder',
+              title: { ar: 'تحديث سياسات الوصول', en: 'Access policy update' },
+              subtitle: { ar: 'إصدار الإصدار الجديد لقواعد التحكم في الصلاحيات.', en: 'Publish revised entitlements standard.' },
+              time: { ar: '06:00 مساءً', en: '06:00 PM' }
+            }
+>>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
           ]
         }
       ]
