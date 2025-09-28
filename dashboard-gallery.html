@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>معرض لوحات التحكم - TailwindCSS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+  <header class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-slate-900 to-slate-900"></div>
+    <div class="relative max-w-6xl mx-auto px-6 py-20 space-y-10">
+      <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+        <div class="space-y-6 max-w-3xl">
+          <div class="space-y-4">
+            <p data-i18n="hero-tag" class="text-indigo-300 text-sm uppercase tracking-widest">TailwindCSS Premium</p>
+            <h1 data-i18n="hero-title" class="text-4xl md:text-5xl font-bold">أفضل 20 تصميمًا متجاوبًا للوحات التحكم</h1>
+            <p data-i18n="hero-description" class="text-slate-300">
+              استكشف مجموعة من لوحات التحكم المتكاملة المبنية بـ TailwindCSS مع دعم كامل للغتين العربية والإنجليزية.
+              كل تصميم مجهز للمنتجات الحديثة ويأتي بواجهة متجاوبة تدعم مختلف الأجهزة.
+            </p>
+          </div>
+          <div data-role="hero-badges" class="flex flex-wrap gap-3"></div>
+        </div>
+        <div class="self-start">
+          <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 pb-20 space-y-8">
+    <h2 data-i18n="section-title" class="text-2xl font-semibold">اختر تصميمك المفضل</h2>
+    <div data-role="card-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+      <p data-i18n="footer-text">© 2024 لوحات تحكم Tailwind. جميع الحقوق محفوظة.</p>
+      <div class="flex gap-4">
+        <a href="#" data-i18n="footer-privacy" class="hover:text-slate-200">سياسة الخصوصية</a>
+        <a href="#" data-i18n="footer-terms" class="hover:text-slate-200">شروط الاستخدام</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const body = document.body;
+
+      const translations = {
+        pageTitle: {
+          ar: 'معرض لوحات التحكم - TailwindCSS',
+          en: 'Dashboard Gallery - TailwindCSS'
+        },
+        heroTag: {
+          ar: 'TailwindCSS Premium',
+          en: 'TailwindCSS Premium'
+        },
+        heroTitle: {
+          ar: 'أفضل 20 تصميمًا متجاوبًا للوحات التحكم',
+          en: 'Top 20 responsive dashboard designs'
+        },
+        heroDescription: {
+          ar: 'استكشف مجموعة من لوحات التحكم المتكاملة المبنية بـ TailwindCSS مع دعم كامل للغتين العربية والإنجليزية. كل تصميم مجهز للمنتجات الحديثة ويأتي بواجهة متجاوبة تدعم مختلف الأجهزة.',
+          en: 'Explore a curated set of TailwindCSS dashboards with full Arabic and English support. Each layout is production-ready and adapts beautifully to every device.'
+        },
+        sectionTitle: {
+          ar: 'اختر تصميمك المفضل',
+          en: 'Pick your favorite layout'
+        },
+        footerText: {
+          ar: '© 2024 لوحات تحكم Tailwind. جميع الحقوق محفوظة.',
+          en: '© 2024 Tailwind Dashboards. All rights reserved.'
+        },
+        footerPrivacy: {
+          ar: 'سياسة الخصوصية',
+          en: 'Privacy policy'
+        },
+        footerTerms: {
+          ar: 'شروط الاستخدام',
+          en: 'Terms of use'
+        },
+        linkLabel: {
+          ar: 'استعراض التصميم →',
+          en: 'View dashboard →'
+        },
+        badges: [
+          {
+            classes: 'px-4 py-2 bg-indigo-500/20 text-indigo-200 rounded-full text-sm',
+            text: {
+              ar: 'متجاوبة بالكامل',
+              en: 'Fully responsive'
+            }
+          },
+          {
+            classes: 'px-4 py-2 bg-emerald-500/20 text-emerald-200 rounded-full text-sm',
+            text: {
+              ar: 'واجهات غنية بالبيانات',
+              en: 'Data-rich interfaces'
+            }
+          },
+          {
+            classes: 'px-4 py-2 bg-amber-500/20 text-amber-200 rounded-full text-sm',
+            text: {
+              ar: 'دعم عربي وإنجليزي',
+              en: 'Arabic & English support'
+            }
+          }
+        ]
+      };
+
+      const dashboards = [
+        {
+          number: '01',
+          href: 'dashboards/dashboard-1.html',
+          gradient: 'from-indigo-500 to-purple-500',
+          accent: 'text-indigo-300',
+          title: {
+            ar: 'لوحة تحليلات النمو',
+            en: 'Growth analytics dashboard'
+          },
+          description: {
+            ar: 'تتبع مؤشرات الأداء الرئيسية ومصادر النمو في الوقت الفعلي.',
+            en: 'Monitor key KPIs and growth sources in real time.'
+          }
+        },
+        {
+          number: '02',
+          href: 'dashboards/dashboard-2.html',
+          gradient: 'from-emerald-500 to-teal-500',
+          accent: 'text-emerald-300',
+          title: {
+            ar: 'لوحة إدارة المشاريع',
+            en: 'Project delivery dashboard'
+          },
+          description: {
+            ar: 'تتبع الإنجاز والمخاطر والاعتمادات عبر المحافظ.',
+            en: 'Track completion, risks, and dependencies across the portfolio.'
+          }
+        },
+        {
+          number: '03',
+          href: 'dashboards/dashboard-3.html',
+          gradient: 'from-amber-500 to-orange-500',
+          accent: 'text-amber-200',
+          title: {
+            ar: 'لوحة تجارة إلكترونية',
+            en: 'E-commerce performance hub'
+          },
+          description: {
+            ar: 'راقب المبيعات وسلوك العملاء والعمليات اللوجستية لحظياً.',
+            en: 'Monitor revenue, customer behaviour, and fulfilment in real time.'
+          }
+        },
+        {
+          number: '04',
+          href: 'dashboards/dashboard-4.html',
+          gradient: 'from-sky-500 to-cyan-500',
+          accent: 'text-sky-200',
+          title: {
+            ar: 'لوحة البنية السحابية',
+            en: 'Cloud infrastructure dashboard'
+          },
+          description: {
+            ar: 'تحليلات زمن الاستجابة، السعة، والإنفاق عبر البيئات.',
+            en: 'Analyse latency, capacity, and spend across environments.'
+          }
+        },
+        {
+          number: '05',
+          href: 'dashboards/dashboard-5.html',
+          gradient: 'from-rose-500 to-pink-500',
+          accent: 'text-rose-200',
+          title: {
+            ar: 'لوحة إدارة المحتوى',
+            en: 'Content operations dashboard'
+          },
+          description: {
+            ar: 'تنسيق جدول النشر، جودة المواد، وأداء القنوات.',
+            en: 'Coordinate publishing schedules, content quality, and channel performance.'
+          }
+        },
+        {
+          number: '06',
+          href: 'dashboards/dashboard-6.html',
+          gradient: 'from-fuchsia-500 to-purple-500',
+          accent: 'text-fuchsia-200',
+          title: {
+            ar: 'لوحة تجربة العملاء',
+            en: 'Customer experience dashboard'
+          },
+          description: {
+            ar: 'أثر الدعم، الملاحظات، والتحويلات عبر كل نقطة تواصل.',
+            en: 'Track support, feedback, and conversions across every touchpoint.'
+          }
+        },
+        {
+          number: '07',
+          href: 'dashboards/dashboard-7.html',
+          gradient: 'from-lime-500 to-emerald-500',
+          accent: 'text-lime-200',
+          title: {
+            ar: 'لوحة الموارد البشرية',
+            en: 'People operations dashboard'
+          },
+          description: {
+            ar: 'نظرة شاملة على القوى العاملة، المواهب، والرفاهية.',
+            en: 'Holistic view of workforce, talent pipelines, and wellbeing.'
+          }
+        },
+        {
+          number: '08',
+          href: 'dashboards/dashboard-8.html',
+          gradient: 'from-blue-500 to-indigo-500',
+          accent: 'text-blue-200',
+          title: {
+            ar: 'لوحة التعليم الإلكتروني',
+            en: 'E-learning experience dashboard'
+          },
+          description: {
+            ar: 'حلّل مشاركة المتعلمين، فعالية المحتوى، وأداء البرامج الحية.',
+            en: 'Analyse learner engagement, content effectiveness, and live cohort performance.'
+          }
+        },
+        {
+          number: '09',
+          href: 'dashboards/dashboard-9.html',
+          gradient: 'from-slate-500 to-slate-700',
+          accent: 'text-slate-200',
+          title: {
+            ar: 'لوحة أمن المعلومات',
+            en: 'Cybersecurity operations dashboard'
+          },
+          description: {
+            ar: 'رؤية فورية للهجمات، التصحيحات، والتدقيق التنظيمي.',
+            en: 'Instant insight into attacks, patching, and regulatory audits.'
+          }
+        },
+        {
+          number: '10',
+          href: 'dashboards/dashboard-10.html',
+          gradient: 'from-cyan-500 to-emerald-500',
+          accent: 'text-cyan-200',
+          title: {
+            ar: 'لوحة الخدمات المالية',
+            en: 'Financial services dashboard'
+          },
+          description: {
+            ar: 'مراقبة الأصول المدارة، العائدات، والمخاطر التشغيلية.',
+            en: 'Monitor assets under management, returns, and operational risk.'
+          }
+        },
+        {
+          number: '11',
+          href: 'dashboards/dashboard-11.html',
+          gradient: 'from-red-500 to-rose-500',
+          accent: 'text-rose-200',
+          title: {
+            ar: 'لوحة عمليات الرعاية الصحية',
+            en: 'Healthcare operations dashboard'
+          },
+          description: {
+            ar: 'راقب سلامة المرضى، الكفاءات السريرية، وكفاءة الموارد.',
+            en: 'Monitor patient safety, clinical efficiency, and resource utilisation.'
+          }
+        },
+        {
+          number: '12',
+          href: 'dashboards/dashboard-12.html',
+          gradient: 'from-purple-500 to-indigo-500',
+          accent: 'text-purple-200',
+          title: {
+            ar: 'لوحة حملات التسويق',
+            en: 'Marketing campaigns dashboard'
+          },
+          description: {
+            ar: 'تتبع أداء القنوات، تحويل الحملات، وتجارب الرسائل.',
+            en: 'Track channel performance, campaign conversions, and messaging experiments.'
+          }
+        },
+        {
+          number: '13',
+          href: 'dashboards/dashboard-13.html',
+          gradient: 'from-amber-600 to-lime-500',
+          accent: 'text-amber-200',
+          title: {
+            ar: 'لوحة سلسلة الإمداد',
+            en: 'Supply chain dashboard'
+          },
+          description: {
+            ar: 'تتبع تدفق الشحنات، تغطية المخزون، وأداء الموردين.',
+            en: 'Track shipments, inventory coverage, and supplier performance.'
+          }
+        },
+        {
+          number: '14',
+          href: 'dashboards/dashboard-14.html',
+          gradient: 'from-emerald-600 to-teal-600',
+          accent: 'text-emerald-200',
+          title: {
+            ar: 'لوحة إدارة العقارات',
+            en: 'Real estate management dashboard'
+          },
+          description: {
+            ar: 'مراقبة الإشغال، التدفقات المالية، وحالة الأصول عبر المحافظ.',
+            en: 'Monitor occupancy, financial flows, and asset condition across portfolios.'
+          }
+        },
+        {
+          number: '15',
+          href: 'dashboards/dashboard-15.html',
+          gradient: 'from-orange-500 to-red-500',
+          accent: 'text-amber-200',
+          title: {
+            ar: 'لوحة العمليات التصنيعية',
+            en: 'Manufacturing operations dashboard'
+          },
+          description: {
+            ar: 'راقب الإنتاج، الجودة، والصيانة في جميع الخطوط.',
+            en: 'Monitor output, quality, and maintenance across lines.'
+          }
+        },
+        {
+          number: '16',
+          href: 'dashboards/dashboard-16.html',
+          gradient: 'from-fuchsia-500 to-cyan-500',
+          accent: 'text-cyan-200',
+          title: {
+            ar: 'لوحة منصة البث',
+            en: 'Streaming platform dashboard'
+          },
+          description: {
+            ar: 'إدارة المشتركين، أداء المحتوى، وجاهزية الشبكة.',
+            en: 'Manage subscribers, content performance, and network readiness.'
+          }
+        },
+        {
+          number: '17',
+          href: 'dashboards/dashboard-17.html',
+          gradient: 'from-cyan-500 to-lime-500',
+          accent: 'text-cyan-200',
+          title: {
+            ar: 'لوحة المدينة الذكية',
+            en: 'Smart city dashboard'
+          },
+          description: {
+            ar: 'قياس الأداء الحضري عبر التنقل، الطاقة، والخدمات الرقمية.',
+            en: 'Measure urban performance across mobility, energy, and digital services.'
+          }
+        },
+        {
+          number: '18',
+          href: 'dashboards/dashboard-18.html',
+          gradient: 'from-rose-500 via-amber-500 to-emerald-500',
+          accent: 'text-amber-200',
+          title: {
+            ar: 'لوحة تجربة الضيوف',
+            en: 'Guest experience intelligence'
+          },
+          description: {
+            ar: 'راقب معدلات الإشغال، رضا الضيوف، وإيرادات الغرف عبر محفظة الفنادق.',
+            en: 'Monitor occupancy, guest sentiment, and room revenue across the hotel portfolio.'
+          }
+        },
+        {
+          number: '19',
+          href: 'dashboards/dashboard-19.html',
+          gradient: 'from-emerald-500 via-teal-500 to-sky-500',
+          accent: 'text-emerald-200',
+          title: {
+            ar: 'لوحة عمليات الطاقة المتجددة',
+            en: 'Renewable operations overview'
+          },
+          description: {
+            ar: 'راقب إنتاج الطاقة، توازن الشبكة، ومبادرات الاستدامة في الوقت الفعلي.',
+            en: 'Track generation, grid balance, and sustainability programs in real time.'
+          }
+        },
+        {
+          number: '20',
+          href: 'dashboards/dashboard-20.html',
+          gradient: 'from-indigo-500 via-violet-500 to-rose-500',
+          accent: 'text-violet-200',
+          title: {
+            ar: 'لوحة أداء النادي الرياضي',
+            en: 'Club performance intelligence'
+          },
+          description: {
+            ar: 'تابع نتائج المباريات، صحة اللاعبين، وتفاعل الجماهير عبر موسم البطولة.',
+            en: 'Follow match results, player wellness, and fan engagement throughout the season.'
+          }
+        }
+      ];
+
+      const heroTagEl = document.querySelector('[data-i18n="hero-tag"]');
+      const heroTitleEl = document.querySelector('[data-i18n="hero-title"]');
+      const heroDescriptionEl = document.querySelector('[data-i18n="hero-description"]');
+      const sectionTitleEl = document.querySelector('[data-i18n="section-title"]');
+      const footerTextEl = document.querySelector('[data-i18n="footer-text"]');
+      const footerPrivacyEl = document.querySelector('[data-i18n="footer-privacy"]');
+      const footerTermsEl = document.querySelector('[data-i18n="footer-terms"]');
+      const badgesContainer = document.querySelector('[data-role="hero-badges"]');
+      const cardsContainer = document.querySelector('[data-role="card-grid"]');
+
+      const languageSwitchers = document.querySelectorAll('[data-role="language-switcher"]');
+      const langButtons = [];
+      let currentLang = 'ar';
+
+      languageSwitchers.forEach(container => {
+        container.innerHTML = '';
+        ['ar', 'en'].forEach(lang => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.dataset.lang = lang;
+          button.textContent = lang === 'ar' ? 'ع' : 'En';
+          button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition border border-white/10 text-slate-200 bg-transparent hover:bg-white/10';
+          button.addEventListener('click', () => setLanguage(lang));
+          container.appendChild(button);
+          langButtons.push(button);
+        });
+      });
+
+      function updateSwitcherButtons() {
+        langButtons.forEach(btn => {
+          const active = btn.dataset.lang === currentLang;
+          btn.classList.toggle('bg-white/10', active);
+          btn.classList.toggle('text-white', active);
+          btn.classList.toggle('opacity-70', !active);
+        });
+      }
+
+      function renderBadges(lang) {
+        if (!badgesContainer) return;
+        badgesContainer.innerHTML = translations.badges.map(badge => `
+          <span class="${badge.classes}">${badge.text[lang]}</span>
+        `).join('');
+      }
+
+      function renderCards(lang) {
+        if (!cardsContainer) return;
+        cardsContainer.innerHTML = dashboards.map(card => `
+          <a href="${card.href}" class="group bg-slate-800/60 hover:bg-slate-800 transition rounded-2xl overflow-hidden shadow-lg border border-slate-700/50">
+            <div class="h-40 bg-gradient-to-br ${card.gradient} flex items-center justify-center">
+              <span class="text-4xl font-bold text-white/80">${card.number}</span>
+            </div>
+            <div class="p-5 space-y-3">
+              <h3 class="text-xl font-semibold">${card.title[lang]}</h3>
+              <p class="text-slate-300 text-sm leading-relaxed">${card.description[lang]}</p>
+              <span class="mt-2 inline-flex items-center ${card.accent} text-sm group-hover:translate-x-1 transition">
+                ${translations.linkLabel[lang]}
+              </span>
+            </div>
+          </a>
+        `).join('');
+      }
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        body.classList.toggle('font-english', lang === 'en');
+        document.title = translations.pageTitle[lang];
+
+        if (heroTagEl) heroTagEl.textContent = translations.heroTag[lang];
+        if (heroTitleEl) heroTitleEl.textContent = translations.heroTitle[lang];
+        if (heroDescriptionEl) heroDescriptionEl.textContent = translations.heroDescription[lang];
+        if (sectionTitleEl) sectionTitleEl.textContent = translations.sectionTitle[lang];
+        if (footerTextEl) footerTextEl.textContent = translations.footerText[lang];
+        if (footerPrivacyEl) footerPrivacyEl.textContent = translations.footerPrivacy[lang];
+        if (footerTermsEl) footerTermsEl.textContent = translations.footerTerms[lang];
+
+        renderBadges(lang);
+        renderCards(lang);
+        updateSwitcherButtons();
+      }
+
+      setLanguage(currentLang);
+    })();
+  </script>
+</body>
+</html>

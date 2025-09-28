@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة البنية السحابية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">C</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">C</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة البنية السحابية',
+          en: 'Cloud Infrastructure Control Panel'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        },
+        collapse: {
+          ar: 'تصغير الشريط',
+          en: 'Collapse sidebar'
+        },
+        expand: {
+          ar: 'توسيع الشريط',
+          en: 'Expand sidebar'
+        }
+      },
+      brand: {
+        badge: 'C',
+        name: {
+          ar: 'مرصد السحابة',
+          en: 'Cloud Atlas'
+        },
+        tagline: {
+          ar: 'مراقبة الصحة والأداء والتكاليف',
+          en: 'Health, performance, and cost monitoring'
+        }
+      },
+      theme: {
+        bodyGradient: 'from-slate-950 via-blue-950 to-sky-900',
+        sidebarGradient: 'from-slate-950 via-blue-900 to-cyan-900',
+        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
+        cardBorder: 'border-sky-400/30',
+        accentGradient: 'from-sky-500 via-indigo-500 to-slate-500',
+        accentText: 'text-sky-200',
+        highlightBg: 'bg-sky-500/10 border-sky-400/30',
+        badgeBg: 'bg-sky-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'cloud',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'مراقبة', en: 'Monitor' }
+        },
+        {
+          id: 'health',
+          icon: 'shield',
+          label: { ar: 'الصحة والأمان', en: 'Health & security' }
+        },
+        {
+          id: 'capacity',
+          icon: 'cube',
+          label: { ar: 'السعة والاستيعاب', en: 'Capacity' }
+        },
+        {
+          id: 'costs',
+          icon: 'bank',
+          label: { ar: 'التكاليف', en: 'Costs' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'حالة المنصة', en: 'Platform status' },
+        value: '99.98% SLA',
+        description: {
+          ar: 'مناطق التوفر الثلاث تعمل دون حوادث خلال 27 يوماً.',
+          en: 'All three availability zones running incident-free for 27 days.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة البنية السحابية',
+          en: 'Cloud infrastructure dashboard'
+        },
+        subtitle: {
+          ar: 'تحليلات زمن الاستجابة، السعة، والإنفاق عبر البيئات.',
+          en: 'Analyse latency, capacity, and spend across environments.'
+        },
+        primary: {
+          ar: 'جدولة صيانة',
+          en: 'Schedule maintenance'
+        },
+        secondary: {
+          ar: 'عرض توصيات التوفير',
+          en: 'View savings plan'
+        }
+      },
+      stats: [
+        {
+          icon: 'cloud',
+          label: { ar: 'متوسط زمن الاستجابة', en: 'Average latency' },
+          value: '142ms',
+          delta: { ar: '-18% مقارنة بالأسبوع الماضي', en: '-18% vs last week' },
+          trend: 'positive'
+        },
+        {
+          icon: 'shield',
+          label: { ar: 'حوادث حرجة', en: 'Critical incidents' },
+          value: '2',
+          delta: { ar: 'تم إغلاق 5 خلال 48 ساعة', en: '5 resolved within 48h' },
+          trend: 'positive'
+        },
+        {
+          icon: 'cube',
+          label: { ar: 'العُقد النشطة', en: 'Active nodes' },
+          value: '1,240',
+          delta: { ar: '+7% توسع تلقائي', en: '+7% autoscaling boost' },
+          trend: 'positive'
+        },
+        {
+          icon: 'bank',
+          label: { ar: 'تكلفة يومية', en: 'Daily spend' },
+          value: '$38K',
+          delta: { ar: '-9% بفضل الخطة المحسّنة', en: '-9% with optimized plan' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'مراقبة زمن الاستجابة', en: 'Latency monitor' },
+          subtitle: { ar: 'قياس عالمي بين المناطق الأساسية والخدمات الحرجة.', en: 'Global measurement across core regions and critical services.' },
+          action: { ar: 'تفاصيل الخدمة', en: 'Service detail' },
+          placeholder: { ar: 'مخطط الاستجابة', en: 'Latency visual' }
+        },
+        {
+          id: 'clusters',
+          type: 'list',
+          title: { ar: 'أعلى مجموعات الحمل', en: 'Top load clusters' },
+          action: { ar: 'تحديث في آخر 2 دقيقة', en: 'Updated 2 minutes ago' },
+          items: [
+            {
+              icon: 'cloud',
+              title: { ar: 'حوسبة المنطقة الشرقية', en: 'East compute cluster' },
+              subtitle: { ar: 'استخدام CPU 63%', en: 'CPU utilisation 63%' },
+              value: '512 عقدة',
+              delta: { ar: 'تم تفعيل أولوية الأداء', en: 'Performance priority enabled' }
+            },
+            {
+              icon: 'cube',
+              title: { ar: 'مزارع التحليلات', en: 'Analytics farms' },
+              subtitle: { ar: 'ذاكرة فائضة 12%', en: 'Memory headroom 12%' },
+              value: '386 عقدة',
+              delta: { ar: 'استهلاك ثابت', en: 'Stable consumption' }
+            },
+            {
+              icon: 'shield',
+              title: { ar: 'وحدة الأمان المُدارة', en: 'Managed security edge' },
+              subtitle: { ar: 'حجب 2.3M تهديد/يوم', en: 'Blocking 2.3M threats/day' },
+              value: 'كفاءة 98%',
+              delta: { ar: 'زيادة التدقيق', en: 'Inspection increased' }
+            }
+          ]
+        },
+        {
+          id: 'migration',
+          type: 'progress',
+          title: { ar: 'تقدم موجات الترحيل', en: 'Migration wave progress' },
+          items: [
+            {
+              title: { ar: 'الموجة الأولى - الخدمات الداخلية', en: 'Wave 1 - internal services' },
+              subtitle: { ar: 'مكتمل مع مراجعات أمنية', en: 'Complete with security reviews' },
+              value: '100%',
+              percent: '100%'
+            },
+            {
+              title: { ar: 'الموجة الثانية - قواعد البيانات', en: 'Wave 2 - databases' },
+              subtitle: { ar: 'اختبارات الأداء مستمرة', en: 'Performance testing underway' },
+              value: '71%',
+              percent: '71%'
+            },
+            {
+              title: { ar: 'الموجة الثالثة - التطبيقات العامة', en: 'Wave 3 - public apps' },
+              subtitle: { ar: 'جاهزية التدريج الأسبوع المقبل', en: 'Staging readiness next week' },
+              value: '46%',
+              percent: '46%'
+            }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'مستجدات العمليات', en: 'Operations timeline' },
+          items: [
+            {
+              icon: 'shield',
+              title: { ar: 'تفعيل سياسات الحماية المتقدمة', en: 'Advanced guardrails enabled' },
+              subtitle: { ar: 'ضبط تلقائي لقواعد الجدار الناري', en: 'Firewall policies auto-tuned' },
+              time: { ar: 'قبل ساعة', en: '1 hour ago' }
+            },
+            {
+              icon: 'cloud',
+              title: { ar: 'إنهاء صيانة التدرج', en: 'Gradient maintenance completed' },
+              subtitle: { ar: 'إعادة توزيع السعة دون توقف', en: 'Capacity redistributed without downtime' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'bank',
+              title: { ar: 'توصيات خفض التكلفة', en: 'Cost optimisation tips' },
+              subtitle: { ar: 'فرص توفير سنوي 1.4M$', en: '$1.4M annual savings identified' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>

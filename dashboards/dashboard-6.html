@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تجربة العملاء</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">X</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">X</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة تجربة العملاء',
+          en: 'Customer Experience Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        },
+        collapse: {
+          ar: 'تصغير الشريط',
+          en: 'Collapse sidebar'
+        },
+        expand: {
+          ar: 'توسيع الشريط',
+          en: 'Expand sidebar'
+        }
+      },
+      brand: {
+        badge: 'X',
+        name: {
+          ar: 'إشراق التجربة',
+          en: 'Experience Glow'
+        },
+        tagline: {
+          ar: 'صوت العميل، الدعم، والرحلات الرقمية',
+          en: 'Voice of customer, support, and journeys'
+        }
+      },
+      theme: {
+        bodyGradient: 'from-slate-950 via-pink-950 to-rose-900',
+        sidebarGradient: 'from-rose-950 via-pink-900 to-amber-900',
+        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
+        cardBorder: 'border-rose-400/30',
+        accentGradient: 'from-emerald-500 via-teal-500 to-cyan-500',
+        accentText: 'text-emerald-200',
+        highlightBg: 'bg-emerald-500/10 border-emerald-400/30',
+        badgeBg: 'bg-emerald-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'heart',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'رضا', en: 'Satisfaction' }
+        },
+        {
+          id: 'support',
+          icon: 'chat-bubble',
+          label: { ar: 'الدعم والتذاكر', en: 'Support & tickets' }
+        },
+        {
+          id: 'feedback',
+          icon: 'sparkles',
+          label: { ar: 'ملاحظات العملاء', en: 'Customer feedback' }
+        },
+        {
+          id: 'journeys',
+          icon: 'map',
+          label: { ar: 'الرحلات الرقمية', en: 'Digital journeys' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'نبض العملاء', en: 'Customer pulse' },
+        value: 'NPS 71',
+        description: {
+          ar: 'برنامج الترحيب الجديد رفع رضا المستخدمين الجدد بنسبة 14 نقطة.',
+          en: 'New onboarding journey increased new-user satisfaction by 14 points.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة تجربة العملاء',
+          en: 'Customer experience dashboard'
+        },
+        subtitle: {
+          ar: 'أثر الدعم، الملاحظات، والتحويلات عبر كل نقطة تواصل.',
+          en: 'Track support, feedback, and conversions across every touchpoint.'
+        },
+        primary: {
+          ar: 'إطلاق حملة وفاء',
+          en: 'Launch loyalty campaign'
+        },
+        secondary: {
+          ar: 'عرض لوحة الرحلات',
+          en: 'View journey board'
+        }
+      },
+      stats: [
+        {
+          icon: 'heart',
+          label: { ar: 'رضا العملاء (CSAT)', en: 'Customer satisfaction (CSAT)' },
+          value: '92%',
+          delta: { ar: '+3 نقاط هذا الربع', en: '+3 points this quarter' },
+          trend: 'positive'
+        },
+        {
+          icon: 'sparkles',
+          label: { ar: 'مؤشر المروج الصافي', en: 'Net promoter score' },
+          value: '71',
+          delta: { ar: '+6 نقاط منذ الشهر الماضي', en: '+6 points since last month' },
+          trend: 'positive'
+        },
+        {
+          icon: 'chat-bubble',
+          label: { ar: 'طلبات مُغلقة خلال 24 ساعة', en: 'Tickets resolved within 24h' },
+          value: '87%',
+          delta: { ar: '+9% بعد أتمتة الردود', en: '+9% after automation rollout' },
+          trend: 'positive'
+        },
+        {
+          icon: 'map',
+          label: { ar: 'تغطية الرحلات المؤتمتة', en: 'Automated journey coverage' },
+          value: '63%',
+          delta: { ar: '+12% خلال 45 يوماً', en: '+12% over 45 days' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'تطور مؤشر الرضا', en: 'Satisfaction evolution' },
+          subtitle: { ar: 'مسار التقييمات اليومية عبر القنوات والدول.', en: 'Daily sentiment across channels and geographies.' },
+          action: { ar: 'تحليل الشرائح', en: 'Segment analysis' },
+          placeholder: { ar: 'مخطط الرضا', en: 'Satisfaction chart' }
+        },
+        {
+          id: 'channels',
+          type: 'list',
+          title: { ar: 'أفضل قنوات الخدمة', en: 'Top service channels' },
+          action: { ar: 'مقارنة أسبوعية', en: 'Week-over-week compare' },
+          items: [
+            {
+              icon: 'chat-bubble',
+              title: { ar: 'مركز المساعدة المباشر', en: 'Live help centre' },
+              subtitle: { ar: 'زمن استجابة 38 ثانية', en: 'Response time 38s' },
+              value: 'CSAT 95%',
+              delta: { ar: '+4 نقاط', en: '+4 points' }
+            },
+            {
+              icon: 'sparkles',
+              title: { ar: 'الرسائل داخل التطبيق', en: 'In-app messaging' },
+              subtitle: { ar: 'حملات تفعيل سياقية', en: 'Contextual activation' },
+              value: 'تفاعل 67%',
+              delta: { ar: '+8% اعتماد', en: '+8% adoption' }
+            },
+            {
+              icon: 'megaphone',
+              title: { ar: 'وسائل التواصل الاجتماعي', en: 'Social care' },
+              subtitle: { ar: 'فريق متعدد اللغات', en: 'Multi-lingual team' },
+              value: 'حل 78%',
+              delta: { ar: '+12% رضا', en: '+12% satisfaction' }
+            }
+          ]
+        },
+        {
+          id: 'journey',
+          type: 'progress',
+          title: { ar: 'مراحل رحلة العميل', en: 'Customer journey stages' },
+          items: [
+            {
+              title: { ar: 'الاكتشاف', en: 'Discovery' },
+              subtitle: { ar: 'محتوى تعليمي مخصص', en: 'Personalised learning content' },
+              value: '78%',
+              percent: '78%'
+            },
+            {
+              title: { ar: 'البدء والتفعيل', en: 'Onboarding & activation' },
+              subtitle: { ar: 'تجربة تفاعلية جديدة', en: 'New interactive walkthrough' },
+              value: '64%',
+              percent: '64%'
+            },
+            {
+              title: { ar: 'النجاح المستمر', en: 'Ongoing success' },
+              subtitle: { ar: 'متابعة ذكية للقيمة', en: 'Value tracking automations' },
+              value: '52%',
+              percent: '52%'
+            }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'مستجدات تجربة العملاء', en: 'CX updates timeline' },
+          items: [
+            {
+              icon: 'sparkles',
+              title: { ar: 'إطلاق روبوت المحادثة الجديد', en: 'New chatbot launched' },
+              subtitle: { ar: 'يغطي 42% من الأسئلة المتكررة', en: 'Covers 42% of repeat questions' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'heart',
+              title: { ar: 'جلسات الاستماع للعملاء', en: 'Customer listening sessions' },
+              subtitle: { ar: '5 مجموعات تركيز في ثلاثة أسواق', en: '5 focus groups across three markets' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            },
+            {
+              icon: 'map',
+              title: { ar: 'تدفق رحلة متكامل جديد', en: 'New integrated journey flow' },
+              subtitle: { ar: 'يُقلل الخطوات بنسبة 23%', en: 'Reduces steps by 23%' },
+              time: { ar: 'قبل يومين', en: '2 days ago' }
+            }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>

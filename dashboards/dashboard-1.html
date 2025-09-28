@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تحليلات النمو</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">G</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">G</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة تحليلات النمو',
+          en: 'Growth Analytics Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        },
+        collapse: {
+          ar: 'تصغير الشريط',
+          en: 'Collapse sidebar'
+        },
+        expand: {
+          ar: 'توسيع الشريط',
+          en: 'Expand sidebar'
+        }
+      },
+      brand: {
+        badge: 'G',
+        name: {
+          ar: 'مؤشرات النمو',
+          en: 'Growth Metrics'
+        },
+        tagline: {
+          ar: 'لوحة أداء الشركات الناشئة',
+          en: 'Startup performance cockpit'
+        }
+      },
+      theme: {
+        bodyGradient: 'from-slate-950 via-indigo-950 to-purple-950',
+        sidebarGradient: 'from-slate-950 via-indigo-950 to-purple-900',
+        cardBg: 'bg-slate-900/70 backdrop-blur-xl',
+        cardBorder: 'border-indigo-500/30',
+        accentGradient: 'from-indigo-500 via-purple-500 to-blue-500',
+        accentText: 'text-indigo-300',
+        highlightBg: 'bg-indigo-500/10 border-indigo-500/20',
+        badgeBg: 'bg-indigo-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'chart-bar',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'مباشر', en: 'Live' }
+        },
+        {
+          id: 'acquisition',
+          icon: 'cursor-arrow',
+          label: { ar: 'الاكتساب', en: 'Acquisition' }
+        },
+        {
+          id: 'segments',
+          icon: 'users',
+          label: { ar: 'شرائح العملاء', en: 'Customer Segments' }
+        },
+        {
+          id: 'retention',
+          icon: 'sparkles',
+          label: { ar: 'الاحتفاظ', en: 'Retention' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'نمو ربع سنوي', en: 'Quarterly growth' },
+        value: '+32%',
+        description: {
+          ar: 'الحملات المخصصة رفعت التسجيلات وتحويلات القنوات المدفوعة.',
+          en: 'Personalised campaigns boosted signups and paid channel conversions.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة تحليلات النمو',
+          en: 'Growth analytics dashboard'
+        },
+        subtitle: {
+          ar: 'تتبع مؤشرات الأداء الرئيسية ومصادر النمو في الوقت الفعلي.',
+          en: 'Monitor key KPIs and growth sources in real time.'
+        },
+        primary: {
+          ar: 'إنشاء تقرير تنفيذي',
+          en: 'Create executive report'
+        },
+        secondary: {
+          ar: 'آخر 30 يوماً',
+          en: 'Last 30 days'
+        }
+      },
+      stats: [
+        {
+          icon: 'users',
+          label: { ar: 'مستخدمون نشطون', en: 'Active users' },
+          value: '128,940',
+          delta: { ar: '+6.4% مقارنة بالأسبوع الماضي', en: '+6.4% vs last week' },
+          trend: 'positive'
+        },
+        {
+          icon: 'cursor-arrow',
+          label: { ar: 'نسبة التحويل', en: 'Conversion rate' },
+          value: '4.87%',
+          delta: { ar: '+0.42 نقطة مئوية', en: '+0.42 percentage points' },
+          trend: 'positive'
+        },
+        {
+          icon: 'sparkles',
+          label: { ar: 'قيمة عمر العميل', en: 'Customer lifetime value' },
+          value: '$1,240',
+          delta: { ar: '+12% نمو سنوي', en: '+12% YoY growth' },
+          trend: 'positive'
+        },
+        {
+          icon: 'chart-bar',
+          label: { ar: 'صافي نقاط الترويج', en: 'Net promoter score' },
+          value: '68',
+          delta: { ar: '+4 نقاط خلال الشهر', en: '+4 points this month' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'منحنى النمو الأسبوعي', en: 'Weekly growth curve' },
+          subtitle: { ar: 'مقارنة الاكتساب والاحتفاظ عبر القنوات الأساسية.', en: 'Acquisition vs retention across primary channels.' },
+          action: { ar: 'تحميل CSV', en: 'Download CSV' },
+          placeholder: { ar: 'مخطط موجه', en: 'Insightful chart' }
+        },
+        {
+          id: 'channels',
+          type: 'list',
+          title: { ar: 'أفضل القنوات', en: 'Top channels' },
+          action: { ar: 'تحديث قبل 5 دقائق', en: 'Updated 5 minutes ago' },
+          items: [
+            {
+              icon: 'megaphone',
+              title: { ar: 'إعلانات البحث', en: 'Search ads' },
+              subtitle: { ar: 'تكلفة الاكتساب 12.4$', en: 'Acquisition cost $12.4' },
+              value: '46%',
+              delta: { ar: '+5% نمو', en: '+5% growth' }
+            },
+            {
+              icon: 'sparkles',
+              title: { ar: 'الإحالات', en: 'Referrals' },
+              subtitle: { ar: 'تجربة ترحيب جديدة', en: 'New welcome experience' },
+              value: '32%',
+              delta: { ar: '+8% نمو', en: '+8% growth' }
+            },
+            {
+              icon: 'tv',
+              title: { ar: 'وسائل التواصل', en: 'Social media' },
+              subtitle: { ar: 'حملات المؤثرين', en: 'Influencer campaigns' },
+              value: '18%',
+              delta: { ar: '+2% نمو', en: '+2% growth' }
+            }
+          ]
+        },
+        {
+          id: 'journey',
+          type: 'progress',
+          title: { ar: 'رحلة التحويل', en: 'Conversion journey' },
+          items: [
+            {
+              title: { ar: 'زيارة الصفحة المقصودة', en: 'Landing page visit' },
+              subtitle: { ar: 'زمن تحميل أقل من 1.2 ثانية', en: 'Load time under 1.2s' },
+              value: '82%',
+              percent: '82%'
+            },
+            {
+              title: { ar: 'التسجيل التجريبي', en: 'Trial signup' },
+              subtitle: { ar: 'اختبار A/B للعرض', en: 'Offer A/B testing' },
+              value: '47%',
+              percent: '47%'
+            },
+            {
+              title: { ar: 'التحويل المدفوع', en: 'Paid conversion' },
+              subtitle: { ar: 'تحفيز الترقيات السنوية', en: 'Incentivise annual upgrades' },
+              value: '22%',
+              percent: '22%'
+            }
+          ]
+        },
+        {
+          id: 'milestones',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'أحداث رئيسية', en: 'Key milestones' },
+          items: [
+            {
+              icon: 'sparkles',
+              title: { ar: 'إطلاق لوحة القيادة الجديدة', en: 'New dashboard launch' },
+              subtitle: { ar: 'رفع تفاعل العملاء 18%', en: 'Raised customer engagement by 18%' },
+              time: { ar: 'قبل ساعتين', en: '2 hours ago' }
+            },
+            {
+              icon: 'users',
+              title: { ar: 'تجزئة جمهور جديدة', en: 'New audience cohort' },
+              subtitle: { ar: 'تمت إضافة شريحة مستخدمين مخلصين', en: 'Loyal user segment added' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'chart-bar',
+              title: { ar: 'إنجاز هدف النمو', en: 'Growth target reached' },
+              subtitle: { ar: 'تحقيق هدف MRR للأسبوع', en: 'Met weekly MRR target' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>

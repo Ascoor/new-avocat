@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تجارة إلكترونية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">E</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">E</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة تجارة إلكترونية',
+          en: 'E-commerce Intelligence Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        },
+        collapse: {
+          ar: 'تصغير الشريط',
+          en: 'Collapse sidebar'
+        },
+        expand: {
+          ar: 'توسيع الشريط',
+          en: 'Expand sidebar'
+        }
+      },
+      brand: {
+        badge: 'E',
+        name: {
+          ar: 'نبض التجارة',
+          en: 'Commerce Pulse'
+        },
+        tagline: {
+          ar: 'تحليلات المبيعات وتجربة العملاء',
+          en: 'Sales and experience analytics'
+        }
+      },
+      theme: {
+        bodyGradient: 'from-slate-950 via-amber-950 to-rose-900',
+        sidebarGradient: 'from-amber-950 via-orange-900 to-rose-900',
+        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
+        cardBorder: 'border-amber-500/30',
+        accentGradient: 'from-amber-500 via-orange-500 to-rose-500',
+        accentText: 'text-amber-200',
+        highlightBg: 'bg-amber-500/10 border-amber-400/30',
+        badgeBg: 'bg-amber-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'shopping-bag',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'موسمي', en: 'Seasonal' }
+        },
+        {
+          id: 'sales',
+          icon: 'chart-bar',
+          label: { ar: 'المبيعات', en: 'Sales' }
+        },
+        {
+          id: 'marketing',
+          icon: 'megaphone',
+          label: { ar: 'التسويق', en: 'Marketing' }
+        },
+        {
+          id: 'fulfilment',
+          icon: 'truck',
+          label: { ar: 'التنفيذ والشحن', en: 'Fulfilment & shipping' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'إيرادات اليوم', en: 'Today’s revenue' },
+        value: '$482K',
+        description: {
+          ar: 'حملة الإطلاق الصيفية رفعت متوسط قيمة السلة 18%.',
+          en: 'Summer launch campaign lifted average order value by 18%.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة تجارة إلكترونية',
+          en: 'E-commerce performance hub'
+        },
+        subtitle: {
+          ar: 'راقب المبيعات وسلوك العملاء والعمليات اللوجستية لحظياً.',
+          en: 'Monitor revenue, customer behaviour, and fulfilment in real time.'
+        },
+        primary: {
+          ar: 'تصدير تقرير الإيرادات',
+          en: 'Export revenue report'
+        },
+        secondary: {
+          ar: 'إدارة حملات العروض',
+          en: 'Manage promo campaigns'
+        }
+      },
+      stats: [
+        {
+          icon: 'shopping-bag',
+          label: { ar: 'قيمة المبيعات اليومية', en: 'Daily sales value' },
+          value: '$482K',
+          delta: { ar: '+14% مقارنة بالأسبوع الماضي', en: '+14% vs previous week' },
+          trend: 'positive'
+        },
+        {
+          icon: 'cursor-arrow',
+          label: { ar: 'نسبة التحويل', en: 'Conversion rate' },
+          value: '3.9%',
+          delta: { ar: '+0.6 نقطة عن المتوسط', en: '+0.6 pts above average' },
+          trend: 'positive'
+        },
+        {
+          icon: 'heart',
+          label: { ar: 'متوسط قيمة السلة', en: 'Average order value' },
+          value: '$126',
+          delta: { ar: '+18% بعد الحملات', en: '+18% after campaigns' },
+          trend: 'positive'
+        },
+        {
+          icon: 'truck',
+          label: { ar: 'طلبات جاهزة للشحن', en: 'Orders ready to ship' },
+          value: '1,280',
+          delta: { ar: 'تم تسليم 92% خلال 24 ساعة', en: '92% delivered within 24h' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'منحنى الإيرادات', en: 'Revenue curve' },
+          subtitle: { ar: 'تدفق الطلبات والإيرادات الإجمالية خلال 14 يوماً.', en: 'Order flow and gross revenue across 14 days.' },
+          action: { ar: 'عرض حسب القناة', en: 'Segment by channel' },
+          placeholder: { ar: 'مخطط الإيرادات', en: 'Revenue chart' }
+        },
+        {
+          id: 'products',
+          type: 'list',
+          title: { ar: 'المنتجات الأعلى أداءً', en: 'Top performing products' },
+          action: { ar: 'تحديث تلقائي', en: 'Auto-updating' },
+          items: [
+            {
+              icon: 'sparkles',
+              title: { ar: 'حزمة العناية بالبشرة', en: 'Skincare essentials kit' },
+              subtitle: { ar: 'متوسط تقييم 4.8', en: 'Average rating 4.8' },
+              value: '$96K',
+              delta: { ar: '+22% عائد يومي', en: '+22% daily revenue' }
+            },
+            {
+              icon: 'shopping-bag',
+              title: { ar: 'حذاء رياضي ذكي', en: 'Smart running shoe' },
+              subtitle: { ar: 'مخزون كافٍ لـ 12 يوماً', en: 'Stock cover for 12 days' },
+              value: '$72K',
+              delta: { ar: '+8% عائد', en: '+8% revenue' }
+            },
+            {
+              icon: 'heart',
+              title: { ar: 'اشتراك عضوية VIP', en: 'VIP membership subscription' },
+              subtitle: { ar: 'زيادة معدل التجديد 11%', en: 'Renewal rate up 11%' },
+              value: '$58K',
+              delta: { ar: '+3% عائد متكرر', en: '+3% recurring' }
+            }
+          ]
+        },
+        {
+          id: 'funnel',
+          type: 'progress',
+          title: { ar: 'مؤشرات مسار الشراء', en: 'Purchase funnel metrics' },
+          items: [
+            {
+              title: { ar: 'مشاهدات المنتجات', en: 'Product views' },
+              subtitle: { ar: 'استهداف شخصي بالصفحة الرئيسية', en: 'Personalised home targeting' },
+              value: '82%',
+              percent: '82%'
+            },
+            {
+              title: { ar: 'إضافة إلى السلة', en: 'Add to cart' },
+              subtitle: { ar: 'حملات استرجاع العربات', en: 'Cart recovery journeys' },
+              value: '46%',
+              percent: '46%'
+            },
+            {
+              title: { ar: 'إتمام الدفع', en: 'Checkout completion' },
+              subtitle: { ar: 'خيارات دفع جديدة', en: 'New payment options' },
+              value: '29%',
+              percent: '29%'
+            }
+          ]
+        },
+        {
+          id: 'updates',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'تحديثات تجربة العملاء', en: 'Customer experience updates' },
+          items: [
+            {
+              icon: 'megaphone',
+              title: { ar: 'إطلاق حملة العطلات', en: 'Holiday campaign launch' },
+              subtitle: { ar: 'تم تخصيص عروض للمشتركين المخلصين', en: 'Loyal subscribers receive tailored bundles' },
+              time: { ar: 'قبل ساعة', en: '1 hour ago' }
+            },
+            {
+              icon: 'truck',
+              title: { ar: 'مركز توزيع جديد', en: 'New fulfilment hub' },
+              subtitle: { ar: 'تقليل أوقات الشحن للمنطقة الغربية', en: 'Shorter lead times for western region' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'heart',
+              title: { ar: 'تقييمات خدمة مميزة', en: 'Service ratings highlight' },
+              subtitle: { ar: 'متوسط رضا العملاء 4.7/5', en: 'Customer satisfaction averages 4.7/5' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>

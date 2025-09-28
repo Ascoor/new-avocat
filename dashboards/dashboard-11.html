@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة عمليات الرعاية الصحية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">HC</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">HC</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة عمليات الرعاية الصحية',
+          en: 'Healthcare Operations Dashboard'
+        }
+      },
+      actions: {
+        open: {
+          ar: 'فتح القائمة',
+          en: 'Open menu'
+        },
+        close: {
+          ar: 'إغلاق',
+          en: 'Close'
+        },
+        collapse: {
+          ar: 'تصغير الشريط',
+          en: 'Collapse sidebar'
+        },
+        expand: {
+          ar: 'توسيع الشريط',
+          en: 'Expand sidebar'
+        }
+      },
+      brand: {
+        badge: 'HC',
+        name: {
+          ar: 'إدارة الرعاية',
+          en: 'Care Command'
+        },
+        tagline: {
+          ar: 'تدفق المرضى، جودة الخدمة، والجاهزية السريرية',
+          en: 'Patient flow, care quality, and bed readiness'
+        }
+      },
+      theme: {
+        bodyGradient: 'from-slate-950 via-teal-950 to-emerald-900',
+        sidebarGradient: 'from-teal-950 via-emerald-900 to-cyan-900',
+        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
+        cardBorder: 'border-teal-400/30',
+        accentGradient: 'from-rose-500 via-red-500 to-amber-500',
+        accentText: 'text-amber-200',
+        highlightBg: 'bg-rose-500/10 border-rose-400/30',
+        badgeBg: 'bg-rose-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        {
+          id: 'overview',
+          icon: 'heart',
+          label: { ar: 'نظرة عامة', en: 'Overview' },
+          badge: { ar: 'رعاية', en: 'Care' }
+        },
+        {
+          id: 'clinical',
+          icon: 'stethoscope',
+          label: { ar: 'المؤشرات السريرية', en: 'Clinical metrics' }
+        },
+        {
+          id: 'capacity',
+          icon: 'users',
+          label: { ar: 'الطاقة الاستيعابية', en: 'Capacity' }
+        },
+        {
+          id: 'finance',
+          icon: 'bank',
+          label: { ar: 'المالية والإدارة', en: 'Finance & admin' }
+        }
+      ],
+      highlight: {
+        label: { ar: 'مستوى الإنذار', en: 'Alert level' },
+        value: 'مستقر',
+        description: {
+          ar: 'وحدة العناية الحرجة تعمل بنسبة 92% وتتوفر أسرة احتياطية للطوارئ.',
+          en: 'Critical care running at 92% with surge beds ready for emergencies.'
+        }
+      },
+      header: {
+        title: {
+          ar: 'لوحة عمليات الرعاية الصحية',
+          en: 'Healthcare operations dashboard'
+        },
+        subtitle: {
+          ar: 'راقب سلامة المرضى، الكفاءات السريرية، وكفاءة الموارد.',
+          en: 'Monitor patient safety, clinical efficiency, and resource utilisation.'
+        },
+        primary: {
+          ar: 'تفعيل خطة الطوارئ',
+          en: 'Activate contingency plan'
+        },
+        secondary: {
+          ar: 'عرض تقرير الجودة',
+          en: 'View quality report'
+        }
+      },
+      stats: [
+        {
+          icon: 'heart',
+          label: { ar: 'نسبة إشغال الأسرة', en: 'Bed occupancy' },
+          value: '84%',
+          delta: { ar: '-3% عن الأسبوع الماضي', en: '-3% vs last week' },
+          trend: 'positive'
+        },
+        {
+          icon: 'stethoscope',
+          label: { ar: 'متوسط انتظار العيادات', en: 'Average clinic wait time' },
+          value: '12 دقيقة',
+          delta: { ar: '-5 دقائق بعد تحسين الجدولة', en: '-5 minutes after scheduling optimisation' },
+          trend: 'positive'
+        },
+        {
+          icon: 'users',
+          label: { ar: 'توافر الطواقم', en: 'Staff availability' },
+          value: '92%',
+          delta: { ar: '+4% بعد برنامج المناوبة الذكية', en: '+4% with smart rostering' },
+          trend: 'positive'
+        },
+        {
+          icon: 'scale',
+          label: { ar: 'امتثال أحداث السلامة', en: 'Safety incident compliance' },
+          value: '99%',
+          delta: { ar: 'جميع الحوادث مُغلقة خلال 48 ساعة', en: 'All incidents closed within 48h' },
+          trend: 'positive'
+        }
+      ],
+      panels: [
+        {
+          id: 'overview',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'تدفق المرضى اليومي', en: 'Daily patient flow' },
+          subtitle: { ar: 'دخول، خروج، وتحويلات عبر الأقسام.', en: 'Admissions, discharges, and transfers across units.' },
+          action: { ar: 'عرض حسب القسم', en: 'View by unit' },
+          placeholder: { ar: 'مخطط التدفق', en: 'Flow chart' }
+        },
+        {
+          id: 'alerts',
+          type: 'list',
+          title: { ar: 'تنبيهات سريرية', en: 'Clinical alerts' },
+          action: { ar: 'آخر تحديث 5 دقائق', en: 'Updated 5 minutes ago' },
+          items: [
+            {
+              icon: 'heart',
+              title: { ar: 'ارتفاع ضغط طارئ', en: 'Hypertension escalation' },
+              subtitle: { ar: 'جناح الباطنية', en: 'Internal medicine ward' },
+              value: 'تم التدخل',
+              delta: { ar: 'ممرضة مسؤولة تم تكليفها', en: 'Charge nurse assigned' }
+            },
+            {
+              icon: 'stethoscope',
+              title: { ar: 'متابعة مضاد حيوي', en: 'Antibiotic stewardship follow-up' },
+              subtitle: { ar: 'قائمة مراجعة الجرعات متاحة', en: 'Dosage checklist available' },
+              value: 'قيد المراجعة',
+              delta: { ar: 'ينتظر موافقة الاستشاري', en: 'Awaiting consultant sign-off' }
+            },
+            {
+              icon: 'users',
+              title: { ar: 'نقص فريق التمريض الليلي', en: 'Night shift staffing gap' },
+              subtitle: { ar: 'تغطية إضافية من الوحدة B', en: 'Backfilled from Unit B' },
+              value: 'تم الحل',
+              delta: { ar: 'تمت جدولة المناوبة', en: 'Shift scheduled' }
+            }
+          ]
+        },
+        {
+          id: 'capacity',
+          type: 'progress',
+          title: { ar: 'استعداد الخدمات', en: 'Service readiness' },
+          items: [
+            {
+              title: { ar: 'غرف العمليات', en: 'Operating theatres' },
+              subtitle: { ar: '8 من 9 غرف جاهزة', en: '8 of 9 theatres ready' },
+              value: '89%',
+              percent: '89%'
+            },
+            {
+              title: { ar: 'المختبر المركزي', en: 'Central laboratory' },
+              subtitle: { ar: 'نتائج خلال 35 دقيقة', en: '35 minute turnaround' },
+              value: '94%',
+              percent: '94%'
+            },
+            {
+              title: { ar: 'وحدة الطوارئ', en: 'Emergency unit' },
+              subtitle: { ar: 'جاهزية المسار السريع', en: 'Fast-track readiness' },
+              value: '76%',
+              percent: '76%'
+            }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'مستجدات الرعاية', en: 'Care updates timeline' },
+          items: [
+            {
+              icon: 'heart',
+              title: { ar: 'إطلاق برنامج متابعة المنزل', en: 'Home monitoring programme launch' },
+              subtitle: { ar: 'يتضمن أجهزة تتبع حيوية', en: 'Includes remote vital devices' },
+              time: { ar: 'اليوم', en: 'Today' }
+            },
+            {
+              icon: 'bank',
+              title: { ar: 'تحديث نظام الفوترة الطبية', en: 'Medical billing system refresh' },
+              subtitle: { ar: 'تكامل مع التأمين الصحي', en: 'Integrated with insurers' },
+              time: { ar: 'أمس', en: 'Yesterday' }
+            },
+            {
+              icon: 'scale',
+              title: { ar: 'مراجعة سلامة شهرية', en: 'Monthly safety review' },
+              subtitle: { ar: 'صفر حوادث عالية الخطورة', en: 'Zero high-risk events' },
+              time: { ar: 'قبل يومين', en: '2 days ago' }
+            }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>
