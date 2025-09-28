@@ -1,14 +1,9 @@
 import type { Config } from "tailwindcss";
-import animate from "tailwindcss-animate";  
 
-const config: Config = {
+export default {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-  ],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -17,9 +12,9 @@ const config: Config = {
         "2xl": "1400px",
       },
     },
-    extend: { 
+    extend: {
       colors: {
-         border: "hsl(var(--border))",
+        border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -121,107 +116,6 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          light: "hsl(var(--primary-light))",
-          glow: "hsl(var(--primary-glow))",
-          hover: "hsl(var(--primary-hover))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-          dark: "hsl(var(--secondary-dark))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
-          soft: "hsl(var(--success-soft))",
-        },
-        warning: {
-          DEFAULT: "hsl(var(--warning))",
-          foreground: "hsl(var(--warning-foreground))",
-          soft: "hsl(var(--warning-soft))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-          dark: "hsl(var(--muted-dark))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-          soft: "hsl(var(--accent-soft))",
-          glow: "hsl(var(--accent-glow))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-          elevated: "hsl(var(--card-elevated))",
-        },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
-          surface: "hsl(var(--sidebar-surface))",
-          "text-muted": "hsl(var(--sidebar-text-muted))",
-          "text-strong": "hsl(var(--sidebar-text-strong))",
-          "hover-glow": "hsl(var(--sidebar-hover-glow))",
-          "hover-foreground": "hsl(var(--sidebar-hover-foreground))",
-          "active-glow": "hsl(var(--sidebar-active-glow))",
-        },
-      },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Amiri', 'serif'],
-        display: ['Playfair Display', 'serif'],
-      },
-      backgroundImage: {
-        'gradient-primary': 'var(--gradient-primary)',
-        'gradient-secondary': 'var(--gradient-secondary)',
-        'gradient-gold': 'var(--gradient-gold)',
-        'gradient-hero': 'var(--gradient-hero)',
-        'gradient-success': 'var(--gradient-success)',
-        'gradient-card': 'var(--gradient-card)',
-        'gradient-aurora': 'var(--gradient-aurora)',
-      },
-      boxShadow: {
-        'premium': 'var(--shadow-premium)',
-        'gold': 'var(--shadow-gold)',
-        'elevated': 'var(--shadow-elevated)',
-        'ambient': 'var(--shadow-ambient)',
-        'glow': 'var(--shadow-glow)',
-        'glow-strong': 'var(--shadow-glow-strong)',
-        'inner-glow': 'var(--shadow-inner-glow)',
-      },
-      transitionTimingFunction: {
-        'premium': 'var(--transition-premium)',
-        'smooth': 'var(--transition-smooth)',
-        'elegant': 'var(--transition-elegant)',
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
       keyframes: {
         "accordion-down": {
           from: {
@@ -242,58 +136,66 @@ const config: Config = {
         "fade-in": {
           "0%": {
             opacity: "0",
-            transform: "translateY(20px)"
+            transform: "translateY(10px)",
           },
           "100%": {
             opacity: "1",
-            transform: "translateY(0)"
-          }
+            transform: "translateY(0)",
+          },
         },
         "slide-up": {
           "0%": {
             opacity: "0",
-            transform: "translateY(40px)"
+            transform: "translateY(30px)",
           },
           "100%": {
             opacity: "1",
-            transform: "translateY(0)"
-          }
+            transform: "translateY(0)",
+          },
         },
         "scale-in": {
           "0%": {
             opacity: "0",
-            transform: "scale(0.95)"
+            transform: "scale(0.9)",
           },
           "100%": {
             opacity: "1",
-            transform: "scale(1)"
-          }
-        },
-        "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" }
-        },
-        "glow": {
-          "0%": { 
-            boxShadow: "0 0 20px hsl(var(--accent) / 0.3)"
+            transform: "scale(1)",
           },
-          "100%": { 
-            boxShadow: "0 0 30px hsl(var(--accent) / 0.5), 0 0 40px hsl(var(--accent) / 0.2)"
-          }
-        }
+        },
+        "bounce-in": {
+          "0%": {
+            opacity: "0",
+            transform: "scale(0.3)",
+          },
+          "50%": {
+            transform: "scale(1.1)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.6s ease-out",
+        "fade-in": "fade-in 0.5s ease-out",
         "slide-up": "slide-up 0.6s ease-out",
         "scale-in": "scale-in 0.4s ease-out",
-        "float": "float 3s ease-in-out infinite",
-        "glow": "glow 2s ease-in-out infinite alternate",
+        "bounce-in": "bounce-in 0.6s ease-out",
+      },
+      backgroundImage: {
+        "hero-gradient": "var(--gradient-hero)",
+        "card-gradient": "var(--gradient-card)",
+        "glass-gradient": "var(--gradient-glass)",
+      },
+      boxShadow: {
+        soft: "var(--shadow-soft)",
+        medium: "var(--shadow-medium)",
+        strong: "var(--shadow-strong)",
       },
     },
   },
-  plugins: [animate],
-};
-
-export default config;
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;
