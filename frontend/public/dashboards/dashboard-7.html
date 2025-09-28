@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة الموارد البشرية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">P</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Backdrop -->
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">P</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة الموارد البشرية',
+          en: 'People Operations Dashboard'
+        }
+      },
+      actions: {
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' },
+        collapse: { ar: 'طي الشريط الجانبي', en: 'Collapse sidebar' },
+        expand: { ar: 'توسيع الشريط الجانبي', en: 'Expand sidebar' }
+      },
+      brand: {
+        badge: 'P',
+        name: { ar: 'People Orbit', en: 'People Orbit' },
+        tagline: { ar: 'قيادة المواهب والنجاح الوظيفي', en: 'Talent and culture command' }
+      },
+      theme: {
+        accentGradient: 'from-lime-500 via-emerald-500 to-teal-500',
+        accentText: 'text-emerald-200',
+        highlightBg: 'bg-emerald-500/10 border-emerald-400/30',
+        badgeBg: 'bg-emerald-500/20',
+        badgeText: 'text-white'
+      },
+      nav: [
+        { id: 'overview', icon: 'users', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مستقر', en: 'Stable' } },
+        { id: 'recruiting', icon: 'briefcase', label: { ar: 'التوظيف', en: 'Hiring' } },
+        { id: 'development', icon: 'book-open', label: { ar: 'التطوير', en: 'Development' } },
+        { id: 'engagement', icon: 'heart', label: { ar: 'المشاركة', en: 'Engagement' } }
+      ],
+      highlight: {
+        label: { ar: 'الجاهزية التنظيمية', en: 'Organisational readiness' },
+        value: '93%',
+        description: {
+          ar: 'أغلب الفرق تمتلك خطط تعاقب ومعسكرات تدريب نشطة.',
+          en: 'Most squads have updated succession plans and active bootcamps.'
+        }
+      },
+      header: {
+        title: { ar: 'لوحة قيادة الموارد البشرية', en: 'People operations cockpit' },
+        subtitle: {
+          ar: 'تابع القوى العاملة، التوظيف، وصحة المشاركة في الوقت الفعلي.',
+          en: 'Monitor workforce health, hiring, and engagement in real time.'
+        },
+        primary: { ar: 'إطلاق حملة ولاء', en: 'Launch retention campaign' },
+        secondary: { ar: 'تقرير الربع الحالي', en: 'Current quarter report' }
+      },
+      stats: [
+        { icon: 'users', label: { ar: 'عدد الموظفين', en: 'Total headcount' }, value: '1,284', delta: { ar: '+42 منذ يناير', en: '+42 since January' }, trend: 'positive' },
+        { icon: 'briefcase', label: { ar: 'المناصب المفتوحة', en: 'Open roles' }, value: '38', delta: { ar: 'متوسط وقت التوظيف 23 يوماً', en: 'Time-to-fill 23 days' }, trend: 'positive' },
+        { icon: 'heart', label: { ar: 'معدل نبض الموظف', en: 'Employee pulse' }, value: '7.9/10', delta: { ar: '+0.4 عن الربع السابق', en: '+0.4 vs last quarter' }, trend: 'positive' },
+        { icon: 'sparkles', label: { ar: 'الاحتفاظ خلال 12 شهر', en: '12-month retention' }, value: '91%', delta: { ar: '+3% بعد برامج النمو', en: '+3% after growth tracks' }, trend: 'positive' }
+      ],
+      panels: [
+        {
+          id: 'headcount',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'تطور القوى العاملة', en: 'Workforce evolution' },
+          subtitle: { ar: 'مقارنة الاستقطاب مقابل الاستقالة حسب الفريق.', en: 'Hiring vs attrition by squad.' },
+          action: { ar: 'تحميل ملف Excel', en: 'Download Excel' },
+          placeholder: { ar: 'مخطط القوى العاملة', en: 'Headcount chart' }
+        },
+        {
+          id: 'roles',
+          type: 'list',
+          title: { ar: 'أهم الوظائف المفتوحة', en: 'Priority open roles' },
+          action: { ar: 'تحديث منذ 1 دقيقة', en: 'Refreshed 1 minute ago' },
+          items: [
+            { icon: 'briefcase', title: { ar: 'قائد هندسة منصات', en: 'Platform engineering lead' }, subtitle: { ar: 'المرحلة: مقابلات نهائية', en: 'Stage: Final interviews' }, value: 'مرشحان', delta: { ar: 'تعيين خلال أسبوع', en: 'Offer in 1 week' } },
+            { icon: 'sparkles', title: { ar: 'مدير نجاح عملاء', en: 'Customer success manager' }, subtitle: { ar: 'الموقع: دبي', en: 'Location: Dubai' }, value: '5 مرشحين', delta: { ar: 'تمت جدولة تمارين الحالة', en: 'Case rounds scheduled' } },
+            { icon: 'users', title: { ar: 'محلل شؤون موظفين', en: 'People analytics specialist' }, subtitle: { ar: 'المسار: تقييم المهارات', en: 'Stage: Skills assessment' }, value: '3 مرشحين', delta: { ar: 'قائمة مختصرة اليوم', en: 'Shortlist today' } }
+          ]
+        },
+        {
+          id: 'development-progress',
+          type: 'progress',
+          title: { ar: 'برامج التطوير', en: 'Development programs' },
+          items: [
+            { title: { ar: 'مسار القيادات الناشئة', en: 'Emerging leaders' }, subtitle: { ar: 'اكتمال 28 من أصل 30 وحدة', en: '28 of 30 modules complete' }, value: '93%', percent: '93%' },
+            { title: { ar: 'برنامج المهندسين الجدد', en: 'New engineers bootcamp' }, subtitle: { ar: 'الفوج الخامس قيد التنفيذ', en: 'Cohort 5 in progress' }, value: '61%', percent: '61%' },
+            { title: { ar: 'التعلم المستمر', en: 'Continuous learning credits' }, subtitle: { ar: 'استهلاك 72% من الميزانية', en: '72% credit usage' }, value: '72%', percent: '72%' }
+          ]
+        },
+        {
+          id: 'diversity',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'مصفوفة التنوع والإنصاف', en: 'Diversity & equity matrix' },
+          action: { ar: 'إرسال تقرير القيادة', en: 'Send leadership report' },
+          headers: [
+            { ar: 'الفريق', en: 'Team' },
+            { ar: 'تمثيل النساء', en: 'Women representation' },
+            { ar: 'التغير', en: 'Change' }
+          ],
+          rows: [
+            { name: { ar: 'الهندسة', en: 'Engineering' }, metric: '34%', delta: { ar: '+4% بعد حملة التوظيف', en: '+4% after hiring sprint' }, trend: 'positive' },
+            { name: { ar: 'المنتج', en: 'Product' }, metric: '48%', delta: { ar: 'مستقر', en: 'Flat' }, trend: 'neutral' },
+            { name: { ar: 'النجاح التجاري', en: 'Commercial success' }, metric: '55%', delta: { ar: '+2% مقابل الهدف', en: '+2% vs target' }, trend: 'positive' }
+          ]
+        },
+        {
+          id: 'people-updates',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'أبرز تحديثات الناس والثقافة', en: 'People & culture updates' },
+          items: [
+            { icon: 'users', title: { ar: 'برنامج الإرشاد الموسع', en: 'Expanded mentoring program' }, subtitle: { ar: '75 زوج إرشادي نشط', en: '75 mentor pairs active' }, time: { ar: 'قبل ساعة', en: '1 hour ago' } },
+            { icon: 'heart', title: { ar: 'إطلاق مبادرة التوازن الصحي', en: 'Wellbeing balance initiative' }, subtitle: { ar: 'جلسات يوغا أسبوعية لجميع المواقع', en: 'Weekly yoga across hubs' }, time: { ar: 'اليوم', en: 'Today' } },
+            { icon: 'sparkles', title: { ar: 'حفل تكريم الأوائل', en: 'Top talent recognition' }, subtitle: { ar: 'تكريم 18 موظفاً على إنجازاتهم', en: 'Celebrated 18 top performers' }, time: { ar: 'هذا الأسبوع', en: 'Earlier this week' } }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>
