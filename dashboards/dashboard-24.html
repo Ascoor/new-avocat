@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة Finance Ledger</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FL</div>
+        <div>
+          <p data-role="mobile-brand-name" class="font-semibold"></p>
+          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
+        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span data-role="open-label">فتح القائمة</span>
+        </button>
+      </div>
+    </header>
+
+    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FL</div>
+          <div>
+            <p data-role="brand-name" class="text-lg font-semibold"></p>
+            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
+          </div>
+        </div>
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
+          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
+            <span data-role="close-label">إغلاق</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav data-role="sidebar-nav" class="space-y-2"></nav>
+      <div data-role="sidebar-highlight"></div>
+    </aside>
+
+    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
+      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
+      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
+      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
+    </main>
+  </div>
+
+  <script src="dashboard-common.js"></script>
+  <script>
+    initDashboard({
+      defaultLang: 'ar',
+      meta: {
+        title: {
+          ar: 'لوحة Finance Ledger',
+          en: 'Finance Ledger Dashboard'
+        }
+      },
+      actions: {
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' }
+      },
+      brand: {
+        badge: 'FL',
+        name: { ar: 'Finance Ledger', en: 'Finance Ledger' },
+        tagline: { ar: 'حالة مالية لحظية', en: 'Real-time financial pulse' }
+      },
+      theme: {
+        accentGradient: 'from-emerald-500 via-cyan-500 to-sky-500',
+        accentText: 'text-emerald-200',
+        highlightBg: 'bg-emerald-500/15 border-emerald-400/30',
+        badgeBg: 'bg-emerald-500/25',
+        badgeText: 'text-white'
+      },
+      nav: [
+        { id: 'overview', icon: 'bank', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مغلق', en: 'Closed' } },
+        { id: 'cashflow', icon: 'chart-bar', label: { ar: 'التدفق النقدي', en: 'Cash flow' } },
+        { id: 'bills', icon: 'calendar', label: { ar: 'الفواتير', en: 'Bills' } },
+        { id: 'reports', icon: 'presentation-chart', label: { ar: 'التقارير', en: 'Reports' } }
+      ],
+      highlight: {
+        label: { ar: 'تنبيه فواتير', en: 'Billing alert' },
+        value: '6 فواتير تستحق هذا الأسبوع',
+        description: {
+          ar: 'راجع قسم الفواتير المستحقة وتأكد من توفر رصيد السحب قبل يوم الجمعة.',
+          en: 'Review due invoices and ensure drawdown coverage before Friday.'
+        }
+      },
+      header: {
+        title: { ar: 'لوحة الدفتر المالي', en: 'Finance ledger console' },
+        subtitle: {
+          ar: 'بطاقات الرصيد والمصاريف مع جدول معاملات وتدفق نقدي صغير وتنبيهات بالفواتير.',
+          en: 'Balance and expense cards plus ledger table, mini cash-flow chart, and billing alerts.'
+        },
+        primary: { ar: 'تحميل كشف بنكي', en: 'Upload bank statement' },
+        secondary: { ar: 'تصدير PDF', en: 'Export PDF' }
+      },
+      stats: [
+        { icon: 'bank', label: { ar: 'الرصيد المتاح', en: 'Available balance' }, value: '$842K', delta: { ar: '+$56K هذا الشهر', en: '+$56K this month' }, trend: 'positive' },
+        { icon: 'chart-bar', label: { ar: 'المصروفات الشهرية', en: 'Monthly expenses' }, value: '$312K', delta: { ar: '+8% مقابل الهدف', en: '+8% vs target' }, trend: 'negative' },
+        { icon: 'calendar', label: { ar: 'فواتير مستحقة', en: 'Due invoices' }, value: '$96K', delta: { ar: '6 خلال 7 أيام', en: '6 within 7 days' }, trend: 'negative' },
+        { icon: 'sparkles', label: { ar: 'مدة التدفق النقدي', en: 'Cash runway' }, value: '9.5 أشهر', delta: { ar: '+0.8 شهر', en: '+0.8 month' }, trend: 'positive' }
+      ],
+      panels: [
+        {
+          id: 'cash',
+          type: 'chart',
+          span: 'xl:col-span-2',
+          title: { ar: 'منحنى التدفق النقدي', en: 'Cash flow curve' },
+          subtitle: { ar: 'إيرادات ومصروفات آخر 12 أسبوعاً.', en: 'Inflows vs outflows across last 12 weeks.' },
+          action: { ar: 'تحديث من المحاسبة', en: 'Refresh from accounting' },
+          placeholder: { ar: 'مخطط خطي صغير', en: 'Compact line chart' }
+        },
+        {
+          id: 'summary',
+          type: 'list',
+          title: { ar: 'ملخص المصاريف', en: 'Expense summary' },
+          action: { ar: 'تحديث قبل 4 دقائق', en: 'Updated 4 minutes ago' },
+          items: [
+            { icon: 'briefcase', title: { ar: 'رواتب الفريق', en: 'Team payroll' }, subtitle: { ar: '$142K - معالجة تلقائية', en: '$142K - auto processed' }, value: '45%', delta: { ar: 'موعد الدفع 28 مايو', en: 'Due May 28' } },
+            { icon: 'building', title: { ar: 'الإيجارات والتسهيلات', en: 'Rent & facilities' }, subtitle: { ar: '$64K - دفعة ثابتة', en: '$64K - fixed lease' }, value: '20%', delta: { ar: 'مجدول شهرياً', en: 'Monthly schedule' } },
+            { icon: 'megaphone', title: { ar: 'التسويق والمبيعات', en: 'Sales & marketing' }, subtitle: { ar: '$52K - حملات نشطة', en: '$52K - active campaigns' }, value: '17%', delta: { ar: 'مراجعة منتصف الربع', en: 'Mid-quarter review' } }
+          ]
+        },
+        {
+          id: 'transactions',
+          type: 'table',
+          span: 'xl:col-span-3',
+          title: { ar: 'دفتر المعاملات', en: 'Ledger transactions' },
+          action: { ar: 'عرض جميع الحركات', en: 'View all entries' },
+          headers: [
+            { ar: 'التاريخ', en: 'Date' },
+            { ar: 'الجهة والمبلغ', en: 'Entity & amount' },
+            { ar: 'الحالة', en: 'Status' }
+          ],
+          rows: [
+            { name: { ar: '12 مايو 2024', en: '12 May 2024' }, metric: 'Orbit Labs · $48,300', delta: { ar: 'محصلة مبيعات', en: 'Sales settlement' }, trend: 'positive' },
+            { name: { ar: '11 مايو 2024', en: '11 May 2024' }, metric: 'Vertex Media · $21,900', delta: { ar: 'فاتورة مستحقة', en: 'Invoice due' }, trend: 'negative' },
+            { name: { ar: '10 مايو 2024', en: '10 May 2024' }, metric: 'Payroll batch · $138,000', delta: { ar: 'مكتمل', en: 'Completed' }, trend: 'neutral' },
+            { name: { ar: '09 مايو 2024', en: '09 May 2024' }, metric: 'CloudX Services · $6,480', delta: { ar: 'بانتظار المصادقة', en: 'Awaiting approval' }, trend: 'negative' }
+          ]
+        },
+        {
+          id: 'targets',
+          type: 'progress',
+          title: { ar: 'أهداف المالية', en: 'Finance targets' },
+          items: [
+            { title: { ar: 'خفض المصروفات', en: 'Expense reduction' }, subtitle: { ar: 'هدف 12% لهذا الربع', en: '12% reduction target' }, value: '46%', percent: '46%' },
+            { title: { ar: 'تحصيل الفواتير', en: 'Invoice collection' }, subtitle: { ar: 'تحصيل خلال 30 يوماً', en: 'Collect within 30 days' }, value: '63%', percent: '63%' },
+            { title: { ar: 'احتياطي الطوارئ', en: 'Emergency reserve' }, subtitle: { ar: 'هدف 1.5 مليون', en: '$1.5M goal' }, value: '58%', percent: '58%' }
+          ]
+        },
+        {
+          id: 'timeline',
+          type: 'timeline',
+          span: 'xl:col-span-3',
+          title: { ar: 'تنبيهات ومهام مالية', en: 'Financial alerts & tasks' },
+          items: [
+            { icon: 'calendar', title: { ar: 'اجتماع لجنة الميزانية', en: 'Budget committee sync' }, subtitle: { ar: 'تحليل نتائج الربع الأول', en: 'Review Q1 actuals' }, time: { ar: 'اليوم', en: 'Today' } },
+            { icon: 'bank', title: { ar: 'تحويل احتياطي الطوارئ', en: 'Emergency reserve top-up' }, subtitle: { ar: '$120K تحويل تلقائي', en: '$120K automated transfer' }, time: { ar: 'غداً', en: 'Tomorrow' } },
+            { icon: 'megaphone', title: { ar: 'مراجعة حملة مدفوعة', en: 'Paid campaign audit' }, subtitle: { ar: 'تتبع التكلفة مقابل العائد', en: 'Track spend vs ROAS' }, time: { ar: 'الخميس', en: 'Thursday' } }
+          ]
+        }
+      ]
+    });
+  </script>
+</body>
+</html>

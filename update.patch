@@ -1,0 +1,1195 @@
+diff --git a/dashboard-gallery.html b/dashboard-gallery.html
+index 6c55d2b7d617f62e81a37353ba8efd08b1b0d7a0..a2b6e2dde852cf71132ced97e83a907f308cc0e2 100644
+--- a/dashboard-gallery.html
++++ b/dashboard-gallery.html
+@@ -1,95 +1,95 @@
+ <!DOCTYPE html>
+ <html lang="ar" dir="rtl">
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>معرض لوحات التحكم - TailwindCSS</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <style>
+     body { font-family: 'Cairo', sans-serif; }
+     body.font-english { font-family: 'Inter', sans-serif; }
+   </style>
+ </head>
+ <body class="bg-slate-900 text-slate-100 min-h-screen">
+   <header class="relative overflow-hidden">
+     <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-slate-900 to-slate-900"></div>
+     <div class="relative max-w-6xl mx-auto px-6 py-20 space-y-10">
+       <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+         <div class="space-y-6 max-w-3xl">
+           <div class="space-y-4">
+             <p data-i18n="hero-tag" class="text-indigo-300 text-sm uppercase tracking-widest">TailwindCSS Premium</p>
+-            <h1 data-i18n="hero-title" class="text-4xl md:text-5xl font-bold">أفضل 20 تصميمًا متجاوبًا للوحات التحكم</h1>
++            <h1 data-i18n="hero-title" class="text-4xl md:text-5xl font-bold">أفضل 25 تصميمًا متجاوبًا للوحات التحكم</h1>
+             <p data-i18n="hero-description" class="text-slate-300">
+               استكشف مجموعة من لوحات التحكم المتكاملة المبنية بـ TailwindCSS مع دعم كامل للغتين العربية والإنجليزية.
+               كل تصميم مجهز للمنتجات الحديثة ويأتي بواجهة متجاوبة تدعم مختلف الأجهزة.
+             </p>
+           </div>
+           <div data-role="hero-badges" class="flex flex-wrap gap-3"></div>
+         </div>
+         <div class="self-start">
+           <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+         </div>
+       </div>
+     </div>
+   </header>
+ 
+   <main class="max-w-6xl mx-auto px-6 pb-20 space-y-8">
+     <h2 data-i18n="section-title" class="text-2xl font-semibold">اختر تصميمك المفضل</h2>
+     <div data-role="card-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+   </main>
+ 
+   <footer class="border-t border-slate-800 py-8">
+     <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+       <p data-i18n="footer-text">© 2024 لوحات تحكم Tailwind. جميع الحقوق محفوظة.</p>
+       <div class="flex gap-4">
+         <a href="#" data-i18n="footer-privacy" class="hover:text-slate-200">سياسة الخصوصية</a>
+         <a href="#" data-i18n="footer-terms" class="hover:text-slate-200">شروط الاستخدام</a>
+       </div>
+     </div>
+   </footer>
+ 
+   <script>
+     (function () {
+       const html = document.documentElement;
+       const body = document.body;
+ 
+       const translations = {
+         pageTitle: {
+           ar: 'معرض لوحات التحكم - TailwindCSS',
+           en: 'Dashboard Gallery - TailwindCSS'
+         },
+         heroTag: {
+           ar: 'TailwindCSS Premium',
+           en: 'TailwindCSS Premium'
+         },
+         heroTitle: {
+-          ar: 'أفضل 20 تصميمًا متجاوبًا للوحات التحكم',
+-          en: 'Top 20 responsive dashboard designs'
++          ar: 'أفضل 25 تصميمًا متجاوبًا للوحات التحكم',
++          en: 'Top 25 responsive dashboard designs'
+         },
+         heroDescription: {
+           ar: 'استكشف مجموعة من لوحات التحكم المتكاملة المبنية بـ TailwindCSS مع دعم كامل للغتين العربية والإنجليزية. كل تصميم مجهز للمنتجات الحديثة ويأتي بواجهة متجاوبة تدعم مختلف الأجهزة.',
+           en: 'Explore a curated set of TailwindCSS dashboards with full Arabic and English support. Each layout is production-ready and adapts beautifully to every device.'
+         },
+         sectionTitle: {
+           ar: 'اختر تصميمك المفضل',
+           en: 'Pick your favorite layout'
+         },
+         footerText: {
+           ar: '© 2024 لوحات تحكم Tailwind. جميع الحقوق محفوظة.',
+           en: '© 2024 Tailwind Dashboards. All rights reserved.'
+         },
+         footerPrivacy: {
+           ar: 'سياسة الخصوصية',
+           en: 'Privacy policy'
+         },
+         footerTerms: {
+           ar: 'شروط الاستخدام',
+           en: 'Terms of use'
+         },
+         linkLabel: {
+           ar: 'استعراض التصميم →',
+           en: 'View dashboard →'
+         },
+@@ -526,50 +526,155 @@
+           metrics: {
+             label: { ar: 'عناصر الطاقة', en: 'Energy widgets' },
+             value: { ar: '6 عناصر', en: '6 widgets' }
+           }
+         },
+         {
+           id: 20,
+           slug: 'dashboard-20',
+           accent: 'from-orange-500/25 via-rose-500/20 to-slate-900/70',
+           badge: { ar: 'الرياضة', en: 'Sports' },
+           category: { ar: 'أندية محترفة', en: 'Pro clubs' },
+           title: { ar: 'لوحة إدارة الرياضة', en: 'Sports management analytics' },
+           description: {
+             ar: 'نتائج المباريات، جاهزية اللاعبين، وتفاعل الجماهير طوال الموسم.',
+             en: 'Match outcomes, player readiness, and fan engagement across the season.'
+           },
+           features: [
+             { ar: 'تحليلات المباريات', en: 'Match analytics' },
+             { ar: 'لوحة صحة اللاعبين', en: 'Player wellness board' },
+             { ar: 'مؤشرات جماهيرية مباشرة', en: 'Live fan engagement KPIs' }
+           ],
+           metrics: {
+             label: { ar: 'مقاطع رياضية', en: 'Sports modules' },
+             value: { ar: '6 شرائح', en: '6 modules' }
+           }
++        },
++        {
++          id: 21,
++          slug: 'dashboard-21',
++          accent: 'from-slate-900/60 via-indigo-500/25 to-slate-900/70',
++          badge: { ar: 'مؤشرات', en: 'KPIs' },
++          category: { ar: 'فرق المنتجات', en: 'Product teams' },
++          title: { ar: 'شبكة مؤشرات مصغرة', en: 'Minimal metrics grid' },
++          description: {
++            ar: 'لوحة داكنة بأربعة مؤشرات رئيسية كبيرة مع مخطط خطي وسجل نشاط.',
++            en: 'A dark canvas with four bold KPIs, a line chart, and a recent activity rail.'
++          },
++          features: [
++            { ar: 'بطاقات KPI كبيرة', en: 'Large KPI cards' },
++            { ar: 'مخطط خطي يومي', en: 'Daily line chart' },
++            { ar: 'نشاطات محدثة', en: 'Fresh activity feed' }
++          ],
++          metrics: {
++            label: { ar: 'عناصر جاهزة', en: 'Ready-made blocks' },
++            value: { ar: '6 عناصر', en: '6 sections' }
++          }
++        },
++        {
++          id: 22,
++          slug: 'dashboard-22',
++          accent: 'from-purple-600/35 via-violet-500/20 to-slate-900/70',
++          badge: { ar: 'تحليلات', en: 'Analytics' },
++          category: { ar: 'فرق البيانات', en: 'Data teams' },
++          title: { ar: 'لوحة Analyst Pro', en: 'Analyst Pro dashboard' },
++          description: {
++            ar: 'مخططات خطية وعمودية واسعة مع شريط جانبي أيقوني وجداول مبيعات.',
++            en: 'Wide line and bar charts with an icon sidebar and concise sales tables.'
++          },
++          features: [
++            { ar: 'شريط جانبي مصغر', en: 'Mini icon sidebar' },
++            { ar: 'مخطط خطي عريض', en: 'Wide line chart' },
++            { ar: 'جداول الدول', en: 'Country sales tables' }
++          ],
++          metrics: {
++            label: { ar: 'مكونات احترافية', en: 'Pro components' },
++            value: { ar: '7 أقسام', en: '7 sections' }
++          }
++        },
++        {
++          id: 23,
++          slug: 'dashboard-23',
++          accent: 'from-sky-400/30 via-indigo-400/20 to-white/30',
++          badge: { ar: 'كانبان', en: 'Kanban' },
++          category: { ar: 'فرق التطوير', en: 'Delivery teams' },
++          title: { ar: 'لوحة Project Kanban', en: 'Project Kanban board' },
++          description: {
++            ar: 'أعمدة كانبان نظيفة مع بطاقات مهام ملونة وصور رمزية وأداة بحث بالأعلى.',
++            en: 'Clean Kanban lanes with colourful task cards, avatars, and a top search bar.'
++          },
++          features: [
++            { ar: '4 أعمدة للحالة', en: 'Four status columns' },
++            { ar: 'بطاقات مع صور رمزية', en: 'Avatar task cards' },
++            { ar: 'أزرار إضافة وبحث', en: 'Search and add controls' }
++          ],
++          metrics: {
++            label: { ar: 'قوالب المهام', en: 'Task templates' },
++            value: { ar: '12 بطاقة', en: '12 cards' }
++          }
++        },
++        {
++          id: 24,
++          slug: 'dashboard-24',
++          accent: 'from-emerald-500/35 via-cyan-500/20 to-slate-900/70',
++          badge: { ar: 'مالية', en: 'Finance' },
++          category: { ar: 'فرق المحاسبة', en: 'Finance teams' },
++          title: { ar: 'لوحة Finance Ledger', en: 'Finance Ledger console' },
++          description: {
++            ar: 'بطاقات أرصدة ومصاريف مع جدول معاملات ومخطط تدفق نقدي.',
++            en: 'Balance and expense cards paired with a ledger table and cash-flow chart.'
++          },
++          features: [
++            { ar: 'تدرجات أزرق وأخضر', en: 'Blue-green gradients' },
++            { ar: 'جدول معاملات واضح', en: 'Detailed ledger table' },
++            { ar: 'تنبيهات فواتير', en: 'Billing alerts' }
++          ],
++          metrics: {
++            label: { ar: 'وحدات مالية', en: 'Finance widgets' },
++            value: { ar: '8 عناصر', en: '8 widgets' }
++          }
++        },
++        {
++          id: 25,
++          slug: 'dashboard-25',
++          accent: 'from-sky-300/30 via-indigo-400/20 to-slate-100/40',
++          badge: { ar: 'مخزون', en: 'Inventory' },
++          category: { ar: 'إدارة المتاجر', en: 'Retail ops' },
++          title: { ar: 'لوحة Inventory & Stockroom', en: 'Inventory & Stockroom' },
++          description: {
++            ar: 'شبكة منتجات ساطعة مع حالات المخزون وأزرار البحث والفلترة.',
++            en: 'Bright product grid with stock states plus search and filter controls.'
++          },
++          features: [
++            { ar: 'بطاقات منتجات بالصور', en: 'Image product cards' },
++            { ar: 'حالات المخزون', en: 'Inventory statuses' },
++            { ar: 'أشرطة أدوات متقدمة', en: 'Advanced toolbar' }
++          ],
++          metrics: {
++            label: { ar: 'عناصر الكتالوج', en: 'Catalog entries' },
++            value: { ar: '15 منتجاً', en: '15 items' }
++          }
+         }
+       ];
+ 
+       const languageSwitchers = document.querySelectorAll('[data-role="language-switcher"]');
+       const heroBadgesContainer = document.querySelector('[data-role="hero-badges"]');
+       const cardGrid = document.querySelector('[data-role="card-grid"]');
+       const langButtons = [];
+ 
+       function renderHeroBadges(lang) {
+         if (!heroBadgesContainer) return;
+         heroBadgesContainer.innerHTML = translations.badges
+           .map(badge => `<span class="${badge.classes}">${badge.text[lang]}</span>`)
+           .join('');
+       }
+ 
+       function renderCards(lang) {
+         if (!cardGrid) return;
+         cardGrid.innerHTML = '';
+         dashboards.forEach(dashboard => {
+           const article = document.createElement('article');
+           article.className = 'group overflow-hidden rounded-2xl border border-white/5 bg-slate-900/60 backdrop-blur-xl flex flex-col transition hover:border-white/15 hover:bg-slate-900/70';
+           article.innerHTML = `
+             <div class="relative h-32 overflow-hidden">
+               <div class="absolute inset-0 bg-gradient-to-br ${dashboard.accent} opacity-80"></div>
+               <div class="relative h-full w-full flex items-start justify-between p-4 text-xs text-white/80">
+diff --git a/dashboards/dashboard-21.html b/dashboards/dashboard-21.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..cec6777d9f3adfdb01ad3bd19fe8704722b71b89
+--- /dev/null
++++ b/dashboards/dashboard-21.html
+@@ -0,0 +1,174 @@
++<!DOCTYPE html>
++<html lang="ar" dir="rtl">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>شبكة مؤشرات مصغرة</title>
++  <script src="https://cdn.tailwindcss.com"></script>
++  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
++  <style>
++    body { font-family: 'Cairo', sans-serif; }
++    body.font-english { font-family: 'Inter', sans-serif; }
++  </style>
++</head>
++<body class="bg-slate-950 text-slate-100">
++  <div class="min-h-screen flex flex-col lg:flex-row">
++    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
++      <div class="flex items-center gap-3">
++        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">MM</div>
++        <div>
++          <p data-role="mobile-brand-name" class="font-semibold"></p>
++          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
++        </div>
++      </div>
++      <div class="flex items-center gap-3">
++        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
++        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
++          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
++          </svg>
++          <span data-role="open-label">فتح القائمة</span>
++        </button>
++      </div>
++    </header>
++
++    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
++
++    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
++      <div class="flex items-start justify-between gap-3">
++        <div class="flex items-center gap-3">
++          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">MM</div>
++          <div>
++            <p data-role="brand-name" class="text-lg font-semibold"></p>
++            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
++          </div>
++        </div>
++        <div data-role="sidebar-actions" class="flex items-center gap-2">
++          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
++          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
++            <span data-role="close-label">إغلاق</span>
++            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
++            </svg>
++          </button>
++        </div>
++      </div>
++      <nav data-role="sidebar-nav" class="space-y-2"></nav>
++      <div data-role="sidebar-highlight"></div>
++    </aside>
++
++    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
++      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
++      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
++      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
++    </main>
++  </div>
++
++  <script src="dashboard-common.js"></script>
++  <script>
++    initDashboard({
++      defaultLang: 'ar',
++      meta: {
++        title: {
++          ar: 'شبكة مؤشرات مصغرة',
++          en: 'Minimal Metrics Grid'
++        }
++      },
++      actions: {
++        open: { ar: 'فتح القائمة', en: 'Open menu' },
++        close: { ar: 'إغلاق', en: 'Close' }
++      },
++      brand: {
++        badge: 'MM',
++        name: { ar: 'Minimal Metrics', en: 'Minimal Metrics' },
++        tagline: { ar: 'لوحة أداء داكنة للمنتج', en: 'Dark product performance board' }
++      },
++      theme: {
++        accentGradient: 'from-slate-800 via-indigo-500 to-slate-900',
++        accentText: 'text-indigo-200',
++        highlightBg: 'bg-indigo-500/10 border-indigo-400/30',
++        badgeBg: 'bg-indigo-500/20',
++        badgeText: 'text-white'
++      },
++      nav: [
++        { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مباشر', en: 'Live' } },
++        { id: 'revenue', icon: 'bank', label: { ar: 'الإيرادات', en: 'Revenue' } },
++        { id: 'engagement', icon: 'sparkles', label: { ar: 'التفاعل', en: 'Engagement' } },
++        { id: 'operations', icon: 'cog', label: { ar: 'العمليات', en: 'Operations' } }
++      ],
++      highlight: {
++        label: { ar: 'تنبيه النظام', en: 'System alert' },
++        value: 'زمن الاستجابة تحت 220 مللي ثانية',
++        description: {
++          ar: 'خادم التحليلات يعمل بكفاءة. آخر مزامنة بيانات منذ 3 دقائق.',
++          en: 'Analytics service healthy. Last data sync 3 minutes ago.'
++        }
++      },
++      header: {
++        title: { ar: 'شبكة مؤشرات مصغرة', en: 'Minimal metrics grid' },
++        subtitle: {
++          ar: 'راقب المؤشرات الأربعة الأهم للمنتج مع مخطط خطي وتحديثات النشاط المباشرة.',
++          en: 'Watch the four essential product KPIs with a line trend and live activity log.'
++        },
++        primary: { ar: 'مشاركة لوحة اليوم', en: 'Share today’s board' },
++        secondary: { ar: 'تعيين تنبيه', en: 'Set alert' }
++      },
++      stats: [
++        { icon: 'chart-bar', label: { ar: 'إيرادات اليوم', en: 'Today’s revenue' }, value: '$84.2K', delta: { ar: '+12% مقابل أمس', en: '+12% vs yesterday' }, trend: 'positive' },
++        { icon: 'users', label: { ar: 'مستخدمون نشطون', en: 'Active users' }, value: '18,430', delta: { ar: '+4.1% أسبوعي', en: '+4.1% weekly' }, trend: 'positive' },
++        { icon: 'cursor-arrow', label: { ar: 'معدل التحويل', en: 'Conversion rate' }, value: '5.28%', delta: { ar: '+0.3 نقطة', en: '+0.3 pts' }, trend: 'positive' },
++        { icon: 'sparkles', label: { ar: 'تحويل التجربة', en: 'Experiment uplift' }, value: '+8.6%', delta: { ar: 'اختبار A/B نشط', en: 'A/B test running' }, trend: 'neutral' }
++      ],
++      panels: [
++        {
++          id: 'trend',
++          type: 'chart',
++          span: 'xl:col-span-2',
++          title: { ar: 'مسار الإيرادات اليومية', en: 'Daily revenue trajectory' },
++          subtitle: { ar: 'آخر 14 يوماً مقسمة حسب القنوات الرئيسية.', en: 'Last 14 days broken down by primary channels.' },
++          action: { ar: 'تصدير CSV', en: 'Export CSV' },
++          placeholder: { ar: 'مخطط خطي متحرك', en: 'Animated line chart' }
++        },
++        {
++          id: 'activity',
++          type: 'list',
++          title: { ar: 'النشاط الحديث', en: 'Recent activity' },
++          action: { ar: 'تحديث قبل دقيقة', en: 'Updated a minute ago' },
++          items: [
++            { icon: 'sparkles', title: { ar: 'تم إطلاق الخطة السنوية', en: 'Annual plan launched' }, subtitle: { ar: 'رفع متوسط قيمة الصفقة 6%', en: 'Lifted deal size by 6%' }, value: 'اليوم', delta: { ar: '08:45 ص', en: '08:45 AM' } },
++            { icon: 'users', title: { ar: 'انضمام فريق المبيعات', en: 'Sales team onboarded' }, subtitle: { ar: 'إضافة 12 عضواً جديداً', en: '12 new members added' }, value: 'أمس', delta: { ar: '04:10 م', en: '04:10 PM' } },
++            { icon: 'megaphone', title: { ar: 'حملة استبقاء جديدة', en: 'Retention push live' }, subtitle: { ar: 'تذكيرات دفع ذكية', en: 'Smart payment nudges' }, value: 'قبل يومين', delta: { ar: '11:20 ص', en: '11:20 AM' } }
++          ]
++        },
++        {
++          id: 'targets',
++          type: 'progress',
++          title: { ar: 'أهداف الربع الحالي', en: 'Current quarter targets' },
++          items: [
++            { title: { ar: 'الوصول الشهري', en: 'Monthly reach' }, subtitle: { ar: 'هدف 20 ألف مستخدم جديد', en: 'Goal: 20k new users' }, value: '73%', percent: '73%' },
++            { title: { ar: 'متوسط قيمة الطلب', en: 'Average order value' }, subtitle: { ar: 'الوضع الحالي 68$', en: 'Current AOV $68' }, value: '64%', percent: '64%' },
++            { title: { ar: 'رضا العملاء', en: 'Customer satisfaction' }, subtitle: { ar: 'استبيان الربع الجاري', en: 'Quarterly survey in progress' }, value: '88%', percent: '88%' }
++          ]
++        },
++        {
++          id: 'channels',
++          type: 'table',
++          span: 'xl:col-span-3',
++          title: { ar: 'تفاصيل القنوات', en: 'Channel breakdown' },
++          action: { ar: 'عرض التفاصيل', en: 'View details' },
++          headers: [
++            { ar: 'القناة', en: 'Channel' },
++            { ar: 'الإيرادات', en: 'Revenue' },
++            { ar: 'الاتجاه', en: 'Trend' }
++          ],
++          rows: [
++            { name: { ar: 'عضويات', en: 'Memberships' }, metric: '$31.8K', delta: { ar: '+9% نمو', en: '+9% growth' }, trend: 'positive' },
++            { name: { ar: 'الترقيات داخل التطبيق', en: 'In-app upgrades' }, metric: '$22.6K', delta: { ar: '+3% مستقر', en: '+3% steady' }, trend: 'neutral' },
++            { name: { ar: 'المتجر الإلكتروني', en: 'Storefront' }, metric: '$18.4K', delta: { ar: '-4% هذا الأسبوع', en: '-4% this week' }, trend: 'negative' }
++          ]
++        }
++      ]
++    });
++  </script>
++</body>
++</html>
+diff --git a/dashboards/dashboard-22.html b/dashboards/dashboard-22.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..32cfc1543b3260f6a620f61fe0da7a01af59ea27
+--- /dev/null
++++ b/dashboards/dashboard-22.html
+@@ -0,0 +1,184 @@
++<!DOCTYPE html>
++<html lang="ar" dir="rtl">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>لوحة Analyst Pro</title>
++  <script src="https://cdn.tailwindcss.com"></script>
++  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
++  <style>
++    body { font-family: 'Cairo', sans-serif; }
++    body.font-english { font-family: 'Inter', sans-serif; }
++  </style>
++</head>
++<body class="bg-slate-950 text-slate-100">
++  <div class="min-h-screen flex flex-col lg:flex-row">
++    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
++      <div class="flex items-center gap-3">
++        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">AP</div>
++        <div>
++          <p data-role="mobile-brand-name" class="font-semibold"></p>
++          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
++        </div>
++      </div>
++      <div class="flex items-center gap-3">
++        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
++        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
++          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
++          </svg>
++          <span data-role="open-label">فتح القائمة</span>
++        </button>
++      </div>
++    </header>
++
++    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
++
++    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
++      <div class="flex items-start justify-between gap-3">
++        <div class="flex items-center gap-3">
++          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">AP</div>
++          <div>
++            <p data-role="brand-name" class="text-lg font-semibold"></p>
++            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
++          </div>
++        </div>
++        <div data-role="sidebar-actions" class="flex items-center gap-2">
++          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
++          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
++            <span data-role="close-label">إغلاق</span>
++            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
++            </svg>
++          </button>
++        </div>
++      </div>
++      <nav data-role="sidebar-nav" class="space-y-2"></nav>
++      <div data-role="sidebar-highlight"></div>
++    </aside>
++
++    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
++      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
++      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
++      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
++    </main>
++  </div>
++
++  <script src="dashboard-common.js"></script>
++  <script>
++    initDashboard({
++      defaultLang: 'ar',
++      meta: {
++        title: {
++          ar: 'لوحة Analyst Pro',
++          en: 'Analyst Pro Dashboard'
++        }
++      },
++      actions: {
++        open: { ar: 'فتح القائمة', en: 'Open menu' },
++        close: { ar: 'إغلاق', en: 'Close' }
++      },
++      brand: {
++        badge: 'AP',
++        name: { ar: 'Analyst Pro', en: 'Analyst Pro' },
++        tagline: { ar: 'مركز قرارات البيانات', en: 'Data decision workspace' }
++      },
++      theme: {
++        accentGradient: 'from-purple-700 via-violet-600 to-indigo-600',
++        accentText: 'text-violet-200',
++        highlightBg: 'bg-violet-500/15 border-violet-400/30',
++        badgeBg: 'bg-violet-500/25',
++        badgeText: 'text-white'
++      },
++      nav: [
++        { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مباشر', en: 'Live' } },
++        { id: 'markets', icon: 'globe-alt', label: { ar: 'الأسواق', en: 'Markets' } },
++        { id: 'sales', icon: 'bank', label: { ar: 'الإيرادات', en: 'Revenue' } },
++        { id: 'forecasts', icon: 'presentation-chart', label: { ar: 'التوقعات', en: 'Forecasts' } }
++      ],
++      highlight: {
++        label: { ar: 'تنبيه التوقع', en: 'Forecast alert' },
++        value: 'انحراف 1.6% عن الخطة',
++        description: {
++          ar: 'حافظ على هامش الأمان عبر ضبط سيناريو Q3. تم تحديث النماذج صباح اليوم.',
++          en: 'Keep safety margin by tuning the Q3 scenario. Models refreshed earlier today.'
++        }
++      },
++      header: {
++        title: { ar: 'لوحة Analyst Pro', en: 'Analyst Pro dashboard' },
++        subtitle: {
++          ar: 'مخططات خطية وعمدية عميقة مع عرض مبيعات حسب الدولة ومؤشرات النمو.',
++          en: 'Deep line and bar charts with country sales insights and growth KPIs.'
++        },
++        primary: { ar: 'إنشاء تقرير تنفيذي', en: 'Generate executive brief' },
++        secondary: { ar: 'مقارنة السيناريوهات', en: 'Compare scenarios' }
++      },
++      stats: [
++        { icon: 'bank', label: { ar: 'صافي الإيرادات السنوي', en: 'Year-to-date net revenue' }, value: '$2.48M', delta: { ar: '+18% سنوي', en: '+18% YoY' }, trend: 'positive' },
++        { icon: 'chart-bar', label: { ar: 'معدل النمو المركب', en: 'Compound growth rate' }, value: '23.4%', delta: { ar: '+1.1 نقطة', en: '+1.1 pts' }, trend: 'positive' },
++        { icon: 'briefcase', label: { ar: 'متوسط قيمة الطلب', en: 'Average order value' }, value: '$186', delta: { ar: '+4$ خلال الربع', en: '+$4 this quarter' }, trend: 'positive' },
++        { icon: 'sparkles', label: { ar: 'دقة التوقع', en: 'Forecast accuracy' }, value: '96.2%', delta: { ar: '-1.4% هذا الأسبوع', en: '-1.4% this week' }, trend: 'negative' }
++      ],
++      panels: [
++        {
++          id: 'performance',
++          type: 'chart',
++          span: 'xl:col-span-2',
++          title: { ar: 'خط اتجاه الإيرادات العالمية', en: 'Global revenue trendline' },
++          subtitle: { ar: 'الأرباع الستة الماضية مقسمة حسب المنطقة.', en: 'Last six quarters split by region.' },
++          action: { ar: 'تحميل البيانات', en: 'Download data' },
++          placeholder: { ar: 'مخطط خطي متعدد السلاسل', en: 'Multi-series line chart' }
++        },
++        {
++          id: 'segments',
++          type: 'chart',
++          title: { ar: 'شذرات النمو حسب القطاع', en: 'Growth by segment' },
++          subtitle: { ar: 'أداء القطاعات الرئيسية خلال الشهر.', en: 'Key sector performance this month.' },
++          action: { ar: 'عرض التفاصيل', en: 'View details' },
++          placeholder: { ar: 'مخطط أعمدة مصغر', en: 'Compact bar chart' }
++        },
++        {
++          id: 'countries',
++          type: 'table',
++          span: 'xl:col-span-2',
++          title: { ar: 'المبيعات حسب الدولة', en: 'Sales by country' },
++          action: { ar: 'فتح التقرير الإقليمي', en: 'Open regional report' },
++          headers: [
++            { ar: 'الدولة', en: 'Country' },
++            { ar: 'المبيعات', en: 'Sales' },
++            { ar: 'الحصة', en: 'Share' }
++          ],
++          rows: [
++            { name: { ar: 'الإمارات', en: 'UAE' }, metric: '$620K', delta: { ar: '24% من الإجمالي', en: '24% of total' }, trend: 'positive' },
++            { name: { ar: 'السعودية', en: 'Saudi Arabia' }, metric: '$540K', delta: { ar: '21% من الإجمالي', en: '21% of total' }, trend: 'positive' },
++            { name: { ar: 'مصر', en: 'Egypt' }, metric: '$310K', delta: { ar: '+6% نمو شهري', en: '+6% MoM growth' }, trend: 'positive' },
++            { name: { ar: 'المملكة المتحدة', en: 'United Kingdom' }, metric: '$280K', delta: { ar: '-3% تحت الهدف', en: '-3% under target' }, trend: 'negative' }
++          ]
++        },
++        {
++          id: 'insights',
++          type: 'list',
++          title: { ar: 'ملاحظات المحللين', en: 'Analyst notes' },
++          action: { ar: 'آخر تحديث 09:20', en: 'Last updated 09:20' },
++          items: [
++            { icon: 'sparkles', title: { ar: 'سيناريو التفاؤل', en: 'Optimistic scenario' }, subtitle: { ar: 'طلب B2B أعلى من المتوقع', en: 'B2B demand exceeding forecast' }, value: '+3.4%', delta: { ar: 'Q3', en: 'Q3' } },
++            { icon: 'megaphone', title: { ar: 'حملة تسويق جديدة', en: 'New marketing push' }, subtitle: { ar: 'تحويل أفضل في أوروبا', en: 'Improved EU conversion' }, value: '1.8x', delta: { ar: 'ROAS', en: 'ROAS' } },
++            { icon: 'users', title: { ar: 'تحول في قاعدة العملاء', en: 'Customer base shift' }, subtitle: { ar: 'زيادة الشركات الناشئة', en: 'Startup accounts rising' }, value: '+14%', delta: { ar: 'الشهر', en: 'Month' } }
++          ]
++        },
++        {
++          id: 'pipeline',
++          type: 'timeline',
++          span: 'xl:col-span-3',
++          title: { ar: 'أحداث تشغيلية حديثة', en: 'Recent operational events' },
++          items: [
++            { icon: 'presentation-chart', title: { ar: 'تحديث نموذج التوقع', en: 'Forecast model update' }, subtitle: { ar: 'إضافة بيانات الطلب اللحظية', en: 'Added real-time demand feed' }, time: { ar: 'قبل ساعتين', en: '2 hours ago' } },
++            { icon: 'calendar', title: { ar: 'اجتماع لجنة المخاطر', en: 'Risk committee sync' }, subtitle: { ar: 'مراجعة هوامش Q4', en: 'Reviewing Q4 margins' }, time: { ar: 'اليوم', en: 'Today' } },
++            { icon: 'bank', title: { ar: 'إغلاق صفقة استراتيجية', en: 'Strategic deal closed' }, subtitle: { ar: '$4.2M قيمة سنوية', en: '$4.2M annualised' }, time: { ar: 'أمس', en: 'Yesterday' } }
++          ]
++        }
++      ]
++    });
++  </script>
++</body>
++</html>
+diff --git a/dashboards/dashboard-23.html b/dashboards/dashboard-23.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..7224d0608319bce39b4a9b41c61487e6fe665466
+--- /dev/null
++++ b/dashboards/dashboard-23.html
+@@ -0,0 +1,185 @@
++<!DOCTYPE html>
++<html lang="ar" dir="rtl">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>لوحة Project Kanban</title>
++  <script src="https://cdn.tailwindcss.com"></script>
++  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
++  <style>
++    body { font-family: 'Cairo', sans-serif; }
++    body.font-english { font-family: 'Inter', sans-serif; }
++  </style>
++</head>
++<body class="bg-slate-950 text-slate-100">
++  <div class="min-h-screen flex flex-col lg:flex-row">
++    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
++      <div class="flex items-center gap-3">
++        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">PK</div>
++        <div>
++          <p data-role="mobile-brand-name" class="font-semibold"></p>
++          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
++        </div>
++      </div>
++      <div class="flex items-center gap-3">
++        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
++        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
++          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
++          </svg>
++          <span data-role="open-label">فتح القائمة</span>
++        </button>
++      </div>
++    </header>
++
++    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
++
++    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
++      <div class="flex items-start justify-between gap-3">
++        <div class="flex items-center gap-3">
++          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">PK</div>
++          <div>
++            <p data-role="brand-name" class="text-lg font-semibold"></p>
++            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
++          </div>
++        </div>
++        <div data-role="sidebar-actions" class="flex items-center gap-2">
++          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
++          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
++            <span data-role="close-label">إغلاق</span>
++            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
++            </svg>
++          </button>
++        </div>
++      </div>
++      <nav data-role="sidebar-nav" class="space-y-2"></nav>
++      <div data-role="sidebar-highlight"></div>
++    </aside>
++
++    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
++      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
++      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
++      <section data-role="panels" class="grid gap-6 xl:grid-cols-4"></section>
++    </main>
++  </div>
++
++  <script src="dashboard-common.js"></script>
++  <script>
++    initDashboard({
++      defaultLang: 'ar',
++      meta: {
++        title: {
++          ar: 'لوحة Project Kanban',
++          en: 'Project Kanban Dashboard'
++        }
++      },
++      actions: {
++        open: { ar: 'فتح القائمة', en: 'Open menu' },
++        close: { ar: 'إغلاق', en: 'Close' }
++      },
++      brand: {
++        badge: 'PK',
++        name: { ar: 'Project Kanban', en: 'Project Kanban' },
++        tagline: { ar: 'تنظيم مهام الفرق', en: 'Organise your delivery work' }
++      },
++      theme: {
++        accentGradient: 'from-sky-400 via-indigo-400 to-emerald-300',
++        accentText: 'text-sky-200',
++        highlightBg: 'bg-sky-400/15 border-sky-300/30',
++        badgeBg: 'bg-sky-400/25',
++        badgeText: 'text-white'
++      },
++      nav: [
++        { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'سبSprint 18', en: 'Sprint 18' } },
++        { id: 'backlog', icon: 'folder', label: { ar: 'قائمة الانتظار', en: 'Backlog' } },
++        { id: 'progress', icon: 'sparkles', label: { ar: 'قيد التنفيذ', en: 'In progress' } },
++        { id: 'done', icon: 'trophy', label: { ar: 'منجز', en: 'Done' } }
++      ],
++      highlight: {
++        label: { ar: 'مرئيات السبرينت', en: 'Sprint insight' },
++        value: '45 مهمة ضمن النطاق',
++        description: {
++          ar: 'أولوية التركيز على تحسين الأداء في عمود قيد التنفيذ. تم تحديث البيانات منذ 5 دقائق.',
++          en: 'Focus on throughput in the In Progress lane. Data synced 5 minutes ago.'
++        }
++      },
++      header: {
++        title: { ar: 'كانبان المشروع', en: 'Project Kanban' },
++        subtitle: {
++          ar: 'أربعة أعمدة منظمة مع بطاقات ملونة وصور رمزية للفريق وأدوات بحث وإضافة مهام.',
++          en: 'Four organised columns with colourful cards, team avatars, and quick actions.'
++        },
++        primary: { ar: 'إضافة مهمة جديدة', en: 'Add new task' },
++        secondary: { ar: 'بحث عن بطاقة', en: 'Search cards' }
++      },
++      stats: [
++        { icon: 'folder', label: { ar: 'المهام في القائمة', en: 'Backlog items' }, value: '18', delta: { ar: '-6 بعد التصفية', en: '-6 after grooming' }, trend: 'positive' },
++        { icon: 'sparkles', label: { ar: 'قيد التنفيذ', en: 'In progress' }, value: '11', delta: { ar: '+2 اليوم', en: '+2 today' }, trend: 'negative' },
++        { icon: 'users', label: { ar: 'توزيع الحمل', en: 'Team load' }, value: '78%', delta: { ar: '+5% بسبب الإجازات', en: '+5% due to PTO' }, trend: 'negative' },
++        { icon: 'trophy', label: { ar: 'منجز هذا الأسبوع', en: 'Completed this week' }, value: '24', delta: { ar: '+8 مقابل الأسبوع الماضي', en: '+8 vs last week' }, trend: 'positive' }
++      ],
++      panels: [
++        {
++          id: 'backlog-column',
++          type: 'list',
++          span: 'xl:col-span-1',
++          title: { ar: 'Backlog', en: 'Backlog' },
++          action: { ar: '3 عناصر بحاجة للمراجعة', en: '3 cards need review' },
++          items: [
++            { icon: 'sparkles', title: { ar: 'EPIC-24: تحسين البحث', en: 'EPIC-24: Improve search' }, subtitle: { ar: 'مالك المهمة: رانيا', en: 'Owner: Rania' }, value: '💡', delta: { ar: 'أولوية عالية', en: 'High priority' } },
++            { icon: 'users', title: { ar: 'STORY-81: لوحة مراقبة', en: 'STORY-81: Monitoring board' }, subtitle: { ar: 'مالك المهمة: سامر', en: 'Owner: Samer' }, value: '📝', delta: { ar: 'جاهز للتقدير', en: 'Ready for sizing' } },
++            { icon: 'calendar', title: { ar: 'BUG-142: إصلاح إشعارات', en: 'BUG-142: Fix notifications' }, subtitle: { ar: 'مالك المهمة: ليلى', en: 'Owner: Laila' }, value: '🐞', delta: { ar: 'تحت المتابعة', en: 'Under triage' } }
++          ]
++        },
++        {
++          id: 'todo-column',
++          type: 'list',
++          span: 'xl:col-span-1',
++          title: { ar: 'To Do', en: 'To Do' },
++          action: { ar: 'تم السحب منذ قليل', en: 'Pulled moments ago' },
++          items: [
++            { icon: 'users', title: { ar: 'TASK-331: إعداد لوحة التسعير', en: 'TASK-331: Pricing board setup' }, subtitle: { ar: 'مالك المهمة: عادل', en: 'Owner: Adel' }, value: '👥', delta: { ar: 'مهمة مشتركة', en: 'Pairing session' } },
++            { icon: 'sparkles', title: { ar: 'TASK-338: تحسين الأداء', en: 'TASK-338: Performance tune' }, subtitle: { ar: 'مالك المهمة: سارة', en: 'Owner: Sarah' }, value: '⚙️', delta: { ar: 'جاهز للبدء', en: 'Ready to start' } }
++          ]
++        },
++        {
++          id: 'in-progress-column',
++          type: 'list',
++          span: 'xl:col-span-1',
++          title: { ar: 'In Progress', en: 'In Progress' },
++          action: { ar: 'الزمن المتوسط 2.1 يوم', en: 'Avg age 2.1 days' },
++          items: [
++            { icon: 'sparkles', title: { ar: 'TASK-312: دمج نظام الهوية', en: 'TASK-312: Identity integration' }, subtitle: { ar: 'مالك المهمة: يوسف', en: 'Owner: Youssef' }, value: '🔄', delta: { ar: 'بقي 40%', en: '40% remaining' } },
++            { icon: 'users', title: { ar: 'TASK-319: تجربة واجهة جديدة', en: 'TASK-319: New UI experiment' }, subtitle: { ar: 'مالك المهمة: نورة', en: 'Owner: Nora' }, value: '🎨', delta: { ar: 'جلسة مراجعة اليوم', en: 'Review today' } },
++            { icon: 'calendar', title: { ar: 'TASK-327: إعداد الاختبارات', en: 'TASK-327: Test harness setup' }, subtitle: { ar: 'مالك المهمة: طارق', en: 'Owner: Tarek' }, value: '🧪', delta: { ar: 'بانتظار الموافقة', en: 'Awaiting approval' } }
++          ]
++        },
++        {
++          id: 'done-column',
++          type: 'list',
++          span: 'xl:col-span-1',
++          title: { ar: 'Done', en: 'Done' },
++          action: { ar: 'تم الإغلاق خلال 24 ساعة', en: 'Closed within 24h' },
++          items: [
++            { icon: 'sparkles', title: { ar: 'TASK-298: دليل الإعداد', en: 'TASK-298: Setup guide' }, subtitle: { ar: 'مالك المهمة: ريم', en: 'Owner: Reem' }, value: '✅', delta: { ar: 'جاهز للإطلاق', en: 'Ready to launch' } },
++            { icon: 'users', title: { ar: 'BUG-135: إصلاح الهواتف', en: 'BUG-135: Mobile fix' }, subtitle: { ar: 'مالك المهمة: مالك', en: 'Owner: Malik' }, value: '✅', delta: { ar: 'تم التحقق', en: 'QA verified' } },
++            { icon: 'calendar', title: { ar: 'TASK-300: تحديث الوثائق', en: 'TASK-300: Docs refresh' }, subtitle: { ar: 'مالك المهمة: جمانة', en: 'Owner: Jumana' }, value: '✅', delta: { ar: 'نُشر بالأمس', en: 'Published yesterday' } }
++          ]
++        },
++        {
++          id: 'health',
++          type: 'progress',
++          span: 'xl:col-span-4',
++          title: { ar: 'صحة السبرينت', en: 'Sprint health' },
++          items: [
++            { title: { ar: 'الالتزام مقابل الانجاز', en: 'Commit vs delivered' }, subtitle: { ar: '24 من أصل 42 اكتملت', en: '24 of 42 completed' }, value: '57%', percent: '57%' },
++            { title: { ar: 'معدل السحب اليومي', en: 'Daily pull rate' }, subtitle: { ar: 'متوسط 6 بطاقات يومياً', en: 'Avg 6 cards per day' }, value: '68%', percent: '68%' },
++            { title: { ar: 'سعادة الفريق', en: 'Team morale' }, subtitle: { ar: 'استبيان هذا الأسبوع', en: 'Pulse survey this week' }, value: '92%', percent: '92%' }
++          ]
++        }
++      ]
++    });
++  </script>
++</body>
++</html>
+diff --git a/dashboards/dashboard-24.html b/dashboards/dashboard-24.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..9a1af9c7a89508aff356f52bc0e85ab5e01a4a3d
+--- /dev/null
++++ b/dashboards/dashboard-24.html
+@@ -0,0 +1,186 @@
++<!DOCTYPE html>
++<html lang="ar" dir="rtl">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>لوحة Finance Ledger</title>
++  <script src="https://cdn.tailwindcss.com"></script>
++  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
++  <style>
++    body { font-family: 'Cairo', sans-serif; }
++    body.font-english { font-family: 'Inter', sans-serif; }
++  </style>
++</head>
++<body class="bg-slate-950 text-slate-100">
++  <div class="min-h-screen flex flex-col lg:flex-row">
++    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
++      <div class="flex items-center gap-3">
++        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FL</div>
++        <div>
++          <p data-role="mobile-brand-name" class="font-semibold"></p>
++          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
++        </div>
++      </div>
++      <div class="flex items-center gap-3">
++        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
++        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
++          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
++          </svg>
++          <span data-role="open-label">فتح القائمة</span>
++        </button>
++      </div>
++    </header>
++
++    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
++
++    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
++      <div class="flex items-start justify-between gap-3">
++        <div class="flex items-center gap-3">
++          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">FL</div>
++          <div>
++            <p data-role="brand-name" class="text-lg font-semibold"></p>
++            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
++          </div>
++        </div>
++        <div data-role="sidebar-actions" class="flex items-center gap-2">
++          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
++          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
++            <span data-role="close-label">إغلاق</span>
++            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
++            </svg>
++          </button>
++        </div>
++      </div>
++      <nav data-role="sidebar-nav" class="space-y-2"></nav>
++      <div data-role="sidebar-highlight"></div>
++    </aside>
++
++    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
++      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
++      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
++      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
++    </main>
++  </div>
++
++  <script src="dashboard-common.js"></script>
++  <script>
++    initDashboard({
++      defaultLang: 'ar',
++      meta: {
++        title: {
++          ar: 'لوحة Finance Ledger',
++          en: 'Finance Ledger Dashboard'
++        }
++      },
++      actions: {
++        open: { ar: 'فتح القائمة', en: 'Open menu' },
++        close: { ar: 'إغلاق', en: 'Close' }
++      },
++      brand: {
++        badge: 'FL',
++        name: { ar: 'Finance Ledger', en: 'Finance Ledger' },
++        tagline: { ar: 'حالة مالية لحظية', en: 'Real-time financial pulse' }
++      },
++      theme: {
++        accentGradient: 'from-emerald-500 via-cyan-500 to-sky-500',
++        accentText: 'text-emerald-200',
++        highlightBg: 'bg-emerald-500/15 border-emerald-400/30',
++        badgeBg: 'bg-emerald-500/25',
++        badgeText: 'text-white'
++      },
++      nav: [
++        { id: 'overview', icon: 'bank', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مغلق', en: 'Closed' } },
++        { id: 'cashflow', icon: 'chart-bar', label: { ar: 'التدفق النقدي', en: 'Cash flow' } },
++        { id: 'bills', icon: 'calendar', label: { ar: 'الفواتير', en: 'Bills' } },
++        { id: 'reports', icon: 'presentation-chart', label: { ar: 'التقارير', en: 'Reports' } }
++      ],
++      highlight: {
++        label: { ar: 'تنبيه فواتير', en: 'Billing alert' },
++        value: '6 فواتير تستحق هذا الأسبوع',
++        description: {
++          ar: 'راجع قسم الفواتير المستحقة وتأكد من توفر رصيد السحب قبل يوم الجمعة.',
++          en: 'Review due invoices and ensure drawdown coverage before Friday.'
++        }
++      },
++      header: {
++        title: { ar: 'لوحة الدفتر المالي', en: 'Finance ledger console' },
++        subtitle: {
++          ar: 'بطاقات الرصيد والمصاريف مع جدول معاملات وتدفق نقدي صغير وتنبيهات بالفواتير.',
++          en: 'Balance and expense cards plus ledger table, mini cash-flow chart, and billing alerts.'
++        },
++        primary: { ar: 'تحميل كشف بنكي', en: 'Upload bank statement' },
++        secondary: { ar: 'تصدير PDF', en: 'Export PDF' }
++      },
++      stats: [
++        { icon: 'bank', label: { ar: 'الرصيد المتاح', en: 'Available balance' }, value: '$842K', delta: { ar: '+$56K هذا الشهر', en: '+$56K this month' }, trend: 'positive' },
++        { icon: 'chart-bar', label: { ar: 'المصروفات الشهرية', en: 'Monthly expenses' }, value: '$312K', delta: { ar: '+8% مقابل الهدف', en: '+8% vs target' }, trend: 'negative' },
++        { icon: 'calendar', label: { ar: 'فواتير مستحقة', en: 'Due invoices' }, value: '$96K', delta: { ar: '6 خلال 7 أيام', en: '6 within 7 days' }, trend: 'negative' },
++        { icon: 'sparkles', label: { ar: 'مدة التدفق النقدي', en: 'Cash runway' }, value: '9.5 أشهر', delta: { ar: '+0.8 شهر', en: '+0.8 month' }, trend: 'positive' }
++      ],
++      panels: [
++        {
++          id: 'cash',
++          type: 'chart',
++          span: 'xl:col-span-2',
++          title: { ar: 'منحنى التدفق النقدي', en: 'Cash flow curve' },
++          subtitle: { ar: 'إيرادات ومصروفات آخر 12 أسبوعاً.', en: 'Inflows vs outflows across last 12 weeks.' },
++          action: { ar: 'تحديث من المحاسبة', en: 'Refresh from accounting' },
++          placeholder: { ar: 'مخطط خطي صغير', en: 'Compact line chart' }
++        },
++        {
++          id: 'summary',
++          type: 'list',
++          title: { ar: 'ملخص المصاريف', en: 'Expense summary' },
++          action: { ar: 'تحديث قبل 4 دقائق', en: 'Updated 4 minutes ago' },
++          items: [
++            { icon: 'briefcase', title: { ar: 'رواتب الفريق', en: 'Team payroll' }, subtitle: { ar: '$142K - معالجة تلقائية', en: '$142K - auto processed' }, value: '45%', delta: { ar: 'موعد الدفع 28 مايو', en: 'Due May 28' } },
++            { icon: 'building', title: { ar: 'الإيجارات والتسهيلات', en: 'Rent & facilities' }, subtitle: { ar: '$64K - دفعة ثابتة', en: '$64K - fixed lease' }, value: '20%', delta: { ar: 'مجدول شهرياً', en: 'Monthly schedule' } },
++            { icon: 'megaphone', title: { ar: 'التسويق والمبيعات', en: 'Sales & marketing' }, subtitle: { ar: '$52K - حملات نشطة', en: '$52K - active campaigns' }, value: '17%', delta: { ar: 'مراجعة منتصف الربع', en: 'Mid-quarter review' } }
++          ]
++        },
++        {
++          id: 'transactions',
++          type: 'table',
++          span: 'xl:col-span-3',
++          title: { ar: 'دفتر المعاملات', en: 'Ledger transactions' },
++          action: { ar: 'عرض جميع الحركات', en: 'View all entries' },
++          headers: [
++            { ar: 'التاريخ', en: 'Date' },
++            { ar: 'الجهة والمبلغ', en: 'Entity & amount' },
++            { ar: 'الحالة', en: 'Status' }
++          ],
++          rows: [
++            { name: { ar: '12 مايو 2024', en: '12 May 2024' }, metric: 'Orbit Labs · $48,300', delta: { ar: 'محصلة مبيعات', en: 'Sales settlement' }, trend: 'positive' },
++            { name: { ar: '11 مايو 2024', en: '11 May 2024' }, metric: 'Vertex Media · $21,900', delta: { ar: 'فاتورة مستحقة', en: 'Invoice due' }, trend: 'negative' },
++            { name: { ar: '10 مايو 2024', en: '10 May 2024' }, metric: 'Payroll batch · $138,000', delta: { ar: 'مكتمل', en: 'Completed' }, trend: 'neutral' },
++            { name: { ar: '09 مايو 2024', en: '09 May 2024' }, metric: 'CloudX Services · $6,480', delta: { ar: 'بانتظار المصادقة', en: 'Awaiting approval' }, trend: 'negative' }
++          ]
++        },
++        {
++          id: 'targets',
++          type: 'progress',
++          title: { ar: 'أهداف المالية', en: 'Finance targets' },
++          items: [
++            { title: { ar: 'خفض المصروفات', en: 'Expense reduction' }, subtitle: { ar: 'هدف 12% لهذا الربع', en: '12% reduction target' }, value: '46%', percent: '46%' },
++            { title: { ar: 'تحصيل الفواتير', en: 'Invoice collection' }, subtitle: { ar: 'تحصيل خلال 30 يوماً', en: 'Collect within 30 days' }, value: '63%', percent: '63%' },
++            { title: { ar: 'احتياطي الطوارئ', en: 'Emergency reserve' }, subtitle: { ar: 'هدف 1.5 مليون', en: '$1.5M goal' }, value: '58%', percent: '58%' }
++          ]
++        },
++        {
++          id: 'timeline',
++          type: 'timeline',
++          span: 'xl:col-span-3',
++          title: { ar: 'تنبيهات ومهام مالية', en: 'Financial alerts & tasks' },
++          items: [
++            { icon: 'calendar', title: { ar: 'اجتماع لجنة الميزانية', en: 'Budget committee sync' }, subtitle: { ar: 'تحليل نتائج الربع الأول', en: 'Review Q1 actuals' }, time: { ar: 'اليوم', en: 'Today' } },
++            { icon: 'bank', title: { ar: 'تحويل احتياطي الطوارئ', en: 'Emergency reserve top-up' }, subtitle: { ar: '$120K تحويل تلقائي', en: '$120K automated transfer' }, time: { ar: 'غداً', en: 'Tomorrow' } },
++            { icon: 'megaphone', title: { ar: 'مراجعة حملة مدفوعة', en: 'Paid campaign audit' }, subtitle: { ar: 'تتبع التكلفة مقابل العائد', en: 'Track spend vs ROAS' }, time: { ar: 'الخميس', en: 'Thursday' } }
++          ]
++        }
++      ]
++    });
++  </script>
++</body>
++</html>
+diff --git a/dashboards/dashboard-25.html b/dashboards/dashboard-25.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..19de7066f3b9c55c57990a2c1a4b63577f57f779
+--- /dev/null
++++ b/dashboards/dashboard-25.html
+@@ -0,0 +1,177 @@
++<!DOCTYPE html>
++<html lang="ar" dir="rtl">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>لوحة Inventory & Stockroom</title>
++  <script src="https://cdn.tailwindcss.com"></script>
++  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
++  <style>
++    body { font-family: 'Cairo', sans-serif; }
++    body.font-english { font-family: 'Inter', sans-serif; }
++  </style>
++</head>
++<body class="bg-slate-950 text-slate-100">
++  <div class="min-h-screen flex flex-col lg:flex-row">
++    <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
++      <div class="flex items-center gap-3">
++        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">IS</div>
++        <div>
++          <p data-role="mobile-brand-name" class="font-semibold"></p>
++          <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
++        </div>
++      </div>
++      <div class="flex items-center gap-3">
++        <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
++        <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
++          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
++          </svg>
++          <span data-role="open-label">فتح القائمة</span>
++        </button>
++      </div>
++    </header>
++
++    <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
++
++    <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
++      <div class="flex items-start justify-between gap-3">
++        <div class="flex items-center gap-3">
++          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">IS</div>
++          <div>
++            <p data-role="brand-name" class="text-lg font-semibold"></p>
++            <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
++          </div>
++        </div>
++        <div data-role="sidebar-actions" class="flex items-center gap-2">
++          <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
++          <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
++            <span data-role="close-label">إغلاق</span>
++            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
++              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
++            </svg>
++          </button>
++        </div>
++      </div>
++      <nav data-role="sidebar-nav" class="space-y-2"></nav>
++      <div data-role="sidebar-highlight"></div>
++    </aside>
++
++    <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
++      <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
++      <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
++      <section data-role="panels" class="grid gap-6 xl:grid-cols-3"></section>
++    </main>
++  </div>
++
++  <script src="dashboard-common.js"></script>
++  <script>
++    initDashboard({
++      defaultLang: 'ar',
++      meta: {
++        title: {
++          ar: 'لوحة Inventory & Stockroom',
++          en: 'Inventory & Stockroom Dashboard'
++        }
++      },
++      actions: {
++        open: { ar: 'فتح القائمة', en: 'Open menu' },
++        close: { ar: 'إغلاق', en: 'Close' }
++      },
++      brand: {
++        badge: 'IS',
++        name: { ar: 'Inventory Hub', en: 'Inventory Hub' },
++        tagline: { ar: 'شبكة منتجات متجددة', en: 'Fresh product grid' }
++      },
++      theme: {
++        accentGradient: 'from-sky-400 via-indigo-400 to-slate-100',
++        accentText: 'text-sky-200',
++        highlightBg: 'bg-sky-300/20 border-sky-200/40',
++        badgeBg: 'bg-sky-300/30',
++        badgeText: 'text-white'
++      },
++      nav: [
++        { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مخزون حي', en: 'Live stock' } },
++        { id: 'products', icon: 'shopping-bag', label: { ar: 'المنتجات', en: 'Products' } },
++        { id: 'suppliers', icon: 'truck', label: { ar: 'الموردون', en: 'Suppliers' } },
++        { id: 'alerts', icon: 'megaphone', label: { ar: 'التنبيهات', en: 'Alerts' } }
++      ],
++      highlight: {
++        label: { ar: 'تنبيه المخزون', en: 'Stock alert' },
++        value: 'منتجات منخفضة: 12 عنصر',
++        description: {
++          ar: 'قم بإطلاق أوامر إعادة التخزين للحفاظ على توفر الحقائب والسماعات الأكثر مبيعاً.',
++          en: 'Raise replenishment orders to keep best-selling bags and headsets available.'
++        }
++      },
++      header: {
++        title: { ar: 'مخزون المتجر', en: 'Store inventory' },
++        subtitle: {
++          ar: 'شبكة منتجات ساطعة مع حالات المخزون وأدوات بحث وفلترة متقدمة.',
++          en: 'A bright product grid with stock statuses and powerful search/filter controls.'
++        },
++        primary: { ar: 'بحث عن منتج', en: 'Find product' },
++        secondary: { ar: 'تطبيق الفلترة', en: 'Apply filters' }
++      },
++      stats: [
++        { icon: 'shopping-bag', label: { ar: 'منتجات متاحة', en: 'In stock' }, value: '148', delta: { ar: '+18 هذا الشهر', en: '+18 this month' }, trend: 'positive' },
++        { icon: 'truck', label: { ar: 'مخزون منخفض', en: 'Low stock' }, value: '23', delta: { ar: '+5 تحتاج متابعة', en: '+5 need attention' }, trend: 'negative' },
++        { icon: 'cube', label: { ar: 'نفاد المخزون', en: 'Out of stock' }, value: '7', delta: { ar: '-3 بعد التوريد الأخير', en: '-3 after last restock' }, trend: 'positive' },
++        { icon: 'bank', label: { ar: 'أوامر إعادة التخزين', en: 'Restock orders' }, value: '$64K', delta: { ar: '4 أوامر قيد التنفيذ', en: '4 orders in progress' }, trend: 'neutral' }
++      ],
++      panels: [
++        {
++          id: 'collections',
++          type: 'list',
++          title: { ar: 'فئات بارزة', en: 'Featured collections' },
++          action: { ar: 'تحديث حسب المبيعات', en: 'Sorted by sales' },
++          items: [
++            { icon: 'shopping-bag', title: { ar: 'حقائب Urban Flow', en: 'Urban Flow bags' }, subtitle: { ar: '12 لوناً - متوفر', en: '12 colours - available' }, value: 'متاح', delta: { ar: 'إعادة توريد خلال 5 أيام', en: 'Restock in 5 days' } },
++            { icon: 'sparkles', title: { ar: 'سماعات PulseMax', en: 'PulseMax headsets' }, subtitle: { ar: '7 موديلات - قليل', en: '7 SKUs - low' }, value: 'قليل', delta: { ar: 'اطلب اليوم', en: 'Order today' } },
++            { icon: 'film', title: { ar: 'كاميرات Vision', en: 'Vision cameras' }, subtitle: { ar: '3 عدسات ضمن الحزمة', en: '3-lens bundle' }, value: 'متاح', delta: { ar: 'عرض ترويجي نشط', en: 'Promo active' } }
++          ]
++        },
++        {
++          id: 'inventory-table',
++          type: 'table',
++          span: 'xl:col-span-2',
++          title: { ar: 'حالة المخزون حسب المنتج', en: 'Inventory status by product' },
++          action: { ar: 'تصدير CSV', en: 'Export CSV' },
++          headers: [
++            { ar: 'المنتج', en: 'Product' },
++            { ar: 'المستودع', en: 'Warehouse' },
++            { ar: 'الحالة', en: 'Status' }
++          ],
++          rows: [
++            { name: { ar: 'Backpack Apex 28L', en: 'Backpack Apex 28L' }, metric: 'المستودع الرئيسي', delta: { ar: 'متاح - 214 وحدة', en: 'Available - 214 units' }, trend: 'positive' },
++            { name: { ar: 'Headphones AirLite', en: 'Headphones AirLite' }, metric: 'مركز الشحن - جدة', delta: { ar: 'قليل - 36 وحدة', en: 'Low - 36 units' }, trend: 'negative' },
++            { name: { ar: 'Camera Atlas Pro', en: 'Camera Atlas Pro' }, metric: 'المستودع المركزي', delta: { ar: 'متاح - 58 وحدة', en: 'Available - 58 units' }, trend: 'positive' },
++            { name: { ar: 'Smartwatch Nova', en: 'Smartwatch Nova' }, metric: 'محطة الرياض', delta: { ar: 'نفاد - طلب توريد', en: 'Out - restock ordered' }, trend: 'negative' }
++          ]
++        },
++        {
++          id: 'replenishment',
++          type: 'progress',
++          title: { ar: 'خطة إعادة التوريد', en: 'Replenishment plan' },
++          items: [
++            { title: { ar: 'الحقائب', en: 'Bags' }, subtitle: { ar: 'أولوية عالية - وصول غداً', en: 'High priority - arrives tomorrow' }, value: '82%', percent: '82%' },
++            { title: { ar: 'الإلكترونيات', en: 'Electronics' }, subtitle: { ar: 'تجميع طلب المورد', en: 'Supplier order compiling' }, value: '54%', percent: '54%' },
++            { title: { ar: 'الإكسسوارات', en: 'Accessories' }, subtitle: { ar: 'تقييم بطيء الحركة', en: 'Slow-mover review' }, value: '39%', percent: '39%' }
++          ]
++        },
++        {
++          id: 'timeline',
++          type: 'timeline',
++          span: 'xl:col-span-3',
++          title: { ar: 'آخر تحديثات المخزون', en: 'Latest inventory updates' },
++          items: [
++            { icon: 'truck', title: { ar: 'وصول شحنة الحقيبة', en: 'Bag shipment received' }, subtitle: { ar: '120 وحدة دخلت المخزون', en: '120 units checked in' }, time: { ar: 'قبل ساعة', en: '1 hour ago' } },
++            { icon: 'megaphone', title: { ar: 'تنبيه ترويج الصيف', en: 'Summer promo alert' }, subtitle: { ar: 'زيادة الطلب على PulseMax', en: 'PulseMax demand spike' }, time: { ar: 'اليوم', en: 'Today' } },
++            { icon: 'bank', title: { ar: 'دفعة للمورد Vision', en: 'Vision supplier payment' }, subtitle: { ar: 'تم تحرير 18,000$', en: '$18,000 released' }, time: { ar: 'أمس', en: 'Yesterday' } }
++          ]
++        }
++      ]
++    });
++  </script>
++</body>
++</html>

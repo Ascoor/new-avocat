@@ -1,0 +1,1255 @@
+{
+  "dashboards": [
+    {
+      "id": "dashboard-01",
+      "name": "Growth Analytics",
+      "description": "لوحة SaaS تركز على مؤشرات النمو والاحتفاظ والقيمة مدى الحياة.",
+      "grid": {
+        "desktop": "12-column CSS grid — sidebar spans 2 columns, content spans 10 with nested grid (8/4 split).",
+        "tablet": "Sidebar becomes slide-over width 280px using absolute positioning; main grid becomes single column with stacked sections.",
+        "mobile": "Stacked layout with collapsible sidebar drawer, KPI cards become horizontal scroll using snap-x."
+      },
+      "components": [
+        "Overlay sidebar with timeline footer",
+        "Gradient top insight bar",
+        "Metric cards grid",
+        "Two chart panels (growth velocity, retention heatmap)",
+        "Acquisition table",
+        "Experiment modal",
+        "Floating action insights button"
+      ],
+      "colors": {
+        "primary": "#312e81",
+        "accent": "#c4b5fd",
+        "bg": "#020617",
+        "surface": "#0f172a",
+        "text": "#f8fafc"
+      },
+      "snippets": {
+        "layout": "grid min-h-screen lg:grid-cols-[280px_1fr] bg-slate-950 text-slate-100",
+        "sidebar": "relative flex flex-col gap-6 bg-gradient-to-br from-indigo-900/80 to-slate-900/90 backdrop-blur",
+        "topbar": "flex items-center justify-between rounded-3xl border border-white/10 bg-white/5 px-6 py-4",
+        "card": "rounded-2xl border border-white/10 bg-slate-900/60 p-5 shadow-lg shadow-indigo-500/10",
+        "chart": "h-64 rounded-3xl border border-indigo-500/30 bg-gradient-to-br from-indigo-900/60 to-slate-900/80",
+        "table": "overflow-hidden rounded-2xl border border-white/10 bg-slate-950/80",
+        "filter": "flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 inline-flex h-14 w-14 items-center justify-center rounded-full bg-indigo-500 text-white shadow-xl",
+        "modal": "rounded-3xl border border-indigo-500/40 bg-slate-950/95 p-8 shadow-2xl"
+      },
+      "responsive": {
+        "desktop": "Sidebar pinned with full nav labels, charts in 8/4 split, experiment modal centered.",
+        "tablet": "Sidebar hidden by default with \"data-open\" toggle, topbar wraps filters, cards grid becomes 2 columns.",
+        "mobile": "Header condenses to icon buttons, cards become snap-x scroll, table converts to stacked cards with border separators."
+      },
+      "accessibility": [
+        "ألوان بتركيز على نسبة تباين 4.8:1 مع خلفية غامقة.",
+        "تنقل لوحة المفاتيح عبر ترتيب tabIndex مخصص لعناصر التصفية والأزرار.",
+        "استخدام aria-expanded وaria-controls لأزرار فتح/إغلاق الشريط الجانبي والمودال."
+      ],
+      "interactions": [
+        "زر لتوسيع الشريط الجانبي يضيف/يزيل الكلاس 'translate-x-full' على اللوحة.",
+        "عناصر الكروت تستخدم transition duration-300 مع hover:-translate-y-1 وhover:shadow-indigo-500/25.",
+        "المودال يظهر بإضافة data-state=\"open\" التي تزيل scale-95 وتزيد opacity من 0 إلى 100 باستخدام transition."
+      ],
+      "performance": [
+        "تحميل lazy لمخططات النمو باستخدام React.lazy وSuspense داخل قسم التحليلات.",
+        "استخدام IntersectionObserver لتفعيل عدادات KPI فقط عند ظهورها (وصف ضمن README).",
+        "تقسيم كود الجدول في كتلة ديناميكية منفصلة عند الحاجة في المشاهد المحمولة."
+      ],
+      "assets": {
+        "jsx": "Dashboard01.jsx",
+        "css": "dashboard-01.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-01-growth-analytics"
+    },
+    {
+      "id": "dashboard-02",
+      "name": "Portfolio Orchestrator",
+      "description": "تخطيط مشاريع بواجهة مليئة بالجداول الزمنية ولوحات الحالة المتعددة.",
+      "grid": {
+        "desktop": "CSS grid with 80px icon rail, 320px stacked command panel, remaining area split into kanban + timeline.",
+        "tablet": "Icon rail becomes top tabs; command panel collapses into accordions before kanban.",
+        "mobile": "Single column with horizontal scroll kanban lists and collapsible timeline section."
+      },
+      "components": [
+        "Icon rail sidebar",
+        "Command palette panel",
+        "Project health cards",
+        "Kanban swimlanes",
+        "Milestone timeline",
+        "Filter drawer",
+        "Floating create project button"
+      ],
+      "colors": {
+        "primary": "#115e59",
+        "accent": "#34d399",
+        "bg": "#022c22",
+        "surface": "#064e3b",
+        "text": "#ecfdf5"
+      },
+      "snippets": {
+        "layout": "grid min-h-screen bg-emerald-950 text-emerald-50 lg:grid-cols-[88px_320px_1fr]",
+        "sidebar": "hidden border-r border-emerald-500/20 bg-emerald-950/80 lg:flex lg:flex-col",
+        "topbar": "flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 px-6 py-4",
+        "card": "rounded-2xl border border-emerald-500/20 bg-emerald-900/60 p-4",
+        "chart": "h-60 rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900 to-emerald-950",
+        "table": "rounded-2xl border border-white/10 bg-emerald-950/60",
+        "filter": "rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm",
+        "fab": "fixed bottom-8 start-8 inline-flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-emerald-950",
+        "modal": "rounded-3xl border border-emerald-500/40 bg-emerald-950/95 p-6"
+      },
+      "responsive": {
+        "desktop": "Icon rail pinned left, command panel shows stacked cards, kanban uses 3 columns next to compact timeline strip.",
+        "tablet": "Command panel collapses into horizontal slider above kanban; icon rail converts to segmented control topbar.",
+        "mobile": "FAB anchors to bottom-left, kanban columns become snap-center horizontal lists, timeline condensed into accordion."
+      },
+      "accessibility": [
+        "علامات aria-current على عناصر لوح الأيقونات لتوضيح القسم الحالي.",
+        "استخدام أزرار بعرض كامل في command panel مع `focus-visible:ring-emerald-300`.",
+        "نسب تباين ≥ 4.5:1 بين النص والخلفيات عبر استخدام طبقات emerald القاتمة."
+      ],
+      "interactions": [
+        "Hover على عناصر الكانبان يطبق shadow-lg shadow-emerald-500/20 وscale-95 عند السحب.",
+        "فلتر اللوحة يفتح بانزلاق translate-y-full ويتم التحكم به عبر data-state.",
+        "Timeline markers تعرض tooltip عبر group-hover مع transition duration-150."
+      ],
+      "performance": [
+        "تقسيم مخطط الجدول الزمني في lazy component يظهر داخل Suspense fallback skeleton.",
+        "استخدام requestIdleCallback لتجميع عدادات المهام بعد تحميل الشاشة.",
+        "تحميل كسول لصور أعضاء الفريق عبر attribute loading=\"lazy\" في JSX."
+      ],
+      "assets": {
+        "jsx": "Dashboard02.jsx",
+        "css": "dashboard-02.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-02-portfolio-orchestrator"
+    },
+    {
+      "id": "dashboard-03",
+      "name": "Payments Hub",
+      "description": "مركز مدفوعات يربط التدفقات النقدية والتسوية والامتثال لحظيًا.",
+      "grid": {
+        "desktop": "Two column layout with 260px compact sidebar, main area split into 8/4 grid for revenue stream vs compliance feed.",
+        "tablet": "Sidebar collapses to icon row on top, charts stack with settlement table below.",
+        "mobile": "Single column with sticky balance widget and slide-up drawer for filters."
+      },
+      "components": [
+        "Compact sidebar",
+        "Balance overview strip",
+        "Revenue + volume charts",
+        "Settlement table",
+        "Compliance activity feed",
+        "Filter drawer",
+        "Floating payout button"
+      ],
+      "colors": {
+        "primary": "#1d4ed8",
+        "accent": "#60a5fa",
+        "bg": "#0b1120",
+        "surface": "#111827",
+        "text": "#e2e8f0"
+      },
+      "snippets": {
+        "layout": "grid min-h-screen bg-slate-950 text-slate-100 lg:grid-cols-[260px_1fr]",
+        "sidebar": "flex flex-col gap-4 border-r border-blue-500/20 bg-slate-950/70 p-6",
+        "topbar": "rounded-3xl border border-white/10 bg-gradient-to-r from-blue-600/30 to-blue-500/10 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-slate-900/60 p-5",
+        "chart": "h-56 rounded-3xl border border-blue-500/30 bg-blue-950/60",
+        "table": "rounded-3xl border border-white/10 bg-slate-950/70",
+        "filter": "rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs",
+        "fab": "fixed bottom-8 end-8 inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-white",
+        "modal": "rounded-3xl border border-blue-500/40 bg-slate-950/95 p-6"
+      },
+      "responsive": {
+        "desktop": "Sidebar pinned with collapsed nav groups, charts side-by-side, compliance feed anchored right.",
+        "tablet": "Sidebar becomes collapsible top nav, cards wrap into 2 columns, settlement table becomes scrollable.",
+        "mobile": "Balance strip sticky at top, charts collapse into cards, filter drawer uses `translate-y-full`."
+      },
+      "accessibility": [
+        "توفير aria-live=polite لقيم الرصيد كي يعلن القارئ أي تحديثات.",
+        "أزرار التصفية تعرض focus-visible:ring-2 focus-visible:ring-blue-300 للتمييز الواضح.",
+        "استخدام aria-describedby للتنبيهات المالية في feed لضمان السياق."
+      ],
+      "interactions": [
+        "Hover على الصفوف في جدول التسوية يضيف bg-blue-500/10 مع transition.",
+        "Drawer التصفية يتحكم به زر ي toggles data-state=open مع translate-y-full.",
+        "FAB يضيف drop-shadow-xl shadow-blue-500/40 عند التركيز أو المرور."
+      ],
+      "performance": [
+        "مخططات الإيرادات محملة كسول عبر React.lazy مع fallback skeleton.",
+        "Table rows يتم chunking عبر virtualization hook (موصى به في README).",
+        "feed يأخذ بياناته عبر polling خامل يتم إيقافه عند إخفاء التبويب."
+      ],
+      "assets": {
+        "jsx": "Dashboard03.jsx",
+        "css": "dashboard-03.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-03-payments-hub"
+    },
+    {
+      "id": "dashboard-04",
+      "name": "Marketing Pulse",
+      "description": "لوحة حملات تسويقية تركّز على معدلات التحويل، المزيج الإعلاني، وتوزيع القنوات.",
+      "grid": {
+        "desktop": "12-column layout with floating metric shelf, central canvas using CSS grid (7/5 split) for charts and channel table.",
+        "tablet": "Top metrics collapse into two rows, charts stack, channel table becomes accordion.",
+        "mobile": "Single column with sticky filter bar, cards convert to swipeable carousels."
+      },
+      "components": [
+        "Glass filter bar",
+        "Metric shelf",
+        "Attribution donut + conversion chart",
+        "Channel performance table",
+        "Audience segment widgets",
+        "Campaign modal",
+        "Floating create campaign button"
+      ],
+      "colors": {
+        "primary": "#be123c",
+        "accent": "#fb7185",
+        "bg": "#130414",
+        "surface": "#1f071a",
+        "text": "#fdf2f8"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-rose-950 text-rose-50",
+        "sidebar": "hidden lg:flex w-72 flex-col gap-6 border-r border-rose-500/20 bg-rose-950/70 p-8",
+        "topbar": "sticky top-0 z-20 flex items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 px-6 py-4 backdrop-blur",
+        "card": "rounded-3xl border border-white/10 bg-rose-950/60 p-5",
+        "chart": "rounded-3xl border border-rose-500/30 bg-gradient-to-br from-rose-900 to-rose-950",
+        "table": "rounded-3xl border border-white/10 bg-rose-950/70",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs",
+        "fab": "fixed bottom-8 end-8 inline-flex h-14 w-14 items-center justify-center rounded-full bg-rose-500 text-rose-50",
+        "modal": "rounded-3xl border border-rose-500/40 bg-rose-950/95 p-6"
+      },
+      "responsive": {
+        "desktop": "Glass filter bar pinned on top, metrics use 4 column grid, charts share 7/5 grid region.",
+        "tablet": "Sidebar hidden, filter bar becomes horizontal scroll, charts stacked with responsive height.",
+        "mobile": "Filter bar sticky with overflow-x, metrics as horizontal scroll, table converts to cards."
+      },
+      "accessibility": [
+        "استعمال aria-pressed على أزرار القنوات لتوضيح الاختيار.",
+        "عناصر filter bar تحصل على focus-visible:ring-rose-200.",
+        "التباين أعلى من 4.6:1 بفضل الخلفيات الداكنة والنص الفاتح."
+      ],
+      "interactions": [
+        "Hover على الكروت يطبق translate-y-[-4px] وshadow-rose-500/20.",
+        "Sidebar overlay يتم تفعيله عبر data-open مع backdrop-blur.",
+        "Modal transition يستخدم scale-95 إلى scale-100 مع duration-200."
+      ],
+      "performance": [
+        "استخدام lazy لمخطط attribution وconversion.",
+        "تقسيم البيانات الكبيرة للقنوات باستخدام dynamic import عند فتح الجدول.",
+        "تأجيل تحميل صور الجمهور باستخدام loading=lazy."
+      ],
+      "assets": {
+        "jsx": "Dashboard04.jsx",
+        "css": "dashboard-04.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-04-marketing-pulse"
+    },
+    {
+      "id": "dashboard-05",
+      "name": "Inventory Atlas",
+      "description": "نظام إدارة مخزون متعدد المستودعات مع تتبع للأصناف ومستويات التحذير.",
+      "grid": {
+        "desktop": "Full-width layout without traditional sidebar, uses sticky vertical tabs inside content splitting into 3-column grid.",
+        "tablet": "Vertical tabs turn into horizontal scroll; 3 columns collapse to 2 with reorder of heatmap.",
+        "mobile": "Single column stack with collapsible stock cards and sticky filter chip bar."
+      },
+      "components": [
+        "Sticky filter bar",
+        "Vertical tabs navigation",
+        "Stock level cards",
+        "Warehouse heatmap",
+        "Restock priority table",
+        "Supplier modal",
+        "Floating add stock button"
+      ],
+      "colors": {
+        "primary": "#0f766e",
+        "accent": "#2dd4bf",
+        "bg": "#012b2a",
+        "surface": "#023737",
+        "text": "#ecfdf5"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-teal-950 text-teal-50",
+        "sidebar": "hidden",
+        "topbar": "sticky top-0 z-30 flex items-center justify-between rounded-3xl border border-white/10 bg-white/5 px-6 py-4 backdrop-blur",
+        "card": "rounded-3xl border border-teal-500/20 bg-teal-900/60 p-5",
+        "chart": "rounded-3xl border border-teal-500/30 bg-gradient-to-br from-teal-900 to-teal-950",
+        "table": "rounded-3xl border border-white/10 bg-teal-950/70",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs",
+        "fab": "fixed bottom-8 start-1/2 z-40 -translate-x-1/2 rounded-full bg-teal-500 px-5 py-3 text-sm font-semibold text-teal-950",
+        "modal": "rounded-3xl border border-teal-500/40 bg-teal-950/95 p-6"
+      },
+      "responsive": {
+        "desktop": "Tabs pinned left within content using sticky top spacing; grid uses 3 equal columns.",
+        "tablet": "Tabs convert to horizontal scroll using flex-row, heatmap moves below cards.",
+        "mobile": "Metrics cards become accordion with `data-open` state, filter chips sticky at top."
+      },
+      "accessibility": [
+        "العلامات التبويبية تستخدم role=tablist وaria-selected لتوضيح الحالة.",
+        "استخدام focus-visible:ring-teal-200 على عناصر التحكم.",
+        "التباين يحقق 4.7:1 على الأقل بين الخلفيات والنصوص."
+      ],
+      "interactions": [
+        "Hover على بطاقات المخزون يطبق ring-2 ring-teal-400/40.",
+        "Heatmap الخلايا تستجيب بـ group-hover:scale-105.",
+        "Modal يظهر بإزالة translate-y-6 وإضافة opacity-100 عبر data-state."
+      ],
+      "performance": [
+        "تحميل lazy لخريطة المخزون باستخدام React.lazy.",
+        "تقسيم جدول الموردين في chunk منفصل يُستدعى عند فتح modal.",
+        "استخدام CSS containment لتقليل إعادة الرسم في أقسام المخزون."
+      ],
+      "assets": {
+        "jsx": "Dashboard05.jsx",
+        "css": "dashboard-05.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-05-inventory-atlas"
+    },
+    {
+      "id": "dashboard-06",
+      "name": "Media Command",
+      "description": "لوحة بث وسائط تدير الجداول، التحكم المباشر، ومراقبة المشاركة.",
+      "grid": {
+        "desktop": "Three zones: left stacked schedule rail (240px), central canvas with live controls, right insights column.",
+        "tablet": "Schedule rail collapses into accordion, central canvas grows with two-row layout.",
+        "mobile": "Single column; live controls sticky, schedule collapses to list with play buttons."
+      },
+      "components": [
+        "Broadcast schedule rail",
+        "Live control panel",
+        "Engagement charts",
+        "Clip library grid",
+        "Moderation feed",
+        "Modal for clip upload",
+        "Floating go-live button"
+      ],
+      "colors": {
+        "primary": "#1f2937",
+        "accent": "#facc15",
+        "bg": "#0a0a0f",
+        "surface": "#111827",
+        "text": "#f9fafb"
+      },
+      "snippets": {
+        "layout": "grid min-h-screen bg-slate-950 text-slate-100 lg:grid-cols-[240px_1fr_320px]",
+        "sidebar": "hidden flex-col gap-4 border-r border-slate-700/40 bg-slate-950/80 p-6 lg:flex",
+        "topbar": "flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-3",
+        "card": "rounded-2xl border border-white/10 bg-slate-900/60 p-4",
+        "chart": "rounded-2xl border border-amber-400/20 bg-gradient-to-br from-amber-500/10 to-slate-900",
+        "table": "rounded-2xl border border-white/10 bg-slate-950/70",
+        "filter": "rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs",
+        "fab": "fixed bottom-8 end-8 inline-flex h-14 w-14 items-center justify-center rounded-full bg-amber-400 text-slate-900",
+        "modal": "rounded-3xl border border-amber-400/30 bg-slate-950/95 p-6"
+      },
+      "responsive": {
+        "desktop": "Schedule rail pinned with upcoming slots, central grid shows live controls + clip grid, insights column shows metrics feed.",
+        "tablet": "Columns collapse into two sections; insights slides under live controls using CSS order.",
+        "mobile": "FAB centered bottom, schedule uses accordion cards, clip grid becomes horizontal scroll."
+      },
+      "accessibility": [
+        "أزرار التحكم المباشر لها aria-pressed مع وصف صوتي واضح.",
+        "استخدام focus-visible:ring-amber-300 لعناصر التفاعل.",
+        "الجدول يعلن الوقت المتبقي عبر aria-live."
+      ],
+      "interactions": [
+        "Hover على عناصر الجدول يضيف bg-amber-400/10 ويعرض زر التشغيل.",
+        "Clip tiles تستخدم group-hover لتكبير المعاينة بscale-105.",
+        "Modal يظهر عبر data-[state=open]:opacity-100 + scale-100."
+      ],
+      "performance": [
+        "مخطط التفاعل lazy داخل Suspense.",
+        "Lazy import لمكتبة player controls عند الطلب.",
+        "استخدام requestAnimationFrame لتحديث المؤقت بدلاً من setInterval."
+      ],
+      "assets": {
+        "jsx": "Dashboard06.jsx",
+        "css": "dashboard-06.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-06-media-command"
+    },
+    {
+      "id": "dashboard-07",
+      "name": "Health Telemetry",
+      "description": "مراقبة المستشفيات من حيث الطاقة الاستيعابية، حالات الطوارئ، والتنبيهات.",
+      "grid": {
+        "desktop": "Header with filters, 3 metrics, async vitals chart, and dual panels for bed/ICU stats in a 2-column grid.",
+        "tablet": "Metric cards go to 2 columns, chart full width, panels stack.",
+        "mobile": "All sections stack with sticky alert button, metrics as horizontal scroll."
+      },
+      "components": [
+        "Filter header",
+        "Vitals metrics",
+        "Async vitals chart",
+        "Bed availability panel",
+        "ICU load panel",
+        "Floating alert button"
+      ],
+      "colors": {
+        "primary": "#047857",
+        "accent": "#34d399",
+        "bg": "#022c22",
+        "surface": "#064e3b",
+        "text": "#ecfdf5"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-emerald-950 text-emerald-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-emerald-900/60 p-5",
+        "chart": "rounded-2xl border border-emerald-500/40 bg-emerald-500/10",
+        "table": "rounded-2xl border border-white/10 bg-emerald-900/50",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-emerald-500 px-5 py-3 text-emerald-950"
+      },
+      "responsive": {
+        "desktop": "Metrics in 3 columns, chart + twin panels grid.",
+        "tablet": "Metrics wrap 2 per row, chart expands, panels stack with gap.",
+        "mobile": "Metrics use horizontal scroll, panels full width with text sizing reduced."
+      },
+      "accessibility": [
+        "استخدام aria-live=polite لإعلان التنبيهات.",
+        "أزرار الفلاتر تدعم focus-visible:ring-emerald-300.",
+        "ألوان النقيض تحقق نسبة تفوق 4.5:1."
+      ],
+      "interactions": [
+        "Hover على الكروت يضيف border-emerald-500/30.",
+        "زر التنبيه يحوي تأثير hover:-translate-y-0.5.",
+        "Panels يمكن توسيعها مع data-[state=open] لتغيير ارتفاعها."
+      ],
+      "performance": [
+        "الرسوم الحيوية lazy داخل Suspense.",
+        "يمكن استخدام memoization لبطاقات المؤشرات لمنع إعادة التصيير.",
+        "البيانات تتدفق عبر web socket يتم إيقافه عند إخفاء التبويب."
+      ],
+      "assets": {
+        "jsx": "Dashboard07.jsx",
+        "css": "dashboard-07.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-07-health-telemetry"
+    },
+    {
+      "id": "dashboard-08",
+      "name": "Learning Accelerator",
+      "description": "إدارة مسارات التعليم، تقدم المتعلمين، والتحليلات التفاعلية للمعلمين.",
+      "grid": {
+        "desktop": "Header with filters, metric row, async completion chart, cohorts table, and dual panels.",
+        "tablet": "Metrics wrap into two columns, table and panels stack with spacing.",
+        "mobile": "All sections full width with reduced padding; table rows become cards."
+      },
+      "components": [
+        "Filter header",
+        "KPI metrics",
+        "Completion chart",
+        "Cohorts table",
+        "Course highlight panels",
+        "Invitation modal",
+        "Assign FAB"
+      ],
+      "colors": {
+        "primary": "#4338ca",
+        "accent": "#a855f7",
+        "bg": "#1e1b4b",
+        "surface": "#312e81",
+        "text": "#ede9fe"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-indigo-950 text-indigo-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-indigo-900/60 p-5",
+        "chart": "rounded-2xl border border-indigo-500/40 bg-indigo-500/10",
+        "table": "rounded-2xl border border-white/10 bg-indigo-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-indigo-500 px-5 py-3 text-indigo-950"
+      },
+      "responsive": {
+        "desktop": "Three metrics inline, chart wide, table padded.",
+        "tablet": "Metrics collapse to two columns, table extends full width.",
+        "mobile": "Metrics horizontal scroll, panels stack, modal fills screen."
+      },
+      "accessibility": [
+        "labels مضافة للعناصر التفاعلية باستخدام aria-label.",
+        "Focus ring بلون indigo-300 على الأزرار.",
+        "استخدام aria-describedby لشرح حالة الإكمال."
+      ],
+      "interactions": [
+        "بطاقات KPI تتحرك بمقدار translate-y-[-2px] عند hover.",
+        "صفوف الجدول تضيء بـ bg-indigo-500/10.",
+        "المودال يستخدم data-[state=open] للتحكم بالظهور."
+      ],
+      "performance": [
+        "مخطط الإكمال lazy داخل Suspense.",
+        "تحميل تجميعي لقوائم الطلاب عند فتح المودال فقط.",
+        "استخدام memo لقائمة اللوحات لتقليل إعادة التصيير."
+      ],
+      "assets": {
+        "jsx": "Dashboard08.jsx",
+        "css": "dashboard-08.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-08-learning-accelerator"
+    },
+    {
+      "id": "dashboard-09",
+      "name": "Hospitality Suite",
+      "description": "لوحة لمتابعة إشغال الفندق، الإيرادات، وتنظيم الترقيات والخدمات.",
+      "grid": {
+        "desktop": "Metrics, revenue chart, arrivals table, housekeeping and concierge panels.",
+        "tablet": "Metrics in two columns, table full width, panels stack below.",
+        "mobile": "Stacked layout with condensed table cards and sticky FAB."
+      },
+      "components": [
+        "Filter header",
+        "Occupancy KPIs",
+        "Revenue chart",
+        "Arrivals table",
+        "Operations panels",
+        "Upgrade modal",
+        "Offer FAB"
+      ],
+      "colors": {
+        "primary": "#b45309",
+        "accent": "#fbbf24",
+        "bg": "#451a03",
+        "surface": "#78350f",
+        "text": "#fef3c7"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-amber-950 text-amber-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-amber-900/60 p-5",
+        "chart": "rounded-2xl border border-amber-500/40 bg-amber-500/10",
+        "table": "rounded-2xl border border-white/10 bg-amber-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-amber-500 px-5 py-3 text-amber-950"
+      },
+      "responsive": {
+        "desktop": "Chart and table align, panels share row.",
+        "tablet": "Panels drop below table, metrics wrap.",
+        "mobile": "Table rows become stacked cards, modal occupies full screen."
+      },
+      "accessibility": [
+        "تسمية الأزرار aria-label للعمليات الفندقية.",
+        "لون التركيز amber-300 للأزرار.",
+        "إعلان تغييرات الترقية عبر aria-live=polite."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر زر سريع لبدء الترقيات.",
+        "Panels تستخدم group-hover لتظليل البطاقة.",
+        "المودال يتدرج scale-95 إلى 100 مع opacity transition."
+      ],
+      "performance": [
+        "مخطط RevPAR lazy داخل Suspense.",
+        "تحميل تفضيلي لقوائم الضيوف عند التمرير.",
+        "التحديثات تستخدم web workers لحساب الإشغال."
+      ],
+      "assets": {
+        "jsx": "Dashboard09.jsx",
+        "css": "dashboard-09.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-09-hospitality-suite"
+    },
+    {
+      "id": "dashboard-10",
+      "name": "Smart City Ops",
+      "description": "منصة لمراقبة البنية التحتية للمدينة الذكية، الحوادث، وحركة المرور.",
+      "grid": {
+        "desktop": "Metrics, async traffic chart, incident table, energy and transit panels.",
+        "tablet": "Metrics wrap, table fills width, panels stack.",
+        "mobile": "Stacked layout with condensed incident cards and sticky dispatch FAB."
+      },
+      "components": [
+        "Filter header",
+        "Sensor KPIs",
+        "Traffic chart",
+        "Incident table",
+        "Energy & transit panels",
+        "Maintenance modal",
+        "Dispatch FAB"
+      ],
+      "colors": {
+        "primary": "#0e7490",
+        "accent": "#06b6d4",
+        "bg": "#083344",
+        "surface": "#134e4a",
+        "text": "#ecfeff"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-cyan-950 text-cyan-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-cyan-900/60 p-5",
+        "chart": "rounded-2xl border border-cyan-500/40 bg-cyan-500/10",
+        "table": "rounded-2xl border border-white/10 bg-cyan-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-cyan-500 px-5 py-3 text-cyan-950"
+      },
+      "responsive": {
+        "desktop": "Chart uses wide span, incidents table adjacent.",
+        "tablet": "Panels move below table, metrics wrap 2 per row.",
+        "mobile": "Incident rows become cards with badges, modal full screen."
+      },
+      "accessibility": [
+        "استخدام aria-live للإشعارات الجديدة.",
+        "تمييز المخططات بألوان عالية التباين.",
+        "التحكم بلوحة المفاتيح في زر الإرسال."
+      ],
+      "interactions": [
+        "Hover على الحوادث يظهر actions inline.",
+        "Panels تستخدم transition-colors للتمييز.",
+        "المودال يفتح مع data-[state=open] يزيل translate-y-4."
+      ],
+      "performance": [
+        "مخطط المرور lazy داخل Suspense.",
+        "تجميع تحديثات المستشعرات باستخدام requestAnimationFrame.",
+        "تحزيم كسول لوحدة الحوادث عند الطلب."
+      ],
+      "assets": {
+        "jsx": "Dashboard10.jsx",
+        "css": "dashboard-10.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-10-smart-city-ops"
+    },
+    {
+      "id": "dashboard-11",
+      "name": "Retail Insight",
+      "description": "لوحة لسلاسل التجزئة تركز على المبيعات، المزج السلعي، والتنبيهات المخزنية.",
+      "grid": {
+        "desktop": "Metrics row, revenue chart, top stores table, product mix and inventory panels.",
+        "tablet": "Metrics wrap, panels stack below table.",
+        "mobile": "Stacked layout, table becomes cards, FAB pinned."
+      },
+      "components": [
+        "Filter header",
+        "Revenue KPIs",
+        "Revenue chart",
+        "Top store table",
+        "Mix & inventory panels",
+        "Promotion modal",
+        "Promo FAB"
+      ],
+      "colors": {
+        "primary": "#ea580c",
+        "accent": "#fb923c",
+        "bg": "#431407",
+        "surface": "#7c2d12",
+        "text": "#ffedd5"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-orange-950 text-orange-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-orange-900/60 p-5",
+        "chart": "rounded-2xl border border-orange-500/40 bg-orange-500/10",
+        "table": "rounded-2xl border border-white/10 bg-orange-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-orange-500 px-5 py-3 text-orange-950"
+      },
+      "responsive": {
+        "desktop": "Chart spans wide area with table next, panels below.",
+        "tablet": "Panels drop under table, metrics wrap two per row.",
+        "mobile": "Table becomes card list, modal full screen."
+      },
+      "accessibility": [
+        "إضافة aria-sort للجدول حسب الأعمدة.",
+        "أزرار الفلتر تدعم focus-visible:ring-orange-300.",
+        "التباين ≥ 4.5:1 لكل النصوص."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر نسبة النمو.",
+        "Panels تتحرك scale-105 عند التركيز.",
+        "المودال يستخدم data-[state=open] للظهور."
+      ],
+      "performance": [
+        "مخطط المبيعات lazy.",
+        "تقسيم بيانات المتاجر حسب pagination ديناميكي.",
+        "Caching للوحة المزج السلعي باستخدام memo."
+      ],
+      "assets": {
+        "jsx": "Dashboard11.jsx",
+        "css": "dashboard-11.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-11-retail-insight"
+    },
+    {
+      "id": "dashboard-12",
+      "name": "Customer 360",
+      "description": "لوحة CRM لمراقبة الصفقات، الاحتفاظ، ومهام فرق النجاح.",
+      "grid": {
+        "desktop": "Metrics row, velocity chart, opportunities table, retention and meetings panels.",
+        "tablet": "Metrics wrap, table expands, panels stack.",
+        "mobile": "Stack layout with condensed table cards and sticky note FAB."
+      },
+      "components": [
+        "Filter header",
+        "Pipeline KPIs",
+        "Velocity chart",
+        "Opportunities table",
+        "Retention & meetings panels",
+        "Touchpoint modal",
+        "Note FAB"
+      ],
+      "colors": {
+        "primary": "#0284c7",
+        "accent": "#38bdf8",
+        "bg": "#082f49",
+        "surface": "#0f4c75",
+        "text": "#e0f2fe"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-sky-950 text-sky-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-sky-900/60 p-5",
+        "chart": "rounded-2xl border border-sky-500/40 bg-sky-500/10",
+        "table": "rounded-2xl border border-white/10 bg-sky-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-sky-500 px-5 py-3 text-sky-950"
+      },
+      "responsive": {
+        "desktop": "Chart and table share row, panels below.",
+        "tablet": "Panels drop under table, metrics wrap two per row.",
+        "mobile": "Table cards and modal full screen."
+      },
+      "accessibility": [
+        "aria-pressed للأزرار المتبدلة بين المراحل.",
+        "Focus-visible ring sky-300.",
+        "القراءة الآلية لحالة الصفقات عبر aria-live."
+      ],
+      "interactions": [
+        "Hover على الصفقات يظهر CTA سريع.",
+        "Panels تستخدم transition-opacity.",
+        "المودال يفتح مع data-[state=open] للتدرج."
+      ],
+      "performance": [
+        "مخطط السرعة lazy.",
+        "تقسيم بيانات الصفقات باستخدام virtual list.",
+        "Memo لبطاقات الاجتماعات لتقليل إعادة التصيير."
+      ],
+      "assets": {
+        "jsx": "Dashboard12.jsx",
+        "css": "dashboard-12.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-12-customer-360"
+    },
+    {
+      "id": "dashboard-13",
+      "name": "Finance Command",
+      "description": "لوحة مالية لمتابعة التدفقات النقدية، المصاريف، وتوقعات الأداء.",
+      "grid": {
+        "desktop": "Metrics row, cashflow chart, expense table, forecast and savings panels.",
+        "tablet": "Metrics wrap, panels stack under table.",
+        "mobile": "Stacked layout with condensed table and modal full screen."
+      },
+      "components": [
+        "Filter header",
+        "Cashflow KPIs",
+        "Cashflow chart",
+        "Expense table",
+        "Forecast panels",
+        "Approval modal",
+        "Report FAB"
+      ],
+      "colors": {
+        "primary": "#0f172a",
+        "accent": "#34d399",
+        "bg": "#020617",
+        "surface": "#1e293b",
+        "text": "#e2e8f0"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-slate-950 text-slate-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-slate-900/60 p-5",
+        "chart": "rounded-2xl border border-emerald-400/40 bg-emerald-400/10",
+        "table": "rounded-2xl border border-white/10 bg-slate-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-emerald-400 px-5 py-3 text-slate-950"
+      },
+      "responsive": {
+        "desktop": "Chart and table align with panels below.",
+        "tablet": "Panels drop under table, metrics wrap.",
+        "mobile": "Cards stacked, modal fills view."
+      },
+      "accessibility": [
+        "إضافة aria-labelledby للمودال.",
+        "إعلان قرارات الموافقة عبر aria-live.",
+        "استخدام focus-visible:ring-emerald-300 للأزرار."
+      ],
+      "interactions": [
+        "Hover على صفوف المصروفات يظهر زر الموافقة.",
+        "Panels تتدرج opacity عند المرور.",
+        "المودال يستخدم data-[state=open] للتحكم بالتحريك."
+      ],
+      "performance": [
+        "مخطط التدفق lazy.",
+        "إحصاءات التوقعات تحسب باستخدام worker عند الطلب.",
+        "Memo للبطاقات لتقليل إعادة التصيير."
+      ],
+      "assets": {
+        "jsx": "Dashboard13.jsx",
+        "css": "dashboard-13.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-13-finance-command"
+    },
+    {
+      "id": "dashboard-14",
+      "name": "Support Ops",
+      "description": "لوحة دعم العملاء لقياس أحجام التذاكر، الالتزام بالاتفاقيات، وأعباء الفرق.",
+      "grid": {
+        "desktop": "Metrics row, resolution chart, tickets table, SLA and agent load panels.",
+        "tablet": "Metrics wrap, table full width, panels stack.",
+        "mobile": "Stack layout with card-style tickets and sticky FAB."
+      },
+      "components": [
+        "Filter header",
+        "Support KPIs",
+        "Resolution chart",
+        "Ticket table",
+        "SLA panels",
+        "Escalation modal",
+        "Escalate FAB"
+      ],
+      "colors": {
+        "primary": "#6d28d9",
+        "accent": "#a855f7",
+        "bg": "#2e1065",
+        "surface": "#4c1d95",
+        "text": "#ede9fe"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-violet-950 text-violet-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-violet-900/60 p-5",
+        "chart": "rounded-2xl border border-violet-500/40 bg-violet-500/10",
+        "table": "rounded-2xl border border-white/10 bg-violet-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-violet-500 px-5 py-3 text-violet-950"
+      },
+      "responsive": {
+        "desktop": "Chart + table align, panels below.",
+        "tablet": "Panels move under table, metrics wrap two per row.",
+        "mobile": "Tickets convert to cards, modal full screen."
+      },
+      "accessibility": [
+        "الجدول يدعم aria-live لتغييرات SLA.",
+        "Focus-visible ring violet-300.",
+        "استخدام aria-expanded لأزرار التصفية."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر زر التصعيد.",
+        "Panels تستخدم transition-scale.",
+        "المودال ينتقل باستخدام data-[state=open] مع opacity."
+      ],
+      "performance": [
+        "مخطط الوقت lazy.",
+        "تجزئة بيانات التذاكر حسب الصفحة.",
+        "Memo لبطاقات SLA لتقليل إعادة التصيير."
+      ],
+      "assets": {
+        "jsx": "Dashboard14.jsx",
+        "css": "dashboard-14.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-14-support-ops"
+    },
+    {
+      "id": "dashboard-15",
+      "name": "Manufacturing Flow",
+      "description": "لوحة تشغيل للمصانع لمتابعة خطوط الإنتاج، الجودة، وصيانة المعدات.",
+      "grid": {
+        "desktop": "Metrics row, throughput chart, line status table, quality and supply panels.",
+        "tablet": "Metrics wrap, panels stack under table.",
+        "mobile": "Stacked layout, table as cards, modal full screen."
+      },
+      "components": [
+        "Filter header",
+        "Production KPIs",
+        "Throughput chart",
+        "Line status table",
+        "Quality & supply panels",
+        "Maintenance modal",
+        "Schedule FAB"
+      ],
+      "colors": {
+        "primary": "#292524",
+        "accent": "#f59e0b",
+        "bg": "#0c0a09",
+        "surface": "#1c1917",
+        "text": "#f5f5f4"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-stone-950 text-stone-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-stone-900/60 p-5",
+        "chart": "rounded-2xl border border-amber-400/40 bg-amber-400/10",
+        "table": "rounded-2xl border border-white/10 bg-stone-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-amber-400 px-5 py-3 text-stone-950"
+      },
+      "responsive": {
+        "desktop": "Chart and table align, panels below.",
+        "tablet": "Panels drop, metrics wrap two per row.",
+        "mobile": "Cards stacked, modal fills screen."
+      },
+      "accessibility": [
+        "استخدام aria-current للخط المحدد.",
+        "Focus ring amber-300.",
+        "تنبيهات الجدول تعلن عبر aria-live."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر مؤشر حالة.",
+        "Panels تستخدم transition-border.",
+        "المودال يعتمد data-[state=open] للحركة."
+      ],
+      "performance": [
+        "مخطط الإنتاج lazy.",
+        "Virtualization لصفوف الخطوط عند العدد الكبير.",
+        "Memo لبطاقات الجودة."
+      ],
+      "assets": {
+        "jsx": "Dashboard15.jsx",
+        "css": "dashboard-15.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-15-manufacturing-flow"
+    },
+    {
+      "id": "dashboard-16",
+      "name": "Energy Grid",
+      "description": "لوحة للطاقة الكهربائية تراقب أحمال الشبكة، المزج التوليدي، وتنبيهات الانقطاع.",
+      "grid": {
+        "desktop": "Metrics row, load chart, events table, generation and storage panels.",
+        "tablet": "Metrics wrap, panels under table.",
+        "mobile": "Stacked layout, cards for events, modal full screen."
+      },
+      "components": [
+        "Filter header",
+        "Grid KPIs",
+        "Load chart",
+        "Events table",
+        "Generation panels",
+        "Dispatch modal",
+        "Balance FAB"
+      ],
+      "colors": {
+        "primary": "#065f46",
+        "accent": "#84cc16",
+        "bg": "#022c22",
+        "surface": "#064e3b",
+        "text": "#ecfdf5"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-emerald-950 text-emerald-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-emerald-900/60 p-5",
+        "chart": "rounded-2xl border border-lime-400/40 bg-lime-400/10",
+        "table": "rounded-2xl border border-white/10 bg-emerald-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-lime-400 px-5 py-3 text-emerald-950"
+      },
+      "responsive": {
+        "desktop": "Chart + table align, panels below.",
+        "tablet": "Panels drop, metrics wrap.",
+        "mobile": "Events as cards, modal full height."
+      },
+      "accessibility": [
+        "التباين ≥ 4.5:1.",
+        "aria-live للأحداث الجديدة.",
+        "Focus-visible ring lime-200."
+      ],
+      "interactions": [
+        "Hover على الأحداث يظهر تفاصيل إضافية.",
+        "Panels تستخدم transition-scale.",
+        "المودال يعتمد data-[state=open] للتحكم بالحركة."
+      ],
+      "performance": [
+        "مخطط الحمل lazy.",
+        "تخزين بيانات الأحداث محليًا وإعادة استخدام الكاش.",
+        "Memo للبطاقات للتقليل من إعادة التصيير."
+      ],
+      "assets": {
+        "jsx": "Dashboard16.jsx",
+        "css": "dashboard-16.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-16-energy-grid"
+    },
+    {
+      "id": "dashboard-17",
+      "name": "Logistics Tracker",
+      "description": "لوحة لوجستية لمتابعة الشحنات، السائقين، وتنبيهات الاستثناءات.",
+      "grid": {
+        "desktop": "Metrics row, delivery chart, shipments table, fleet and exceptions panels.",
+        "tablet": "Metrics wrap, panels stack under table.",
+        "mobile": "Stacked layout with shipment cards and sticky FAB."
+      },
+      "components": [
+        "Filter header",
+        "Delivery KPIs",
+        "On-time chart",
+        "Shipment table",
+        "Fleet panels",
+        "Reroute modal",
+        "Assign FAB"
+      ],
+      "colors": {
+        "primary": "#1d4ed8",
+        "accent": "#38bdf8",
+        "bg": "#0f172a",
+        "surface": "#1e3a8a",
+        "text": "#dbeafe"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-blue-950 text-blue-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-blue-900/60 p-5",
+        "chart": "rounded-2xl border border-sky-400/40 bg-sky-400/10",
+        "table": "rounded-2xl border border-white/10 bg-blue-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-sky-400 px-5 py-3 text-blue-950"
+      },
+      "responsive": {
+        "desktop": "Chart + table align, panels below.",
+        "tablet": "Panels drop, metrics wrap.",
+        "mobile": "Shipments as cards, modal full screen."
+      },
+      "accessibility": [
+        "إضافة aria-describedby لعرض المعلومات التفصيلية للشحنة.",
+        "Focus ring sky-300.",
+        "aria-live لتحديثات الاستثناءات."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر زر التتبع.",
+        "Panels تستخدم transition-translate.",
+        "المودال يعتمد data-[state=open] لتغيير الحجم."
+      ],
+      "performance": [
+        "مخطط التسليم lazy.",
+        "Virtualization للشحنات الطويلة.",
+        "Memo لبطاقات الأسطول."
+      ],
+      "assets": {
+        "jsx": "Dashboard17.jsx",
+        "css": "dashboard-17.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-17-logistics-tracker"
+    },
+    {
+      "id": "dashboard-18",
+      "name": "People Ops",
+      "description": "لوحة الموارد البشرية لعرض التوظيف، رضا الموظفين، والمراجعات القادمة.",
+      "grid": {
+        "desktop": "Metrics row, pipeline chart, open roles table, engagement and review panels.",
+        "tablet": "Metrics wrap, panels stack under table.",
+        "mobile": "Stacked layout, table cards, modal full screen."
+      },
+      "components": [
+        "Filter header",
+        "People KPIs",
+        "Pipeline chart",
+        "Roles table",
+        "Engagement panels",
+        "Invitation modal",
+        "Invite FAB"
+      ],
+      "colors": {
+        "primary": "#be123c",
+        "accent": "#fb7185",
+        "bg": "#4c0519",
+        "surface": "#7f1d1d",
+        "text": "#ffe4e6"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-rose-950 text-rose-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-rose-900/60 p-5",
+        "chart": "rounded-2xl border border-rose-400/40 bg-rose-400/10",
+        "table": "rounded-2xl border border-white/10 bg-rose-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-rose-400 px-5 py-3 text-rose-950"
+      },
+      "responsive": {
+        "desktop": "Chart + table align, panels below.",
+        "tablet": "Panels drop, metrics wrap.",
+        "mobile": "Roles as cards, modal full height."
+      },
+      "accessibility": [
+        "aria-describedby للملاحظات على الأدوار.",
+        "Focus ring rose-300.",
+        "aria-live لتغييرات عدد المرشحين."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر زر الدعوة.",
+        "Panels تستخدم transition-opacity.",
+        "المودال يعتمد data-[state=open] لتغيير الحجم."
+      ],
+      "performance": [
+        "مخطط التوظيف lazy.",
+        "تخزين بيانات المرشحين في cache محلي.",
+        "Memo للبطاقات لتقليل إعادة التصيير."
+      ],
+      "assets": {
+        "jsx": "Dashboard18.jsx",
+        "css": "dashboard-18.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-18-people-ops"
+    },
+    {
+      "id": "dashboard-19",
+      "name": "Content Studio",
+      "description": "لوحة فريق المحتوى لإدارة الإنتاج، النشر، وأداء القصص.",
+      "grid": {
+        "desktop": "Metrics row, reach chart, production table, calendar and approvals panels.",
+        "tablet": "Metrics wrap, panels stack under table.",
+        "mobile": "Stacked layout, table cards, modal full screen."
+      },
+      "components": [
+        "Filter header",
+        "Content KPIs",
+        "Reach chart",
+        "Production table",
+        "Calendar panels",
+        "Schedule modal",
+        "Publish FAB"
+      ],
+      "colors": {
+        "primary": "#6d28d9",
+        "accent": "#d946ef",
+        "bg": "#2e1065",
+        "surface": "#581c87",
+        "text": "#f5e1ff"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-purple-950 text-purple-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-purple-900/60 p-5",
+        "chart": "rounded-2xl border border-fuchsia-400/40 bg-fuchsia-400/10",
+        "table": "rounded-2xl border border-white/10 bg-purple-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-fuchsia-400 px-5 py-3 text-purple-950"
+      },
+      "responsive": {
+        "desktop": "Chart + table align, panels below.",
+        "tablet": "Panels drop, metrics wrap.",
+        "mobile": "Production queue as cards, modal fills view."
+      },
+      "accessibility": [
+        "aria-describedby للأدوار في الطابور.",
+        "Focus ring fuchsia-300.",
+        "aria-live لتغييرات الجدول الزمني."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر زر النشر.",
+        "Panels تستخدم transition-opacity.",
+        "المودال يعتمد data-[state=open] للتدرج."
+      ],
+      "performance": [
+        "مخطط الوصول lazy.",
+        "تقسيم بيانات الطابور عبر pagination.",
+        "Memo للبطاقات لتقليل إعادة التصيير."
+      ],
+      "assets": {
+        "jsx": "Dashboard19.jsx",
+        "css": "dashboard-19.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-19-content-studio"
+    },
+    {
+      "id": "dashboard-20",
+      "name": "Product Launch",
+      "description": "لوحة إطلاق منتج لمتابعة الاستعدادات، المخاطر، والتبعيات عبر الفرق.",
+      "grid": {
+        "desktop": "Metrics row, readiness chart, milestone table, GTM and dependency panels.",
+        "tablet": "Metrics wrap, panels stack under table.",
+        "mobile": "Stacked layout, table cards, modal full screen."
+      },
+      "components": [
+        "Filter header",
+        "Launch KPIs",
+        "Readiness chart",
+        "Milestone table",
+        "GTM panels",
+        "Risk modal",
+        "Launch FAB"
+      ],
+      "colors": {
+        "primary": "#312e81",
+        "accent": "#f59e0b",
+        "bg": "#1e1b4b",
+        "surface": "#312e81",
+        "text": "#ede9fe"
+      },
+      "snippets": {
+        "layout": "min-h-screen bg-indigo-950 text-indigo-50",
+        "topbar": "flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-5",
+        "card": "rounded-2xl border border-white/10 bg-indigo-900/60 p-5",
+        "chart": "rounded-2xl border border-amber-400/40 bg-amber-400/10",
+        "table": "rounded-2xl border border-white/10 bg-indigo-900/40",
+        "filter": "rounded-full border border-white/10 bg-white/10 px-4 py-2",
+        "fab": "fixed bottom-8 end-8 rounded-full bg-amber-400 px-5 py-3 text-indigo-950"
+      },
+      "responsive": {
+        "desktop": "Chart + table align, panels below.",
+        "tablet": "Panels drop, metrics wrap.",
+        "mobile": "Milestones as cards, modal full height."
+      },
+      "accessibility": [
+        "aria-describedby للمخاطر المسجلة.",
+        "Focus ring amber-300.",
+        "aria-live لتحديث حالة المراحل."
+      ],
+      "interactions": [
+        "Hover على الصفوف يظهر زر التحديث.",
+        "Panels تستخدم transition-scale.",
+        "المودال يعتمد data-[state=open] للتدرج."
+      ],
+      "performance": [
+        "مخطط الاستعداد lazy.",
+        "تقسيم بيانات milestones عبر pagination.",
+        "Memo لبطاقات GTM."
+      ],
+      "assets": {
+        "jsx": "Dashboard20.jsx",
+        "css": "dashboard-20.css",
+        "readme": "README.md",
+        "thumbnail": "thumbnail.png"
+      },
+      "directory": "dashboard-20-product-launch"
+    }
+  ]
+}
