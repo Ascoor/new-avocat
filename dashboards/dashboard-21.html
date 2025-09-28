@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
   <title>شبكة مؤشرات مصغرة</title>
-=======
-  <title>لوحة الذكاء التشغيلي</title>
->>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -19,11 +15,7 @@
   <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
-<<<<<<< HEAD
-        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">MM</div>
-=======
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">OI</div>
->>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
         <div>
           <p data-role="mobile-brand-name" class="font-semibold"></p>
           <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
@@ -45,11 +37,7 @@
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
-<<<<<<< HEAD
-          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">MM</div>
-=======
           <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">OI</div>
->>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
           <div>
             <p data-role="brand-name" class="text-lg font-semibold"></p>
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
@@ -82,103 +70,6 @@
       defaultLang: 'ar',
       meta: {
         title: {
-<<<<<<< HEAD
-          ar: 'شبكة مؤشرات مصغرة',
-          en: 'Minimal Metrics Grid'
-        }
-      },
-      actions: {
-        open: { ar: 'فتح القائمة', en: 'Open menu' },
-        close: { ar: 'إغلاق', en: 'Close' }
-      },
-      brand: {
-        badge: 'MM',
-        name: { ar: 'Minimal Metrics', en: 'Minimal Metrics' },
-        tagline: { ar: 'لوحة أداء داكنة للمنتج', en: 'Dark product performance board' }
-      },
-      theme: {
-        accentGradient: 'from-slate-800 via-indigo-500 to-slate-900',
-        accentText: 'text-indigo-200',
-        highlightBg: 'bg-indigo-500/10 border-indigo-400/30',
-        badgeBg: 'bg-indigo-500/20',
-        badgeText: 'text-white'
-      },
-      nav: [
-        { id: 'overview', icon: 'chart-bar', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مباشر', en: 'Live' } },
-        { id: 'revenue', icon: 'bank', label: { ar: 'الإيرادات', en: 'Revenue' } },
-        { id: 'engagement', icon: 'sparkles', label: { ar: 'التفاعل', en: 'Engagement' } },
-        { id: 'operations', icon: 'cog', label: { ar: 'العمليات', en: 'Operations' } }
-      ],
-      highlight: {
-        label: { ar: 'تنبيه النظام', en: 'System alert' },
-        value: 'زمن الاستجابة تحت 220 مللي ثانية',
-        description: {
-          ar: 'خادم التحليلات يعمل بكفاءة. آخر مزامنة بيانات منذ 3 دقائق.',
-          en: 'Analytics service healthy. Last data sync 3 minutes ago.'
-        }
-      },
-      header: {
-        title: { ar: 'شبكة مؤشرات مصغرة', en: 'Minimal metrics grid' },
-        subtitle: {
-          ar: 'راقب المؤشرات الأربعة الأهم للمنتج مع مخطط خطي وتحديثات النشاط المباشرة.',
-          en: 'Watch the four essential product KPIs with a line trend and live activity log.'
-        },
-        primary: { ar: 'مشاركة لوحة اليوم', en: 'Share today’s board' },
-        secondary: { ar: 'تعيين تنبيه', en: 'Set alert' }
-      },
-      stats: [
-        { icon: 'chart-bar', label: { ar: 'إيرادات اليوم', en: 'Today’s revenue' }, value: '$84.2K', delta: { ar: '+12% مقابل أمس', en: '+12% vs yesterday' }, trend: 'positive' },
-        { icon: 'users', label: { ar: 'مستخدمون نشطون', en: 'Active users' }, value: '18,430', delta: { ar: '+4.1% أسبوعي', en: '+4.1% weekly' }, trend: 'positive' },
-        { icon: 'cursor-arrow', label: { ar: 'معدل التحويل', en: 'Conversion rate' }, value: '5.28%', delta: { ar: '+0.3 نقطة', en: '+0.3 pts' }, trend: 'positive' },
-        { icon: 'sparkles', label: { ar: 'تحويل التجربة', en: 'Experiment uplift' }, value: '+8.6%', delta: { ar: 'اختبار A/B نشط', en: 'A/B test running' }, trend: 'neutral' }
-      ],
-      panels: [
-        {
-          id: 'trend',
-          type: 'chart',
-          span: 'xl:col-span-2',
-          title: { ar: 'مسار الإيرادات اليومية', en: 'Daily revenue trajectory' },
-          subtitle: { ar: 'آخر 14 يوماً مقسمة حسب القنوات الرئيسية.', en: 'Last 14 days broken down by primary channels.' },
-          action: { ar: 'تصدير CSV', en: 'Export CSV' },
-          placeholder: { ar: 'مخطط خطي متحرك', en: 'Animated line chart' }
-        },
-        {
-          id: 'activity',
-          type: 'list',
-          title: { ar: 'النشاط الحديث', en: 'Recent activity' },
-          action: { ar: 'تحديث قبل دقيقة', en: 'Updated a minute ago' },
-          items: [
-            { icon: 'sparkles', title: { ar: 'تم إطلاق الخطة السنوية', en: 'Annual plan launched' }, subtitle: { ar: 'رفع متوسط قيمة الصفقة 6%', en: 'Lifted deal size by 6%' }, value: 'اليوم', delta: { ar: '08:45 ص', en: '08:45 AM' } },
-            { icon: 'users', title: { ar: 'انضمام فريق المبيعات', en: 'Sales team onboarded' }, subtitle: { ar: 'إضافة 12 عضواً جديداً', en: '12 new members added' }, value: 'أمس', delta: { ar: '04:10 م', en: '04:10 PM' } },
-            { icon: 'megaphone', title: { ar: 'حملة استبقاء جديدة', en: 'Retention push live' }, subtitle: { ar: 'تذكيرات دفع ذكية', en: 'Smart payment nudges' }, value: 'قبل يومين', delta: { ar: '11:20 ص', en: '11:20 AM' } }
-          ]
-        },
-        {
-          id: 'targets',
-          type: 'progress',
-          title: { ar: 'أهداف الربع الحالي', en: 'Current quarter targets' },
-          items: [
-            { title: { ar: 'الوصول الشهري', en: 'Monthly reach' }, subtitle: { ar: 'هدف 20 ألف مستخدم جديد', en: 'Goal: 20k new users' }, value: '73%', percent: '73%' },
-            { title: { ar: 'متوسط قيمة الطلب', en: 'Average order value' }, subtitle: { ar: 'الوضع الحالي 68$', en: 'Current AOV $68' }, value: '64%', percent: '64%' },
-            { title: { ar: 'رضا العملاء', en: 'Customer satisfaction' }, subtitle: { ar: 'استبيان الربع الجاري', en: 'Quarterly survey in progress' }, value: '88%', percent: '88%' }
-          ]
-        },
-        {
-          id: 'channels',
-          type: 'table',
-          span: 'xl:col-span-3',
-          title: { ar: 'تفاصيل القنوات', en: 'Channel breakdown' },
-          action: { ar: 'عرض التفاصيل', en: 'View details' },
-          headers: [
-            { ar: 'القناة', en: 'Channel' },
-            { ar: 'الإيرادات', en: 'Revenue' },
-            { ar: 'الاتجاه', en: 'Trend' }
-          ],
-          rows: [
-            { name: { ar: 'عضويات', en: 'Memberships' }, metric: '$31.8K', delta: { ar: '+9% نمو', en: '+9% growth' }, trend: 'positive' },
-            { name: { ar: 'الترقيات داخل التطبيق', en: 'In-app upgrades' }, metric: '$22.6K', delta: { ar: '+3% مستقر', en: '+3% steady' }, trend: 'neutral' },
-            { name: { ar: 'المتجر الإلكتروني', en: 'Storefront' }, metric: '$18.4K', delta: { ar: '-4% هذا الأسبوع', en: '-4% this week' }, trend: 'negative' }
-=======
           ar: 'لوحة الذكاء التشغيلي',
           en: 'Operational intelligence cockpit'
         }
@@ -414,7 +305,6 @@
               subtitle: { ar: 'تدريب فريق التحليلات على المتغيرات الجديدة.', en: 'Upskill analytics team on new feature sets.' },
               time: { ar: '04:15 مساءً', en: '04:15 PM' }
             }
->>>>>>> 495ce522ec3f1fb9d9ea52afa947e39ea87d577e
           ]
         }
       ]
