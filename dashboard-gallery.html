@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>معرض لوحات التحكم - TailwindCSS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Cairo', sans-serif; }
+    body.font-english { font-family: 'Inter', sans-serif; }
+    body.theme-light { background-color: rgb(248 250 252); color: rgb(15 23 42); }
+    body.theme-light header .absolute { background: linear-gradient(135deg, rgba(129, 140, 248, 0.2), rgba(255, 255, 255, 0.95)); }
+    body.theme-light footer { background-color: rgba(255, 255, 255, 0.85); border-color: rgba(148, 163, 184, 0.25); color: rgb(71 85 105); }
+    body.theme-light footer a { color: rgb(51 65 85); }
+    body.theme-light footer a:hover { color: rgb(15 23 42); }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+  <header class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-slate-900 to-slate-900"></div>
+    <div class="relative max-w-6xl mx-auto px-6 py-20 space-y-10">
+      <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+        <div class="space-y-6 max-w-3xl">
+          <div class="space-y-4">
+            <p data-i18n="hero-tag" class="text-indigo-300 text-sm uppercase tracking-widest">TailwindCSS Premium</p>
+            <h1 data-i18n="hero-title" class="text-4xl md:text-5xl font-bold">أفضل 20 تصميمًا متجاوبًا للوحات التحكم</h1>
+            <p data-i18n="hero-description" class="text-slate-300">
+              استكشف مجموعة من لوحات التحكم المتكاملة المبنية بـ TailwindCSS مع دعم كامل للغتين العربية والإنجليزية.
+              كل تصميم مجهز للمنتجات الحديثة ويأتي بواجهة متجاوبة تدعم مختلف الأجهزة.
+            </p>
+          </div>
+          <div data-role="hero-badges" class="flex flex-wrap gap-3"></div>
+        </div>
+        <div class="self-start flex flex-col items-end gap-3">
+          <button data-role="theme-toggle" class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200">وضع النهار</button>
+          <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 pb-20 space-y-8">
+    <h2 data-i18n="section-title" class="text-2xl font-semibold">اختر تصميمك المفضل</h2>
+    <div data-role="card-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-400">
+      <p data-i18n="footer-text">© 2024 لوحات تحكم Tailwind. جميع الحقوق محفوظة.</p>
+      <div class="flex gap-4">
+        <a href="#" data-i18n="footer-privacy" class="hover:text-slate-200">سياسة الخصوصية</a>
+        <a href="#" data-i18n="footer-terms" class="hover:text-slate-200">شروط الاستخدام</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="dashboards/dashboard-blueprints.js"></script>
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const body = document.body;
+
+      const translations = {
+        pageTitle: {
+          ar: 'معرض لوحات التحكم - TailwindCSS',
+          en: 'Dashboard Gallery - TailwindCSS'
+        },
+        heroTag: {
+          ar: 'TailwindCSS Premium',
+          en: 'TailwindCSS Premium'
+        },
+        heroTitle: {
+          ar: 'أفضل 20 تصميمًا متجاوبًا للوحات التحكم',
+          en: 'Top 20 responsive dashboard designs'
+        },
+        heroDescription: {
+          ar: 'استكشف مجموعة من لوحات التحكم المتكاملة المبنية بـ TailwindCSS مع دعم كامل للغتين العربية والإنجليزية. كل تصميم مجهز للمنتجات الحديثة ويأتي بواجهة متجاوبة تدعم مختلف الأجهزة.',
+          en: 'Explore a curated set of TailwindCSS dashboards with full Arabic and English support. Each layout is production-ready and adapts beautifully to every device.'
+        },
+        sectionTitle: {
+          ar: 'اختر تصميمك المفضل',
+          en: 'Pick your favorite layout'
+        },
+        footerText: {
+          ar: '© 2024 لوحات تحكم Tailwind. جميع الحقوق محفوظة.',
+          en: '© 2024 Tailwind Dashboards. All rights reserved.'
+        },
+        footerPrivacy: {
+          ar: 'سياسة الخصوصية',
+          en: 'Privacy policy'
+        },
+        footerTerms: {
+          ar: 'شروط الاستخدام',
+          en: 'Terms of use'
+        },
+        themeLight: {
+          ar: 'الوضع النهاري',
+          en: 'Day mode'
+        },
+        themeDark: {
+          ar: 'الوضع الليلي',
+          en: 'Night mode'
+        },
+        linkLabel: {
+          ar: 'استعراض التصميم →',
+          en: 'View dashboard →'
+        },
+        badges: [
+          {
+            classes: 'px-4 py-2 bg-indigo-500/20 text-indigo-200 rounded-full text-sm',
+            classesLight: 'px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm',
+            text: {
+              ar: 'متجاوبة بالكامل',
+              en: 'Fully responsive'
+            }
+          },
+          {
+            classes: 'px-4 py-2 bg-emerald-500/20 text-emerald-200 rounded-full text-sm',
+            classesLight: 'px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm',
+            text: {
+              ar: 'واجهات غنية بالبيانات',
+              en: 'Data-rich interfaces'
+            }
+          },
+          {
+            classes: 'px-4 py-2 bg-amber-500/20 text-amber-200 rounded-full text-sm',
+            classesLight: 'px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm',
+            text: {
+              ar: 'دعم عربي وإنجليزي',
+              en: 'Arabic & English support'
+            }
+          }
+        ]
+      };
+
+      function getText(value, lang) {
+        if (!value) return '';
+        if (typeof value === 'string') return value;
+        if (value[lang]) return value[lang];
+        return value.ar || value.en || '';
+      }
+
+      const blueprints = Object.values(window.DASHBOARD_BLUEPRINTS || {});
+      const dashboards = blueprints
+        .slice()
+        .sort((a, b) => {
+          const aSlug = a.slug || '';
+          const bSlug = b.slug || '';
+          const aNum = parseInt((aSlug.match(/\d+/) || ['0'])[0], 10);
+          const bNum = parseInt((bSlug.match(/\d+/) || ['0'])[0], 10);
+          if (aNum !== bNum) return aNum - bNum;
+          return (a.id || '').localeCompare(b.id || '');
+        })
+        .map((blueprint, index) => ({
+          index,
+          number: String(index + 1).padStart(2, '0'),
+          slug: blueprint.slug || `${blueprint.id}.html`,
+          blueprint,
+          gradient: {
+            dark: `bg-gradient-to-br ${blueprint.theme?.dark?.accentGradient || 'from-indigo-500 via-purple-500 to-slate-900'}`,
+            light: `bg-gradient-to-br ${blueprint.theme?.light?.accentGradient || blueprint.theme?.dark?.accentGradient || 'from-indigo-400 via-purple-400 to-slate-100'}`
+          },
+          accent: {
+            dark: blueprint.theme?.dark?.accentText || 'text-indigo-300',
+            light: blueprint.theme?.light?.accentText || 'text-indigo-600'
+          }
+        }));
+
+      const heroTagEl = document.querySelector('[data-i18n="hero-tag"]');
+      const heroTitleEl = document.querySelector('[data-i18n="hero-title"]');
+      const heroDescriptionEl = document.querySelector('[data-i18n="hero-description"]');
+      const sectionTitleEl = document.querySelector('[data-i18n="section-title"]');
+      const footerTextEl = document.querySelector('[data-i18n="footer-text"]');
+      const footerPrivacyEl = document.querySelector('[data-i18n="footer-privacy"]');
+      const footerTermsEl = document.querySelector('[data-i18n="footer-terms"]');
+      const badgesContainer = document.querySelector('[data-role="hero-badges"]');
+      const cardsContainer = document.querySelector('[data-role="card-grid"]');
+      const themeToggle = document.querySelector('[data-role="theme-toggle"]');
+      const languageSwitchers = document.querySelectorAll('[data-role="language-switcher"]');
+      const langButtons = [];
+
+      let currentLang = 'ar';
+      const themeStorageKey = 'gallery:theme';
+      let currentTheme = 'dark';
+      try {
+        const storedTheme = localStorage.getItem(themeStorageKey);
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+          currentTheme = storedTheme;
+        }
+      } catch (error) {
+        currentTheme = 'dark';
+      }
+
+      languageSwitchers.forEach(container => {
+        container.innerHTML = '';
+        ['ar', 'en'].forEach(lang => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.dataset.lang = lang;
+          button.textContent = lang === 'ar' ? 'ع' : 'En';
+          button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition';
+          button.addEventListener('click', () => setLanguage(lang));
+          container.appendChild(button);
+          langButtons.push(button);
+        });
+      });
+
+      function updateSwitcherButtons() {
+        langButtons.forEach(btn => {
+          const active = btn.dataset.lang === currentLang;
+          const base = 'px-3 py-1 text-xs font-semibold rounded-lg transition';
+          const themeClasses = currentTheme === 'light'
+            ? 'border border-slate-300 text-slate-700 hover:bg-slate-100'
+            : 'border border-white/10 text-slate-200 hover:bg-white/10';
+          const activeClasses = currentTheme === 'light'
+            ? 'bg-slate-900/10 text-slate-900'
+            : 'bg-white/10 text-white';
+          const inactiveOpacity = currentTheme === 'light' ? 'opacity-80' : 'opacity-70';
+          btn.className = `${base} ${themeClasses}`;
+          if (active) {
+            btn.classList.add(...activeClasses.split(' '));
+          } else {
+            btn.classList.add(inactiveOpacity);
+          }
+        });
+      }
+
+      function renderBadges(lang) {
+        if (!badgesContainer) return;
+        badgesContainer.innerHTML = translations.badges.map(badge => `
+          <span class="${currentTheme === 'light' ? badge.classesLight : badge.classes}">${getText(badge.text, lang)}</span>
+        `).join('');
+      }
+
+      function renderCards(lang) {
+        if (!cardsContainer) return;
+        const cardsMarkup = dashboards.map(card => {
+          const surfaceBase = 'group relative rounded-2xl overflow-hidden transition-all duration-300';
+          const surfaceClass = currentTheme === 'light'
+            ? `${surfaceBase} border border-slate-200 bg-white/90 hover:bg-white`
+            : `${surfaceBase} border border-slate-700/50 bg-slate-800/60 hover:bg-slate-800`;
+          const numberClass = currentTheme === 'light'
+            ? 'text-4xl font-bold text-slate-800/85 drop-shadow-sm'
+            : 'text-4xl font-bold text-white/90 drop-shadow-lg';
+          const descriptionClass = currentTheme === 'light'
+            ? 'text-slate-600 text-sm leading-relaxed'
+            : 'text-slate-300 text-sm leading-relaxed';
+          const accentClass = currentTheme === 'light' ? card.accent.light : card.accent.dark;
+          const gradientClass = currentTheme === 'light' ? card.gradient.light : card.gradient.dark;
+          const overlayClass = currentTheme === 'light' ? 'bg-white/45' : 'bg-slate-950/35';
+
+          const blueprint = card.blueprint;
+          const gallery = blueprint.gallery || {};
+          const brand = blueprint.brand || {};
+          const hrefTarget = card.slug.startsWith('http') ? card.slug : `dashboards/${card.slug.replace(/^\//, '')}`;
+          const badgeLabel = getText(gallery.badge, lang) || '';
+          const title = getText(gallery.title, lang) || getText(brand.name, lang) || blueprint.id || '';
+          const description = getText(gallery.description, lang) || getText(brand.tagline, lang) || '';
+          const rawTags = Array.isArray(gallery.tags) ? gallery.tags : [];
+          const tagMarkup = rawTags.length
+            ? `<div class="flex flex-wrap gap-2">${rawTags.map(tag => `<span class="px-3 py-1 text-xs rounded-full ${currentTheme === 'light' ? 'bg-slate-100 text-slate-600 border border-slate-200/80' : 'bg-white/10 text-slate-200/90 border border-white/10'}">${getText(tag, lang)}</span>`).join('')}</div>`
+            : '';
+          const badgeChip = badgeLabel
+            ? `<span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full ${currentTheme === 'light' ? 'bg-slate-900/5 text-slate-700 border border-slate-200' : 'bg-white/10 text-slate-100 border border-white/10'}">${badgeLabel}</span>`
+            : '';
+          const brandToken = getText(brand.badge, lang) || (badgeLabel ? badgeLabel.charAt(0) : title.charAt(0) || card.number);
+
+          return `
+          <a href="${hrefTarget}" class="${surfaceClass}">
+            <div class="relative h-44 ${gradientClass} overflow-hidden">
+              <div class="absolute inset-0 ${overlayClass}"></div>
+              <div class="relative flex h-full w-full flex-col items-center justify-center gap-3">
+                <span class="${numberClass}">${card.number}</span>
+                <span class="rounded-full border border-white/30 px-3 py-1 text-xs tracking-[0.4em] uppercase text-white/90">${brandToken}</span>
+              </div>
+            </div>
+            <div class="p-5 space-y-4">
+              ${badgeChip}
+              <h3 class="text-xl font-semibold">${title}</h3>
+              <p class="${descriptionClass}">${description}</p>
+              ${tagMarkup}
+              <span class="mt-3 inline-flex items-center gap-2 ${accentClass} text-sm font-semibold transition group-hover:translate-x-1">
+                ${translations.linkLabel[lang]}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </a>`;
+        }).join('');
+        cardsContainer.innerHTML = cardsMarkup;
+      }
+
+      function updateThemeToggleLabel() {
+        if (!themeToggle) return;
+        const label = currentTheme === 'dark' ? translations.themeLight[currentLang] : translations.themeDark[currentLang];
+        const base = 'inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition';
+        const themeClass = currentTheme === 'light'
+          ? 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+          : 'border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10';
+        themeToggle.textContent = label;
+        themeToggle.setAttribute('aria-label', label);
+        themeToggle.setAttribute('title', label);
+        themeToggle.className = `${base} ${themeClass}`;
+      }
+
+      function applyTheme(theme, persist = false) {
+        const nextTheme = theme === 'light' ? 'light' : 'dark';
+        currentTheme = nextTheme;
+        body.classList.toggle('theme-light', nextTheme === 'light');
+        body.classList.toggle('theme-dark', nextTheme === 'dark');
+        if (nextTheme === 'light') {
+          body.classList.remove('bg-slate-900', 'text-slate-100');
+          body.classList.add('bg-slate-50', 'text-slate-900');
+          if (heroDescriptionEl) {
+            heroDescriptionEl.classList.remove('text-slate-300');
+            heroDescriptionEl.classList.add('text-slate-600');
+          }
+          if (heroTagEl) {
+            heroTagEl.classList.remove('text-indigo-300');
+            heroTagEl.classList.add('text-indigo-600');
+          }
+          [footerTextEl, footerPrivacyEl, footerTermsEl].forEach(el => {
+            if (!el) return;
+            el.classList.remove('text-slate-400');
+            el.classList.add('text-slate-500');
+          });
+        } else {
+          body.classList.remove('bg-slate-50', 'text-slate-900');
+          body.classList.add('bg-slate-900', 'text-slate-100');
+          if (heroDescriptionEl) {
+            heroDescriptionEl.classList.remove('text-slate-600');
+            heroDescriptionEl.classList.add('text-slate-300');
+          }
+          if (heroTagEl) {
+            heroTagEl.classList.remove('text-indigo-600');
+            heroTagEl.classList.add('text-indigo-300');
+          }
+          [footerTextEl, footerPrivacyEl, footerTermsEl].forEach(el => {
+            if (!el) return;
+            el.classList.remove('text-slate-500');
+            el.classList.add('text-slate-400');
+          });
+        }
+        updateThemeToggleLabel();
+        renderBadges(currentLang);
+        renderCards(currentLang);
+        updateSwitcherButtons();
+        if (persist) {
+          try {
+            localStorage.setItem(themeStorageKey, nextTheme);
+          } catch (error) {
+            // ignore storage issues
+          }
+        }
+      }
+
+      function setLanguage(lang) {
+        currentLang = lang;
+        html.setAttribute('lang', lang);
+        html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        body.classList.toggle('font-english', lang === 'en');
+        document.title = translations.pageTitle[lang];
+
+        if (heroTagEl) heroTagEl.textContent = translations.heroTag[lang];
+        if (heroTitleEl) heroTitleEl.textContent = translations.heroTitle[lang];
+        if (heroDescriptionEl) heroDescriptionEl.textContent = translations.heroDescription[lang];
+        if (sectionTitleEl) sectionTitleEl.textContent = translations.sectionTitle[lang];
+        if (footerTextEl) footerTextEl.textContent = translations.footerText[lang];
+        if (footerPrivacyEl) footerPrivacyEl.textContent = translations.footerPrivacy[lang];
+        if (footerTermsEl) footerTermsEl.textContent = translations.footerTerms[lang];
+
+        renderBadges(lang);
+        renderCards(lang);
+        updateSwitcherButtons();
+        updateThemeToggleLabel();
+      }
+
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const next = currentTheme === 'dark' ? 'light' : 'dark';
+          applyTheme(next, true);
+        });
+      }
+
+      setLanguage(currentLang);
+      applyTheme(currentTheme);
+    })();
+  </script>
+</body>
+</html>
