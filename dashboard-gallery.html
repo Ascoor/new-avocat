@@ -11,6 +11,11 @@
   <style>
     body { font-family: 'Cairo', sans-serif; }
     body.font-english { font-family: 'Inter', sans-serif; }
+    body.theme-light { background-color: rgb(248 250 252); color: rgb(15 23 42); }
+    body.theme-light header .absolute { background: linear-gradient(135deg, rgba(129, 140, 248, 0.2), rgba(255, 255, 255, 0.95)); }
+    body.theme-light footer { background-color: rgba(255, 255, 255, 0.85); border-color: rgba(148, 163, 184, 0.25); color: rgb(71 85 105); }
+    body.theme-light footer a { color: rgb(51 65 85); }
+    body.theme-light footer a:hover { color: rgb(15 23 42); }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen">
@@ -29,7 +34,8 @@
           </div>
           <div data-role="hero-badges" class="flex flex-wrap gap-3"></div>
         </div>
-        <div class="self-start">
+        <div class="self-start flex flex-col items-end gap-3">
+          <button data-role="theme-toggle" class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200">وضع النهار</button>
           <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
         </div>
       </div>
@@ -89,6 +95,14 @@
           ar: 'شروط الاستخدام',
           en: 'Terms of use'
         },
+        themeLight: {
+          ar: 'الوضع النهاري',
+          en: 'Day mode'
+        },
+        themeDark: {
+          ar: 'الوضع الليلي',
+          en: 'Night mode'
+        },
         linkLabel: {
           ar: 'استعراض التصميم →',
           en: 'View dashboard →'
@@ -96,6 +110,7 @@
         badges: [
           {
             classes: 'px-4 py-2 bg-indigo-500/20 text-indigo-200 rounded-full text-sm',
+            classesLight: 'px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm',
             text: {
               ar: 'متجاوبة بالكامل',
               en: 'Fully responsive'
@@ -103,6 +118,7 @@
           },
           {
             classes: 'px-4 py-2 bg-emerald-500/20 text-emerald-200 rounded-full text-sm',
+            classesLight: 'px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm',
             text: {
               ar: 'واجهات غنية بالبيانات',
               en: 'Data-rich interfaces'
@@ -110,6 +126,7 @@
           },
           {
             classes: 'px-4 py-2 bg-amber-500/20 text-amber-200 rounded-full text-sm',
+            classesLight: 'px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm',
             text: {
               ar: 'دعم عربي وإنجليزي',
               en: 'Arabic & English support'
@@ -124,6 +141,7 @@
           href: 'dashboards/dashboard-1.html',
           gradient: 'from-indigo-500 to-purple-500',
           accent: 'text-indigo-300',
+          accentLight: 'text-indigo-600',
           title: {
             ar: 'لوحة تحليلات النمو',
             en: 'Growth analytics dashboard'
@@ -138,6 +156,7 @@
           href: 'dashboards/dashboard-2.html',
           gradient: 'from-emerald-500 to-teal-500',
           accent: 'text-emerald-300',
+          accentLight: 'text-emerald-600',
           title: {
             ar: 'لوحة إدارة المشاريع',
             en: 'Project delivery dashboard'
@@ -152,6 +171,7 @@
           href: 'dashboards/dashboard-3.html',
           gradient: 'from-amber-500 to-orange-500',
           accent: 'text-amber-200',
+          accentLight: 'text-amber-600',
           title: {
             ar: 'لوحة تجارة إلكترونية',
             en: 'E-commerce performance hub'
@@ -166,6 +186,7 @@
           href: 'dashboards/dashboard-4.html',
           gradient: 'from-sky-500 to-cyan-500',
           accent: 'text-sky-200',
+          accentLight: 'text-sky-600',
           title: {
             ar: 'لوحة البنية السحابية',
             en: 'Cloud infrastructure dashboard'
@@ -180,6 +201,7 @@
           href: 'dashboards/dashboard-5.html',
           gradient: 'from-rose-500 to-pink-500',
           accent: 'text-rose-200',
+          accentLight: 'text-rose-600',
           title: {
             ar: 'لوحة إدارة المحتوى',
             en: 'Content operations dashboard'
@@ -194,6 +216,7 @@
           href: 'dashboards/dashboard-6.html',
           gradient: 'from-fuchsia-500 to-purple-500',
           accent: 'text-fuchsia-200',
+          accentLight: 'text-fuchsia-600',
           title: {
             ar: 'لوحة تجربة العملاء',
             en: 'Customer experience dashboard'
@@ -208,6 +231,7 @@
           href: 'dashboards/dashboard-7.html',
           gradient: 'from-lime-500 to-emerald-500',
           accent: 'text-lime-200',
+          accentLight: 'text-lime-600',
           title: {
             ar: 'لوحة الموارد البشرية',
             en: 'People operations dashboard'
@@ -222,6 +246,7 @@
           href: 'dashboards/dashboard-8.html',
           gradient: 'from-blue-500 to-indigo-500',
           accent: 'text-blue-200',
+          accentLight: 'text-blue-600',
           title: {
             ar: 'لوحة التعليم الإلكتروني',
             en: 'E-learning experience dashboard'
@@ -236,6 +261,7 @@
           href: 'dashboards/dashboard-9.html',
           gradient: 'from-slate-500 to-slate-700',
           accent: 'text-slate-200',
+          accentLight: 'text-slate-600',
           title: {
             ar: 'لوحة أمن المعلومات',
             en: 'Cybersecurity operations dashboard'
@@ -250,6 +276,7 @@
           href: 'dashboards/dashboard-10.html',
           gradient: 'from-cyan-500 to-emerald-500',
           accent: 'text-cyan-200',
+          accentLight: 'text-cyan-600',
           title: {
             ar: 'لوحة الخدمات المالية',
             en: 'Financial services dashboard'
@@ -264,6 +291,7 @@
           href: 'dashboards/dashboard-11.html',
           gradient: 'from-red-500 to-rose-500',
           accent: 'text-rose-200',
+          accentLight: 'text-rose-600',
           title: {
             ar: 'لوحة عمليات الرعاية الصحية',
             en: 'Healthcare operations dashboard'
@@ -278,6 +306,7 @@
           href: 'dashboards/dashboard-12.html',
           gradient: 'from-purple-500 to-indigo-500',
           accent: 'text-purple-200',
+          accentLight: 'text-purple-600',
           title: {
             ar: 'لوحة حملات التسويق',
             en: 'Marketing campaigns dashboard'
@@ -292,6 +321,7 @@
           href: 'dashboards/dashboard-13.html',
           gradient: 'from-amber-600 to-lime-500',
           accent: 'text-amber-200',
+          accentLight: 'text-amber-600',
           title: {
             ar: 'لوحة سلسلة الإمداد',
             en: 'Supply chain dashboard'
@@ -306,6 +336,7 @@
           href: 'dashboards/dashboard-14.html',
           gradient: 'from-emerald-600 to-teal-600',
           accent: 'text-emerald-200',
+          accentLight: 'text-emerald-600',
           title: {
             ar: 'لوحة إدارة العقارات',
             en: 'Real estate management dashboard'
@@ -320,6 +351,7 @@
           href: 'dashboards/dashboard-15.html',
           gradient: 'from-orange-500 to-red-500',
           accent: 'text-amber-200',
+          accentLight: 'text-amber-600',
           title: {
             ar: 'لوحة العمليات التصنيعية',
             en: 'Manufacturing operations dashboard'
@@ -334,6 +366,7 @@
           href: 'dashboards/dashboard-16.html',
           gradient: 'from-fuchsia-500 to-cyan-500',
           accent: 'text-cyan-200',
+          accentLight: 'text-cyan-600',
           title: {
             ar: 'لوحة منصة البث',
             en: 'Streaming platform dashboard'
@@ -348,6 +381,7 @@
           href: 'dashboards/dashboard-17.html',
           gradient: 'from-cyan-500 to-lime-500',
           accent: 'text-cyan-200',
+          accentLight: 'text-blue-600',
           title: {
             ar: 'لوحة المدينة الذكية',
             en: 'Smart city dashboard'
@@ -362,6 +396,7 @@
           href: 'dashboards/dashboard-18.html',
           gradient: 'from-rose-500 via-amber-500 to-emerald-500',
           accent: 'text-amber-200',
+          accentLight: 'text-amber-600',
           title: {
             ar: 'لوحة تجربة الضيوف',
             en: 'Guest experience intelligence'
@@ -376,6 +411,7 @@
           href: 'dashboards/dashboard-19.html',
           gradient: 'from-emerald-500 via-teal-500 to-sky-500',
           accent: 'text-emerald-200',
+          accentLight: 'text-emerald-600',
           title: {
             ar: 'لوحة عمليات الطاقة المتجددة',
             en: 'Renewable operations overview'
@@ -390,6 +426,7 @@
           href: 'dashboards/dashboard-20.html',
           gradient: 'from-indigo-500 via-violet-500 to-rose-500',
           accent: 'text-violet-200',
+          accentLight: 'text-violet-600',
           title: {
             ar: 'لوحة أداء النادي الرياضي',
             en: 'Club performance intelligence'
@@ -410,10 +447,21 @@
       const footerTermsEl = document.querySelector('[data-i18n="footer-terms"]');
       const badgesContainer = document.querySelector('[data-role="hero-badges"]');
       const cardsContainer = document.querySelector('[data-role="card-grid"]');
+      const themeToggle = document.querySelector('[data-role="theme-toggle"]');
 
       const languageSwitchers = document.querySelectorAll('[data-role="language-switcher"]');
       const langButtons = [];
       let currentLang = 'ar';
+      const themeStorageKey = 'gallery:theme';
+      let currentTheme = 'dark';
+      try {
+        const storedTheme = localStorage.getItem(themeStorageKey);
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+          currentTheme = storedTheme;
+        }
+      } catch (error) {
+        currentTheme = 'dark';
+      }
 
       languageSwitchers.forEach(container => {
         container.innerHTML = '';
@@ -422,7 +470,7 @@
           button.type = 'button';
           button.dataset.lang = lang;
           button.textContent = lang === 'ar' ? 'ع' : 'En';
-          button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition border border-white/10 text-slate-200 bg-transparent hover:bg-white/10';
+          button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition';
           button.addEventListener('click', () => setLanguage(lang));
           container.appendChild(button);
           langButtons.push(button);
@@ -432,35 +480,122 @@
       function updateSwitcherButtons() {
         langButtons.forEach(btn => {
           const active = btn.dataset.lang === currentLang;
-          btn.classList.toggle('bg-white/10', active);
-          btn.classList.toggle('text-white', active);
-          btn.classList.toggle('opacity-70', !active);
+          const base = 'px-3 py-1 text-xs font-semibold rounded-lg transition';
+          const themeClasses = currentTheme === 'light'
+            ? 'border border-slate-300 text-slate-700 hover:bg-slate-100'
+            : 'border border-white/10 text-slate-200 hover:bg-white/10';
+          const activeClasses = currentTheme === 'light'
+            ? 'bg-slate-900/10 text-slate-900'
+            : 'bg-white/10 text-white';
+          const inactiveOpacity = currentTheme === 'light' ? 'opacity-80' : 'opacity-70';
+          btn.className = `${base} ${themeClasses}`;
+          if (active) {
+            btn.classList.add(...activeClasses.split(' '));
+          } else {
+            btn.classList.add(inactiveOpacity);
+          }
         });
       }
 
       function renderBadges(lang) {
         if (!badgesContainer) return;
         badgesContainer.innerHTML = translations.badges.map(badge => `
-          <span class="${badge.classes}">${badge.text[lang]}</span>
+          <span class="${currentTheme === 'light' ? badge.classesLight : badge.classes}">${badge.text[lang]}</span>
         `).join('');
       }
 
       function renderCards(lang) {
         if (!cardsContainer) return;
-        cardsContainer.innerHTML = dashboards.map(card => `
-          <a href="${card.href}" class="group bg-slate-800/60 hover:bg-slate-800 transition rounded-2xl overflow-hidden shadow-lg border border-slate-700/50">
+        cardsContainer.innerHTML = dashboards.map(card => {
+          const surfaceBase = 'group rounded-2xl overflow-hidden shadow-lg transition';
+          const surfaceClass = currentTheme === 'light'
+            ? `${surfaceBase} border border-slate-200 bg-white/90 hover:bg-white`
+            : `${surfaceBase} border border-slate-700/50 bg-slate-800/60 hover:bg-slate-800`;
+          const numberClass = currentTheme === 'light'
+            ? 'text-4xl font-bold text-slate-800/80'
+            : 'text-4xl font-bold text-white/80';
+          const descriptionClass = currentTheme === 'light'
+            ? 'text-slate-600 text-sm leading-relaxed'
+            : 'text-slate-300 text-sm leading-relaxed';
+          const accentClass = currentTheme === 'light' ? card.accentLight : card.accent;
+          return `
+          <a href="${card.href}" class="${surfaceClass}">
             <div class="h-40 bg-gradient-to-br ${card.gradient} flex items-center justify-center">
-              <span class="text-4xl font-bold text-white/80">${card.number}</span>
+              <span class="${numberClass}">${card.number}</span>
             </div>
             <div class="p-5 space-y-3">
               <h3 class="text-xl font-semibold">${card.title[lang]}</h3>
-              <p class="text-slate-300 text-sm leading-relaxed">${card.description[lang]}</p>
-              <span class="mt-2 inline-flex items-center ${card.accent} text-sm group-hover:translate-x-1 transition">
+              <p class="${descriptionClass}">${card.description[lang]}</p>
+              <span class="mt-2 inline-flex items-center ${accentClass} text-sm group-hover:translate-x-1 transition">
                 ${translations.linkLabel[lang]}
               </span>
             </div>
-          </a>
-        `).join('');
+          </a>`;
+        }).join('');
+      }
+
+      function updateThemeToggleLabel() {
+        if (!themeToggle) return;
+        const label = currentTheme === 'dark' ? translations.themeLight[currentLang] : translations.themeDark[currentLang];
+        const base = 'inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition';
+        const themeClass = currentTheme === 'light'
+          ? 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+          : 'border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10';
+        themeToggle.textContent = label;
+        themeToggle.setAttribute('aria-label', label);
+        themeToggle.setAttribute('title', label);
+        themeToggle.className = `${base} ${themeClass}`;
+      }
+
+      function applyTheme(theme, persist = false) {
+        const nextTheme = theme === 'light' ? 'light' : 'dark';
+        currentTheme = nextTheme;
+        body.classList.toggle('theme-light', nextTheme === 'light');
+        body.classList.toggle('theme-dark', nextTheme === 'dark');
+        if (nextTheme === 'light') {
+          body.classList.remove('bg-slate-900', 'text-slate-100');
+          body.classList.add('bg-slate-50', 'text-slate-900');
+          if (heroDescriptionEl) {
+            heroDescriptionEl.classList.remove('text-slate-300');
+            heroDescriptionEl.classList.add('text-slate-600');
+          }
+          if (heroTagEl) {
+            heroTagEl.classList.remove('text-indigo-300');
+            heroTagEl.classList.add('text-indigo-600');
+          }
+          [footerTextEl, footerPrivacyEl, footerTermsEl].forEach(el => {
+            if (!el) return;
+            el.classList.remove('text-slate-400');
+            el.classList.add('text-slate-500');
+          });
+        } else {
+          body.classList.remove('bg-slate-50', 'text-slate-900');
+          body.classList.add('bg-slate-900', 'text-slate-100');
+          if (heroDescriptionEl) {
+            heroDescriptionEl.classList.remove('text-slate-600');
+            heroDescriptionEl.classList.add('text-slate-300');
+          }
+          if (heroTagEl) {
+            heroTagEl.classList.remove('text-indigo-600');
+            heroTagEl.classList.add('text-indigo-300');
+          }
+          [footerTextEl, footerPrivacyEl, footerTermsEl].forEach(el => {
+            if (!el) return;
+            el.classList.remove('text-slate-500');
+            el.classList.add('text-slate-400');
+          });
+        }
+        updateThemeToggleLabel();
+        renderBadges(currentLang);
+        renderCards(currentLang);
+        updateSwitcherButtons();
+        if (persist) {
+          try {
+            localStorage.setItem(themeStorageKey, nextTheme);
+          } catch (error) {
+            // ignore storage issues
+          }
+        }
       }
 
       function setLanguage(lang) {
@@ -481,9 +616,18 @@
         renderBadges(lang);
         renderCards(lang);
         updateSwitcherButtons();
+        updateThemeToggleLabel();
+      }
+
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const next = currentTheme === 'dark' ? 'light' : 'dark';
+          applyTheme(next, true);
+        });
       }
 
       setLanguage(currentLang);
+      applyTheme(currentTheme);
     })();
   </script>
 </body>

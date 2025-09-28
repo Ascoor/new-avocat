@@ -8,6 +8,15 @@ body.sidebar-mini #sidebar { overflow-y: auto; }
 .dashboard-fade-in[style*="--dashboard-delay"] { animation-delay: var(--dashboard-delay); }
 body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradient 22s ease infinite; }
 @keyframes dashboardGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.theme-light { color-scheme: light; }
+.theme-light body, body.theme-light { color-scheme: light; }
+.theme-light .bg-white\/5 { background-color: rgba(15, 23, 42, 0.08) !important; }
+.theme-light .bg-white\/10 { background-color: rgba(15, 23, 42, 0.12) !important; }
+.theme-light .bg-white\/20 { background-color: rgba(15, 23, 42, 0.18) !important; }
+.theme-light .text-slate-300 { color: rgb(100 116 139) !important; }
+.theme-light .text-slate-400 { color: rgb(148 163 184) !important; }
+.theme-light .border-white\/10 { border-color: rgba(148, 163, 184, 0.25) !important; }
+.theme-light .border-white\/5 { border-color: rgba(148, 163, 184, 0.18) !important; }
 `;
   if (!document.getElementById(RUNTIME_STYLE_ID)) {
     const style = document.createElement('style');
@@ -37,6 +46,7 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
     'tv': 'M4.5 3.75A2.25 2.25 0 0 1 6.75 1.5h10.5A2.25 2.25 0 0 1 19.5 3.75V16.5h1.5a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h1.5V3.75z',
     'map': 'M9.75 2.25a.75.75 0 0 1 .45.15l2.55 1.913 2.55-1.913a.75.75 0 0 1 .9 0l3 2.25a.75.75 0 0 1 .3.6v14.25a.75.75 0 0 1-1.2.6l-2.55-1.913-2.55 1.913a.75.75 0 0 1-.9 0l-2.55-1.913-2.55 1.913a.75.75 0 0 1-.9 0l-3-2.25a.75.75 0 0 1-.3-.6V3.15a.75.75 0 0 1 1.2-.6l2.55 1.913 2.55-1.913a.75.75 0 0 1 .45-.15z',
     'sun': 'M12 3.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V4.5a.75.75 0 0 1 .75-.75zm6.364 1.636a.75.75 0 0 1 0 1.06l-1.061 1.061a.75.75 0 0 1-1.06-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm8.25 3a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75zM6.75 12a.75.75 0 0 1-.75.75H4.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75zm13.114 4.886a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 1 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zM12 18.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75zm-6.364-1.364a.75.75 0 0 1 0 1.06l-1.06 1.061a.75.75 0 0 1-1.061-1.06l1.06-1.061a.75.75 0 0 1 1.061 0zM5.114 6.614a.75.75 0 0 1 0-1.06l1.06-1.061a.75.75 0 1 1 1.061 1.06L6.175 6.614a.75.75 0 0 1-1.061 0z',
+    'moon': 'M21 12.75a9 9 0 0 1-8.818 8.996 9.002 9.002 0 0 1-8.2-13.038 8.25 8.25 0 0 0 11.06 11.06A9 9 0 0 0 21 12.75z',
     'trophy': 'M5.25 3A2.25 2.25 0 0 1 7.5.75h9A2.25 2.25 0 0 1 18.75 3v1.5H21a.75.75 0 0 1 .75.75 4.5 4.5 0 0 1-4.365 4.497A6.753 6.753 0 0 1 13.5 13.2v2.55h2.25a.75.75 0 0 1 0 1.5H8.25a.75.75 0 0 1 0-1.5H10.5V13.2a6.753 6.753 0 0 1-3.885-3.453A4.5 4.5 0 0 1 2.25 5.25a.75.75 0 0 1 .75-.75h2.25V3zm0 3h-1.5a3 3 0 0 0 2.829 2.987A6.717 6.717 0 0 1 5.25 6zm12 0a6.717 6.717 0 0 1-1.329 2.987A3 3 0 0 0 18.75 6h-1.5z',
     'book-open': 'M12 4.5c-1.07-1-2.534-1.5-4.364-1.5C4.221 3 2 4.586 2 7.5v9a.75.75 0 0 0 .75.75c2.59 0 4.36.353 5.386 1.223.884.748 1.36 1.789 1.864 3.259a.75.75 0 0 0 1.4 0c.504-1.47.98-2.511 1.864-3.259 1.026-.87 2.795-1.223 5.386-1.223a.75.75 0 0 0 .75-.75v-9c0-2.914-2.221-4.5-5.636-4.5C14.534 3 13.07 3.5 12 4.5z',
     'presentation-chart': 'M3 3.75A2.25 2.25 0 0 1 5.25 1.5h13.5A2.25 2.25 0 0 1 21 3.75V9H3V3.75zm0 7.5h18v4.5A2.25 2.25 0 0 1 18.75 18H13.5v2.25H15a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5h1.5V18H5.25A2.25 2.25 0 0 1 3 15.75v-4.5z',
@@ -58,11 +68,6 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="${classes}"><path d="${path}" /></svg>`;
   }
 
-  function formatDelta(delta, trend) {
-    const base = trend === 'negative' ? 'text-rose-400' : trend === 'neutral' ? 'text-amber-400' : 'text-emerald-400';
-    return `${base} text-sm font-medium`;
-  }
-
   function initDashboard(config) {
     const html = document.documentElement;
     const body = document.body;
@@ -76,46 +81,211 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       open: { ar: 'فتح القائمة', en: 'Open menu' },
       close: { ar: 'إغلاق', en: 'Close' },
       collapse: { ar: 'تصغير الشريط', en: 'Collapse sidebar' },
-      expand: { ar: 'توسيع الشريط', en: 'Expand sidebar' }
+      expand: { ar: 'توسيع الشريط', en: 'Expand sidebar' },
+      themeToLight: { ar: 'وضع النهار', en: 'Day mode' },
+      themeToDark: { ar: 'وضع الليل', en: 'Night mode' }
     };
     config.actions = Object.assign({}, defaultActions, config.actions || {});
-    for (const key of Object.keys(defaultActions)) {
+    Object.keys(defaultActions).forEach(key => {
       config.actions[key] = Object.assign({}, defaultActions[key], config.actions[key] || {});
+    });
+
+    const DEFAULT_THEMES = {
+      dark: {
+        bodyBase: 'bg-slate-950 text-slate-100',
+        bodyGradient: '',
+        sidebarBase: 'bg-slate-950/80 backdrop-blur-xl lg:bg-slate-950/60',
+        sidebarGradient: '',
+        sidebarBorder: 'border-slate-800/70',
+        sidebarBackdrop: 'bg-slate-900/70',
+        cardBg: 'bg-slate-900/70 backdrop-blur-xl',
+        cardBorder: 'border-slate-800/60',
+        cardShadow: 'shadow-[0_28px_65px_-40px_rgba(15,23,42,0.8)]',
+        accentGradient: 'from-indigo-500 to-purple-500',
+        accentText: 'text-indigo-300',
+        highlightBg: 'bg-indigo-500/10 border-indigo-500/20',
+        badgeBg: 'bg-indigo-500/20',
+        badgeText: 'text-white',
+        mutedText: 'text-slate-400',
+        subtleText: 'text-slate-300',
+        navDefault: 'border border-slate-800/70 hover:bg-slate-900/70',
+        navActive: 'border border-indigo-400/40 bg-indigo-500/10',
+        navIconBg: 'bg-slate-900/70',
+        navBadgeText: 'text-slate-400',
+        statLabel: 'text-slate-400',
+        statIconBg: 'bg-slate-900/70',
+        deltaPositive: 'text-emerald-400',
+        deltaNegative: 'text-rose-400',
+        deltaNeutral: 'text-amber-400',
+        primaryButton: 'bg-white/10 text-white hover:bg-white/20 focus:ring-white/30',
+        secondaryButton: 'border border-white/10 text-slate-200 hover:bg-white/10',
+        placeholderBorder: 'border-white/10',
+        listBg: 'bg-slate-900/70',
+        listBorder: 'border border-slate-800/70',
+        listMuted: 'text-slate-400',
+        progressTrack: 'bg-slate-900/70',
+        timelineIconBg: 'bg-slate-900/70',
+        timelineLine: 'bg-slate-800/70',
+        timelineChip: 'bg-slate-900/70 text-slate-300',
+        tableHeaderBg: 'bg-slate-900/60',
+        tableHeaderText: 'text-slate-300',
+        tableBorder: 'border-slate-800/60',
+        themeToggleButton: 'border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10',
+        themeToggleIconBg: 'bg-white/10',
+        focusRing: 'focus:outline-none focus:ring-2 focus:ring-indigo-400/60 focus:ring-offset-0',
+        pillButton: 'border border-white/10 text-slate-200 bg-transparent hover:bg-white/10',
+        pillButtonActive: 'border border-white/20 bg-white/10 text-white'
+      },
+      light: {
+        bodyBase: 'bg-slate-50 text-slate-900',
+        bodyGradient: '',
+        sidebarBase: 'bg-white/90 backdrop-blur-xl lg:bg-white/70',
+        sidebarGradient: '',
+        sidebarBorder: 'border-slate-200',
+        sidebarBackdrop: 'bg-slate-900/30',
+        cardBg: 'bg-white/90 backdrop-blur-xl',
+        cardBorder: 'border-slate-200',
+        cardShadow: 'shadow-[0_24px_60px_-35px_rgba(15,23,42,0.35)]',
+        accentGradient: 'from-indigo-500 to-purple-500',
+        accentText: 'text-indigo-600',
+        highlightBg: 'bg-indigo-500/10 border-indigo-300/60',
+        badgeBg: 'bg-indigo-500/10',
+        badgeText: 'text-indigo-600',
+        mutedText: 'text-slate-500',
+        subtleText: 'text-slate-500',
+        navDefault: 'border border-slate-200 hover:bg-slate-100/80',
+        navActive: 'border border-indigo-200 bg-indigo-500/10',
+        navIconBg: 'bg-slate-100',
+        navBadgeText: 'text-slate-500',
+        statLabel: 'text-slate-500',
+        statIconBg: 'bg-slate-100',
+        deltaPositive: 'text-emerald-500',
+        deltaNegative: 'text-rose-500',
+        deltaNeutral: 'text-amber-500',
+        primaryButton: 'bg-slate-900 text-white hover:bg-slate-800 focus:ring-slate-900/20',
+        secondaryButton: 'border border-slate-300 text-slate-700 hover:bg-slate-100',
+        placeholderBorder: 'border-slate-200',
+        listBg: 'bg-white',
+        listBorder: 'border border-slate-200',
+        listMuted: 'text-slate-500',
+        progressTrack: 'bg-slate-200',
+        timelineIconBg: 'bg-slate-100',
+        timelineLine: 'bg-slate-200',
+        timelineChip: 'bg-slate-100 text-slate-600',
+        tableHeaderBg: 'bg-slate-100/80',
+        tableHeaderText: 'text-slate-500',
+        tableBorder: 'border-slate-200',
+        themeToggleButton: 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100',
+        themeToggleIconBg: 'bg-slate-900/5',
+        focusRing: 'focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-0',
+        pillButton: 'border border-slate-200 text-slate-700 bg-white/80 hover:bg-slate-100',
+        pillButtonActive: 'border border-slate-300 bg-slate-900/10 text-slate-900'
+      }
+    };
+
+    function sanitizeTheme(overrides) {
+      if (!overrides || typeof overrides !== 'object') return {};
+      const result = {};
+      Object.keys(overrides).forEach(key => {
+        if (key === 'dark' || key === 'light' || key === 'defaultMode') return;
+        result[key] = overrides[key];
+      });
+      return result;
     }
 
-    const theme = Object.assign({
-      bodyGradient: '',
-      sidebarGradient: '',
-      sidebarBorder: '',
-      cardBg: 'bg-slate-900/70 backdrop-blur-xl',
-      cardBorder: 'border-slate-800/60',
-      cardShadow: 'shadow-[0_28px_65px_-40px_rgba(15,23,42,0.8)]',
-      accentGradient: 'from-indigo-500 to-purple-500',
-      accentText: 'text-indigo-400',
-      highlightBg: 'bg-indigo-500/10 border-indigo-500/20',
-      badgeBg: 'bg-indigo-500/20',
-      badgeText: 'text-white'
-    }, config.theme || {});
+    const themeConfig = config.theme || {};
+    const hasExplicitModes = typeof themeConfig.dark === 'object' || typeof themeConfig.light === 'object';
+    const themeModes = {
+      dark: Object.assign({}, DEFAULT_THEMES.dark, sanitizeTheme(hasExplicitModes ? themeConfig.dark : themeConfig)),
+      light: Object.assign({}, DEFAULT_THEMES.light, sanitizeTheme(hasExplicitModes ? themeConfig.light : themeConfig.light))
+    };
 
-    body.classList.add('antialiased', 'bg-slate-950', 'text-slate-100', 'transition-colors', 'duration-500');
-    if (theme.bodyGradient) {
-      body.classList.add('bg-gradient-to-br');
-      theme.bodyGradient.split(/\s+/).filter(Boolean).forEach(cls => body.classList.add(cls));
-      body.classList.add('dashboard-animated');
+    const themeStorageKey = `dashboard:theme:${window.location.pathname}`;
+    const requestedMode = themeConfig.defaultMode === 'light' ? 'light' : 'dark';
+    let themeMode = requestedMode;
+    try {
+      const storedTheme = localStorage.getItem(themeStorageKey);
+      if (storedTheme === 'light' || storedTheme === 'dark') {
+        themeMode = storedTheme;
+      }
+    } catch (error) {
+      themeMode = requestedMode;
     }
+    if (!themeModes[themeMode]) {
+      themeMode = 'dark';
+    }
+    let theme = themeModes[themeMode];
+
+    body.classList.add('antialiased', 'transition-colors', 'duration-500');
+    body.classList.remove('bg-slate-950', 'text-slate-100');
     if (shell) {
       shell.classList.add('dashboard-shell');
     }
     if (sidebar) {
       sidebar.classList.add('transition-all', 'duration-300', 'will-change-transform');
-      if (theme.sidebarGradient) {
-        sidebar.classList.add('bg-gradient-to-b');
-        theme.sidebarGradient.split(/\s+/).filter(Boolean).forEach(cls => sidebar.classList.add(cls));
+      sidebar.classList.remove('bg-slate-900/95', 'lg:bg-slate-900/60', 'border-white/10', 'lg:border-l-0');
+    }
+    if (sidebarBackdrop) {
+      sidebarBackdrop.classList.remove('bg-black/60');
+    }
+
+    const appliedClasses = {
+      bodyBase: [],
+      bodyGradient: [],
+      sidebarBase: [],
+      sidebarGradient: [],
+      sidebarBorder: [],
+      sidebarBackdrop: []
+    };
+
+    function parseClasses(value) {
+      if (!value || typeof value !== 'string') return [];
+      return value.split(/\s+/).filter(Boolean);
+    }
+
+    function setClassList(element, key, classes) {
+      if (!element) return;
+      const previous = appliedClasses[key] || [];
+      if (previous.length) {
+        element.classList.remove(...previous);
       }
-      if (theme.sidebarBorder) {
-        sidebar.classList.remove('border-white/10');
-        theme.sidebarBorder.split(/\s+/).filter(Boolean).forEach(cls => sidebar.classList.add(cls));
+      const next = Array.isArray(classes) ? classes : parseClasses(classes);
+      if (next.length) {
+        element.classList.add(...next);
       }
+      appliedClasses[key] = next;
+    }
+
+    function updateThemePresentation() {
+      setClassList(body, 'bodyBase', parseClasses(theme.bodyBase));
+      if (theme.bodyGradient) {
+        setClassList(body, 'bodyGradient', ['bg-gradient-to-br', 'dashboard-animated'].concat(parseClasses(theme.bodyGradient)));
+      } else {
+        if (appliedClasses.bodyGradient.length) {
+          body.classList.remove(...appliedClasses.bodyGradient);
+        }
+        body.classList.remove('bg-gradient-to-br', 'dashboard-animated');
+        appliedClasses.bodyGradient = [];
+      }
+      setClassList(sidebar, 'sidebarBase', parseClasses(theme.sidebarBase));
+      if (sidebar) {
+        if (theme.sidebarGradient) {
+          setClassList(sidebar, 'sidebarGradient', ['bg-gradient-to-b'].concat(parseClasses(theme.sidebarGradient)));
+        } else {
+          if (appliedClasses.sidebarGradient.length) {
+            sidebar.classList.remove(...appliedClasses.sidebarGradient);
+          }
+          sidebar.classList.remove('bg-gradient-to-b');
+          appliedClasses.sidebarGradient = [];
+        }
+      }
+      setClassList(sidebar, 'sidebarBorder', parseClasses(theme.sidebarBorder));
+      setClassList(sidebarBackdrop, 'sidebarBackdrop', parseClasses(theme.sidebarBackdrop));
+      body.classList.toggle('theme-light', themeMode === 'light');
+      body.classList.toggle('theme-dark', themeMode === 'dark');
+      html.classList.toggle('theme-light', themeMode === 'light');
+      html.classList.toggle('theme-dark', themeMode === 'dark');
+      document.documentElement.style.colorScheme = themeMode === 'light' ? 'light' : 'dark';
     }
 
     const storageKey = `dashboard:mini:${window.location.pathname}`;
@@ -134,6 +304,16 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
     let miniLabelNodes = [];
     let miniIconNodes = [];
     let miniToggle = null;
+    let miniBaseClasses = [];
+    const themeButtons = [];
+    const langButtons = [];
+    let offscreenClass = 'translate-x-full';
+
+    function deltaClass(trend) {
+      if (trend === 'negative') return theme.deltaNegative;
+      if (trend === 'neutral') return theme.deltaNeutral;
+      return theme.deltaPositive;
+    }
 
     function syncMiniPresentation() {
       const active = miniState && lgQuery.matches;
@@ -193,6 +373,16 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       syncMiniPresentation();
     }
 
+    function updateMiniToggleTheme() {
+      if (!miniToggle) return;
+      const base = miniBaseClasses.join(' ');
+      miniToggle.className = `${base} ${theme.secondaryButton} ${theme.focusRing}`.trim();
+      miniIconNodes.forEach(icon => {
+        icon.className = `h-8 w-8 rounded-lg flex items-center justify-center transition-transform duration-300 ${theme.navIconBg}`;
+        icon.innerHTML = createIcon('layout-sidebar', `h-4 w-4 ${theme.accentText}`);
+      });
+    }
+
     function createMiniToggle() {
       if (!sidebar) return null;
       const headerRow = sidebar.querySelector('.flex.items-start.justify-between.gap-3');
@@ -200,10 +390,11 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       if (!actionsWrap) return null;
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = 'hidden lg:inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20 transition';
+      miniBaseClasses = ['hidden', 'lg:inline-flex', 'items-center', 'gap-2', 'rounded-xl', 'text-xs', 'font-semibold', 'transition'];
+      button.className = `${miniBaseClasses.join(' ')} ${theme.secondaryButton} ${theme.focusRing}`.trim();
       button.innerHTML = `
-        <span data-role="mini-icon" class="h-8 w-8 rounded-lg flex items-center justify-center bg-white/10 transition-transform duration-300">
-          ${createIcon('layout-sidebar', 'h-4 w-4 text-white')}
+        <span data-role="mini-icon" class="h-8 w-8 rounded-lg flex items-center justify-center transition-transform duration-300 ${theme.navIconBg}">
+          ${createIcon('layout-sidebar', `h-4 w-4 ${theme.accentText}`)}
         </span>
         <span data-role="mini-label" class="mini-label whitespace-nowrap transition-opacity duration-300"></span>
       `;
@@ -218,7 +409,7 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
 
     function openSidebar() {
       if (!sidebar) return;
-      sidebar.classList.remove('translate-x-full');
+      sidebar.classList.remove(offscreenClass);
       sidebar.classList.add('translate-x-0');
       if (sidebarBackdrop) {
         sidebarBackdrop.classList.remove('pointer-events-none');
@@ -228,7 +419,7 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
 
     function closeSidebar() {
       if (!sidebar) return;
-      sidebar.classList.add('translate-x-full');
+      sidebar.classList.add(offscreenClass);
       sidebar.classList.remove('translate-x-0');
       if (sidebarBackdrop) {
         sidebarBackdrop.classList.add('pointer-events-none');
@@ -246,7 +437,6 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
     });
 
     const languageContainers = document.querySelectorAll('[data-role="language-switcher"]');
-    const langButtons = [];
     languageContainers.forEach(container => {
       if (!container) return;
       container.innerHTML = '';
@@ -255,7 +445,7 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
         button.type = 'button';
         button.dataset.langButton = lang;
         button.textContent = lang === 'ar' ? 'ع' : 'En';
-        button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition border border-white/10 text-slate-200 bg-transparent hover:bg-white/10';
+        button.className = 'px-3 py-1 text-xs font-semibold rounded-lg transition';
         button.setAttribute('aria-pressed', 'false');
         container.appendChild(button);
         langButtons.push(button);
@@ -264,6 +454,52 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
 
     miniToggle = createMiniToggle();
 
+    function updateThemeButtons() {
+      const targetMode = themeMode === 'dark' ? 'light' : 'dark';
+      const label = targetMode === 'light' ? config.actions.themeToLight[currentLang] : config.actions.themeToDark[currentLang];
+      themeButtons.forEach(entry => {
+        const { button, icon, labelNode, baseClasses } = entry;
+        button.className = `${baseClasses.join(' ')} ${theme.themeToggleButton} ${theme.focusRing}`.trim();
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
+        button.setAttribute('aria-pressed', themeMode === 'light' ? 'true' : 'false');
+        icon.className = `h-8 w-8 rounded-lg flex items-center justify-center transition-transform duration-300 ${theme.themeToggleIconBg}`;
+        icon.innerHTML = createIcon(targetMode === 'light' ? 'sun' : 'moon', `h-4 w-4 ${theme.accentText}`);
+        labelNode.textContent = label;
+      });
+    }
+
+    function initThemeButtons() {
+      const containers = document.querySelectorAll('[data-role="theme-toggle"]');
+      containers.forEach(container => {
+        const baseClasses = container.className ? container.className.split(/\s+/).filter(Boolean) : [];
+        if (!baseClasses.includes('inline-flex') && !baseClasses.includes('flex')) {
+          baseClasses.push('inline-flex');
+        }
+        if (!baseClasses.includes('items-center')) baseClasses.push('items-center');
+        if (!baseClasses.includes('gap-2')) baseClasses.push('gap-2');
+        if (!baseClasses.includes('rounded-xl')) baseClasses.push('rounded-xl');
+        if (!baseClasses.includes('text-xs')) baseClasses.push('text-xs');
+        if (!baseClasses.includes('font-semibold')) baseClasses.push('font-semibold');
+        if (!baseClasses.includes('transition')) baseClasses.push('transition');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = baseClasses.join(' ');
+        button.setAttribute('data-theme-toggle-button', '');
+        const icon = document.createElement('span');
+        const labelNode = document.createElement('span');
+        labelNode.classList.add('whitespace-nowrap');
+        button.appendChild(icon);
+        button.appendChild(labelNode);
+        container.replaceWith(button);
+        themeButtons.push({ button, icon, label: labelNode, baseClasses });
+        button.addEventListener('click', () => {
+          setThemeMode(themeMode === 'dark' ? 'light' : 'dark', true);
+        });
+      });
+      updateThemeButtons();
+    }
+
     langButtons.forEach(btn => {
       btn.addEventListener('click', () => setLanguage(btn.dataset.langButton));
     });
@@ -271,10 +507,9 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
     function updateLanguageButtons() {
       langButtons.forEach(btn => {
         const active = btn.dataset.langButton === currentLang;
-        btn.classList.toggle('bg-white/10', active);
-        btn.classList.toggle('text-white', active);
-        btn.classList.toggle('border-white/10', true);
-        btn.classList.toggle('opacity-70', !active);
+        const base = ['px-3', 'py-1', 'text-xs', 'font-semibold', 'rounded-lg', 'transition'];
+        const themeClasses = parseClasses(active ? theme.pillButtonActive : theme.pillButton);
+        btn.className = base.concat(themeClasses).join(' ');
         btn.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
     }
@@ -298,6 +533,7 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       taglineElements.forEach(el => {
         if (el) {
           el.textContent = config.brand.tagline[lang];
+          el.className = `text-sm ${theme.subtleText}`;
         }
       });
     }
@@ -309,15 +545,16 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       navLinks = [];
       navLabels = [];
       navBadges = [];
+      const baseClasses = 'flex items-center justify-between px-4 py-3 rounded-xl transition duration-200';
       (config.nav || []).forEach((item, index) => {
         const link = document.createElement('a');
         link.href = `#${item.id}`;
         link.title = item.label[lang];
-        link.className = `flex items-center justify-between px-4 py-3 rounded-xl border transition ${index === 0 ? 'bg-white/10 border-white/10' : 'border-white/5 hover:bg-white/5'}`;
+        link.className = `${baseClasses} ${index === 0 ? theme.navActive : theme.navDefault}`;
         const left = document.createElement('span');
         left.className = 'flex items-center gap-3 text-sm transition-all duration-300';
         const iconWrapper = document.createElement('span');
-        iconWrapper.className = 'h-9 w-9 rounded-xl flex items-center justify-center bg-white/5';
+        iconWrapper.className = `h-9 w-9 rounded-xl flex items-center justify-center ${theme.navIconBg}`;
         iconWrapper.innerHTML = createIcon(item.icon, `h-5 w-5 ${theme.accentText}`);
         const labelSpan = document.createElement('span');
         labelSpan.className = 'sidebar-label font-medium transition-all duration-300';
@@ -326,7 +563,7 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
         left.appendChild(labelSpan);
         link.appendChild(left);
         const badgeSpan = document.createElement('span');
-        badgeSpan.className = 'sidebar-badge text-xs text-slate-400 transition-all duration-300';
+        badgeSpan.className = `sidebar-badge text-xs transition-all duration-300 ${theme.navBadgeText}`;
         badgeSpan.textContent = item.badge ? item.badge[lang] : '';
         link.appendChild(badgeSpan);
         navContainer.appendChild(link);
@@ -341,9 +578,9 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       if (!highlight || !config.highlight) return;
       highlight.innerHTML = `
         <div class="rounded-2xl border ${theme.highlightBg} ${theme.cardShadow} p-5 space-y-3">
-          <p class="text-xs uppercase tracking-wide text-slate-400">${config.highlight.label[lang]}</p>
+          <p class="text-xs uppercase tracking-wide ${theme.mutedText}">${config.highlight.label[lang]}</p>
           <p class="text-2xl font-semibold">${config.highlight.value}</p>
-          <p class="text-sm text-slate-300">${config.highlight.description[lang]}</p>
+          <p class="text-sm ${theme.subtleText}">${config.highlight.description[lang]}</p>
         </div>
       `;
       const card = highlight.querySelector('div');
@@ -356,12 +593,12 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
     function renderHeader(lang) {
       const header = document.querySelector('[data-role="main-header"]');
       if (!header) return;
-      const primary = config.header.primary ? `<button class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20">${config.header.primary[lang]}</button>` : '';
-      const secondary = config.header.secondary ? `<button class="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-white/5">${config.header.secondary[lang]}</button>` : '';
+      const primary = config.header.primary ? `<button class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold ${theme.primaryButton} ${theme.focusRing}">${config.header.primary[lang]}</button>` : '';
+      const secondary = config.header.secondary ? `<button class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold ${theme.secondaryButton} ${theme.focusRing}">${config.header.secondary[lang]}</button>` : '';
       header.innerHTML = `
         <div>
           <h1 class="text-3xl font-bold">${config.header.title[lang]}</h1>
-          <p class="mt-2 text-slate-300">${config.header.subtitle[lang]}</p>
+          <p class="mt-2 ${theme.subtleText}">${config.header.subtitle[lang]}</p>
         </div>
         <div class="flex flex-wrap gap-3">
           ${secondary}
@@ -384,14 +621,14 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
         card.innerHTML = `
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-slate-400">${stat.label[lang]}</p>
+              <p class="text-sm ${theme.statLabel}">${stat.label[lang]}</p>
               <p class="mt-3 text-3xl font-semibold">${stat.value}</p>
             </div>
-            <span class="h-12 w-12 rounded-xl flex items-center justify-center bg-white/5">
+            <span class="h-12 w-12 rounded-xl flex items-center justify-center ${theme.statIconBg}">
               ${createIcon(stat.icon, `h-6 w-6 ${theme.accentText}`)}
             </span>
           </div>
-          <p class="${formatDelta('', stat.trend)}">${stat.delta[lang]}</p>
+          <p class="${deltaClass(stat.trend)} text-sm font-medium">${stat.delta[lang]}</p>
         `;
         statsContainer.appendChild(card);
       });
@@ -415,29 +652,29 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 class="text-xl font-semibold">${panel.title[lang]}</h2>
-                <p class="text-sm text-slate-300">${panel.subtitle[lang]}</p>
+                <p class="text-sm ${theme.subtleText}">${panel.subtitle[lang]}</p>
               </div>
-              ${panel.action ? `<button class="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-200 hover:bg-white/5">${panel.action[lang]}</button>` : ''}
+              ${panel.action ? `<button class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold ${theme.secondaryButton} ${theme.focusRing}">${panel.action[lang]}</button>` : ''}
             </div>
-            <div class="h-56 rounded-2xl border border-dashed border-white/10 bg-gradient-to-br ${theme.accentGradient} opacity-80 flex items-center justify-center text-sm text-white/80">
+            <div class="h-56 rounded-2xl border border-dashed ${theme.placeholderBorder} bg-gradient-to-br ${theme.accentGradient} opacity-90 flex items-center justify-center text-sm text-white/90">
               ${panel.placeholder[lang]}
             </div>
           `;
         } else if (panel.type === 'list') {
           const items = (panel.items || []).map(item => `
-            <div class="flex items-center justify-between rounded-xl border border-white/5 bg-white/5 px-4 py-3">
+            <div class="flex items-center justify-between rounded-xl ${theme.listBorder} ${theme.listBg} px-4 py-3">
               <div class="flex items-center gap-3">
-                <span class="h-10 w-10 rounded-xl flex items-center justify-center bg-white/5">
+                <span class="h-10 w-10 rounded-xl flex items-center justify-center ${theme.timelineIconBg}">
                   ${createIcon(item.icon || 'sparkles', `h-5 w-5 ${theme.accentText}`)}
                 </span>
                 <div>
                   <p class="text-sm font-semibold">${item.title[lang]}</p>
-                  <p class="text-xs text-slate-400">${item.subtitle[lang]}</p>
+                  <p class="text-xs ${theme.listMuted}">${item.subtitle[lang]}</p>
                 </div>
               </div>
               <div class="text-right">
                 <p class="text-base font-semibold">${item.value}</p>
-                <p class="text-xs text-slate-400">${item.delta[lang]}</p>
+                <p class="text-xs ${theme.listMuted}">${item.delta[lang]}</p>
               </div>
             </div>
           `).join('');
@@ -445,7 +682,7 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
             <div class="space-y-4">
               <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">${panel.title[lang]}</h2>
-                ${panel.action ? `<span class="text-xs text-slate-400">${panel.action[lang]}</span>` : ''}
+                ${panel.action ? `<span class="text-xs ${theme.listMuted}">${panel.action[lang]}</span>` : ''}
               </div>
               ${items}
             </div>
@@ -455,12 +692,12 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
             <div class="space-y-2">
               <div class="flex items-center justify-between text-sm">
                 <span>${item.title[lang]}</span>
-                <span class="text-slate-400">${item.value}</span>
+                <span class="${theme.subtleText}">${item.value}</span>
               </div>
-              <div class="h-2 rounded-full bg-white/5 overflow-hidden">
+              <div class="h-2 rounded-full ${theme.progressTrack} overflow-hidden">
                 <div class="h-full rounded-full bg-gradient-to-r ${theme.accentGradient}" style="width:${item.percent}"></div>
               </div>
-              <p class="text-xs text-slate-400">${item.subtitle[lang]}</p>
+              <p class="text-xs ${theme.listMuted}">${item.subtitle[lang]}</p>
             </div>
           `).join('');
           content = `
@@ -470,21 +707,21 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
             </div>
           `;
         } else if (panel.type === 'table') {
-          const headers = (panel.headers || []).map(header => `<th class="px-4 py-2 text-left text-xs font-semibold text-slate-400">${header[lang]}</th>`).join('');
-          const rows = (panel.rows || []).map(row => `<tr class="border-t border-white/5">
+          const headers = (panel.headers || []).map(header => `<th class="px-4 py-2 text-left text-xs font-semibold ${theme.tableHeaderText}">${header[lang]}</th>`).join('');
+          const rows = (panel.rows || []).map(row => `<tr class="border-t ${theme.tableBorder}">
               <td class="px-4 py-3 text-sm font-medium">${row.name[lang]}</td>
-              <td class="px-4 py-3 text-sm text-slate-300">${row.metric}</td>
-              <td class="px-4 py-3 text-sm ${row.trend === 'negative' ? 'text-rose-400' : 'text-emerald-400'}">${row.delta[lang]}</td>
+              <td class="px-4 py-3 text-sm ${theme.subtleText}">${row.metric}</td>
+              <td class="px-4 py-3 text-sm ${deltaClass(row.trend)} font-medium">${row.delta[lang]}</td>
             </tr>`).join('');
           content = `
             <div class="space-y-4 overflow-hidden">
               <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold">${panel.title[lang]}</h2>
-                ${panel.action ? `<span class="text-xs text-slate-400">${panel.action[lang]}</span>` : ''}
+                ${panel.action ? `<span class="text-xs ${theme.listMuted}">${panel.action[lang]}</span>` : ''}
               </div>
               <div class="overflow-x-auto">
                 <table class="min-w-full text-left">
-                  <thead class="bg-white/5">
+                  <thead class="${theme.tableHeaderBg}">
                     <tr>${headers}</tr>
                   </thead>
                   <tbody>${rows}</tbody>
@@ -496,13 +733,13 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
           const items = (panel.items || []).map(item => `
             <div class="flex gap-4">
               <div class="flex flex-col items-center">
-                <span class="h-10 w-10 rounded-xl flex items-center justify-center bg-white/5">${createIcon(item.icon || 'sparkles', `h-5 w-5 ${theme.accentText}`)}</span>
-                <span class="flex-1 w-px bg-white/10"></span>
+                <span class="h-10 w-10 rounded-xl flex items-center justify-center ${theme.timelineIconBg}">${createIcon(item.icon || 'sparkles', `h-5 w-5 ${theme.accentText}`)}</span>
+                <span class="flex-1 w-px ${theme.timelineLine}"></span>
               </div>
               <div class="pb-6">
                 <p class="text-sm font-semibold">${item.title[lang]}</p>
-                <p class="text-xs text-slate-400 mt-1">${item.subtitle[lang]}</p>
-                <span class="inline-flex items-center gap-1 rounded-full bg-white/5 px-3 py-1 text-xs text-slate-300 mt-3">${item.time[lang]}</span>
+                <p class="text-xs ${theme.listMuted} mt-1">${item.subtitle[lang]}</p>
+                <span class="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs ${theme.timelineChip} mt-3">${item.time[lang]}</span>
               </div>
             </div>
           `).join('');
@@ -518,31 +755,91 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       });
     }
 
+    function renderAll() {
+      renderBrand(currentLang);
+      renderNav(currentLang);
+      renderHighlight(currentLang);
+      renderHeader(currentLang);
+      renderStats(currentLang);
+      renderPanels(currentLang);
+    }
+
+    function updateActionLabels() {
+      const openLabel = document.querySelector('[data-role="open-label"]');
+      const closeLabel = document.querySelector('[data-role="close-label"]');
+      if (openLabel) openLabel.textContent = config.actions.open[currentLang];
+      if (closeLabel) closeLabel.textContent = config.actions.close[currentLang];
+      if (sidebarToggle) {
+        sidebarToggle.setAttribute('aria-label', config.actions.open[currentLang]);
+        sidebarToggle.setAttribute('title', config.actions.open[currentLang]);
+      }
+      if (sidebarClose) {
+        sidebarClose.setAttribute('aria-label', config.actions.close[currentLang]);
+        sidebarClose.setAttribute('title', config.actions.close[currentLang]);
+      }
+    }
+
+    function updateDirection(lang) {
+      const isRTL = lang === 'ar';
+      if (sidebar) {
+        sidebar.classList.toggle('right-0', isRTL);
+        sidebar.classList.toggle('left-0', !isRTL);
+        sidebar.classList.toggle('border-l', isRTL);
+        sidebar.classList.toggle('border-r', !isRTL);
+        sidebar.classList.toggle('lg:border-l-0', isRTL);
+        sidebar.classList.toggle('lg:border-r-0', !isRTL);
+        sidebar.classList.remove('translate-x-full', '-translate-x-full');
+        offscreenClass = isRTL ? 'translate-x-full' : '-translate-x-full';
+        sidebar.classList.add(offscreenClass);
+      }
+      if (miniToggle) {
+        miniToggle.classList.toggle('flex-row-reverse', isRTL);
+      }
+    }
+
+    function applyDocumentTitle(lang) {
+      const title = document.querySelector('title');
+      if (title && config.meta && config.meta.title) {
+        title.textContent = config.meta.title[lang];
+      }
+    }
+
+    function setThemeMode(mode, persist) {
+      const nextMode = mode === 'light' ? 'light' : 'dark';
+      themeMode = themeModes[nextMode] ? nextMode : 'dark';
+      theme = themeModes[themeMode];
+      if (persist) {
+        try {
+          localStorage.setItem(themeStorageKey, themeMode);
+        } catch (error) {
+          // ignore storage issues
+        }
+      }
+      updateThemePresentation();
+      renderAll();
+      updateLanguageButtons();
+      updateThemeButtons();
+      updateMiniToggleTheme();
+      syncMiniPresentation();
+    }
+
     function setLanguage(lang) {
       currentLang = lang;
       html.setAttribute('lang', lang);
       html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
       body.classList.toggle('font-english', lang === 'en');
+      updateDirection(lang);
+      renderAll();
       updateLanguageButtons();
-      renderBrand(lang);
-      renderNav(lang);
-      renderHighlight(lang);
-      renderHeader(lang);
-      renderStats(lang);
-      renderPanels(lang);
-      const title = document.querySelector('title');
-      if (title && config.meta && config.meta.title) {
-        title.textContent = config.meta.title[lang];
-      }
-      const openLabel = document.querySelector('[data-role="open-label"]');
-      const closeLabel = document.querySelector('[data-role="close-label"]');
-      if (openLabel) openLabel.textContent = config.actions.open[lang];
-      if (closeLabel) closeLabel.textContent = config.actions.close[lang];
-      if (sidebarToggle) sidebarToggle.setAttribute('aria-label', config.actions.open[lang]);
-      if (sidebarClose) sidebarClose.setAttribute('aria-label', config.actions.close[lang]);
+      updateActionLabels();
+      updateThemeButtons();
+      updateMiniToggleTheme();
+      applyDocumentTitle(lang);
       syncMiniPresentation();
     }
 
+    updateThemePresentation();
+    initThemeButtons();
     setLanguage(currentLang);
     setMiniState(miniState, false);
 
@@ -555,6 +852,5 @@ body.dashboard-animated { background-size: 260% 260%; animation: dashboardGradie
       lgQuery.addListener(handleMediaChange);
     }
   }
-
   window.initDashboard = initDashboard;
 })();

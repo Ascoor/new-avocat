@@ -22,6 +22,7 @@
         </div>
       </div>
       <div class="flex items-center gap-3">
+        <span data-role="theme-toggle" class="lg:hidden"></span>
         <div data-role="language-switcher" class="inline-flex rounded-xl border border-white/10 p-1 bg-white/5"></div>
         <button id="sidebarToggle" class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -44,6 +45,7 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <span data-role="theme-toggle" class="hidden lg:inline-flex"></span>
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -104,16 +106,47 @@
         }
       },
       theme: {
-        bodyGradient: 'from-slate-950 via-teal-950 to-emerald-900',
-        sidebarGradient: 'from-teal-950 via-emerald-900 to-cyan-900',
-        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
-        cardBorder: 'border-teal-400/30',
-        accentGradient: 'from-rose-500 via-red-500 to-amber-500',
-        accentText: 'text-amber-200',
-        highlightBg: 'bg-rose-500/10 border-rose-400/30',
-        badgeBg: 'bg-rose-500/20',
-        badgeText: 'text-white'
+        defaultMode: 'dark',
+        dark: {
+          bodyGradient: 'from-slate-950 via-teal-950 to-emerald-900',
+          sidebarGradient: 'from-teal-950 via-emerald-900 to-cyan-900',
+          cardBg: 'bg-slate-950/60 backdrop-blur-xl',
+          cardBorder: 'border-teal-400/30',
+          accentGradient: 'from-rose-500 via-red-500 to-amber-500',
+          accentText: 'text-amber-200',
+          highlightBg: 'bg-rose-500/10 border-rose-400/30',
+          badgeBg: 'bg-rose-500/20',
+          badgeText: 'text-white',
+          navActive: 'border border-teal-400/40 bg-teal-500/10',
+          navIconBg: 'bg-teal-500/10',
+          navBadgeText: 'text-teal-200',
+          listBorder: 'border border-teal-500/20',
+          listBg: 'bg-slate-900/70',
+          timelineIconBg: 'bg-teal-500/10',
+          timelineChip: 'bg-teal-500/10 text-teal-200',
+          tableHeaderBg: 'bg-teal-500/10'
+        },
+        light: {
+          bodyGradient: 'from-teal-50 via-white to-emerald-100',
+          sidebarGradient: 'from-white via-teal-50 to-emerald-100',
+          cardBg: 'bg-white/90 backdrop-blur-xl',
+          cardBorder: 'border-teal-200',
+          accentGradient: 'from-rose-500 via-red-500 to-amber-500',
+          accentText: 'text-teal-600',
+          highlightBg: 'bg-teal-500/10 border-teal-200/60',
+          badgeBg: 'bg-teal-500/10',
+          badgeText: 'text-teal-700',
+          navActive: 'border border-teal-300 bg-teal-500/10',
+          navIconBg: 'bg-teal-100',
+          navBadgeText: 'text-teal-600',
+          listBorder: 'border border-teal-100',
+          listBg: 'bg-white',
+          timelineIconBg: 'bg-teal-100',
+          timelineChip: 'bg-teal-100 text-teal-700',
+          tableHeaderBg: 'bg-teal-50/80'
+        }
       },
+
       nav: [
         {
           id: 'overview',
