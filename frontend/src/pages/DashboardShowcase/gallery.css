@@ -1,0 +1,174 @@
+@layer components {
+  .gallery-shell {
+    @apply relative min-h-screen overflow-hidden text-slate-100;
+    background: radial-gradient(circle at top, hsl(var(--primary) / 0.18), transparent 65%);
+  }
+
+  .gallery-content {
+    @apply relative z-10 mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-24 pt-12 sm:px-6 lg:px-8;
+  }
+
+  .gallery-header {
+    @apply flex flex-wrap items-center justify-between gap-4;
+  }
+
+  .gallery-actions {
+    @apply flex items-center gap-2;
+  }
+
+  .gallery-hero {
+    @apply mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr];
+  }
+
+  .gallery-hero-card {
+    @apply rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur;
+  }
+
+  .gallery-stats-grid {
+    @apply grid gap-6 sm:grid-cols-2;
+  }
+
+  .gallery-stat {
+    @apply space-y-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-200 shadow-lg;
+  }
+
+  .gallery-search {
+    @apply flex w-full max-w-xl items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-2 backdrop-blur;
+  }
+
+  .gallery-search__input {
+    @apply border-0 bg-transparent text-sm text-white placeholder:text-slate-400 focus-visible:ring-0;
+  }
+
+  .gallery-filters {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .gallery-grid {
+    @apply grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .gallery-empty {
+    @apply col-span-full flex flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-12 text-center text-slate-300;
+  }
+
+  .gallery-card {
+    @apply group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 text-white shadow-xl transition-all duration-500;
+  }
+
+  .gallery-card__preview {
+    @apply relative aspect-[16/9] overflow-hidden;
+  }
+
+  .gallery-card__previewGradient {
+    @apply absolute inset-0 transition-opacity duration-500;
+  }
+
+  .gallery-card__previewOverlay {
+    @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-500;
+  }
+
+  .gallery-card__previewContent {
+    @apply relative z-10 flex h-full flex-col justify-between p-6;
+  }
+
+  .gallery-card__previewBadge {
+    @apply inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-black/30 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em];
+  }
+
+  .gallery-card__previewCategory {
+    @apply text-sm font-medium text-slate-200;
+  }
+
+  .gallery-card__header {
+    @apply space-y-3 px-6 pt-6;
+  }
+
+  .gallery-card__title {
+    @apply text-2xl font-semibold text-white;
+  }
+
+  .gallery-card__summary {
+    @apply text-sm text-slate-200;
+  }
+
+  .gallery-card__content {
+    @apply space-y-6 px-6 pb-6;
+  }
+
+  .gallery-card__features {
+    @apply space-y-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200;
+  }
+
+  .gallery-card__metrics {
+    @apply flex items-center justify-between rounded-2xl border border-indigo-300/30 bg-indigo-500/10 px-5 py-3 text-sm text-indigo-100;
+  }
+
+  .gallery-card__cta {
+    @apply w-full rounded-full;
+  }
+}
+
+.gallery-shell::before,
+.gallery-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gallery-shell::before {
+  background: linear-gradient(130deg, hsl(var(--background)) 15%, hsl(var(--secondary)) 100%);
+  opacity: 0.35;
+}
+
+.gallery-shell::after {
+  background: var(--gradient-aurora);
+  opacity: 0.2;
+}
+
+.gallery-card:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 28px 60px -18px rgba(14, 116, 144, 0.35);
+  border-color: rgba(99, 102, 241, 0.45);
+}
+
+.gallery-card:hover .gallery-card__previewGradient {
+  opacity: 0.65;
+}
+
+.gallery-card:hover .gallery-card__previewOverlay {
+  opacity: 0.35;
+}
+
+.gallery-card__feature {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 0.75rem;
+}
+
+.gallery-card__feature::before {
+  content: "";
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: hsl(225 100% 85% / 0.85);
+}
+
+.gallery-card__feature--more::before {
+  display: none;
+}
+
+.gallery-stat h3 {
+  @apply text-xs font-semibold uppercase tracking-[0.4em] text-indigo-200;
+}
+
+.gallery-stat p {
+  @apply text-slate-300;
+}
+
+.gallery-stat strong {
+  @apply text-4xl font-bold text-white;
+}
