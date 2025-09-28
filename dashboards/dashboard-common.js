@@ -33,7 +33,8 @@
     'film': 'M4.5 3A1.5 1.5 0 0 0 3 4.5v15A1.5 1.5 0 0 0 4.5 21H6v-4.5h3V21h6v-4.5h3V21h1.5a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 19.5 3H18v4.5h-3V3H9v4.5H6V3H4.5z',
     'globe-alt': 'M12 2.25c-5.108 0-9.25 4.142-9.25 9.25s4.142 9.25 9.25 9.25 9.25-4.142 9.25-9.25S17.108 2.25 12 2.25zm7.698 8.25H15.7a15.81 15.81 0 0 0-1.124-5.098 7.754 7.754 0 0 1 5.122 5.098zM12 3.75c1.486 0 3.577 2.735 3.963 6.75H8.037C8.423 6.485 10.514 3.75 12 3.75zM7.3 12.75h9.4a15.81 15.81 0 0 1-1.124 5.098A7.754 7.754 0 0 1 7.3 12.75zm3.741 5.848A15.872 15.872 0 0 1 7.2 12.75H4.302a7.754 7.754 0 0 0 6.739 5.848zm6.017-5.848a15.872 15.872 0 0 1-3.841 5.848 7.754 7.754 0 0 0 6.739-5.848H17.058zM4.302 11.25H7.3A15.81 15.81 0 0 1 8.424 6.152 7.754 7.754 0 0 0 4.302 11.25z',
     'leaf': 'M12.75 3a9.75 9.75 0 0 1 9.75 9.75 9.75 9.75 0 0 1-12.6 9.303A5.251 5.251 0 0 1 5.5 17.25H4.125a2.625 2.625 0 0 1-2.625-2.625v-.375A11.25 11.25 0 0 1 12.75 3zm-4.5 9.75a4.5 4.5 0 0 0-4.5 4.5c0 .621.504 1.125 1.125 1.125h1.375a3.75 3.75 0 0 0 3.75-3.75v-1.875z',
-    'basketball': 'M12 2.25A9.75 9.75 0 1 0 21.75 12 9.75 9.75 0 0 0 12 2.25zm7.314 8.25h-4.564a12.3 12.3 0 0 0-.753-4.43A8.255 8.255 0 0 1 19.314 10.5zm-6.064 0H10.75V4.058a10.77 10.77 0 0 1 2.5 6.442zm-3.5 0H4.686a8.255 8.255 0 0 1 5.317-6.68 12.3 12.3 0 0 0-.753 4.43zm0 3h2.5v6.442a10.77 10.77 0 0 1-2.5-6.442zm3.5 0h4.564a8.255 8.255 0 0 1-5.317 6.68 12.3 12.3 0 0 0 .753-4.43zm-6.81 0a12.3 12.3 0 0 0 .753 4.43A8.255 8.255 0 0 1 4.686 13.5z'
+    'basketball': 'M12 2.25A9.75 9.75 0 1 0 21.75 12 9.75 9.75 0 0 0 12 2.25zm7.314 8.25h-4.564a12.3 12.3 0 0 0-.753-4.43A8.255 8.255 0 0 1 19.314 10.5zm-6.064 0H10.75V4.058a10.77 10.77 0 0 1 2.5 6.442zm-3.5 0H4.686a8.255 8.255 0 0 1 5.317-6.68 12.3 12.3 0 0 0-.753 4.43zm0 3h2.5v6.442a10.77 10.77 0 0 1-2.5-6.442zm3.5 0h4.564a8.255 8.255 0 0 1-5.317 6.68 12.3 12.3 0 0 0 .753-4.43zm-6.81 0a12.3 12.3 0 0 0 .753 4.43A8.255 8.255 0 0 1 4.686 13.5z',
+    'sidebar-toggle': 'M4 6a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z'
   };
 
   function createIcon(name, classes) {
@@ -64,10 +65,119 @@
       theme.body.split(' ').forEach(cls => cls && body.classList.add(cls));
     }
 
+    const styleId = 'dashboard-collapsible-style';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = `
+        @media (min-width: 1024px) {
+          #sidebar {
+            transition: width 0.3s ease, padding 0.3s ease;
+          }
+          body.sidebar-mini #sidebar {
+            width: 6rem;
+            padding-inline: 1rem;
+          }
+          body.sidebar-mini #sidebar [data-role="brand-name"],
+          body.sidebar-mini #sidebar [data-role="brand-tagline"],
+          body.sidebar-mini #sidebar [data-role="sidebar-highlight"] {
+            display: none !important;
+          }
+          body.sidebar-mini #sidebar nav a {
+            padding-inline: 0.75rem;
+          }
+          body.sidebar-mini #sidebar nav a .sidebar-link-content {
+            justify-content: center;
+            gap: 0;
+          }
+          body.sidebar-mini #sidebar nav a .sidebar-icon {
+            margin-inline-end: 0;
+          }
+          body.sidebar-mini #sidebar nav a .sidebar-label,
+          body.sidebar-mini #sidebar nav a .sidebar-badge {
+            display: none !important;
+          }
+          body.sidebar-mini #sidebarCollapse {
+            width: 100%;
+            justify-content: center;
+          }
+          body.sidebar-mini #sidebarCollapse [data-role="collapse-label"] {
+            display: none;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    const defaultActions = {
+      open: { ar: 'فتح القائمة', en: 'Open menu' },
+      close: { ar: 'إغلاق', en: 'Close' },
+      collapse: { ar: 'تصغير القائمة الجانبية', en: 'Collapse sidebar' },
+      expand: { ar: 'توسيع القائمة الجانبية', en: 'Expand sidebar' }
+    };
+
+    const providedActions = Object.assign({}, config.actions || {});
+    config.actions = {};
+    Object.keys(defaultActions).forEach(key => {
+      config.actions[key] = Object.assign({}, defaultActions[key], providedActions[key] || {});
+    });
+
     const sidebar = document.getElementById('sidebar');
     const sidebarBackdrop = document.getElementById('sidebarBackdrop');
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebarClose = document.getElementById('sidebarClose');
+
+    const storageKey = config.storageKey || `dashboard-mini-${window.location.pathname}`;
+    let isMini = false;
+    try {
+      isMini = window.localStorage.getItem(storageKey) === '1';
+    } catch (error) {
+      isMini = false;
+    }
+
+    let collapseButton = null;
+
+    function updateCollapseButton(lang) {
+      if (!collapseButton) return;
+      const label = collapseButton.querySelector('[data-role="collapse-label"]');
+      const text = isMini ? config.actions.expand[lang] : config.actions.collapse[lang];
+      if (label) {
+        label.textContent = text;
+      }
+      collapseButton.setAttribute('aria-label', text);
+      collapseButton.title = text;
+      collapseButton.setAttribute('aria-pressed', isMini ? 'true' : 'false');
+    }
+
+    function applyMiniState(mini, lang = 'ar') {
+      if (!sidebar) return;
+      isMini = mini;
+      body.classList.toggle('sidebar-mini', mini);
+      try {
+        window.localStorage.setItem(storageKey, mini ? '1' : '0');
+      } catch (error) {
+        /* ignore persistence issues */
+      }
+      updateCollapseButton(lang);
+    }
+
+    if (sidebar) {
+      const actionsContainer = sidebar.querySelector('[data-role="sidebar-actions"]') || sidebar;
+      collapseButton = document.createElement('button');
+      collapseButton.type = 'button';
+      collapseButton.id = 'sidebarCollapse';
+      collapseButton.className = 'hidden lg:inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200 hover:bg-white/5 transition';
+      collapseButton.innerHTML = `
+        <span class="h-5 w-5 flex items-center justify-center text-slate-200">
+          ${createIcon('sidebar-toggle', 'h-4 w-4')}
+        </span>
+        <span data-role="collapse-label" class="whitespace-nowrap"></span>
+      `;
+      actionsContainer.prepend(collapseButton);
+      collapseButton.addEventListener('click', () => {
+        applyMiniState(!isMini, currentLang);
+      });
+    }
 
     function openSidebar() {
       if (!sidebar) return;
@@ -156,14 +266,16 @@
         link.href = `#${item.id}`;
         link.className = `flex items-center justify-between px-4 py-3 rounded-xl border ${index === 0 ? 'bg-white/10 border-white/10' : 'border-white/5 hover:bg-white/5'} transition`;
         link.innerHTML = `
-          <span class="flex items-center gap-3 text-sm">
-            <span class="h-9 w-9 rounded-xl flex items-center justify-center bg-white/5">
+          <span class="flex items-center gap-3 text-sm sidebar-link-content">
+            <span class="h-9 w-9 rounded-xl flex items-center justify-center bg-white/5 sidebar-icon">
               ${createIcon(item.icon, `h-5 w-5 ${theme.accentText}`)}
             </span>
-            <span class="font-medium">${item.label[lang]}</span>
+            <span class="font-medium sidebar-label">${item.label[lang]}</span>
           </span>
-          <span class="text-xs text-slate-400">${item.badge ? item.badge[lang] : ''}</span>
+          <span class="text-xs text-slate-400 sidebar-badge">${item.badge ? item.badge[lang] : ''}</span>
         `;
+        link.setAttribute('aria-label', item.label[lang]);
+        link.title = item.label[lang];
         navContainer.appendChild(link);
       });
     }
@@ -171,10 +283,13 @@
     function renderHighlight(lang) {
       const highlight = document.querySelector('[data-role="sidebar-highlight"]');
       if (!highlight || !config.highlight) return;
+      const highlightValue = typeof config.highlight.value === 'object'
+        ? config.highlight.value[lang]
+        : config.highlight.value;
       highlight.innerHTML = `
         <div class="rounded-2xl border ${theme.highlightBg} p-5 space-y-3">
           <p class="text-xs uppercase tracking-wide text-slate-400">${config.highlight.label[lang]}</p>
-          <p class="text-2xl font-semibold">${config.highlight.value}</p>
+          <p class="text-2xl font-semibold">${highlightValue}</p>
           <p class="text-sm text-slate-300">${config.highlight.description[lang]}</p>
         </div>
       `;
@@ -356,8 +471,10 @@
       const closeLabel = document.querySelector('[data-role="close-label"]');
       if (openLabel) openLabel.textContent = config.actions.open[lang];
       if (closeLabel) closeLabel.textContent = config.actions.close[lang];
+      applyMiniState(isMini, lang);
     }
 
+    applyMiniState(isMini, currentLang);
     setLanguage(currentLang);
   }
 
