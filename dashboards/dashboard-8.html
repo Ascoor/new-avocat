@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة التعليم الإلكتروني</title>
+  <title>لوحة إدارة التعليم الإلكتروني</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -12,7 +12,8 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">L</div>
@@ -32,8 +33,10 @@
       </div>
     </header>
 
+    <!-- Mobile Backdrop -->
     <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
+    <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -43,7 +46,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -57,6 +60,7 @@
       <div data-role="sidebar-highlight"></div>
     </aside>
 
+    <!-- Main -->
     <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
       <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
       <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
@@ -70,217 +74,114 @@
       defaultLang: 'ar',
       meta: {
         title: {
-          ar: 'لوحة التعليم الإلكتروني',
-          en: 'E-learning Experience Dashboard'
+          ar: 'لوحة إدارة التعليم الإلكتروني',
+          en: 'E-learning Analytics Dashboard'
         }
       },
       actions: {
-        open: {
-          ar: 'فتح القائمة',
-          en: 'Open menu'
-        },
-        close: {
-          ar: 'إغلاق',
-          en: 'Close'
-        },
-        collapse: {
-          ar: 'تصغير الشريط',
-          en: 'Collapse sidebar'
-        },
-        expand: {
-          ar: 'توسيع الشريط',
-          en: 'Expand sidebar'
-        }
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' },
+        collapse: { ar: 'طي الشريط الجانبي', en: 'Collapse sidebar' },
+        expand: { ar: 'توسيع الشريط الجانبي', en: 'Expand sidebar' }
       },
       brand: {
         badge: 'L',
-        name: {
-          ar: 'منصة التعلم الذكي',
-          en: 'Smart Learning Hub'
-        },
-        tagline: {
-          ar: 'تعليم ذاتي، بث مباشر، وشهادات احترافية',
-          en: 'Self-paced, live cohorts, and pro certifications'
-        }
+        name: { ar: 'Learning Atlas', en: 'Learning Atlas' },
+        tagline: { ar: 'منصة ذكاء التعلم الرقمي', en: 'Digital learning intelligence' }
       },
       theme: {
-        bodyGradient: 'from-slate-950 via-violet-950 to-blue-900',
-        sidebarGradient: 'from-violet-950 via-blue-900 to-indigo-900',
-        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
-        cardBorder: 'border-violet-400/30',
-        accentGradient: 'from-blue-500 via-indigo-500 to-violet-500',
-        accentText: 'text-indigo-200',
-        highlightBg: 'bg-blue-500/10 border-blue-400/30',
-        badgeBg: 'bg-indigo-500/20',
+        accentGradient: 'from-blue-500 via-sky-400 to-indigo-500',
+        accentText: 'text-sky-200',
+        highlightBg: 'bg-sky-500/10 border-sky-400/30',
+        badgeBg: 'bg-sky-500/20',
         badgeText: 'text-white'
       },
       nav: [
-        {
-          id: 'overview',
-          icon: 'book-open',
-          label: { ar: 'نظرة عامة', en: 'Overview' },
-          badge: { ar: 'تعلم', en: 'Learning' }
-        },
-        {
-          id: 'courses',
-          icon: 'sparkles',
-          label: { ar: 'الدورات والبرامج', en: 'Courses & programs' }
-        },
-        {
-          id: 'learners',
-          icon: 'users',
-          label: { ar: 'المتعلمون', en: 'Learners' }
-        },
-        {
-          id: 'certs',
-          icon: 'trophy',
-          label: { ar: 'الشهادات', en: 'Certifications' }
-        }
+        { id: 'overview', icon: 'presentation-chart', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'مباشر', en: 'Live' } },
+        { id: 'courses', icon: 'book-open', label: { ar: 'الدورات', en: 'Courses' } },
+        { id: 'learners', icon: 'users', label: { ar: 'المتعلمون', en: 'Learners' } },
+        { id: 'engagement', icon: 'chart-bar', label: { ar: 'التفاعل', en: 'Engagement' } }
       ],
       highlight: {
-        label: { ar: 'أبرز برنامج', en: 'Featured program' },
-        value: 'قادة المنتجات الاحترافية',
+        label: { ar: 'معدل الإكمال الكلي', en: 'Overall completion rate' },
+        value: '72%',
         description: {
-          ar: 'مسار من 8 أسابيع مع إرشاد مباشر ارتفع معدل إكماله إلى 84%.',
-          en: 'Eight-week mentored track now reaching 84% completion.'
+          ar: 'تحسن 9 نقاط بعد إطلاق نظام الحوافز الجديد.',
+          en: 'Up 9 points following the new incentive system.'
         }
       },
       header: {
-        title: {
-          ar: 'لوحة التعليم الإلكتروني',
-          en: 'E-learning experience dashboard'
-        },
+        title: { ar: 'لوحة تحليلات التعلم', en: 'Learning analytics cockpit' },
         subtitle: {
-          ar: 'حلّل مشاركة المتعلمين، فعالية المحتوى، وأداء البرامج الحية.',
-          en: 'Analyse learner engagement, content effectiveness, and live cohort performance.'
+          ar: 'راقب تقدم المتعلمين، أداء الدورات، وتفاعل المحتوى لحظياً.',
+          en: 'Monitor learner progress, course health, and content engagement live.'
         },
-        primary: {
-          ar: 'إطلاق فصل جديد',
-          en: 'Launch new cohort'
-        },
-        secondary: {
-          ar: 'تصدير تقدم المتعلمين',
-          en: 'Export learner progress'
-        }
+        primary: { ar: 'إنشاء شهادة مخصصة', en: 'Create custom certificate' },
+        secondary: { ar: 'فلترة حسب الأكاديمية', en: 'Filter by academy' }
       },
       stats: [
-        {
-          icon: 'users',
-          label: { ar: 'متعلمين نشطين', en: 'Active learners' },
-          value: '6,480',
-          delta: { ar: '+18% نمو خلال 90 يوماً', en: '+18% growth over 90 days' },
-          trend: 'positive'
-        },
-        {
-          icon: 'book-open',
-          label: { ar: 'معدل إكمال الدورات', en: 'Course completion rate' },
-          value: '82%',
-          delta: { ar: '+7 نقاط بفضل التفاعل', en: '+7 pts after interactivity' },
-          trend: 'positive'
-        },
-        {
-          icon: 'play',
-          label: { ar: 'جلسات مباشرة هذا الأسبوع', en: 'Live sessions this week' },
-          value: '34',
-          delta: { ar: '+9 جلسات مقارنة بالأسبوع الماضي', en: '+9 sessions vs last week' },
-          trend: 'positive'
-        },
-        {
-          icon: 'heart',
-          label: { ar: 'رضا المتعلمين', en: 'Learner satisfaction' },
-          value: '4.6/5',
-          delta: { ar: '+0.3 بعد تحسين التقييم', en: '+0.3 after feedback revamp' },
-          trend: 'positive'
-        }
+        { icon: 'users', label: { ar: 'متعلمين نشطين', en: 'Active learners' }, value: '18,420', delta: { ar: '+1.2K هذا الأسبوع', en: '+1.2k this week' }, trend: 'positive' },
+        { icon: 'book-open', label: { ar: 'نسبة الإكمال', en: 'Completion rate' }, value: '72%', delta: { ar: '+9% منذ الإطلاق', en: '+9% since launch' }, trend: 'positive' },
+        { icon: 'sparkles', label: { ar: 'الدروس الجديدة', en: 'New lessons released' }, value: '48', delta: { ar: '+12 خلال شهر', en: '+12 over month' }, trend: 'positive' },
+        { icon: 'heart', label: { ar: 'تقييم الدورات', en: 'Course satisfaction' }, value: '4.5/5', delta: { ar: '+0.2 عن الربع الماضي', en: '+0.2 vs last quarter' }, trend: 'positive' }
       ],
       panels: [
         {
-          id: 'overview',
+          id: 'activity',
           type: 'chart',
           span: 'xl:col-span-2',
-          title: { ar: 'مشاركة التعلم الأسبوعية', en: 'Weekly learning engagement' },
-          subtitle: { ar: 'الوقت المستغرق والتفاعل عبر مسارات التعلم.', en: 'Time spent and interactions across learning paths.' },
-          action: { ar: 'عرض حسب المسار', en: 'View by track' },
-          placeholder: { ar: 'مخطط المشاركة', en: 'Engagement plot' }
+          title: { ar: 'نشاط المتعلمين اليومي', en: 'Daily learner activity' },
+          subtitle: { ar: 'جلسات، دقائق مشاهدة، وتمارين مكتملة.', en: 'Sessions, minutes viewed, and exercises completed.' },
+          action: { ar: 'تحميل ملف CSV', en: 'Download CSV' },
+          placeholder: { ar: 'مخطط نشاط المتعلمين', en: 'Learner activity chart' }
         },
         {
-          id: 'courses',
+          id: 'top-courses',
           type: 'list',
-          title: { ar: 'الدورات الأعلى أداءً', en: 'Top performing courses' },
-          action: { ar: 'تحديث تلقائي', en: 'Auto refreshed' },
+          title: { ar: 'الدورات الأعلى تقييماً', en: 'Top-rated courses' },
+          action: { ar: 'بيانات آخر 24 ساعة', en: 'Last 24h data' },
           items: [
-            {
-              icon: 'sparkles',
-              title: { ar: 'تصميم المنتج المعتمد', en: 'Certified product design' },
-              subtitle: { ar: 'نسبة إكمال 86%', en: 'Completion rate 86%' },
-              value: '1,240 متعلم',
-              delta: { ar: '+320 تسجيل جديد', en: '+320 new enrollments' }
-            },
-            {
-              icon: 'book-open',
-              title: { ar: 'تحليل البيانات المتقدم', en: 'Advanced data analytics' },
-              subtitle: { ar: 'مشروع تخرج فعلي', en: 'Capstone project' },
-              value: '980 متعلم',
-              delta: { ar: '+14% معدل نجاح', en: '+14% success rate' }
-            },
-            {
-              icon: 'trophy',
-              title: { ar: 'شهادة الأمن السيبراني', en: 'Cybersecurity certification' },
-              subtitle: { ar: 'مختبرات عملية مباشرة', en: 'Hands-on live labs' },
-              value: '760 متعلم',
-              delta: { ar: 'تحقيق 92% رضا', en: 'Achieved 92% satisfaction' }
-            }
+            { icon: 'presentation-chart', title: { ar: 'تصميم تجربة المستخدم', en: 'UX design mastery' }, subtitle: { ar: 'نسبة الإكمال 84%', en: 'Completion 84%' }, value: '4.8★', delta: { ar: '+320 متعلماً جديداً', en: '+320 new learners' } },
+            { icon: 'sparkles', title: { ar: 'أساسيات الذكاء الاصطناعي', en: 'AI foundations' }, subtitle: { ar: 'مسار من 8 وحدات', en: '8-module pathway' }, value: '4.6★', delta: { ar: 'قوائم انتظار 140', en: 'Waitlist 140' } },
+            { icon: 'book-open', title: { ar: 'مهارات القيادة الحديثة', en: 'Modern leadership skills' }, subtitle: { ar: 'برنامج معتمد', en: 'Accredited program' }, value: '4.7★', delta: { ar: '98% رضا المتعلمين', en: '98% learner delight' } }
           ]
         },
         {
-          id: 'journey',
+          id: 'learning-paths',
           type: 'progress',
-          title: { ar: 'مسار تقدم المتعلمين', en: 'Learner progress stages' },
+          title: { ar: 'تقدم المسارات التعليمية', en: 'Learning path progress' },
           items: [
-            {
-              title: { ar: 'الاستكشاف والتسجيل', en: 'Discovery & enrolment' },
-              subtitle: { ar: 'رحلات بريدية مخصصة', en: 'Personalised nurture journeys' },
-              value: '91%',
-              percent: '91%'
-            },
-            {
-              title: { ar: 'التفاعل داخل الدورة', en: 'In-course engagement' },
-              subtitle: { ar: 'أنشطة تفاعلية وألعاب تعليمية', en: 'Interactive labs & gamification' },
-              value: '74%',
-              percent: '74%'
-            },
-            {
-              title: { ar: 'الحصول على الشهادة', en: 'Certification attainment' },
-              subtitle: { ar: 'جلسات مراجعة مباشرة', en: 'Live review bootcamps' },
-              value: '58%',
-              percent: '58%'
-            }
+            { title: { ar: 'مسار المطور الشامل', en: 'Full-stack developer path' }, subtitle: { ar: '1,240 متعلماً نشطاً', en: '1,240 active learners' }, value: '64%', percent: '64%' },
+            { title: { ar: 'مسار نجاح العملاء', en: 'Customer success path' }, subtitle: { ar: 'جدولة ورشة مباشرة', en: 'Live workshop scheduled' }, value: '58%', percent: '58%' },
+            { title: { ar: 'مسار القيادة التنفيذية', en: 'Executive leadership path' }, subtitle: { ar: 'تقييم القيادة النهائي الأسبوع المقبل', en: 'Final leadership assessment next week' }, value: '41%', percent: '41%' }
           ]
         },
         {
-          id: 'timeline',
+          id: 'learner-progress',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'تقدم المتعلمين المميز', en: 'Featured learner progress' },
+          action: { ar: 'إرسال المتابعة', en: 'Send follow-up' },
+          headers: [
+            { ar: 'المتعلم', en: 'Learner' },
+            { ar: 'المسار', en: 'Path' },
+            { ar: 'التغير', en: 'Change' }
+          ],
+          rows: [
+            { name: { ar: 'نورة العتيبي', en: 'Noura Al-Otaibi' }, metric: '92% - مسار تحليل البيانات', delta: { ar: '+12% هذا الأسبوع', en: '+12% this week' }, trend: 'positive' },
+            { name: { ar: 'ليلى المصري', en: 'Leila El-Masry' }, metric: '78% - مسار الذكاء الاصطناعي', delta: { ar: '+6% بعد جلسة الإرشاد', en: '+6% post mentoring' }, trend: 'positive' },
+            { name: { ar: 'جاسم القحطاني', en: 'Jasem Al-Qahtani' }, metric: '56% - مسار القيادة', delta: { ar: 'يحتاج متابعة', en: 'Needs nudges' }, trend: 'neutral' }
+          ]
+        },
+        {
+          id: 'academy-updates',
           type: 'timeline',
           span: 'xl:col-span-3',
-          title: { ar: 'تحديثات المنصة التعليمية', en: 'Platform updates timeline' },
+          title: { ar: 'تحديثات الأكاديمية', en: 'Academy updates' },
           items: [
-            {
-              icon: 'play',
-              title: { ar: 'إطلاق استوديو البث الجديد', en: 'New live studio launch' },
-              subtitle: { ar: 'جودة بث 4K ودعم متعدد اللغات', en: '4K streaming with multi-language support' },
-              time: { ar: 'اليوم', en: 'Today' }
-            },
-            {
-              icon: 'sparkles',
-              title: { ar: 'تحسين تجربة التطبيق', en: 'Mobile app refresh' },
-              subtitle: { ar: 'إشعارات تقدم ذكية', en: 'Smart progress alerts' },
-              time: { ar: 'أمس', en: 'Yesterday' }
-            },
-            {
-              icon: 'trophy',
-              title: { ar: 'شراكة اعتماد جديدة', en: 'New accreditation partner' },
-              subtitle: { ar: 'اعتماد دولي للبرامج التقنية', en: 'Global certification for tech tracks' },
-              time: { ar: 'قبل يومين', en: '2 days ago' }
-            }
+            { icon: 'sparkles', title: { ar: 'إطلاق معمل الواقع الافتراضي', en: 'VR practice lab launch' }, subtitle: { ar: 'دعم التمارين العملية لمهارات الواقع الافتراضي', en: 'Hands-on VR skill drills available' }, time: { ar: 'قبل 3 ساعات', en: '3 hours ago' } },
+            { icon: 'book-open', title: { ar: 'تعاون مع جامعة دولية', en: 'New university partnership' }, subtitle: { ar: 'شهادات مشتركة في علوم البيانات', en: 'Joint certifications in data science' }, time: { ar: 'اليوم', en: 'Today' } },
+            { icon: 'presentation-chart', title: { ar: 'ندوة مباشرة حول التعلم المصغر', en: 'Microlearning live seminar' }, subtitle: { ar: 'حضور أكثر من 2,100 متعلم', en: '2,100+ attendees' }, time: { ar: 'أمس', en: 'Yesterday' } }
           ]
         }
       ]

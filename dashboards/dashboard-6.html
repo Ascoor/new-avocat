@@ -12,10 +12,11 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">X</div>
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">C</div>
         <div>
           <p data-role="mobile-brand-name" class="font-semibold"></p>
           <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
@@ -32,18 +33,20 @@
       </div>
     </header>
 
+    <!-- Mobile Backdrop -->
     <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
+    <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
-          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">X</div>
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">C</div>
           <div>
             <p data-role="brand-name" class="text-lg font-semibold"></p>
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -57,6 +60,7 @@
       <div data-role="sidebar-highlight"></div>
     </aside>
 
+    <!-- Main -->
     <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
       <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
       <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
@@ -71,165 +75,75 @@
       meta: {
         title: {
           ar: 'لوحة تجربة العملاء',
-          en: 'Customer Experience Dashboard'
+          en: 'Customer Experience Cockpit'
         }
       },
       actions: {
-        open: {
-          ar: 'فتح القائمة',
-          en: 'Open menu'
-        },
-        close: {
-          ar: 'إغلاق',
-          en: 'Close'
-        },
-        collapse: {
-          ar: 'تصغير الشريط',
-          en: 'Collapse sidebar'
-        },
-        expand: {
-          ar: 'توسيع الشريط',
-          en: 'Expand sidebar'
-        }
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' },
+        collapse: { ar: 'طي الشريط الجانبي', en: 'Collapse sidebar' },
+        expand: { ar: 'توسيع الشريط الجانبي', en: 'Expand sidebar' }
       },
       brand: {
-        badge: 'X',
-        name: {
-          ar: 'إشراق التجربة',
-          en: 'Experience Glow'
-        },
-        tagline: {
-          ar: 'صوت العميل، الدعم، والرحلات الرقمية',
-          en: 'Voice of customer, support, and journeys'
-        }
+        badge: 'C',
+        name: { ar: 'Customer Pulse', en: 'Customer Pulse' },
+        tagline: { ar: 'تحليلات تجربة العملاء الشاملة', en: 'End-to-end CX analytics' }
       },
       theme: {
-        bodyGradient: 'from-slate-950 via-pink-950 to-rose-900',
-        sidebarGradient: 'from-rose-950 via-pink-900 to-amber-900',
-        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
-        cardBorder: 'border-rose-400/30',
-        accentGradient: 'from-emerald-500 via-teal-500 to-cyan-500',
-        accentText: 'text-emerald-200',
-        highlightBg: 'bg-emerald-500/10 border-emerald-400/30',
-        badgeBg: 'bg-emerald-500/20',
+        accentGradient: 'from-fuchsia-500 via-pink-500 to-rose-500',
+        accentText: 'text-fuchsia-200',
+        highlightBg: 'bg-fuchsia-500/10 border-fuchsia-400/30',
+        badgeBg: 'bg-fuchsia-500/20',
         badgeText: 'text-white'
       },
       nav: [
-        {
-          id: 'overview',
-          icon: 'heart',
-          label: { ar: 'نظرة عامة', en: 'Overview' },
-          badge: { ar: 'رضا', en: 'Satisfaction' }
-        },
-        {
-          id: 'support',
-          icon: 'chat-bubble',
-          label: { ar: 'الدعم والتذاكر', en: 'Support & tickets' }
-        },
-        {
-          id: 'feedback',
-          icon: 'sparkles',
-          label: { ar: 'ملاحظات العملاء', en: 'Customer feedback' }
-        },
-        {
-          id: 'journeys',
-          icon: 'map',
-          label: { ar: 'الرحلات الرقمية', en: 'Digital journeys' }
-        }
+        { id: 'overview', icon: 'sparkles', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'تحديث مباشر', en: 'Live update' } },
+        { id: 'feedback', icon: 'chat-bubble', label: { ar: 'ملاحظات العملاء', en: 'Customer feedback' } },
+        { id: 'support', icon: 'stethoscope', label: { ar: 'الدعم', en: 'Support' } },
+        { id: 'journeys', icon: 'map', label: { ar: 'مسارات العملاء', en: 'Journeys' } }
       ],
       highlight: {
-        label: { ar: 'نبض العملاء', en: 'Customer pulse' },
-        value: 'NPS 71',
+        label: { ar: 'مؤشر الرضا اللحظي', en: 'Live satisfaction index' },
+        value: '87',
         description: {
-          ar: 'برنامج الترحيب الجديد رفع رضا المستخدمين الجدد بنسبة 14 نقطة.',
-          en: 'New onboarding journey increased new-user satisfaction by 14 points.'
+          ar: 'ارتفع المؤشر 6 نقاط بعد تحسينات تجربة الاشتراك.',
+          en: 'Up 6 points after onboarding enhancements.'
         }
       },
       header: {
-        title: {
-          ar: 'لوحة تجربة العملاء',
-          en: 'Customer experience dashboard'
-        },
+        title: { ar: 'لوحة قيادة تجربة العملاء', en: 'Customer experience cockpit' },
         subtitle: {
-          ar: 'أثر الدعم، الملاحظات، والتحويلات عبر كل نقطة تواصل.',
-          en: 'Track support, feedback, and conversions across every touchpoint.'
+          ar: 'راقب المشاعر، SLA الدعم، ونبض العملاء عبر القنوات.',
+          en: 'Track sentiment, support SLAs, and customer pulse across channels.'
         },
-        primary: {
-          ar: 'إطلاق حملة وفاء',
-          en: 'Launch loyalty campaign'
-        },
-        secondary: {
-          ar: 'عرض لوحة الرحلات',
-          en: 'View journey board'
-        }
+        primary: { ar: 'إطلاق حملة تفاعل', en: 'Launch engagement campaign' },
+        secondary: { ar: 'آخر 30 يوماً', en: 'Last 30 days' }
       },
       stats: [
-        {
-          icon: 'heart',
-          label: { ar: 'رضا العملاء (CSAT)', en: 'Customer satisfaction (CSAT)' },
-          value: '92%',
-          delta: { ar: '+3 نقاط هذا الربع', en: '+3 points this quarter' },
-          trend: 'positive'
-        },
-        {
-          icon: 'sparkles',
-          label: { ar: 'مؤشر المروج الصافي', en: 'Net promoter score' },
-          value: '71',
-          delta: { ar: '+6 نقاط منذ الشهر الماضي', en: '+6 points since last month' },
-          trend: 'positive'
-        },
-        {
-          icon: 'chat-bubble',
-          label: { ar: 'طلبات مُغلقة خلال 24 ساعة', en: 'Tickets resolved within 24h' },
-          value: '87%',
-          delta: { ar: '+9% بعد أتمتة الردود', en: '+9% after automation rollout' },
-          trend: 'positive'
-        },
-        {
-          icon: 'map',
-          label: { ar: 'تغطية الرحلات المؤتمتة', en: 'Automated journey coverage' },
-          value: '63%',
-          delta: { ar: '+12% خلال 45 يوماً', en: '+12% over 45 days' },
-          trend: 'positive'
-        }
-      ],
+        { icon: 'heart', label: { ar: 'مؤشر رضا العملاء', en: 'Customer satisfaction index' }, value: '87', delta: { ar: '+6 نقاط هذا الشهر', en: '+6 points this month' }, trend: 'positive' },
+        { icon: 'clock', label: { ar: 'زمن الاستجابة للدعم', en: 'Support response time' }, value: '38 ثانية', delta: { ar: '−12% عن الأسبوع الماضي', en: '−12% vs last week' }, trend: 'positive' },
+        { icon: 'chat-bubble', label: { ar: 'التذاكر المفتوحة', en: 'Open tickets' }, value: '124', delta: { ar: 'انخفاض 14%', en: '14% decrease' }, trend: 'positive' },
+        { icon: 'sparkles', label: { ar: 'الحل من أول تواصل', en: 'First-contact resolution' }, value: '71%', delta: { ar: '+5% بعد التدريب', en: '+5% post training' }, trend: 'positive' }
+      ].map(stat => ({ ...stat, icon: stat.icon === 'clock' ? 'calendar' : stat.icon })),
       panels: [
         {
-          id: 'overview',
+          id: 'sentiment',
           type: 'chart',
           span: 'xl:col-span-2',
-          title: { ar: 'تطور مؤشر الرضا', en: 'Satisfaction evolution' },
-          subtitle: { ar: 'مسار التقييمات اليومية عبر القنوات والدول.', en: 'Daily sentiment across channels and geographies.' },
-          action: { ar: 'تحليل الشرائح', en: 'Segment analysis' },
-          placeholder: { ar: 'مخطط الرضا', en: 'Satisfaction chart' }
+          title: { ar: 'منحنى المشاعر عبر القنوات', en: 'Sentiment across channels' },
+          subtitle: { ar: 'تحليل البريد، التطبيق، والمكالمات خلال 30 يوماً.', en: 'Email, app, and voice sentiment across 30 days.' },
+          action: { ar: 'تحميل تقرير المشاعر', en: 'Download sentiment report' },
+          placeholder: { ar: 'مخطط المشاعر', en: 'Sentiment chart' }
         },
         {
-          id: 'channels',
+          id: 'top-drivers',
           type: 'list',
-          title: { ar: 'أفضل قنوات الخدمة', en: 'Top service channels' },
-          action: { ar: 'مقارنة أسبوعية', en: 'Week-over-week compare' },
+          title: { ar: 'أبرز محركات الرضا', en: 'Top satisfaction drivers' },
+          action: { ar: 'محدث منذ 5 دقائق', en: 'Refreshed 5 minutes ago' },
           items: [
-            {
-              icon: 'chat-bubble',
-              title: { ar: 'مركز المساعدة المباشر', en: 'Live help centre' },
-              subtitle: { ar: 'زمن استجابة 38 ثانية', en: 'Response time 38s' },
-              value: 'CSAT 95%',
-              delta: { ar: '+4 نقاط', en: '+4 points' }
-            },
-            {
-              icon: 'sparkles',
-              title: { ar: 'الرسائل داخل التطبيق', en: 'In-app messaging' },
-              subtitle: { ar: 'حملات تفعيل سياقية', en: 'Contextual activation' },
-              value: 'تفاعل 67%',
-              delta: { ar: '+8% اعتماد', en: '+8% adoption' }
-            },
-            {
-              icon: 'megaphone',
-              title: { ar: 'وسائل التواصل الاجتماعي', en: 'Social care' },
-              subtitle: { ar: 'فريق متعدد اللغات', en: 'Multi-lingual team' },
-              value: 'حل 78%',
-              delta: { ar: '+12% رضا', en: '+12% satisfaction' }
-            }
+            { icon: 'sparkles', title: { ar: 'واجهة التطبيق', en: 'App interface' }, subtitle: { ar: 'تصميم جديد سجل 4.6⭐', en: 'Redesign trending at 4.6⭐' }, value: '+18', delta: { ar: 'تأثير إيجابي', en: 'Positive impact' } },
+            { icon: 'chat-bubble', title: { ar: 'دعم الدردشة الفوري', en: 'Live chat support' }, subtitle: { ar: 'متوسط الزمن 31 ثانية', en: 'Avg time 31 seconds' }, value: '+12', delta: { ar: 'مستوى رضا مرتفع', en: 'High satisfaction' } },
+            { icon: 'megaphone', title: { ar: 'حملات التفعيل', en: 'Activation campaigns' }, subtitle: { ar: 'سلسلة البريد الترحيبي', en: 'New welcome sequence' }, value: '+9', delta: { ar: 'تحسن الاحتفاظ', en: 'Retention improved' } }
           ]
         },
         {
@@ -237,50 +151,37 @@
           type: 'progress',
           title: { ar: 'مراحل رحلة العميل', en: 'Customer journey stages' },
           items: [
-            {
-              title: { ar: 'الاكتشاف', en: 'Discovery' },
-              subtitle: { ar: 'محتوى تعليمي مخصص', en: 'Personalised learning content' },
-              value: '78%',
-              percent: '78%'
-            },
-            {
-              title: { ar: 'البدء والتفعيل', en: 'Onboarding & activation' },
-              subtitle: { ar: 'تجربة تفاعلية جديدة', en: 'New interactive walkthrough' },
-              value: '64%',
-              percent: '64%'
-            },
-            {
-              title: { ar: 'النجاح المستمر', en: 'Ongoing success' },
-              subtitle: { ar: 'متابعة ذكية للقيمة', en: 'Value tracking automations' },
-              value: '52%',
-              percent: '52%'
-            }
+            { title: { ar: 'التجربة الأولى', en: 'First experience' }, subtitle: { ar: 'معدل نقر 68%', en: '68% click-through' }, value: '68%', percent: '68%' },
+            { title: { ar: 'التفاعل المتكرر', en: 'Recurring engagement' }, subtitle: { ar: 'تدفق رسائل شخصية', en: 'Personalised messaging stream' }, value: '52%', percent: '52%' },
+            { title: { ar: 'الدفاع عن العلامة', en: 'Advocacy' }, subtitle: { ar: 'دعوات برنامج الإحالة', en: 'Referral program invites' }, value: '21%', percent: '21%' }
           ]
         },
         {
-          id: 'timeline',
+          id: 'support-queue',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'قائمة انتظار الدعم', en: 'Support queue health' },
+          action: { ar: 'عرض مركز الخدمة', en: 'Open help centre' },
+          headers: [
+            { ar: 'الفئة', en: 'Category' },
+            { ar: 'SLA الحالي', en: 'Current SLA' },
+            { ar: 'التغير', en: 'Change' }
+          ],
+          rows: [
+            { name: { ar: 'مشكلات الفوترة', en: 'Billing issues' }, metric: '24 دقيقة', delta: { ar: 'تحسن 6 دقائق', en: 'Improved by 6m' }, trend: 'positive' },
+            { name: { ar: 'أخطاء التطبيق', en: 'App defects' }, metric: '41 دقيقة', delta: { ar: '−4 دقائق بعد الإصدار', en: '−4m after release' }, trend: 'positive' },
+            { name: { ar: 'طلبات الميزات', en: 'Feature requests' }, metric: '3.1 يوم', delta: { ar: 'بدون تغيير', en: 'Unchanged' }, trend: 'neutral' }
+          ]
+        },
+        {
+          id: 'moments',
           type: 'timeline',
           span: 'xl:col-span-3',
-          title: { ar: 'مستجدات تجربة العملاء', en: 'CX updates timeline' },
+          title: { ar: 'لحظات صوت العميل', en: 'Voice-of-customer moments' },
           items: [
-            {
-              icon: 'sparkles',
-              title: { ar: 'إطلاق روبوت المحادثة الجديد', en: 'New chatbot launched' },
-              subtitle: { ar: 'يغطي 42% من الأسئلة المتكررة', en: 'Covers 42% of repeat questions' },
-              time: { ar: 'اليوم', en: 'Today' }
-            },
-            {
-              icon: 'heart',
-              title: { ar: 'جلسات الاستماع للعملاء', en: 'Customer listening sessions' },
-              subtitle: { ar: '5 مجموعات تركيز في ثلاثة أسواق', en: '5 focus groups across three markets' },
-              time: { ar: 'أمس', en: 'Yesterday' }
-            },
-            {
-              icon: 'map',
-              title: { ar: 'تدفق رحلة متكامل جديد', en: 'New integrated journey flow' },
-              subtitle: { ar: 'يُقلل الخطوات بنسبة 23%', en: 'Reduces steps by 23%' },
-              time: { ar: 'قبل يومين', en: '2 days ago' }
-            }
+            { icon: 'megaphone', title: { ar: 'مجتمع المستخدمين الشهري', en: 'Monthly user council' }, subtitle: { ar: '15 عميلًا استعرضوا خارطة الطريق', en: '15 clients reviewed roadmap' }, time: { ar: 'قبل ساعتين', en: '2 hours ago' } },
+            { icon: 'chat-bubble', title: { ar: 'إطلاق برنامج الولاء', en: 'Loyalty program roll-out' }, subtitle: { ar: 'تسجيل 3.4 ألف عضو خلال اليوم الأول', en: '3.4k members joined day one' }, time: { ar: 'اليوم', en: 'Today' } },
+            { icon: 'sparkles', title: { ar: 'تحسين تجربة الدعم الهاتفي', en: 'Voice support uplift' }, subtitle: { ar: 'تدريب الوكلاء على السيناريوهات الحرجة', en: 'Agents trained on critical scripts' }, time: { ar: 'أمس', en: 'Yesterday' } }
           ]
         }
       ]

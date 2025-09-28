@@ -49,11 +49,6 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
 
-          {/* Desktop logo */}
-          <div className="hidden md:block">
-            <BrandLogo variant="icon" className="h-8" />
-          </div>
-
           {/* Desktop collapse toggle */}
           <Button
             variant="ghost"

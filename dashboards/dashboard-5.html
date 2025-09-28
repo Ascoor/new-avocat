@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة إدارة المحتوى</title>
+  <title>لوحة مراقبة الاستمرارية</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -12,10 +12,11 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Mobile Header -->
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">M</div>
+        <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">R</div>
         <div>
           <p data-role="mobile-brand-name" class="font-semibold"></p>
           <p data-role="mobile-brand-tagline" class="text-xs text-slate-300"></p>
@@ -32,18 +33,20 @@
       </div>
     </header>
 
+    <!-- Mobile Backdrop -->
     <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 opacity-0 pointer-events-none transition-opacity lg:hidden"></div>
 
+    <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 right-0 z-50 w-80 max-w-full transform translate-x-full border-l border-white/10 bg-slate-900/95 backdrop-blur-xl px-6 py-8 space-y-8 transition-transform duration-300 lg:static lg:translate-x-0 lg:w-80 lg:border-l-0 lg:bg-slate-900/60">
       <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
-          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">M</div>
+          <div data-role="brand-badge" class="h-12 w-12 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">R</div>
           <div>
             <p data-role="brand-name" class="text-lg font-semibold"></p>
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -57,6 +60,7 @@
       <div data-role="sidebar-highlight"></div>
     </aside>
 
+    <!-- Main -->
     <main class="flex-1 px-4 py-8 lg:px-12 lg:py-10 space-y-10">
       <div data-role="main-header" class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"></div>
       <section data-role="stats" class="grid gap-6 md:grid-cols-2 xl:grid-cols-4"></section>
@@ -70,217 +74,114 @@
       defaultLang: 'ar',
       meta: {
         title: {
-          ar: 'لوحة إدارة المحتوى',
-          en: 'Content Operations Dashboard'
+          ar: 'لوحة مراقبة الاستمرارية',
+          en: 'Cloud Reliability War-room'
         }
       },
       actions: {
-        open: {
-          ar: 'فتح القائمة',
-          en: 'Open menu'
-        },
-        close: {
-          ar: 'إغلاق',
-          en: 'Close'
-        },
-        collapse: {
-          ar: 'تصغير الشريط',
-          en: 'Collapse sidebar'
-        },
-        expand: {
-          ar: 'توسيع الشريط',
-          en: 'Expand sidebar'
-        }
+        open: { ar: 'فتح القائمة', en: 'Open menu' },
+        close: { ar: 'إغلاق', en: 'Close' },
+        collapse: { ar: 'طي الشريط الجانبي', en: 'Collapse sidebar' },
+        expand: { ar: 'توسيع الشريط الجانبي', en: 'Expand sidebar' }
       },
       brand: {
-        badge: 'M',
-        name: {
-          ar: 'إيقاع المحتوى',
-          en: 'Content Rhythm'
-        },
-        tagline: {
-          ar: 'تخطيط النشر وتجربة القراء',
-          en: 'Publishing cadence & reader experience'
-        }
+        badge: 'R',
+        name: { ar: 'Resilience Core', en: 'Resilience Core' },
+        tagline: { ar: 'قيادة الاستجابة للحوادث', en: 'Incident response command' }
       },
       theme: {
-        bodyGradient: 'from-slate-950 via-fuchsia-950 to-indigo-900',
-        sidebarGradient: 'from-fuchsia-950 via-purple-900 to-indigo-900',
-        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
-        cardBorder: 'border-fuchsia-500/30',
-        accentGradient: 'from-violet-500 via-purple-500 to-pink-500',
-        accentText: 'text-violet-200',
-        highlightBg: 'bg-fuchsia-500/10 border-fuchsia-400/30',
-        badgeBg: 'bg-fuchsia-500/20',
+        accentGradient: 'from-emerald-500 via-sky-400 to-indigo-500',
+        accentText: 'text-emerald-200',
+        highlightBg: 'bg-emerald-500/10 border-emerald-400/30',
+        badgeBg: 'bg-emerald-500/20',
         badgeText: 'text-white'
       },
       nav: [
-        {
-          id: 'overview',
-          icon: 'sparkles',
-          label: { ar: 'نظرة عامة', en: 'Overview' },
-          badge: { ar: 'تحرير', en: 'Editorial' }
-        },
-        {
-          id: 'calendar',
-          icon: 'calendar',
-          label: { ar: 'الجدول التحريري', en: 'Editorial calendar' }
-        },
-        {
-          id: 'authors',
-          icon: 'users',
-          label: { ar: 'المحررون والمؤلفون', en: 'Authors & editors' }
-        },
-        {
-          id: 'distribution',
-          icon: 'megaphone',
-          label: { ar: 'التوزيع والترويج', en: 'Distribution & promotion' }
-        }
-      ],
+        { id: 'overview', icon: 'shield', label: { ar: 'نظرة عامة', en: 'Overview' }, badge: { ar: 'P1 نشط', en: 'P1 active' } },
+        { id: 'incidents', icon: 'alert', label: { ar: 'الحوادث', en: 'Incidents' } },
+        { id: 'capacity', icon: 'cloud', label: { ar: 'السعة', en: 'Capacity' } },
+        { id: 'playbooks', icon: 'book-open', label: { ar: 'أدلة العمل', en: 'Runbooks' } }
+      ].map(item => ({ ...item, icon: item.icon === 'alert' ? 'sparkles' : item.icon })),
       highlight: {
-        label: { ar: 'حملة الأسبوع', en: 'Campaign of the week' },
-        value: 'سلسلة التحولات الرقمية',
+        label: { ar: 'أولوية الحادث', en: 'Incident priority' },
+        value: { ar: 'P1 - تأخر تدفق البيانات', en: 'P1 – Data stream lag' },
         description: {
-          ar: 'ارتفعت القراءات العميقة بنسبة 26% بعد إطلاق السلسلة المكونة من خمسة أجزاء.',
-          en: 'Deep reads climbed 26% after launching the five-part digital transformation series.'
+          ar: 'تأثير على التقارير الزمنية، زمن الاستجابة الحالي 7 دقائق.',
+          en: 'Impacting realtime analytics, current response time 7 minutes.'
         }
       },
       header: {
-        title: {
-          ar: 'لوحة إدارة المحتوى',
-          en: 'Content operations dashboard'
-        },
+        title: { ar: 'غرفة التحكم بالاستمرارية', en: 'Reliability command room' },
         subtitle: {
-          ar: 'تنسيق جدول النشر، جودة المواد، وأداء القنوات.',
-          en: 'Coordinate publishing schedules, content quality, and channel performance.'
+          ar: 'إدارة الحوادث، التوسع، وخطط التعافي في لوحة واحدة.',
+          en: 'Coordinate incidents, scaling, and recovery strategies from one view.'
         },
-        primary: {
-          ar: 'إطلاق موضوع خاص',
-          en: 'Launch special topic'
-        },
-        secondary: {
-          ar: 'مراجعة الخطة الأسبوعية',
-          en: 'Review weekly plan'
-        }
+        primary: { ar: 'دعوة قادة الطوارئ', en: 'Page incident leads' },
+        secondary: { ar: 'نافذة 6 ساعات', en: 'Last 6 hours' }
       },
       stats: [
-        {
-          icon: 'sparkles',
-          label: { ar: 'مقالات منشورة هذا الشهر', en: 'Articles published this month' },
-          value: '64',
-          delta: { ar: '+12 عن الشهر السابق', en: '+12 vs last month' },
-          trend: 'positive'
-        },
-        {
-          icon: 'heart',
-          label: { ar: 'معدل التفاعل', en: 'Engagement rate' },
-          value: '7.4%',
-          delta: { ar: '+1.2 نقطة', en: '+1.2 pts' },
-          trend: 'positive'
-        },
-        {
-          icon: 'folder',
-          label: { ar: 'مسودات قيد المراجعة', en: 'Drafts in review' },
-          value: '18',
-          delta: { ar: '-6 مقارنة بالأسبوع الماضي', en: '-6 vs last week' },
-          trend: 'positive'
-        },
-        {
-          icon: 'users',
-          label: { ar: 'مساهمون نشطون', en: 'Active contributors' },
-          value: '27',
-          delta: { ar: '+4 أصوات جديدة', en: '+4 new voices' },
-          trend: 'positive'
-        }
-      ],
+        { icon: 'shield', label: { ar: 'الحوادث المفتوحة', en: 'Open incidents' }, value: '5', delta: { ar: '−3 خلال 12 ساعة', en: '−3 in 12 hours' }, trend: 'positive' },
+        { icon: 'clock', label: { ar: 'متوسط زمن الحل', en: 'Mean time to resolve' }, value: '42 دقيقة', delta: { ar: 'الهدف 45 دقيقة', en: 'Target 45 minutes' }, trend: 'positive' },
+        { icon: 'users', label: { ar: 'فرق الاستجابة النشطة', en: 'Active response squads' }, value: '4 فرق', delta: { ar: 'انضم فريق النمو', en: 'Growth team joined' }, trend: 'positive' },
+        { icon: 'cloud', label: { ar: 'جاهزية التوسع', en: 'Scaling readiness' }, value: '88%', delta: { ar: 'أضيفت 12 عقدة جديدة', en: '12 nodes added' }, trend: 'positive' }
+      ].map(stat => ({ ...stat, icon: stat.icon === 'clock' ? 'calendar' : stat.icon })),
       panels: [
         {
-          id: 'overview',
+          id: 'impact',
           type: 'chart',
           span: 'xl:col-span-2',
-          title: { ar: 'منحنى التفاعل اليومي', en: 'Daily engagement curve' },
-          subtitle: { ar: 'مقارنة التفاعل بين المقالات الطويلة والقصيرة عبر القنوات.', en: 'Long-form vs short-form engagement across channels.' },
-          action: { ar: 'عرض حسب الفئة', en: 'Segment by category' },
-          placeholder: { ar: 'مخطط التفاعل', en: 'Engagement chart' }
+          title: { ar: 'نافذة تأثير SLA', en: 'SLA impact window' },
+          subtitle: { ar: 'حجم التوقف مقابل خط الأساس خلال آخر 6 ساعات.', en: 'Downtime magnitude vs baseline across the last 6 hours.' },
+          action: { ar: 'تحميل تقرير التأثير', en: 'Download impact report' },
+          placeholder: { ar: 'منحنى التأثير', en: 'Impact curve' }
         },
         {
-          id: 'stories',
+          id: 'live-incidents',
           type: 'list',
-          title: { ar: 'مواضيع رائجة', en: 'Trending stories' },
-          action: { ar: 'آخر تحديث 15 دقيقة', en: 'Updated 15 minutes ago' },
+          title: { ar: 'الحوادث المباشرة', en: 'Live incidents' },
+          action: { ar: 'تم التحديث قبل دقيقتين', en: 'Updated 2 minutes ago' },
           items: [
-            {
-              icon: 'sparkles',
-              title: { ar: 'مستقبل الذكاء الاصطناعي التوليدي', en: 'Future of generative AI' },
-              subtitle: { ar: '3 أجزاء | 12 دقيقة قراءة', en: '3-part | 12 min read' },
-              value: '24K',
-              delta: { ar: 'معدل إكمال 68%', en: 'Completion rate 68%' }
-            },
-            {
-              icon: 'book-open',
-              title: { ar: 'دليل استراتيجيات المحتوى لعام 2024', en: '2024 content strategy guide' },
-              subtitle: { ar: 'PDF قابل للتنزيل', en: 'Downloadable PDF' },
-              value: '18K',
-              delta: { ar: '600 مشاركة اجتماعية', en: '600 social shares' }
-            },
-            {
-              icon: 'megaphone',
-              title: { ar: 'بودكاست صوت الصناعة', en: 'Industry voice podcast' },
-              subtitle: { ar: 'حلقة جديدة كل ثلاثاء', en: 'New episode every Tuesday' },
-              value: '9.3K',
-              delta: { ar: 'متوسط استماع 21 دقيقة', en: 'Avg listen 21 mins' }
-            }
+            { icon: 'sparkles', title: { ar: 'SYN-212 - فقدان رسائل', en: 'SYN-212 – Message loss' }, subtitle: { ar: 'خدمة البث اللحظي', en: 'Realtime stream service' }, value: 'مرحلة التخفيف', delta: { ar: 'ETA الحل 18 دقيقة', en: 'ETA resolution 18m' } },
+            { icon: 'cloud', title: { ar: 'CAP-104 - ضغط السعة', en: 'CAP-104 – Capacity pressure' }, subtitle: { ar: 'عنقود المعالجة في سنغافورة', en: 'Singapore processing cluster' }, value: 'يتطلب التوسع', delta: { ar: 'زيادة 20% في الحمل', en: 'Load up 20%' } },
+            { icon: 'shield', title: { ar: 'SEC-078 - رمز تنبيه', en: 'SEC-078 – Token alert' }, subtitle: { ar: 'بوابة الهوية', en: 'Identity gateway' }, value: 'تحقيق', delta: { ar: 'لا تأثير على العملاء', en: 'No customer impact' } }
           ]
         },
         {
-          id: 'pipeline',
+          id: 'runbooks',
           type: 'progress',
-          title: { ar: 'خط إنتاج المحتوى', en: 'Content production pipeline' },
+          title: { ar: 'تنفيذ خطة الاستجابة', en: 'Response plan execution' },
           items: [
-            {
-              title: { ar: 'البحث وتحديد الفكرة', en: 'Research & ideation' },
-              subtitle: { ar: 'جلسات عصف أسبوعية', en: 'Weekly brainstorming sessions' },
-              value: '88%',
-              percent: '88%'
-            },
-            {
-              title: { ar: 'الكتابة والتحرير', en: 'Writing & editing' },
-              subtitle: { ar: 'قوالب مراجعة جديدة', en: 'New review templates' },
-              value: '62%',
-              percent: '62%'
-            },
-            {
-              title: { ar: 'التصميم والنشر', en: 'Design & publishing' },
-              subtitle: { ar: 'اختبارات A/B للعناوين', en: 'Headline A/B testing' },
-              value: '48%',
-              percent: '48%'
-            }
+            { title: { ar: 'تنسيق الاتصالات', en: 'Communications' }, subtitle: { ar: 'إرسال تحديثات العملاء كل 15 دقيقة', en: 'Customer updates every 15 minutes' }, value: '95%', percent: '95%' },
+            { title: { ar: 'الاستعادة المرحلية', en: 'Phased recovery' }, subtitle: { ar: 'تفعيل المسار البديل للبيانات', en: 'Fallback data path enabled' }, value: '68%', percent: '68%' },
+            { title: { ar: 'مراجعة ما بعد الحادث', en: 'Post-incident review' }, subtitle: { ar: 'جمع المقاييس والجداول', en: 'Collecting metrics & timelines' }, value: '22%', percent: '22%' }
           ]
         },
         {
-          id: 'timeline',
+          id: 'capacity',
+          type: 'table',
+          span: 'xl:col-span-2',
+          title: { ar: 'خطة التوسع الفوري', en: 'Immediate scaling plan' },
+          action: { ar: 'مزامنة مع الفريق الهندسي', en: 'Sync with engineering' },
+          headers: [
+            { ar: 'العنقود', en: 'Cluster' },
+            { ar: 'الحالة', en: 'Status' },
+            { ar: 'التغير', en: 'Change' }
+          ],
+          rows: [
+            { name: { ar: 'معالجة الأحداث', en: 'Event processing' }, metric: 'قيد التوسعة', delta: { ar: '+12 عقدة خلال 5 دقائق', en: '+12 nodes in 5m' }, trend: 'positive' },
+            { name: { ar: 'مخزن البيانات', en: 'Data lake' }, metric: 'جاهز', delta: { ar: 'سعة احتياطية 34%', en: '34% buffer capacity' }, trend: 'positive' },
+            { name: { ar: 'منصة الهوية', en: 'Identity platform' }, metric: 'تحذير طفيف', delta: { ar: '+4% تأخير جلسات', en: '+4% session latency' }, trend: 'neutral' }
+          ]
+        },
+        {
+          id: 'updates',
           type: 'timeline',
           span: 'xl:col-span-3',
-          title: { ar: 'تحديثات تحريرية', en: 'Editorial updates' },
+          title: { ar: 'خط زمني للتحديثات', en: 'Update timeline' },
           items: [
-            {
-              icon: 'calendar',
-              title: { ar: 'إطلاق جدول النشر الجديد', en: 'New publishing calendar launched' },
-              subtitle: { ar: 'أولويات موجهة نحو القصص المتعمقة', en: 'Focus on deep-dive features' },
-              time: { ar: 'اليوم', en: 'Today' }
-            },
-            {
-              icon: 'users',
-              title: { ar: 'تعيين محرر ضيف', en: 'Guest editor assignment' },
-              subtitle: { ar: 'سلسلة ريادة الأعمال الناشئة', en: 'Emerging founders series' },
-              time: { ar: 'أمس', en: 'Yesterday' }
-            },
-            {
-              icon: 'megaphone',
-              title: { ar: 'حملة النشرة الأسبوعية', en: 'Weekly newsletter push' },
-              subtitle: { ar: 'زيادة معدل الفتح إلى 41%', en: 'Open rate up to 41%' },
-              time: { ar: 'قبل يومين', en: '2 days ago' }
-            }
+            { icon: 'megaphone', title: { ar: 'بيان العملاء الأول', en: 'Initial customer note' }, subtitle: { ar: 'إرسال إلى قائمة الحالة العامة', en: 'Shared via public status page' }, time: { ar: 'قبل 10 دقائق', en: '10 minutes ago' } },
+            { icon: 'cog', title: { ar: 'تنشيط الحاويات الاحتياطية', en: 'Backup containers activated' }, subtitle: { ar: 'تحويل 35% من الحمل إلى المسار البديل', en: 'Rerouted 35% of load to fallback path' }, time: { ar: 'قبل 25 دقيقة', en: '25 minutes ago' } },
+            { icon: 'book-open', title: { ar: 'بدء مراجعة ما بعد الحادث', en: 'Post-incident review kickoff' }, subtitle: { ar: 'جمع الملاحظات من جميع الفرق', en: 'Collecting notes from all squads' }, time: { ar: 'أمس', en: 'Yesterday' } }
           ]
         }
       ]

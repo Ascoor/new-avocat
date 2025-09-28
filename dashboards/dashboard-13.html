@@ -12,7 +12,7 @@
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
-  <div data-role="dashboard-shell" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="min-h-screen flex flex-col lg:flex-row">
     <header class="lg:hidden border-b border-white/5 bg-white/5 backdrop-blur-sm px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div data-role="mobile-badge" class="h-11 w-11 rounded-2xl bg-white/10 text-white flex items-center justify-center text-lg font-semibold">SC</div>
@@ -43,7 +43,7 @@
             <p data-role="brand-tagline" class="text-sm text-slate-300"></p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div data-role="sidebar-actions" class="flex items-center gap-2">
           <div data-role="language-switcher" class="hidden lg:inline-flex rounded-xl border border-white/10 bg-white/5 p-1"></div>
           <button id="sidebarClose" class="lg:hidden inline-flex items-center gap-2 rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-200">
             <span data-role="close-label">إغلاق</span>
@@ -82,14 +82,6 @@
         close: {
           ar: 'إغلاق',
           en: 'Close'
-        },
-        collapse: {
-          ar: 'تصغير الشريط',
-          en: 'Collapse sidebar'
-        },
-        expand: {
-          ar: 'توسيع الشريط',
-          en: 'Expand sidebar'
         }
       },
       brand: {
@@ -104,10 +96,6 @@
         }
       },
       theme: {
-        bodyGradient: 'from-slate-950 via-emerald-950 to-amber-900',
-        sidebarGradient: 'from-emerald-950 via-emerald-900 to-amber-900',
-        cardBg: 'bg-slate-950/60 backdrop-blur-xl',
-        cardBorder: 'border-emerald-400/30',
         accentGradient: 'from-amber-500 via-lime-500 to-emerald-500',
         accentText: 'text-emerald-200',
         highlightBg: 'bg-lime-500/10 border-lime-400/30',
