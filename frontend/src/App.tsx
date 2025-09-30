@@ -17,9 +17,7 @@ import UnClientsPage from '@/pages/UnClientsPage';
 import { LawyersList, LawyerDetails } from '@/pages/LawyersPage';
 import ServicesPage from '@/pages/ServicesPage';
 import OfficeSettingsPage from '@/pages/OfficeSettingsPage';
-import NotFound from '@/pages/NotFound';
-import DashboardGalleryPage from '@/pages/DashboardShowcase/GalleryPage';
-import DashboardDetailPage from '@/pages/DashboardShowcase/DashboardDetailPage';
+import NotFound from '@/pages/NotFound'; 
 
 // 🌀 نوع الأقسام المستقبلية
 type DashboardSectionKey =
@@ -50,9 +48,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         {/* 🌍 Public */}
-        <Route path="/" element={<Landing />} />
-        <Route path="/showcase" element={<DashboardGalleryPage />} />
-        <Route path="/showcase/:slug" element={<DashboardDetailPage />} />
+        <Route path="/" element={<Landing />} /> 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 

@@ -32,6 +32,7 @@ backend/storage/framework/sessions/*
 backend/storage/framework/views/*
 backend/storage/logs/*
 backend/.env
+DashboardShowcase/
 backend/.phpunit.result.cache
 
 # ---- IDE & OS Files ----
