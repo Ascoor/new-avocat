@@ -36,7 +36,8 @@ const DashboardGalleryPage = () => {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
-  const firstDashboardSlug = DASHBOARD_CATALOG[0]?.slug ?? 'dashboard-1';
+  const featuredDashboard = DASHBOARD_CATALOG[0];
+  const firstDashboardSlug = featuredDashboard?.slug ?? 'dashboard-1';
 
   useEffect(() => {
     document.title = t('showcase.pageTitle');
@@ -72,13 +73,50 @@ const DashboardGalleryPage = () => {
     });
   }, [activeCategory, language, query]);
 
+  const uniqueIndustries = useMemo(
+    () => new Set(DASHBOARD_CATALOG.map((dashboard) => dashboard.category.en)).size,
+    [],
+  );
+
+  const heroStats = useMemo(
+    () => [
+      {
+        label: t('showcase.stats.totalDashboards'),
+        hint: t('showcase.stats.totalDashboardsHint'),
+        value: `${DASHBOARD_CATALOG.length}`,
+      },
+      {
+        label: t('showcase.stats.uniqueIndustries'),
+        hint: t('showcase.stats.uniqueIndustriesHint'),
+        value: `${uniqueIndustries}`,
+      },
+    ],
+    [t, uniqueIndustries],
+  );
+
+  const featuredContent = useMemo(() => {
+    if (!featuredDashboard) {
+      return null;
+    }
+
+    return {
+      title: getLocalizedText(language, featuredDashboard.title),
+      summary: getLocalizedText(language, featuredDashboard.summary),
+      badge: getLocalizedText(language, featuredDashboard.badge),
+      category: getLocalizedText(language, featuredDashboard.category),
+      features: featuredDashboard.features.slice(0, 3).map((feature) =>
+        getLocalizedText(language, feature),
+      ),
+    };
+  }, [featuredDashboard, language]);
+
   return (
     <div className="gallery-shell" data-gallery-root dir={direction}>
       <div className="gallery-content">
         <header className="gallery-header">
           <Link to="/" className="inline-flex items-center gap-3">
             <BrandLogo variant="text" className="h-12" lang={language} />
-            <span className="text-sm font-medium text-slate-400">
+            <span className="text-sm font-medium text-muted-foreground">
               {t('showcase.header.tagline')}
             </span>
           </Link>
@@ -92,73 +130,113 @@ const DashboardGalleryPage = () => {
         </header>
 
         <section className="gallery-hero">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-indigo-200">
+          <div className="gallery-hero__content">
+            <span className="gallery-hero__badge">
               <Sparkles className="h-4 w-4" />
               {t('showcase.hero.badge')}
-            </div>
-            <h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl">
-              {t('showcase.hero.title')}
-            </h1>
-            <p className="max-w-2xl text-lg text-slate-300 sm:text-xl">
-              {t('showcase.hero.subtitle')}
-            </p>
-            <p className="max-w-2xl text-base text-slate-400">
-              {t('showcase.hero.description')}
-            </p>
-            <div className="flex flex-wrap gap-3">
+            </span>
+            <h1 className="gallery-hero__title">{t('showcase.hero.title')}</h1>
+            <p className="gallery-hero__subtitle">{t('showcase.hero.subtitle')}</p>
+            <p className="gallery-hero__description">{t('showcase.hero.description')}</p>
+            <div className="gallery-hero__cta">
               <Button size="lg" asChild>
                 <Link to={`/showcase/${firstDashboardSlug}`}>
                   {t('showcase.actions.jumpToExample')}
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link to="/dashboard">
-                  {t('showcase.actions.goToApp')}
-                </Link>
+                <Link to="/dashboard">{t('showcase.actions.goToApp')}</Link>
               </Button>
             </div>
-          </div>
-
-          <div className="gallery-hero-card">
-            <div className="gallery-stats-grid">
-              <div className="gallery-stat">
-                <h3>{t('showcase.stats.totalDashboards')}</h3>
-                <strong>25</strong>
-                <p>{t('showcase.stats.totalDashboardsHint')}</p>
-              </div>
-              <div className="gallery-stat">
-                <h3>{t('showcase.stats.uniqueIndustries')}</h3>
-                <strong>{categories.length}</strong>
-                <p>{t('showcase.stats.uniqueIndustriesHint')}</p>
-              </div>
-            </div>
-            <div className="mt-8 grid gap-3">
-              {categories.slice(0, 6).map((category) => (
-                <div
-                  key={category.en}
-                  className="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3 text-sm text-slate-200"
-                >
-                  <span>{getLocalizedText(language, category)}</span>
-                  <span className="text-xs text-indigo-200">
-                    {t('showcase.labels.industryTag')}
-                  </span>
+            <dl className="gallery-hero__stats">
+              {heroStats.map((stat) => (
+                <div key={stat.label} className="gallery-hero__statsCard">
+                  <dt className="gallery-hero__statsLabel">{stat.label}</dt>
+                  <dd className="gallery-hero__statsValue">{stat.value}</dd>
+                  <dd className="gallery-hero__statsHint">{stat.hint}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </div>
+
+          {featuredDashboard && featuredContent ? (
+            <aside
+              className="gallery-hero__showcase"
+              aria-label={featuredContent.title}
+            >
+              <div className="gallery-hero__showcasePreview">
+                <span
+                  aria-hidden
+                  className={cn(
+                    'gallery-hero__showcaseAccent bg-gradient-to-br',
+                    featuredDashboard.accent,
+                  )}
+                />
+                <span
+                  aria-hidden
+                  className={cn(
+                    'gallery-hero__showcaseBackdrop bg-gradient-to-br',
+                    featuredDashboard.preview.gradient,
+                  )}
+                />
+                <span aria-hidden className="gallery-hero__showcaseOverlay" />
+                <div className="gallery-hero__showcaseContent">
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      'gallery-hero__showcaseBadge',
+                      featuredDashboard.preview.accentText,
+                    )}
+                  >
+                    {featuredContent.badge}
+                  </Badge>
+                  <span className="gallery-hero__showcaseMeta">
+                    {featuredContent.category}
+                  </span>
+                  <h3 className="gallery-hero__showcaseTitle">
+                    {featuredContent.title}
+                  </h3>
+                </div>
+              </div>
+              <div className="gallery-hero__showcaseBody">
+                <p className="gallery-hero__showcaseDescription">
+                  {featuredContent.summary}
+                </p>
+                <ul className="gallery-hero__showcaseList">
+                  {featuredContent.features.map((feature) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+              <Button asChild variant="ghost" className="gallery-hero__showcaseAction">
+                <Link to={`/showcase/${featuredDashboard.slug}`}>
+                  {t('showcase.actions.jumpToExample')}
+                </Link>
+              </Button>
+            </aside>
+          ) : null}
         </section>
 
-        <section className="mt-14 space-y-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="gallery-search">
-              <Search className="h-4 w-4 text-slate-300" />
-              <Input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={t('showcase.filters.searchPlaceholder')}
-                className="gallery-search__input"
-              />
+        <section className="gallery-collection">
+          <div className="gallery-collection__toolbar">
+            <div className="gallery-collection__toolbarPrimary">
+              <div className="gallery-search">
+                <Search className="h-4 w-4 text-muted-foreground" />
+                <Input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder={t('showcase.filters.searchPlaceholder')}
+                  className="gallery-search__input"
+                />
+              </div>
+              <div className="gallery-collection__meta" role="status">
+                <span className="gallery-collection__metaValue">
+                  {filteredDashboards.length}
+                </span>
+                <span className="gallery-collection__metaLabel">
+                  {t('showcase.stats.totalDashboards')}
+                </span>
+              </div>
             </div>
             <div className="gallery-filters" dir={direction}>
               <Button
@@ -195,11 +273,11 @@ const DashboardGalleryPage = () => {
               ))
             ) : (
               <div className="gallery-empty">
-                <Sparkles className="mb-4 h-10 w-10 text-indigo-200" />
-                <h2 className="text-2xl font-semibold text-white">
+                <Sparkles className="mb-4 h-10 w-10 text-primary" />
+                <h2 className="text-2xl font-semibold text-foreground">
                   {t('showcase.empty.title')}
                 </h2>
-                <p className="mt-2 max-w-md text-sm text-slate-400">
+                <p className="mt-2 max-w-md text-sm text-muted-foreground">
                   {t('showcase.empty.subtitle')}
                 </p>
               </div>
@@ -230,10 +308,18 @@ const GalleryCard = ({ dashboard, language, ctaLabel }: GalleryCardProps) => {
         className={cn('gallery-card__accent bg-gradient-to-br', dashboard.accent)}
       />
       <div className="gallery-card__preview">
-        <div className={cn('gallery-card__previewGradient bg-gradient-to-br', dashboard.preview.gradient)} />
+        <div
+          className={cn(
+            'gallery-card__previewGradient bg-gradient-to-br',
+            dashboard.preview.gradient,
+          )}
+        />
         <div className="gallery-card__previewOverlay" />
         <div className="gallery-card__previewContent">
-          <Badge variant="outline" className={cn('gallery-card__previewBadge', dashboard.preview.accentText)}>
+          <Badge
+            variant="outline"
+            className={cn('gallery-card__previewBadge', dashboard.preview.accentText)}
+          >
             {localizedBadge}
           </Badge>
           <span className="gallery-card__previewCategory">{localizedCategory}</span>
@@ -251,7 +337,7 @@ const GalleryCard = ({ dashboard, language, ctaLabel }: GalleryCardProps) => {
             </li>
           ))}
           {dashboard.features.length > 3 ? (
-            <li className="gallery-card__feature gallery-card__feature--more text-indigo-100">
+            <li className="gallery-card__feature gallery-card__feature--more">
               +{dashboard.features.length - 3}
             </li>
           ) : null}
