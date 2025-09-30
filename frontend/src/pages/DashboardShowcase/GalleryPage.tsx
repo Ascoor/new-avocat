@@ -73,7 +73,7 @@ const DashboardGalleryPage = () => {
   }, [activeCategory, language, query]);
 
   return (
-    <div className="gallery-shell" dir={direction}>
+    <div className="gallery-shell" data-gallery-root dir={direction}>
       <div className="gallery-content">
         <header className="gallery-header">
           <Link to="/" className="inline-flex items-center gap-3">
@@ -225,6 +225,10 @@ const GalleryCard = ({ dashboard, language, ctaLabel }: GalleryCardProps) => {
 
   return (
     <Card className="gallery-card">
+      <span
+        aria-hidden
+        className={cn('gallery-card__accent bg-gradient-to-br', dashboard.accent)}
+      />
       <div className="gallery-card__preview">
         <div className={cn('gallery-card__previewGradient bg-gradient-to-br', dashboard.preview.gradient)} />
         <div className="gallery-card__previewOverlay" />
