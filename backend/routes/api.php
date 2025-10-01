@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\Website\AchievementController;
+use App\Http\Controllers\Api\Website\ArticleController;
+use App\Http\Controllers\Api\Website\PageController;
+use App\Http\Controllers\Api\Website\TeamController;
+use App\Http\Controllers\Api\Website\UploadController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CaseStatusController;
 use App\Http\Controllers\CaseSubTypeController;
@@ -169,3 +174,14 @@ Route::post('notifications/{notificationId}/read', [NotificationController::clas
         Route::post('notification', [NotificationController::class,'store']);
         Route::post('event', [EventController::class,'store']);
         Route::get('/events', [EventController::class,'index']);
+
+Route::prefix('website')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::get('/pages/{slug}', [PageController::class, 'index']);
+    Route::post('/pages/{slug}', [PageController::class, 'update']);
+
+    Route::apiResource('team', TeamController::class);
+    Route::apiResource('articles', ArticleController::class);
+    Route::apiResource('achievements', AchievementController::class);
+
+    Route::post('/upload', [UploadController::class, 'store']);
+});
