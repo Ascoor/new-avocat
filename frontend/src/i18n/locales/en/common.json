@@ -96,8 +96,72 @@
   "supportDesc": "Dedicated support that ensures your digital transformation success",
   "testimonialsTitle": "Trusted by Legal Leaders Across MENA",
   "testimonialsSubtitle": "Hear from legal professionals who've transformed their practice with Avocat",
+  "testimonialsItems": [
+    {
+      "id": 1,
+      "name": "Ahmed Al-Mansouri",
+      "position": "Managing Partner",
+      "company": "Al-Mansouri & Associates",
+      "avatar": "👨‍💼",
+      "rating": 5,
+      "quote": "Avocat transformed our practice completely. The digital tools increased our efficiency by 300% and our client satisfaction rates are at an all-time high.",
+      "type": "firm"
+    },
+    {
+      "id": 2,
+      "name": "Sarah Johnson",
+      "position": "Legal Director",
+      "company": "Global Corp",
+      "avatar": "👩‍💼",
+      "rating": 5,
+      "quote": "The compliance tracking and contract management features have revolutionized how we handle our legal operations. Outstanding platform!",
+      "type": "firm"
+    },
+    {
+      "id": 3,
+      "name": "Dr. Khalid Rahman",
+      "position": "Independent Lawyer",
+      "company": "Solo Practice",
+      "avatar": "👨‍⚖️",
+      "rating": 5,
+      "quote": "As a solo practitioner, Avocat gave me enterprise-level tools at an affordable price. My practice has grown 200% since I started using it.",
+      "type": "individual"
+    },
+    {
+      "id": 4,
+      "name": "Fatima Al-Zahra",
+      "position": "Senior Partner",
+      "company": "Legal Innovations LLC",
+      "avatar": "👩‍⚖️",
+      "rating": 5,
+      "quote": "The training programs helped our entire team transition to digital workflows seamlessly. Exceptional support and cutting-edge technology.",
+      "type": "firm"
+    }
+  ],
+  "testimonialsStats": [
+    { "number": "500+", "label": "Happy Clients", "icon": "😊" },
+    { "number": "98%", "label": "Satisfaction Rate", "icon": "⭐" },
+    { "number": "24/7", "label": "Support Available", "icon": "🚀" }
+  ],
   "ctaTitle": "Ready to Lead the Digital Legal Revolution?",
   "ctaSubtitle": "Join the exclusive community of forward-thinking legal professionals who trust Avocat",
+  "ctaPrimaryLabel": "Get Free Demo",
+  "ctaSecondaryLabel": "Contact Sales",
+  "ctaFeatures": [
+    "✅ Free 30-Day Trial",
+    "🚀 Instant Setup",
+    "💡 24/7 Expert Support",
+    "🔒 Bank-Level Security"
+  ],
+  "ctaTrustNote": "Trusted by leading law firms across MENA",
+  "ctaClients": [
+    "Baker McKenzie Style Firm",
+    "Regional Legal Leader",
+    "International Law Group",
+    "Corporate Legal Dept",
+    "Government Entity"
+  ],
+  "ctaBottom": "🌟 Join the Legal Digital Revolution Today!",
   "ctaDescription": "Start today and position your practice at the forefront of legal innovation. Limited-time access to our premium transformation package.",
   "ctaUrgency": "Transform your practice in 30 days or less",
   "contactTitle": "Connect with Legal Technology Specialists",

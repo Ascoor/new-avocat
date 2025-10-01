@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Star, Quote, ChevronLeft, ChevronRight, Building, User } from 'lucide-react';
 
-interface Testimonial {
+type TestimonialType = 'firm' | 'individual';
+
+interface TestimonialCopy {
   id: number;
   name: string;
   position: string;
@@ -10,57 +12,39 @@ interface Testimonial {
   avatar: string;
   rating: number;
   quote: string;
-  type: 'firm' | 'individual';
+  type: TestimonialType;
+}
+
+interface TestimonialStat {
+  number: string;
+  label: string;
+  icon: string;
 }
 
 const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { t, isRTL } = useLanguage();
 
-  const testimonials: Testimonial[] = [
-    {
-      id: 1,
-      name: 'Ahmed Al-Mansouri',
-      position: 'Managing Partner',
-      company: 'Al-Mansouri & Associates',
-      avatar: '👨‍💼',
-      rating: 5,
-      quote: 'Avocat transformed our practice completely. The digital tools increased our efficiency by 300% and our client satisfaction rates are at an all-time high.',
-      type: 'firm'
-    },
-    {
-      id: 2,
-      name: 'Sarah Johnson',
-      position: 'Legal Director',
-      company: 'Global Corp',
-      avatar: '👩‍💼',
-      rating: 5,
-      quote: 'The compliance tracking and contract management features have revolutionized how we handle our legal operations. Outstanding platform!',
-      type: 'firm'
-    },
-    {
-      id: 3,
-      name: 'Dr. Khalid Rahman',
-      position: 'Independent Lawyer',
-      company: 'Solo Practice',
-      avatar: '👨‍⚖️',
-      rating: 5,
-      quote: 'As a solo practitioner, Avocat gave me enterprise-level tools at an affordable price. My practice has grown 200% since I started using it.',
-      type: 'individual'
-    },
-    {
-      id: 4,
-      name: 'Fatima Al-Zahra',
-      position: 'Senior Partner',
-      company: 'Legal Innovations LLC',
-      avatar: '👩‍⚖️',
-      rating: 5,
-      quote: 'The training programs helped our entire team transition to digital workflows seamlessly. Exceptional support and cutting-edge technology.',
-      type: 'firm'
-    }
-  ];
+  const testimonials = useMemo(() => {
+    const entries = t<TestimonialCopy[]>('testimonialsItems', { returnObjects: true }) ?? [];
+    return entries;
+  }, [t]);
+
+  const stats = useMemo(() => {
+    const statEntries = t<TestimonialStat[]>('testimonialsStats', { returnObjects: true }) ?? [];
+    return statEntries;
+  }, [t]);
 
   useEffect(() => {
+    if (currentIndex >= testimonials.length) {
+      setCurrentIndex(0);
+    }
+  }, [currentIndex, testimonials.length]);
+
+  useEffect(() => {
+    if (testimonials.length <= 1) {
+      return;
+    }
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 6000);
@@ -87,7 +71,10 @@ const Testimonials: React.FC = () => {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-br from-secondary/30 via-background to-secondary/30 relative overflow-hidden">
+    <section
+      id="testimonials"
+      className="relative overflow-hidden bg-gradient-to-br from-secondary/30 via-background to-secondary/30 py-24"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply blur-xl animate-float"></div>
@@ -112,7 +99,7 @@ const Testimonials: React.FC = () => {
               className="flex transition-transform duration-700 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {testimonials.map((testimonial, index) => (
+              {testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="w-full flex-shrink-0">
                   <div className="card-elevated p-8 lg:p-12 text-center mx-4 relative animate-scale-in">
                     {/* Quote Icon */}
@@ -123,8 +110,8 @@ const Testimonials: React.FC = () => {
                     {/* Company Type Badge */}
                     <div className="absolute top-6 right-6">
                       <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                        testimonial.type === 'firm' 
-                          ? 'bg-gradient-to-br from-primary to-primary-light' 
+                        testimonial.type === 'firm'
+                          ? 'bg-gradient-to-br from-primary to-primary-light'
                           : 'bg-gradient-to-br from-accent to-accent-glow'
                       }`}>
                         {testimonial.type === 'firm' ? (
@@ -141,7 +128,7 @@ const Testimonials: React.FC = () => {
                     </div>
 
                     {/* Rating */}
-                    <div className="flex justify-center space-x-1 mb-6">
+                    <div className="flex justify-center space-x-1 mb-6 rtl:space-x-reverse">
                       {renderStars(testimonial.rating)}
                     </div>
 
@@ -189,7 +176,7 @@ const Testimonials: React.FC = () => {
         </div>
 
         {/* Testimonial Indicators */}
-        <div className="flex justify-center space-x-3 mb-16">
+        <div className="mb-16 flex justify-center space-x-3 rtl:space-x-reverse">
           {testimonials.map((_, index) => (
             <button
               key={index}
@@ -204,12 +191,8 @@ const Testimonials: React.FC = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { number: '500+', label: 'Happy Clients', icon: '😊' },
-            { number: '98%', label: 'Satisfaction Rate', icon: '⭐' },
-            { number: '24/7', label: 'Support Available', icon: '🚀' }
-          ].map((stat, index) => (
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          {stats.map((stat, index) => (
             <div
               key={index}
               className="text-center card-premium p-8 hover:card-elevated transition-all duration-500 group hover:-translate-y-1 animate-slide-up"
