@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from "@/components/ui/button";
 import { Play, ArrowRight, Sparkles, Zap } from 'lucide-react';
@@ -7,15 +7,22 @@ import { smoothScrollToElement } from "@/utils/smoothScroll";
 const CallToAction: React.FC = () => {
   const { t, isRTL } = useLanguage();
 
-  const scrollToContact = () => {
-    const element = document.querySelector<HTMLElement>('#contact');
+  const features = useMemo(() => t<string[]>('ctaFeatures', { returnObjects: true }) ?? [], [t]);
+  const clients = useMemo(() => t<string[]>('ctaClients', { returnObjects: true }) ?? [], [t]);
+  const primaryLabel = t('ctaPrimaryLabel');
+  const secondaryLabel = t('ctaSecondaryLabel');
+  const trustNote = t('ctaTrustNote');
+  const bottomNote = t('ctaBottom');
+
+  const scrollToSection = (selector: string) => {
+    const element = document.querySelector<HTMLElement>(selector);
     if (element) {
       smoothScrollToElement(element, { offset: 90, duration: 950 });
     }
   };
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section id="cta" className="relative overflow-hidden py-24">
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary-glow"></div>
       
@@ -53,13 +60,8 @@ const CallToAction: React.FC = () => {
 
           {/* Features List */}
           <div className="flex flex-wrap justify-center gap-6 mb-12 animate-slide-up" style={{ animationDelay: '400ms' }}>
-            {[
-              '✅ Free 30-Day Trial',
-              '🚀 Instant Setup',
-              '💡 24/7 Expert Support',
-              '🔒 Bank-Level Security'
-            ].map((feature, index) => (
-              <div 
+            {features.map((feature, index) => (
+              <div
                 key={index}
                 className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-white font-medium hover:bg-white/30 transition-all duration-300 hover:scale-105"
               >
@@ -73,40 +75,34 @@ const CallToAction: React.FC = () => {
             isRTL ? 'sm:flex-row-reverse' : ''
           }`} style={{ animationDelay: '600ms' }}>
             
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="btn-gold text-xl px-12 py-6 h-auto group shadow-gold hover:shadow-xl hover:scale-105 transition-all duration-300"
-              onClick={() => window.open('#demo', '_blank')}
+              onClick={() => scrollToSection('#capabilities')}
             >
               <Play className="w-6 h-6 mr-3 rtl:ml-3 rtl:mr-0 group-hover:scale-110 transition-transform duration-300" />
-              <span className="font-semibold">Get Free Demo</span>
+              <span className="font-semibold">{primaryLabel}</span>
               <Zap className="w-5 h-5 ml-2 rtl:mr-2 rtl:ml-0 group-hover:rotate-12 transition-transform duration-300" />
             </Button>
-            
-            <Button 
-              size="lg" 
+
+            <Button
+              size="lg"
               variant="outline"
               className="btn-glass text-xl px-12 py-6 h-auto group hover:bg-white/30 border-2 border-white/50"
-              onClick={scrollToContact}
+              onClick={() => scrollToSection('#contact')}
             >
-              <span className="font-semibold">Contact Sales</span>
+              <span className="font-semibold">{secondaryLabel}</span>
               <ArrowRight className="w-6 h-6 ml-3 rtl:mr-3 rtl:ml-0 group-hover:translate-x-2 rtl:group-hover:-translate-x-2 transition-transform duration-300" />
             </Button>
           </div>
 
           {/* Trust Indicators */}
           <div className="mt-16 animate-fade-in" style={{ animationDelay: '800ms' }}>
-            <p className="text-white/70 text-sm mb-6">Trusted by leading law firms across MENA</p>
-            
+            <p className="text-white/70 text-sm mb-6">{trustNote}</p>
+
             <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-              {[
-                'Baker McKenzie Style Firm',
-                'Regional Legal Leader',
-                'International Law Group',
-                'Corporate Legal Dept',
-                'Government Entity'
-              ].map((client, index) => (
-                <div 
+              {clients.map((client, index) => (
+                <div
                   key={index}
                   className="bg-white/20 backdrop-blur-md px-6 py-3 rounded-lg text-white text-sm font-medium hover:bg-white/30 transition-all duration-300"
                 >
@@ -118,9 +114,7 @@ const CallToAction: React.FC = () => {
 
           {/* Bottom Message */}
           <div className="mt-12 animate-pulse">
-            <p className="text-white/80 text-lg font-medium">
-              🌟 Join the Legal Digital Revolution Today!
-            </p>
+            <p className="text-white/80 text-lg font-medium">{bottomNote}</p>
           </div>
         </div>
       </div>

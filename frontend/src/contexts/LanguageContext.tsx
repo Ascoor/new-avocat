@@ -1,14 +1,17 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { TOptions } from 'i18next';
 
 export type Language = 'ar' | 'en';
 export type Direction = 'rtl' | 'ltr';
+
+type TranslateFn = <T = string>(key: string, options?: TOptions | Record<string, unknown>) => T;
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
-  t: (key: string, vars?: Record<string, string | number>) => string;
+  t: TranslateFn;
   isRTL: boolean;
   direction: Direction;
 }
@@ -74,8 +77,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [i18n]);
 
   const t = useCallback(
-    (key: string, vars?: Record<string, string | number>) =>
-      i18nextT(key, { defaultValue: key, ...(vars ?? {}) }),
+    <T = string>(key: string, options?: TOptions | Record<string, unknown>) =>
+      i18nextT(key, { defaultValue: key, ...(options ?? {}) }) as T,
     [i18nextT],
   );
 

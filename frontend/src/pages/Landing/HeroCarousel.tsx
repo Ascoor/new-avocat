@@ -7,7 +7,7 @@ import { smoothScrollToElement } from "@/utils/smoothScroll";
 import heroLegal1 from "@/assets/slides/hero-legal-1.png";
 import heroDigital2 from "@/assets/slides/hero-digital-2.png";
 import heroPartnership3 from "@/assets/slides/hero-partnership-3.png";
-import HeroTeam from "@/assets/slides/hero-team-4..png";
+import heroTeam from "@/assets/slides/hero-team-4.png";
 
 type SlideCopy = {
   title: string;
@@ -101,6 +101,32 @@ const slides: Slide[] = [
           "شبكة مستشارين في الخليج وأوروبا لتنفيذ عابر للحدود بلا انقطاع.",
           "غرف تعاون مؤمنة تحافظ على تزامن الجهات الرقابية وأصحاب المصلحة.",
           "دليل تشغيلي مصمم ينسق الحوكمة والامتثال واستراتيجيات النزاع.",
+        ],
+      },
+    },
+  },
+  {
+    id: 4,
+    image: heroTeam,
+    overlay: "bg-gradient-to-r from-black/80 via-slate-900/60 to-transparent",
+    badge: { en: "Elite Advisory Collective", ar: "فريق الخبراء" },
+    copy: {
+      en: {
+        title: "Secure. Scalable. Simply Extraordinary.",
+        subtitle: "Dedicated expert pods blend legal mastery with bank-grade security for your most strategic matters.",
+        bullets: [
+          "Specialized task forces align litigators, consultants, and technologists for every mandate.",
+          "Real-time collaboration hubs keep clients, regulators, and partners perfectly synchronized.",
+          "Proven transformation playbooks accelerate adoption across regional and global operations.",
+        ],
+      },
+      ar: {
+        title: "آمن. قابل للتوسع. استثنائي ببساطة.",
+        subtitle: "فرق خبراء متخصصة تجمع التميز القانوني مع أمان بمستوى البنوك لأهم قضاياك الاستراتيجية.",
+        bullets: [
+          "فرق عمل متخصصة توحد المحامين والاستشاريين والخبراء التقنيين لكل تفويض قانوني.",
+          "مراكز تعاون لحظية تبقي العملاء والجهات التنظيمية والشركاء في انسجام تام.",
+          "أدلة تحول مجربة تسرّع الاعتماد عبر العمليات الإقليمية والعالمية.",
         ],
       },
     },

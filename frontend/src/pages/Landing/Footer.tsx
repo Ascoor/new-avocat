@@ -10,8 +10,10 @@ const quickLinks = [
   { href: "#about", en: "About", ar: "من نحن" },
   { href: "#services", en: "Services", ar: "الخدمات" },
   { href: "#capabilities", en: "Capabilities", ar: "الإمكانيات" },
+  { href: "#features", en: "Features", ar: "الميزات" },
   { href: "#achievements", en: "Achievements", ar: "الإنجازات" },
   { href: "#team", en: "Team", ar: "الفريق" },
+  { href: "#testimonials", en: "Testimonials", ar: "الشهادات" },
   { href: "#insights", en: "Insights", ar: "المدونة" },
   { href: "#contact", en: "Contact", ar: "اتصل بنا" },
 ];
