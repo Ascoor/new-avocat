@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import API_CONFIG from '@/config/config';
+import { resolveAssetUrl } from '@/utils/asset';
 import type { Locale, Localized } from '@/types/website';
 
 export type LogoVariant = "icon" | "text" | "full";
@@ -20,16 +20,16 @@ type LogoContent = Localized<LogoVariantPaths>;
 
 const fallbackLogos: Record<LogoVariant, LogoContent> = {
   icon: {
-    en: { light: '/branding/icons/logo-icon-light.png', dark: '/branding/icons/logo-icon-dark.png' },
-    ar: { light: '/branding/icons/logo-icon-light.png', dark: '/branding/icons/logo-icon-dark.png' },
+    en: { light: 'storage/brand/icons/logo-icon-light.png', dark: 'storage/brand/icons/logo-icon-dark.png' },
+    ar: { light: 'storage/brand/icons/logo-icon-light.png', dark: 'storage/brand/icons/logo-icon-dark.png' },
   },
   text: {
-    en: { light: '/branding/text/logo-text-en-light.png', dark: '/branding/text/logo-text-en-dark.png' },
-    ar: { light: '/branding/text/logo-text-ar-light.png', dark: '/branding/text/logo-text-ar-dark.png' },
+    en: { light: 'storage/brand/text/logo-text-en-light.png', dark: 'storage/brand/text/logo-text-en-dark.png' },
+    ar: { light: 'storage/brand/text/logo-text-ar-light.png', dark: 'storage/brand/text/logo-text-ar-dark.png' },
   },
   full: {
-    en: { light: '/branding/full/logo-full-en-light.png', dark: '/branding/full/logo-full-en-dark.png' },
-    ar: { light: '/branding/full/logo-full-arabic-light.png', dark: '/branding/full/logo-full-arabic-dark.png' },
+    en: { light: 'storage/brand/full/logo-full-en-light.png', dark: 'storage/brand/full/logo-full-en-dark.png' },
+    ar: { light: 'storage/brand/full/logo-full-arabic-light.png', dark: 'storage/brand/full/logo-full-arabic-dark.png' },
   },
 };
 
@@ -41,7 +41,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
 }) => {
   const { i18n } = useTranslation();
   const { theme } = useTheme();
-  const { getLocalizedValue } = useWebsiteContent("branding");
+  const { getLocalizedValue } = useWebsiteContent('settings');
 
   // 🌍 detect language automatically unless overridden
   const currentLang: Locale = lang ?? (i18n.language?.startsWith("ar") ? "ar" : "en");
@@ -50,27 +50,42 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
   const isDark = typeof dark === "boolean" ? dark : theme === "dark";
   const mode = isDark ? "dark" : "light";
 
-  const logos = useMemo(() => {
-    const icon = getLocalizedValue<LogoVariantPaths>("logo_icon", fallbackLogos.icon);
-    const text = getLocalizedValue<LogoVariantPaths>("logo_text", fallbackLogos.text);
-    const full = getLocalizedValue<LogoVariantPaths>("logo_full", fallbackLogos.full);
+  const iconLogos = useMemo(
+    () => getLocalizedValue<LogoVariantPaths>('logo_icon', fallbackLogos.icon),
+    [getLocalizedValue]
+  );
+  const textLogos = useMemo(
+    () => getLocalizedValue<LogoVariantPaths>('logo_text', fallbackLogos.text),
+    [getLocalizedValue]
+  );
+  const fullLogos = useMemo(
+    () => getLocalizedValue<LogoVariantPaths>('logo_full', fallbackLogos.full),
+    [getLocalizedValue]
+  );
+  const siteLogo = useMemo(
+    () => getLocalizedValue<string>('site_logo', {
+      ar: fallbackLogos.full.ar.light,
+      en: fallbackLogos.full.en.light,
+    }),
+    [getLocalizedValue]
+  );
 
-    return { icon, text, full };
-  }, [getLocalizedValue]);
-
-  const selectedLogo = logos[variant][currentLang] ?? logos[variant].en ?? fallbackLogos[variant].en;
-
-  const resolveAssetUrl = (path?: string | null): string | undefined => {
-    if (!path) return undefined;
-    if (/^https?:\/\//.test(path) || path.startsWith('data:')) {
-      return path;
-    }
-    const base = API_CONFIG.baseURL.replace(/\/$/, '');
-    const relative = path.replace(/^\//, '');
-    return `${base}/${relative}`;
+  const logos: Record<LogoVariant, Localized<LogoVariantPaths>> = {
+    icon: iconLogos,
+    text: textLogos,
+    full: fullLogos,
   };
 
-  const src = resolveAssetUrl(selectedLogo?.[mode]) ?? resolveAssetUrl(fallbackLogos[variant][currentLang]?.[mode]);
+  const selectedLogo = logos[variant][currentLang] ?? logos[variant].en ?? fallbackLogos[variant].en;
+  const siteLogoPath = siteLogo[currentLang] ?? siteLogo.en;
+
+  const fallbackLocaleLogo = fallbackLogos[variant][currentLang] ?? fallbackLogos[variant].en;
+  const src = resolveAssetUrl(
+    typeof selectedLogo === 'string' ? selectedLogo : selectedLogo?.[mode]
+  ) ?? resolveAssetUrl(siteLogoPath)
+    ?? resolveAssetUrl(
+      typeof fallbackLocaleLogo === 'string' ? fallbackLocaleLogo : fallbackLocaleLogo?.[mode]
+    );
 
   // ✅ alt text for accessibility
   const getAltText = (): string => {

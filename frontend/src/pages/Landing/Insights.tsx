@@ -1,87 +1,9 @@
+import { useMemo } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 import { useWebsiteCollection } from "@/hooks/useWebsiteCollection";
-import type { ArticleApi, Locale, Localized } from "@/types/website";
+import type { ArticleApi, Locale } from "@/types/website";
 import { BrainCircuit, Newspaper, ShieldAlert } from "lucide-react";
-
-const sectionFallback: Record<string, Localized<string>> = {
-  badge: { en: "Insights & Blog", ar: "مدونة التحول الرقمي" },
-  title: {
-    en: "Thought Leadership in Digital Legal Transformation",
-    ar: "ريادة فكرية في التحول الرقمي القانوني",
-  },
-  description: {
-    en: "Perspectives that help boards, innovators, and legal teams navigate AI, cybersecurity, and smart justice reforms.",
-    ar: "رؤى تساعد مجالس الإدارة والمبتكرين والفرق القانونية على التنقل في مجالات الذكاء الاصطناعي والأمن السيبراني وإصلاحات العدالة الذكية.",
-  },
-  cta: { en: "Read the full insight ↗", ar: "اقرأ التحليل الكامل ↗" },
-};
-
-const fallbackArticles: ArticleApi[] = [
-  {
-    id: 1,
-    title: {
-      en: "AI Governance for the Modern Law Firm",
-      ar: "حوكمة الذكاء الاصطناعي في مكاتب المحاماة الحديثة",
-    },
-    tag: {
-      en: "Digital Legal Transformation",
-      ar: "التحول القانوني الرقمي",
-    },
-    summary: {
-      en: "Discover how predictive analytics, machine learning assistants, and ethical frameworks accelerate precedent research while preserving professional responsibility.",
-      ar: "اكتشف كيف تسرّع التحليلات التنبؤية والمساعدات المعتمدة على التعلم الآلي والأطر الأخلاقية عمليات البحث في السوابق مع الحفاظ على المسؤولية المهنية.",
-    },
-    body: {
-      en: "An in-depth look at how AI enhances legal research, risk scoring, and ethical governance frameworks across global mandates.",
-      ar: "تحليل معمق لدور الذكاء الاصطناعي في تطوير البحث القانوني وتقييم المخاطر مع الالتزام بالمعايير الأخلاقية العالمية.",
-    },
-    slug: "ai-governance-modern-law-firm",
-    cover_image: null,
-  },
-  {
-    id: 2,
-    title: {
-      en: "Smart Justice Dashboards for Executives",
-      ar: "لوحات عدالة ذكية للقيادات التنفيذية",
-    },
-    tag: {
-      en: "Client Transparency",
-      ar: "شفافية العملاء",
-    },
-    summary: {
-      en: "Dashboards that integrate litigation status, budget analytics, and client sentiment deliver real-time governance to boards and ministries.",
-      ar: "لوحات تحكم تدمج حالة القضايا وتحليلات الميزانيات ومؤشرات رضا العملاء لتوفير حوكمة لحظية لمجالس الإدارة والوزارات.",
-    },
-    body: {
-      en: "A study on how smart justice dashboards consolidate legal performance, financial KPIs, and client expectations into a single source of truth.",
-      ar: "دراسة حول كيفية تقديم لوحات العدالة الذكية رؤية موحدة للأداء القانوني والمالي وتوقعات العملاء.",
-    },
-    slug: "smart-justice-dashboards-executives",
-    cover_image: null,
-  },
-  {
-    id: 3,
-    title: {
-      en: "Cybercrime Playbooks for Regulated Industries",
-      ar: "أدلة مكافحة الجرائم الإلكترونية للقطاعات المنظمة",
-    },
-    tag: {
-      en: "Cybersecurity",
-      ar: "الأمن السيبراني",
-    },
-    summary: {
-      en: "From financial services to healthcare, explore compliant digital forensics, incident response, and cross-border notification strategies.",
-      ar: "من الخدمات المالية إلى الرعاية الصحية، استكشف التحقيقات الرقمية المتوافقة، والاستجابة للحوادث، واستراتيجيات الإخطار العابرة للحدود.",
-    },
-    body: {
-      en: "A roadmap for regulators to build cybercrime response playbooks that align with international standards and protect digital trust.",
-      ar: "خريطة طريق للجهات المنظمة لتصميم أدلة استجابة للحوادث تتوافق مع المعايير الدولية وتحمي الثقة الرقمية.",
-    },
-    slug: "cybercrime-playbooks-regulated-industries",
-    cover_image: null,
-  },
-];
 
 const articleIcons = [BrainCircuit, Newspaper, ShieldAlert];
 
@@ -89,19 +11,24 @@ const Insights: React.FC = () => {
   const { language, direction } = useLanguage();
   const locale = language as Locale;
   const isArabic = language === "ar";
-  const { getValueForLocale } = useWebsiteContent("articles");
-  const { data: articlesData } = useWebsiteCollection<ArticleApi>("/api/website/articles");
+  const { getValueForLocale } = useWebsiteContent('articles');
+  const { data: articlesRaw } = useWebsiteCollection<ArticleApi | { data: ArticleApi[] }>("/api/website/articles");
 
-  const badge = getValueForLocale("articles_badge", locale, sectionFallback.badge[locale]);
-  const title = getValueForLocale("articles_title", locale, sectionFallback.title[locale]);
-  const description = getValueForLocale(
-    "articles_description",
-    locale,
-    sectionFallback.description[locale]
-  );
-  const cta = getValueForLocale("articles_cta", locale, sectionFallback.cta[locale]);
+  const articlesData = useMemo(() => {
+    if (Array.isArray(articlesRaw)) {
+      return articlesRaw;
+    }
 
-  const articles = (articlesData.length ? articlesData : fallbackArticles).slice(0, 3);
+    const nested = (articlesRaw as { data?: ArticleApi[] } | null)?.data;
+    return Array.isArray(nested) ? nested : [];
+  }, [articlesRaw]);
+
+  const badge = getValueForLocale('articles_badge', locale) ?? '';
+  const title = getValueForLocale('articles_title', locale) ?? '';
+  const description = getValueForLocale('articles_description', locale) ?? '';
+  const cta = getValueForLocale('articles_cta', locale) ?? '';
+
+  const articles = articlesData.slice(0, 3);
 
   return (
     <section id="insights" className="bg-background py-24" dir={direction}>

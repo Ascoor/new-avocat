@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('page_id')->constrained()->cascadeOnDelete();
             $table->string('key');
             $table->json('value');
-            $table->enum('type', ['text', 'image', 'link', 'html'])->default('text');
+            $table->enum('type', ['text', 'image', 'link', 'html', 'list', 'json'])->default('text');
             $table->timestamps();
 
             $table->unique(['page_id', 'key']);

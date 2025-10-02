@@ -1,18 +1,36 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from "@/components/ui/button";
+import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import { Play, ArrowRight, Sparkles, Zap } from 'lucide-react';
-import { smoothScrollToElement } from "@/utils/smoothScroll";
+import { smoothScrollToElement } from '@/utils/smoothScroll';
 
 const CallToAction: React.FC = () => {
-  const { t, isRTL } = useLanguage();
+  const { language, isRTL } = useLanguage();
+  const locale = language as 'ar' | 'en';
+  const { getLocalizedValue, getValueForLocale } = useWebsiteContent('cta');
 
-  const features = useMemo(() => t<string[]>('ctaFeatures', { returnObjects: true }) ?? [], [t]);
-  const clients = useMemo(() => t<string[]>('ctaClients', { returnObjects: true }) ?? [], [t]);
-  const primaryLabel = t('ctaPrimaryLabel');
-  const secondaryLabel = t('ctaSecondaryLabel');
-  const trustNote = t('ctaTrustNote');
-  const bottomNote = t('ctaBottom');
+  const getString = useCallback(
+    (key: string, fallback = ''): string => getValueForLocale<string>(key, locale) ?? fallback,
+    [getValueForLocale, locale]
+  );
+
+  const features = useMemo(() => {
+    const localized = getLocalizedValue<string[]>('cta_features', { ar: [], en: [] });
+    return (localized[locale] ?? localized.en ?? []).filter(Boolean);
+  }, [getLocalizedValue, locale]);
+
+  const clients = useMemo(() => {
+    const localized = getLocalizedValue<string[]>('cta_clients', { ar: [], en: [] });
+    return (localized[locale] ?? localized.en ?? []).filter(Boolean);
+  }, [getLocalizedValue, locale]);
+
+  const primaryLabel = getString('cta_primary_label');
+  const secondaryLabel = getString('cta_secondary_label');
+  const title = getString('cta_title');
+  const subtitle = getString('cta_subtitle');
+  const trustNote = getString('cta_trust_note');
+  const bottomNote = getString('cta_bottom_note');
 
   const scrollToSection = (selector: string) => {
     const element = document.querySelector<HTMLElement>(selector);
@@ -23,10 +41,8 @@ const CallToAction: React.FC = () => {
 
   return (
     <section id="cta" className="relative overflow-hidden py-24">
-      {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary-glow"></div>
-      
-      {/* Floating Elements */}
+
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 left-20 w-32 h-32 bg-accent rounded-full blur-2xl animate-float"></div>
         <div className="absolute top-40 right-32 w-24 h-24 bg-white rounded-full blur-xl animate-float" style={{ animationDelay: '1s' }}></div>
@@ -34,31 +50,26 @@ const CallToAction: React.FC = () => {
         <div className="absolute bottom-20 right-20 w-28 h-28 bg-white rounded-full blur-2xl animate-float" style={{ animationDelay: '3s' }}></div>
       </div>
 
-      {/* Geometric Patterns */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-16 h-16 border-2 border-white rotate-45 animate-spin" style={{ animationDuration: '20s' }}></div>
-    <div className="absolute top-32 right-16 w-12 h-12 border-2 border-accent rotate-45 animate-spin-reverse"></div>
-    <div className="absolute bottom-16 left-1/4 w-20 h-20 border-2 border-white rotate-45 animate-spin" style={{ animationDuration: '25s' }}></div>
+        <div className="absolute top-32 right-16 w-12 h-12 border-2 border-accent rotate-45 animate-spin-reverse"></div>
+        <div className="absolute bottom-16 left-1/4 w-20 h-20 border-2 border-white rotate-45 animate-spin" style={{ animationDuration: '25s' }}></div>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="text-center animate-fade-in">
-          {/* Icon */}
           <div className="w-24 h-24 mx-auto mb-8 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center animate-glow">
             <Sparkles className="w-12 h-12 text-accent animate-pulse" />
           </div>
 
-          {/* Heading */}
           <h2 className="text-4xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight animate-slide-up">
-            {t('ctaTitle')}
+            {title}
           </h2>
 
-          {/* Subheading */}
           <p className="text-xl lg:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '200ms' }}>
-            {t('ctaSubtitle')}
+            {subtitle}
           </p>
 
-          {/* Features List */}
           <div className="flex flex-wrap justify-center gap-6 mb-12 animate-slide-up" style={{ animationDelay: '400ms' }}>
             {features.map((feature, index) => (
               <div
@@ -70,11 +81,9 @@ const CallToAction: React.FC = () => {
             ))}
           </div>
 
-          {/* Action Buttons */}
           <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up ${
             isRTL ? 'sm:flex-row-reverse' : ''
           }`} style={{ animationDelay: '600ms' }}>
-            
             <Button
               size="lg"
               className="btn-gold text-xl px-12 py-6 h-auto group shadow-gold hover:shadow-xl hover:scale-105 transition-all duration-300"
@@ -96,7 +105,6 @@ const CallToAction: React.FC = () => {
             </Button>
           </div>
 
-          {/* Trust Indicators */}
           <div className="mt-16 animate-fade-in" style={{ animationDelay: '800ms' }}>
             <p className="text-white/70 text-sm mb-6">{trustNote}</p>
 
@@ -112,7 +120,6 @@ const CallToAction: React.FC = () => {
             </div>
           </div>
 
-          {/* Bottom Message */}
           <div className="mt-12 animate-pulse">
             <p className="text-white/80 text-lg font-medium">{bottomNote}</p>
           </div>

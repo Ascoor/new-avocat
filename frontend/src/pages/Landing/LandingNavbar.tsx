@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import BrandLogo from "@/components/common/BrandLogo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
+import { resolveAssetUrl } from "@/utils/asset";
 import {
   Award,
   BookOpenText,
@@ -61,7 +63,11 @@ const LandingNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); 
   const { language, toggleLanguage, direction } = useLanguage();
   const navigate = useNavigate();
- 
+  const { getLocalizedValue } = useWebsiteContent('settings');
+
+  const logoPaths = useMemo(() => getLocalizedValue<string>('site_logo', { ar: null, en: null }), [getLocalizedValue]);
+  const navLogo = resolveAssetUrl(logoPaths[language as 'ar' | 'en'] ?? logoPaths.en ?? undefined);
+
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -132,12 +138,21 @@ const LandingNavbar: React.FC = () => {
           className="flex items-center gap-3" 
         >
           <div className="hidden sm:block">
-            <BrandLogo
+            {navLogo ? (
+              <img
+                src={navLogo}
+                alt={isArabic ? "شعار أفوكات" : "Avocat Logo"}
+                className="h-12 object-contain"
+              />
+            ) : (
+              <BrandLogo
                 variant="text"
                 className="h-12"
                 lang={language}
                 dark={isTop ? true : undefined}
-              />   </div> 
+              />
+            )}
+          </div> 
           <div className="text-lg font-semibold text-foreground sm:hidden">Avocat</div>
         </button>
 

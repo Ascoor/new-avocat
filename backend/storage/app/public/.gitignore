@@ -1,2 +1,6 @@
 *
 !.gitignore
+!brand/
+!brand/**
+!landing/
+!landing/**

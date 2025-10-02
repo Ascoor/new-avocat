@@ -1,18 +1,36 @@
-import React from "react";
-import { Database, Laptop, Shield, Users } from "lucide-react";
+import React, { useMemo } from 'react';
+import { Database, Laptop, Shield, Users } from 'lucide-react';
 
-import SectionHeader from "@/components/landing/SectionHeader";
-import { useLanguage } from "@/contexts/LanguageContext";
+import SectionHeader from '@/components/landing/SectionHeader';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useWebsiteContent } from '@/hooks/useWebsiteContent';
+import type { ContentBlock, Locale } from '@/types/website';
 
-const features = [
-  { key: "dataProtection", icon: Shield },
-  { key: "clientManagement", icon: Users },
-  { key: "caseTracking", icon: Database },
-  { key: "digitalTraining", icon: Laptop },
-] as const;
+const iconLookup: Record<string, typeof Shield> = {
+  shield: Shield,
+  users: Users,
+  database: Database,
+  laptop: Laptop,
+};
 
 const Features: React.FC = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const locale = language as Locale;
+  const { contentBlocks, getValueForLocale } = useWebsiteContent('features');
+
+  const header = {
+    eyebrow: getValueForLocale('features_badge', locale) ?? '',
+    title: getValueForLocale('features_title', locale) ?? '',
+    subtitle: getValueForLocale('features_subtitle', locale) ?? '',
+  };
+
+  const features = useMemo(
+    () =>
+      contentBlocks
+        .filter((block) => block.key.startsWith('features_item_'))
+        .map((block) => mapFeature(block, locale)),
+    [contentBlocks, locale]
+  );
 
   return (
     <section
@@ -25,18 +43,18 @@ const Features: React.FC = () => {
 
       <div className="container relative z-10 mx-auto px-6">
         <SectionHeader
-          title={t("landing.features.title")}
-          subtitle={t("landing.features.subtitle")}
-          eyebrow={t("landing.features.eyebrow")}
+          title={header.title}
+          subtitle={header.subtitle}
+          eyebrow={header.eyebrow}
           className="mb-16"
           titleClassName="text-balance"
           titleId="features-heading"
         />
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {features.map(({ key, icon: Icon }, index) => (
+          {features.map((feature, index) => (
             <article
-              key={key}
+              key={`${feature.title}-${index}`}
               className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card/90 p-6 shadow-ambient transition-all duration-500 ease-elegant hover:-translate-y-3 hover:shadow-glow-strong animate-fadeInUp"
               style={{ animationDelay: `${index * 120}ms` }}
             >
@@ -46,16 +64,16 @@ const Features: React.FC = () => {
               <div className="mb-6 flex items-center justify-center">
                 <div className="relative rounded-full bg-accent-soft p-4 shadow-inner-glow transition-all duration-300 ease-smooth group-hover:scale-105 group-hover:bg-accent">
                   <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gradient-aurora opacity-0 blur-xl transition-opacity duration-500 ease-smooth group-hover:opacity-80" />
-                  <Icon className="h-10 w-10 text-accent animate-float group-hover:animate-glowPulse" aria-hidden />
+                  <feature.Icon className="h-10 w-10 text-accent animate-float group-hover:animate-glowPulse" aria-hidden />
                 </div>
               </div>
 
               <h3 className="mb-2 text-xl font-semibold text-text-strong transition-colors duration-300 ease-smooth group-hover:text-primary">
-                {t(`landing.features.items.${key}.title`)}
+                {feature.title}
               </h3>
 
               <p className="text-text-body transition-colors duration-300 ease-smooth group-hover:text-text-muted">
-                {t(`landing.features.items.${key}.description`)}
+                {feature.description}
               </p>
             </article>
           ))}
@@ -64,5 +82,33 @@ const Features: React.FC = () => {
     </section>
   );
 };
+
+function mapFeature(block: ContentBlock, locale: Locale) {
+  const localized = block.value as unknown as {
+    ar?: {
+      icon?: string;
+      title?: string;
+      description?: string;
+      tagline?: string;
+    } | null;
+    en?: {
+      icon?: string;
+      title?: string;
+      description?: string;
+      tagline?: string;
+    } | null;
+  };
+
+  const fallback = localized.en ?? {};
+  const data = localized[locale] ?? fallback ?? {};
+  const iconKey = (data.icon ?? fallback.icon ?? 'shield').toLowerCase();
+
+  return {
+    Icon: iconLookup[iconKey] ?? Shield,
+    title: data.title ?? fallback.title ?? '',
+    description: data.description ?? fallback.description ?? '',
+    tagline: data.tagline ?? fallback.tagline ?? '',
+  };
+}
 
 export default Features;
