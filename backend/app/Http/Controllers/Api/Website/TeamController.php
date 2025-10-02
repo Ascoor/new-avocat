@@ -52,6 +52,10 @@ class TeamController extends Controller
             'position_en' => [$required, 'string', 'max:255'],
             'bio_ar' => [$optional, 'nullable', 'string'],
             'bio_en' => [$optional, 'nullable', 'string'],
+            'highlights_ar' => [$optional, 'array'],
+            'highlights_ar.*' => ['string'],
+            'highlights_en' => [$optional, 'array'],
+            'highlights_en.*' => ['string'],
             'image' => [$optional, 'nullable', 'string', 'max:2048'],
         ];
 

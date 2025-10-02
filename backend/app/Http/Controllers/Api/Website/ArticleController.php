@@ -49,6 +49,10 @@ class ArticleController extends Controller
         return $request->validate([
             'title_ar' => [$required, 'string', 'max:255'],
             'title_en' => [$required, 'string', 'max:255'],
+            'tag_ar' => [$optional, 'nullable', 'string', 'max:255'],
+            'tag_en' => [$optional, 'nullable', 'string', 'max:255'],
+            'summary_ar' => [$optional, 'nullable', 'string'],
+            'summary_en' => [$optional, 'nullable', 'string'],
             'body_ar' => [$required, 'string'],
             'body_en' => [$required, 'string'],
             'slug' => [$required, 'string', 'max:255', Rule::unique('articles', 'slug')->ignore($article?->id)],

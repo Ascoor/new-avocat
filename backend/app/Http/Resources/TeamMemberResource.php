@@ -25,6 +25,10 @@ class TeamMemberResource extends JsonResource
                 'ar' => $this->bio_ar,
                 'en' => $this->bio_en,
             ],
+            'highlights' => [
+                'ar' => $this->highlights_ar ?? [],
+                'en' => $this->highlights_en ?? [],
+            ],
             'image' => $this->image,
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),

@@ -1,23 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/contexts/ThemeContext';
-
-// icons
-import logoIconLight from '@/assets/brand/icons/logo-icon-light.png';
-import logoIconDark from '@/assets/brand/icons/logo-icon-dark.png';
-
-// text
-import logoTextArLight from '@/assets/brand/text/logo-text-ar-light.png';
-import logoTextArDark from '@/assets/brand/text/logo-text-ar-dark.png';
-import logoTextEnLight from '@/assets/brand/text/logo-text-en-light.png';
-import logoTextEnDark from '@/assets/brand/text/logo-text-en-dark.png';
-
-// full
-import logoFullArLight from '@/assets/brand/full/logo-full-arabic-light.png';
-import logoFullArDark from '@/assets/brand/full/logo-full-arabic-dark.png';
-import logoFullEnLight from '@/assets/brand/full/logo-full-en-light.png';
-import logoFullEnDark from '@/assets/brand/full/logo-full-en-dark.png';
+import { useWebsiteContent } from '@/hooks/useWebsiteContent';
+import API_CONFIG from '@/config/config';
+import type { Locale, Localized } from '@/types/website';
 
 export type LogoVariant = "icon" | "text" | "full";
 
@@ -28,6 +15,24 @@ interface BrandLogoProps {
   dark?: boolean;              // force light/dark mode if needed
 }
 
+type LogoVariantPaths = { light: string; dark: string };
+type LogoContent = Localized<LogoVariantPaths>;
+
+const fallbackLogos: Record<LogoVariant, LogoContent> = {
+  icon: {
+    en: { light: '/branding/icons/logo-icon-light.png', dark: '/branding/icons/logo-icon-dark.png' },
+    ar: { light: '/branding/icons/logo-icon-light.png', dark: '/branding/icons/logo-icon-dark.png' },
+  },
+  text: {
+    en: { light: '/branding/text/logo-text-en-light.png', dark: '/branding/text/logo-text-en-dark.png' },
+    ar: { light: '/branding/text/logo-text-ar-light.png', dark: '/branding/text/logo-text-ar-dark.png' },
+  },
+  full: {
+    en: { light: '/branding/full/logo-full-en-light.png', dark: '/branding/full/logo-full-en-dark.png' },
+    ar: { light: '/branding/full/logo-full-arabic-light.png', dark: '/branding/full/logo-full-arabic-dark.png' },
+  },
+};
+
 const BrandLogo: React.FC<BrandLogoProps> = ({
   variant = "full",
   className,
@@ -36,37 +41,36 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
 }) => {
   const { i18n } = useTranslation();
   const { theme } = useTheme();
+  const { getLocalizedValue } = useWebsiteContent("branding");
 
   // 🌍 detect language automatically unless overridden
-  const currentLang: "ar" | "en" =
-    lang ?? (i18n.language?.startsWith("ar") ? "ar" : "en");
+  const currentLang: Locale = lang ?? (i18n.language?.startsWith("ar") ? "ar" : "en");
 
   // 🌑 detect theme mode
   const isDark = typeof dark === "boolean" ? dark : theme === "dark";
   const mode = isDark ? "dark" : "light";
 
-  // 🎨 available logos
-  const logos = {
-    icon: {
-      light: logoIconLight,
-      dark: logoIconDark,
-    },
-    text: {
-      ar: { light: logoTextArLight, dark: logoTextArDark },
-      en: { light: logoTextEnLight, dark: logoTextEnDark },
-    },
-    full: {
-      ar: { light: logoFullArLight, dark: logoFullArDark },
-      en: { light: logoFullEnLight, dark: logoFullEnDark },
-    },
+  const logos = useMemo(() => {
+    const icon = getLocalizedValue<LogoVariantPaths>("logo_icon", fallbackLogos.icon);
+    const text = getLocalizedValue<LogoVariantPaths>("logo_text", fallbackLogos.text);
+    const full = getLocalizedValue<LogoVariantPaths>("logo_full", fallbackLogos.full);
+
+    return { icon, text, full };
+  }, [getLocalizedValue]);
+
+  const selectedLogo = logos[variant][currentLang] ?? logos[variant].en ?? fallbackLogos[variant].en;
+
+  const resolveAssetUrl = (path?: string | null): string | undefined => {
+    if (!path) return undefined;
+    if (/^https?:\/\//.test(path) || path.startsWith('data:')) {
+      return path;
+    }
+    const base = API_CONFIG.baseURL.replace(/\/$/, '');
+    const relative = path.replace(/^\//, '');
+    return `${base}/${relative}`;
   };
 
-  // ✅ resolve src
-  const getSrc = () => {
-    if (variant === "icon") return logos.icon[mode];
-    if (variant === "text") return logos.text[currentLang][mode];
-    return logos.full[currentLang][mode];
-  };
+  const src = resolveAssetUrl(selectedLogo?.[mode]) ?? resolveAssetUrl(fallbackLogos[variant][currentLang]?.[mode]);
 
   // ✅ alt text for accessibility
   const getAltText = (): string => {
@@ -78,9 +82,13 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
       : "Avocat Full Logo";
   };
 
+  if (!src) {
+    return null;
+  }
+
   return (
     <img
-      src={getSrc()}
+      src={src}
       alt={getAltText()}
       className={cn(
         "object-contain",

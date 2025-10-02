@@ -1,7 +1,17 @@
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button"; 
+import { useEffect, useMemo, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ChevronLeft, ChevronRight, Mail, Play, ShieldCheck, Sparkles } from "lucide-react";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
+import type { Locale, Localized } from "@/types/website";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
+  Mail,
+  Play,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { smoothScrollToElement } from "@/utils/smoothScroll";
 
 import heroLegal1 from "@/assets/slides/hero-legal-1.png";
@@ -9,43 +19,42 @@ import heroDigital2 from "@/assets/slides/hero-digital-2.png";
 import heroPartnership3 from "@/assets/slides/hero-partnership-3.png";
 import heroTeam from "@/assets/slides/hero-team-4.png";
 
-type SlideCopy = {
-  title: string;
-  subtitle: string;
-  bullets: string[];
+type HeroSlideDefaults = {
+  badge: Localized<string>;
+  title: Localized<string>;
+  subtitle: Localized<string>;
+  bullets: Localized<string[]>;
 };
 
-type Slide = {
+type SlideDefinition = {
   id: number;
   image: string;
-  overlay: string; 
-  badge: {
-    en: string;
-    ar: string;
-  };
-  copy: Record<"en" | "ar", SlideCopy>;
+  overlay: string;
+  defaults: HeroSlideDefaults;
 };
 
-const slides: Slide[] = [
+const slideDefinitions: SlideDefinition[] = [
   {
     id: 1,
     image: heroLegal1,
     overlay: "bg-gradient-to-r from-black/80 via-slate-900/60 to-transparent",
-    badge: { en: "Flagship Litigation Unit", ar: "وحدة التقاضي الرئيسية" },
-    copy: {
-      en: {
-        title: "Elite trial counsel for high-stakes mandates",
-        subtitle: "Seasoned advocates and digital workflows protect your interests across MENA courts.",
-        bullets: [
+    defaults: {
+      badge: { en: "Flagship Litigation Unit", ar: "وحدة التقاضي الرئيسية" },
+      title: {
+        en: "Elite trial counsel for high-stakes mandates",
+        ar: "محامون نخبة للقضايا المصيرية",
+      },
+      subtitle: {
+        en: "Seasoned advocates and digital workflows protect your interests across MENA courts.",
+        ar: "محامون مخضرمون وسير عمل رقمية تحمي مصالحك عبر محاكم المنطقة.",
+      },
+      bullets: {
+        en: [
           "Strategic command of commercial, administrative, and criminal disputes.",
           "Secure evidence rooms and filings orchestrated with military precision.",
           "24/7 bilingual crisis desk for urgent injunctions and enforcement.",
         ],
-      },
-      ar: {
-        title: "محامون نخبة للقضايا المصيرية",
-        subtitle: "محامون مخضرمون وسير عمل رقمية تحمي مصالحك عبر محاكم المنطقة.",
-        bullets: [
+        ar: [
           "إدارة استراتيجية للنزاعات التجارية والإدارية والجنائية.",
           "غرف أدلة مؤمنة وإيداعات منظمة بدقة عالية.",
           "مكتب طوارئ ثنائي اللغة على مدار الساعة للأوامر العاجلة والتنفيذ.",
@@ -57,21 +66,23 @@ const slides: Slide[] = [
     id: 2,
     image: heroDigital2,
     overlay: "bg-gradient-to-r from-black/75 via-slate-900/55 to-transparent",
-    badge: { en: "Digital Transformation", ar: "التحول الرقمي" },
-    copy: {
-      en: {
-        title: "Operate your firm on a unified digital backbone",
-        subtitle: "AI-enabled matter management delivers clarity, compliance, and profitability.",
-        bullets: [
+    defaults: {
+      badge: { en: "Digital Transformation", ar: "التحول الرقمي" },
+      title: {
+        en: "Operate your firm on a unified digital backbone",
+        ar: "شغّل مكتبك على بنية رقمية موحدة",
+      },
+      subtitle: {
+        en: "AI-enabled matter management delivers clarity, compliance, and profitability.",
+        ar: "إدارة القضايا بالذكاء الاصطناعي تمنحك الوضوح والامتثال والربحية.",
+      },
+      bullets: {
+        en: [
           "Predictive analytics score risk, value, and timelines before filing.",
           "Client dashboards report progress, fees, and key metrics in real time.",
           "Automated document assembly executes compliant contracts instantly.",
         ],
-      },
-      ar: {
-        title: "شغّل مكتبك على بنية رقمية موحدة",
-        subtitle: "إدارة القضايا بالذكاء الاصطناعي تمنحك الوضوح والامتثال والربحية.",
-        bullets: [
+        ar: [
           "تحليلات تنبؤية تقيم المخاطر والقيمة والزمن قبل التقديم.",
           "لوحات عملاء تعرض التقدم والرسوم والمؤشرات لحظة بلحظة.",
           "تجميع عقود آلي ينفذ مستندات متوافقة فوراً.",
@@ -83,21 +94,23 @@ const slides: Slide[] = [
     id: 3,
     image: heroPartnership3,
     overlay: "bg-gradient-to-r from-black/85 via-slate-900/55 to-transparent",
-    badge: { en: "Trusted Cross-Border Partner", ar: "شريك عبر الحدود" },
-    copy: {
-      en: {
-        title: "Partnerships that scale across jurisdictions",
-        subtitle: "Collaborative models align your teams with regulators, investors, and clients.",
-        bullets: [
+    defaults: {
+      badge: { en: "Trusted Cross-Border Partner", ar: "شريك عبر الحدود" },
+      title: {
+        en: "Partnerships that scale across jurisdictions",
+        ar: "شراكات تتمدد عبر الولايات القضائية",
+      },
+      subtitle: {
+        en: "Collaborative models align your teams with regulators, investors, and clients.",
+        ar: "نماذج تعاونية تنسق فرقك مع الجهات التنظيمية والمستثمرين والعملاء.",
+      },
+      bullets: {
+        en: [
           "Integrated GCC and EU counsel network for seamless cross-border execution.",
           "Cybersecure collaboration rooms keep regulators and stakeholders in sync.",
           "Tailored playbooks align governance, compliance, and dispute strategies.",
         ],
-      },
-      ar: {
-        title: "شراكات تتمدد عبر الولايات القضائية",
-        subtitle: "نماذج تعاونية تنسق فرقك مع الجهات التنظيمية والمستثمرين والعملاء.",
-        bullets: [
+        ar: [
           "شبكة مستشارين في الخليج وأوروبا لتنفيذ عابر للحدود بلا انقطاع.",
           "غرف تعاون مؤمنة تحافظ على تزامن الجهات الرقابية وأصحاب المصلحة.",
           "دليل تشغيلي مصمم ينسق الحوكمة والامتثال واستراتيجيات النزاع.",
@@ -109,21 +122,23 @@ const slides: Slide[] = [
     id: 4,
     image: heroTeam,
     overlay: "bg-gradient-to-r from-black/80 via-slate-900/60 to-transparent",
-    badge: { en: "Elite Advisory Collective", ar: "فريق الخبراء" },
-    copy: {
-      en: {
-        title: "Secure. Scalable. Simply Extraordinary.",
-        subtitle: "Dedicated expert pods blend legal mastery with bank-grade security for your most strategic matters.",
-        bullets: [
+    defaults: {
+      badge: { en: "Elite Advisory Collective", ar: "فريق الخبراء" },
+      title: {
+        en: "Secure. Scalable. Simply Extraordinary.",
+        ar: "آمن. قابل للتوسع. استثنائي ببساطة.",
+      },
+      subtitle: {
+        en: "Dedicated expert pods blend legal mastery with bank-grade security for your most strategic matters.",
+        ar: "فرق خبراء متخصصة تجمع التميز القانوني مع أمان بمستوى البنوك لأهم قضاياك الاستراتيجية.",
+      },
+      bullets: {
+        en: [
           "Specialized task forces align litigators, consultants, and technologists for every mandate.",
           "Real-time collaboration hubs keep clients, regulators, and partners perfectly synchronized.",
           "Proven transformation playbooks accelerate adoption across regional and global operations.",
         ],
-      },
-      ar: {
-        title: "آمن. قابل للتوسع. استثنائي ببساطة.",
-        subtitle: "فرق خبراء متخصصة تجمع التميز القانوني مع أمان بمستوى البنوك لأهم قضاياك الاستراتيجية.",
-        bullets: [
+        ar: [
           "فرق عمل متخصصة توحد المحامين والاستشاريين والخبراء التقنيين لكل تفويض قانوني.",
           "مراكز تعاون لحظية تبقي العملاء والجهات التنظيمية والشركاء في انسجام تام.",
           "أدلة تحول مجربة تسرّع الاعتماد عبر العمليات الإقليمية والعالمية.",
@@ -133,11 +148,44 @@ const slides: Slide[] = [
   },
 ];
 
+const ctaFallbacks: Record<string, Localized<string>> = {
+  demo: {
+    en: "Request Live Demo",
+    ar: "اطلب العرض التفاعلي",
+  },
+  contact: {
+    en: "Speak to Counsel",
+    ar: "تواصل مع الخبراء",
+  },
+};
+
 const HeroCarousel: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
   const { language } = useLanguage();
+  const locale = language as Locale;
   const isArabic = language === "ar";
+  const { loading, getLocalizedValue, getValueForLocale } = useWebsiteContent("hero");
+
+  const slides = useMemo(() => {
+    return slideDefinitions.map(({ id, image, overlay, defaults }) => {
+      const badge = getLocalizedValue<string>(`hero_slide_${id}_badge`, defaults.badge);
+      const title = getLocalizedValue<string>(`hero_slide_${id}_title`, defaults.title);
+      const subtitle = getLocalizedValue<string>(`hero_slide_${id}_subtitle`, defaults.subtitle);
+      const bullets = getLocalizedValue<string[]>(`hero_slide_${id}_bullets`, defaults.bullets);
+
+      return {
+        id,
+        image,
+        overlay,
+        badge,
+        title,
+        subtitle,
+        bullets,
+      };
+    });
+  }, [getLocalizedValue]);
+
   const slidesCount = slides.length;
 
   useEffect(() => {
@@ -183,15 +231,28 @@ const HeroCarousel: React.FC = () => {
   const activeSlide = slidesCount ? slides[current % slidesCount] : undefined;
   if (!activeSlide) return null;
 
-  const slideCopy = activeSlide.copy[isArabic ? "ar" : "en"];
-  const badge = activeSlide.badge[isArabic ? "ar" : "en"];
-  const demoLabel = isArabic ? "اطلب العرض التفاعلي" : "Request Live Demo";
-  const contactLabel = isArabic ? "تواصل مع الخبراء" : "Speak to Counsel";
+  const slideCopy = {
+    title: activeSlide.title[locale] ?? "",
+    subtitle: activeSlide.subtitle[locale] ?? "",
+    bullets: activeSlide.bullets[locale] ?? [],
+  };
+  const badge = activeSlide.badge[locale] ?? "";
+  const demoLabel = getValueForLocale("hero_cta_demo_label", locale, ctaFallbacks.demo[locale]);
+  const contactLabel = getValueForLocale(
+    "hero_cta_contact_label",
+    locale,
+    ctaFallbacks.contact[locale]
+  );
 
   return (
     <section id="home" className="relative h-[90vh] min-h-[640px] overflow-hidden">
+      {loading && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40">
+          <Loader2 className="h-10 w-10 animate-spin text-white" />
+        </div>
+      )}
       {/* خلفية الشرائح */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 ">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
@@ -199,8 +260,13 @@ const HeroCarousel: React.FC = () => {
               index === current ? "opacity-100 scale-100" : "pointer-events-none opacity-0 scale-105"
             }`}
           >
-            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${slide.image})` }} />
-            <div className={`absolute inset-0 ${slide.overlay}`} />  
+<div
+  className="absolute inset-0 bg-cover bg-center"
+  style={{ backgroundImage: `url(${slide.image})` }}
+/>
+{/* Gradient overlay */}
+<div className="absolute inset-0 bg-gradient-to-br from-primary via-primary-light to-primary-glow opacity-80 mix-blend-multiply" />
+
           </div>
         ))}
       </div>

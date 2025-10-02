@@ -17,6 +17,14 @@ class ArticleResource extends JsonResource
                 'ar' => $this->title_ar,
                 'en' => $this->title_en,
             ],
+            'tag' => [
+                'ar' => $this->tag_ar,
+                'en' => $this->tag_en,
+            ],
+            'summary' => [
+                'ar' => $this->summary_ar,
+                'en' => $this->summary_en,
+            ],
             'body' => [
                 'ar' => $this->body_ar,
                 'en' => $this->body_en,

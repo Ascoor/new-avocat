@@ -21,6 +21,9 @@ class PageResource extends JsonResource
             'content_blocks' => ContentBlockResource::collection(
                 $this->whenLoaded('contentBlocks')
             ),
+            'content' => ContentBlockResource::collection(
+                $this->whenLoaded('contentBlocks')
+            ),
             'created_at' => $this->created_at?->toISOString(),
             'updated_at' => $this->updated_at?->toISOString(),
         ];

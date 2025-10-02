@@ -16,6 +16,13 @@ class TeamMember extends Model
         'position_en',
         'bio_ar',
         'bio_en',
+        'highlights_ar',
+        'highlights_en',
         'image',
+    ];
+
+    protected $casts = [
+        'highlights_ar' => 'array',
+        'highlights_en' => 'array',
     ];
 }

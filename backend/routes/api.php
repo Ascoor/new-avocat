@@ -175,13 +175,21 @@ Route::post('notifications/{notificationId}/read', [NotificationController::clas
         Route::post('event', [EventController::class,'store']);
         Route::get('/events', [EventController::class,'index']);
 
-Route::prefix('website')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
+Route::prefix('website')->group(function () {
     Route::get('/pages/{slug}', [PageController::class, 'index']);
-    Route::post('/pages/{slug}', [PageController::class, 'update']);
+    Route::get('/team', [TeamController::class, 'index']);
+    Route::get('/team/{team}', [TeamController::class, 'show']);
+    Route::get('/achievements', [AchievementController::class, 'index']);
+    Route::get('/articles', [ArticleController::class, 'index']);
+    Route::get('/articles/{article:slug}', [ArticleController::class, 'show']);
 
-    Route::apiResource('team', TeamController::class);
-    Route::apiResource('articles', ArticleController::class);
-    Route::apiResource('achievements', AchievementController::class);
+    Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+        Route::post('/pages/{slug}', [PageController::class, 'update']);
 
-    Route::post('/upload', [UploadController::class, 'store']);
+        Route::apiResource('team', TeamController::class)->except(['index', 'show']);
+        Route::apiResource('articles', ArticleController::class)->except(['index', 'show']);
+        Route::apiResource('achievements', AchievementController::class)->except(['index']);
+
+        Route::post('/upload', [UploadController::class, 'store']);
+    });
 });
