@@ -206,46 +206,81 @@ const HeroCarousel: React.FC = () => {
       </div>
 
       {/* المحتوى */}
-      <div className="relative z-10 flex h-full items-center">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur lg:p-10 dark:bg-background/70">
-            
-            {/* Badge */}
-            <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-border/80 bg-card/80 px-4 py-2 text-xs font-semibold text-white/90 shadow-inner backdrop-blur">
-              <Sparkles className="h-4 w-4 text-accent" />
-              <span>{badge}</span>
-            </div>
-
-            {/* النصوص */}
-            <div className="space-y-6 text-white" dir={isArabic ? "rtl" : "ltr"}>
-              <h1 className="text-4xl font-display font-semibold leading-tight drop-shadow lg:text-5xl">
-                {slideCopy.title}
-              </h1>
-              <p className="text-lg leading-relaxed text-white/85">{slideCopy.subtitle}</p>
-              <ul className="space-y-3 text-base" dir={isArabic ? "rtl" : "ltr"}>
-                {slideCopy.bullets.map((item) => (
-                  <li key={item} className={`flex items-start gap-3 ${isArabic ? "flex-row-reverse" : ""}`}>
-                    <ShieldCheck className="mt-1 h-5 w-5 flex-shrink-0 text-accent" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* الأزرار */}
-            <div className={`mt-8 flex flex-col gap-4 sm:flex-row ${isArabic ? "sm:flex-row-reverse" : ""} sm:items-center`} dir={isArabic ? "rtl" : "ltr"}>
-              <Button onClick={handleDemoClick} className="btn-gold flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold">
-                <Play className="h-5 w-5" />
-                <span>{demoLabel}</span>
-              </Button>
-              <Button onClick={handleContactClick} variant="outline" className="btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 text-base font-semibold text-white">
-                <Mail className="h-5 w-5" />
-                <span>{contactLabel}</span>
-              </Button>
-            </div>
-          </div>
-        </div>
+<div className="relative z-10 flex h-full items-center">
+  <div className="container mx-auto px-4 lg:px-8">
+    <div className="max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur lg:p-10 dark:bg-background/70">
+      
+      {/* Badge */}
+      <div
+        className={`mb-6 inline-flex items-center gap-3 rounded-full border border-border/80 bg-card/80 px-4 py-2 text-xs font-semibold text-white/90 shadow-inner backdrop-blur ${
+          isArabic ? "flex-row-reverse" : "flex-row"
+        }`}
+      >
+        <Sparkles className="h-4 w-4 text-accent" />
+        <span>{badge}</span>
       </div>
+
+      {/* النصوص */} 
+<div className="space-y-6 text-white" dir={isArabic ? "rtl" : "ltr"}>
+  <h1 className="text-4xl font-display font-semibold leading-tight drop-shadow lg:text-5xl">
+    {slideCopy.title}
+  </h1>
+  <p className="text-lg leading-relaxed text-white/85">
+    {slideCopy.subtitle}
+  </p>
+ 
+
+        <ul
+          className="space-y-3 text-base" dir={isArabic ? "rtl" : "ltr"}  
+        >
+          {slideCopy.bullets.map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-3 "                
+            >
+              <ShieldCheck className="mt-1 h-5 w-5 flex-shrink-0 text-accent" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* الأزرار */}
+      <div
+        className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center  "
+        dir={isArabic ? "ltr" : "rtl"}
+      >
+     
+  {/* زر ذهبي مميز */}
+ <Button
+   variant="gold"
+  onClick={handleDemoClick}
+  className="btn-gold relative overflow-hidden flex items-center justify-center gap-2 px-10 py-3 text-base font-semibold rounded-lg shadow-gold transition-premium"
+>
+  <Play className="h-5 w-5 animate-float relative z-10 text-primary-foreground" />
+  
+  {/* النص بخط واضح */}
+  <span className="relative z-10 text-primary-foreground">{demoLabel}</span>
+
+  {/* لمعة خفيفة */}
+  <span className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/50 to-transparent opacity-0 hover:opacity-20 transition-opacity duration-500"></span>
+</Button>
+
+
+  {/* زر زجاجي أنيق */}
+ <Button
+  onClick={handleContactClick}
+  variant="premium"
+  className="btn-glass flex items-center justify-center gap-2 px-10 py-3 text-base font-semibold rounded-lg border border-white/30 text-white shadow-ambient hover:shadow-glow transition-elegant"
+>
+  <Mail className="h-5 w-5 text-white" />
+  <span className="relative z-10">{contactLabel}</span>
+</Button>
+
+      </div>
+    </div>
+  </div>
+</div>
 
       {/* أزرار التنقل */}
       <button onClick={handlePrev} className="absolute left-6 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-background/30 backdrop-blur transition-all duration-300 hover:border-white/70 hover:bg-background/50" aria-label="Previous slide">

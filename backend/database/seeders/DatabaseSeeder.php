@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call(UsersTableSeeder::class);
         $this->call(ClientsTableSeeder::class);
-        $this->call(PageSeeder::class);
+        $this->call(InitialWebsiteSeeder::class);
         $this->call(LawyerSeeder::class);
         $this->call(CourtTypesTableSeeder::class);
         $this->call(CourtLevelsTableSeeder::class);
