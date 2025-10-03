@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import type { Locale } from '@/types/website';
+import type { Locale, Localized } from '@/types/website';
 import {
   ChevronLeft,
   ChevronRight,
@@ -14,6 +14,11 @@ import {
 } from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
+
+import heroLegal1 from '@/assets/slides/hero-legal-1.png';
+import heroDigital2 from '@/assets/slides/hero-digital-2.png';
+import heroPartnership3 from '@/assets/slides/hero-partnership-3.png';
+import heroTeam from '@/assets/slides/hero-team-4.png';
 
 interface HeroSlide {
   id: number;
@@ -30,6 +35,133 @@ const overlayClasses = [
   'bg-gradient-to-r from-black/75 via-slate-900/55 to-transparent',
   'bg-gradient-to-r from-black/85 via-slate-900/55 to-transparent',
   'bg-gradient-to-r from-black/80 via-slate-900/60 to-transparent',
+];
+
+const fallbackSlides: Array<{
+  id: number;
+  overlay: string;
+  image: string;
+  badge: Localized<string>;
+  title: Localized<string>;
+  subtitle: Localized<string>;
+  bullets: Localized<string[]>;
+}> = [
+  {
+    id: 1,
+    overlay: overlayClasses[0],
+    image: heroLegal1,
+    badge: {
+      en: 'Flagship Litigation Unit',
+      ar: 'وحدة التقاضي الرئيسية',
+    },
+    title: {
+      en: 'Elite trial counsel for high-stakes mandates',
+      ar: 'محامون نخبة للقضايا المصيرية',
+    },
+    subtitle: {
+      en: 'Seasoned advocates and digital workflows protect your interests across MENA courts.',
+      ar: 'محامون مخضرمون وسير عمل رقمية تحمي مصالحك عبر محاكم المنطقة.',
+    },
+    bullets: {
+      en: [
+        'Strategic command of commercial, administrative, and criminal disputes.',
+        'Secure evidence rooms and filings orchestrated with military precision.',
+        '24/7 bilingual crisis desk for urgent injunctions and enforcement.',
+      ],
+      ar: [
+        'إدارة استراتيجية للنزاعات التجارية والإدارية والجنائية.',
+        'غرف أدلة مؤمنة وإيداعات منظمة بدقة عالية.',
+        'مكتب طوارئ ثنائي اللغة على مدار الساعة للأوامر العاجلة والتنفيذ.',
+      ],
+    },
+  },
+  {
+    id: 2,
+    overlay: overlayClasses[1],
+    image: heroDigital2,
+    badge: {
+      en: 'Digital Transformation',
+      ar: 'التحول الرقمي',
+    },
+    title: {
+      en: 'Operate your firm on a unified digital backbone',
+      ar: 'شغّل مكتبك على بنية رقمية موحدة',
+    },
+    subtitle: {
+      en: 'AI-enabled matter management delivers clarity, compliance, and profitability.',
+      ar: 'إدارة القضايا بالذكاء الاصطناعي تمنحك الوضوح والامتثال والربحية.',
+    },
+    bullets: {
+      en: [
+        'Predictive analytics score risk, value, and timelines before filing.',
+        'Client dashboards report progress, fees, and key metrics in real time.',
+        'Automated document assembly executes compliant contracts instantly.',
+      ],
+      ar: [
+        'تحليلات تنبؤية تقيم المخاطر والقيمة والزمن قبل التقديم.',
+        'لوحات عملاء تعرض التقدم والرسوم والمؤشرات لحظة بلحظة.',
+        'تجميع عقود آلي ينفذ مستندات متوافقة فوراً.',
+      ],
+    },
+  },
+  {
+    id: 3,
+    overlay: overlayClasses[2],
+    image: heroPartnership3,
+    badge: {
+      en: 'Trusted Cross-Border Partner',
+      ar: 'شريك عبر الحدود',
+    },
+    title: {
+      en: 'Partnerships that scale across jurisdictions',
+      ar: 'شراكات تتمدد عبر الولايات القضائية',
+    },
+    subtitle: {
+      en: 'Collaborative models align your teams with regulators, investors, and clients.',
+      ar: 'نماذج تعاونية تنسق فرقك مع الجهات التنظيمية والمستثمرين والعملاء.',
+    },
+    bullets: {
+      en: [
+        'Integrated GCC and EU counsel network for seamless cross-border execution.',
+        'Cybersecure collaboration rooms keep regulators and stakeholders in sync.',
+        'Tailored playbooks align governance, compliance, and dispute strategies.',
+      ],
+      ar: [
+        'شبكة مستشارين في الخليج وأوروبا لتنفيذ عابر للحدود بلا انقطاع.',
+        'غرف تعاون مؤمنة تحافظ على تزامن الجهات الرقابية وأصحاب المصلحة.',
+        'دليل تشغيلي مصمم ينسق الحوكمة والامتثال واستراتيجيات النزاع.',
+      ],
+    },
+  },
+  {
+    id: 4,
+    overlay: overlayClasses[3],
+    image: heroTeam,
+    badge: {
+      en: 'Elite Advisory Collective',
+      ar: 'فريق الخبراء',
+    },
+    title: {
+      en: 'Secure. Scalable. Simply Extraordinary.',
+      ar: 'آمن. قابل للتوسع. استثنائي ببساطة.',
+    },
+    subtitle: {
+      en: 'Dedicated expert pods blend legal mastery with bank-grade security for your most strategic matters.',
+      ar: 'فرق خبراء متخصصة تجمع التميز القانوني مع أمان بمستوى البنوك لأهم قضاياك الاستراتيجية.',
+    },
+    bullets: {
+      en: [
+        'Specialized task forces align litigators, consultants, and technologists for every mandate.',
+        'Real-time collaboration hubs keep clients, regulators, and partners perfectly synchronized.',
+        'Proven transformation playbooks accelerate adoption across regional and global operations.',
+      ],
+      ar: [
+        'فرق عمل متخصصة توحد المحامين والاستشاريين والخبراء التقنيين لكل تفويض قانوني.',
+        'مراكز تعاون لحظية تبقي العملاء والجهات التنظيمية والشركاء في انسجام تام.',
+        'أدلة تحول مجربة تسرّع الاعتماد عبر العمليات الإقليمية والعالمية.',
+      ],
+    },
+  },
 ];
 
 const HeroCarousel: React.FC = () => {
@@ -55,31 +187,56 @@ const HeroCarousel: React.FC = () => {
       }
     });
 
+    if (numbers.size === 0) {
+      fallbackSlides.forEach((slide) => numbers.add(slide.id));
+    }
+
     return Array.from(numbers).sort((a, b) => a - b);
   }, [contentBlocks]);
 
   const slides: HeroSlide[] = useMemo(() => {
     return slideNumbers.map((id, index) => {
-      const localizedImage = getLocalizedValue<string>('hero_slide_' + id + '_image', {
-        ar: null,
-        en: null,
-      });
-      const localizedBullets = getLocalizedValue<string[]>('hero_slide_' + id + '_bullets', {
-        ar: [],
-        en: [],
-      });
+      const fallback = fallbackSlides.find((slide) => slide.id === id);
 
-      const image = resolveAssetUrl(localizedImage[locale] ?? localizedImage.en ?? undefined);
-      const bullets = (localizedBullets[locale] ?? localizedBullets.en ?? []).filter(Boolean);
+      const localizedImage = getLocalizedValue<string>('hero_slide_' + id + '_image');
+      const localizedBullets = getLocalizedValue<string[]>('hero_slide_' + id + '_bullets', fallback?.bullets);
+
+      const fallbackImage = fallback?.image ?? heroLegal1;
+      const resolvedImage =
+        resolveAssetUrl(localizedImage[locale] ?? localizedImage.en ?? undefined) ?? fallbackImage;
+      const bullets = (
+        localizedBullets[locale] ?? localizedBullets.en ?? fallback?.bullets?.en ?? []
+      ).filter(Boolean);
+
+      const badge =
+        getValueForLocale<string>(
+          `hero_slide_${id}_badge`,
+          locale,
+          fallback?.badge?.[locale] ?? fallback?.badge?.en ?? ''
+        ) ?? (fallback?.badge?.[locale] ?? fallback?.badge?.en ?? '');
+
+      const title =
+        getValueForLocale<string>(
+          `hero_slide_${id}_title`,
+          locale,
+          fallback?.title?.[locale] ?? fallback?.title?.en ?? ''
+        ) ?? (fallback?.title?.[locale] ?? fallback?.title?.en ?? '');
+
+      const subtitle =
+        getValueForLocale<string>(
+          `hero_slide_${id}_subtitle`,
+          locale,
+          fallback?.subtitle?.[locale] ?? fallback?.subtitle?.en ?? ''
+        ) ?? (fallback?.subtitle?.[locale] ?? fallback?.subtitle?.en ?? '');
 
       return {
         id,
-        badge: getString(`hero_slide_${id}_badge`),
-        title: getString(`hero_slide_${id}_title`),
-        subtitle: getString(`hero_slide_${id}_subtitle`),
+        badge,
+        title,
+        subtitle,
         bullets,
-        image,
-        overlay: overlayClasses[index % overlayClasses.length],
+        image: resolvedImage,
+        overlay: fallback?.overlay ?? overlayClasses[index % overlayClasses.length],
       };
     });
   }, [getLocalizedValue, getString, locale, slideNumbers]);
@@ -167,7 +324,7 @@ const HeroCarousel: React.FC = () => {
             <span>{activeSlide.badge}</span>
           </div>
 
-          <div className={`space-y-6 ${isArabic ? 'text-right' : 'text-left'}`} dir={isArabic ? 'rtl' : 'ltr'}>
+          <div className="space-y-6 "dir={isArabic ? 'rtl' : 'ltr'}>
             <h1 className="text-4xl font-display font-extrabold text-white drop-shadow-lg lg:text-6xl">
               {activeSlide.title}
             </h1>
@@ -183,7 +340,7 @@ const HeroCarousel: React.FC = () => {
             </ul>
           </div>
 
-          <div className={`mt-10 flex flex-wrap gap-4 ${isArabic ? 'justify-end' : 'justify-start'}`}>
+          <div className="mt-10 flex flex-wrap gap-4 " dir={isArabic ? 'ltr' : 'rtl'}>
             <Button
               size="lg"
               className="btn-gold flex items-center gap-3 px-8 py-3 text-base shadow-gold"
@@ -210,17 +367,17 @@ const HeroCarousel: React.FC = () => {
         <div className="pointer-events-auto flex gap-2">
           <button
             type="button"
-            onClick={handlePrev}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white backdrop-blur transition hover:border-white/60 hover:bg-black/60"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
             onClick={handleNext}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white backdrop-blur transition hover:border-white/60 hover:bg-black/60"
           >
             <ChevronRight className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={handlePrev}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white backdrop-blur transition hover:border-white/60 hover:bg-black/60"
+          >
+            <ChevronLeft className="h-5 w-5" />
           </button>
         </div>
 

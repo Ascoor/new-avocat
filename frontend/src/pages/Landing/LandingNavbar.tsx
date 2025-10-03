@@ -1,11 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import BrandLogo from "@/components/common/BrandLogo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
-import { useWebsiteContent } from "@/hooks/useWebsiteContent";
-import { resolveAssetUrl } from "@/utils/asset";
 import {
   Award,
   BookOpenText,
@@ -31,12 +29,11 @@ const navItems: NavItem[] = [
   { href: "#home", icon: Scale, en: "Home", ar: "الرئيسية" },
   { href: "#about", icon: BookOpenText, en: "About", ar: "من نحن" },
   { href: "#services", icon: ShieldCheck, en: "Services", ar: "الخدمات" },
-  { href: "#capabilities", icon: Sparkles, en: "Capabilities", ar: "الإمكانيات" },
-  { href: "#features", icon: ShieldCheck, en: "Features", ar: "الميزات" },
+  // { href: "#capabilities", icon: Sparkles, en: "Capabilities", ar: "الإمكانيات" },
   { href: "#achievements", icon: Award, en: "Achievements", ar: "الإنجازات" },
   { href: "#team", icon: Users, en: "Team", ar: "الفريق" },
-  { href: "#testimonials", icon: Sparkles, en: "Testimonials", ar: "الشهادات" },
-  { href: "#insights", icon: BookOpenText, en: "Insights", ar: "المدونة" },
+  // { href: "#testimonials", icon: Sparkles, en: "Testimonials", ar: "الشهادات" },
+  // { href: "#insights", icon: BookOpenText, en: "Insights", ar: "المدونة" },
   { href: "#contact", icon: Phone, en: "Contact", ar: "اتصل بنا" },
   {
     href: "/showcase",
@@ -63,11 +60,7 @@ const LandingNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); 
   const { language, toggleLanguage, direction } = useLanguage();
   const navigate = useNavigate();
-  const { getLocalizedValue } = useWebsiteContent('settings');
-
-  const logoPaths = useMemo(() => getLocalizedValue<string>('site_logo', { ar: null, en: null }), [getLocalizedValue]);
-  const navLogo = resolveAssetUrl(logoPaths[language as 'ar' | 'en'] ?? logoPaths.en ?? undefined);
-
+ 
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -138,21 +131,12 @@ const LandingNavbar: React.FC = () => {
           className="flex items-center gap-3" 
         >
           <div className="hidden sm:block">
-            {navLogo ? (
-              <img
-                src={navLogo}
-                alt={isArabic ? "شعار أفوكات" : "Avocat Logo"}
-                className="h-12 object-contain"
-              />
-            ) : (
-              <BrandLogo
+            <BrandLogo
                 variant="text"
                 className="h-12"
                 lang={language}
                 dark={isTop ? true : undefined}
-              />
-            )}
-          </div> 
+              />   </div> 
           <div className="text-lg font-semibold text-foreground sm:hidden">Avocat</div>
         </button>
 

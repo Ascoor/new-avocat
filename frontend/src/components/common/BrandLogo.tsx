@@ -4,37 +4,46 @@ import { cn } from '@/lib/utils';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import { resolveAssetUrl } from '@/utils/asset';
-import type { Locale, Localized } from '@/types/website';
+import type { Locale } from '@/types/website';
 
-export type LogoVariant = "icon" | "text" | "full";
+// Local fallbacks
+import logoIconLight from '@/assets/brand/icons/logo-icon-light.png';
+import logoIconDark from '@/assets/brand/icons/logo-icon-dark.png';
+import logoTextArLight from '@/assets/brand/text/logo-text-ar-light.png';
+import logoTextArDark from '@/assets/brand/text/logo-text-ar-dark.png';
+import logoTextEnLight from '@/assets/brand/text/logo-text-en-light.png';
+import logoTextEnDark from '@/assets/brand/text/logo-text-en-dark.png';
+import logoFullArLight from '@/assets/brand/full/logo-full-arabic-light.png';
+import logoFullArDark from '@/assets/brand/full/logo-full-arabic-dark.png';
+import logoFullEnLight from '@/assets/brand/full/logo-full-en-light.png';
+import logoFullEnDark from '@/assets/brand/full/logo-full-en-dark.png';
+
+export type LogoVariant = 'icon' | 'text' | 'full';
 
 interface BrandLogoProps {
-  variant?: LogoVariant;       // icon | text | full
+  variant?: LogoVariant;
   className?: string;
-  lang?: "ar" | "en";          // force language if needed
-  dark?: boolean;              // force light/dark mode if needed
+  lang?: 'ar' | 'en';
+  dark?: boolean;
 }
 
-type LogoVariantPaths = { light: string; dark: string };
-type LogoContent = Localized<LogoVariantPaths>;
-
-const fallbackLogos: Record<LogoVariant, LogoContent> = {
+const fallbackLogos = {
   icon: {
-    en: { light: 'storage/brand/icons/logo-icon-light.png', dark: 'storage/brand/icons/logo-icon-dark.png' },
-    ar: { light: 'storage/brand/icons/logo-icon-light.png', dark: 'storage/brand/icons/logo-icon-dark.png' },
+    light: logoIconLight,
+    dark: logoIconDark,
   },
   text: {
-    en: { light: 'storage/brand/text/logo-text-en-light.png', dark: 'storage/brand/text/logo-text-en-dark.png' },
-    ar: { light: 'storage/brand/text/logo-text-ar-light.png', dark: 'storage/brand/text/logo-text-ar-dark.png' },
+    ar: { light: logoTextArLight, dark: logoTextArDark },
+    en: { light: logoTextEnLight, dark: logoTextEnDark },
   },
   full: {
-    en: { light: 'storage/brand/full/logo-full-en-light.png', dark: 'storage/brand/full/logo-full-en-dark.png' },
-    ar: { light: 'storage/brand/full/logo-full-arabic-light.png', dark: 'storage/brand/full/logo-full-arabic-dark.png' },
+    ar: { light: logoFullArLight, dark: logoFullArDark },
+    en: { light: logoFullEnLight, dark: logoFullEnDark },
   },
 };
 
 const BrandLogo: React.FC<BrandLogoProps> = ({
-  variant = "full",
+  variant = 'full',
   className,
   lang,
   dark,
@@ -43,74 +52,71 @@ const BrandLogo: React.FC<BrandLogoProps> = ({
   const { theme } = useTheme();
   const { getLocalizedValue } = useWebsiteContent('settings');
 
-  // 🌍 detect language automatically unless overridden
-  const currentLang: Locale = lang ?? (i18n.language?.startsWith("ar") ? "ar" : "en");
+  const currentLang: Locale = lang ?? (i18n.language?.startsWith('ar') ? 'ar' : 'en');
+  const isDark = typeof dark === 'boolean' ? dark : theme === 'dark';
+  const mode = isDark ? 'dark' : 'light';
 
-  // 🌑 detect theme mode
-  const isDark = typeof dark === "boolean" ? dark : theme === "dark";
-  const mode = isDark ? "dark" : "light";
-
-  const iconLogos = useMemo(
-    () => getLocalizedValue<LogoVariantPaths>('logo_icon', fallbackLogos.icon),
+  const remoteIcons = useMemo(
+    () => getLocalizedValue<{ light?: string | null; dark?: string | null }>('logo_icon'),
     [getLocalizedValue]
   );
-  const textLogos = useMemo(
-    () => getLocalizedValue<LogoVariantPaths>('logo_text', fallbackLogos.text),
+  const remoteText = useMemo(
+    () => getLocalizedValue<{ light?: string | null; dark?: string | null }>('logo_text'),
     [getLocalizedValue]
   );
-  const fullLogos = useMemo(
-    () => getLocalizedValue<LogoVariantPaths>('logo_full', fallbackLogos.full),
+  const remoteFull = useMemo(
+    () => getLocalizedValue<{ light?: string | null; dark?: string | null }>('logo_full'),
     [getLocalizedValue]
   );
-  const siteLogo = useMemo(
-    () => getLocalizedValue<string>('site_logo', {
-      ar: fallbackLogos.full.ar.light,
-      en: fallbackLogos.full.en.light,
-    }),
+  const remoteSite = useMemo(
+    () => getLocalizedValue<string>('site_logo'),
     [getLocalizedValue]
   );
 
-  const logos: Record<LogoVariant, Localized<LogoVariantPaths>> = {
-    icon: iconLogos,
-    text: textLogos,
-    full: fullLogos,
+  const resolveRemoteVariant = (
+    sources: { light?: string | null; dark?: string | null } | undefined
+  ): string | undefined => {
+    if (!sources) return undefined;
+    const candidate = sources[mode] ?? sources.light ?? sources.dark;
+    return resolveAssetUrl(candidate ?? undefined);
   };
 
-  const selectedLogo = logos[variant][currentLang] ?? logos[variant].en ?? fallbackLogos[variant].en;
-  const siteLogoPath = siteLogo[currentLang] ?? siteLogo.en;
+  const getSrc = (): string => {
+    if (variant === 'icon') {
+      const remote = resolveRemoteVariant(remoteIcons?.[currentLang]);
+      return remote ?? (isDark ? fallbackLogos.icon.dark : fallbackLogos.icon.light);
+    }
 
-  const fallbackLocaleLogo = fallbackLogos[variant][currentLang] ?? fallbackLogos[variant].en;
-  const src = resolveAssetUrl(
-    typeof selectedLogo === 'string' ? selectedLogo : selectedLogo?.[mode]
-  ) ?? resolveAssetUrl(siteLogoPath)
-    ?? resolveAssetUrl(
-      typeof fallbackLocaleLogo === 'string' ? fallbackLocaleLogo : fallbackLocaleLogo?.[mode]
-    );
+    if (variant === 'text') {
+      const remote = resolveRemoteVariant(remoteText?.[currentLang]);
+      const fallback = fallbackLogos.text[currentLang][mode];
+      return remote ?? fallback;
+    }
 
-  // ✅ alt text for accessibility
+    const remoteFullLogo = resolveRemoteVariant(remoteFull?.[currentLang]);
+  const remoteSiteLogo = resolveAssetUrl(remoteSite?.[currentLang] ?? remoteSite?.en ?? undefined);
+    const fallback = fallbackLogos.full[currentLang][mode];
+    return remoteFullLogo ?? remoteSiteLogo ?? fallback;
+  };
+
+  const src = getSrc();
+
   const getAltText = (): string => {
-    if (variant === "icon") return "Avocat Icon";
-    if (variant === "text")
-      return currentLang === "ar" ? "أفوكات" : "Avocat";
-    return currentLang === "ar"
-      ? "شعار أفوكات الكامل"
-      : "Avocat Full Logo";
+    if (variant === 'icon') return 'Avocat Icon';
+    if (variant === 'text') return currentLang === 'ar' ? 'أفوكات' : 'Avocat';
+    return currentLang === 'ar' ? 'شعار أفوكات الكامل' : 'Avocat Full Logo';
   };
-
-  if (!src) {
-    return null;
-  }
 
   return (
     <img
       src={src}
       alt={getAltText()}
       className={cn(
-        "object-contain",
-        currentLang === "ar" ? "rtl" : "ltr", // 👈 direction aware
+        'object-contain',
+        currentLang === 'ar' ? 'rtl' : 'ltr',
         className
       )}
-      dir={currentLang === "ar" ? "rtl" : "ltr"} // 👈 HTML dir attribute
+      dir={currentLang === 'ar' ? 'rtl' : 'ltr'}
     />
   );
 };

@@ -53,8 +53,8 @@ class InitialWebsiteSeeder extends Seeder
                     'en' => 'Seasoned advocates and digital workflows protect your interests across MENA courts.',
                 ],
                 'image' => [
-                    'ar' => 'storage/landing/hero/hero-legal-1.png',
-                    'en' => 'storage/landing/hero/hero-legal-1.png',
+                    'ar' => 'branding/landing/hero-legal-1.png',
+                    'en' => 'branding/landing/hero-legal-1.png',
                 ],
                 'bullets' => [
                     'ar' => [
@@ -83,8 +83,8 @@ class InitialWebsiteSeeder extends Seeder
                     'en' => 'AI-enabled matter management delivers clarity, compliance, and profitability.',
                 ],
                 'image' => [
-                    'ar' => 'storage/landing/hero/hero-digital-2.png',
-                    'en' => 'storage/landing/hero/hero-digital-2.png',
+                    'ar' => 'branding/landing/hero-digital-2.png',
+                    'en' => 'branding/landing/hero-digital-2.png',
                 ],
                 'bullets' => [
                     'ar' => [
@@ -113,8 +113,8 @@ class InitialWebsiteSeeder extends Seeder
                     'en' => 'Collaborative models align your teams with regulators, investors, and clients.',
                 ],
                 'image' => [
-                    'ar' => 'storage/landing/hero/hero-partnership-3.png',
-                    'en' => 'storage/landing/hero/hero-partnership-3.png',
+                    'ar' => 'branding/landing/hero-partnership-3.png',
+                    'en' => 'branding/landing/hero-partnership-3.png',
                 ],
                 'bullets' => [
                     'ar' => [
@@ -143,8 +143,8 @@ class InitialWebsiteSeeder extends Seeder
                     'en' => 'Dedicated expert pods blend legal mastery with bank-grade security for your most strategic matters.',
                 ],
                 'image' => [
-                    'ar' => 'storage/landing/hero/hero-team-4.png',
-                    'en' => 'storage/landing/hero/hero-team-4.png',
+                    'ar' => 'branding/landing/hero-team-4.png',
+                    'en' => 'branding/landing/hero-team-4.png',
                 ],
                 'bullets' => [
                     'ar' => [
@@ -1694,8 +1694,8 @@ class InitialWebsiteSeeder extends Seeder
         $page->contentBlocks()->delete();
 
         $sharedIconPaths = [
-            'light' => 'storage/brand/icons/logo-icon-light.png',
-            'dark' => 'storage/brand/icons/logo-icon-dark.png',
+            'light' => 'branding/icons/logo-icon-light.png',
+            'dark' => 'branding/icons/logo-icon-dark.png',
         ];
 
         $page->contentBlocks()->createMany([
@@ -1703,8 +1703,8 @@ class InitialWebsiteSeeder extends Seeder
                 'key' => 'site_logo',
                 'type' => 'image',
                 'value' => [
-                    'ar' => 'storage/brand/full/logo-full-arabic-light.png',
-                    'en' => 'storage/brand/full/logo-full-en-light.png',
+                    'ar' => 'branding/full/logo-full-arabic-light.png',
+                    'en' => 'branding/full/logo-full-en-light.png',
                 ],
             ],
             [
@@ -1720,12 +1720,12 @@ class InitialWebsiteSeeder extends Seeder
                 'type' => 'image',
                 'value' => [
                     'ar' => [
-                        'light' => 'storage/brand/text/logo-text-ar-light.png',
-                        'dark' => 'storage/brand/text/logo-text-ar-dark.png',
+                        'light' => 'branding/text/logo-text-ar-light.png',
+                        'dark' => 'branding/text/logo-text-ar-dark.png',
                     ],
                     'en' => [
-                        'light' => 'storage/brand/text/logo-text-en-light.png',
-                        'dark' => 'storage/brand/text/logo-text-en-dark.png',
+                        'light' => 'branding/text/logo-text-en-light.png',
+                        'dark' => 'branding/text/logo-text-en-dark.png',
                     ],
                 ],
             ],
@@ -1734,12 +1734,12 @@ class InitialWebsiteSeeder extends Seeder
                 'type' => 'image',
                 'value' => [
                     'ar' => [
-                        'light' => 'storage/brand/full/logo-full-arabic-light.png',
-                        'dark' => 'storage/brand/full/logo-full-arabic-dark.png',
+                        'light' => 'branding/full/logo-full-arabic-light.png',
+                        'dark' => 'branding/full/logo-full-arabic-dark.png',
                     ],
                     'en' => [
-                        'light' => 'storage/brand/full/logo-full-en-light.png',
-                        'dark' => 'storage/brand/full/logo-full-en-dark.png',
+                        'light' => 'branding/full/logo-full-en-light.png',
+                        'dark' => 'branding/full/logo-full-en-dark.png',
                     ],
                 ],
             ],

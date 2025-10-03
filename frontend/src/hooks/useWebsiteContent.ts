@@ -27,10 +27,11 @@ export function useWebsiteContent(slug: string): UseWebsiteContentResult {
     setError(null);
 
     api
-      .get<PageContent>(`/api/website/pages/${slug}`)
+      .get(`/api/website/pages/${slug}`)
       .then((response) => {
         if (!isCancelled) {
-          setData(response.data);
+          const payload = (response.data?.data ?? response.data) as PageContent | null;
+          setData(payload);
         }
       })
       .catch((err: unknown) => {

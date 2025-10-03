@@ -9,8 +9,13 @@ export function resolveAssetUrl(path?: string | null): string | undefined {
     return path;
   }
 
+  const sanitized = path
+    .replace(/^storage\/brand\//, 'branding/')
+    .replace(/^storage\/landing\//, 'branding/landing/')
+    .replace(/^branding\/landing\/hero\//, 'branding/landing/');
+
   const baseUrl = API_CONFIG.baseURL.replace(/\/$/, '');
-  const normalized = path.startsWith('/') ? path : `/${path}`;
+  const normalized = sanitized.startsWith('/') ? sanitized : `/${sanitized}`;
 
   return `${baseUrl}${normalized}`;
 }

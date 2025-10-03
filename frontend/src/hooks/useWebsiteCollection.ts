@@ -19,10 +19,11 @@ export function useWebsiteCollection<T = unknown>(endpoint: string): UseWebsiteC
     setError(null);
 
     api
-      .get<T[]>(endpoint)
+      .get(endpoint)
       .then((response) => {
         if (!isCancelled) {
-          setData(response.data);
+          const payload = response.data?.data ?? response.data;
+          setData(Array.isArray(payload) ? (payload as T[]) : []);
         }
       })
       .catch((err: unknown) => {
