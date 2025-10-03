@@ -6,25 +6,63 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PageResource;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Validation\Rule;
 
 class PageController extends Controller
 {
     public function index(string $slug): PageResource
     {
-        $page = Page::with('contentBlocks')->where('slug', $slug)->firstOrFail();
-
-        return new PageResource($page);
+        return new PageResource($this->resolvePage($slug));
     }
 
     public function update(Request $request, string $slug): PageResource
+    {
+        return $this->adminUpdate($request, $slug);
+    }
+
+    public function adminIndex(): AnonymousResourceCollection
+    {
+        $pages = Page::query()
+            ->orderBy('slug')
+            ->get();
+
+        return PageResource::collection($pages);
+    }
+
+    public function adminShow(string $slug): PageResource
+    {
+        return new PageResource($this->resolvePage($slug));
+    }
+
+    public function adminUpdate(Request $request, string $slug): PageResource
+    {
+        $page = $this->persistPage($request, $slug);
+
+        return new PageResource($page->load($this->contentBlockRelation()));
+    }
+
+    public function settings(): PageResource
+    {
+        return $this->adminShow('settings');
+    }
+
+    public function updateSettings(Request $request): PageResource
+    {
+        return $this->adminUpdate($request, 'settings');
+    }
+
+    private function persistPage(Request $request, string $slug): Page
     {
         $validated = $request->validate([
             'title_ar' => ['nullable', 'string', 'max:255'],
             'title_en' => ['nullable', 'string', 'max:255'],
             'content_blocks' => ['sometimes', 'array'],
             'content_blocks.*.key' => ['required', 'string', 'max:255'],
-            'content_blocks.*.type' => ['nullable', Rule::in('text', 'image', 'link', 'html')],
+            'content_blocks.*.type' => [
+                'nullable',
+                Rule::in('text', 'image', 'link', 'html', 'list', 'json'),
+            ],
             'content_blocks.*.value' => ['required', 'array'],
             'content_blocks.*.value.ar' => ['nullable'],
             'content_blocks.*.value.en' => ['nullable'],
@@ -56,17 +94,37 @@ class PageController extends Controller
                 $keys[] = $block['key'];
             }
 
-            if ($keys) {
-                $page->contentBlocks()
-                    ->whereNotIn('key', $keys)
-                    ->delete();
-            } else {
-                $page->contentBlocks()->delete();
-            }
+            $this->purgeMissingBlocks($page, $keys);
         }
 
-        $page->load('contentBlocks');
+        return $page;
+    }
 
-        return new PageResource($page);
+    private function resolvePage(string $slug): Page
+    {
+        return Page::query()
+            ->with($this->contentBlockRelation())
+            ->where('slug', $slug)
+            ->firstOrFail();
+    }
+
+    private function contentBlockRelation(): array
+    {
+        return [
+            'contentBlocks' => fn ($query) => $query->orderBy('id'),
+        ];
+    }
+
+    private function purgeMissingBlocks(Page $page, array $keys): void
+    {
+        if (empty($keys)) {
+            $page->contentBlocks()->delete();
+
+            return;
+        }
+
+        $page->contentBlocks()
+            ->whereNotIn('key', $keys)
+            ->delete();
     }
 }

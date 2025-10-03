@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Star, Quote, ChevronLeft, ChevronRight, Building, User } from 'lucide-react';
+
+import SectionHeader from './components/SectionHeader';
+import SectionContainer from './components/SectionContainer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import type { ContentBlock, Locale } from '@/types/website';
-import { Star, Quote, ChevronLeft, ChevronRight, Building, User } from 'lucide-react';
 
 type TestimonialType = 'firm' | 'individual';
 
@@ -27,7 +31,7 @@ const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { language, isRTL } = useLanguage();
   const locale = language as Locale;
-  const { contentBlocks, getValueForLocale } = useWebsiteContent('testimonials');
+  const { loading, contentBlocks, getValueForLocale } = useWebsiteContent('testimonials');
 
   const header = {
     title: getValueForLocale('testimonials_title', locale) ?? '',
@@ -61,16 +65,15 @@ const Testimonials: React.FC = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
+  const renderStars = (rating: number) =>
+    Array.from({ length: 5 }, (_, index) => (
       <Star
-        key={i}
-        className={`w-5 h-5 ${
-          i < rating ? 'text-accent fill-current' : 'text-muted-foreground'
+        key={index}
+        className={`h-5 w-5 ${
+          index < rating ? 'text-accent drop-shadow-sm' : 'text-muted-foreground/50'
         }`}
       />
     ));
-  };
 
   if (!testimonials.length) {
     return null;
@@ -86,17 +89,16 @@ const Testimonials: React.FC = () => {
         <div className="absolute bottom-10 right-10 w-72 h-72 bg-accent rounded-full mix-blend-multiply blur-xl animate-float" style={{ animationDelay: '4s' }} />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl فونت-display font-bold text-foreground mb-6">
-            {header.title}
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            {header.subtitle}
-          </p>
-        </div>
+      <div className="container relative z-10 mx-auto px-4 lg:px-8">
+        <SectionContainer
+          loading={loading}
+          loaderLabel={locale === 'ar' ? 'جارٍ تحميل الشهادات' : 'Loading testimonials'}
+          className="bg-background/85"
+        >
+          <div className="space-y-14">
+            <SectionHeader title={header.title} subtitle={header.subtitle} />
 
-        <div className="relative max-w-5xl mx-auto mb-16">
+            <div className="relative max-w-5xl mx-auto">
           <div className="overflow-hidden rounded-3xl">
             <div
               className="flex transition-transform duration-700 ease-in-out"
@@ -104,36 +106,41 @@ const Testimonials: React.FC = () => {
             >
               {testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="w-full flex-shrink-0">
-                  <div className="card-elevated p-8 lg:p-12 text-center mx-4 relative animate-scale-in">
-                    <div className="absolute top-6 left-6 opacity-20">
-                      <Quote className="w-12 h-12 text-primary" />
+                  <motion.div
+                    initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    className="card-elevated relative mx-4 p-8 text-center text-foreground lg:p-12"
+                  >
+                    <div className="absolute left-6 top-6 opacity-20">
+                      <Quote className="h-12 w-12 text-primary" />
                     </div>
 
-                    <div className="absolute top-6 right-6">
+                    <div className="absolute right-6 top-6">
                       <div
-                        className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                        className={`flex h-12 w-12 items-center justify-center rounded-full shadow-inner-glow ${
                           testimonial.type === 'firm'
                             ? 'bg-gradient-to-br from-primary to-primary-light'
                             : 'bg-gradient-to-br from-accent to-accent-glow'
                         }`}
                       >
                         {testimonial.type === 'firm' ? (
-                          <Building className="w-6 h-6 text-white" />
+                          <Building className="h-6 w-6 text-primary-foreground" />
                         ) : (
-                          <User className="w-6 h-6 text-white" />
+                          <User className="h-6 w-6 text-primary-foreground" />
                         )}
                       </div>
                     </div>
 
-                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-secondary to-secondary-dark rounded-full flex items-center justify-center text-4xl shadow-elevated">
+                    <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-secondary-dark text-4xl shadow-elevated">
                       {testimonial.avatar}
                     </div>
 
-                    <div className="flex justify-center space-x-1 rtl:space-x-reverse mb-6">
+                    <div className="mb-6 flex justify-center space-x-1 rtl:space-x-reverse">
                       {renderStars(testimonial.rating)}
                     </div>
 
-                    <blockquote className="text-xl lg:text-2xl font-display text-foreground leading-relaxed mb-8 max-w-3xl mx-auto">
+                    <blockquote className="mx-auto mb-6 max-w-3xl text-xl leading-relaxed text-muted-foreground lg:text-2xl">
                       "{testimonial.quote}"
                     </blockquote>
 
@@ -141,10 +148,10 @@ const Testimonials: React.FC = () => {
                       <h4 className="text-xl font-display font-semibold text-foreground">
                         {testimonial.name}
                       </h4>
-                      <p className="text-muted-foreground">{testimonial.position}</p>
-                      <p className="text-primary font-medium">{testimonial.company}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.position}</p>
+                      <p className="text-sm font-medium text-primary">{testimonial.company}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               ))}
             </div>
@@ -152,47 +159,54 @@ const Testimonials: React.FC = () => {
 
           <button
             onClick={prevTestimonial}
-            className={`absolute top-1/2 -translate-y-1/2 ${
+            className={`group absolute top-1/2 h-12 w-12 -translate-y-1/2 rounded-full border border-border/60 bg-card/80 text-foreground shadow-elevated backdrop-blur transition-all duration-300 hover:bg-card hover:text-primary ${
               isRTL ? 'right-2' : 'left-2'
-            } w-12 h-12 bg-card border border-border rounded-full flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 shadow-lg group`}
+            }`}
           >
-            <ChevronLeft className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+            <ChevronLeft className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
           </button>
 
           <button
             onClick={nextTestimonial}
-            className={`absolute top-1/2 -translate-y-1/2 ${
+            className={`group absolute top-1/2 h-12 w-12 -translate-y-1/2 rounded-full border border-border/60 bg-card/80 text-foreground shadow-elevated backdrop-blur transition-all duration-300 hover:bg-card hover:text-primary ${
               isRTL ? 'left-2' : 'right-2'
-            } w-12 h-12 bg-card border border-border rounded-full flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 shadow-lg group`}
+            }`}
           >
-            <ChevronRight className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+            <ChevronRight className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
           </button>
         </div>
 
-        <div className="mb-16 flex justify-center space-x-3 rtl:space-x-reverse">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/30 hover:bg-muted-foreground/60'
-              }`}
-            />
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="text-center card-premium p-8 hover:card-elevated transition-all duration-500 group hover:-translate-y-1 animate-slide-up"
-              style={{ animationDelay: `${index * 200}ms` }}
-            >
-              <div className="mb-2 text-3xl font-display font-bold text-primary">{stat.number}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
+            <div className="mb-10 flex justify-center space-x-3 rtl:space-x-reverse">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? 'w-8 bg-primary'
+                      : 'w-3 bg-muted-foreground/40 hover:bg-muted-foreground/60'
+                  }`}
+                />
+              ))}
             </div>
-          ))}
-        </div>
+
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 0.55, delay: index * 0.08 }}
+                  className="card-premium text-center transition-all duration-500 hover:-translate-y-1 hover:card-elevated"
+                >
+                  <div className="mb-2 text-3xl font-display font-bold text-primary">{stat.number}</div>
+                  <div className="pb-8 text-sm text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </SectionContainer>
       </div>
     </section>
   );

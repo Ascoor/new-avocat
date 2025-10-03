@@ -1,9 +1,13 @@
 import { useCallback, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { Gavel, MessageSquareQuote, Trophy } from 'lucide-react';
+
+import SectionHeader from './components/SectionHeader';
+import SectionContainer from './components/SectionContainer';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import { useWebsiteCollection } from '@/hooks/useWebsiteCollection';
 import type { AchievementApi, Locale } from '@/types/website';
-import { Gavel, MessageSquareQuote, Trophy } from 'lucide-react';
 
 const storyIcons = [Gavel, MessageSquareQuote, Trophy];
 
@@ -11,8 +15,8 @@ const Achievements: React.FC = () => {
   const { language, direction } = useLanguage();
   const locale = language as Locale;
   const isArabic = language === 'ar';
-  const { contentBlocks, getLocalizedValue, getValueForLocale } = useWebsiteContent('achievements');
-  const { data: stats } = useWebsiteCollection<AchievementApi>('/api/website/achievements');
+  const { loading, contentBlocks, getLocalizedValue, getValueForLocale } = useWebsiteContent('achievements');
+  const { data: stats, loading: statsLoading } = useWebsiteCollection<AchievementApi>('/api/website/achievements');
 
   const getString = useCallback(
     (key: string, lang: Locale = locale, fallback = ''): string =>
@@ -73,72 +77,107 @@ const Achievements: React.FC = () => {
 
   const achievementStats = stats.length ? stats : [];
 
+  const isLoading = loading || statsLoading;
+
   return (
     <section id="achievements" className="bg-background py-24" dir={direction}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="mb-16 text-center">
-          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
-            <span>{header.badge}</span>
+        <SectionContainer
+          loading={isLoading}
+          loaderLabel={isArabic ? 'جارٍ تحميل قسم الإنجازات' : 'Loading achievements'}
+          className="bg-card/70"
+        >
+          <div className="space-y-16">
+            <SectionHeader badge={header.badge} title={header.title} subtitle={header.description} />
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {metrics.map((metric, index) => (
+                <motion.div
+                  key={`${metric}-${index}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ duration: 0.6, delay: index * 0.08 }}
+                  className="rounded-3xl border border-border bg-gradient-to-br from-primary/5 via-background to-background p-6 text-center shadow-ambient"
+                >
+                  <p className="text-sm font-semibold text-primary">{metric}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="grid gap-8 lg:grid-cols-3">
+              {stories.map((story, index) => {
+                const Icon = story.Icon;
+
+                return (
+                  <motion.article
+                    key={`${story.title}-${index}`}
+                    initial={{ opacity: 0, y: 32 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 0.7, delay: index * 0.1 }}
+                    className="flex h-full flex-col gap-6 rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
+                  >
+                    <div className="flex items-center gap-3">
+                      <motion.div
+                        initial={{ scale: 0.85, rotate: -6, opacity: 0 }}
+                        whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+                        viewport={{ once: true, amount: 0.7 }}
+                        transition={{ duration: 0.6, delay: 0.05 }}
+                        className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold"
+                      >
+                        <Icon className="h-6 w-6" />
+                      </motion.div>
+                      <h3 className="text-xl font-semibold text-foreground">{story.title}</h3>
+                    </div>
+
+                    <motion.p
+                      className="text-base leading-relaxed text-muted-foreground"
+                      dir={isArabic ? 'rtl' : 'ltr'}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.6 }}
+                      transition={{ duration: 0.55, delay: 0.12 }}
+                    >
+                      {story.summary}
+                    </motion.p>
+
+                    <motion.ul
+                      className="space-y-3 text-sm text-muted-foreground"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.6 }}
+                      transition={{ duration: 0.55, delay: 0.18 }}
+                    >
+                      {story.details.map((detail) => (
+                        <li key={detail} className="flex items-start gap-2" dir={isArabic ? 'rtl' : 'ltr'}>
+                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  </motion.article>
+                );
+              })}
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {achievementStats.map((stat, index) => (
+                <motion.div
+                  key={stat.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: 0.6, delay: index * 0.08 }}
+                  className="rounded-3xl border border-border bg-card/70 p-6 text-center shadow-elevated backdrop-blur"
+                >
+                  <p className="text-3xl font-display font-bold text-primary">{stat.number}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{stat.title[locale] ?? stat.title.en}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
-          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{header.title}</h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{header.description}</p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {metrics.map((metric, index) => (
-            <div
-              key={`${metric}-${index}`}
-              className="rounded-3xl border border-border bg-gradient-to-br from-primary/5 via-background to-background p-6 text-center shadow-ambient"
-            >
-              <p className="text-sm font-semibold text-primary">{metric}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
-          {stories.map((story, index) => {
-            const Icon = story.Icon;
-
-            return (
-              <div
-                key={`${story.title}-${index}`}
-                className="flex h-full flex-col gap-6 rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold">
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">{story.title}</h3>
-                </div>
-
-                <p className="text-base leading-relaxed text-muted-foreground" dir={isArabic ? 'rtl' : 'ltr'}>
-                  {story.summary}
-                </p>
-
-                <ul className="space-y-3 text-sm text-muted-foreground">
-                  {story.details.map((detail) => (
-                    <li key={detail} className="flex items-start gap-2" dir={isArabic ? 'rtl' : 'ltr'}>
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-primary" />
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {achievementStats.map((stat) => (
-            <div
-              key={stat.id}
-              className="rounded-3xl border border-border bg-card/70 p-6 text-center shadow-elevated backdrop-blur"
-            >
-              <p className="text-3xl font-display font-bold text-primary">{stat.number}</p>
-              <p className="mt-2 text-sm text-muted-foreground">{stat.title[locale] ?? stat.title.en}</p>
-            </div>
-          ))}
-        </div>
+        </SectionContainer>
       </div>
     </section>
   );

@@ -5,7 +5,8 @@
   "sidebar": {
     "sections": {
       "main": "Main",
-      "system": "System"
+      "system": "System",
+      "website": "Website Management"
     },
     "toggle": {
       "open": "Expand section",
@@ -33,216 +34,16 @@
     "users_roles": "Users & Roles",
     "archive": "Archive",
     "courts_search": "Courts Search",
+    "website_pages": "Website Pages",
+    "website_team": "Team",
+    "website_achievements": "Achievements",
+    "website_settings": "Website Settings",
     "login": "Login",
     "register": "Register"
   },
-  "home": "Home",
-  "features": "Features",
-  "services": "Services",
-  "about": "About",
-  "contact": "Contact",
-  "login": "Login",
-  "signup": "Sign Up",
-  "heroSlide1Title": "Pioneering the Future of Digital Legal Excellence",
-  "heroSlide1Subtitle": "Transform your legal practice with cutting-edge technology, uncompromising security, and the wisdom of traditional legal excellence. Join the digital revolution that's reshaping the legal landscape across MENA.",
-  "heroSlide2Title": "Intelligent Legal Solutions for Modern Practices",
-  "heroSlide2Subtitle": "Harness the power of AI-driven case management, automated workflows, and client-centric digital tools designed exclusively for legal professionals who demand excellence and efficiency.",
-  "heroSlide3Title": "Avocat – Where Legal Heritage Meets Digital Innovation",
-  "heroSlide3Subtitle": "Experience seamless integration of time-honored legal principles with revolutionary technology. Our platform empowers lawyers to deliver exceptional client outcomes while scaling their practice.",
-  "heroSlide4Title": "Secure. Scalable. Simply Extraordinary.",
-  "heroSlide4Subtitle": "Bank-grade encryption meets intuitive design in a comprehensive legal platform trusted by leading law firms across the Middle East and North Africa.",
-  "getDemo": "Experience Live Demo",
-  "contactUs": "Speak with Expert",
-  "featuresTitle": "Revolutionary Legal Technology Solutions",
-  "featuresSubtitle": "Comprehensive digital tools engineered for legal excellence and operational efficiency",
-  "dataProtection": "Advanced Data Protection",
-  "dataProtectionDesc": "Military-grade encryption with ISO 27001 compliance ensures your confidential legal documents and sensitive client information remain absolutely secure. Your data, protected at every digital touchpoint.",
-  "dataProtectionTagline": "Your data, secured at every step",
-  "clientManagement": "Intelligent Client Management",
-  "clientManagementDesc": "Revolutionary CRM system designed specifically for legal practices. Track client communications, automate follow-ups, manage retainers, and deliver personalized client experiences that build lasting relationships.",
-  "clientManagementTagline": "Relationships that drive results",
-  "caseTracking": "Real-Time Case Intelligence",
-  "caseTrackingDesc": "AI-powered case lifecycle management with automated scheduling, deadline alerts, and progress analytics. Never miss a critical date while maintaining complete visibility across all case activities.",
-  "caseTrackingTagline": "Stay ahead, always informed",
-  "digitalTraining": "Continuous Legal Education",
-  "digitalTrainingDesc": "Comprehensive training ecosystem featuring expert-led webinars, certification programs, and e-government compliance modules. Empower your team with cutting-edge legal technology skills.",
-  "digitalTrainingTagline": "Knowledge that transforms practice",
-  "servicesTitle": "Specialized Legal Technology Services",
-  "servicesSubtitle": "Tailored digital transformation solutions for every legal professional and organization",
-  "lawFirms": "Law Firm Digital Transformation",
-  "lawFirmsDesc": "Complete end-to-end digitization for law firms of all sizes. From document automation to client portals, we provide the technological foundation for modern legal practice. Our comprehensive suite includes case lifecycle management, document automation, client communication platforms, billing integration, and performance analytics.",
-  "corporateLegal": "Corporate Legal Department Solutions",
-  "corporateLegalDesc": "Enterprise-grade legal operations platform designed for in-house legal teams. Seamlessly integrate with existing ERP systems while maintaining regulatory compliance. Features include contract management, compliance tracking, legal spend management, risk assessment tools, and regulatory monitoring.",
-  "independentLawyers": "Solo Practice Empowerment",
-  "independentLawyersDesc": "Affordable, cloud-based legal technology that gives independent lawyers enterprise-level capabilities. Focus on your clients while we handle the technology. Includes cloud storage, mobile practice management, client acquisition tools, automated documentation, and 24/7 support.",
-  "training": "Legal Technology Training & E-Government",
-  "trainingDesc": "Professional development programs and smart digital governance solutions. Bridge the gap between traditional legal practice and modern technological requirements. Comprehensive certification programs, government integration, digital literacy workshops, compliance training, and adoption support.",
-  "aboutTitle": "About Avocat - Leaders in Legal Innovation",
-  "aboutSubtitle": "Bridging the timeless principles of law with transformative digital solutions",
-  "aboutDescription": "Behind Avocat is a dedicated team of lawyers, technologists, and innovation specialists united by a singular vision: to revolutionize legal practice across the MENA region. We understand that law is both an art and a science – requiring the wisdom of tradition and the power of innovation. Our platform doesn't just digitize legal processes; it elevates them, ensuring that every lawyer can deliver exceptional value to their clients while building a sustainable, scalable practice.",
-  "aboutMission": "Our mission extends beyond technology. We're building the future of legal services – one where accessibility, efficiency, and excellence converge to serve justice in the digital age.",
-  "visionTitle": "Our Vision for Legal Excellence",
-  "visionDescription": "To be the definitive platform that empowers legal professionals across MENA to achieve unprecedented success through intelligent technology integration.",
-  "whyChooseTitle": "Why Leading Legal Professionals Choose Avocat",
-  "trustValue": "Unwavering Trust & Confidentiality",
-  "trustDesc": "Built with the highest security standards and ethical framework",
-  "innovationValue": "Continuous Innovation Leadership",
-  "innovationDesc": "Pioneering legal technology solutions that define industry standards",
-  "expertiseValue": "Deep Legal Domain Expertise",
-  "expertiseDesc": "Created by lawyers, for lawyers, with authentic understanding",
-  "standardsValue": "Global Standards, Local Excellence",
-  "standardsDesc": "International best practices tailored for MENA legal requirements",
-  "supportValue": "Exceptional Client Success Partnership",
-  "supportDesc": "Dedicated support that ensures your digital transformation success",
-  "testimonialsTitle": "Trusted by Legal Leaders Across MENA",
-  "testimonialsSubtitle": "Hear from legal professionals who've transformed their practice with Avocat",
-  "testimonialsItems": [
-    {
-      "id": 1,
-      "name": "Ahmed Al-Mansouri",
-      "position": "Managing Partner",
-      "company": "Al-Mansouri & Associates",
-      "avatar": "👨‍💼",
-      "rating": 5,
-      "quote": "Avocat transformed our practice completely. The digital tools increased our efficiency by 300% and our client satisfaction rates are at an all-time high.",
-      "type": "firm"
-    },
-    {
-      "id": 2,
-      "name": "Sarah Johnson",
-      "position": "Legal Director",
-      "company": "Global Corp",
-      "avatar": "👩‍💼",
-      "rating": 5,
-      "quote": "The compliance tracking and contract management features have revolutionized how we handle our legal operations. Outstanding platform!",
-      "type": "firm"
-    },
-    {
-      "id": 3,
-      "name": "Dr. Khalid Rahman",
-      "position": "Independent Lawyer",
-      "company": "Solo Practice",
-      "avatar": "👨‍⚖️",
-      "rating": 5,
-      "quote": "As a solo practitioner, Avocat gave me enterprise-level tools at an affordable price. My practice has grown 200% since I started using it.",
-      "type": "individual"
-    },
-    {
-      "id": 4,
-      "name": "Fatima Al-Zahra",
-      "position": "Senior Partner",
-      "company": "Legal Innovations LLC",
-      "avatar": "👩‍⚖️",
-      "rating": 5,
-      "quote": "The training programs helped our entire team transition to digital workflows seamlessly. Exceptional support and cutting-edge technology.",
-      "type": "firm"
-    }
-  ],
-  "testimonialsStats": [
-    { "number": "500+", "label": "Happy Clients", "icon": "😊" },
-    { "number": "98%", "label": "Satisfaction Rate", "icon": "⭐" },
-    { "number": "24/7", "label": "Support Available", "icon": "🚀" }
-  ],
-  "ctaTitle": "Ready to Lead the Digital Legal Revolution?",
-  "ctaSubtitle": "Join the exclusive community of forward-thinking legal professionals who trust Avocat",
-  "ctaPrimaryLabel": "Get Free Demo",
-  "ctaSecondaryLabel": "Contact Sales",
-  "ctaFeatures": [
-    "✅ Free 30-Day Trial",
-    "🚀 Instant Setup",
-    "💡 24/7 Expert Support",
-    "🔒 Bank-Level Security"
-  ],
-  "ctaTrustNote": "Trusted by leading law firms across MENA",
-  "ctaClients": [
-    "Baker McKenzie Style Firm",
-    "Regional Legal Leader",
-    "International Law Group",
-    "Corporate Legal Dept",
-    "Government Entity"
-  ],
-  "ctaBottom": "🌟 Join the Legal Digital Revolution Today!",
-  "ctaDescription": "Start today and position your practice at the forefront of legal innovation. Limited-time access to our premium transformation package.",
-  "ctaUrgency": "Transform your practice in 30 days or less",
-  "contactTitle": "Connect with Legal Technology Specialists",
-  "contactSubtitle": "Schedule a personalized consultation with our expert team",
-  "name": "Full Name",
-  "email": "Professional Email",
-  "message": "Tell us about your legal technology needs",
-  "submit": "Request Consultation",
-  "blogTitle": "Legal Innovation Insights",
-  "blogSubtitle": "Stay ahead with expert analysis on legal technology trends",
-  "blogPost1": "How AI is Reshaping Legal Practice in 2024",
-  "blogPost1Preview": "Discover the transformative impact of artificial intelligence on case research, document review, and client service delivery.",
-  "blogPost2": "The Future of Client Relations in Digital Law Firms",
-  "blogPost2Preview": "Explore how leading law firms are leveraging technology to build stronger, more profitable client relationships.",
-  "blogPost3": "Regulatory Compliance in the Digital Age",
-  "blogPost3Preview": "Navigate the complex landscape of legal technology compliance with expert guidance and practical frameworks.",
-  "newsletterTitle": "Stay Ahead in Legal Innovation",
-  "newsletterSubtitle": "Subscribe to receive exclusive insights on digital legal transformation",
-  "newsletterPlaceholder": "Enter your professional email",
-  "newsletterButton": "Join Innovation Network",
-  "partnersTitle": "Trusted by Leading Legal Organizations",
-  "partnersSubtitle": "Powering digital transformation for prestigious law firms and legal departments",
-  "footerTagline": "Pioneering Legal Digital Excellence Across MENA",
-  "ourServices": "Our Solutions",
-  "quickLinks": "Quick Links",
-  "contactInfo": "Contact Information",
-  "headquarters": "Regional Headquarters",
-  "allRightsReserved": "All rights reserved.",
-  "privacyPolicy": "Privacy Policy",
-  "termsOfService": "Terms of Service",
-  "cookiePolicy": "Cookie Policy",
-  "complianceStatement": "GDPR & Regional Compliance Ready",
-  "showcase": {
-    "pageTitle": "Dashboard Showcase — Avocat",
-    "header": {
-      "tagline": "Immersive dashboard gallery"
-    },
-    "hero": {
-      "badge": "25 premium dashboards",
-      "title": "Explore bilingual dashboards ready for light and dark mode",
-      "subtitle": "Pick from industry-specific control centres crafted with Tailwind CSS.",
-      "description": "Every layout is responsive, RTL-friendly, and tuned for Arabic & English experiences with native theme toggles."
-    },
-    "actions": {
-      "backToLanding": "Back to landing",
-      "backToGallery": "Back to gallery",
-      "goToApp": "Enter client platform",
-      "jumpToExample": "View featured dashboard",
-      "viewDashboard": "View dashboard",
-      "openInNewTab": "Open full preview",
-      "previousDashboard": "Previous dashboard",
-      "nextDashboard": "Next dashboard"
-    },
-    "filters": {
-      "searchPlaceholder": "Search dashboards by industry or feature",
-      "all": "All dashboards"
-    },
-    "stats": {
-      "totalDashboards": "Dashboards included",
-      "totalDashboardsHint": "Unique responsive layouts with RTL/LTR shells.",
-      "uniqueIndustries": "Industries covered",
-      "uniqueIndustriesHint": "Spanning legal ops, finance, product, and sustainability."
-    },
-    "labels": {
-      "industryTag": "Industry focus"
-    },
-    "empty": {
-      "title": "No dashboards match your filters",
-      "subtitle": "Try updating the search text or clear the industry filter to explore the full collection."
-    },
-    "notFound": {
-      "title": "Dashboard not found",
-      "subtitle": "The layout you were looking for is not part of the showcase. Pick another design from the gallery."
-    },
-    "detail": {
-      "badgeLabel": "Industry focus",
-      "featuresTitle": "What you'll get",
-      "previewTitle": "Live interactive preview",
-      "previewHint": "Use the theme and language toggles inside the frame to explore the dashboard.",
-      "footerLead": "Keep browsing curated dashboards or continue to the Avocat platform."
-    }
+  "home": {
+    "title": "Welcome to Avocat",
+    "subtitle": "Start building your next-generation legal operations platform."
   },
   "common": {
     "theme": "Theme",
@@ -378,51 +179,6 @@
     "priority": "Priority",
     "addProcedure": "Add New Procedure"
   },
-  "services": {
-    "title": "Services Management",
-    "subtitle": "Track, review, and maintain your legal service catalog.",
-    "messages": {
-      "deleteSuccess": "Service removed successfully.",
-      "deleteErrorTitle": "Unable to delete service",
-      "deleteErrorDescription": "Please try again after refreshing the page."
-    },
-    "status": {
-      "inProgress": "In Progress",
-      "underExecution": "Under Execution",
-      "completed": "Completed",
-      "circulating": "In Circulation",
-      "settled": "Settled",
-      "unknown": "Unknown"
-    },
-    "list": {
-      "add": "Add Service",
-      "empty": "No services found. Add your first service to get started.",
-      "actions": {
-        "view": "View service",
-        "edit": "Edit service",
-        "delete": "Delete service"
-      },
-      "table": {
-        "slug": "Reference",
-        "type": "Service Type",
-        "place": "Service Location",
-        "year": "Year",
-        "status": "Status",
-        "actions": "Actions"
-      }
-    },
-    "name": "Service Name",
-    "category": "Category",
-    "price": "Price",
-    "duration": "Duration",
-    "statusLabel": "Status",
-    "description": "Description",
-    "addService": "Add New Service"
-  },
-  "home": {
-    "title": "Welcome to Avocat",
-    "subtitle": "Start building your next-generation legal operations platform."
-  },
   "auth": {
     "profile": "Profile",
     "logout": "Sign out",
@@ -481,129 +237,6 @@
     },
     "register": {
       "title": "Create account"
-    }
-  },
-  "landing": {
-    "nav": {
-      "home": "Home",
-      "features": "Features",
-      "services": "Services",
-      "about": "About",
-      "contact": "Contact",
-      "login": "Login",
-      "signup": "Create Account",
-      "languageToggle": {
-        "toArabic": "عربي",
-        "toEnglish": "EN"
-      }
-    },
-    "hero": {
-      "eyebrow": "Digital legal ops",
-      "title": "Bridging Law & Digital Transformation",
-      "subtitle": "Avocat Law Firm empowers legal professionals with digital tools, secure data systems, and modern training for a new era of legal practice.",
-      "primaryCta": "Try Demo",
-      "secondaryCta": "Contact Us"
-    },
-    "features": {
-      "eyebrow": "Platform pillars",
-      "title": "Core Features",
-      "subtitle": "Purpose-built capabilities for digital-first legal teams.",
-      "items": {
-        "dataProtection": {
-          "title": "Data Protection",
-          "description": "Enterprise-grade legal data security."
-        },
-        "clientManagement": {
-          "title": "Client Management",
-          "description": "Organize clients with or without power of attorney."
-        },
-        "caseTracking": {
-          "title": "Case Tracking",
-          "description": "Track cases, sessions, and legal procedures."
-        },
-        "digitalTraining": {
-          "title": "Digital Training",
-          "description": "Prepare legal teams for digital transformation."
-        }
-      }
-    },
-    "services": {
-      "eyebrow": "Who we serve",
-      "title": "Our Services",
-      "subtitle": "Support for every segment of the legal industry.",
-      "items": {
-        "lawFirms": {
-          "title": "For Law Firms",
-          "description": "Comprehensive law firm management solutions."
-        },
-        "legalDepartments": {
-          "title": "For Legal Departments",
-          "description": "Streamlined operations for corporate legal teams."
-        },
-        "lawyers": {
-          "title": "For Lawyers",
-          "description": "Tools for independent legal professionals."
-        },
-        "training": {
-          "title": "Training & E-Gov",
-          "description": "Capacity-building & government e-service support."
-        }
-      }
-    },
-    "about": {
-      "eyebrow": "Our mission",
-      "title": "About Avocat Law Firm",
-      "description": "Avocat Law Firm is a leader in legal digital transformation, offering services that blend traditional legal excellence with modern technology. Our team empowers law firms, legal departments, and individual lawyers to succeed in the digital era.",
-      "imageAlt": "Law Team"
-    },
-    "testimonials": {
-      "eyebrow": "Trusted voices",
-      "title": "What Our Clients Say",
-      "subtitle": "Modern legal teams that rely on Avocat to stay ahead.",
-      "items": {
-        "partner": {
-          "name": "Legal Partner",
-          "quote": "Avocat transformed how we manage cases and clients."
-        },
-        "corporate": {
-          "name": "Corporate Client",
-          "quote": "Professional, secure, and truly innovative services."
-        }
-      }
-    },
-    "cta": {
-      "title": "Ready to Transform Your Legal Practice?",
-      "subtitle": "Try our demo or get in touch today.",
-      "primary": "Try Demo",
-      "secondary": "Contact Us"
-    },
-    "contact": {
-      "eyebrow": "Let's connect",
-      "title": "Contact Us",
-      "subtitle": "We would love to hear from you. Share your questions and our team will respond shortly.",
-      "form": {
-        "namePlaceholder": "Your Name",
-        "emailPlaceholder": "Your Email",
-        "messagePlaceholder": "Your Message",
-        "submit": "Send Message"
-      }
-    },
-    "footer": {
-      "tagline": "The trusted digital backbone for forward-thinking legal practices.",
-      "servicesTitle": "Core capabilities",
-      "contactTitle": "Head office",
-      "services": {
-        "caseManagement": "Case Management",
-        "legalConsulting": "Legal Consulting",
-        "digitalTraining": "Digital Training",
-        "egovSupport": "E-Gov Support"
-      },
-      "contact": {
-        "email": "info@avocat.com",
-        "phone": "+20 111 222 3333",
-        "address": "Cairo, Egypt"
-      },
-      "rights": "All rights reserved"
     }
   },
   "lawyers": {
@@ -1338,5 +971,8 @@
     "preferences": "Preferences",
     "appearance": "Appearance",
     "rtlPreview": "RTL Preview"
+  },
+  "validation": {
+    "email_required": "Email is required"
   }
 }

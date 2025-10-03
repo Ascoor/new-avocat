@@ -1,11 +1,17 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ComponentType } from 'react';
+import { motion } from 'framer-motion';
+import { Clock3, Mail, MapPin, Phone, Send } from 'lucide-react';
+
+import SectionHeader from './components/SectionHeader';
+import SectionContainer from './components/SectionContainer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import { Clock3, Mail, MapPin, Phone, Send } from 'lucide-react';
+
+type ContactLocale = 'ar' | 'en';
 
 interface ContactFormCopy {
   labels: {
@@ -32,7 +38,7 @@ interface ContactPoint {
   details: string;
 }
 
-const iconLookup: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconLookup: Record<string, ComponentType<{ className?: string }>> = {
   MapPin,
   Phone,
   Mail,
@@ -43,8 +49,8 @@ const Contact: React.FC = () => {
   const { toast } = useToast();
   const { language, direction } = useLanguage();
   const isArabic = language === 'ar';
-  const locale = language as 'ar' | 'en';
-  const { contentBlocks, getLocalizedValue, getValueForLocale } = useWebsiteContent('contact');
+  const locale = language as ContactLocale;
+  const { loading, contentBlocks, getLocalizedValue, getValueForLocale } = useWebsiteContent('contact');
 
   const header = {
     badge: getValueForLocale('contact_badge', locale) ?? '',
@@ -128,109 +134,136 @@ const Contact: React.FC = () => {
         <div className="absolute -left-20 top-32 h-72 w-72 rounded-full bg-primary/40 blur-3xl" />
         <div className="absolute -right-16 bottom-10 h-80 w-80 rounded-full bg-accent/40 blur-3xl" />
       </div>
+
       <div className="container relative mx-auto px-4 lg:px-8">
-        <div className="mb-16 text-center">
-          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
-            <span>{header.badge}</span>
-          </div>
-          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{header.title}</h2>
-          <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{header.description}</p>
-        </div>
+        <SectionContainer
+          loading={loading}
+          loaderLabel={locale === 'ar' ? 'جارٍ تجهيز نموذج التواصل' : 'Preparing contact module'}
+          className="bg-background/85"
+        >
+          <div className="space-y-16">
+            <SectionHeader badge={header.badge} title={header.title} subtitle={header.description} />
 
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
-          <div className="rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground" htmlFor="name">
-                    {formCopy.labels.name}
-                  </label>
-                  <Input
-                    required
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder={formCopy.placeholders.name}
-                    className="h-12 rounded-2xl border-border bg-background/70"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground" htmlFor="email">
-                    {formCopy.labels.email}
-                  </label>
-                  <Input
-                    required
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder={formCopy.placeholders.email}
-                    className="h-12 rounded-2xl border-border bg-background/70"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground" htmlFor="message">
-                  {formCopy.labels.message}
-                </label>
-                <Textarea
-                  required
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={6}
-                  placeholder={formCopy.placeholders.message}
-                  className="resize-none rounded-2xl border-border bg-background/70"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-gold flex w-full items-center justify-center gap-2 py-3 text-base font-semibold"
+            <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+              <motion.form
+                onSubmit={handleSubmit}
+                className="rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
-                {isSubmitting ? (
-                  <span className="flex items-center gap-2 text-sm">
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                    {formCopy.submitting}
-                  </span>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4" />
-                    <span>{formCopy.submit}</span>
-                  </>
-                )}
-              </Button>
-              <p className="text-xs text-muted-foreground">{header.note}</p>
-            </form>
-          </div>
-
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur">
-              <h3 className="text-lg font-semibold text-foreground">{header.conciergeTitle}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{header.conciergeBody}</p>
-            </div>
-
-            <div className="space-y-4">
-              {contactPoints.map((point, index) => {
-                const Icon = iconLookup[point.icon.toLowerCase()] ?? MapPin;
-                return (
-                  <div key={`${point.title}-${index}`} className="flex items-start gap-3">
-                    <Icon className="mt-1 h-5 w-5 text-primary" />
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">{point.title}</p>
-                      <p className="text-sm text-muted-foreground">{point.details}</p>
+                <div className="space-y-6">
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground" htmlFor="name">
+                        {formCopy.labels.name}
+                      </label>
+                      <Input
+                        required
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder={formCopy.placeholders.name}
+                        className="h-12 rounded-2xl border-border bg-background/70"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-foreground" htmlFor="email">
+                        {formCopy.labels.email}
+                      </label>
+                      <Input
+                        required
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder={formCopy.placeholders.email}
+                        className="h-12 rounded-2xl border-border bg-background/70"
+                      />
                     </div>
                   </div>
-                );
-              })}
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground" htmlFor="message">
+                      {formCopy.labels.message}
+                    </label>
+                    <Textarea
+                      required
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={6}
+                      placeholder={formCopy.placeholders.message}
+                      className="resize-none rounded-2xl border-border bg-background/70"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn-gold flex w-full items-center justify-center gap-2 py-3 text-base font-semibold"
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center gap-2 text-sm">
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                        {formCopy.submitting}
+                      </span>
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" />
+                        <span>{formCopy.submit}</span>
+                      </>
+                    )}
+                  </Button>
+                </div>
+                <p className="mt-6 text-center text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                  {header.note}
+                </p>
+              </motion.form>
+
+              <motion.div
+                className="space-y-6 rounded-3xl border border-border bg-card/60 p-8 shadow-ambient backdrop-blur"
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="space-y-3">
+                  <h3 className="text-xl font-semibold text-foreground">{header.conciergeTitle}</h3>
+                  <p className="text-sm text-muted-foreground">{header.conciergeBody}</p>
+                </div>
+
+                <div className="space-y-4">
+                  {contactPoints.map((point, index) => {
+                    const Icon = iconLookup[point.icon] ?? MapPin;
+                    return (
+                      <motion.div
+                        key={`${point.title}-${index}`}
+                        initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.7 }}
+                        transition={{ duration: 0.45, delay: index * 0.08 }}
+                        className="flex items-start gap-3 rounded-2xl border border-border/60 bg-background/70 p-3"
+                      >
+                        <div className="rounded-xl bg-primary/10 p-2 text-primary">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <div className="space-y-1 text-sm text-muted-foreground">
+                          <h4 className="text-base font-semibold text-foreground">{point.title}</h4>
+                          <p className={isArabic ? 'font-arabic' : undefined}>{point.details}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </SectionContainer>
       </div>
     </section>
   );

@@ -193,3 +193,13 @@ Route::prefix('website')->group(function () {
         Route::post('/upload', [UploadController::class, 'store']);
     });
 });
+
+Route::prefix('admin/website')
+    ->middleware(['auth:sanctum', 'role:admin'])
+    ->group(function () {
+        Route::get('/pages', [PageController::class, 'adminIndex']);
+        Route::get('/pages/{slug}', [PageController::class, 'adminShow']);
+        Route::put('/pages/{slug}', [PageController::class, 'adminUpdate']);
+        Route::get('/settings', [PageController::class, 'settings']);
+        Route::put('/settings', [PageController::class, 'updateSettings']);
+    });

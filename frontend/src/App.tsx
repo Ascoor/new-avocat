@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -18,6 +18,7 @@ import { LawyersList, LawyerDetails } from '@/pages/LawyersPage';
 import ServicesPage from '@/pages/ServicesPage';
 import OfficeSettingsPage from '@/pages/OfficeSettingsPage';
 import NotFound from '@/pages/NotFound'; 
+import AdminWebsitePage from '@/pages/admin/Website/AdminWebsitePage';
 
 // 🌀 نوع الأقسام المستقبلية
 type DashboardSectionKey =
@@ -79,6 +80,12 @@ const App = () => {
           {/* 🛠️ Services & Settings */}
           <Route path="services" element={<ServicesPage />} />
           <Route path="office_settings" element={<OfficeSettingsPage />} />
+
+          {/* 🌐 Website Management */}
+          <Route path="website">
+            <Route index element={<Navigate to="pages" replace />} />
+            <Route path=":section" element={<AdminWebsitePage />} />
+          </Route>
 
           {/* ⏳ Coming Soon */}
           <Route path="sessions" element={<DashboardPlaceholder sectionKey="sessions" />} />

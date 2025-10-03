@@ -109,6 +109,8 @@ const config: Config = {
         'glow': 'var(--shadow-glow)',
         'glow-strong': 'var(--shadow-glow-strong)',
         'inner-glow': 'var(--shadow-inner-glow)',
+        'header-light': 'var(--shadow-header-light)',
+        'header-dark': 'var(--shadow-header-dark)',
       },
       transitionTimingFunction: {
         'premium': 'var(--transition-premium)',
