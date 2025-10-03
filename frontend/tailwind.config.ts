@@ -30,6 +30,7 @@ const config: Config = {
           light: "hsl(var(--primary-light))",
           glow: "hsl(var(--primary-glow))",
           hover: "hsl(var(--primary-hover))",
+          darker: "hsl(var(--primary-darker))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -70,6 +71,17 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
           elevated: "hsl(var(--card-elevated))",
         },
+        surface: {
+          muted: "hsl(var(--surface-muted))",
+          highlight: "hsl(var(--surface-highlight))",
+          glass: "hsl(var(--surface-glass))",
+        },
+        text: {
+          strong: "hsl(var(--text-strong))",
+          muted: "hsl(var(--text-muted))",
+          body: "hsl(var(--text-body))",
+          inverse: "hsl(var(--text-inverse))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -94,7 +106,6 @@ const config: Config = {
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',
-        'gradient-secondary': 'var(--gradient-secondary)',
         'gradient-gold': 'var(--gradient-gold)',
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-success': 'var(--gradient-success)',
