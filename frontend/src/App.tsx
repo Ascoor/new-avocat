@@ -19,6 +19,7 @@ import ServicesPage from '@/pages/ServicesPage';
 import OfficeSettingsPage from '@/pages/OfficeSettingsPage';
 import NotFound from '@/pages/NotFound'; 
 import AdminWebsitePage from '@/pages/admin/Website/AdminWebsitePage';
+import WebsiteReportPage from '@/pages/admin/Website/WebsiteReportPage';
 
 // 🌀 نوع الأقسام المستقبلية
 type DashboardSectionKey =
@@ -84,6 +85,7 @@ const App = () => {
           {/* 🌐 Website Management */}
           <Route path="website">
             <Route index element={<Navigate to="pages" replace />} />
+            <Route path="report" element={<WebsiteReportPage />} />
             <Route path=":section" element={<AdminWebsitePage />} />
           </Route>
 
