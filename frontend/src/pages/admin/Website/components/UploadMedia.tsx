@@ -12,6 +12,7 @@ interface UploadMediaProps {
   label?: string;
   description?: string;
   onChange?: (url: string) => void;
+  disabled?: boolean;
 }
 
 const formatFileSize = (bytes: number) => {
@@ -24,7 +25,7 @@ const formatFileSize = (bytes: number) => {
   return `${bytes} bytes`;
 };
 
-const UploadMedia: React.FC<UploadMediaProps> = ({ value, label = 'Upload media asset', description, onChange }) => {
+const UploadMedia: React.FC<UploadMediaProps> = ({ value, label = 'Upload media asset', description, onChange, disabled = false }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { toast } = useToast();
   const [isDragging, setDragging] = useState(false);
@@ -32,7 +33,7 @@ const UploadMedia: React.FC<UploadMediaProps> = ({ value, label = 'Upload media 
   const [fileSize, setFileSize] = useState<number | null>(null);
 
   const handleFile = async (file: File | null) => {
-    if (!file) {
+    if (!file || disabled) {
       return;
     }
 
@@ -58,6 +59,9 @@ const UploadMedia: React.FC<UploadMediaProps> = ({ value, label = 'Upload media 
   };
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    if (disabled) {
+      return;
+    }
     event.preventDefault();
     setDragging(false);
     const [file] = Array.from(event.dataTransfer.files ?? []);
@@ -65,11 +69,19 @@ const UploadMedia: React.FC<UploadMediaProps> = ({ value, label = 'Upload media 
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    if (disabled) {
+      return;
+    }
     event.preventDefault();
     setDragging(true);
   };
 
-  const handleDragLeave = () => setDragging(false);
+  const handleDragLeave = () => {
+    if (disabled) {
+      return;
+    }
+    setDragging(false);
+  };
 
   return (
     <Card>
@@ -82,29 +94,57 @@ const UploadMedia: React.FC<UploadMediaProps> = ({ value, label = 'Upload media 
       <CardContent className="space-y-4">
         <div
           className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 text-center transition ${
-            isDragging ? 'border-primary/60 bg-primary/5' : 'border-border/60'
+            disabled
+              ? 'cursor-not-allowed border-border/40 bg-muted/30 opacity-70'
+              : isDragging
+                ? 'border-primary/60 bg-primary/5'
+                : 'border-border/60'
           }`}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           role="button"
-          tabIndex={0}
-          onClick={() => inputRef.current?.click()}
+          tabIndex={disabled ? -1 : 0}
+          onClick={() => {
+            if (!disabled) {
+              inputRef.current?.click();
+            }
+          }}
+          onKeyDown={(event) => {
+            if (disabled) {
+              return;
+            }
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              inputRef.current?.click();
+            }
+          }}
+          aria-label="Upload media"
+          aria-disabled={disabled}
         >
           {uploading ? (
             <Loader2 className="mb-2 h-6 w-6 animate-spin text-primary" />
           ) : (
             <ImagePlus className="mb-2 h-6 w-6 text-muted-foreground" />
           )}
-          <p className="text-sm font-medium text-foreground">{uploading ? 'Uploading…' : 'Drop image or click to upload'}</p>
+          <p className="text-sm font-medium text-foreground">
+            {disabled ? 'Uploads disabled for your role' : uploading ? 'Uploading…' : 'Drop image or click to upload'}
+          </p>
           <p className="text-xs text-muted-foreground">JPEG, PNG, WebP up to 10 MB</p>
-          <Input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleInputChange} />
+          <Input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleInputChange}
+            disabled={disabled || uploading}
+          />
           <Button
             variant="outline"
             size="sm"
             className="mt-4"
             type="button"
-            disabled={uploading}
+            disabled={uploading || disabled}
             onClick={() => inputRef.current?.click()}
           >
             Browse files

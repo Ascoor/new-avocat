@@ -7,14 +7,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/components/ui/use-toast';
-import type { PageStatus } from '@/types/website';
+import useUserRoles from '@/hooks/useUserRoles';
+import WorkflowStatusBadge from './WorkflowStatusBadge';
 import PageEditor from './PageEditor/PageEditor';
+import type { PageStatus, WorkflowState } from '@/types/website';
 
 const PagesManager: React.FC = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { can } = useUserRoles();
 
   const pagesQuery = useQuery({
     queryKey: ['admin-website-pages'],
@@ -23,9 +28,26 @@ const PagesManager: React.FC = () => {
 
   const pages = useMemo(() => pagesQuery.data ?? [], [pagesQuery.data]);
   const [selectedSlug, setSelectedSlug] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [bulkProgress, setBulkProgress] = useState(0);
+  const canBulkPublish = can('pages:bulk-publish');
+
+  const filteredPages = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return pages;
+    }
+    const normalized = searchTerm.toLowerCase();
+    return pages.filter((page) => {
+      const title = page.title?.en ?? page.title?.ar ?? '';
+      return page.slug.toLowerCase().includes(normalized) || title.toLowerCase().includes(normalized);
+    });
+  }, [pages, searchTerm]);
 
   const publishAllMutation = useMutation({
     mutationFn: publishAllWebsitePages,
+    onMutate: () => {
+      setBulkProgress(25);
+    },
     onSuccess: () => {
       toast({ title: 'All staged changes published' });
       queryClient.invalidateQueries({ queryKey: ['admin-website-pages'] });
@@ -37,7 +59,29 @@ const PagesManager: React.FC = () => {
       const message = error instanceof Error ? error.message : 'Unable to publish all changes';
       toast({ title: 'Bulk publish failed', description: message, variant: 'destructive' });
     },
+    onSettled: () => {
+      setBulkProgress(0);
+    },
   });
+
+  useEffect(() => {
+    if (!publishAllMutation.isPending) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setBulkProgress((value) => {
+        if (value >= 90) {
+          return value;
+        }
+        return value + 5;
+      });
+    }, 350);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [publishAllMutation.isPending]);
 
   useEffect(() => {
     if (!pages.length) {
@@ -60,7 +104,11 @@ const PagesManager: React.FC = () => {
     [pages, selectedSlug],
   );
 
-  const renderStatusBadge = (status?: PageStatus) => {
+  const renderStatusBadge = (workflowState?: WorkflowState, status?: PageStatus, scheduledFor?: string | null) => {
+    if (workflowState) {
+      return <WorkflowStatusBadge state={workflowState} scheduledFor={scheduledFor ?? null} />;
+    }
+
     switch (status) {
       case 'published':
         return <Badge className="bg-emerald-100 text-emerald-800">🟢 Published</Badge>;
@@ -75,36 +123,70 @@ const PagesManager: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div className="w-full md:w-80">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="w-full space-y-3 lg:w-80">
           {pagesQuery.isLoading ? (
             <Skeleton className="h-10 w-full" />
           ) : (
-            <Select value={selectedSlug} onValueChange={setSelectedSlug}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select page" />
-              </SelectTrigger>
-              <SelectContent>
-                {pages.map((page) => (
-                  <SelectItem key={page.slug} value={page.slug}>
-                    <div className="flex items-center justify-between gap-2">
-                      <span>{page.title?.en ?? page.slug}</span>
-                      {renderStatusBadge(page.status)}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <>
+              <Input
+                placeholder="Search pages by slug or title"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+              {filteredPages.length === 0 ? (
+                <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+                  No pages match “{searchTerm}”.
+                </div>
+              ) : (
+                <Select value={selectedSlug} onValueChange={setSelectedSlug}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select page" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {filteredPages.map((page) => (
+                      <SelectItem key={page.slug} value={page.slug}>
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex flex-col text-left">
+                            <span className="text-sm font-medium">{page.title?.en ?? page.slug}</span>
+                            <span className="text-xs text-muted-foreground">/{page.slug}</span>
+                          </div>
+                          {renderStatusBadge(page.workflow?.state, page.status, page.workflow?.scheduled_for ?? null)}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </>
           )}
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="outline" onClick={() => navigate('/dashboard/website/report')}>
-            View report
-          </Button>
-          <Button type="button" onClick={() => publishAllMutation.mutate()} disabled={publishAllMutation.isPending}>
-            {publishAllMutation.isPending ? 'Publishing…' : 'Publish all changes'}
-          </Button>
+        <div className="flex w-full flex-col gap-3 lg:w-auto">
+          <div className="flex flex-wrap gap-2">
+            <Button type="button" variant="outline" onClick={() => navigate('/dashboard/website/report')}>
+              View report
+            </Button>
+            <Button type="button" variant="outline" onClick={() => navigate('/dashboard/website/workflow')}>
+              Workflow board
+            </Button>
+            <Button
+              type="button"
+              onClick={() => publishAllMutation.mutate()}
+              disabled={!canBulkPublish || publishAllMutation.isPending}
+            >
+              {publishAllMutation.isPending ? 'Publishing…' : 'Publish all changes'}
+            </Button>
+          </div>
+          {publishAllMutation.isPending ? (
+            <div className="space-y-1">
+              <Progress value={bulkProgress} className="h-2" />
+              <p className="text-xs text-muted-foreground">Rolling out staged drafts to production…</p>
+            </div>
+          ) : null}
+          {!canBulkPublish ? (
+            <p className="text-xs text-muted-foreground">Bulk publishing is limited to administrators.</p>
+          ) : null}
         </div>
       </div>
 

@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { Activity, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
+import { Activity, AlertTriangle, BarChart3, CheckCircle2, Clock, Database, Timer } from 'lucide-react';
 
 import { getWebsiteReport } from '@/api/websiteAdmin.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import WorkflowStatusBadge from './WorkflowStatusBadge';
 
 const ReportWidget: React.FC = () => {
   const reportQuery = useQuery({
@@ -53,10 +54,12 @@ const ReportWidget: React.FC = () => {
   ) : (
     <Badge className="bg-red-100 text-red-800">Unavailable</Badge>
   );
+  const mediaUsage = report.mediaStorageUsage;
+  const mediaUsageValue = mediaUsage?.quota ? Math.min(100, Math.round((mediaUsage.used / mediaUsage.quota) * 100)) : 0;
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
@@ -105,6 +108,39 @@ const ReportWidget: React.FC = () => {
             <p className="text-xs text-muted-foreground">Monitored endpoint: /api/admin/website/report</p>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader className="space-y-1">
+            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              <Timer className="h-4 w-4" /> Pending approvals
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <p className="text-3xl font-semibold">{report.pendingApprovals ?? 0}</p>
+            <p className="text-xs text-muted-foreground">Requests awaiting admin review.</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="space-y-1">
+            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              <Database className="h-4 w-4" /> Media usage
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="text-sm font-medium text-foreground">
+              {mediaUsage ? (
+                <>
+                  {formatBytes(mediaUsage.used)} / {formatBytes(mediaUsage.quota)}
+                </>
+              ) : (
+                '—'
+              )}
+            </div>
+            <Progress value={mediaUsageValue} />
+            <p className="text-xs text-muted-foreground">Media library consumption (real-time).</p>
+          </CardContent>
+        </Card>
       </div>
 
       <Card>
@@ -123,7 +159,7 @@ const ReportWidget: React.FC = () => {
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-foreground">{section.title}</span>
-                      {renderStatus(section.status)}
+                      <WorkflowStatusBadge state={section.status === 'published' ? 'published' : 'draft'} />
                     </div>
                     <span className="text-xs text-muted-foreground">
                       Last update: {section.updated_at ? new Date(section.updated_at).toLocaleString() : '—'}
@@ -136,21 +172,86 @@ const ReportWidget: React.FC = () => {
           )}
         </CardContent>
       </Card>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+              <BarChart3 className="h-5 w-5" /> Edit frequency
+            </CardTitle>
+            <CardDescription>Pages with the highest cadence of edits in the last sprint.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {report.editFrequencyPerPage && report.editFrequencyPerPage.length > 0 ? (
+              report.editFrequencyPerPage.map((item) => (
+                <div key={item.slug} className="flex items-center justify-between rounded-md border border-border/60 p-3">
+                  <div>
+                    <p className="text-sm font-medium text-foreground">/{item.slug}</p>
+                    <p className="text-xs text-muted-foreground">Edits in sprint</p>
+                  </div>
+                  <Badge variant="secondary">{item.edits}</Badge>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground">No edit activity recorded.</p>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+              <Clock className="h-5 w-5" /> Time since publish
+            </CardTitle>
+            <CardDescription>Monitor stale pages that may need updates.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {report.timeSinceLastPublish && report.timeSinceLastPublish.length > 0 ? (
+              report.timeSinceLastPublish.map((item) => (
+                <div key={item.slug} className="flex items-center justify-between rounded-md border border-border/60 p-3">
+                  <span className="text-sm font-medium text-foreground">/{item.slug}</span>
+                  <span className="text-xs text-muted-foreground">{formatMinutes(item.minutes)}</span>
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground">Publish activity data not available.</p>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
 
-const renderStatus = (status: string) => {
-  switch (status) {
-    case 'published':
-      return <Badge className="bg-emerald-100 text-emerald-800">🟢 Published</Badge>;
-    case 'preview':
-      return <Badge className="bg-blue-100 text-blue-800">🔵 Preview</Badge>;
-    case 'unlinked':
-      return <Badge className="bg-red-100 text-red-800">🔴 Unlinked</Badge>;
-    default:
-      return <Badge className="bg-amber-100 text-amber-800">🟡 Draft</Badge>;
+const formatBytes = (bytes: number) => {
+  if (!Number.isFinite(bytes)) {
+    return '—';
   }
+  if (bytes >= 1024 * 1024 * 1024) {
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
+  }
+  if (bytes >= 1024 * 1024) {
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }
+  if (bytes >= 1024) {
+    return `${Math.round(bytes / 1024)} KB`;
+  }
+  return `${bytes} B`;
+};
+
+const formatMinutes = (minutes: number) => {
+  if (!Number.isFinite(minutes)) {
+    return '—';
+  }
+  if (minutes < 60) {
+    return `${minutes} min ago`;
+  }
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) {
+    return `${hours}h ago`;
+  }
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
 };
 
 export default ReportWidget;

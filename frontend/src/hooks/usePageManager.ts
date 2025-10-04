@@ -9,7 +9,7 @@ import {
   updateWebsitePage,
   type PageUpdatePayload,
 } from '@/api/websiteAdmin.service';
-import type { PageContent, PageHistoryEntry, PageStatus } from '@/types/website';
+import type { PageContent, PageHistoryEntry, PageStatus, PageWorkflowMeta, WorkflowState } from '@/types/website';
 
 interface UsePageManagerOptions {
   enabled?: boolean;
@@ -23,6 +23,8 @@ interface SaveDraftOptions {
 interface UsePageManagerResult {
   page: PageContent | undefined;
   status: PageStatus;
+  workflow: PageWorkflowMeta | null | undefined;
+  workflowState: WorkflowState;
   history: PageHistoryEntry[];
   isLoading: boolean;
   isHistoryLoading: boolean;
@@ -37,11 +39,20 @@ interface UsePageManagerResult {
 }
 
 const deriveStatus = (page: PageContent | undefined): PageStatus => {
-  if (!page?.status) {
-    return 'draft';
+  if (page?.status) {
+    return page.status;
   }
+  return 'draft';
+};
 
-  return page.status;
+const deriveWorkflowState = (page: PageContent | undefined): WorkflowState => {
+  if (page?.workflow?.state) {
+    return page.workflow.state;
+  }
+  if (page?.status === 'published') {
+    return 'published';
+  }
+  return 'draft';
 };
 
 export const usePageManager = (
@@ -161,10 +172,14 @@ export const usePageManager = (
   }, [queryClient, slug]);
 
   const status = useMemo(() => deriveStatus(pageQuery.data), [pageQuery.data]);
+  const workflow = pageQuery.data?.workflow;
+  const workflowState = useMemo(() => deriveWorkflowState(pageQuery.data), [pageQuery.data]);
 
   return {
     page: pageQuery.data,
     status,
+    workflow,
+    workflowState,
     history: historyQuery.data ?? [],
     isLoading: pageQuery.isLoading || pageQuery.isFetching,
     isHistoryLoading: historyQuery.isLoading,

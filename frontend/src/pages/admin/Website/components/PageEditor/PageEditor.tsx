@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { CalendarClock, CheckCircle2, Eye, FileWarning, Hourglass, Send, TimerReset } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,9 +13,15 @@ import BlockManager from '../BlockManager';
 import PreviewPane from './PreviewPane';
 import type { PageFormValues } from './types';
 import usePageManager from '@/hooks/usePageManager';
-import type { ContentBlock, Localized } from '@/types/website';
+import useUserRoles from '@/hooks/useUserRoles';
+import useWorkflowManager from '@/hooks/useWorkflowManager';
+import PublishScheduleModal from '../PublishScheduleModal';
+import type { ContentBlock, Localized, WorkflowEvent } from '@/types/website';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import WorkflowStatusBadge from '../WorkflowStatusBadge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 
 interface PageEditorProps {
   slug: string;
@@ -170,10 +178,56 @@ const formatTimestamp = (input: string | null | undefined) => {
   }
 };
 
+const workflowEventMeta: Record<WorkflowEvent['type'], { label: string; icon: ReactNode; tone: string }> = {
+  submitted: { label: 'Submitted for review', icon: <Send className="h-4 w-4 text-blue-500" />, tone: 'text-blue-600 dark:text-blue-200' },
+  reviewed: { label: 'Reviewed', icon: <Eye className="h-4 w-4 text-slate-500" />, tone: 'text-muted-foreground' },
+  approved: {
+    label: 'Approved',
+    icon: <CheckCircle2 className="h-4 w-4 text-emerald-500" />,
+    tone: 'text-emerald-600 dark:text-emerald-200',
+  },
+  rejected: {
+    label: 'Changes requested',
+    icon: <FileWarning className="h-4 w-4 text-red-500" />,
+    tone: 'text-red-600 dark:text-red-200',
+  },
+  published: {
+    label: 'Published',
+    icon: <CheckCircle2 className="h-4 w-4 text-emerald-500" />,
+    tone: 'text-emerald-600 dark:text-emerald-200',
+  },
+  scheduled: {
+    label: 'Scheduled',
+    icon: <CalendarClock className="h-4 w-4 text-purple-500" />,
+    tone: 'text-purple-600 dark:text-purple-200',
+  },
+  cancelled: {
+    label: 'Schedule cancelled',
+    icon: <TimerReset className="h-4 w-4 text-amber-500" />,
+    tone: 'text-amber-600 dark:text-amber-200',
+  },
+};
+
 const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => {
   const { toast } = useToast();
-  const { page, status, history, isLoading, isSaving, isPublishing, isPreviewing, saveDraft, publish, requestPreview } =
+  const { page, status, workflow, workflowState, history, isLoading, isSaving, isPreviewing, saveDraft, requestPreview } =
     usePageManager(slug);
+  const {
+    can,
+    isLoading: isRolesLoading,
+  } = useUserRoles();
+  const {
+    requestApproval,
+    approveAndPublish,
+    publishDirectly,
+    schedulePublish,
+    cancelSchedule,
+    isRequestingApproval,
+    isApproving,
+    isPublishing: isWorkflowPublishing,
+    isScheduling,
+    isCancellingSchedule,
+  } = useWorkflowManager({ slug });
 
   const form = useForm<PageFormValues>({
     defaultValues,
@@ -183,6 +237,8 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
     control: form.control,
     name: 'blocks',
   });
+
+  const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
 
   const watchedValues = useWatch({ control: form.control }) as PageFormValues | undefined;
   const previewValues = watchedValues ?? defaultValues;
@@ -198,6 +254,33 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
   const lastSnapshotRef = useRef<string>('');
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const allowEditing = !isRolesLoading && can('pages:edit');
+  const isReadOnly = !allowEditing;
+  const canPreviewDraft = !isRolesLoading && (can('pages:view') || allowEditing);
+  const canPublishNow = !isRolesLoading && can('pages:publish');
+  const canApproveContent = !isRolesLoading && can('pages:approve');
+  const canScheduleContent = !isRolesLoading && can('pages:schedule');
+  const showRequestApprovalButton = allowEditing && !canApproveContent && !canPublishNow;
+
+  const previewHref = useMemo(() => {
+    if (!slug) {
+      return page?.preview_url ?? null;
+    }
+    const base = `/preview/${slug}`;
+    const params = new URLSearchParams();
+    if (workflow?.draft_id) {
+      params.set('draftId', workflow.draft_id);
+    }
+
+    const fallback = params.size > 0 ? `${base}?${params.toString()}` : base;
+    return page?.preview_url ?? fallback;
+  }, [page?.preview_url, slug, workflow?.draft_id]);
+
+  const workflowEvents = useMemo(() => {
+    const events = [...(workflow?.events ?? [])];
+    return events.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+  }, [workflow?.events]);
+
   useEffect(() => {
     if (!page) {
       return;
@@ -209,6 +292,10 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
   }, [page, form]);
 
   useEffect(() => {
+    if (isReadOnly) {
+      return;
+    }
+
     const subscription = form.watch((values) => {
       const serialized = JSON.stringify(values);
 
@@ -239,9 +326,14 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
         clearTimeout(autosaveTimer.current);
       }
     };
-  }, [form, saveDraft, toast]);
+  }, [form, isReadOnly, saveDraft, toast]);
 
   const handleManualSave = (values: PageFormValues) => {
+    if (isReadOnly) {
+      toast({ title: 'You do not have permission to edit this page', variant: 'destructive' });
+      return;
+    }
+
     try {
       const missingKey = values.blocks.find((block) => !block.key.trim());
       if (missingKey) {
@@ -265,9 +357,44 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
     }
   };
 
-  const handlePublish = async () => {
+  const handlePreview = async (options?: { silent?: boolean }) => {
     try {
-      await publish();
+      const values = form.getValues();
+      const payload = toPayload(values);
+      const data = await requestPreview(payload);
+      if (!options?.silent) {
+        toast({ title: 'Preview link updated' });
+      }
+      return data?.preview_url ?? previewHref;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to generate preview';
+      if (!options?.silent) {
+        toast({ title: 'Preview failed', description: message, variant: 'destructive' });
+      }
+      throw error;
+    }
+  };
+
+  const handleOpenPreviewTab = async () => {
+    try {
+      await handlePreview({ silent: true });
+      if (previewHref && typeof window !== 'undefined') {
+        window.open(previewHref, '_blank', 'noopener');
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to open preview';
+      toast({ title: 'Preview failed', description: message, variant: 'destructive' });
+    }
+  };
+
+  const handlePublishNow = async () => {
+    if (!canPublishNow) {
+      toast({ title: 'Publishing restricted', description: 'You need publish permissions to publish this page.', variant: 'destructive' });
+      return;
+    }
+
+    try {
+      await publishDirectly();
       toast({ title: 'Page published successfully' });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unable to publish page';
@@ -275,15 +402,44 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
     }
   };
 
-  const handlePreview = async () => {
+  const handleRequestApproval = async () => {
     try {
-      const values = form.getValues();
-      const payload = toPayload(values);
-      await requestPreview(payload);
-      toast({ title: 'Preview link updated' });
+      await requestApproval({ draft_id: workflow?.draft_id ?? null });
+      toast({ title: 'Approval requested', description: 'An administrator will review the draft shortly.' });
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unable to generate preview';
-      toast({ title: 'Preview failed', description: message, variant: 'destructive' });
+      const message = error instanceof Error ? error.message : 'Unable to request approval';
+      toast({ title: 'Request failed', description: message, variant: 'destructive' });
+    }
+  };
+
+  const handleApprovePublish = async () => {
+    try {
+      await approveAndPublish({ draft_id: workflow?.draft_id ?? null });
+      toast({ title: 'Changes approved and published' });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to approve changes';
+      toast({ title: 'Approval failed', description: message, variant: 'destructive' });
+    }
+  };
+
+  const handleScheduleSubmit = async ({ scheduled_for, notes }: { scheduled_for: string; notes?: string | null }) => {
+    try {
+      await schedulePublish({ scheduled_for, notes: notes ?? null, draft_id: workflow?.draft_id ?? null });
+      toast({ title: 'Publish scheduled', description: `Content will go live at ${formatTimestamp(scheduled_for)}` });
+      setScheduleModalOpen(false);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to schedule publish';
+      toast({ title: 'Scheduling failed', description: message, variant: 'destructive' });
+    }
+  };
+
+  const handleCancelSchedule = async () => {
+    try {
+      await cancelSchedule();
+      toast({ title: 'Scheduled publish cancelled' });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to cancel schedule';
+      toast({ title: 'Cancel failed', description: message, variant: 'destructive' });
     }
   };
 
@@ -291,12 +447,42 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
     return null;
   }
 
+  const actionsSlot = (
+    <>
+      {showRequestApprovalButton ? (
+        <Button variant="secondary" size="sm" onClick={handleRequestApproval} disabled={isRequestingApproval || isReadOnly}>
+          {isRequestingApproval ? 'Requesting…' : 'Request approval'}
+        </Button>
+      ) : null}
+      {canApproveContent ? (
+        <Button variant="secondary" size="sm" onClick={handleApprovePublish} disabled={isApproving}>
+          {isApproving ? 'Approving…' : 'Approve & publish'}
+        </Button>
+      ) : null}
+      {canScheduleContent ? (
+        <Button variant="outline" size="sm" onClick={() => setScheduleModalOpen(true)} disabled={isScheduling}>
+          Schedule
+        </Button>
+      ) : null}
+      {workflowState === 'scheduled' && canScheduleContent ? (
+        <Button variant="ghost" size="sm" className="text-destructive" onClick={handleCancelSchedule} disabled={isCancellingSchedule}>
+          {isCancellingSchedule ? 'Cancelling…' : 'Cancel schedule'}
+        </Button>
+      ) : null}
+    </>
+  );
+
   return (
     <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
       <div className="space-y-6">
         {title || description ? (
-          <div className="space-y-1">
-            {title ? <h2 className="text-xl font-semibold text-foreground">{title}</h2> : null}
+          <div className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-xl font-semibold text-foreground">{title}</h2>
+              <WorkflowStatusBadge state={workflowState} scheduledFor={workflow?.scheduled_for ?? null} />
+              {workflow?.assigned_to ? <Badge variant="outline">Reviewer: {workflow.assigned_to}</Badge> : null}
+              {isReadOnly ? <Badge variant="destructive">View only</Badge> : null}
+            </div>
             {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
           </div>
         ) : null}
@@ -323,7 +509,7 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Page title (EN)</FormLabel>
-                      <Input placeholder="Optional English title" {...field} />
+                      <Input placeholder="Optional English title" disabled={isReadOnly} {...field} />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -334,7 +520,7 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>عنوان الصفحة (AR)</FormLabel>
-                      <Input dir="rtl" placeholder="عنوان اختياري" {...field} />
+                      <Input dir="rtl" placeholder="عنوان اختياري" disabled={isReadOnly} {...field} />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -342,14 +528,20 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
               </CardContent>
             </Card>
 
-            <BlockManager form={form} control={form.control} fields={fieldArray.fields} fieldArray={fieldArray} />
+            <BlockManager
+              form={form}
+              control={form.control}
+              fields={fieldArray.fields}
+              fieldArray={fieldArray}
+              readOnly={isReadOnly}
+            />
 
-            <CardFooter className="flex items-center justify-end gap-3 border-t bg-muted/30 py-4">
+            <CardFooter className="flex flex-wrap items-center justify-end gap-3 border-t bg-muted/30 py-4">
               <Badge variant="outline">Autosaving every 2s when changes detected</Badge>
-              <Button type="button" variant="outline" onClick={handlePreview} disabled={isPreviewing}>
+              <Button type="button" variant="outline" onClick={() => void handlePreview()} disabled={!canPreviewDraft || isPreviewing}>
                 {isPreviewing ? 'Generating preview…' : 'Preview draft'}
               </Button>
-              <Button type="submit" disabled={isSaving}>
+              <Button type="submit" disabled={isSaving || isReadOnly}>
                 {isSaving ? 'Saving…' : 'Save draft'}
               </Button>
             </CardFooter>
@@ -362,12 +554,53 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
           title={previewTitle}
           blocks={previewBlocks}
           status={status}
-          previewUrl={page?.preview_url ?? null}
+          workflowState={workflowState}
+          scheduledFor={workflow?.scheduled_for ?? null}
+          previewUrl={previewHref}
           isPreviewing={isPreviewing}
-          isPublishing={isPublishing}
-          onPreview={handlePreview}
-          onPublish={handlePublish}
+          isPublishing={isWorkflowPublishing}
+          onPreview={() => void handlePreview()}
+          onPublish={handlePublishNow}
+          onOpenPreviewTab={previewHref ? handleOpenPreviewTab : undefined}
+          canPreview={canPreviewDraft}
+          canPublish={canPublishNow}
+          actionsSlot={actionsSlot}
         />
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold">Workflow timeline</CardTitle>
+            <CardDescription>Track review events and publishing milestones for this page.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {workflowEvents.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No workflow activity recorded yet.</p>
+            ) : (
+              <ScrollArea className="max-h-64 pr-2">
+                <div className="space-y-4">
+                  {workflowEvents.map((event) => {
+                    const meta = workflowEventMeta[event.type];
+                    return (
+                      <div key={`${event.id}-${event.timestamp}`} className="flex items-start gap-3">
+                        <div className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-muted">
+                          {meta?.icon ?? <Hourglass className="h-4 w-4 text-muted-foreground" />}
+                        </div>
+                        <div className="space-y-1">
+                          <p className={cn('text-sm font-medium', meta?.tone)}>{meta?.label ?? event.type}</p>
+                          <p className="text-xs text-muted-foreground">{formatTimestamp(event.timestamp)}</p>
+                          {event.actor ? (
+                            <p className="text-xs text-muted-foreground">by {event.actor}</p>
+                          ) : null}
+                          {event.notes ? <p className="text-xs text-muted-foreground">{event.notes}</p> : null}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
+            )}
+          </CardContent>
+        </Card>
 
         <Card>
           <CardHeader>
@@ -401,6 +634,14 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
           </CardFooter>
         </Card>
       </div>
+
+      <PublishScheduleModal
+        open={scheduleModalOpen}
+        onOpenChange={setScheduleModalOpen}
+        onSubmit={handleScheduleSubmit}
+        defaultDate={workflow?.scheduled_for ?? null}
+        isSubmitting={isScheduling}
+      />
     </div>
   );
 };

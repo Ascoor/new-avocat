@@ -6,9 +6,11 @@ import type {
   PageContent,
   PageHistoryEntry,
   PageStatus,
+  PublishingQueueItem,
   TeamMemberApi,
   TestimonialApi,
   WebsiteReportSummary,
+  WorkflowState,
 } from '@/types/website';
 
 const unwrap = <T>(payload: unknown): T => {
@@ -39,6 +41,16 @@ export interface PageUpdatePayload {
   title_ar?: string | null;
   content_blocks?: AdminContentBlockPayload[];
   status?: PageStatus | null;
+  workflow_state?: WorkflowState | null;
+}
+
+export interface WorkflowRequestPayload {
+  notes?: string | null;
+  draft_id?: string | null;
+}
+
+export interface SchedulePayload extends WorkflowRequestPayload {
+  scheduled_for: string;
 }
 
 export const listWebsitePages = async (): Promise<PageContent[]> => {
@@ -68,6 +80,31 @@ export const publishWebsitePage = async (slug: string): Promise<PageContent> => 
 
 export const publishAllWebsitePages = async (): Promise<void> => {
   await api.post('/api/admin/website/pages/publish-all');
+};
+
+export const requestPageApproval = async (slug: string, payload: WorkflowRequestPayload): Promise<PageContent> => {
+  const { data } = await api.post(`/api/admin/website/pages/${slug}/request-approval`, payload);
+  return unwrap<PageContent>(data);
+};
+
+export const approveWebsitePage = async (slug: string, payload?: WorkflowRequestPayload): Promise<PageContent> => {
+  const { data } = await api.post(`/api/admin/website/pages/${slug}/approve`, payload ?? {});
+  return unwrap<PageContent>(data);
+};
+
+export const scheduleWebsitePage = async (slug: string, payload: SchedulePayload): Promise<PageContent> => {
+  const { data } = await api.post(`/api/admin/website/pages/${slug}/schedule`, payload);
+  return unwrap<PageContent>(data);
+};
+
+export const cancelScheduledWebsitePage = async (slug: string): Promise<PageContent> => {
+  const { data } = await api.delete(`/api/admin/website/pages/${slug}/schedule`);
+  return unwrap<PageContent>(data);
+};
+
+export const getPublishingQueue = async (): Promise<PublishingQueueItem[]> => {
+  const { data } = await api.get('/api/admin/website/pages/publishing-queue');
+  return unwrapCollection<PublishingQueueItem>(data);
 };
 
 export const getWebsitePageHistory = async (slug: string): Promise<PageHistoryEntry[]> => {
