@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Activity, AlertTriangle, BarChart3, CheckCircle2, Clock, Database, Timer } from 'lucide-react';
+import { Activity, AlertTriangle, BarChart3, CheckCircle2, Clock, Database, History, Timer } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import { getWebsiteReport } from '@/api/websiteAdmin.service';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import WorkflowStatusBadge from './WorkflowStatusBadge';
+import useNotifications from '@/hooks/useNotifications';
 
 const ReportWidget: React.FC = () => {
   const reportQuery = useQuery({
@@ -15,6 +18,8 @@ const ReportWidget: React.FC = () => {
   });
 
   const report = reportQuery.data;
+  const { activity, connectionState } = useNotifications();
+  const recentActivity = useMemo(() => activity.slice(0, 10), [activity]);
 
   if (reportQuery.isLoading) {
     return (
@@ -218,6 +223,47 @@ const ReportWidget: React.FC = () => {
             )}
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+              <History className="h-5 w-5" /> Recent admin activity
+            </CardTitle>
+            <CardDescription>Live audit log events streaming from website collaborators.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <span>Status: {connectionState === 'open' ? 'Live' : connectionState}</span>
+              <Link to="/dashboard/website/activity" className="font-medium text-primary hover:underline">
+                View all
+              </Link>
+            </div>
+            {recentActivity.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No activity captured in the last updates.</p>
+            ) : (
+              <ul className="space-y-2">
+                {recentActivity.map((entry) => (
+                  <li
+                    key={entry.id}
+                    className="flex items-center justify-between gap-3 rounded-md border border-border/60 bg-muted/40 px-3 py-2"
+                  >
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-foreground line-clamp-1">{entry.action}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-1">
+                        {entry.user} • {formatRelativeTimestamp(entry.timestamp)}
+                      </p>
+                    </div>
+                    {entry.section ? (
+                      <Badge variant="outline" className="shrink-0 capitalize">
+                        {entry.section}
+                      </Badge>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
@@ -251,6 +297,32 @@ const formatMinutes = (minutes: number) => {
     return `${hours}h ago`;
   }
   const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+};
+
+const formatRelativeTimestamp = (value: string) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return 'just now';
+  }
+
+  const diff = Date.now() - date.getTime();
+  const minute = 60 * 1000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+
+  if (diff < minute) {
+    return 'just now';
+  }
+  if (diff < hour) {
+    const minutes = Math.floor(diff / minute);
+    return `${minutes}m ago`;
+  }
+  if (diff < day) {
+    const hours = Math.floor(diff / hour);
+    return `${hours}h ago`;
+  }
+  const days = Math.floor(diff / day);
   return `${days}d ago`;
 };
 

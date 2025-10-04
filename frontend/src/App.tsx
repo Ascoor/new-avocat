@@ -21,6 +21,8 @@ import NotFound from '@/pages/NotFound';
 import AdminWebsitePage from '@/pages/admin/Website/AdminWebsitePage';
 import WebsiteReportPage from '@/pages/admin/Website/WebsiteReportPage';
 import WorkflowBoardPage from '@/pages/admin/Website/WorkflowBoardPage';
+import ActivityLogPage from '@/pages/admin/Website/ActivityLogPage';
+import NotificationsPage from '@/pages/admin/Website/NotificationsPage';
 
 // 🌀 نوع الأقسام المستقبلية
 type DashboardSectionKey =
@@ -88,6 +90,8 @@ const App = () => {
             <Route index element={<Navigate to="pages" replace />} />
             <Route path="report" element={<WebsiteReportPage />} />
             <Route path="workflow" element={<WorkflowBoardPage />} />
+            <Route path="activity" element={<ActivityLogPage />} />
+            <Route path="notifications" element={<NotificationsPage />} />
             <Route path=":section" element={<AdminWebsitePage />} />
           </Route>
 

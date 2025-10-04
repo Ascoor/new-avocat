@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import WorkflowStatusBadge from './components/WorkflowStatusBadge';
+import useNotifications from '@/hooks/useNotifications';
 
 const WorkflowBoardPage: React.FC = () => {
   const queryClient = useQueryClient();
@@ -17,6 +18,7 @@ const WorkflowBoardPage: React.FC = () => {
     queryKey: ['admin-website-publishing-queue'],
     queryFn: getPublishingQueue,
   });
+  const { connectionState } = useNotifications();
 
   const items = useMemo(() => queueQuery.data ?? [], [queueQuery.data]);
 
@@ -32,6 +34,7 @@ const WorkflowBoardPage: React.FC = () => {
           <p className="text-sm text-muted-foreground">
             Monitor drafts awaiting approval, scheduled publishes, and bulk publishing progress in real time.
           </p>
+          <p className="text-xs text-muted-foreground">Live updates: {connectionState}</p>
         </div>
         <Button variant="outline" onClick={handleRefresh} disabled={queueQuery.isFetching}>
           <RefreshCcw className="mr-2 h-4 w-4" /> Refresh
