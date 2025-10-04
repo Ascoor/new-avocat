@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft } from "lucide-react";
+import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft, SunDim, MoonStar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import BrandLogo from "../common/BrandLogo";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface HeaderProps {
   title?: string;
@@ -25,19 +26,25 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
+  const { theme } = useTheme();
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
 
   return (
     <header
       className={cn(
-        "header-shell sticky top-0 z-50 h-16 transition-all duration-500",
+        "header-shell sticky top-0 z-50 h-16 transition-all duration-500 backdrop-blur",
         className
       )}
     >
       <div className="relative z-[1] flex h-full items-center justify-between px-4">
         {/* Left side */}
-        <div className={cn("flex items-center gap-3", isRTL ? "flex-row-reverse" : "flex-row")}>
+        <div
+          className={cn(
+            "flex items-center gap-3",
+            isRTL ? "flex-row-reverse" : "flex-row"
+          )}
+        >
           {/* Mobile menu button */}
           <Button
             variant="ghost"
@@ -62,14 +69,32 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             />
           </Button>
 
-          {/* Page title */}
-          {title && (
-            <h1 className="hidden sm:block text-lg font-semibold text-foreground">{title}</h1>
-          )}
+          <div className="flex items-center gap-3">
+            <BrandLogo variant="icon" className="h-8 w-8 md:hidden" />
+            {/* Page title */}
+            {title && (
+              <h1 className="hidden sm:block text-lg font-semibold text-foreground">
+                {title}
+              </h1>
+            )}
+          </div>
         </div>
 
         {/* Right side */}
         <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            {theme === "dark" ? (
+              <>
+                <MoonStar className="h-3.5 w-3.5" />
+                {language === "ar" ? "وضع ليلي" : "Night Mode"}
+              </>
+            ) : (
+              <>
+                <SunDim className="h-3.5 w-3.5" />
+                {language === "ar" ? "وضع نهاري" : "Day Mode"}
+              </>
+            )}
+          </div>
           <ThemeToggle />
           <Button onClick={toggleLang} variant="outline" size="sm">
             {language === "ar" ? "EN" : "عربي"}

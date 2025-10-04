@@ -38,24 +38,23 @@ const Sidebar: React.FC = () => {
       animate={{ width: collapsed ? 64 : 256 }}
       transition={{ duration: 0.3, ease: [0.25, 0.8, 0.25, 1] }}
       className={cn(
-        "sidebar-shell hidden h-screen flex-shrink-0 flex-col border-r border-sidebar-border md:sticky md:top-0 md:flex"
+        "sidebar-shell hidden h-screen flex-shrink-0 flex-col md:sticky md:top-0 md:flex"
       )}
       dir={isRTL ? "rtl" : "ltr"}
       data-collapsed={collapsed}
     >
-       {/* Brand Section */}
-<div
-  className={cn(
-    "sidebar-brand flex items-center justify-center gap-3  transition-all duration-300",
-    collapsed ? "px-4 py-2" : "px-6 py-4"
-  )}
->
-  <BrandLogo
-    variant={collapsed ? "icon" : "full"}
-    className={collapsed ? "h-12 w-12 transition-all duration-300" : "h-8 w-auto transition-all duration-300"}
-  />
-</div>
-
+      {/* Brand Section */}
+      <div
+        className={cn(
+          "sidebar-brand flex items-center justify-center gap-3 transition-all duration-300",
+          collapsed ? "px-4 py-3" : "px-6 py-5"
+        )}
+      >
+        <BrandLogo
+          variant={collapsed ? "icon" : "full"}
+          className={collapsed ? "h-10 w-10" : "h-9 w-auto"}
+        />
+      </div>
 
       {/* Navigation Groups */}
       <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-4 sidebar-scroll">
@@ -137,7 +136,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       )}
       style={{
         background: design.badgeGradient,
-        boxShadow: "var(var(--shadow-luxury))"
+        boxShadow: design.shadow ?? "var(--shadow-premium)"
       }}
     >
       <LegalIcon

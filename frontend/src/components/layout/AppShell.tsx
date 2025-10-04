@@ -14,23 +14,24 @@ const AppShell: React.FC<AppShellProps> = ({ children, title }) => {
   const isRTL = i18n.language === "ar";
 
   return (
-    <div className="flex min-h-screen bg-background" dir={isRTL ? "rtl" : "ltr"}>
-      {/* Sidebar */}
-      <div className="hidden md:block">
-        <Sidebar />
+    <div className="dashboard-shell" dir={isRTL ? "rtl" : "ltr"}>
+      <div className="dashboard-layout">
+        {/* Sidebar */}
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
+
+        {/* Mobile Drawer trigger */}
+        <MobileDrawer />
+
+        {/* Content */}
+        <div className="dashboard-content">
+          <Header title={title} />
+          <main className="dashboard-scroll">
+            <div className="dashboard-inner">{children}</div>
+          </main>
+        </div>
       </div>
-
-      {/* Mobile Drawer */}
-      <MobileDrawer />
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col min-h-screen transition-all duration-300">
-        <Header title={title} />
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
-      </div>
-
-      {/* Drawer (Mobile only) */}
-      <MobileDrawer />
     </div>
   );
 };
