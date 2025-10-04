@@ -200,6 +200,16 @@ Route::prefix('admin/website')
         Route::get('/pages', [PageController::class, 'adminIndex']);
         Route::get('/pages/{slug}', [PageController::class, 'adminShow']);
         Route::put('/pages/{slug}', [PageController::class, 'adminUpdate']);
+        Route::post('/pages/{slug}/preview', [PageController::class, 'preview']);
+        Route::post('/pages/{slug}/publish', [PageController::class, 'publish']);
+        Route::post('/pages/publish-all', [PageController::class, 'publishAll']);
+        Route::post('/pages/{slug}/request-approval', [PageController::class, 'requestApproval']);
+        Route::post('/pages/{slug}/approve', [PageController::class, 'approve']);
+        Route::post('/pages/{slug}/schedule', [PageController::class, 'schedule']);
+        Route::delete('/pages/{slug}/schedule', [PageController::class, 'cancelSchedule']);
+        Route::get('/pages/{slug}/history', [PageController::class, 'history']);
+        Route::get('/pages/publishing-queue', [PageController::class, 'publishingQueue']);
+        Route::post('/upload', [UploadController::class, 'store']);
         Route::get('/settings', [PageController::class, 'settings']);
         Route::put('/settings', [PageController::class, 'updateSettings']);
     });
