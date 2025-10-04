@@ -1,6 +1,6 @@
 import type { IconKey } from "@/config/iconography";
 
-export type SidebarGroupKey = "main" | "system";
+export type SidebarGroupKey = "main" | "website" | "system";
 
 export interface SidebarItem {
   key: string;
@@ -42,6 +42,19 @@ export const sidebarGroups: SidebarGroup[] = [
     ],
   },
   {
+    key: "website",
+    items: [
+      { key: "website_pages", iconKey: "knowledge", path: "/dashboard/website/pages" },
+      { key: "website_team", iconKey: "lawyers", path: "/dashboard/website/team" },
+      {
+        key: "website_achievements",
+        iconKey: "reports",
+        path: "/dashboard/website/achievements",
+      },
+      { key: "website_settings", iconKey: "settings", path: "/dashboard/website/settings" },
+    ],
+  },
+  {
     key: "system",
     items: [
       {
@@ -76,6 +89,10 @@ export const translateKey = (key: string, lang: string) => {
     users_roles: { ar: "الأدوار والصلاحيات", en: "Users & Roles" },
     archive: { ar: "الأرشيف", en: "Archive" },
     courts_search: { ar: "البحث القضائي", en: "Courts Search" },
+    website_pages: { ar: "صفحات الموقع", en: "Website Pages" },
+    website_team: { ar: "فريق العمل", en: "Team" },
+    website_achievements: { ar: "الإنجازات", en: "Achievements" },
+    website_settings: { ar: "إعدادات الموقع", en: "Website Settings" },
   };
 
   return labels[key]?.[lang] || key;
