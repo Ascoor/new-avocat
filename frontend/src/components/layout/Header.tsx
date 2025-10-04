@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
         >
           {/* Mobile menu button */}
           <Button
-            variant="ghost"
+            variant="glass"
             size="icon"
             onClick={toggleMobile}
             className="md:hidden h-9 w-9"
@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
 
           {/* Desktop collapse toggle */}
           <Button
-            variant="ghost"
+            variant="glass"
             size="icon"
             onClick={toggleCollapsed}
             className="hidden md:flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-muted-foreground transition hover:border-border hover:bg-muted"
@@ -82,20 +82,9 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
 
         {/* Right side */}
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            {theme === "dark" ? (
-              <>
-                <MoonStar className="h-3.5 w-3.5" />
-                {language === "ar" ? "وضع ليلي" : "Night Mode"}
-              </>
-            ) : (
-              <>
-                <SunDim className="h-3.5 w-3.5" />
-                {language === "ar" ? "وضع نهاري" : "Day Mode"}
-              </>
-            )}
-          </div>
+        
           <ThemeToggle />
+       
           <Button onClick={toggleLang} variant="outline" size="sm">
             {language === "ar" ? "EN" : "عربي"}
           </Button>
@@ -104,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
-                  variant="ghost"
+                  variant="glass"
                   size="sm"
                   className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
                 >

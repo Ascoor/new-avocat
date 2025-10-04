@@ -12,7 +12,7 @@ const ThemeToggle: React.FC = () => {
 
   return (
     <Button
-      variant="default"
+      variant="outline"
       size="icon"
       onClick={toggleTheme}
       aria-label={isDark ? t('light') : t('dark')}
