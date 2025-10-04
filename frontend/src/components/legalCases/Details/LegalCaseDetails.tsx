@@ -180,7 +180,7 @@ const LegalCaseDetails = () => {
               hover="glow"
               className="relative overflow-hidden border border-border/60 bg-surface-muted/80 p-6 md:p-8"
             >
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_var(var(--gradient-primary)))] from-primary/10 via-transparent to-transparent" />
               <div className="relative flex flex-col gap-6">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div className="space-y-2">

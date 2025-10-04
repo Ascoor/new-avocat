@@ -375,8 +375,8 @@ const GeneralSettingsSection = () => {
   const [formState, setFormState] = useState<BrandingFormState>({
     officeName: '',
     theme: {
-      light: { primary: '#1E3A8A', surface: '#FFFFFF', accent: '#0EA5E9' },
-      dark: { primary: '#60A5FA', surface: '#0B1120', accent: '#FACC15' },
+      light: { primary: '#1E3A8A', surface: 'var(var(--background))FFF', accent: 'var(var(--primary))' },
+      dark: { primary: '#60A5FA', surface: '#0B1120', accent: 'var(var(--gold-muted))' },
     },
   });
   const [logoFiles, setLogoFiles] = useState<Record<LogoVariant, File | null>>({

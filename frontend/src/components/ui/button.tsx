@@ -22,7 +22,7 @@ const buttonVariants = cva(
   premium: "bg-gradient-primary text-text-inverse font-semibold shadow-premium hover:scale-[1.02] hover:shadow-glow transition-premium",
   gold: "bg-gradient-gold text-accent-foreground font-semibold shadow-gold hover:shadow-glow-strong hover:scale-[1.02] transition-premium",
   glass: "bg-surface-glass border border-white/20 text-white backdrop-blur-md shadow-ambient hover:shadow-glow hover:border-accent transition-elegant",
-  chromatic: "relative overflow-hidden rounded-full border border-border/60 bg-transparent px-4 py-2 text-text-strong shadow-ambient transition-all duration-500 hover:border-accent/70 hover:shadow-glow before:pointer-events-none before:absolute before:inset-0 before:-translate-y-full before:bg-[var(--toggle-gradient)] before:opacity-0 before:transition-all before:duration-500 before:content-[''] hover:before:translate-y-0 hover:before:opacity-100 hover:text-text-inverse",
+  chromatic: "relative overflow-hidden rounded-full border border-border/60 bg-transparent px-4 py-2 text-text-strong shadow-ambient transition-all duration-500 hover:border-accent/70 hover:shadow-glow before:pointer-events-none before:absolute before:inset-0 before:-translate-y-full before:bg-[var(var(--gradient-gold))] before:opacity-0 before:transition-all before:duration-500 before:content-[''] hover:before:translate-y-0 hover:before:opacity-100 hover:text-text-inverse",
   hero: "bg-gradient-hero text-text-inverse shadow-glow-strong font-semibold hover:scale-105 hover:shadow-glow-strong transition-premium",
 },
       size: {

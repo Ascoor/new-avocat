@@ -53,7 +53,7 @@ const CaseSection = ({
       )}
     >
       {/* Gradient overlay */}
-      <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent opacity-70" />
+      <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top,_var(var(--gradient-primary)))] from-primary/10 via-transparent to-transparent opacity-70" />
 
       {/* Header */}
       <div className="relative flex flex-col gap-4">

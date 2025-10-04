@@ -27,8 +27,10 @@ const iconLookup: Record<string, React.ComponentType<{ className?: string }>> = 
 };
 
 const Footer: React.FC = () => {
-  const { language, direction } = useLanguage();
-  const isArabic = language === 'ar';
+  const { direction,language } = useLanguage();
+
+  const currentYear = new Date().getFullYear();
+
   const locale = language as 'ar' | 'en';
   const { getLocalizedValue, getValueForLocale } = useWebsiteContent('footer');
 
@@ -69,89 +71,114 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer
-      className={cn(
-        'relative mt-24 overflow-hidden transition-colors bg-gradient-to-t from-primary/90 via-primary/90 to-primary/95 text-white dark:text-foreground'
-      )}
-      dir={direction}
-    >
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute left-10 top-16 h-48 w-48 rounded-full bg-accent/70 blur-3xl dark:bg-accent/40" />
-        <div className="absolute right-0 bottom-10 h-56 w-56 rounded-full bg-white/50 blur-3xl dark:bg-primary/30" />
-      </div>
-      <div className="relative">
-        <div className="container mx-auto grid gap-12 px-4 py-16 lg:grid-cols-4 lg:px-8">
-          <div className="space-y-6">
-            <BrandLogo variant="full" className="h-12" lang={language} dark />
-            <p className="text-sm text-white/80 dark:text-foreground/70">{mission}</p>
-            <p className="text-xs uppercase tracking-widest text-accent">{highlight}</p>
-            <SocialGroup />
-          </div>
-
-          <div>
-            <h3 className="font-display text-lg font-semibold text-white dark:text-foreground">
-              {getValueForLocale('footer_quick_links_title', locale) ?? ''}
-            </h3>
-            <ul className="mt-6 space-y-3 text-sm text-white/80 dark:text-foreground/70">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <button
-                    onClick={() => scrollTo(link.href)}
-                    className="flex w-full items-center justify-between rounded-xl border border-transparent px-3 py-2 text-left transition-all duration-300 hover:border-white/40 hover:bg-white/10 dark:hover:border-foreground/30 dark:hover:bg-foreground/10"
-                  >
-                    <span>{link.label}</span>
-                    <span className="text-xs uppercase tracking-widest text-white/60 dark:text-foreground/50">
-                      {link.href.replace('#', '')}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-display text-lg font-semibold text-white dark:text-foreground">
-              {getValueForLocale('footer_services_title', locale) ?? ''}
-            </h3>
-            <ul className="mt-6 space-y-3 text-sm text-white/80 dark:text-foreground/70">
-              {serviceHighlights.map((service) => (
-                <li
-                  key={service}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 dark:border-foreground/20 dark:bg-foreground/5"
-                >
-                  {service}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6 rounded-3xl border border-white/20 bg-white/10 p-5 dark:border-foreground/20 dark:bg-foreground/5">
-              <h4 className="font-display text-base font-semibold text-white dark:text-foreground">
-                {subscribeCopy.title}
-              </h4>
-              <p className="mt-2 text-xs text-white/80 dark:text-foreground/70">{subscribeCopy.body}</p>
+    <footer className="bg-gradient-primary text-primary-foreground">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          {/* Brand Section */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+    
+              <div className="flex flex-col">
+                     <BrandLogo variant="full" className="h-12" lang={language} dark />
+                      </div>
             </div>
+            <p className="text-primary-foreground/80 leading-relaxed">
+              {direction === 'rtl' 
+                ? 'رائدون في التحول الرقمي القانوني، نقدم حلولاً متطورة للممارسات القانونية الحديثة.'
+                : 'Leading legal digital transformation with advanced solutions for modern legal practices.'
+              }
+            </p>
+          </div>
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg text-primary-foreground">
+              {direction === 'rtl' ? 'روابط سريعة' : 'Quick Links'}
+            </h4>
+            <ul className="space-y-2">
+              {[
+                { key: 'home', href: '#home' },
+                { key: 'about', href: '#about' },
+                { key: 'services', href: '#services' },
+                { key: 'contact', href: '#contact' }
+              ].map((link) => (
+                <li key={link.key}>
+                  <a 
+                    href={link.href}
+                    className="text-primary-foreground/70 hover:text-gold transition-colors duration-300"
+                  >
+                    {direction === 'rtl' 
+                      ? ({ home: 'الرئيسية', about: 'من نحن', services: 'خدماتنا', contact: 'اتصل بنا' })[link.key]
+                      : ({ home: 'Home', about: 'About Us', services: 'Services', contact: 'Contact' })[link.key]
+                    }
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="space-y-5">
-            <h3 className="font-display text-lg font-semibold text-white dark:text-foreground">
-              {getValueForLocale('footer_contact_title', locale) ?? ''}
-            </h3>
-            <div className="space-y-4 text-sm text-white/80 dark:text-foreground/70">
-              {contactDetails.map((detail, index) => {
-                const Icon = iconLookup[detail.icon.toLowerCase()] ?? MapPin;
-                return (
-                  <div key={`${detail.icon}-${index}`} className="flex items-start gap-3">
-                    <Icon className="mt-1 h-5 w-5 text-white/80 dark:text-foreground/70" />
-                    <p>{detail.text}</p>
-                  </div>
-                );
-              })}
+          {/* Services */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg text-primary-foreground">
+              {direction === 'rtl' ? 'خدماتنا' : 'Our Services'}
+            </h4>
+            <ul className="space-y-2">
+              {[
+                direction === 'rtl' ? 'أنظمة الإدارة القانونية' : 'Legal Management',
+                direction === 'rtl' ? 'حماية البيانات' : 'Data Protection',
+                direction === 'rtl' ? 'التدريب القانوني' : 'Legal Training',
+                direction === 'rtl' ? 'الخدمات الحكومية' : 'Government Services'
+              ].map((service, index) => (
+                <li key={index}>
+                  <span className="text-primary-foreground/70 hover:text-gold transition-colors duration-300 cursor-pointer">
+                    {service}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <h4 className="font-semibold text-lg text-primary-foreground">
+              {direction === 'rtl' ? 'معلومات التواصل' : 'Contact Info'}
+            </h4>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Phone className="w-5 h-5 text-gold flex-shrink-0" />
+                <span className="text-primary-foreground/80">+966 11 234 5678</span>
+              </div>
+              <div className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Mail className="w-5 h-5 text-gold flex-shrink-0" />
+                <span className="text-primary-foreground/80">info@avocat.sa</span>
+              </div>
+              <div className="flex items-start space-x-3 rtl:space-x-reverse">
+                <MapPin className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
+                <span className="text-primary-foreground/80">
+                  {direction === 'rtl' ? 'الرياض، المملكة العربية السعودية' : 'Riyadh, Saudi Arabia'}
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/10 bg-primary/95 dark:border-foreground/20 dark:bg-background/95">
-          <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-6 text-xs text-white/80 dark:text-foreground/60 lg:flex-row lg:px-8">
-            <p>{bottom}</p>
+        {/* Bottom Bar */}
+        <div className="border-t border-primary-foreground/20 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-primary-foreground/70 text-sm">
+              {direction === 'rtl' 
+                ? `© ${currentYear} مكتب أفوكات للمحاماة. جميع الحقوق محفوظة.`
+                : `© ${currentYear} Avocat Law Firm. All rights reserved.`
+              }
+            </p>
+            <div className="flex space-x-6 rtl:space-x-reverse">
+              <a href="#" className="text-primary-foreground/70 hover:text-gold transition-colors duration-300 text-sm">
+                {direction === 'rtl' ? 'سياسة الخصوصية' : 'Privacy Policy'}
+              </a>
+              <a href="#" className="text-primary-foreground/70 hover:text-gold transition-colors duration-300 text-sm">
+                {direction === 'rtl' ? 'الشروط والأحكام' : 'Terms of Service'}
+              </a>
+            </div>
           </div>
         </div>
       </div>

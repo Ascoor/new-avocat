@@ -6,10 +6,10 @@ import { Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const STATUS_COLORS: Record<string, string> = {
-  active: '#10B981',
-  pending: '#F59E0B',
-  closed: '#EF4444',
-  on_hold: '#6B7280',
+  active: 'var(var(--gold))',
+  pending: 'var(var(--gold-muted))',
+  closed: 'var(var(--destructive))',
+  on_hold: 'var(var(--slate-light))',
 };
 
 export default function CasesByStatusChart() {

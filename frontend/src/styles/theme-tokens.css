@@ -6,7 +6,6 @@
     --foreground: 215 85% 12%;
 
     /* 🔵 Primary: Deep Legal Blue */
-    --primary-darker: 215 100% 12%;
     --primary: 215 100% 15%;
     --primary-foreground: 0 0% 100%;
     --primary-light: 215 85% 25%;
@@ -68,13 +67,20 @@
 
     /* 🌈 Premium Gradient System */
     --gradient-primary: linear-gradient(135deg, hsl(215 100% 15%), hsl(215 85% 25%));
+    --gradient-secondary: linear-gradient(135deg, hsl(210 30% 98%), hsl(210 25% 88%));
     --gradient-gold: linear-gradient(135deg, hsl(42 95% 45%), hsl(42 100% 55%));
     --gradient-hero: linear-gradient(135deg, hsl(215 100% 10%), hsl(215 85% 20%));
     --gradient-success: linear-gradient(135deg, hsl(142 80% 40%), hsl(142 75% 50%));
     --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(210 30% 98%));
     --gradient-aurora: linear-gradient(135deg, hsl(215 100% 15%), hsl(180 50% 65%), hsl(42 95% 45%));
+    --gradient-legal: linear-gradient(135deg, hsl(215 100% 8%), hsl(215 85% 15%), hsl(42 95% 45%));
 
     --toggle-gradient: linear-gradient(135deg, hsl(215 100% 15%), hsl(42 95% 45%));
+
+    /* 📊 Chart Data Colors */
+    --color-datasetA: 215 100% 15%;
+    --color-datasetB: 42 95% 45%;
+    --color-datasetC: 180 50% 65%;
 
     /* 🧭 Premium Sidebar System */
     --sidebar-background: 0 0% 100%;
@@ -87,6 +93,8 @@
     --sidebar-muted-foreground: 215 30% 45%;
     --sidebar-border: 210 25% 85%;
     --sidebar-ring: 215 100% 15%;
+    --sidebar-hover-highlight: 210 30% 92%;
+    --sidebar-item-bg: 0 0% 100%;
     --sidebar-surface: 210 35% 98%;
     --sidebar-text-muted: 215 30% 45%;
     --sidebar-text-strong: 215 85% 12%;
@@ -97,8 +105,6 @@
     --sidebar-hover-glow: 42 95% 45% / 0.08;
     --sidebar-ambient-glow: 215 100% 15% / 0.05;
     --sidebar-shell-shadow: 0 20px 60px -15px hsl(215 100% 15% / 0.12);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent: var(--sidebar-accent);
 
     /* 🧭 Enhanced Sidebar States */
     --sidebar-surface-gradient: linear-gradient(180deg, hsl(0 0% 100%), hsl(210 35% 98%));
@@ -118,7 +124,6 @@
     --header-shell-shadow: 0 4px 20px hsl(215 100% 15% / 0.08);
     --header-shell-border: 1px solid hsl(210 25% 88%);
     --header-shell-blur: blur(24px);
-    --shadow-header-light: 0 18px 48px -20px hsl(215 100% 15% / 0.15);
 
     /* 🔲 Layout & Spacing System */
     --sidebar-width: 320px;
@@ -143,7 +148,7 @@
     --shadow-glow: 0 0 40px hsl(42 95% 45% / 0.35);
     --shadow-glow-strong: 0 0 64px hsl(42 95% 45% / 0.6);
     --shadow-inner-glow: inset 0 1px 0 hsl(0 0% 100% / 0.15);
-    --legal-icon-shadow-soft: 0 16px 36px -20px hsl(var(--primary) / 0.25);
+    --shadow-legal-depth: 0 20px 80px -20px hsl(215 100% 8% / 0.3);
 
     --transition-premium: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -157,14 +162,14 @@
     /* 🌙 Night Mode - Premium Legal Dark Theme */
     --background: 215 100% 3%;
     --foreground: 210 20% 95%;
-    --primary-darker: 213 100% 10%;   /* أغمق درجة - للخلفيات الثقيلة */
-    --primary: 213 100% 15%;          /* اللون الأساسي */
-    --primary-hover: 213 80% 25%;     /* عند التفاعل */
-    --primary-light: 213 70% 40%;     /* للـHighlights */
-    --primary-glow: 213 90% 30%;      /* توهج داخلي */
-
-    /* Contrast text */
-    --primary-foreground: 0 0% 100%;
+ --primary-darker: 213 100% 10%;   /* أغمق درجة - للخلفيات الثقيلة */
+  --primary: 213 100% 15%;          /* اللون الأساسي */
+  --primary-hover: 213 80% 25%;     /* عند التفاعل */
+  --primary-light: 213 70% 40%;     /* للـHighlights */
+  --primary-glow: 213 90% 30%;      /* توهج داخلي */
+  
+  /* Contrast text */
+  --primary-foreground: 0 0% 100%; 
     /* ⚫ Secondary: Rich Charcoal */
     --secondary: 215 60% 8%;
     --secondary-foreground: 210 20% 95%;
@@ -220,11 +225,14 @@
 
     /* 🌈 Premium Night Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(215 80% 4%), hsl(215 60% 8%));
+    --gradient-secondary: linear-gradient(135deg, hsl(215 60% 6%), hsl(215 50% 10%));
     --gradient-gold: linear-gradient(135deg, hsl(35 45% 65%), hsl(35 50% 70%));
     --gradient-hero: linear-gradient(135deg, hsl(215 100% 2%), hsl(215 80% 4%));
+    --gradient-footer-night: linear-gradient(135deg, hsl(215 100% 2%), hsl(215 70% 5%));
     --gradient-success: linear-gradient(135deg, hsl(142 75% 50%), hsl(142 70% 60%));
     --gradient-card: linear-gradient(135deg, hsl(215 60% 6%), hsl(215 50% 10%));
     --gradient-aurora: linear-gradient(135deg, hsl(215 80% 4%), hsl(180 55% 65%), hsl(35 45% 65%));
+    --gradient-legal: linear-gradient(135deg, hsl(215 100% 1%), hsl(215 80% 4%), hsl(35 45% 65%));
 
     --toggle-gradient: linear-gradient(135deg, hsl(180 55% 65%), hsl(35 45% 65%));
 
@@ -239,6 +247,8 @@
     --sidebar-muted-foreground: 210 20% 70%;
     --sidebar-border: 215 40% 15%;
     --sidebar-ring: 180 55% 65%;
+    --sidebar-hover-highlight: 215 45% 12%;
+    --sidebar-item-bg: 215 60% 6%;
     --sidebar-surface: 215 50% 10%;
     --sidebar-text-muted: 210 20% 70%;
     --sidebar-text-strong: 210 20% 95%;
@@ -249,8 +259,6 @@
     --sidebar-hover-glow: 35 45% 65% / 0.08;
     --sidebar-ambient-glow: 180 55% 65% / 0.05;
     --sidebar-shell-shadow: 0 20px 60px -15px hsl(0 0% 0% / 0.25);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent: var(--sidebar-accent);
 
     /* 🧭 Enhanced Night Sidebar States */
     --sidebar-surface-gradient: linear-gradient(180deg, hsl(215 60% 6%), hsl(215 50% 10%));
@@ -270,7 +278,6 @@
     --header-shell-shadow: 0 6px 24px hsl(0 0% 0% / 0.15);
     --header-shell-border: 1px solid hsl(215 40% 15%);
     --header-shell-blur: blur(32px);
-    --shadow-header-dark: 0 20px 56px -24px hsl(0 0% 0% / 0.35);
 
     /* ⚡ Premium Night Effects */
     --shadow-premium: 0 40px 80px -16px hsl(0 0% 0% / 0.4);
@@ -280,7 +287,7 @@
     --shadow-glow: 0 0 48px hsl(35 45% 65% / 0.4);
     --shadow-glow-strong: 0 0 80px hsl(35 45% 65% / 0.7);
     --shadow-inner-glow: inset 0 1px 0 hsl(180 55% 65% / 0.08);
-    --legal-icon-shadow-soft: 0 18px 48px -26px hsl(var(--primary) / 0.4);
+    --shadow-legal-depth: 0 32px 120px -24px hsl(0 0% 0% / 0.5);
 
     --transition-premium: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);

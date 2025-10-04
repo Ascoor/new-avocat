@@ -143,16 +143,16 @@ const Login: React.FC = () => {
 
   return (
     <div
-      className="relative min-h-screen bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.12),transparent_60%)]"
+      className="relative min-h-screen bg-[radial-gradient(circle_at_top,hsl(var(var(--primary))/0.12),transparent_60%)]"
       dir={isRTL ? "rtl" : "ltr"}
     >
-      <div className="absolute inset-0 bg-[linear-gradient(130deg,hsl(var(--background))_20%,hsl(var(--secondary))_100%)]" />
-      <div className="absolute inset-0" style={{ backgroundImage: "var(--gradient-aurora)" }} />
+      <div className="absolute inset-0 bg-[linear-gradient(130deg,hsl(var(var(--background)))_20%,hsl(var(var(--secondary)))_100%)]" />
+      <div className="absolute inset-0" style={{ backgroundImage: "var(var(--gradient-subtle))" }} />
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
         <div className="w-full max-w-lg space-y-8">
 
-          <div className="rounded-3xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]/95 p-8 shadow-[var(--shadow-elevated)] backdrop-blur">
+          <div className="rounded-3xl border border-[hsl(var(var(--border)))] bg-[hsl(var(var(--card)))]/95 p-8 shadow-[var(var(--shadow-card))] backdrop-blur">
             <div className="flex flex-col items-center text-center">
           <div className="text-center">
 <BrandLogo variant="icon" className="h-24"/>
@@ -160,13 +160,13 @@ const Login: React.FC = () => {
  
 <BrandLogo variant="text" className="h-16"/>
  
-              <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">
+              <p className="mt-2 text-sm text-[hsl(var(var(--slate-light)))]">
                 {activeTab === "signin" ? t("auth.login.subtitle") : t("auth.signup.subtitle")}
               </p>
             </div>
 
             {formError ? (
-              <div className="mt-6 flex items-center gap-2 rounded-lg border border-[hsl(var(--destructive))]/40 bg-[hsl(var(--destructive))]/10 px-3 py-2 text-sm text-[hsl(var(--destructive))]">
+              <div className="mt-6 flex items-center gap-2 rounded-lg border border-[hsl(var(var(--destructive)))]/40 bg-[hsl(var(var(--destructive)))]/10 px-3 py-2 text-sm text-[hsl(var(var(--destructive)))]">
                 <AlertCircle className="h-4 w-4" />
                 <span>{formError}</span>
               </div>
@@ -284,9 +284,9 @@ const Login: React.FC = () => {
               </TabsContent>
             </Tabs>
 
-            <div className="mt-8 text-center text-sm text-[hsl(var(--muted-foreground))]">
+            <div className="mt-8 text-center text-sm text-[hsl(var(var(--slate-light)))]">
  
-              <Link to="/" className="mt-3 inline-block transition-colors hover:text-[hsl(var(--primary))]">
+              <Link to="/" className="mt-3 inline-block transition-colors hover:text-[hsl(var(var(--primary)))]">
                 {language === "ar" ? "← العودة إلى الصفحة الرئيسية" : "← Back to home"}
               </Link>
             </div>

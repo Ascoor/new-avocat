@@ -109,8 +109,8 @@ const SidebarProvider = React.forwardRef<
   const cssVariables = React.useMemo(
     () =>
       ({
-        "--sidebar-width": isMobile ? SIDEBAR_WIDTH_MOBILE : SIDEBAR_WIDTH,
-        "--sidebar-width-icon": isMobile ? SIDEBAR_WIDTH_ICON_MOBILE : SIDEBAR_WIDTH_ICON,
+        "320px": isMobile ? SIDEBAR_WIDTH_MOBILE : SIDEBAR_WIDTH,
+        "var(320px-icon)": isMobile ? SIDEBAR_WIDTH_ICON_MOBILE : SIDEBAR_WIDTH_ICON,
         ...styleProp,
       }) as React.CSSProperties,
     [isMobile, styleProp],
@@ -146,7 +146,7 @@ const Sidebar = React.forwardRef<
   if (collapsible === "none") {
     return (
       <div
-        className={cn("flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground", className)}
+        className={cn("flex h-full w-[320px] flex-col bg-sidebar text-sidebar-foreground", className)}
         ref={ref}
         {...props}
       >
@@ -161,11 +161,11 @@ const Sidebar = React.forwardRef<
         <SheetContent
           data-sidebar="sidebar"
           data-mobile="true"
-          className="w-[--sidebar-width] max-w-full bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+          className="w-[320px] max-w-full bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
           style={
             {
-              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON_MOBILE,
+              "320px": SIDEBAR_WIDTH_MOBILE,
+              "var(320px-icon)": SIDEBAR_WIDTH_ICON_MOBILE,
             } as React.CSSProperties
           }
           side={side}
@@ -188,24 +188,24 @@ const Sidebar = React.forwardRef<
       {/* This is what handles the sidebar gap on desktop */}
       <div
         className={cn(
-          "relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear",
+          "relative h-svh w-[320px] bg-transparent transition-[width] duration-200 ease-linear",
           "group-data-[collapsible=offcanvas]:w-0",
           "group-data-[side=right]:rotate-180",
           variant === "floating" || variant === "inset"
-            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
-            : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
+            ? "group-data-[collapsible=icon]:w-[calc(var(var(320px-icon))_+_theme(spacing.4))]"
+            : "group-data-[collapsible=icon]:w-[var(320px-icon)]",
         )}
       />
       <div
         className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex",
+          "fixed inset-y-0 z-10 hidden h-svh w-[320px] transition-[left,right,width] duration-200 ease-linear md:flex",
           side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(320px)*-1)]"
+            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(320px)*-1)]",
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
-            : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
+            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(var(320px-icon))_+_theme(spacing.4)_+2px)]"
+            : "group-data-[collapsible=icon]:w-[var(320px-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l",
           className,
         )}
         {...props}
@@ -424,7 +424,7 @@ const sidebarMenuButtonVariants = cva(
       variant: {
         default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         outline:
-          "bg-background shadow-[0_0_0_1px_hsl(var(--color-sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--color-sidebar-accent))]",
+          "bg-background shadow-[0_0_0_1px_hsl(var(--color-sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(var(--gold)))]",
       },
       size: {
         default: "h-8 text-sm",

@@ -131,13 +131,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       className={cn(
         "sidebar-icon-badge flex items-center justify-center rounded-xl transition-all duration-300",
         collapsed
-          ? "w-[var(--icon-size-collapsed)] h-[var(--icon-size-collapsed)]"
-          : "w-[var(--icon-size-expanded)] h-[var(--icon-size-expanded)]",
+          ? "w-[var(20px)] h-[var(20px)]"
+          : "w-[var(24px)] h-[var(24px)]",
         design.badgeClass ?? "text-white"
       )}
       style={{
         background: design.badgeGradient,
-        boxShadow: "var(--legal-icon-shadow-soft)"
+        boxShadow: "var(var(--shadow-luxury))"
       }}
     >
       <LegalIcon
@@ -233,7 +233,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                   className="sidebar-icon-badge flex h-8 w-8 items-center justify-center rounded-lg"
                   style={{
                     background: childDesign.badgeGradient,
-                    boxShadow: "var(--legal-icon-shadow-soft)"
+                    boxShadow: "var(var(--shadow-luxury))"
                   }}
                 >
                   <LegalIcon iconKey={child.iconKey} width={16} height={16} />

@@ -49,7 +49,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
   const toolbarContent = toolbar ?? <LanguageToggle />;
 
   return (
-    <div className="relative min-h-screen bg-[hsl(var(--background))]" dir={direction}>
+    <div className="relative min-h-screen bg-[hsl(var(var(--background)))]" dir={direction}>
       <div
         className={cn(
           'fixed top-6 z-50 flex items-center gap-2',
@@ -76,10 +76,10 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
                 filter: 'brightness(0.6)',
               }}
             />
-            <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
+            <div className="absolute inset-0" style={{ background: 'var(var(--gradient-hero))' }} />
           </div>
 
-          <div className="relative z-10 flex w-full flex-col justify-between px-12 py-16 text-[hsl(var(--text-inverse))] lg:px-16">
+          <div className="relative z-10 flex w-full flex-col justify-between px-12 py-16 text-[hsl(var(var(var(--foreground))))] lg:px-16">
             <div className="flex items-center justify-between">
               <BrandLogo variant="text" className="h-12" lang={language} dark />
               {hero.badge ? (
@@ -117,7 +117,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
                       )}
                     >
                       <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 dark:bg-white/5">
-                        <Icon className="h-5 w-5" style={{ color: 'hsl(var(--accent))' }} />
+                        <Icon className="h-5 w-5" style={{ color: 'hsl(var(var(--gold-light)))' }} />
                       </span>
                       <span className="text-sm leading-relaxed text-white/90">{text}</span>
                     </div>
@@ -145,9 +145,9 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
         </section>
 
         <section className="relative flex flex-1 items-center justify-center px-6 py-16 lg:px-12">
-          <div className="absolute inset-0 bg-[hsl(var(--background))]/90 lg:bg-transparent" />
+          <div className="absolute inset-0 bg-[hsl(var(var(--background)))]/90 lg:bg-transparent" />
           <div className="relative z-10 w-full max-w-md space-y-8">
-            <div className="overflow-hidden rounded-3xl border border-border/40 bg-[hsl(var(--card))] shadow-[var(--shadow-ambient)] lg:hidden">
+            <div className="overflow-hidden rounded-3xl border border-border/40 bg-[hsl(var(var(--card)))] shadow-[var(var(--shadow-elegant))] lg:hidden">
               <div className="relative">
                 <div
                   className="absolute inset-0"
@@ -158,8 +158,8 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
                     filter: 'brightness(0.6)',
                   }}
                 />
-                <div className="absolute inset-0" style={{ background: 'var(--gradient-hero)' }} />
-                <div className="relative z-10 space-y-4 px-6 py-8 text-[hsl(var(--text-inverse))]">
+                <div className="absolute inset-0" style={{ background: 'var(var(--gradient-hero))' }} />
+                <div className="relative z-10 space-y-4 px-6 py-8 text-[hsl(var(var(var(--foreground))))]">
                   <BrandLogo variant="text" className="h-10" lang={language} dark />
                   <h1 className="text-3xl font-semibold leading-snug">{hero.title}</h1>
                   {hero.description ? (
@@ -177,7 +177,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
                           )}
                         >
                           <span className="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 dark:bg-white/5">
-                            <Icon className="h-4 w-4" style={{ color: 'hsl(var(--accent))' }} />
+                            <Icon className="h-4 w-4" style={{ color: 'hsl(var(var(--gold-light)))' }} />
                           </span>
                           <span className="text-xs leading-relaxed text-white/85">{text}</span>
                         </div>
@@ -191,22 +191,22 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
             <Card
               className="relative w-full overflow-hidden border border-border/60 backdrop-blur-sm"
               style={{
-                background: 'hsl(var(--card))',
-                boxShadow: 'var(--shadow-elevated)',
+                background: 'hsl(var(var(--card)))',
+                boxShadow: 'var(var(--shadow-card))',
               }}
             >
-              <div className="pointer-events-none absolute -top-32 left-1/2 h-60 w-60 -translate-x-1/2 rounded-full bg-[hsl(var(--primary))]/12 blur-3xl" />
+              <div className="pointer-events-none absolute -top-32 left-1/2 h-60 w-60 -translate-x-1/2 rounded-full bg-[hsl(var(var(--primary)))]/12 blur-3xl" />
 
               {(card.icon || card.title || card.description) && (
                 <CardHeader className="relative space-y-4 text-center">
                   {card.icon}
                   {card.title ? (
-                    <CardTitle className="text-2xl font-semibold text-[hsl(var(--foreground))]">
+                    <CardTitle className="text-2xl font-semibold text-[hsl(var(var(--foreground)))]">
                       {card.title}
                     </CardTitle>
                   ) : null}
                   {card.description ? (
-                    <CardDescription className="text-sm text-[hsl(var(--muted-foreground))]">
+                    <CardDescription className="text-sm text-[hsl(var(var(--slate-light)))]">
                       {card.description}
                     </CardDescription>
                   ) : null}
@@ -216,7 +216,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ heroSide = 'left', hero, card, toolba
               <CardContent className="relative space-y-6">{card.content}</CardContent>
 
               {card.footer ? (
-                <CardFooter className="relative flex flex-col items-center justify-center gap-2 border-t border-border/40 bg-[hsl(var(--surface-muted))] py-4 text-sm text-[hsl(var(--muted-foreground))]">
+                <CardFooter className="relative flex flex-col items-center justify-center gap-2 border-t border-border/40 bg-[hsl(var(--surface-muted))] py-4 text-sm text-[hsl(var(var(--slate-light)))]">
                   {card.footer}
                 </CardFooter>
               ) : null}

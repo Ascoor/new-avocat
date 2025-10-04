@@ -20,7 +20,7 @@ const LandingPage: React.FC = () => {
   return (
     <>
       <LandingNavbar />
-      <main dir={direction} className="bg-background text-text-body">
+ 
         <HeroCarousel />
         <About />
         <Services />
@@ -31,8 +31,7 @@ const LandingPage: React.FC = () => {
         <Testimonials />
         <Insights />
         <CallToAction />
-        <Contact />
-      </main>
+        <Contact /> 
       <ScrollToTopButton />
       <Footer />
     </>
