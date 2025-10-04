@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { resolveAssetUrl } from '@/utils/asset';
-import PageEditor from './PageEditor';
+import PageEditor from './PageEditor/PageEditor';
 import { getWebsitePage } from '@/api/websiteAdmin.service';
 import type { ContentBlock, Locale, Localized, PageContent } from '@/types/website';
 

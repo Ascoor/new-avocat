@@ -7,6 +7,8 @@ import PagesManager from './components/PagesManager';
 import TeamManager from './components/TeamManager';
 import AchievementsManager from './components/AchievementsManager';
 import SettingsManager from './components/SettingsManager';
+import ArticlesManager from './components/ArticlesManager';
+import TestimonialsManager from './components/TestimonialsManager';
 
 const TABS = ['pages', 'team', 'achievements', 'settings'] as const;
 type TabValue = (typeof TABS)[number];
@@ -47,6 +49,8 @@ const AdminWebsitePage: React.FC = () => {
 
         <TabsContent value="pages" className="space-y-6">
           <PagesManager />
+          <ArticlesManager />
+          <TestimonialsManager />
         </TabsContent>
 
         <TabsContent value="team" className="space-y-6">

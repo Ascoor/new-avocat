@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
 import api from '@/api/axiosConfig';
 import type { ContentBlock, Localized, Locale, PageContent } from '@/types/website';
 
@@ -16,40 +18,16 @@ export interface UseWebsiteContentResult {
 }
 
 export function useWebsiteContent(slug: string): UseWebsiteContentResult {
-  const [data, setData] = useState<PageContent | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+  const query = useQuery({
+    queryKey: ['website-content', slug],
+    queryFn: async () => {
+      const response = await api.get(`/api/website/pages/${slug}`);
+      const payload = (response.data?.data ?? response.data) as PageContent | null;
+      return payload;
+    },
+  });
 
-  useEffect(() => {
-    let isCancelled = false;
-
-    setLoading(true);
-    setError(null);
-
-    api
-      .get(`/api/website/pages/${slug}`)
-      .then((response) => {
-        if (!isCancelled) {
-          const payload = (response.data?.data ?? response.data) as PageContent | null;
-          setData(payload);
-        }
-      })
-      .catch((err: unknown) => {
-        if (!isCancelled) {
-          const normalized = err instanceof Error ? err : new Error('Failed to load content');
-          setError(normalized);
-        }
-      })
-      .finally(() => {
-        if (!isCancelled) {
-          setLoading(false);
-        }
-      });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [slug]);
+  const data = query.data ?? null;
 
   const contentBlocks = useMemo<ContentBlock[]>(
     () => data?.content_blocks ?? data?.content ?? [],
@@ -86,8 +64,8 @@ export function useWebsiteContent(slug: string): UseWebsiteContentResult {
 
   return {
     data,
-    loading,
-    error,
+    loading: query.isLoading,
+    error: (query.error as Error | null) ?? null,
     contentBlocks,
     getLocalizedValue,
     getValueForLocale,
