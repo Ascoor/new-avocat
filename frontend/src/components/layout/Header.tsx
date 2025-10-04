@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import BrandLogo from "../common/BrandLogo";
+import NotificationBell from "../common/NotificationBell";
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface HeaderProps {
@@ -82,6 +83,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
 
         {/* Right side */}
         <div className="flex items-center gap-4">
+          <NotificationBell />
           <div className="hidden sm:flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
             {theme === "dark" ? (
               <>

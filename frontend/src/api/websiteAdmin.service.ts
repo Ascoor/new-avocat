@@ -12,6 +12,7 @@ import type {
   WebsiteReportSummary,
   WorkflowState,
 } from '@/types/website';
+import type { ActivityLogEntry } from '@/types/notifications';
 
 const unwrap = <T>(payload: unknown): T => {
   if (payload && typeof payload === 'object' && 'data' in (payload as Record<string, unknown>)) {
@@ -133,6 +134,11 @@ export const uploadWebsiteMedia = async (file: File): Promise<UploadMediaResult>
 export const getWebsiteReport = async (): Promise<WebsiteReportSummary> => {
   const { data } = await api.get('/api/admin/website/report');
   return unwrap<WebsiteReportSummary>(data);
+};
+
+export const getActivityLog = async (params?: { limit?: number }): Promise<ActivityLogEntry[]> => {
+  const { data } = await api.get('/api/admin/website/activity', { params });
+  return unwrapCollection<ActivityLogEntry>(data);
 };
 
 export const getWebsiteSettings = async (): Promise<PageContent> => getWebsitePage('settings');
