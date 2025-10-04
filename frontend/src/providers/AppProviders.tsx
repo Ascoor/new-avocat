@@ -8,6 +8,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
+import NotificationCenterProvider from '@/modules/notifications/NotificationCenter';
 
 const queryClient = new QueryClient();
 
@@ -20,15 +21,17 @@ const AppProviders = ({ children }: AppProvidersProps) => {
     <ThemeProvider>
       <LanguageProvider>
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <SidebarProvider>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                {children}
-              </TooltipProvider>
-            </SidebarProvider>
-          </AuthProvider>
+          <NotificationCenterProvider>
+            <AuthProvider>
+              <SidebarProvider>
+                <TooltipProvider>
+                  <Toaster />
+                  <Sonner />
+                  {children}
+                </TooltipProvider>
+              </SidebarProvider>
+            </AuthProvider>
+          </NotificationCenterProvider>
         </QueryClientProvider>
       </LanguageProvider>
     </ThemeProvider>

@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import BrandLogo from "../common/BrandLogo";
+import NotificationBell from "../common/NotificationBell";
 import { useTheme } from "@/contexts/ThemeContext";
 
 interface HeaderProps {
