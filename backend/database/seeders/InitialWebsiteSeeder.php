@@ -976,12 +976,15 @@ class InitialWebsiteSeeder extends Seeder
         ];
 
         foreach ($testimonials as $testimonial) {
+            $english = $testimonial['en'] ?? [];
+            $arabic = array_merge($english, $testimonial['ar'] ?? []);
+
             $page->contentBlocks()->create([
                 'key' => sprintf('testimonial_%d', $testimonial['id']),
                 'type' => 'json',
                 'value' => [
-                    'ar' => $testimonial['ar'],
-                    'en' => $testimonial['en'],
+                    'ar' => $arabic,
+                    'en' => $english,
                 ],
             ]);
         }
