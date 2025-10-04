@@ -17,4 +17,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* Dark CTA background */
+.bg-cta-dark {
+  @apply bg-gradient-to-br from-primary via-primary-glow to-slate-bg;
+  background-image: url('/textures/stars.svg');
+  background-size: cover;
+  opacity: 0.9;
+}
+
 }

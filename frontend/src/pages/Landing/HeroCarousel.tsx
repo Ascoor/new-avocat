@@ -1,25 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { motion, AnimatePresence, easeOut } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import type { Locale, Localized } from '@/types/website';
+import type { Locale } from '@/types/website';
 import {
   ChevronLeft,
-  ChevronRight,
-  Loader2,
-  Mail,
-  Play,
+  ChevronRight, 
   ShieldCheck,
   Sparkles,
-} from 'lucide-react';
+  Loader2,Cpu, PlayCircle } from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
-
-// Fallback assets
-import heroLegal1 from '@/assets/slides/hero-legal-1.png';
-import heroDigital2 from '@/assets/slides/hero-digital-2.png';
-import heroPartnership3 from '@/assets/slides/hero-partnership-3.png';
-import heroTeam from '@/assets/slides/hero-team-4.png';
 
 interface HeroSlide {
   id: number;
@@ -32,114 +24,9 @@ interface HeroSlide {
 }
 
 const overlayClasses = [
-  'bg-gradient-to-r from-black/80 via-slate-900/60 to-transparent',
-  'bg-gradient-to-r from-black/75 via-slate-900/55 to-transparent',
-  'bg-gradient-to-r from-black/85 via-slate-900/55 to-transparent',
-  'bg-gradient-to-r from-black/80 via-slate-900/60 to-transparent',
-];
-
-// ✅ fallbackSlides to be used if API empty
-const fallbackSlides: Array<{
-  id: number;
-  overlay: string;
-  image: string;
-  badge: Localized<string>;
-  title: Localized<string>;
-  subtitle: Localized<string>;
-  bullets: Localized<string[]>;
-}> = [
-  {
-    id: 1,
-    overlay: overlayClasses[0],
-    image: heroLegal1,
-    badge: { en: 'Flagship Litigation Unit', ar: 'وحدة التقاضي الرئيسية' },
-    title: { en: 'Elite trial counsel for high-stakes mandates', ar: 'محامون نخبة للقضايا المصيرية' },
-    subtitle: {
-      en: 'Seasoned advocates and digital workflows protect your interests across MENA courts.',
-      ar: 'محامون مخضرمون وسير عمل رقمية تحمي مصالحك عبر محاكم المنطقة.',
-    },
-    bullets: {
-      en: [
-        'Strategic command of commercial, administrative, and criminal disputes.',
-        'Secure evidence rooms and filings orchestrated with military precision.',
-        '24/7 bilingual crisis desk for urgent injunctions and enforcement.',
-      ],
-      ar: [
-        'إدارة استراتيجية للنزاعات التجارية والإدارية والجنائية.',
-        'غرف أدلة مؤمنة وإيداعات منظمة بدقة عالية.',
-        'مكتب طوارئ ثنائي اللغة على مدار الساعة للأوامر العاجلة والتنفيذ.',
-      ],
-    },
-  },
-  {
-    id: 2,
-    overlay: overlayClasses[1],
-    image: heroDigital2,
-    badge: { en: 'Digital Transformation', ar: 'التحول الرقمي' },
-    title: { en: 'Operate your firm on a unified digital backbone', ar: 'شغّل مكتبك على بنية رقمية موحدة' },
-    subtitle: {
-      en: 'AI-enabled matter management delivers clarity, compliance, and profitability.',
-      ar: 'إدارة القضايا بالذكاء الاصطناعي تمنحك الوضوح والامتثال والربحية.',
-    },
-    bullets: {
-      en: [
-        'Predictive analytics score risk, value, and timelines before filing.',
-        'Client dashboards report progress, fees, and key metrics in real time.',
-        'Automated document assembly executes compliant contracts instantly.',
-      ],
-      ar: [
-        'تحليلات تنبؤية تقيم المخاطر والقيمة والزمن قبل التقديم.',
-        'لوحات عملاء تعرض التقدم والرسوم والمؤشرات لحظة بلحظة.',
-        'تجميع عقود آلي ينفذ مستندات متوافقة فوراً.',
-      ],
-    },
-  },
-  {
-    id: 3,
-    overlay: overlayClasses[2],
-    image: heroPartnership3,
-    badge: { en: 'Trusted Cross-Border Partner', ar: 'شريك عبر الحدود' },
-    title: { en: 'Partnerships that scale across jurisdictions', ar: 'شراكات تتمدد عبر الولايات القضائية' },
-    subtitle: {
-      en: 'Collaborative models align your teams with regulators, investors, and clients.',
-      ar: 'نماذج تعاونية تنسق فرقك مع الجهات التنظيمية والمستثمرين والعملاء.',
-    },
-    bullets: {
-      en: [
-        'Integrated GCC and EU counsel network for seamless cross-border execution.',
-        'Cybersecure collaboration rooms keep regulators and stakeholders in sync.',
-        'Tailored playbooks align governance, compliance, and dispute strategies.',
-      ],
-      ar: [
-        'شبكة مستشارين في الخليج وأوروبا لتنفيذ عابر للحدود بلا انقطاع.',
-        'غرف تعاون مؤمنة تحافظ على تزامن الجهات الرقابية وأصحاب المصلحة.',
-        'دليل تشغيلي مصمم ينسق الحوكمة والامتثال واستراتيجيات النزاع.',
-      ],
-    },
-  },
-  {
-    id: 4,
-    overlay: overlayClasses[3],
-    image: heroTeam,
-    badge: { en: 'Elite Advisory Collective', ar: 'فريق الخبراء' },
-    title: { en: 'Secure. Scalable. Simply Extraordinary.', ar: 'آمن. قابل للتوسع. استثنائي ببساطة.' },
-    subtitle: {
-      en: 'Dedicated expert pods blend legal mastery with bank-grade security.',
-      ar: 'فرق خبراء متخصصة تجمع التميز القانوني مع أمان بمستوى البنوك.',
-    },
-    bullets: {
-      en: [
-        'Specialized task forces align litigators, consultants, and technologists.',
-        'Real-time collaboration hubs keep clients and regulators in sync.',
-        'Proven transformation playbooks accelerate adoption regionally and globally.',
-      ],
-      ar: [
-        'فرق عمل متخصصة توحد المحامين والاستشاريين والخبراء التقنيين.',
-        'مراكز تعاون لحظية تبقي العملاء والجهات التنظيمية والشركاء في انسجام.',
-        'أدلة تحول مجربة تسرّع الاعتماد عبر العمليات الإقليمية والعالمية.',
-      ],
-    },
-  },
+  'bg-gradient-to-b from-black/80 via-slate-900/60 to-transparent',
+  'bg-gradient-to-b from-black/75 via-slate-900/55 to-transparent',
+  'bg-gradient-to-b from-black/85 via-slate-900/55 to-transparent',
 ];
 
 const HeroCarousel: React.FC = () => {
@@ -147,167 +34,244 @@ const HeroCarousel: React.FC = () => {
   const [autoPlay, setAutoPlay] = useState(true);
   const { language } = useLanguage();
   const locale = language as Locale;
-  const isArabic = language === 'ar';
+  const isArabic = locale === 'ar';
   const { loading, contentBlocks, getLocalizedValue, getValueForLocale } = useWebsiteContent('hero');
 
-  const getString = useCallback(
-    (key: string, fallback = ''): string => getValueForLocale<string>(key, locale) ?? fallback,
-    [getValueForLocale, locale]
-  );
-
+  // 🧭 استخراج الشرائح من CMS
   const slideNumbers = useMemo(() => {
-    const numbers = new Set<number>();
+    const ids = new Set<number>();
     contentBlocks.forEach((block) => {
       const match = block.key.match(/^hero_slide_(\d+)_/);
-      if (match) numbers.add(Number(match[1]));
+      if (match) ids.add(Number(match[1]));
     });
-    if (numbers.size === 0) fallbackSlides.forEach((slide) => numbers.add(slide.id));
-    return Array.from(numbers).sort((a, b) => a - b);
+    return Array.from(ids).sort((a, b) => a - b);
   }, [contentBlocks]);
 
   const slides: HeroSlide[] = useMemo(() => {
     return slideNumbers.map((id, index) => {
-      const fallback = fallbackSlides.find((slide) => slide.id === id);
       const localizedImage = getLocalizedValue<string>(`hero_slide_${id}_image`);
-      const localizedBullets = getLocalizedValue<string[]>(`hero_slide_${id}_bullets`, fallback?.bullets);
-
-      const resolvedImage =
-        resolveAssetUrl(localizedImage[locale] ?? localizedImage.en ?? undefined) ?? fallback?.image;
-      const bullets =
-        (localizedBullets[locale] ?? localizedBullets.en ?? fallback?.bullets?.[locale] ?? []).filter(Boolean);
+      const localizedBullets = getLocalizedValue<string[]>(`hero_slide_${id}_bullets`);
+      const image = resolveAssetUrl(localizedImage[locale] ?? localizedImage.en ?? undefined);
+      const bullets = (localizedBullets[locale] ?? localizedBullets.en ?? []).filter(Boolean);
 
       return {
         id,
-        badge: getValueForLocale(`hero_slide_${id}_badge`, locale, fallback?.badge?.[locale] ?? '') ?? '',
-        title: getValueForLocale(`hero_slide_${id}_title`, locale, fallback?.title?.[locale] ?? '') ?? '',
-        subtitle: getValueForLocale(`hero_slide_${id}_subtitle`, locale, fallback?.subtitle?.[locale] ?? '') ?? '',
+        badge: getValueForLocale(`hero_slide_${id}_badge`, locale, '') ?? '',
+        title: getValueForLocale(`hero_slide_${id}_title`, locale, '') ?? '',
+        subtitle: getValueForLocale(`hero_slide_${id}_subtitle`, locale, '') ?? '',
         bullets,
-        image: resolvedImage,
-        overlay: fallback?.overlay ?? overlayClasses[index % overlayClasses.length],
+        image,
+        overlay: overlayClasses[index % overlayClasses.length],
       };
     });
-  }, [getLocalizedValue, getValueForLocale, locale, slideNumbers]);
+  }, [slideNumbers, locale, getLocalizedValue, getValueForLocale]);
 
-  // autoplay
+  // ⏱️ التشغيل التلقائي
   useEffect(() => {
     if (!autoPlay || slides.length <= 1) return;
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 6000);
+    const timer = setInterval(() => setCurrent((p) => (p + 1) % slides.length), 7000);
     return () => clearInterval(timer);
   }, [autoPlay, slides.length]);
 
-  if (loading && !slides.length) {
+  // 🌀 حالات التحميل
+  if (loading && !slides.length)
     return (
-      <section id="home" className="relative h-[80vh] min-h-[600px]">
-        <div className="flex h-full items-center justify-center">
-          <Loader2 className="h-10 w-10 animate-spin text-primary" />
-        </div>
+      <section id="home" className="relative h-[90vh] flex items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
       </section>
     );
-  }
 
-  if (!slides.length) return null;
+  if (!slides.length)
+    return (
+      <section id="home" className="relative h-[90vh] flex items-center justify-center text-muted-foreground">
+        <p>{isArabic ? 'لم يتم العثور على بيانات الشرائح بعد.' : 'No hero slides found yet.'}</p>
+      </section>
+    );
 
-  const activeSlide = slides[current];
+  const active = slides[current];
+
+  // 🎬 أنيميشن النصوص (Staggered fade + slide)
+  const textVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15,
+        duration: 0.6,
+        ease: easeOut, // ✅ إصلاح الـ TypeScript error هنا
+      },
+    }),
+  };
 
   return (
-    <section id="home" className="relative h-[80vh] min-h-[600px] overflow-hidden">
-      {/* background */}
-      <div className="absolute inset-0">
-        {slides.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transform transition-all duration-\[9000ms\] ease-out ${
-              index === current
-                ? 'opacity-100 scale-100 translate-x-0 blur-0'
-                : 'opacity-0 scale-105 translate-x-10 blur-sm'
-            }`}
+    <section
+      id="home"
+      dir={isArabic ? 'rtl' : 'ltr'}
+      className="relative h-[90vh] min-h-[640px] overflow-hidden bg-black"
+    >
+      {/* الخلفية */}
+      <AnimatePresence mode="wait">
+        {slides.map(
+          (s, i) =>
+            i === current && (
+              <motion.div
+                key={s.id}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 1.2, ease: easeOut }}
+                className="absolute inset-0"
+              >
+                {s.image && (
+                  <motion.div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${s.image})` }}
+                    initial={{ scale: 1.05 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 6, ease: easeOut }}
+                  />
+                )}
+                <div className={`absolute inset-0 ${s.overlay}`} />
+              </motion.div>
+            )
+        )}
+      </AnimatePresence>
+
+      {/* المحتوى */}
+      <div className="relative z-10 flex h-full items-center">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            key={active.id}
+            initial="hidden"
+            animate="visible"
+            className="max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur lg:p-10 dark:bg-background/70"
           >
-            <img src={slide.image} alt={slide.title} className="h-full w-full object-cover" />
-            <div className={`absolute inset-0 ${slide.overlay}`} />
-          </div>
-        ))}
+            {/* البادج */}
+            {active.badge && (
+              <motion.div
+                variants={textVariants}
+                custom={0}
+                className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold text-white/90 shadow-inner backdrop-blur"
+              >
+                <Sparkles className="h-4 w-4 text-accent" />
+                <span>{active.badge}</span>
+              </motion.div>
+            )}
+
+            {/* العنوان */}
+            <motion.h1
+              variants={textVariants}
+              custom={1}
+              className="text-4xl lg:text-5xl font-bold leading-tight text-white drop-shadow-md"
+            >
+              {active.title}
+            </motion.h1>
+
+            <motion.p
+              variants={textVariants}
+              custom={2}
+              className="mt-4 text-lg text-white/85 leading-relaxed"
+            >
+              {active.subtitle}
+            </motion.p>
+
+            {/* النقاط */}
+            <motion.ul className="mt-6 space-y-3 text-base text-white/85" initial="hidden" animate="visible">
+              {active.bullets.map((b, i) => (
+                <motion.li
+                  key={b}
+                  variants={textVariants}
+                  custom={i + 3}
+                  className="flex items-start gap-3"
+                >
+                  <ShieldCheck className="mt-1 h-5 w-5 text-accent flex-shrink-0" />
+                  <span>{b}</span>
+                </motion.li>
+              ))}
+            </motion.ul>
+
+            {/* الأزرار */}
+            <motion.div
+            
+  dir={isArabic ? 'ltr' : 'rtl'}
+              variants={textVariants}
+              custom={active.bullets.length + 4}
+              className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center"
+            >
+       
+
+<Button
+  onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
+  variant="accent"
+  className="btn-primary flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-white"
+>
+  <PlayCircle className="h-5 w-5" />
+  <span>{isArabic ? 'ابدأ رقمنة مكتبك' : 'Start Your Digital Transformation'}</span>
+</Button>
+
+<Button
+  onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
+  variant="hero"
+  className="btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 text-base font-semibold text-white"
+>
+  <Cpu className="h-5 w-5" />
+  <span>{isArabic ? 'تعرّف على الأنظمة' : 'Explore Our Systems'}</span>
+</Button>
+
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* content */}
-      <div className="relative z-10 h-full flex flex-col justify-center px-6 lg:px-10 max-w-6xl mx-auto">
-        {/* Badge */}
-        <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white/80">
-          <Sparkles className="h-4 w-4" />
-          <span>{activeSlide.badge}</span>
-        </div>
+      {/* عناصر التحكم */}
+   <div
+  dir={isArabic ? 'rtl' : 'ltr'}
+  className="absolute bottom-6 inset-x-0 z-20 flex items-center justify-center gap-4"
+>
+  {/* زر السابق */}
+  <button
+    onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
+    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
+    aria-label={isArabic ? 'الشريحة السابقة' : 'Previous slide'}
+  >
+    {isArabic ? (
+      <ChevronRight className="h-5 w-5" /> // ← بالعربي الزر العكسي
+    ) : (
+      <ChevronLeft className="h-5 w-5" />
+    )}
+  </button>
 
-        {/* Text */}
-        <div className="space-y-6" dir={isArabic ? 'rtl' : 'ltr'}>
-          <h1 className="text-4xl lg:text-6xl font-extrabold text-white drop-shadow-lg">
-            {activeSlide.title}
-          </h1>
-          <p className="max-w-3xl text-lg lg:text-xl text-white/80">{activeSlide.subtitle}</p>
+  {/* النقاط (المؤشرات) */}
+  <div className="flex gap-2">
+    {slides.map((_, i) => (
+      <button
+        key={i}
+        onClick={() => setCurrent(i)}
+        className={`h-2 rounded-full transition-all ${
+          i === current ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
+        }`}
+        aria-label={`Go to slide ${i + 1}`}
+      />
+    ))}
+  </div>
 
-          <ul className="grid gap-3 text-sm text-white/80 lg:max-w-2xl">
-            {activeSlide.bullets.map((bullet, idx) => (
-              <li key={`${activeSlide.id}-bullet-${idx}`} className="flex items-start gap-3">
-                <ShieldCheck className="mt-0.5 h-5 w-5 text-accent" />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* CTAs */}
-        <div className="mt-10 flex flex-wrap gap-4" dir={isArabic ? 'ltr' : 'rtl'}>
-          <Button
-            size="lg"
-            className="relative flex items-center gap-3 px-8 py-3 text-base shadow-gold bg-gradient-to-r from-accent to-primary text-primary-foreground rounded-lg hover:scale-105 transition-transform"
-            onClick={() => smoothScrollToElement(document.querySelector('#capabilities')!)}
-          >
-            <Play className="h-5 w-5 animate-pulse" />
-            <span>{getString('hero_cta_demo_label')}</span>
-          </Button>
-
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-white/40 bg-white/10 px-8 py-3 text-base text-white backdrop-blur rounded-lg hover:scale-105 hover:shadow-lg"
-            onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
-          >
-            <Mail className="h-5 w-5" />
-            <span>{getString('hero_cta_contact_label')}</span>
-          </Button>
-        </div>
-      </div>
-
-      {/* controls */}
-      <div className="absolute bottom-6 inset-x-0 z-20 flex items-center justify-center gap-4">
-        <button
-          onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-        <button
-          onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-
-        <div className="flex gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrent(index)}
-              className={`h-2 rounded-full transition-all ${
-                index === current ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
-              }`}
-            />
-          ))}
-        </div>
+  {/* زر التالي */}
+  <button
+    onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
+    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
+    aria-label={isArabic ? 'الشريحة التالية' : 'Next slide'}
+  >
+    {isArabic ? (
+      <ChevronLeft className="h-5 w-5" /> // ← بالعربي السهم العكسي
+    ) : (
+      <ChevronRight className="h-5 w-5" />
+    )}
+  </button> 
 
         <button
           onClick={() => setAutoPlay((p) => !p)}
-          className="ml-4 rounded-full border border-white/30 bg-black/30 px-4 py-1 text-xs uppercase text-white/70 hover:text-white"
+          className="ml-4 rounded-full border border-white/30 bg-black/30 px-4 py-1 text-xs uppercase text-white/70 hover:text-white transition"
         >
           {autoPlay ? 'Pause' : 'Play'}
         </button>

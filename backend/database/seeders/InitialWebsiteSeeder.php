@@ -6,6 +6,9 @@ use App\Models\Achievement;
 use App\Models\Article;
 use App\Models\ContentBlock;
 use App\Models\Page;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema; 
 use App\Models\TeamMember;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -14,6 +17,19 @@ class InitialWebsiteSeeder extends Seeder
 {
     public function run(): void
     {
+    Schema::disableForeignKeyConstraints();
+
+        // 🧹 تنظيف الجداول المرتبطة قبل إعادة التخزين
+        DB::table('content_blocks')->truncate();
+        DB::table('pages')->truncate();
+        DB::table('team_members')->truncate();
+        DB::table('achievements')->truncate();
+        DB::table('articles')->truncate();
+
+        Schema::enableForeignKeyConstraints();
+
+        // 🚀 بدء إعادة الإدخال
+        $this->command->info('Seeding website structure...');
         $this->seedHeroPage();
         $this->seedAboutPage();
         $this->seedServicesPage();
@@ -27,192 +43,163 @@ class InitialWebsiteSeeder extends Seeder
         $this->seedContact();
         $this->seedFooter();
         $this->seedSettings();
+
+        $this->command->info('✅ Website content seeded successfully with IDs reset.');
     }
+
 
     private function seedHeroPage(): void
     {
-        $page = Page::updateOrCreate(
-            ['slug' => 'hero'],
-            ['title_ar' => 'الرئيسية', 'title_en' => 'Home']
-        );
+        
+    $page = Page::updateOrCreate(
+        ['slug' => 'hero'],
+        ['title_ar' => 'الرئيسية', 'title_en' => 'Home']
+    );
 
-        $page->contentBlocks()->delete();
+    $page->contentBlocks()->delete();
 
-        $slides = [
-            [
-                'badge' => [
-                    'ar' => 'وحدة التقاضي الرئيسية',
-                    'en' => 'Flagship Litigation Unit',
+    $slides = [
+        [
+            'badge' => [
+                'ar' => 'رقمنة مكتبك',
+                'en' => 'Digitize Your Practice',
+            ],
+            'title' => [
+                'ar' => 'حان الوقت لرقمنة مكتبك وإدارة القضايا بذكاء ومرونة.',
+                'en' => 'It’s time to digitize your firm and manage cases with intelligence and agility.',
+            ],
+            'subtitle' => [
+                'ar' => 'انتقل إلى تجربة قانونية أسرع، أذكى وأكثر أمانًا.',
+                'en' => 'Move to a faster, smarter, and more secure legal experience.',
+            ],
+            'image' => [
+                'ar' => 'branding/landing/hero-slogan-1.png',
+                'en' => 'branding/landing/hero-slogan-1.png',
+            ],
+            'bullets' => [
+                'ar' => [
+                    'كل القرارات والتقارير أصبحت بين يديك... بضغطة زر.',
+                    'نظم إجراءاتك، وتصفح ملفاتك من هاتفك… بلا قيود أو أوراق.',
                 ],
-                'title' => [
-                    'ar' => 'محامون نخبة للقضايا المصيرية',
-                    'en' => 'Elite trial counsel for high-stakes mandates',
-                ],
-                'subtitle' => [
-                    'ar' => 'محامون مخضرمون وسير عمل رقمية تحمي مصالحك عبر محاكم المنطقة.',
-                    'en' => 'Seasoned advocates and digital workflows protect your interests across MENA courts.',
-                ],
-                'image' => [
-                    'ar' => 'branding/landing/hero-legal-1.png',
-                    'en' => 'branding/landing/hero-legal-1.png',
-                ],
-                'bullets' => [
-                    'ar' => [
-                        'إدارة استراتيجية للنزاعات التجارية والإدارية والجنائية.',
-                        'غرف أدلة مؤمنة وإيداعات منظمة بدقة عالية.',
-                        'مكتب طوارئ ثنائي اللغة على مدار الساعة للأوامر العاجلة والتنفيذ.',
-                    ],
-                    'en' => [
-                        'Strategic command of commercial, administrative, and criminal disputes.',
-                        'Secure evidence rooms and filings orchestrated with military precision.',
-                        '24/7 bilingual crisis desk for urgent injunctions and enforcement.',
-                    ],
+                'en' => [
+                    'All decisions and reports are now at your fingertips… with one click.',
+                    'Organize your processes and access files from your phone… no paper needed.',
                 ],
             ],
-            [
-                'badge' => [
-                    'ar' => 'التحول الرقمي',
-                    'en' => 'Digital Transformation',
+        ],
+        [
+            'badge' => [
+                'ar' => 'التحول الرقمي',
+                'en' => 'Digital Transformation',
+            ],
+            'title' => [
+                'ar' => 'شغّل مكتبك على بنية رقمية موحدة',
+                'en' => 'Operate your firm on a unified digital backbone',
+            ],
+            'subtitle' => [
+                'ar' => 'إدارة القضايا بالذكاء الاصطناعي تمنحك الوضوح والامتثال والربحية.',
+                'en' => 'AI-enabled matter management delivers clarity, compliance, and profitability.',
+            ],
+            'image' => [
+                'ar' => 'branding/landing/hero-digital-2.png',
+                'en' => 'branding/landing/hero-digital-2.png',
+            ],
+            'bullets' => [
+                'ar' => [
+                    'تحليلات تنبؤية تقيم المخاطر والقيمة والزمن قبل التقديم.',
+                    'لوحات عملاء تعرض التقدم والرسوم والمؤشرات لحظة بلحظة.',
+                    'تجميع عقود آلي ينفذ مستندات متوافقة فوراً.',
                 ],
-                'title' => [
-                    'ar' => 'شغّل مكتبك على بنية رقمية موحدة',
-                    'en' => 'Operate your firm on a unified digital backbone',
-                ],
-                'subtitle' => [
-                    'ar' => 'إدارة القضايا بالذكاء الاصطناعي تمنحك الوضوح والامتثال والربحية.',
-                    'en' => 'AI-enabled matter management delivers clarity, compliance, and profitability.',
-                ],
-                'image' => [
-                    'ar' => 'branding/landing/hero-digital-2.png',
-                    'en' => 'branding/landing/hero-digital-2.png',
-                ],
-                'bullets' => [
-                    'ar' => [
-                        'تحليلات تنبؤية تقيم المخاطر والقيمة والزمن قبل التقديم.',
-                        'لوحات عملاء تعرض التقدم والرسوم والمؤشرات لحظة بلحظة.',
-                        'تجميع عقود آلي ينفذ مستندات متوافقة فوراً.',
-                    ],
-                    'en' => [
-                        'Predictive analytics score risk, value, and timelines before filing.',
-                        'Client dashboards report progress, fees, and key metrics in real time.',
-                        'Automated document assembly executes compliant contracts instantly.',
-                    ],
+                'en' => [
+                    'Predictive analytics score risk, value, and timelines before filing.',
+                    'Client dashboards report progress, fees, and key metrics in real time.',
+                    'Automated document assembly executes compliant contracts instantly.',
                 ],
             ],
-            [
-                'badge' => [
-                    'ar' => 'شريك عبر الحدود',
-                    'en' => 'Trusted Cross-Border Partner',
+        ],
+        [
+            'badge' => [
+                'ar' => 'الأمان السيبراني',
+                'en' => 'Cybersecurity',
+            ],
+            'title' => [
+                'ar' => 'حماية قانونية بمستوى عسكري',
+                'en' => 'Military-grade legal cybersecurity',
+            ],
+            'subtitle' => [
+                'ar' => 'ملفاتك القانونية مشفرة ومحمية من أي اختراق.',
+                'en' => 'Your legal files are encrypted and shielded from breaches.',
+            ],
+            'image' => [
+                'ar' => 'branding/landing/hero-cyber.png',
+                'en' => 'branding/landing/hero-cyber.png',
+            ],
+            'bullets' => [
+                'ar' => [
+                    'غرف أدلة رقمية بتشفير كامل.',
+                    'تتبع كل عملية وصول لحماية بياناتك.',
+                    'خصوصية كاملة تمنحك الثقة.',
                 ],
-                'title' => [
-                    'ar' => 'شراكات تتمدد عبر الولايات القضائية',
-                    'en' => 'Partnerships that scale across jurisdictions',
-                ],
-                'subtitle' => [
-                    'ar' => 'نماذج تعاونية تنسق فرقك مع الجهات التنظيمية والمستثمرين والعملاء.',
-                    'en' => 'Collaborative models align your teams with regulators, investors, and clients.',
-                ],
-                'image' => [
-                    'ar' => 'branding/landing/hero-partnership-3.png',
-                    'en' => 'branding/landing/hero-partnership-3.png',
-                ],
-                'bullets' => [
-                    'ar' => [
-                        'شبكة مستشارين في الخليج وأوروبا لتنفيذ عابر للحدود بلا انقطاع.',
-                        'غرف تعاون مؤمنة تحافظ على تزامن الجهات الرقابية وأصحاب المصلحة.',
-                        'دليل تشغيلي مصمم ينسق الحوكمة والامتثال واستراتيجيات النزاع.',
-                    ],
-                    'en' => [
-                        'Integrated GCC and EU counsel network for seamless cross-border execution.',
-                        'Cybersecure collaboration rooms keep regulators and stakeholders in sync.',
-                        'Tailored playbooks align governance, compliance, and dispute strategies.',
-                    ],
+                'en' => [
+                    'Fully encrypted digital evidence rooms.',
+                    'Track every access for ultimate data protection.',
+                    'Total privacy that builds trust.',
                 ],
             ],
-            [
-                'badge' => [
-                    'ar' => 'فريق الخبراء',
-                    'en' => 'Elite Advisory Collective',
-                ],
-                'title' => [
-                    'ar' => 'آمن. قابل للتوسع. استثنائي ببساطة.',
-                    'en' => 'Secure. Scalable. Simply Extraordinary.',
-                ],
-                'subtitle' => [
-                    'ar' => 'فرق خبراء متخصصة تجمع التميز القانوني مع أمان بمستوى البنوك لأهم قضاياك الاستراتيجية.',
-                    'en' => 'Dedicated expert pods blend legal mastery with bank-grade security for your most strategic matters.',
-                ],
-                'image' => [
-                    'ar' => 'branding/landing/hero-team-4.png',
-                    'en' => 'branding/landing/hero-team-4.png',
-                ],
-                'bullets' => [
-                    'ar' => [
-                        'فرق عمل متخصصة توحد المحامين والاستشاريين والخبراء التقنيين لكل تفويض قانوني.',
-                        'مراكز تعاون لحظية تبقي العملاء والجهات التنظيمية والشركاء في انسجام تام.',
-                        'أدلة تحول مجربة تسرّع الاعتماد عبر العمليات الإقليمية والعالمية.',
-                    ],
-                    'en' => [
-                        'Specialized task forces align litigators, consultants, and technologists for every mandate.',
-                        'Real-time collaboration hubs keep clients, regulators, and partners perfectly synchronized.',
-                        'Proven transformation playbooks accelerate adoption across regional and global operations.',
-                    ],
-                ],
-            ],
-        ];
+        ],
+    ];
 
-        foreach ($slides as $index => $slide) {
-            $position = $index + 1;
-
-            $page->contentBlocks()->createMany([
-                [
-                    'key' => "hero_slide_{$position}_badge",
-                    'type' => 'text',
-                    'value' => $slide['badge'],
-                ],
-                [
-                    'key' => "hero_slide_{$position}_title",
-                    'type' => 'text',
-                    'value' => $slide['title'],
-                ],
-                [
-                    'key' => "hero_slide_{$position}_subtitle",
-                    'type' => 'text',
-                    'value' => $slide['subtitle'],
-                ],
-                [
-                    'key' => "hero_slide_{$position}_image",
-                    'type' => 'image',
-                    'value' => $slide['image'],
-                ],
-                [
-                    'key' => "hero_slide_{$position}_bullets",
-                    'type' => 'list',
-                    'value' => $slide['bullets'],
-                ],
-            ]);
-        }
+    foreach ($slides as $index => $slide) {
+        $position = $index + 1;
 
         $page->contentBlocks()->createMany([
             [
-                'key' => 'hero_cta_demo_label',
+                'key' => "hero_slide_{$position}_badge",
                 'type' => 'text',
-                'value' => [
-                    'ar' => 'اطلب العرض التفاعلي',
-                    'en' => 'Request Live Demo',
-                ],
+                'value' => $slide['badge'],
             ],
             [
-                'key' => 'hero_cta_contact_label',
+                'key' => "hero_slide_{$position}_title",
                 'type' => 'text',
-                'value' => [
-                    'ar' => 'تواصل مع الخبراء',
-                    'en' => 'Speak to Counsel',
-                ],
+                'value' => $slide['title'],
+            ],
+            [
+                'key' => "hero_slide_{$position}_subtitle",
+                'type' => 'text',
+                'value' => $slide['subtitle'],
+            ],
+            [
+                'key' => "hero_slide_{$position}_image",
+                'type' => 'image',
+                'value' => $slide['image'],
+            ],
+            [
+                'key' => "hero_slide_{$position}_bullets",
+                'type' => 'list',
+                'value' => $slide['bullets'],
             ],
         ]);
     }
 
+    $page->contentBlocks()->createMany([
+        [
+            'key' => 'hero_cta_demo_label',
+            'type' => 'text',
+            'value' => [
+                'ar' => 'اطلب العرض التفاعلي',
+                'en' => 'Request Live Demo',
+            ],
+        ],
+        [
+            'key' => 'hero_cta_contact_label',
+            'type' => 'text',
+            'value' => [
+                'ar' => 'تواصل مع الخبراء',
+                'en' => 'Speak to Counsel',
+            ],
+        ],
+    ]);
+}
     private function seedAboutPage(): void
     {
         $page = Page::updateOrCreate(
@@ -398,69 +385,90 @@ class InitialWebsiteSeeder extends Seeder
                 ],
             ],
         ]);
+$groups = [
+    'legal_services' => [
+        'title' => [
+            'ar' => 'الخدمات القانونية',
+            'en' => 'Legal Services',
+        ],
+        'description' => [
+            'ar' => 'حلول قانونية شاملة تغطي التقاضي، التحكيم، العقود، تأسيس الشركات، الامتثال، والاستشارات المتخصصة في القطاعات الحديثة مثل التقنية والتمويل والطاقة.',
+            'en' => 'Comprehensive legal solutions covering litigation, arbitration, contracts, corporate setup, compliance, and emerging sectors like technology, finance, and energy.',
+        ],
+        'items' => [
+            'ar' => [
+                'التقاضي وحل النزاعات',
+                'التحكيم التجاري والدولي',
+                'صياغة العقود والتفاوض الاحترافي',
+                'استشارات الحوكمة والإدارة للشركات',
+                'تأسيس الشركات المحلية والدولية',
+                'حماية حقوق الملكية الفكرية والعلامات التجارية',
+                'الامتثال التنظيمي والتشريعي المتخصص',
+                'القانون التجاري والتمويلي الحديث',
+                'الاستشارات في القوانين التكنولوجية والتحول الرقمي',
+                'القانون المالي والمصرفي والتمويل الإسلامي',
+                'قانون الشركات الناشئة ورأس المال الجريء',
+                'القانون البيئي والاستدامة والمسؤولية المجتمعية',
+                'إدارة المخاطر القانونية والتعاقدية',
+                'الوساطة والتسويات خارج المحاكم',
+            ],
+            'en' => [
+                'Litigation & Dispute Resolution',
+                'Commercial & International Arbitration',
+                'Professional Contract Drafting & Negotiation',
+                'Corporate Governance & Executive Advisory',
+                'Local & International Company Formation',
+                'Intellectual Property & Trademark Protection',
+                'Regulatory & Sector-Specific Compliance',
+                'Modern Commercial & Financial Law',
+                'Technology Law & Digital Transformation Advisory',
+                'Banking, Finance & Islamic Finance Law',
+                'Startup & Venture Capital Legal Structuring',
+                'Environmental, ESG & Sustainability Law',
+                'Legal & Contractual Risk Management',
+                'Mediation & Out-of-Court Settlements',
+            ],
+        ],
+    ],
 
-        $groups = [
-            'legal_services' => [
-                'title' => [
-                    'ar' => 'الخدمات القانونية',
-                    'en' => 'Legal Services',
-                ],
-                'description' => [
-                    'ar' => 'التقاضي وحل النزاعات، التحكيم التجاري والدولي، صياغة العقود، الاستشارات للشركات، تأسيس الشركات، حماية الملكية الفكرية، والامتثال المتخصص لكل قطاع.',
-                    'en' => 'Litigation & dispute resolution, international arbitration, contract drafting, corporate advisory, company formation, IP protection, and sector-specific compliance.',
-                ],
-                'items' => [
-                    'ar' => [
-                        'التقاضي وحل النزاعات',
-                        'التحكيم التجاري والدولي',
-                        'صياغة العقود والتفاوض',
-                        'استشارات الحوكمة للشركات',
-                        'تأسيس الشركات',
-                        'حماية الملكية الفكرية',
-                        'الامتثال للتشريعات',
-                    ],
-                    'en' => [
-                        'Litigation & Dispute Resolution',
-                        'International Arbitration',
-                        'Contract Drafting & Negotiation',
-                        'Corporate Governance Advisory',
-                        'Company Incorporation',
-                        'Intellectual Property Protection',
-                        'Regulatory Compliance',
-                    ],
-                ],
+    'digital_ai_services' => [
+        'title' => [
+            'ar' => 'الخدمات الرقمية والذكاء الاصطناعي',
+            'en' => 'Digital & AI Services',
+        ],
+        'description' => [
+            'ar' => 'خدمات تقنية متقدمة تربط بين القانون والذكاء الاصطناعي — من إدارة القضايا الرقمية إلى تحليل البيانات القانونية وأمن المعلومات.',
+            'en' => 'Advanced tech-driven services merging law and AI — from digital case management to data analytics and cybersecurity protection.',
+        ],
+        'items' => [
+            'ar' => [
+                'منصات إدارة القضايا الذكية المعتمدة على الذكاء الاصطناعي',
+                'مساعدو البحث القانوني المدعومون بالذكاء الاصطناعي',
+                'أنظمة التوقيع الإلكتروني الموثوق والآمن',
+                'أتمتة عمليات الامتثال والحوكمة المؤسسية',
+                'الحماية من الجرائم الإلكترونية واختراق البيانات',
+                'تدقيق خصوصية البيانات ومطابقة لوائح GDPR وNCA',
+                'تحليل الأدلة الجنائية الرقمية',
+                'التحول الرقمي وإدارة الوثائق القانونية إلكترونيًا',
+                'تحليلات المخاطر القانونية بالذكاء الاصطناعي',
+                'تكامل الأنظمة القانونية السحابية (Cloud Legal Systems)',
             ],
-            'digital_ai_services' => [
-                'title' => [
-                    'ar' => 'الخدمات الرقمية والذكاء الاصطناعي',
-                    'en' => 'Digital & AI Services',
-                ],
-                'description' => [
-                    'ar' => 'إدارة القضايا الرقمية، مساعدو البحث بالذكاء الاصطناعي، سير عمل التوقيع الإلكتروني، أتمتة الامتثال، مكافحة الجريمة الإلكترونية، وبرامج خصوصية البيانات.',
-                    'en' => 'Digital case management, AI research assistants, e-signature workflows, compliance automation, cybercrime protection, and data privacy programs.',
-                ],
-                'items' => [
-                    'ar' => [
-                        'استراتيجيات القضايا المدعومة بالذكاء الاصطناعي',
-                        'منصات إدارة القضايا الرقمية',
-                        'سير عمل التوقيع الإلكتروني الآمن',
-                        'لوحات أتمتة الامتثال',
-                        'مكافحة الجريمة الإلكترونية',
-                        'تدقيق خصوصية البيانات والحوكمة',
-                        'الأدلة الجنائية الرقمية',
-                    ],
-                    'en' => [
-                        'AI-Augmented Case Strategy',
-                        'Digital Case Management Platforms',
-                        'Secure E-Signature Workflows',
-                        'Compliance Automation Dashboards',
-                        'Cybercrime Protection',
-                        'Data Privacy & Governance Audits',
-                        'Digital Evidence Forensics',
-                    ],
-                ],
+            'en' => [
+                'AI-Driven Smart Case Management Platforms',
+                'AI Legal Research & Predictive Analytics',
+                'Trusted & Secure E-Signature Systems',
+                'Automated Compliance & Corporate Governance Workflows',
+                'Cybersecurity & Data Breach Protection',
+                'Data Privacy Audits under GDPR & NCA Frameworks',
+                'Digital Forensics & Evidence Analysis',
+                'Digital Transformation & E-Document Management',
+                'AI-Powered Legal Risk Prediction Tools',
+                'Cloud-Integrated Legal Operations Systems',
             ],
-        ];
+        ],
+    ],
+];
+
 
         foreach ($groups as $key => $group) {
             $page->contentBlocks()->createMany([
