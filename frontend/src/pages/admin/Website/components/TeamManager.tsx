@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
 
 import {
   createTeamMember,
@@ -27,6 +27,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import type { TeamMemberApi } from '@/types/website';
 import { useToast } from '@/components/ui/use-toast';
+import useUserRoles from '@/hooks/useUserRoles';
 
 interface TeamMemberFormValues {
   name_en: string;
@@ -91,6 +92,10 @@ const toFormValues = (member: TeamMemberApi | null): TeamMemberFormValues => {
 const TeamManager: React.FC = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { can } = useUserRoles();
+  const canManageTeam = can('pages:edit');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const teamQuery = useQuery({
     queryKey: ['admin-team-members'],
@@ -140,6 +145,10 @@ const TeamManager: React.FC = () => {
   });
 
   const handleSubmit = (values: TeamMemberFormValues) => {
+    if (!canManageTeam) {
+      toast({ title: 'Read-only mode', description: 'You do not have permission to modify team members.', variant: 'destructive' });
+      return;
+    }
     const payload = toInputPayload(values);
     const id = editingMember?.id;
     if (!payload.name_en || !payload.name_ar) {
@@ -151,6 +160,10 @@ const TeamManager: React.FC = () => {
   };
 
   const handleOpenDialog = (member: TeamMemberApi | null = null) => {
+    if (!canManageTeam) {
+      toast({ title: 'Read-only mode', description: 'You do not have permission to edit team members.', variant: 'destructive' });
+      return;
+    }
     setEditingMember(member);
     setDialogOpen(true);
   };
@@ -160,19 +173,54 @@ const TeamManager: React.FC = () => {
     setEditingMember(null);
   };
 
+  const handleRequestDelete = (member: TeamMemberApi) => {
+    if (!canManageTeam) {
+      toast({ title: 'Read-only mode', description: 'You do not have permission to delete team members.', variant: 'destructive' });
+      return;
+    }
+    setPendingDelete(member);
+  };
+
   const members = useMemo(() => teamQuery.data ?? [], [teamQuery.data]);
+  const filteredMembers = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return members;
+    }
+    const normalized = searchTerm.toLowerCase();
+    return members.filter((member) => {
+      const name = `${member.name.en ?? ''} ${member.name.ar ?? ''}`.toLowerCase();
+      const role = `${member.position.en ?? ''} ${member.position.ar ?? ''}`.toLowerCase();
+      return name.includes(normalized) || role.includes(normalized);
+    });
+  }, [members, searchTerm]);
+  const visibleMembers = useMemo(() => filteredMembers.slice(0, visibleCount), [filteredMembers, visibleCount]);
+  const hasMoreMembers = visibleMembers.length < filteredMembers.length;
 
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+        <CardHeader className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="space-y-1">
             <CardTitle className="text-xl font-semibold">Leadership team</CardTitle>
             <CardDescription>Manage the team members showcased on the landing page.</CardDescription>
           </div>
-          <Button type="button" onClick={() => handleOpenDialog(null)}>
-            <Plus className="mr-2 h-4 w-4" /> Add member
-          </Button>
+          <div className="flex w-full flex-col gap-2 lg:w-auto lg:flex-row lg:items-center">
+            <div className="relative w-full lg:w-72">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search team members"
+                className="pl-9"
+                value={searchTerm}
+                onChange={(event) => {
+                  setSearchTerm(event.target.value);
+                  setVisibleCount(10);
+                }}
+              />
+            </div>
+            <Button type="button" onClick={() => handleOpenDialog(null)} disabled={!canManageTeam}>
+              <Plus className="mr-2 h-4 w-4" /> Add member
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           {teamQuery.isLoading ? (
@@ -181,47 +229,58 @@ const TeamManager: React.FC = () => {
               <Skeleton className="h-8 w-full" />
               <Skeleton className="h-8 w-full" />
             </div>
-          ) : members.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No team members found.</p>
+          ) : filteredMembers.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No team members match the current filters.</p>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name (EN)</TableHead>
-                    <TableHead>اسم (AR)</TableHead>
-                    <TableHead>Role (EN)</TableHead>
-                    <TableHead className="w-32 text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {members.map((member) => (
-                    <TableRow key={member.id}>
-                      <TableCell className="font-medium">{member.name.en}</TableCell>
-                      <TableCell dir="rtl">{member.name.ar}</TableCell>
-                      <TableCell>{member.position.en}</TableCell>
-                      <TableCell className="flex justify-end gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          onClick={() => handleOpenDialog(member)}
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          onClick={() => setPendingDelete(member)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
+            <div className="space-y-3">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name (EN)</TableHead>
+                      <TableHead>اسم (AR)</TableHead>
+                      <TableHead>Role (EN)</TableHead>
+                      <TableHead className="w-32 text-right">Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {visibleMembers.map((member) => (
+                      <TableRow key={member.id}>
+                        <TableCell className="font-medium">{member.name.en}</TableCell>
+                        <TableCell dir="rtl">{member.name.ar}</TableCell>
+                        <TableCell>{member.position.en}</TableCell>
+                        <TableCell className="flex justify-end gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            onClick={() => handleOpenDialog(member)}
+                            disabled={!canManageTeam}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="icon"
+                            onClick={() => handleRequestDelete(member)}
+                            disabled={!canManageTeam}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+              {hasMoreMembers ? (
+                <div className="flex justify-center">
+                  <Button type="button" variant="outline" onClick={() => setVisibleCount((count) => count + 10)}>
+                    Load more members
+                  </Button>
+                </div>
+              ) : null}
             </div>
           )}
         </CardContent>
@@ -248,29 +307,29 @@ const TeamManager: React.FC = () => {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="name_en">Name (EN)</Label>
-                <Input id="name_en" {...form.register('name_en')} required />
+                <Input id="name_en" disabled={!canManageTeam} {...form.register('name_en')} required />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="name_ar">الاسم (AR)</Label>
-                <Input id="name_ar" dir="rtl" {...form.register('name_ar')} required />
+                <Input id="name_ar" dir="rtl" disabled={!canManageTeam} {...form.register('name_ar')} required />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="position_en">Role (EN)</Label>
-                <Input id="position_en" {...form.register('position_en')} required />
+                <Input id="position_en" disabled={!canManageTeam} {...form.register('position_en')} required />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="position_ar">الدور (AR)</Label>
-                <Input id="position_ar" dir="rtl" {...form.register('position_ar')} required />
+                <Input id="position_ar" dir="rtl" disabled={!canManageTeam} {...form.register('position_ar')} required />
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <Label htmlFor="bio_en">Bio (EN)</Label>
-                <Textarea id="bio_en" rows={4} {...form.register('bio_en')} />
+                <Textarea id="bio_en" rows={4} disabled={!canManageTeam} {...form.register('bio_en')} />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="bio_ar">السيرة (AR)</Label>
-                <Textarea id="bio_ar" rows={4} dir="rtl" {...form.register('bio_ar')} />
+                <Textarea id="bio_ar" rows={4} dir="rtl" disabled={!canManageTeam} {...form.register('bio_ar')} />
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -280,6 +339,7 @@ const TeamManager: React.FC = () => {
                   id="highlights_en"
                   rows={4}
                   placeholder="One item per line"
+                  disabled={!canManageTeam}
                   {...form.register('highlights_en')}
                 />
               </div>
@@ -290,20 +350,26 @@ const TeamManager: React.FC = () => {
                   rows={4}
                   dir="rtl"
                   placeholder="عنصر لكل سطر"
+                  disabled={!canManageTeam}
                   {...form.register('highlights_ar')}
                 />
               </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="image">Image path (optional)</Label>
-              <Input id="image" placeholder="branding/landing/team-1.png" {...form.register('image')} />
+              <Input
+                id="image"
+                placeholder="branding/landing/team-1.png"
+                disabled={!canManageTeam}
+                {...form.register('image')}
+              />
             </div>
 
             <DialogFooter className="pt-2">
               <Button type="button" variant="outline" onClick={handleCloseDialog}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={saveMutation.isPending}>
+              <Button type="submit" disabled={saveMutation.isPending || !canManageTeam}>
                 {saveMutation.isPending ? 'Saving…' : 'Save'}
               </Button>
             </DialogFooter>
@@ -312,13 +378,13 @@ const TeamManager: React.FC = () => {
       </Dialog>
 
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
+        open={Boolean(pendingDelete && canManageTeam)}
         title="Remove team member?"
         description="This action removes the member from the public landing page."
         confirmLabel="Delete"
         cancelLabel="Cancel"
         onConfirm={() => {
-          if (pendingDelete) {
+          if (pendingDelete && canManageTeam) {
             deleteMutation.mutate(pendingDelete.id);
           }
         }}

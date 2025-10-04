@@ -9,6 +9,7 @@ interface TextFieldEditorProps {
   control: Control<PageFormValues>;
   index: number;
   type?: string | null;
+  readOnly?: boolean;
 }
 
 const resolveRows = (type: string | null | undefined) => {
@@ -19,7 +20,7 @@ const resolveRows = (type: string | null | undefined) => {
   return 4;
 };
 
-const TextFieldEditor: React.FC<TextFieldEditorProps> = ({ control, index, type }) => {
+const TextFieldEditor: React.FC<TextFieldEditorProps> = ({ control, index, type, readOnly = false }) => {
   const labelSuffix = type === 'list' ? ' (one item per line)' : '';
 
   return (
@@ -31,7 +32,7 @@ const TextFieldEditor: React.FC<TextFieldEditorProps> = ({ control, index, type 
           <FormItem>
             <FormLabel>English{labelSuffix}</FormLabel>
             <FormControl>
-              <Textarea rows={resolveRows(type)} {...field} />
+              <Textarea rows={resolveRows(type)} disabled={readOnly} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -45,7 +46,7 @@ const TextFieldEditor: React.FC<TextFieldEditorProps> = ({ control, index, type 
           <FormItem>
             <FormLabel>Arabic{labelSuffix}</FormLabel>
             <FormControl>
-              <Textarea rows={resolveRows(type)} dir="rtl" {...field} />
+              <Textarea rows={resolveRows(type)} dir="rtl" disabled={readOnly} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

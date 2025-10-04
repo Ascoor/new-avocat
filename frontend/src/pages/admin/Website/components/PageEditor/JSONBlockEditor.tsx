@@ -8,9 +8,10 @@ import type { PageFormValues } from './types';
 interface JSONBlockEditorProps {
   control: Control<PageFormValues>;
   index: number;
+  readOnly?: boolean;
 }
 
-const JSONBlockEditor: React.FC<JSONBlockEditorProps> = ({ control, index }) => {
+const JSONBlockEditor: React.FC<JSONBlockEditorProps> = ({ control, index, readOnly = false }) => {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <FormField
@@ -20,7 +21,7 @@ const JSONBlockEditor: React.FC<JSONBlockEditorProps> = ({ control, index }) => 
           <FormItem>
             <FormLabel>English JSON</FormLabel>
             <FormControl>
-              <Textarea rows={12} {...field} />
+              <Textarea rows={12} disabled={readOnly} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -34,7 +35,7 @@ const JSONBlockEditor: React.FC<JSONBlockEditorProps> = ({ control, index }) => 
           <FormItem>
             <FormLabel>Arabic JSON</FormLabel>
             <FormControl>
-              <Textarea rows={12} dir="rtl" {...field} />
+              <Textarea rows={12} dir="rtl" disabled={readOnly} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

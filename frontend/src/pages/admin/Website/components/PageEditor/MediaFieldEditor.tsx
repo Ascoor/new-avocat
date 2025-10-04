@@ -10,9 +10,10 @@ interface MediaFieldEditorProps {
   control: Control<PageFormValues>;
   form: UseFormReturn<PageFormValues>;
   index: number;
+  readOnly?: boolean;
 }
 
-const MediaFieldEditor: React.FC<MediaFieldEditorProps> = ({ control, form, index }) => {
+const MediaFieldEditor: React.FC<MediaFieldEditorProps> = ({ control, form, index, readOnly = false }) => {
   const valueEn = form.watch(`blocks.${index}.value_en`);
   const valueAr = form.watch(`blocks.${index}.value_ar`);
 
@@ -23,7 +24,7 @@ const MediaFieldEditor: React.FC<MediaFieldEditorProps> = ({ control, form, inde
 
   return (
     <div className="space-y-4">
-      <UploadMedia value={valueEn || valueAr || ''} onChange={handleUpload} />
+      <UploadMedia value={valueEn || valueAr || ''} onChange={handleUpload} disabled={readOnly} />
 
       <div className="grid gap-4 md:grid-cols-2">
         <FormField
@@ -33,7 +34,7 @@ const MediaFieldEditor: React.FC<MediaFieldEditorProps> = ({ control, form, inde
             <FormItem>
               <FormLabel>Media URL (EN)</FormLabel>
               <FormControl>
-                <Input placeholder="https://" {...field} />
+                <Input placeholder="https://" disabled={readOnly} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -47,7 +48,7 @@ const MediaFieldEditor: React.FC<MediaFieldEditorProps> = ({ control, form, inde
             <FormItem>
               <FormLabel>رابط الوسائط (AR)</FormLabel>
               <FormControl>
-                <Input dir="rtl" placeholder="https://" {...field} />
+                <Input dir="rtl" placeholder="https://" disabled={readOnly} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
