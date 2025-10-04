@@ -1,11 +1,11 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import LegalIcon from '@/components/common/LegalIcon';
-import { getIconDesign } from '@/config/iconography';
-import { cn } from '@/lib/utils';
+import React, { useMemo } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import LegalIcon from "@/components/common/LegalIcon";
+import { getIconDesign } from "@/config/iconography";
+import { cn } from "@/lib/utils";
 import {
   BarChart,
   Bar,
@@ -14,138 +14,220 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LineChart,
-  Line,
   PieChart,
   Pie,
   Cell,
-} from 'recharts';
-import {
-  TrendingUp,
-  AlertCircle,
-  CheckCircle,
-  Clock,
-} from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
+  TooltipProps,
+} from "recharts";
+import { TrendingUp, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
+import type { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
 
 const DashboardHome = () => {
   const { language } = useLanguage();
+  const { theme } = useTheme();
 
-  // Sample data for charts
-  const caseData = [
-    { month: language === 'ar' ? 'يناير' : 'Jan', cases: 65, revenue: 12000 },
-    { month: language === 'ar' ? 'فبراير' : 'Feb', cases: 59, revenue: 15000 },
-    { month: language === 'ar' ? 'مارس' : 'Mar', cases: 80, revenue: 18000 },
-    { month: language === 'ar' ? 'أبريل' : 'Apr', cases: 81, revenue: 22000 },
-    { month: language === 'ar' ? 'مايو' : 'May', cases: 56, revenue: 19000 },
-    { month: language === 'ar' ? 'يونيو' : 'Jun', cases: 95, revenue: 25000 },
-  ];
+  const palette = useMemo(
+    () => ({
+      primary: "hsl(var(--chart-primary))",
+      accent: "hsl(var(--chart-secondary))",
+      tertiary: "hsl(var(--chart-tertiary))",
+      muted: "hsl(var(--chart-muted))",
+    }),
+    []
+  );
 
-  const caseStatusData = [
-    { name: language === 'ar' ? 'نشطة' : 'Active', value: 45, color: 'hsl(var(--primary))' },
-    { name: language === 'ar' ? 'مكتملة' : 'Completed', value: 30, color: 'hsl(var(--success))' },
-    { name: language === 'ar' ? 'معلقة' : 'Pending', value: 15, color: 'hsl(var(--warning))' },
-    { name: language === 'ar' ? 'مؤجلة' : 'On Hold', value: 10, color: 'hsl(var(--muted-foreground))' },
-  ];
+  const revenueFormatter = useMemo(
+    () =>
+      new Intl.NumberFormat(language === "ar" ? "ar-EG" : "en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      }).format(25000),
+    [language]
+  );
+
+  const caseData = useMemo(
+    () =>
+      [
+        { month: language === "ar" ? "يناير" : "Jan", cases: 65 },
+        { month: language === "ar" ? "فبراير" : "Feb", cases: 59 },
+        { month: language === "ar" ? "مارس" : "Mar", cases: 80 },
+        { month: language === "ar" ? "أبريل" : "Apr", cases: 81 },
+        { month: language === "ar" ? "مايو" : "May", cases: 56 },
+        { month: language === "ar" ? "يونيو" : "Jun", cases: 95 },
+      ],
+    [language]
+  );
+
+  const caseStatusData = useMemo(
+    () =>
+      [
+        { name: language === "ar" ? "نشطة" : "Active", value: 45, color: palette.primary },
+        { name: language === "ar" ? "مكتملة" : "Completed", value: 30, color: "hsl(var(--success))" },
+        { name: language === "ar" ? "معلقة" : "Pending", value: 15, color: "hsl(var(--warning))" },
+        { name: language === "ar" ? "مؤجلة" : "On Hold", value: 10, color: palette.muted },
+      ],
+    [language, palette.primary, palette.muted]
+  );
 
   const stats = [
     {
-      title: language === 'ar' ? 'إجمالي القضايا' : 'Total Cases',
-      value: '247',
-      change: '+12%',
-      iconKey: 'cases' as const,
+      title: language === "ar" ? "إجمالي القضايا" : "Total Cases",
+      value: "247",
+      change: "+12%",
+      iconKey: "cases" as const,
     },
     {
-      title: language === 'ar' ? 'العملاء النشطون' : 'Active Clients',
-      value: '89',
-      change: '+8%',
-      iconKey: 'clients' as const,
+      title: language === "ar" ? "العملاء النشطون" : "Active Clients",
+      value: "89",
+      change: "+8%",
+      iconKey: "clients" as const,
     },
     {
-      title: language === 'ar' ? 'الإيرادات الشهرية' : 'Monthly Revenue',
-      value: '$25,000',
-      change: '+15%',
-      iconKey: 'reports' as const,
+      title: language === "ar" ? "الإيرادات الشهرية" : "Monthly Revenue",
+      value: revenueFormatter,
+      change: "+15%",
+      iconKey: "reports" as const,
     },
     {
-      title: language === 'ar' ? 'المواعيد القادمة' : 'Upcoming Appointments',
-      value: '12',
-      change: '+3',
-      iconKey: 'sessions' as const,
+      title: language === "ar" ? "المواعيد القادمة" : "Upcoming Appointments",
+      value: "12",
+      change: "+3",
+      iconKey: "sessions" as const,
     },
   ];
 
   const recentActivities = [
     {
       id: 1,
-      action: language === 'ar' ? 'قضية جديدة مُضافة' : 'New case added',
-      client: language === 'ar' ? 'شركة الخليج' : 'Gulf Corporation',
-      time: language === 'ar' ? 'منذ 2 ساعة' : '2 hours ago',
-      status: 'new',
+      action: language === "ar" ? "قضية جديدة مُضافة" : "New case added",
+      client: language === "ar" ? "شركة الخليج" : "Gulf Corporation",
+      time: language === "ar" ? "منذ 2 ساعة" : "2 hours ago",
+      status: "new" as const,
     },
     {
       id: 2,
-      action: language === 'ar' ? 'تم إكمال المستند' : 'Document completed',
-      client: language === 'ar' ? 'أحمد المحمدي' : 'Ahmed Al-Mohammadi',
-      time: language === 'ar' ? 'منذ 4 ساعات' : '4 hours ago',
-      status: 'completed',
+      action: language === "ar" ? "تم إكمال المستند" : "Document completed",
+      client: language === "ar" ? "أحمد المحمدي" : "Ahmed Al-Mohammadi",
+      time: language === "ar" ? "منذ 4 ساعات" : "4 hours ago",
+      status: "completed" as const,
     },
     {
       id: 3,
-      action: language === 'ar' ? 'موعد مجدول' : 'Appointment scheduled',
-      client: language === 'ar' ? 'شركة النور' : 'Al-Noor Company',
-      time: language === 'ar' ? 'منذ 6 ساعات' : '6 hours ago',
-      status: 'scheduled',
+      action: language === "ar" ? "موعد مجدول" : "Appointment scheduled",
+      client: language === "ar" ? "شركة النور" : "Al-Noor Company",
+      time: language === "ar" ? "منذ 6 ساعات" : "6 hours ago",
+      status: "scheduled" as const,
     },
   ];
- 
-  return (
-    <div className="space-y-6" dir={language === 'ar' ? 'rtl' : 'ltr'}>
-      {/* Welcome Section */}
-      <div className="rounded-xl bg-gradient-to-r from-primary to-primary-light p-4 text-primary-foreground sm:p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-2xl font-display font-bold mb-2">
-              {language === 'ar' ? 'مرحباً بك في لوحة التحكم' : 'Welcome to Your Dashboard'}
-            </h1>
-            <p className="text-primary-foreground/80">
-              {language === 'ar' 
-                ? 'إليك نظرة عامة على أداءك القانوني اليوم' 
-                : 'Here\'s an overview of your legal practice today'
-              }
-            </p>
+
+  const renderTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>) => {
+    if (!active || !payload?.length) return null;
+
+    return (
+      <div className="rounded-lg border border-border/60 bg-card/95 px-3 py-2 shadow-lg backdrop-blur">
+        <p className="text-xs font-medium text-muted-foreground">{label}</p>
+        {payload.map((entry, index) => (
+          <div key={index} className="flex items-center gap-2 text-sm text-foreground">
+            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: entry.color as string }} />
+            <span className="font-semibold">{entry.value}</span>
           </div>
-          <LegalIcon iconKey="dashboard" width={48} height={48} />
-        </div>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className="space-y-6" dir={language === "ar" ? "rtl" : "ltr"}>
+      <div className="grid gap-6 lg:grid-cols-[2.2fr_1fr]">
+        <Card className="card-premium">
+          <CardContent className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-3">
+              <Badge className="w-fit rounded-full border border-border/40 bg-background/40 px-4 py-1 text-xs uppercase tracking-[0.3em] text-muted-foreground" variant="outline">
+                {theme === "dark"
+                  ? language === "ar" ? "أداء ليلي" : "Night Insight"
+                  : language === "ar" ? "أداء نهاري" : "Daylight Insight"}
+              </Badge>
+              <div className="space-y-1">
+                <h1 className="text-2xl font-display font-bold tracking-tight sm:text-3xl">
+                  {language === "ar" ? "مرحباً بك في لوحة التحكم" : "Welcome to Your Dashboard"}
+                </h1>
+                <p className="max-w-xl text-sm text-muted-foreground">
+                  {language === "ar"
+                    ? "نقدّم لك لمحة محدثة عن القضايا، العملاء والأداء المالي"
+                    : "Get an updated snapshot of your cases, clients, and revenue streams."}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 rounded-full bg-background/60 px-3 py-1">
+                  <span className="h-2 w-2 rounded-full bg-[hsl(var(--chart-primary))]" />
+                  {language === "ar" ? "القضايا النشطة" : "Active Cases"}
+                </div>
+                <div className="flex items-center gap-2 rounded-full bg-background/60 px-3 py-1">
+                  <span className="h-2 w-2 rounded-full bg-[hsl(var(--chart-secondary))]" />
+                  {language === "ar" ? "قضايا مكتملة" : "Completed"}
+                </div>
+              </div>
+            </div>
+            <div className="relative flex h-full min-h-[160px] w-full items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-[hsl(var(--primary)/0.08)] to-[hsl(var(--accent)/0.1)] sm:w-[220px]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,hsl(var(--primary)/0.2),transparent_60%)]" />
+              <LegalIcon iconKey="dashboard" width={72} height={72} className="relative text-primary" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-premium flex flex-col justify-between">
+          <CardHeader className="pb-2">
+            <CardTitle className="dashboard-section-title flex items-center gap-2 text-base">
+              <AlertCircle className="h-5 w-5 text-[hsl(var(--chart-secondary))]" />
+              {language === "ar" ? "نظرة سريعة" : "Quick Glance"}
+            </CardTitle>
+            <CardDescription>
+              {language === "ar" ? "أرقام اليوم المميزة" : "Today's highlights"}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            {[
+              { label: language === "ar" ? "جلسات اليوم" : "Sessions Today", value: "5" },
+              { label: language === "ar" ? "وثائق قيد المراجعة" : "Docs in Review", value: "14" },
+              { label: language === "ar" ? "نسبة الالتزام" : "Compliance", value: "92%" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex items-center justify-between rounded-2xl bg-background/60 px-4 py-3 text-sm font-medium text-muted-foreground"
+              >
+                <span>{item.label}</span>
+                <span className="text-foreground">{item.value}</span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="dashboard-bento">
         {stats.map((stat, index) => {
           const design = getIconDesign(stat.iconKey);
           return (
             <Card key={index} className="card-premium">
               <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">
-                      {stat.title}
-                    </p>
-                    <p className="text-2xl font-bold text-text-strong">
-                      {stat.value}
-                    </p>
-                    <Badge variant="secondary" className="mt-1">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
+                    <p className="text-3xl font-bold tracking-tight text-text-strong">{stat.value}</p>
+                    <Badge variant="secondary" className="mt-1 w-fit rounded-full px-3">
                       {stat.change}
                     </Badge>
                   </div>
                   <div
                     className={cn(
                       "flex h-12 w-12 items-center justify-center rounded-2xl",
-                      design.badgeClass ?? "text-white",
+                      design.badgeClass ?? "text-white"
                     )}
                     style={{
                       background: design.badgeGradient,
-                      boxShadow: design.shadow,
+                      boxShadow: design.shadow ?? "var(--shadow-premium)",
                     }}
                   >
                     <LegalIcon iconKey={stat.iconKey} width={28} height={28} />
@@ -157,86 +239,61 @@ const DashboardHome = () => {
         })}
       </div>
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Cases & Revenue Chart */}
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.6fr_1fr]">
         <Card className="card-premium">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5" />
-              {language === 'ar' ? 'القضايا والإيرادات' : 'Cases & Revenue'}
+              {language === "ar" ? "القضايا والإيرادات" : "Cases & Revenue"}
             </CardTitle>
             <CardDescription>
-              {language === 'ar' 
-                ? 'نظرة عامة على الأداء الشهري' 
-                : 'Monthly performance overview'
-              }
+              {language === "ar" ? "نظرة عامة على الأداء الشهري" : "Monthly performance overview"}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={caseData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
-                <YAxis stroke="hsl(var(--muted-foreground))" />
-                <Tooltip 
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                  }}
-                />
-                <Bar dataKey="cases" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                <defs>
+                  <linearGradient id="casesGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={palette.primary} stopOpacity={0.95} />
+                    <stop offset="100%" stopColor={palette.primary} stopOpacity={0.25} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border) / 0.6)" />
+                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} />
+                <YAxis stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} />
+                <Tooltip content={renderTooltip} cursor={{ fill: "hsl(var(--muted) / 0.3)" }} />
+                <Bar dataKey="cases" fill="url(#casesGradient)" radius={[12, 12, 12, 12]} barSize={26} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        {/* Case Status Distribution */}
         <Card className="card-premium">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <LegalIcon iconKey="cases" width={20} height={20} />
-              {language === 'ar' ? 'توزيع حالة القضايا' : 'Case Status Distribution'}
+              {language === "ar" ? "توزيع حالة القضايا" : "Case Status Distribution"}
             </CardTitle>
             <CardDescription>
-              {language === 'ar' 
-                ? 'التوزيع الحالي للقضايا حسب الحالة' 
-                : 'Current distribution of cases by status'
-              }
+              {language === "ar" ? "التوزيع الحالي للقضايا حسب الحالة" : "Current distribution of cases by status"}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
-                <Pie
-                  data={caseStatusData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  dataKey="value"
-                >
+                <Pie data={caseStatusData} cx="50%" cy="50%" innerRadius={60} outerRadius={110} dataKey="value">
                   {caseStatusData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip 
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                  }}
-                />
+                <Tooltip content={renderTooltip} />
               </PieChart>
             </ResponsiveContainer>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="mt-4 grid grid-cols-2 gap-4">
               {caseStatusData.map((item, index) => (
                 <div key={index} className="flex items-center gap-2">
-                  <div 
-                    className="w-3 h-3 rounded-full" 
-                    style={{ backgroundColor: item.color }}
-                  />
+                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
                   <span className="text-sm text-muted-foreground">{item.name}</span>
                   <Badge variant="outline">{item.value}</Badge>
                 </div>
@@ -246,28 +303,39 @@ const DashboardHome = () => {
         </Card>
       </div>
 
-      {/* Recent Activities & Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activities */}
-        <Card className="lg:col-span-2 card-premium">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.7fr_1fr]">
+        <Card className="card-premium">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5" />
-              {language === 'ar' ? 'الأنشطة الأخيرة' : 'Recent Activities'}
+              {language === "ar" ? "الأنشطة الأخيرة" : "Recent Activities"}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {recentActivities.map((activity) => (
-                <div key={activity.id} className="flex items-center justify-between p-3 bg-surface-muted rounded-lg">
+                <div
+                  key={activity.id}
+                  className="flex items-center justify-between gap-3 rounded-2xl border border-border/50 bg-background/60 px-4 py-3 shadow-sm"
+                >
                   <div className="flex items-center gap-3">
-                    <div className={`w-2 h-2 rounded-full ${
-                      activity.status === 'new' ? 'bg-primary' :
-                      activity.status === 'completed' ? 'bg-success' : 'bg-warning'
-                    }`} />
+                    <span
+                      className={cn(
+                        "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                        activity.status === "new"
+                          ? "bg-[hsl(var(--chart-primary))]/15 text-[hsl(var(--chart-primary))]"
+                          : activity.status === "completed"
+                          ? "bg-success/15 text-success"
+                          : "bg-warning/15 text-warning"
+                      )}
+                    >
+                      {activity.status === "new" && <AlertCircle className="h-4 w-4" />}
+                      {activity.status === "completed" && <CheckCircle className="h-4 w-4" />}
+                      {activity.status === "scheduled" && <Clock className="h-4 w-4" />}
+                    </span>
                     <div>
                       <p className="font-medium text-text-strong">{activity.action}</p>
-                      <p className="text-sm text-muted-foreground">{activity.client}</p>
+                      <p className="text-xs text-muted-foreground">{activity.client}</p>
                     </div>
                   </div>
                   <span className="text-xs text-muted-foreground">{activity.time}</span>
@@ -277,77 +345,58 @@ const DashboardHome = () => {
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
         <Card className="card-premium">
           <CardHeader>
-            <CardTitle>
-              {language === 'ar' ? 'إجراءات سريعة' : 'Quick Actions'}
-            </CardTitle>
+            <CardTitle>{language === "ar" ? "إجراءات سريعة" : "Quick Actions"}</CardTitle>
           </CardHeader>
-         <CardContent className="space-y-3">
-            <Button className="w-full justify-start gap-2 btn-premium">
+          <CardContent className="space-y-3">
+            <Button className="btn-premium w-full justify-start gap-3">
               <LegalIcon iconKey="cases" width={20} height={20} />
-              {language === 'ar' ? 'قضية جديدة' : 'New Case'}
+              {language === "ar" ? "قضية جديدة" : "New Case"}
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2">
+            <Button variant="outline" className="w-full justify-start gap-3 rounded-2xl border-border/60 bg-background/70">
               <LegalIcon iconKey="clients" width={20} height={20} />
-              {language === 'ar' ? 'إضافة عميل' : 'Add Client'}
+              {language === "ar" ? "إضافة عميل" : "Add Client"}
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2">
+            <Button variant="outline" className="w-full justify-start gap-3 rounded-2xl border-border/60 bg-background/70">
               <LegalIcon iconKey="sessions" width={20} height={20} />
-              {language === 'ar' ? 'جدولة موعد' : 'Schedule Meeting'}
+              {language === "ar" ? "جدولة موعد" : "Schedule Meeting"}
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-2">
+            <Button variant="outline" className="w-full justify-start gap-3 rounded-2xl border-border/60 bg-background/70">
               <LegalIcon iconKey="documents" width={20} height={20} />
-              {language === 'ar' ? 'إنشاء مستند' : 'Create Document'}
+              {language === "ar" ? "إنشاء مستند" : "Create Document"}
             </Button>
           </CardContent>
         </Card>
       </div>
 
-      {/* Task Progress */}
       <Card className="card-premium">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CheckCircle className="h-5 w-5" />
-            {language === 'ar' ? 'تقدم المهام' : 'Task Progress'}
+            {language === "ar" ? "تقدم المهام" : "Task Progress"}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium">
-                  {language === 'ar' ? 'مراجعة الوثائق' : 'Document Review'}
-                </span>
-                <span className="text-sm text-muted-foreground">75%</span>
+            {[
+              { label: language === "ar" ? "مراجعة الوثائق" : "Document Review", value: 75 },
+              { label: language === "ar" ? "متابعة العملاء" : "Client Follow-up", value: 60 },
+              { label: language === "ar" ? "إعداد التقارير" : "Report Preparation", value: 90 },
+            ].map((task) => (
+              <div key={task.label}>
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-sm font-medium">{task.label}</span>
+                  <span className="text-sm text-muted-foreground">{task.value}%</span>
+                </div>
+                <Progress value={task.value} className="h-2" />
               </div>
-              <Progress value={75} className="h-2" />
-            </div>
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium">
-                  {language === 'ar' ? 'متابعة العملاء' : 'Client Follow-up'}
-                </span>
-                <span className="text-sm text-muted-foreground">60%</span>
-              </div>
-              <Progress value={60} className="h-2" />
-            </div>
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium">
-                  {language === 'ar' ? 'إعداد التقارير' : 'Report Preparation'}
-                </span>
-                <span className="text-sm text-muted-foreground">90%</span>
-              </div>
-              <Progress value={90} className="h-2" />
-            </div>
+            ))}
           </div>
         </CardContent>
       </Card>
     </div>
   );
-
 };
 
 export default DashboardHome;
