@@ -124,7 +124,7 @@ const LandingNavbar: React.FC = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 lg:px-8">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 lg:px-8">
         <button
           type="button"
           onClick={() => scrollToAnchor("#home")}
