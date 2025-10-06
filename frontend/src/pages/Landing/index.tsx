@@ -18,9 +18,10 @@ const LandingPage: React.FC = () => {
   const { direction } = useLanguage();
  
   return (
-    <>
+    <div className="flex min-h-screen flex-col" dir={direction}>
       <LandingNavbar />
- 
+
+      <main className="flex flex-1 flex-col overflow-x-hidden">
         <HeroCarousel />
         <About />
         <Services />
@@ -31,10 +32,12 @@ const LandingPage: React.FC = () => {
         <Testimonials />
         <Insights />
         <CallToAction />
-        <Contact /> 
-      <ScrollToTopButton />
+        <Contact />
+      </main>
+
       <Footer />
-    </>
+      <ScrollToTopButton />
+    </div>
   );
 };
 
