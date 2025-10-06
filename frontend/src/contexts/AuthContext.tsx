@@ -72,6 +72,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  const mapRole = useCallback((role: ApiUser['role']): User['role'] => {
+    const normalized = typeof role === 'string' ? role.toLowerCase() : String(role ?? '').toLowerCase();
+
+    if (normalized === '1' || normalized === 'admin') {
+      return 'admin';
+    }
+
+    if (normalized === '2' || normalized === 'lawyer') {
+      return 'lawyer';
+    }
+
+    return 'client';
+  }, []);
+
+  const mapApiUserToContextUser = useCallback(
+    (payload: ApiUser): User => ({
+      id: String(payload.id),
+      email: payload.email,
+      name: payload.name,
+      avatar: payload.avatar ?? undefined,
+      role: mapRole(payload.role ?? null),
+    }),
+    [mapRole],
+  );
+
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -137,31 +162,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [readUserFromStorage]);
-
-  const mapRole = useCallback((role: ApiUser['role']): User['role'] => {
-    const normalized = typeof role === 'string' ? role.toLowerCase() : String(role ?? '').toLowerCase();
-
-    if (normalized === '1' || normalized === 'admin') {
-      return 'admin';
-    }
-
-    if (normalized === '2' || normalized === 'lawyer') {
-      return 'lawyer';
-    }
-
-    return 'client';
-  }, []);
-
-  const mapApiUserToContextUser = useCallback(
-    (payload: ApiUser): User => ({
-      id: String(payload.id),
-      email: payload.email,
-      name: payload.name,
-      avatar: payload.avatar ?? undefined,
-      role: mapRole(payload.role ?? null),
-    }),
-    [mapRole],
-  );
 
   const extractErrorMessage = useCallback((error: unknown, fallback: string): string => {
     if (error && typeof error === 'object') {
