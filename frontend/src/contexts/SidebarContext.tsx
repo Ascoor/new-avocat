@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 interface SidebarContextType {
   isCollapsed: boolean;
@@ -59,17 +65,17 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   }, [isCollapsed]);
 
-  const toggleCollapsed = () => {
+  const toggleCollapsed = useCallback(() => {
     setIsCollapsed(prev => !prev);
-  };
+  }, []);
 
-  const toggleMobile = () => {
+  const toggleMobile = useCallback(() => {
     setIsMobileOpen(prev => !prev);
-  };
+  }, []);
 
-  const closeMobile = () => {
+  const closeMobile = useCallback(() => {
     setIsMobileOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
