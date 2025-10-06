@@ -49,10 +49,10 @@ const Footer: React.FC = () => {
 
   const headingClass = 'text-base sm:text-lg font-semibold neon-text drop-shadow-md';
   const linkClass =
-    'group inline-flex items-center gap-2 text-sm sm:text-base text-primary-foreground/80 transition-colors duration-300 hover:text-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent';
+    'group inline-flex items-center gap-2 text-sm sm:text-base text-foreground/80 transition-colors duration-300 hover:text-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent';
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-primary-foreground">
+    <footer className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-foreground">
       <div className="pointer-events-none absolute inset-0 opacity-80 mix-blend-screen" aria-hidden>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(57,255,242,0.12),_transparent_55%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(0,255,188,0.08),_transparent_60%)]" />
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
               <BrandLogo variant="full" className="h-12" lang={language} dark />
               <span className="sr-only">Avocat</span>
             </div>
-            <p className="max-w-xs text-sm leading-relaxed text-primary-foreground/85 sm:text-base">
+            <p className="max-w-xs text-sm leading-relaxed text-foreground/85 sm:text-base">
               {mission}
             </p>
             <div className="h-1 w-24 rounded-full neon-divider" />
@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-3 text-sm sm:text-base">
               {serviceHighlights.map((service, index) => (
-                <li key={`${service}-${index}`} className="text-primary-foreground/75 transition-colors hover:text-neon">
+                <li key={`${service}-${index}`} className="text-foreground/75 transition-colors hover:text-neon">
                   {service}
                 </li>
               ))}
@@ -135,7 +135,7 @@ const Footer: React.FC = () => {
                 return (
                   <div
                     key={`${detail.icon ?? 'info'}-${index}`}
-                    className="flex items-start gap-3 text-primary-foreground/85"
+                    className="flex items-start gap-3 text-foreground/85"
                   >
                     {Icon && <Icon className="h-5 w-5 flex-shrink-0 text-neon" />}
                     <span className="leading-relaxed">{detail.text}</span>
