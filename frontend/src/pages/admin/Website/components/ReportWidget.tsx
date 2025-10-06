@@ -10,16 +10,50 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import WorkflowStatusBadge from './WorkflowStatusBadge';
 import useNotifications from '@/hooks/useNotifications';
+import useUserRoles from '@/hooks/useUserRoles';
 
 const ReportWidget: React.FC = () => {
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+  const permissionsReady = !(rolesLoading || rolesFetching);
+  const canViewReport = permissionsReady && can('analytics:view');
+
   const reportQuery = useQuery({
     queryKey: ['admin-website-report'],
     queryFn: getWebsiteReport,
+    enabled: canViewReport,
   });
 
   const report = reportQuery.data;
   const { activity, connectionState } = useNotifications();
   const recentActivity = useMemo(() => activity.slice(0, 10), [activity]);
+
+  if (!permissionsReady) {
+    return (
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <Skeleton className="h-4 w-24" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-8 w-16" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
+  if (!canViewReport) {
+    return (
+      <Card className="border-dashed border-border/60 bg-muted/30">
+        <CardHeader>
+          <CardTitle className="text-sm font-medium text-muted-foreground">Analytics access required</CardTitle>
+          <CardDescription>You do not have permission to view website analytics.</CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
 
   if (reportQuery.isLoading) {
     return (

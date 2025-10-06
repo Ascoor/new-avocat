@@ -7,6 +7,7 @@ import { resolveAssetUrl } from '@/utils/asset';
 import PageEditor from './PageEditor/PageEditor';
 import { getWebsitePage } from '@/api/websiteAdmin.service';
 import type { ContentBlock, Locale, Localized, PageContent } from '@/types/website';
+import useUserRoles from '@/hooks/useUserRoles';
 
 interface LogoPreview {
   id: string;
@@ -19,12 +20,40 @@ const LOCALES: Locale[] = ['en', 'ar'];
 const MODES: Array<'light' | 'dark'> = ['light', 'dark'];
 
 const SettingsManager: React.FC = () => {
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+  const permissionsReady = !(rolesLoading || rolesFetching);
+  const canViewSettings = permissionsReady && can('pages:view');
+
   const settingsQuery = useQuery({
     queryKey: ['admin-website-page', 'settings'],
     queryFn: () => getWebsitePage('settings'),
+    enabled: canViewSettings,
   });
 
   const previews = useMemo(() => buildLogoPreviews(settingsQuery.data), [settingsQuery.data]);
+
+  if (!permissionsReady) {
+    return (
+      <div className="space-y-6">
+        <Card className="border-border/70">
+          <CardHeader>
+            <Skeleton className="h-6 w-40" />
+          </CardHeader>
+          <CardContent>
+            <LogoSkeletonGrid />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!canViewSettings) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view website settings.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">

@@ -11,12 +11,18 @@ import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import WorkflowStatusBadge from './components/WorkflowStatusBadge';
 import useNotifications from '@/hooks/useNotifications';
+import useUserRoles from '@/hooks/useUserRoles';
 
 const WorkflowBoardPage: React.FC = () => {
   const queryClient = useQueryClient();
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+  const permissionsReady = !(rolesLoading || rolesFetching);
+  const canViewWorkflow = permissionsReady && can('pages:view');
+
   const queueQuery = useQuery({
     queryKey: ['admin-website-publishing-queue'],
     queryFn: getPublishingQueue,
+    enabled: canViewWorkflow,
   });
   const { connectionState } = useNotifications();
 
@@ -25,6 +31,23 @@ const WorkflowBoardPage: React.FC = () => {
   const handleRefresh = () => {
     queryClient.invalidateQueries({ queryKey: ['admin-website-publishing-queue'] });
   };
+
+  if (!permissionsReady) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-10 w-60" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    );
+  }
+
+  if (!canViewWorkflow) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view the publishing workflow.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
