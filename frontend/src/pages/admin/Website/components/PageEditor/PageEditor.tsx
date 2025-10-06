@@ -210,12 +210,18 @@ const workflowEventMeta: Record<WorkflowEvent['type'], { label: string; icon: Re
 
 const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => {
   const { toast } = useToast();
-  const { page, status, workflow, workflowState, history, isLoading, isSaving, isPreviewing, saveDraft, requestPreview } =
-    usePageManager(slug);
   const {
     can,
     isLoading: isRolesLoading,
+    isFetching: isRolesFetching,
   } = useUserRoles();
+  const permissionsReady = !(isRolesLoading || isRolesFetching);
+  const hasViewAccess = permissionsReady && can('pages:view');
+  const canManageWorkflow =
+    permissionsReady && (can('pages:approve') || can('pages:publish') || can('pages:schedule'));
+
+  const { page, status, workflow, workflowState, history, isLoading, isSaving, isPreviewing, saveDraft, requestPreview } =
+    usePageManager(slug, { enabled: hasViewAccess });
   const {
     requestApproval,
     approveAndPublish,
@@ -227,7 +233,7 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
     isPublishing: isWorkflowPublishing,
     isScheduling,
     isCancellingSchedule,
-  } = useWorkflowManager({ slug });
+  } = useWorkflowManager({ slug, enabled: hasViewAccess, loadQueue: canManageWorkflow });
 
   const form = useForm<PageFormValues>({
     defaultValues,
@@ -254,12 +260,12 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
   const lastSnapshotRef = useRef<string>('');
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const allowEditing = !isRolesLoading && can('pages:edit');
+  const allowEditing = permissionsReady && can('pages:edit');
   const isReadOnly = !allowEditing;
-  const canPreviewDraft = !isRolesLoading && (can('pages:view') || allowEditing);
-  const canPublishNow = !isRolesLoading && can('pages:publish');
-  const canApproveContent = !isRolesLoading && can('pages:approve');
-  const canScheduleContent = !isRolesLoading && can('pages:schedule');
+  const canPreviewDraft = permissionsReady && (can('pages:view') || allowEditing);
+  const canPublishNow = permissionsReady && can('pages:publish');
+  const canApproveContent = permissionsReady && can('pages:approve');
+  const canScheduleContent = permissionsReady && can('pages:schedule');
   const showRequestApprovalButton = allowEditing && !canApproveContent && !canPublishNow;
 
   const previewHref = useMemo(() => {
@@ -403,6 +409,10 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
   };
 
   const handleRequestApproval = async () => {
+    if (!allowEditing) {
+      toast({ title: 'Request blocked', description: 'You do not have permission to request approval.', variant: 'destructive' });
+      return;
+    }
     try {
       await requestApproval({ draft_id: workflow?.draft_id ?? null });
       toast({ title: 'Approval requested', description: 'An administrator will review the draft shortly.' });
@@ -413,6 +423,10 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
   };
 
   const handleApprovePublish = async () => {
+    if (!canApproveContent) {
+      toast({ title: 'Approval restricted', description: 'You do not have permission to approve this page.', variant: 'destructive' });
+      return;
+    }
     try {
       await approveAndPublish({ draft_id: workflow?.draft_id ?? null });
       toast({ title: 'Changes approved and published' });
@@ -423,6 +437,10 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
   };
 
   const handleScheduleSubmit = async ({ scheduled_for, notes }: { scheduled_for: string; notes?: string | null }) => {
+    if (!canScheduleContent) {
+      toast({ title: 'Scheduling restricted', description: 'You do not have permission to schedule this page.', variant: 'destructive' });
+      return;
+    }
     try {
       await schedulePublish({ scheduled_for, notes: notes ?? null, draft_id: workflow?.draft_id ?? null });
       toast({ title: 'Publish scheduled', description: `Content will go live at ${formatTimestamp(scheduled_for)}` });
@@ -434,6 +452,10 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
   };
 
   const handleCancelSchedule = async () => {
+    if (!canScheduleContent && !canApproveContent && !canPublishNow) {
+      toast({ title: 'Cancel restricted', description: 'You do not have permission to cancel scheduled publishes.', variant: 'destructive' });
+      return;
+    }
     try {
       await cancelSchedule();
       toast({ title: 'Scheduled publish cancelled' });
@@ -442,6 +464,23 @@ const PageEditor: React.FC<PageEditorProps> = ({ slug, title, description }) => 
       toast({ title: 'Cancel failed', description: message, variant: 'destructive' });
     }
   };
+
+  if (!permissionsReady) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    );
+  }
+
+  if (!hasViewAccess) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view this page.
+      </div>
+    );
+  }
 
   if (!slug) {
     return null;

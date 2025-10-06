@@ -87,14 +87,17 @@ const toFormValues = (article: ArticleApi | null): ArticleFormValues => {
 const ArticlesManager: React.FC = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { can } = useUserRoles();
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+  const permissionsReady = !(rolesLoading || rolesFetching);
   const [searchTerm, setSearchTerm] = useState('');
   const [visibleCount, setVisibleCount] = useState(10);
-  const canManageArticles = can('pages:edit');
+  const canViewArticles = permissionsReady && can('pages:view');
+  const canManageArticles = permissionsReady && can('pages:edit');
 
   const articlesQuery = useQuery({
     queryKey: ['admin-website-articles'],
     queryFn: listArticles,
+    enabled: canViewArticles,
   });
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -190,6 +193,23 @@ const ArticlesManager: React.FC = () => {
   }, [articles, searchTerm]);
   const visibleArticles = useMemo(() => filteredArticles.slice(0, visibleCount), [filteredArticles, visibleCount]);
   const hasMoreArticles = visibleArticles.length < filteredArticles.length;
+
+  if (!permissionsReady) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-10 w-56" />
+        <Skeleton className="h-32 w-full" />
+      </div>
+    );
+  }
+
+  if (!canViewArticles) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view articles.
+      </div>
+    );
+  }
 
   return (
     <Card>

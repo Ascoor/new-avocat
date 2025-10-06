@@ -28,6 +28,7 @@ import { useToast } from '@/components/ui/use-toast';
 import type { TestimonialApi } from '@/types/website';
 import UploadMedia from './UploadMedia';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
+import useUserRoles from '@/hooks/useUserRoles';
 
 interface TestimonialFormValues {
   name_en: string;
@@ -78,10 +79,15 @@ const toFormValues = (testimonial: TestimonialApi | null): TestimonialFormValues
 const TestimonialsManager: React.FC = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+  const permissionsReady = !(rolesLoading || rolesFetching);
+  const canViewTestimonials = permissionsReady && can('pages:view');
+  const canManageTestimonials = permissionsReady && can('pages:edit');
 
   const testimonialsQuery = useQuery({
     queryKey: ['admin-website-testimonials'],
     queryFn: listTestimonials,
+    enabled: canViewTestimonials,
   });
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -127,6 +133,10 @@ const TestimonialsManager: React.FC = () => {
   });
 
   const handleSubmit = (values: TestimonialFormValues) => {
+    if (!canManageTestimonials) {
+      toast({ title: 'Read-only mode', description: 'You do not have permission to modify testimonials.', variant: 'destructive' });
+      return;
+    }
     const payload = toPayload(values);
     if (!payload.name_en || !payload.name_ar || !payload.quote_en || !payload.quote_ar) {
       toast({ title: 'Name and quote are required in both languages', variant: 'destructive' });
@@ -138,6 +148,10 @@ const TestimonialsManager: React.FC = () => {
   };
 
   const handleOpenDialog = (testimonial: TestimonialApi | null = null) => {
+    if (!canManageTestimonials) {
+      toast({ title: 'Read-only mode', description: 'You do not have permission to edit testimonials.', variant: 'destructive' });
+      return;
+    }
     setEditingTestimonial(testimonial);
     setDialogOpen(true);
   };
@@ -149,6 +163,23 @@ const TestimonialsManager: React.FC = () => {
 
   const testimonials = useMemo(() => testimonialsQuery.data ?? [], [testimonialsQuery.data]);
 
+  if (!permissionsReady) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-10 w-48" />
+        <Skeleton className="h-32 w-full" />
+      </div>
+    );
+  }
+
+  if (!canViewTestimonials) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view testimonials.
+      </div>
+    );
+  }
+
   return (
     <Card>
       <CardHeader className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -156,7 +187,7 @@ const TestimonialsManager: React.FC = () => {
           <CardTitle className="text-xl font-semibold">Testimonials</CardTitle>
           <CardDescription>Manage client stories displayed on the landing page testimonials slider.</CardDescription>
         </div>
-        <Button type="button" onClick={() => handleOpenDialog(null)}>
+        <Button type="button" onClick={() => handleOpenDialog(null)} disabled={!canManageTestimonials}>
           <Plus className="mr-2 h-4 w-4" /> New testimonial
         </Button>
       </CardHeader>
@@ -188,10 +219,26 @@ const TestimonialsManager: React.FC = () => {
                     <TableCell>{testimonial.position.en ?? testimonial.position.ar ?? '—'}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => handleOpenDialog(testimonial)}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleOpenDialog(testimonial)}
+                          disabled={!canManageTestimonials}
+                        >
                           <Pencil className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => setPendingDelete(testimonial)}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            if (!canManageTestimonials) {
+                              toast({ title: 'Read-only mode', description: 'You do not have permission to delete testimonials.', variant: 'destructive' });
+                              return;
+                            }
+                            setPendingDelete(testimonial);
+                          }}
+                          disabled={!canManageTestimonials}
+                        >
                           <Trash2 className="h-4 w-4 text-destructive" />
                         </Button>
                       </div>
@@ -214,30 +261,30 @@ const TestimonialsManager: React.FC = () => {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="name_en">Name (EN)</Label>
-                <Input id="name_en" {...form.register('name_en')} />
+                <Input id="name_en" disabled={!canManageTestimonials} {...form.register('name_en')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="name_ar">الاسم (AR)</Label>
-                <Input id="name_ar" dir="rtl" {...form.register('name_ar')} />
+                <Input id="name_ar" dir="rtl" disabled={!canManageTestimonials} {...form.register('name_ar')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="position_en">Position (EN)</Label>
-                <Input id="position_en" {...form.register('position_en')} />
+                <Input id="position_en" disabled={!canManageTestimonials} {...form.register('position_en')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="position_ar">المنصب (AR)</Label>
-                <Input id="position_ar" dir="rtl" {...form.register('position_ar')} />
+                <Input id="position_ar" dir="rtl" disabled={!canManageTestimonials} {...form.register('position_ar')} />
               </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="quote_en">Quote (EN)</Label>
-                <Textarea id="quote_en" rows={4} {...form.register('quote_en')} />
+                <Textarea id="quote_en" rows={4} disabled={!canManageTestimonials} {...form.register('quote_en')} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="quote_ar">الشهادة (AR)</Label>
-                <Textarea id="quote_ar" rows={4} dir="rtl" {...form.register('quote_ar')} />
+                <Textarea id="quote_ar" rows={4} dir="rtl" disabled={!canManageTestimonials} {...form.register('quote_ar')} />
               </div>
             </div>
 
@@ -246,13 +293,14 @@ const TestimonialsManager: React.FC = () => {
               label="Avatar image"
               description="Upload a square avatar (512x512 recommended)."
               onChange={(url) => form.setValue('avatar', url, { shouldDirty: true })}
+              disabled={!canManageTestimonials}
             />
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={handleCloseDialog}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={saveMutation.isPending}>
+              <Button type="submit" disabled={saveMutation.isPending || !canManageTestimonials}>
                 {saveMutation.isPending ? 'Saving…' : 'Save testimonial'}
               </Button>
             </DialogFooter>
@@ -261,12 +309,18 @@ const TestimonialsManager: React.FC = () => {
       </Dialog>
 
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
+        open={Boolean(pendingDelete && canManageTestimonials)}
         title="Delete testimonial"
         description="This action cannot be undone."
         confirmLabel="Delete"
         loading={deleteMutation.isPending}
-        onConfirm={() => pendingDelete && deleteMutation.mutate(pendingDelete.id)}
+        onConfirm={() => {
+          if (pendingDelete && canManageTestimonials) {
+            deleteMutation.mutate(pendingDelete.id);
+          } else if (!canManageTestimonials) {
+            toast({ title: 'Read-only mode', description: 'You do not have permission to delete testimonials.', variant: 'destructive' });
+          }
+        }}
         onOpenChange={(open) => {
           if (!open) {
             setPendingDelete(null);

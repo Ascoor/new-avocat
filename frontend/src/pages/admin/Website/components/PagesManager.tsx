@@ -19,11 +19,15 @@ const PagesManager: React.FC = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { can } = useUserRoles();
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+
+  const canViewPages = can('pages:view');
+  const shouldFetchPages = canViewPages && !rolesLoading && !rolesFetching;
 
   const pagesQuery = useQuery({
     queryKey: ['admin-website-pages'],
     queryFn: listWebsitePages,
+    enabled: shouldFetchPages,
   });
 
   const pages = useMemo(() => pagesQuery.data ?? [], [pagesQuery.data]);
@@ -120,6 +124,23 @@ const PagesManager: React.FC = () => {
         return <Badge className="bg-amber-100 text-amber-800">🟡 Draft</Badge>;
     }
   };
+
+  if (rolesLoading || rolesFetching) {
+    return (
+      <div className="space-y-6">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-64 w-full" />
+      </div>
+    );
+  }
+
+  if (!canViewPages) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view website pages. Please contact an administrator if you believe this is an error.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

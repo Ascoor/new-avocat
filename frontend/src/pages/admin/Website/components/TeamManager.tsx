@@ -92,14 +92,17 @@ const toFormValues = (member: TeamMemberApi | null): TeamMemberFormValues => {
 const TeamManager: React.FC = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { can } = useUserRoles();
-  const canManageTeam = can('pages:edit');
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+  const permissionsReady = !(rolesLoading || rolesFetching);
+  const canViewTeam = permissionsReady && can('pages:view');
+  const canManageTeam = permissionsReady && can('pages:edit');
   const [searchTerm, setSearchTerm] = useState('');
   const [visibleCount, setVisibleCount] = useState(10);
 
   const teamQuery = useQuery({
     queryKey: ['admin-team-members'],
     queryFn: listTeamMembers,
+    enabled: canViewTeam,
   });
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -195,6 +198,23 @@ const TeamManager: React.FC = () => {
   }, [members, searchTerm]);
   const visibleMembers = useMemo(() => filteredMembers.slice(0, visibleCount), [filteredMembers, visibleCount]);
   const hasMoreMembers = visibleMembers.length < filteredMembers.length;
+
+  if (!permissionsReady) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-10 w-48" />
+        <Skeleton className="h-32 w-full" />
+      </div>
+    );
+  }
+
+  if (!canViewTeam) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view team members.
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

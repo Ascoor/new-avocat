@@ -26,6 +26,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import type { AchievementApi } from '@/types/website';
 import { useToast } from '@/components/ui/use-toast';
+import useUserRoles from '@/hooks/useUserRoles';
 
 interface AchievementFormValues {
   title_en: string;
@@ -60,10 +61,15 @@ const toPayload = (values: AchievementFormValues): AchievementInput => ({
 const AchievementsManager: React.FC = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { can, isLoading: rolesLoading, isFetching: rolesFetching } = useUserRoles();
+  const permissionsReady = !(rolesLoading || rolesFetching);
+  const canViewAchievements = permissionsReady && can('pages:view');
+  const canManageAchievements = permissionsReady && can('pages:edit');
 
   const achievementsQuery = useQuery({
     queryKey: ['admin-achievements'],
     queryFn: listAchievements,
+    enabled: canViewAchievements,
   });
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -108,6 +114,10 @@ const AchievementsManager: React.FC = () => {
   });
 
   const handleSubmit = (values: AchievementFormValues) => {
+    if (!canManageAchievements) {
+      toast({ title: 'Read-only mode', description: 'You do not have permission to modify achievements.', variant: 'destructive' });
+      return;
+    }
     const payload = toPayload(values);
     if (!payload.title_en || !payload.title_ar) {
       toast({ title: 'Title is required in both languages', variant: 'destructive' });
@@ -118,6 +128,10 @@ const AchievementsManager: React.FC = () => {
   };
 
   const handleOpenDialog = (achievement: AchievementApi | null = null) => {
+    if (!canManageAchievements) {
+      toast({ title: 'Read-only mode', description: 'You do not have permission to edit achievements.', variant: 'destructive' });
+      return;
+    }
     setEditingAchievement(achievement);
     setDialogOpen(true);
   };
@@ -129,6 +143,23 @@ const AchievementsManager: React.FC = () => {
 
   const achievements = useMemo(() => achievementsQuery.data ?? [], [achievementsQuery.data]);
 
+  if (!permissionsReady) {
+    return (
+      <div className="space-y-4">
+        <Skeleton className="h-10 w-48" />
+        <Skeleton className="h-24 w-full" />
+      </div>
+    );
+  }
+
+  if (!canViewAchievements) {
+    return (
+      <div className="rounded-lg border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
+        You do not have permission to view achievements.
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <Card>
@@ -137,7 +168,7 @@ const AchievementsManager: React.FC = () => {
             <CardTitle className="text-xl font-semibold">Achievements</CardTitle>
             <CardDescription>Control the statistics shown in the achievements strip.</CardDescription>
           </div>
-          <Button type="button" onClick={() => handleOpenDialog(null)}>
+          <Button type="button" onClick={() => handleOpenDialog(null)} disabled={!canManageAchievements}>
             <Plus className="mr-2 h-4 w-4" /> Add achievement
           </Button>
         </CardHeader>
@@ -173,6 +204,7 @@ const AchievementsManager: React.FC = () => {
                           variant="outline"
                           size="icon"
                           onClick={() => handleOpenDialog(achievement)}
+                          disabled={!canManageAchievements}
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>
@@ -180,7 +212,14 @@ const AchievementsManager: React.FC = () => {
                           type="button"
                           variant="destructive"
                           size="icon"
-                          onClick={() => setPendingDelete(achievement)}
+                          onClick={() => {
+                            if (!canManageAchievements) {
+                              toast({ title: 'Read-only mode', description: 'You do not have permission to delete achievements.', variant: 'destructive' });
+                              return;
+                            }
+                            setPendingDelete(achievement);
+                          }}
+                          disabled={!canManageAchievements}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -211,21 +250,21 @@ const AchievementsManager: React.FC = () => {
           <form onSubmit={form.handleSubmit(handleSubmit)} className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="title_en">Title (EN)</Label>
-              <Input id="title_en" {...form.register('title_en')} required />
+              <Input id="title_en" disabled={!canManageAchievements} {...form.register('title_en')} required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="title_ar">العنوان (AR)</Label>
-              <Input id="title_ar" dir="rtl" {...form.register('title_ar')} required />
+              <Input id="title_ar" dir="rtl" disabled={!canManageAchievements} {...form.register('title_ar')} required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="number">Number (optional)</Label>
-              <Input id="number" type="number" min={0} {...form.register('number')} />
+              <Input id="number" type="number" min={0} disabled={!canManageAchievements} {...form.register('number')} />
             </div>
             <DialogFooter className="pt-2">
               <Button type="button" variant="outline" onClick={handleCloseDialog}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={saveMutation.isPending}>
+              <Button type="submit" disabled={saveMutation.isPending || !canManageAchievements}>
                 {saveMutation.isPending ? 'Saving…' : 'Save'}
               </Button>
             </DialogFooter>
@@ -240,9 +279,14 @@ const AchievementsManager: React.FC = () => {
         confirmLabel="Delete"
         cancelLabel="Cancel"
         onConfirm={() => {
-          if (pendingDelete) {
-            deleteMutation.mutate(pendingDelete.id);
+          if (!pendingDelete) {
+            return;
           }
+          if (!canManageAchievements) {
+            toast({ title: 'Read-only mode', description: 'You do not have permission to delete achievements.', variant: 'destructive' });
+            return;
+          }
+          deleteMutation.mutate(pendingDelete.id);
         }}
         onClose={() => setPendingDelete(null)}
       />

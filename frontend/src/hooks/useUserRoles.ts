@@ -34,8 +34,10 @@ export interface UseUserRolesResult {
   hasRole: (role: Role | Role[]) => boolean;
   can: (permission: Permission) => boolean;
   isLoading: boolean;
+  isFetching: boolean;
   isError: boolean;
   error: unknown;
+  isAdmin: boolean;
 }
 
 export const useUserRoles = (): UseUserRolesResult => {
@@ -92,8 +94,10 @@ export const useUserRoles = (): UseUserRolesResult => {
     hasRole,
     can,
     isLoading: profileQuery.isLoading && isAdmin,
+    isFetching: profileQuery.isFetching && isAdmin,
     isError: profileQuery.isError,
     error: profileQuery.error,
+    isAdmin,
   };
 };
 
