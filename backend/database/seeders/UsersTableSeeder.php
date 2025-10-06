@@ -2,33 +2,33 @@
 
 namespace Database\Seeders;
 
+use App\Http\Middleware\EnsureUserHasRole;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Support\Facades\DB;
 
 class UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
-             // 🧹 مسح كل المستخدمين قبل الإنشاء
-             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-DB::table('users')->truncate();
-DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // 🧹 مسح كل المستخدمين قبل الإنشاء
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $users = [
             [
                 'name' => 'عبدالحميد عسكر',
                 'email' => 'a@a.com',
                 'password' => 'Ask@123456',
-                'role' => '1',
+                'role' => EnsureUserHasRole::databaseRoleValue('admin'),
             ],
             [
                 'name' => 'User 2',
                 'email' => 'user2@example.com',
                 'password' => 'password',
-                'role' => '3',
+                'role' => EnsureUserHasRole::databaseRoleValue('viewer'),
             ],
         ];
 
