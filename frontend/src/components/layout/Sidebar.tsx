@@ -1,36 +1,110 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
 import { ChevronDown, ChevronRight, LogOut } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import BrandLogo from "../common/BrandLogo";
-import { cn } from "@/lib/utils";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useAuth } from "@/contexts/AuthContext";
-import { useSidebar } from "@/contexts/SidebarContext";
-import { useIsMobile } from "@/hooks/use-mobile";
 import LegalIcon from "@/components/common/LegalIcon";
+import { Button } from "@/components/ui/button";
+import {
+  Sidebar as SidebarRoot,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useSidebar as useSidebarContext } from "@/contexts/SidebarContext";
 import { getIconDesign } from "@/config/iconography";
-import { sidebarGroups, type SidebarItem as SidebarItemType } from "@/config/sidebar";
+import { sidebarGroups } from "@/config/sidebar";
+import { cn } from "@/lib/utils";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
-  const isMobile = useIsMobile();
   const { t, isRTL } = useLanguage();
   const { logout } = useAuth();
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed } = useSidebarContext();
 
   const collapsed = isCollapsed;
+  const currentPath = location.pathname;
 
-  const isPathActive = useMemo(
-    () =>
-      (path?: string) =>
-        !!path && (location.pathname === path || location.pathname.startsWith(`${path}/`)),
-    [location.pathname]
+  const isActive = useCallback(
+    (path?: string) =>
+      !!path && (currentPath === path || currentPath.startsWith(`${path}/`)),
+    [currentPath]
   );
 
-  if (isMobile) return null;
+  const initialExpanded = useMemo(() => {
+    const defaults: Record<string, boolean> = {};
+    sidebarGroups.forEach((group) => {
+      group.items.forEach((item) => {
+        if (item.children?.length) {
+          defaults[item.key] = item.children.some((child) => isActive(child.path));
+        }
+      });
+    });
+    return defaults;
+  }, [isActive]);
+
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(initialExpanded);
+
+  useEffect(() => {
+    setExpandedGroups((prev) => {
+      const next = { ...prev };
+      sidebarGroups.forEach((group) => {
+        group.items.forEach((item) => {
+          if (item.children?.length) {
+            if (item.children.some((child) => isActive(child.path))) {
+              next[item.key] = true;
+            }
+          }
+        });
+      });
+      return next;
+    });
+  }, [currentPath, isActive]);
+
+  const toggleGroup = useCallback((key: string) => {
+    setExpandedGroups((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  }, []);
+
+  const renderIcon = useCallback(
+    (iconKey: string, size: "default" | "sm" = "default") => {
+      const design = getIconDesign(iconKey);
+      const sizeClasses =
+        size === "sm"
+          ? "h-7 w-7 rounded-lg"
+          : collapsed
+            ? "h-9 w-9 rounded-xl"
+            : "h-10 w-10 rounded-2xl";
+      const iconSize = size === "sm" ? 16 : collapsed ? 20 : 18;
+
+      return (
+        <span
+          className={cn(
+            "flex items-center justify-center shadow-sm text-white",
+            design.badgeClass,
+            sizeClasses,
+          )}
+          style={{
+            background: design.badgeGradient,
+            boxShadow: design.shadow ?? "var(--shadow-premium)",
+          }}
+        >
+          <LegalIcon iconKey={iconKey} width={iconSize} height={iconSize} />
+        </span>
+      );
+    },
+    [collapsed],
+  );
 
   return (
     <motion.aside
@@ -41,7 +115,6 @@ const Sidebar: React.FC = () => {
         "sidebar-shell hidden h-screen flex-shrink-0  flex-col md:sticky md:top-0 md:flex"
       )}
       dir={isRTL ? "rtl" : "ltr"}
-      data-collapsed={collapsed}
     >
       {/* Brand Section */}
       <div
@@ -87,163 +160,156 @@ const Sidebar: React.FC = () => {
           onClick={logout}
           variant="hero"
           className={cn(
-            "w-full justify-start text-sidebar-text-muted transition-colors hover:bg-destructive/10 hover:text-destructive",
-            collapsed ? "px-2" : "px-3"
+            "flex items-center px-4 transition-all duration-300",
+            collapsed ? "justify-center" : "justify-start",
           )}
         >
-          <LogOut className="h-5 w-5 flex-shrink-0" />
-          {!collapsed && (
-            <span className={cn(isRTL ? "mr-2" : "ml-2")}>{t("auth.logout")}</span>
-          )}
-        </Button>
-      </div>
-    </motion.aside>
-  );
-};
+          <BrandLogo
+            variant={collapsed ? "icon" : "full"}
+            className={collapsed ? "h-10 w-10" : "h-9 w-auto"}
+          />
+        </div>
 
-interface SidebarItemProps {
-  item: SidebarItemType;
-  collapsed: boolean;
-  isPathActive: (path?: string) => boolean;
-  isRTL: boolean;
-  t: (key: string) => string;
-}
-
-const SidebarItem: React.FC<SidebarItemProps> = ({
-  item,
-  collapsed,
-  isPathActive,
-  isRTL,
-  t
-}) => {
-  const [open, setOpen] = useState(false);
-  const hasChildren = item.children && item.children.length > 0;
-  const childActive = hasChildren
-    ? item.children!.some((child) => isPathActive(child.path))
-    : false;
-  const isActive = item.path ? isPathActive(item.path) : childActive;
-
-  const design = getIconDesign(item.iconKey);
-
-  const iconBadge = (
-    <span
-      className={cn(
-        "sidebar-icon-badge flex items-center justify-center rounded-xl transition-all duration-300",
-        collapsed
-          ? "w-[var(20px)] h-[var(20px)]"
-          : "w-[var(24px)] h-[var(24px)]",
-        design.badgeClass ?? "text-white"
-      )}
-      style={{
-        background: design.badgeGradient,
-        boxShadow: design.shadow ?? "var(--shadow-premium)"
-      }}
-    >
-      <LegalIcon
-        iconKey={item.iconKey}
-        width={collapsed ? 20 : 18}
-        height={collapsed ? 20 : 18}
-      />
-    </span>
-  );
-
-  useEffect(() => {
-    if (childActive) setOpen(true);
-  }, [childActive]);
-
-  const handleToggle = () => {
-    if (hasChildren) setOpen((prev) => !prev);
-  };
-
-  return (
-    <div className="relative">
-      {/* Parent Item */}
-      <div
-        className={cn(
-          "sidebar-nav-item group relative flex items-center rounded-2xl text-sm transition-all duration-300",
-          collapsed ? "justify-center py-2" : "px-1 py-1.5",
-          isActive ? "text-sidebar-primary" : "text-sidebar-text-muted"
-        )}
-        data-active={isActive}
-        data-collapsed={collapsed}
-      >
-        <NavLink
-          to={
-            item.path ?? (hasChildren ? item.children?.[0]?.path ?? "#" : "#")
-          }
-          end={!hasChildren}
-          className={cn(
-            "sidebar-nav-link flex w-full items-center gap-3 rounded-2xl px-3 py-2",
-            collapsed && "justify-center px-0"
-          )}
-          onClick={(event) => {
-            if (!item.path && hasChildren) {
-              event.preventDefault();
-              handleToggle();
-            }
-          }}
-        >
-          {iconBadge}
-          {!collapsed && <span className="truncate">{t(`nav.${item.key}`)}</span>}
-        </NavLink>
-
-        {!collapsed && hasChildren && (
-          <button
-            type="button"
-            className="ml-auto inline-flex h-6 w-6 items-center justify-center rounded-md text-sidebar-text-muted hover:text-sidebar-primary"
-            onClick={(event) => {
-              event.stopPropagation();
-              handleToggle();
-            }}
-            aria-label={open ? t("sidebar.toggle.close") : t("sidebar.toggle.open")}
-          >
-            {open ? (
-              <ChevronDown className="h-4 w-4" />
-            ) : (
-              <ChevronRight className="h-4 w-4" />
-            )}
-          </button>
-        )}
-      </div>
-
-      {/* Child Items */}
-      {!collapsed && hasChildren && open && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          className={cn("mt-1 space-y-1", isRTL ? "mr-6" : "ml-6")}
-        >
-          {item.children!.map((child) => {
-            const childDesign = getIconDesign(child.iconKey);
-
-            return (
-              <NavLink
-                key={child.key}
-                to={child.path ?? "#"}
-                className={({ isActive }) =>
-                  cn(
-                    "sidebar-subitem flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm",
-                    isActive ? "is-active" : "text-sidebar-text-muted"
-                  )
-                }
+        <div className="flex-1 space-y-6 overflow-y-auto px-2">
+          {sidebarGroups.map((group) => (
+            <SidebarGroup key={group.key}>
+              <SidebarGroupLabel
+                className={cn(
+                  "px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground",
+                  collapsed && "hidden",
+                )}
               >
-                <span
-                  className="sidebar-icon-badge flex h-8 w-8 items-center justify-center rounded-lg"
-                  style={{
-                    background: childDesign.badgeGradient,
-                    boxShadow: "var(var(--shadow-luxury))"
-                  }}
-                >
-                  <LegalIcon iconKey={child.iconKey} width={16} height={16} />
-                </span>
-                <span>{t(`nav.${child.key}`)}</span>
-              </NavLink>
-            );
-          })}
-        </motion.div>
-      )}
-    </div>
+                {t(`sidebar.sections.${group.key}`)}
+              </SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu className="space-y-1">
+                  {group.items.map((item) => {
+                    const hasChildren = !!item.children?.length;
+                    const groupActive = hasChildren
+                      ? item.children!.some((child) => isActive(child.path))
+                      : false;
+                    const itemActive = item.path ? isActive(item.path) : groupActive;
+
+                    if (!hasChildren) {
+                      const target = item.path ?? "#";
+
+                      return (
+                        <SidebarMenuItem key={item.key}>
+                          <SidebarMenuButton
+                            asChild
+                            isActive={itemActive}
+                            tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
+                            className={cn(
+                              "rounded-lg transition-all duration-200",
+                              collapsed ? "justify-center" : "gap-3 px-3",
+                              itemActive
+                                ? "bg-primary/10 text-primary font-medium"
+                                : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+                            )}
+                          >
+                            <NavLink to={target} className="flex w-full items-center gap-3">
+                              {renderIcon(item.iconKey)}
+                              {!collapsed && (
+                                <span className="truncate font-medium">
+                                  {t(`nav.${item.key}`)}
+                                </span>
+                              )}
+                            </NavLink>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    }
+
+                    const isExpanded = expandedGroups[item.key] ?? groupActive;
+                    const childSpacing = collapsed ? "" : isRTL ? "mr-8" : "ml-8";
+
+                    return (
+                      <SidebarMenuItem key={item.key}>
+                        <Collapsible open={isExpanded} onOpenChange={() => toggleGroup(item.key)}>
+                          <CollapsibleTrigger asChild>
+                            <SidebarMenuButton
+                              isActive={groupActive}
+                              tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
+                              className={cn(
+                                "rounded-lg transition-all duration-200",
+                                collapsed ? "justify-center" : "gap-3 px-3",
+                                groupActive
+                                  ? "bg-primary/10 text-primary font-medium"
+                                  : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+                              )}
+                            >
+                              <div className="flex items-center gap-3">
+                                {renderIcon(item.iconKey)}
+                                {!collapsed && (
+                                  <span className="truncate font-medium">
+                                    {t(`nav.${item.key}`)}
+                                  </span>
+                                )}
+                              </div>
+                              {!collapsed && (
+                                <span className="ml-auto">
+                                  {isExpanded ? (
+                                    <ChevronDown className="h-4 w-4" />
+                                  ) : (
+                                    <ChevronRight className="h-4 w-4" />
+                                  )}
+                                </span>
+                              )}
+                            </SidebarMenuButton>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent className={cn("mt-1 space-y-1", collapsed && "hidden")}>
+                            {!collapsed &&
+                              item.children?.map((child) => {
+                                const childActive = isActive(child.path);
+                                const childTarget = child.path ?? "#";
+                                return (
+                                  <SidebarMenuButton
+                                    key={child.key}
+                                    asChild
+                                    isActive={childActive}
+                                    className={cn(
+                                      "rounded-lg px-3 py-2 text-sm transition-all duration-200",
+                                      childSpacing,
+                                      childActive
+                                        ? "bg-primary/10 text-primary font-medium"
+                                        : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+                                    )}
+                                  >
+                                    <NavLink
+                                      to={childTarget}
+                                      className="flex w-full items-center gap-3"
+                                    >
+                                      {renderIcon(child.iconKey, "sm")}
+                                      <span className="truncate">{t(`nav.${child.key}`)}</span>
+                                    </NavLink>
+                                  </SidebarMenuButton>
+                                );
+                              })}
+                          </CollapsibleContent>
+                        </Collapsible>
+                      </SidebarMenuItem>
+                    );
+                  })}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          ))}
+        </div>
+      </SidebarContent>
+      <SidebarFooter className="border-t border-border px-3 py-4">
+        <Button
+          onClick={logout}
+          variant="ghost"
+          className={cn(
+            "w-full items-center justify-start gap-3 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive",
+            collapsed && "justify-center gap-0",
+          )}
+        >
+          <LogOut className="h-5 w-5" />
+          {!collapsed && <span>{t("auth.logout")}</span>}
+        </Button>
+      </SidebarFooter>
+    </SidebarRoot>
   );
 };
 
