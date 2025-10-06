@@ -64,3 +64,33 @@
     background-image: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.08));
   }
 }
+
+@layer utilities {
+  .neon-text {
+    color: hsl(var(--neon));
+    text-shadow:
+      0 0 6px hsl(var(--neon-glow) / 0.75),
+      0 0 18px hsl(var(--neon-glow) / 0.35),
+      0 0 30px hsl(var(--neon-glow) / 0.18);
+  }
+
+  .neon-text-muted {
+    color: hsl(var(--neon-muted));
+  }
+
+  .dark .neon-text-muted {
+    color: hsl(var(--neon));
+    opacity: 0.9;
+  }
+
+  .neon-divider {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--neon) / 0.55),
+      hsl(var(--neon) / 0.8),
+      transparent
+    );
+    box-shadow: 0 0 12px hsl(var(--neon-glow) / 0.35);
+  }
+}
