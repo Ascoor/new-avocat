@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AdminAuthController;
+use App\Http\Controllers\Api\Admin\AdminEventController;
+use App\Http\Controllers\Api\Admin\WebsiteActivityController;
+use App\Http\Controllers\Api\Admin\WebsiteReportController;
 use App\Http\Controllers\Api\Website\AchievementController;
 use App\Http\Controllers\Api\Website\ArticleController;
 use App\Http\Controllers\Api\Website\PageController;
@@ -55,6 +59,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user/{user}', [UserController::class, 'updateProfile'])->name('user.update');
     Route::get('/user/{user}', [UserController::class, 'getUserDetails'])->name('user.details');
 });
+
+Route::prefix('admin')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::get('/auth/me', AdminAuthController::class);
+
+        Route::middleware('role:admin')->group(function () {
+            Route::get('/website/activity', WebsiteActivityController::class);
+            Route::get('/website/report', WebsiteReportController::class);
+        });
+    });
+
+Route::get('/admin/events/subscribe', [AdminEventController::class, 'subscribe']);
 
 // Dashboard & searches
 Route::get('/search-court', [CourtSearchController::class, 'index']);

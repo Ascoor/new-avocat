@@ -22,11 +22,13 @@ DB::statement('SET FOREIGN_KEY_CHECKS=1;');
                 'name' => 'عبدالحميد عسكر',
                 'email' => 'a@a.com',
                 'password' => 'Ask@123456',
+                'role' => '1',
             ],
             [
                 'name' => 'User 2',
                 'email' => 'user2@example.com',
                 'password' => 'password',
+                'role' => '3',
             ],
         ];
 
@@ -37,6 +39,7 @@ DB::statement('SET FOREIGN_KEY_CHECKS=1;');
                     'name' => $userData['name'],
                     'email' => $userData['email'],
                     'password' => Hash::make($userData['password']),
+                    'role' => $userData['role'],
                 ]);
 
                 // إنشاء التوكن الشخصي للمستخدم
