@@ -1,5 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+import api from '@/api/axiosConfig';
+
+interface ApiUser {
+  id: number | string;
+  email: string;
+  name: string;
+  role?: string | number | null;
+  avatar?: string | null;
+}
+
 export interface User {
   id: string;
   email: string;
@@ -32,33 +42,100 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored auth state
-    const storedUser = localStorage.getItem('avocat_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const initialize = async () => {
+      try {
+        const storedUser = localStorage.getItem('avocat_user');
+        if (storedUser) {
+          try {
+            setUser(JSON.parse(storedUser) as User);
+          } catch (error) {
+            console.warn('Failed to parse stored user payload', error);
+            localStorage.removeItem('avocat_user');
+          }
+        }
+
+        const storedToken = sessionStorage.getItem('token');
+        if (storedToken) {
+          const parsedToken = JSON.parse(storedToken) as string;
+          if (parsedToken) {
+            const { data } = await api.get<ApiUser>('/api/auth/profile');
+            const mappedUser = mapApiUserToContextUser(data);
+            setUser(mappedUser);
+            localStorage.setItem('avocat_user', JSON.stringify(mappedUser));
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to bootstrap auth state from API', error);
+        sessionStorage.removeItem('token');
+        localStorage.removeItem('avocat_user');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void initialize();
   }, []);
+
+  const mapRole = (role: ApiUser['role']): User['role'] => {
+    const normalized = typeof role === 'string' ? role.toLowerCase() : String(role ?? '').toLowerCase();
+
+    if (normalized === '1' || normalized === 'admin') {
+      return 'admin';
+    }
+
+    if (normalized === '2' || normalized === 'lawyer') {
+      return 'lawyer';
+    }
+
+    return 'client';
+  };
+
+  const mapApiUserToContextUser = (payload: ApiUser): User => ({
+    id: String(payload.id),
+    email: payload.email,
+    name: payload.name,
+    avatar: payload.avatar ?? undefined,
+    role: mapRole(payload.role ?? null),
+  });
+
+  const extractErrorMessage = (error: unknown, fallback: string): string => {
+    if (error && typeof error === 'object') {
+      const maybeResponse = (error as { response?: { data?: { message?: string } } }).response;
+      if (maybeResponse?.data?.message && typeof maybeResponse.data.message === 'string') {
+        return maybeResponse.data.message;
+      }
+
+      if ('message' in error && typeof (error as { message?: string }).message === 'string') {
+        return (error as { message: string }).message;
+      }
+    }
+
+    return fallback;
+  };
 
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock user data
-      const mockUser: User = {
-        id: '1',
-        email,
-        name: email === 'admin@avocat.com' ? 'أحمد المحامي' : 'محمد العميل',
-        avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${email}`,
-        role: email === 'admin@avocat.com' ? 'admin' : 'client'
-      };
+      const response = await api.post<{ user: ApiUser; access_token: string }>(
+        '/api/auth/login',
+        { email, password },
+      );
 
-      setUser(mockUser);
-      localStorage.setItem('avocat_user', JSON.stringify(mockUser));
+      const token = response.data?.access_token;
+      const apiUser = response.data?.user;
+
+      if (!token || !apiUser) {
+        throw new Error('Invalid authentication response.');
+      }
+
+      sessionStorage.setItem('token', JSON.stringify(token));
+
+      const mappedUser = mapApiUserToContextUser(apiUser);
+      setUser(mappedUser);
+      localStorage.setItem('avocat_user', JSON.stringify(mappedUser));
     } catch (error) {
-      throw new Error('فشل في تسجيل الدخول');
+      const message = extractErrorMessage(error, 'فشل في تسجيل الدخول');
+      throw new Error(message);
     } finally {
       setLoading(false);
     }
@@ -67,21 +144,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signup = async (email: string, password: string, name: string) => {
     setLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const newUser: User = {
-        id: Date.now().toString(),
-        email,
-        name,
-        avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${name}`,
-        role: 'client'
-      };
+      const response = await api.post<{ user: ApiUser; access_token: string }>(
+        '/api/auth/register',
+        {
+          name,
+          email,
+          password,
+          password_confirmation: password,
+          role: '3',
+        },
+      );
 
-      setUser(newUser);
-      localStorage.setItem('avocat_user', JSON.stringify(newUser));
+      const token = response.data?.access_token;
+      const apiUser = response.data?.user;
+
+      if (!token || !apiUser) {
+        throw new Error('Invalid registration response.');
+      }
+
+      sessionStorage.setItem('token', JSON.stringify(token));
+
+      const mappedUser = mapApiUserToContextUser(apiUser);
+      setUser(mappedUser);
+      localStorage.setItem('avocat_user', JSON.stringify(mappedUser));
     } catch (error) {
-      throw new Error('فشل في إنشاء الحساب');
+      const message = extractErrorMessage(error, 'فشل في إنشاء الحساب');
+      throw new Error(message);
     } finally {
       setLoading(false);
     }
@@ -90,6 +178,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser(null);
     localStorage.removeItem('avocat_user');
+    sessionStorage.removeItem('token');
+    void api.post('/api/auth/logout').catch(() => undefined);
   };
 
   const value = {
