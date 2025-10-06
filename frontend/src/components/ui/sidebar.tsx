@@ -109,8 +109,8 @@ const SidebarProvider = React.forwardRef<
   const cssVariables = React.useMemo(
     () =>
       ({
-        "320px": isMobile ? SIDEBAR_WIDTH_MOBILE : SIDEBAR_WIDTH,
-        "var(320px-icon)": isMobile ? SIDEBAR_WIDTH_ICON_MOBILE : SIDEBAR_WIDTH_ICON,
+        "--sidebar-width": isMobile ? SIDEBAR_WIDTH_MOBILE : SIDEBAR_WIDTH,
+        "--sidebar-width-icon": isMobile ? SIDEBAR_WIDTH_ICON_MOBILE : SIDEBAR_WIDTH_ICON,
         ...styleProp,
       }) as React.CSSProperties,
     [isMobile, styleProp],
@@ -164,8 +164,8 @@ const Sidebar = React.forwardRef<
           className="w-[320px] max-w-full bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
           style={
             {
-              "320px": SIDEBAR_WIDTH_MOBILE,
-              "var(320px-icon)": SIDEBAR_WIDTH_ICON_MOBILE,
+              "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON_MOBILE,
             } as React.CSSProperties
           }
           side={side}
@@ -192,20 +192,20 @@ const Sidebar = React.forwardRef<
           "group-data-[collapsible=offcanvas]:w-0",
           "group-data-[side=right]:rotate-180",
           variant === "floating" || variant === "inset"
-            ? "group-data-[collapsible=icon]:w-[calc(var(var(320px-icon))_+_theme(spacing.4))]"
-            : "group-data-[collapsible=icon]:w-[var(320px-icon)]",
+            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
+            : "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)]",
         )}
       />
       <div
         className={cn(
           "fixed inset-y-0 z-10 hidden h-svh w-[320px] transition-[left,right,width] duration-200 ease-linear md:flex",
           side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(320px)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(320px)*-1)]",
+            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
+            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(var(320px-icon))_+_theme(spacing.4)_+2px)]"
-            : "group-data-[collapsible=icon]:w-[var(320px-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l",
+            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+_2px)]"
+            : "group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l",
           className,
         )}
         {...props}
