@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import SectionTitle from '@/components/SectionTitle';
 import { motion, useAnimationFrame } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -48,9 +49,12 @@ const Testimonials: React.FC = () => {
           <span className="inline-block px-4 py-2 rounded-full bg-gold-light text-gold-muted font-semibold text-sm mb-4">
             {direction === 'rtl' ? 'آراء العملاء' : 'Client Reviews'}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6 font-cairo">
+          <SectionTitle
+            className="mx-auto font-cairo"
+            glowIntensity={0.75}
+          >
             {direction === 'rtl' ? 'ماذا يقول عملاؤنا' : 'What Our Clients Say'}
-          </h2>
+          </SectionTitle>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             {direction === 'rtl'
               ? 'آراء حقيقية من محامين ومكاتب قانونية تستخدم حلولنا يومياً'

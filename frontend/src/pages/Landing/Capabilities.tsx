@@ -1,8 +1,10 @@
-    import { useCallback, useMemo } from 'react';
-    import { Cpu, Layers, ShieldEllipsis } from 'lucide-react';
-    import { useLanguage } from '@/contexts/LanguageContext';
-    import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-    import type { ContentBlock, Locale } from '@/types/website';
+import { useCallback, useMemo } from 'react';
+import { Cpu, Layers, ShieldEllipsis } from 'lucide-react';
+
+import SectionTitle from '@/components/SectionTitle';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useWebsiteContent } from '@/hooks/useWebsiteContent';
+import type { ContentBlock, Locale } from '@/types/website';
 
     const iconLookup: Record<string, typeof Layers> = {
       layers: Layers,
@@ -49,9 +51,12 @@
               <div className="relative mx-auto mt-8 inline-flex max-w-3xl flex-col items-center overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-primary-hover to-accent p-[1px]">
                 <div className="relative w-full overflow-hidden rounded-[calc(1.5rem-1px)] bg-gradient-to-r from-background/95 via-background/90 to-background/95 px-8 py-10 shadow-header-light transition-shadow duration-500 dark:from-secondary/40 dark:via-primary-darker/60 dark:to-secondary/40 dark:shadow-header-dark">
                   <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-aurora opacity-0 blur-3xl transition-opacity duration-500 dark:opacity-20" />
-                  <h2 className="text-4xl font-display font-bold text-foreground lg:text-5xl">
+                  <SectionTitle
+                    className="mx-auto text-center font-display"
+                    glowIntensity={0.7}
+                  >
                     {header.title}
-                  </h2>
+                  </SectionTitle>
                   <p className="mt-3 text-lg leading-relaxed text-muted-foreground/90 lg:text-xl">
                     {header.subtitle}
                   </p>
