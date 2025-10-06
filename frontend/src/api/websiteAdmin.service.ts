@@ -23,6 +23,21 @@ const unwrap = <T>(payload: unknown): T => {
   return payload as T;
 };
 
+const hasValidSessionToken = (): boolean => {
+  try {
+    const storedToken = sessionStorage.getItem('token');
+    if (!storedToken) {
+      return false;
+    }
+
+    const parsed = JSON.parse(storedToken) as unknown;
+    return typeof parsed === 'string' && parsed.length > 0;
+  } catch (error) {
+    console.warn('Failed to read auth token from sessionStorage', error);
+    return false;
+  }
+};
+
 const unwrapCollection = <T>(payload: unknown): T[] => {
   const data = unwrap<unknown>(payload);
   if (Array.isArray(data)) {
@@ -138,11 +153,16 @@ export const getWebsiteReport = async (): Promise<WebsiteReportSummary> => {
 };
 
 export const getActivityLog = async (params?: { limit?: number }): Promise<ActivityLogEntry[]> => {
+  if (!hasValidSessionToken()) {
+    const { data } = await api.get('/api/website/activity', { params });
+    return unwrapCollection<ActivityLogEntry>(data);
+  }
+
   try {
     const { data } = await api.get('/api/admin/website/activity', { params });
     return unwrapCollection<ActivityLogEntry>(data);
   } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 401) {
+    if (isAxiosError(error) && (error.response?.status === 401 || error.response?.status === 403)) {
       const { data } = await api.get('/api/website/activity', { params });
       return unwrapCollection<ActivityLogEntry>(data);
     }
