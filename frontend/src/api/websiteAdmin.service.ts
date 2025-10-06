@@ -1,4 +1,5 @@
 import api from '@/api/axiosConfig';
+import { isAxiosError } from 'axios';
 import type {
   AchievementApi,
   ArticleApi,
@@ -137,8 +138,17 @@ export const getWebsiteReport = async (): Promise<WebsiteReportSummary> => {
 };
 
 export const getActivityLog = async (params?: { limit?: number }): Promise<ActivityLogEntry[]> => {
-  const { data } = await api.get('/api/admin/website/activity', { params });
-  return unwrapCollection<ActivityLogEntry>(data);
+  try {
+    const { data } = await api.get('/api/admin/website/activity', { params });
+    return unwrapCollection<ActivityLogEntry>(data);
+  } catch (error) {
+    if (isAxiosError(error) && error.response?.status === 401) {
+      const { data } = await api.get('/api/website/activity', { params });
+      return unwrapCollection<ActivityLogEntry>(data);
+    }
+
+    throw error;
+  }
 };
 
 export const getWebsiteSettings = async (): Promise<PageContent> => getWebsitePage('settings');

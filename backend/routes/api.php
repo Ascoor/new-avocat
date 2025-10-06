@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Api\Admin\AdminAuthController;
 use App\Http\Controllers\Api\Admin\AdminEventController;
-use App\Http\Controllers\Api\Admin\WebsiteActivityController;
+use App\Http\Controllers\Api\Admin\WebsiteActivityController as AdminWebsiteActivityController;
+use App\Http\Controllers\Api\Website\WebsiteActivityController as PublicWebsiteActivityController;
 use App\Http\Controllers\Api\Admin\WebsiteReportController;
 use App\Http\Controllers\Api\Website\AchievementController;
 use App\Http\Controllers\Api\Website\ArticleController;
@@ -66,12 +67,15 @@ Route::prefix('admin')
         Route::get('/auth/me', AdminAuthController::class);
 
         Route::middleware('role:admin')->group(function () {
-            Route::get('/website/activity', WebsiteActivityController::class);
+            Route::get('/website/activity', AdminWebsiteActivityController::class);
             Route::get('/website/report', WebsiteReportController::class);
         });
     });
 
 Route::get('/admin/events/subscribe', [AdminEventController::class, 'subscribe']);
+
+// Website activity (public)
+Route::get('/website/activity', PublicWebsiteActivityController::class);
 
 // Dashboard & searches
 Route::get('/search-court', [CourtSearchController::class, 'index']);
