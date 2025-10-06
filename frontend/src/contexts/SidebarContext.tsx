@@ -3,8 +3,13 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
+import {
+  SidebarProvider as SidebarUiProvider,
+  useSidebar as useUiSidebar,
+} from '@/components/ui/sidebar';
 
 interface SidebarContextType {
   isCollapsed: boolean;
@@ -16,10 +21,7 @@ interface SidebarContextType {
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
-const DESKTOP_SIDEBAR_WIDTH = '280px';
-const TABLET_SIDEBAR_WIDTH = '220px';
-const MOBILE_SIDEBAR_WIDTH = '100%';
-const ICON_SIDEBAR_WIDTH = '88px';
+const SIDEBAR_STORAGE_KEY = 'sidebar-collapsed';
 
 export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(() => {
@@ -27,75 +29,55 @@ export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ child
       return false;
     }
 
-    const saved = window.localStorage.getItem('sidebar-collapsed');
-    return saved ? JSON.parse(saved) : false;
+    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : false;
   });
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-
-    const root = document.documentElement;
-    root.style.setProperty('--sidebar-width-icon', ICON_SIDEBAR_WIDTH);
-
-    const applyResponsiveWidth = () => {
-      if (typeof window === 'undefined') return;
-      const viewportWidth = window.innerWidth;
-
-      if (viewportWidth < 640) {
-        root.style.setProperty('--sidebar-width', MOBILE_SIDEBAR_WIDTH);
-      } else if (viewportWidth < 1024) {
-        root.style.setProperty('--sidebar-width', TABLET_SIDEBAR_WIDTH);
-      } else {
-        root.style.setProperty('--sidebar-width', DESKTOP_SIDEBAR_WIDTH);
-      }
-    };
-
-    applyResponsiveWidth();
-    window.addEventListener('resize', applyResponsiveWidth);
-
-    return () => {
-      window.removeEventListener('resize', applyResponsiveWidth);
-    };
+  const handleOpenChange = useCallback((open: boolean) => {
+    setIsCollapsed(!open);
   }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window.localStorage.setItem('sidebar-collapsed', JSON.stringify(isCollapsed));
+      window.localStorage.setItem(SIDEBAR_STORAGE_KEY, JSON.stringify(isCollapsed));
     }
   }, [isCollapsed]);
 
+  return (
+    <SidebarUiProvider open={!isCollapsed} onOpenChange={handleOpenChange}>
+      <SidebarContextBridge isCollapsed={isCollapsed}>{children}</SidebarContextBridge>
+    </SidebarUiProvider>
+  );
+};
+
+const SidebarContextBridge: React.FC<{
+  isCollapsed: boolean;
+  children: React.ReactNode;
+}> = ({ isCollapsed, children }) => {
+  const { toggleSidebar, openMobile, setOpenMobile } = useUiSidebar();
+
   const toggleCollapsed = useCallback(() => {
-    setIsCollapsed(prev => !prev);
-  }, []);
+    toggleSidebar();
+  }, [toggleSidebar]);
 
   const toggleMobile = useCallback(() => {
-    setIsMobileOpen(prev => !prev);
-  }, []);
+    setOpenMobile(prev => !prev);
+  }, [setOpenMobile]);
 
   const closeMobile = useCallback(() => {
-    setIsMobileOpen(false);
-  }, []);
+    setOpenMobile(false);
+  }, [setOpenMobile]);
 
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-    if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileOpen]);
-
-  const value = {
-    isCollapsed,
-    isMobileOpen,
-    toggleCollapsed,
-    toggleMobile,
-    closeMobile
-  };
+  const value = useMemo(
+    () => ({
+      isCollapsed,
+      isMobileOpen: openMobile,
+      toggleCollapsed,
+      toggleMobile,
+      closeMobile,
+    }),
+    [isCollapsed, openMobile, toggleCollapsed, toggleMobile, closeMobile],
+  );
 
   return (
     <SidebarContext.Provider value={value}>
