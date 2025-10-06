@@ -67,6 +67,11 @@ const config: Config = {
           muted: "hsl(var(--gold-muted))",
           light: "hsl(var(--gold-light))",
         },
+        neon: {
+          DEFAULT: "hsl(var(--neon))",
+          glow: "hsl(var(--neon-glow))",
+          muted: "hsl(var(--neon-muted))",
+        },
         slate: {
           DEFAULT: "hsl(var(--slate))",
           light: "hsl(var(--slate-light))",

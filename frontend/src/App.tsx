@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
+import AdminRoute from '@/components/AdminRoute';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // Pages
@@ -86,7 +87,7 @@ const App = () => {
           <Route path="office_settings" element={<OfficeSettingsPage />} />
 
           {/* 🌐 Website Management */}
-          <Route path="website">
+          <Route path="website" element={<AdminRoute />}>
             <Route index element={<Navigate to="pages" replace />} />
             <Route path="report" element={<WebsiteReportPage />} />
             <Route path="workflow" element={<WorkflowBoardPage />} />
