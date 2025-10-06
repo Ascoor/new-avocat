@@ -107,13 +107,58 @@ const Sidebar: React.FC = () => {
   );
 
   return (
-    <SidebarRoot
-      collapsible="icon"
-      className="hidden border-r border-border bg-card md:flex"
+    <motion.aside
+      initial={{ width: collapsed ? 64 : 256 }}
+      animate={{ width: collapsed ? 64 : 256 }}
+      transition={{ duration: 0.3, ease: [0.25, 0.8, 0.25, 1] }}
+      className={cn(
+        "sidebar-shell hidden h-screen flex-shrink-0  flex-col md:sticky md:top-0 md:flex"
+      )}
       dir={isRTL ? "rtl" : "ltr"}
     >
-      <SidebarContent className="flex h-full flex-col gap-4 py-4">
-        <div
+      {/* Brand Section */}
+      <div
+        className={cn(
+          "sidebar-brand flex items-center justify-center gap-3 transition-all duration-300",
+          collapsed ? "px-4 py-3" : "px-6 py-5"
+        )}
+      >
+        <BrandLogo
+          variant={collapsed ? "icon" : "full"}
+          className={collapsed ? "h-10 w-10" : "h-9 w-auto"}
+        />
+      </div>
+
+      {/* Navigation Groups */}
+      <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-4 sidebar-scroll">
+        {sidebarGroups.map((group) => (
+          <div key={group.key} className="space-y-2">
+            {!collapsed && (
+              <p className="sidebar-group-label px-2 text-xs font-semibold">
+                {t(`sidebar.sections.${group.key}`)}
+              </p>
+            )}
+            <div className="space-y-1">
+              {group.items.map((item) => (
+                <SidebarItem
+                  key={item.key}
+                  item={item}
+                  collapsed={collapsed}
+                  isPathActive={isPathActive}
+                  isRTL={isRTL}
+                  t={t}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      {/* Logout Section */}
+      <div className="sidebar-footer border-t border-transparent px-3 py-4">
+        <Button
+          onClick={logout}
+          variant="hero"
           className={cn(
             "flex items-center px-4 transition-all duration-300",
             collapsed ? "justify-center" : "justify-start",

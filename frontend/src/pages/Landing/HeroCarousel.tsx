@@ -7,10 +7,13 @@ import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import type { Locale } from '@/types/website';
 import {
   ChevronLeft,
-  ChevronRight, 
+  ChevronRight,
   ShieldCheck,
   Sparkles,
-  Loader2,Cpu, PlayCircle } from 'lucide-react';
+  Loader2,
+  Cpu,
+  PlayCircle,
+} from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
 
@@ -109,7 +112,7 @@ const HeroCarousel: React.FC = () => {
     <section
       id="home"
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="relative h-[90vh] min-h-[640px] overflow-hidden bg-black"
+      className="relative flex min-h-[520px] flex-col justify-between overflow-hidden bg-black sm:min-h-[600px] lg:min-h-[720px]"
     >
       {/* الخلفية */}
       <AnimatePresence mode="wait">
@@ -141,12 +144,12 @@ const HeroCarousel: React.FC = () => {
 
       {/* المحتوى */}
       <div className="relative z-10 flex h-full items-center">
-        <div className="container mx-auto px-4 lg:px-8">
+        <div className="container mx-auto px-4 py-20 sm:py-24 lg:px-8 lg:py-32">
           <motion.div
             key={active.id}
             initial="hidden"
             animate="visible"
-            className="max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur lg:p-10 dark:bg-background/70"
+            className="max-w-3xl rounded-3xl bg-slate-950/70 p-6 shadow-ambient backdrop-blur-sm sm:p-8 lg:p-10 dark:bg-background/70"
           >
             {/* البادج */}
             {active.badge && (
@@ -165,6 +168,8 @@ const HeroCarousel: React.FC = () => {
               as="h1"
               variants={textVariants}
               custom={1}
+              
+      dir={isArabic ? 'rtl' : 'ltr'}
               animateOnView={false}
               glowIntensity={0.85}
               className="max-w-3xl text-left font-display text-[hsl(var(--title-color-dark))] dark:text-[hsl(var(--title-color-dark))] lg:text-6xl"
@@ -175,13 +180,17 @@ const HeroCarousel: React.FC = () => {
             <motion.p
               variants={textVariants}
               custom={2}
-              className="mt-4 text-lg text-white/85 leading-relaxed"
+              className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg"
             >
               {active.subtitle}
             </motion.p>
 
             {/* النقاط */}
-            <motion.ul className="mt-6 space-y-3 text-base text-white/85" initial="hidden" animate="visible">
+            <motion.ul
+              className="mt-6 space-y-3 text-sm text-white/85 sm:text-base"
+              initial="hidden"
+              animate="visible"
+            >
               {active.bullets.map((b, i) => (
                 <motion.li
                   key={b}
@@ -197,46 +206,42 @@ const HeroCarousel: React.FC = () => {
 
             {/* الأزرار */}
             <motion.div
-            
-  dir={isArabic ? 'ltr' : 'rtl'}
+              dir={isArabic ? 'ltr' : 'rtl'}
               variants={textVariants}
               custom={active.bullets.length + 4}
               className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center"
             >
-       
+              <Button
+                onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
+                variant="accent"
+                className="btn-primary flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:text-base"
+              >
+                <PlayCircle className="h-5 w-5" />
+                <span>{isArabic ? 'ابدأ رقمنة مكتبك' : 'Start Your Digital Transformation'}</span>
+              </Button>
 
-<Button
-  onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
-  variant="accent"
-  className="btn-primary flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-white"
->
-  <PlayCircle className="h-5 w-5" />
-  <span>{isArabic ? 'ابدأ رقمنة مكتبك' : 'Start Your Digital Transformation'}</span>
-</Button>
-
-<Button
-  onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
-  variant="hero"
-  className="btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 text-base font-semibold text-white"
->
-  <Cpu className="h-5 w-5" />
-  <span>{isArabic ? 'تعرّف على الأنظمة' : 'Explore Our Systems'}</span>
-</Button>
-
+              <Button
+                onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
+                variant="hero"
+                className="btn-glass flex w-full items-center justify-center gap-2 rounded-full border-white/40 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition-transform hover:-translate-y-0.5 sm:w-auto sm:px-8 sm:text-base"
+              >
+                <Cpu className="h-5 w-5" />
+                <span>{isArabic ? 'تعرّف على الأنظمة' : 'Explore Our Systems'}</span>
+              </Button>
             </motion.div>
           </motion.div>
         </div>
       </div>
 
       {/* عناصر التحكم */}
-   <div
-  dir={isArabic ? 'rtl' : 'ltr'}
-  className="absolute bottom-6 inset-x-0 z-20 flex items-center justify-center gap-4"
->
+      <div
+        dir={isArabic ? 'rtl' : 'ltr'}
+        className="absolute inset-x-0 bottom-4 z-20 flex items-center justify-center gap-4 px-4 sm:bottom-6"
+      >
   {/* زر السابق */}
   <button
     onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
-    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
+    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white transition hover:bg-black/60"
     aria-label={isArabic ? 'الشريحة السابقة' : 'Previous slide'}
   >
     {isArabic ? (
@@ -253,7 +258,7 @@ const HeroCarousel: React.FC = () => {
         key={i}
         onClick={() => setCurrent(i)}
         className={`h-2 rounded-full transition-all ${
-          i === current ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
+          i === current ? 'w-8 bg-white shadow-[0_0_12px_rgba(255,255,255,0.6)]' : 'w-2 bg-white/40 hover:bg-white/70'
         }`}
         aria-label={`Go to slide ${i + 1}`}
       />
@@ -263,7 +268,7 @@ const HeroCarousel: React.FC = () => {
   {/* زر التالي */}
   <button
     onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
-    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
+    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white transition hover:bg-black/60"
     aria-label={isArabic ? 'الشريحة التالية' : 'Next slide'}
   >
     {isArabic ? (
