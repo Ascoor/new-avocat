@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, easeOut } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import SectionTitle from '@/components/SectionTitle';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import type { Locale } from '@/types/website';
@@ -160,13 +161,16 @@ const HeroCarousel: React.FC = () => {
             )}
 
             {/* العنوان */}
-            <motion.h1
+            <SectionTitle
+              as="h1"
               variants={textVariants}
               custom={1}
-              className="text-4xl lg:text-5xl font-bold leading-tight text-white drop-shadow-md"
+              animateOnView={false}
+              glowIntensity={0.85}
+              className="max-w-3xl text-left font-display text-[hsl(var(--title-color-dark))] dark:text-[hsl(var(--title-color-dark))] lg:text-6xl"
             >
               {active.title}
-            </motion.h1>
+            </SectionTitle>
 
             <motion.p
               variants={textVariants}

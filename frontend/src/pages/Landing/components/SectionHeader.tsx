@@ -1,6 +1,7 @@
 import { memo, type ReactNode } from 'react';
 import { motion, cubicBezier } from 'framer-motion';
 
+import SectionTitle from '@/components/SectionTitle';
 import { cn } from '@/lib/utils';
 
 interface SectionHeaderProps {
@@ -16,18 +17,6 @@ const premiumEase = cubicBezier(0.22, 1, 0.36, 1);
 const badgeMotion = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: premiumEase } },
-};
-
-const titleMotion = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.75,
-      ease: premiumEase,
-    },
-  },
 };
 
 const subtitleMotion = {
@@ -75,14 +64,15 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
       ) : null}
 
       {title ? (
-        <motion.h2
-          variants={titleMotion}
-          className="text-balance font-display text-4xl font-semibold tracking-tight text-foreground transition-colors duration-500 md:text-5xl"
+        <SectionTitle
+          className={cn(
+            'font-display',
+            align === 'center' && 'mx-auto',
+            align === 'right' && 'ml-auto',
+          )}
         >
-          <span className="headline-neon" data-title={title ?? ''}>
-            {title}
-          </span>
-        </motion.h2>
+          {title}
+        </SectionTitle>
       ) : null}
 
       {subtitle ? (

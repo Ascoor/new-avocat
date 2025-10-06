@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 import { useWebsiteCollection } from "@/hooks/useWebsiteCollection";
+import SectionTitle from '@/components/SectionTitle';
 import type { ArticleApi, Locale } from "@/types/website";
 import { BrainCircuit, Newspaper, ShieldAlert } from "lucide-react";
 
@@ -37,7 +38,9 @@ const Insights: React.FC = () => {
           <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-5 py-2 text-xs font-semibold text-muted-foreground">
             <span>{badge}</span>
           </div>
-          <h2 className="mt-6 text-4xl font-display font-bold text-foreground lg:text-5xl">{title}</h2>
+          <SectionTitle className="mx-auto font-display" glowIntensity={0.68}>
+            {title}
+          </SectionTitle>
           <p className="mt-4 text-lg text-muted-foreground lg:text-xl">{description}</p>
 
         </div>

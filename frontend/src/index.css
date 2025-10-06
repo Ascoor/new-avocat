@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Outfit:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap');
 @import './styles/theme-tokens.css';
 @import './styles/radix-vars.css';
 @import './styles/dashboard-shell.css';
@@ -10,6 +11,13 @@
 
 
 @layer base {
+  :root {
+    --title-color-light: 215 80% 22%;
+    --title-color-dark: 215 100% 88%;
+    --title-glow-dark: 175 220 255;
+    --glow-intensity: 0.65;
+  }
+
   * {
     @apply border-border;
   }
@@ -17,12 +25,42 @@
   body {
     @apply bg-background text-foreground;
   }
+
   /* Dark CTA background */
-.bg-cta-dark {
-  @apply bg-gradient-to-br from-primary via-primary-glow to-slate-bg;
-  background-image: url('/textures/stars.svg');
-  background-size: cover;
-  opacity: 0.9;
+  .bg-cta-dark {
+    @apply bg-gradient-to-br from-primary via-primary-glow to-slate-bg;
+    background-image: url('/textures/stars.svg');
+    background-size: cover;
+    opacity: 0.9;
+  }
 }
 
+@layer components {
+  .section-title {
+    font-family: 'Poppins', 'Cairo', 'Outfit', 'Inter', var(--font-display, 'Inter'), sans-serif;
+    letter-spacing: 0.08em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    text-shadow:
+      0 0 10px rgba(175, 220, 255, 0.25),
+      0 0 20px rgba(175, 220, 255, 0.15),
+      1px 2px 4px rgba(0, 0, 0, 0.35);
+  }
+
+  .section-title::after {
+    background-image: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1));
+  }
+
+  .dark .section-title {
+    color: hsl(var(--title-color-dark));
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+    text-shadow:
+      0 0 12px rgba(var(--title-glow-dark), 0.3),
+      0 0 24px rgba(var(--title-glow-dark), 0.2),
+      0 0 40px rgba(var(--title-glow-dark), 0.35),
+      1px 2px 6px rgba(0, 0, 0, 0.45);
+  }
+
+  .dark .section-title::after {
+    background-image: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.08));
+  }
 }
