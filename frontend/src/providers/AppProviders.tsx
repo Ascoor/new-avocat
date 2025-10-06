@@ -21,8 +21,8 @@ const AppProviders = ({ children }: AppProvidersProps) => {
     <ThemeProvider>
       <LanguageProvider>
         <QueryClientProvider client={queryClient}>
-          <NotificationCenterProvider>
-            <AuthProvider>
+          <AuthProvider>
+            <NotificationCenterProvider>
               <SidebarProvider>
                 <TooltipProvider>
                   <Toaster />
@@ -30,8 +30,8 @@ const AppProviders = ({ children }: AppProvidersProps) => {
                   {children}
                 </TooltipProvider>
               </SidebarProvider>
-            </AuthProvider>
-          </NotificationCenterProvider>
+            </NotificationCenterProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </LanguageProvider>
     </ThemeProvider>
