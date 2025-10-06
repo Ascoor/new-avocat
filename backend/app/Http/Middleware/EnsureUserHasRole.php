@@ -40,6 +40,19 @@ class EnsureUserHasRole
     }
 
     /**
+     * Map the provided role (alias or canonical) to the value stored in the database.
+     */
+    public static function databaseRoleValue(string|int $role): string
+    {
+        return match (self::normalizeRole($role)) {
+            'admin' => '1',
+            'editor' => '2',
+            'viewer' => '3',
+            default => (string) $role,
+        };
+    }
+
+    /**
      * Determine if the given user owns one of the provided roles.
      */
     public static function userHasRole(object|null $user, array $roles): bool
