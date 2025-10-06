@@ -38,7 +38,7 @@ const Sidebar: React.FC = () => {
       animate={{ width: collapsed ? 64 : 256 }}
       transition={{ duration: 0.3, ease: [0.25, 0.8, 0.25, 1] }}
       className={cn(
-        "sidebar-shell hidden h-screen flex-shrink-0 flex-col md:sticky md:top-0 md:flex"
+        "sidebar-shell hidden h-screen flex-shrink-0  flex-col md:sticky md:top-0 md:flex"
       )}
       dir={isRTL ? "rtl" : "ltr"}
       data-collapsed={collapsed}
@@ -85,7 +85,7 @@ const Sidebar: React.FC = () => {
       <div className="sidebar-footer border-t border-transparent px-3 py-4">
         <Button
           onClick={logout}
-          variant="ghost"
+          variant="hero"
           className={cn(
             "w-full justify-start text-sidebar-text-muted transition-colors hover:bg-destructive/10 hover:text-destructive",
             collapsed ? "px-2" : "px-3"

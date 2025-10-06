@@ -165,6 +165,8 @@ const HeroCarousel: React.FC = () => {
               as="h1"
               variants={textVariants}
               custom={1}
+              
+      dir={isArabic ? 'rtl' : 'ltr'}
               animateOnView={false}
               glowIntensity={0.85}
               className="max-w-3xl text-left font-display text-[hsl(var(--title-color-dark))] dark:text-[hsl(var(--title-color-dark))] lg:text-6xl"
