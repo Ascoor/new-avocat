@@ -19,6 +19,7 @@ import type {
   AdminNotificationSeverity,
   AdminServerEventPayload,
 } from '@/types/notifications';
+import { useAuth } from '@/contexts/AuthContext';
 
 export type NotificationConnectionState = 'idle' | 'connecting' | 'open' | 'error';
 
@@ -76,6 +77,8 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
   const [isBootstrapping, setIsBootstrapping] = useState(true);
   const reconnectAttempts = useRef(0);
   const reconnectTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { user, isAuthenticated } = useAuth();
+  const isAdmin = isAuthenticated && user?.role === 'admin';
 
   const markAsRead = useCallback((id: string) => {
     setNotifications((prev) => prev.map((item) => (item.id === id ? { ...item, read: true } : item)));
@@ -89,14 +92,38 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
     setNotifications((prev) => prev.filter((item) => item.id !== id));
   }, []);
 
+  const readToken = useCallback((): string | null => {
+    try {
+      const storedToken = sessionStorage.getItem('token');
+      if (!storedToken) {
+        return null;
+      }
+
+      const parsed = JSON.parse(storedToken) as string | null;
+      if (!parsed || typeof parsed !== 'string' || parsed.length === 0) {
+        return null;
+      }
+
+      return parsed;
+    } catch (error) {
+      console.warn('Unable to parse session token for SSE connection', error);
+      return null;
+    }
+  }, []);
+
   const refreshActivity = useCallback(async () => {
+    if (!isAdmin) {
+      setActivity([]);
+      return;
+    }
+
     try {
       const entries = await getActivityLog({ limit: 100 });
       setActivity(entries);
     } catch (error) {
       console.warn('Failed to refresh activity log', error);
     }
-  }, []);
+  }, [isAdmin]);
 
   const handleServerEvent = useCallback(
     (payload: AdminServerEventPayload) => {
@@ -157,6 +184,21 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let isMounted = true;
 
+    if (!isAdmin) {
+      setIsBootstrapping(false);
+      setConnectionState('idle');
+      setActivity([]);
+      setNotifications([]);
+      reconnectAttempts.current = 0;
+      if (reconnectTimeout.current) {
+        clearTimeout(reconnectTimeout.current);
+        reconnectTimeout.current = null;
+      }
+      return () => {
+        isMounted = false;
+      };
+    }
+
     const bootstrap = async () => {
       try {
         await refreshActivity();
@@ -180,10 +222,24 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
         clearTimeout(reconnectTimeout.current);
       }
     };
-  }, [refreshActivity]);
+  }, [isAdmin, refreshActivity]);
 
   useEffect(() => {
     let eventSource: EventSource | null = null;
+
+    if (!isAdmin) {
+      setConnectionState('idle');
+      reconnectAttempts.current = 0;
+      if (reconnectTimeout.current) {
+        clearTimeout(reconnectTimeout.current);
+        reconnectTimeout.current = null;
+      }
+      return () => {
+        if (eventSource) {
+          eventSource.close();
+        }
+      };
+    }
 
     const connect = () => {
       if (eventSource) {
@@ -194,17 +250,13 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
       setConnectionState('connecting');
 
       const url = new URL('/api/admin/events/subscribe', API_CONFIG.baseURL);
-      try {
-        const storedToken = sessionStorage.getItem('token');
-        if (storedToken) {
-          const parsedToken = JSON.parse(storedToken) as string;
-          if (parsedToken) {
-            url.searchParams.set('token', parsedToken);
-          }
-        }
-      } catch (error) {
-        console.warn('Unable to parse session token for SSE connection', error);
+      const token = readToken();
+      if (!token) {
+        setConnectionState('idle');
+        return;
       }
+
+      url.searchParams.set('token', token);
 
       const source = new EventSource(url.toString(), { withCredentials: true });
       eventSource = source;
@@ -245,7 +297,7 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
         eventSource.close();
       }
     };
-  }, [handleServerEvent]);
+  }, [handleServerEvent, isAdmin, readToken]);
 
   const unreadCount = useMemo(
     () => notifications.reduce((total, notification) => (notification.read ? total : total + 1), 0),

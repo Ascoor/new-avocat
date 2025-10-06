@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getAdminProfile } from '@/api/adminAuth.service';
 import type { Permission, Role } from '@/types/website';
+import { useAuth } from '@/contexts/AuthContext';
 
 const rolePermissions: Record<Role, Permission[]> = {
   Admin: [
@@ -38,22 +39,37 @@ export interface UseUserRolesResult {
 }
 
 export const useUserRoles = (): UseUserRolesResult => {
+  const { user, isAuthenticated } = useAuth();
+  const isAdmin = isAuthenticated && user?.role === 'admin';
+
   const profileQuery = useQuery({
     queryKey: ['admin-profile'],
     queryFn: getAdminProfile,
+    enabled: isAdmin,
   });
 
-  const roles = useMemo(() => normalizeRoles(profileQuery.data?.roles), [profileQuery.data?.roles]);
+  const roles = useMemo(() => {
+    if (!isAdmin) {
+      return ['Viewer'] as Role[];
+    }
+
+    return normalizeRoles(profileQuery.data?.roles);
+  }, [isAdmin, profileQuery.data?.roles]);
 
   const permissions = useMemo(() => {
     const base = new Set<Permission>();
+
+    if (!isAdmin) {
+      return Array.from(base);
+    }
+
     roles.forEach((role) => {
       const rolePerms = rolePermissions[role];
       rolePerms?.forEach((permission) => base.add(permission));
     });
     profileQuery.data?.permissions?.forEach((permission) => base.add(permission));
     return Array.from(base);
-  }, [profileQuery.data?.permissions, roles]);
+  }, [isAdmin, profileQuery.data?.permissions, roles]);
 
   const hasRole = useCallback(
     (role: Role | Role[]) => {
@@ -75,7 +91,7 @@ export const useUserRoles = (): UseUserRolesResult => {
     permissions,
     hasRole,
     can,
-    isLoading: profileQuery.isLoading,
+    isLoading: profileQuery.isLoading && isAdmin,
     isError: profileQuery.isError,
     error: profileQuery.error,
   };
