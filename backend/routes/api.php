@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\AdminAuthController;
 use App\Http\Controllers\Api\Admin\AdminEventController;
+use App\Http\Controllers\Api\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Api\Admin\WebsiteActivityController as AdminWebsiteActivityController;
 use App\Http\Controllers\Api\Website\WebsiteActivityController as PublicWebsiteActivityController;
 use App\Http\Controllers\Api\Admin\WebsiteReportController;
@@ -216,7 +217,7 @@ Route::prefix('website')->group(function () {
 });
 
 Route::prefix('admin/website')
-    ->middleware(['auth:sanctum', 'role:admin'])
+    ->middleware(['auth:sanctum', 'role:admin,editor'])
     ->group(function () {
         Route::get('/pages', [PageController::class, 'adminIndex']);
         Route::get('/pages/{slug}', [PageController::class, 'adminShow']);
@@ -233,4 +234,16 @@ Route::prefix('admin/website')
         Route::post('/upload', [UploadController::class, 'store']);
         Route::get('/settings', [PageController::class, 'settings']);
         Route::put('/settings', [PageController::class, 'updateSettings']);
+
+        Route::get('/articles', [ArticleController::class, 'index']);
+        Route::post('/articles', [ArticleController::class, 'store']);
+        Route::get('/articles/{article}', [ArticleController::class, 'show']);
+        Route::put('/articles/{article}', [ArticleController::class, 'update']);
+        Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);
+
+        Route::get('/testimonials', [AdminTestimonialController::class, 'index']);
+        Route::post('/testimonials', [AdminTestimonialController::class, 'store']);
+        Route::get('/testimonials/{testimonial}', [AdminTestimonialController::class, 'show']);
+        Route::put('/testimonials/{testimonial}', [AdminTestimonialController::class, 'update']);
+        Route::delete('/testimonials/{testimonial}', [AdminTestimonialController::class, 'destroy']);
     });
