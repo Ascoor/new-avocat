@@ -7,21 +7,24 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
+ 
+use Illuminate\Support\Facades\Schema;  
 class CourtTypesTableSeeder extends Seeder
 {
 
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
+
+
        public function run(): void
     {
-        
+    Schema::disableForeignKeyConstraints();
 
-        DB::table('court_types')->delete();
+        // 🧹 تنظيف الجداول المرتبطة قبل إعادة التخزين
+        DB::table('court_types')->truncate();
         
+        Schema::enableForeignKeyConstraints();
+
+        
+ 
        DB::table('court_types')->insert(array (
             0 => 
             array (

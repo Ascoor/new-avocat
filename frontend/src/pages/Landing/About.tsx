@@ -97,10 +97,10 @@ const About: React.FC = () => {
                         className="flex items-start space-x-4 rtl:space-x-reverse"
                       >
                         <div className="flex-shrink-0 w-12 h-12 bg-gradient-gold rounded-xl flex items-center justify-center shadow-gold">
-                          <Icon className="w-6 h-6 text-primary" />
+                          <Icon className="w-6 h-6 text-primary-foreground" />
                         </div>
                         <div>
-                          <h3 className="text-lg font-semibold text-foreground mb-2">
+                          <h3 className="text-lg font-semibold text-primary mb-2">
                             {pillar.title}
                           </h3>
                           <p className="text-muted-foreground leading-relaxed">
@@ -118,7 +118,7 @@ const About: React.FC = () => {
                     <div className="flex items-start space-x-4 rtl:space-x-reverse">
                       <CheckCircle className="w-8 h-8 text-gold flex-shrink-0 mt-1" />
                       <div>
-                        <h4 className="text-lg font-semibold text-foreground mb-3">
+                        <h4 className="text-lg font-semibold text-primary mb-3">
                           {direction === 'rtl' ? 'رؤيتنا' : 'Our Vision'}
                         </h4>
                         <p className="text-muted-foreground leading-relaxed">
@@ -151,15 +151,15 @@ const About: React.FC = () => {
                 ))}
 
                 {/* Certified Card */}
-                <Card className="col-span-2 bg-gradient-primary text-center p-8 shadow-luxury">
+                <Card className="col-span-2 bg-gradient-secondary text-center p-8 shadow-luxury">
                   <CardContent className="p-0">
                     <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Award className="w-8 h-8 text-primary" />
+                      <Award className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <h4 className="text-xl font-bold text-primary-foreground mb-3">
+                    <h4 className="text-xl font-bold text-gold mb-3">
                       {direction === 'rtl' ? 'معتمدون ومرخصون' : 'Certified & Licensed'}
                     </h4>
-                    <p className="text-primary-foreground/80">
+                    <p className="text-secondary-foreground">
                       {direction === 'rtl'
                         ? 'حاصلون على جميع التراخيص والاعتمادات لممارسة الخدمات القانونية والتقنية'
                         : 'Fully licensed and certified for legal and technical service delivery'}

@@ -8,14 +8,22 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\ClientRepository;
 use Laravel\Passport\TokenRepository;
-use Illuminate\Support\Facades\DB;
+ 
 use App\Models\Lawyer;
 use App\Models\User;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema; 
 class LawyerSeeder extends Seeder
 {
        public function run(): void
     {
+    Schema::disableForeignKeyConstraints();
+
+        // 🧹 تنظيف الجداول المرتبطة قبل إعادة التخزين
+        DB::table('lawyers')->truncate();
+        
+        Schema::enableForeignKeyConstraints();
 
         $lawyers = [
             [

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 
+use Illuminate\Support\Facades\Schema; 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,13 @@ class CourtLevelsTableSeeder extends Seeder
     {
         
 
-       DB::table('court_levels')->delete();
+    Schema::disableForeignKeyConstraints();
+
+        // 🧹 تنظيف الجداول المرتبطة قبل إعادة التخزين
+        DB::table('court_levels')->truncate();
+        
+        Schema::enableForeignKeyConstraints();
+
         
        DB::table('court_levels')->insert(array (
             0 => 
