@@ -1,8 +1,8 @@
-import BrandLogo from '@/components/common/BrandLogo';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import { smoothScrollToElement } from '@/utils/smoothScroll';
-import { Linkedin, Mail, MapPin, Phone, Twitter } from 'lucide-react';
+import BrandLogo from "@/components/common/BrandLogo";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
+import { smoothScrollToElement } from "@/utils/smoothScroll";
+import { Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react";
 
 interface QuickLink {
   href: string;
@@ -16,150 +16,210 @@ interface ContactDetail {
 
 const Footer: React.FC = () => {
   const { direction, language } = useLanguage();
-  const locale = language as 'ar' | 'en';
+  const locale = language as "ar" | "en";
   const currentYear = new Date().getFullYear();
 
-  const { getLocalizedValue, getValueForLocale } = useWebsiteContent('footer');
+  const { getLocalizedValue, getValueForLocale } = useWebsiteContent("footer");
 
-  // ===== Content =====
-  const mission = (getValueForLocale('footer_mission', locale) ?? '') as string;
+  // ===== محتوى CMS =====
+  const mission = (getValueForLocale("footer_mission", locale) ?? "") as string;
 
-  const quickLinksLocalized = getLocalizedValue<QuickLink[]>('footer_quick_links', {
+  const quickLinksLocalized = getLocalizedValue<QuickLink[]>("footer_quick_links", {
     ar: [],
     en: [],
   });
-  const quickLinks = (quickLinksLocalized[locale] ?? quickLinksLocalized.en ?? []).filter(Boolean);
+  const quickLinks =
+    (quickLinksLocalized[locale] ?? quickLinksLocalized.en ?? []).filter(Boolean);
 
-  const serviceHighlightsLocalized = getLocalizedValue<string[]>('footer_services', {
+  const serviceHighlightsLocalized = getLocalizedValue<string[]>("footer_services", {
     ar: [],
     en: [],
   });
-  const serviceHighlights = (serviceHighlightsLocalized[locale] ?? serviceHighlightsLocalized.en ?? []).filter(Boolean);
+  const serviceHighlights =
+    (serviceHighlightsLocalized[locale] ?? serviceHighlightsLocalized.en ?? []).filter(Boolean);
 
-  const contactDetailsLocalized = getLocalizedValue<ContactDetail[]>('footer_contact_details', {
+  const contactDetailsLocalized = getLocalizedValue<ContactDetail[]>("footer_contact_details", {
     ar: [],
     en: [],
   });
-  const contactDetails = (contactDetailsLocalized[locale] ?? contactDetailsLocalized.en ?? []).filter(Boolean);
+  const contactDetails =
+    (contactDetailsLocalized[locale] ?? contactDetailsLocalized.en ?? []).filter(Boolean);
 
   const scrollTo = (href: string) => {
     const element = document.querySelector<HTMLElement>(href);
     if (element) smoothScrollToElement(element, { offset: 90, duration: 950 });
   };
 
-  const headingClass = 'text-base sm:text-lg font-semibold neon-text drop-shadow-md';
+  const headingClass =
+    "font-semibold text-lg sm:text-xl text-white dark:text-slate-100 mb-4 font-cairo";
   const linkClass =
-    'group inline-flex items-center gap-2 text-sm sm:text-base text-foreground/80 transition-colors duration-300 hover:text-neon focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent';
+    "text-slate-300 dark:text-slate-400 hover:text-accent dark:hover:text-accent transition-colors duration-300 text-sm inline-block hover:translate-x-1 rtl:hover:-translate-x-1";
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-foreground">
-      <div className="pointer-events-none absolute inset-0 opacity-80 mix-blend-screen" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(57,255,242,0.12),_transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(0,255,188,0.08),_transparent_60%)]" />
-      </div>
+    <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800/70 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-black border-t border-border/50">
+      {/* تأثير النيون الخفيف */}
+      <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-primary/5 to-accent/5 pointer-events-none" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
-          {/* ===== Brand Section ===== */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <BrandLogo variant="full" className="h-12" lang={language} dark />
-              <span className="sr-only">Avocat</span>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* ===== الشبكة الرئيسية ===== */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+          {/* ===== الشعار والمهمة ===== */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse mb-4">
+              <div className="flex flex-col">
+                <BrandLogo variant="full" className="h-8 w-8" />
+             
+              
+              </div>
             </div>
-            <p className="max-w-xs text-sm leading-relaxed text-foreground/85 sm:text-base">
-              {mission}
-            </p>
-            <div className="h-1 w-24 rounded-full neon-divider" />
+
+  <p className="text-slate-300 dark:text-slate-400 leading-relaxed text-sm max-w-xs">
+    {mission
+      ? mission
+      : language === "ar"
+        ? "رائدون في التحول الرقمي القانوني، نقدم حلولاً متطورة للممارسات القانونية الحديثة."
+        : "Leading legal digital transformation with advanced solutions for modern legal practices."}
+  </p>
           </div>
 
-          {/* ===== Quick Links ===== */}
-          <div className="space-y-4 sm:justify-self-center sm:text-center lg:justify-self-start lg:text-left">
+          {/* ===== الروابط السريعة ===== */}
+          <div className="space-y-4">
             <h4 className={headingClass}>
-              {direction === 'rtl' ? 'روابط سريعة' : 'Quick Links'}
+              {direction === "rtl" ? "روابط سريعة" : "Quick Links"}
             </h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    onClick={(event) => {
-                      event.preventDefault();
+                    onClick={(e) => {
+                      e.preventDefault();
                       scrollTo(link.href);
                     }}
                     className={linkClass}
                   >
-                    <span className="inline-flex h-2 w-2 rounded-full bg-neon/60 transition-transform duration-300 group-hover:scale-125" />
-                    <span className="text-sm sm:text-base font-medium">
-                      {link.label}
-                    </span>
+                    {link.label}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* ===== Services ===== */}
-          <div className="space-y-4 sm:justify-self-center sm:text-center lg:justify-self-start lg:text-left">
+          {/* ===== الخدمات ===== */}
+          <div className="space-y-4">
             <h4 className={headingClass}>
-              {direction === 'rtl' ? 'خدماتنا' : 'Our Services'}
+              {direction === "rtl" ? "خدماتنا" : "Our Services"}
             </h4>
-            <ul className="space-y-3 text-sm sm:text-base">
-              {serviceHighlights.map((service, index) => (
-                <li key={`${service}-${index}`} className="text-foreground/75 transition-colors hover:text-neon">
-                  {service}
-                </li>
-              ))}
+            <ul className="space-y-3">
+              {serviceHighlights.length > 0
+                ? serviceHighlights.map((service, i) => (
+                    <li key={i}>
+                      <span className="text-slate-300 dark:text-slate-400 hover:text-gold dark:hover:text-gold transition-colors duration-300 cursor-pointer text-sm inline-block hover:translate-x-1 rtl:hover:-translate-x-1">
+                        {service}
+                      </span>
+                    </li>
+                  ))
+                : [
+                    direction === "rtl" ? "أنظمة الإدارة القانونية" : "Legal Management",
+                    direction === "rtl" ? "حماية البيانات" : "Data Protection",
+                    direction === "rtl" ? "التدريب القانوني" : "Legal Training",
+                    direction === "rtl" ? "الخدمات الحكومية" : "Government Services",
+                  ].map((s, i) => (
+                    <li key={i}>
+                      <span className="text-slate-300 dark:text-slate-400 hover:text-gold transition-colors duration-300 text-sm inline-block hover:translate-x-1 rtl:hover:-translate-x-1">
+                        {s}
+                      </span>
+                    </li>
+                  ))}
             </ul>
           </div>
 
-          {/* ===== Contact Info ===== */}
+          {/* ===== معلومات التواصل ===== */}
           <div className="space-y-4">
             <h4 className={headingClass}>
-              {direction === 'rtl' ? 'معلومات التواصل' : 'Contact Info'}
+              {direction === "rtl" ? "معلومات التواصل" : "Contact Info"}
             </h4>
-            <div className="space-y-4 text-sm sm:text-base">
-              {contactDetails.map((detail, index) => {
-                const Icon =
-                  detail.icon === 'phone'
-                    ? Phone
-                    : detail.icon === 'mail'
-                    ? Mail
-                    : detail.icon === 'map'
-                    ? MapPin
-                    : detail.icon === 'linkedin'
-                    ? Linkedin
-                    : detail.icon === 'twitter'
-                    ? Twitter
-                    : null;
+            <div className="space-y-4">
+              {contactDetails.length > 0
+                ? contactDetails.map((detail, i) => {
+                    const Icon =
+                      detail.icon === "phone"
+                        ? Phone
+                        : detail.icon === "mail"
+                        ? Mail
+                        : detail.icon === "map"
+                        ? MapPin
+                        : detail.icon === "linkedin"
+                        ? Linkedin
+                        : detail.icon === "twitter"
+                        ? Twitter
+                        : null;
 
-                return (
-                  <div
-                    key={`${detail.icon ?? 'info'}-${index}`}
-                    className="flex items-start gap-3 text-foreground/85"
-                  >
-                    {Icon && <Icon className="h-5 w-5 flex-shrink-0 text-neon" />}
-                    <span className="leading-relaxed">{detail.text}</span>
-                  </div>
-                );
-              })}
+                    return (
+                      <div
+                        key={i}
+                        className="flex items-center space-x-3 rtl:space-x-reverse group"
+                      >
+                        {Icon && (
+                          <Icon className="w-5 h-5 text-gold flex-shrink-0 group-hover:scale-110 transition-transform" />
+                        )}
+                        <span className="text-slate-300 dark:text-slate-400 text-sm">
+                          {detail.text}
+                        </span>
+                      </div>
+                    );
+                  })
+                : [
+                    {
+                      icon: Phone,
+                      text: "+966 11 234 5678",
+                    },
+                    {
+                      icon: Mail,
+                      text: "info@avocat.sa",
+                    },
+                    {
+                      icon: MapPin,
+                      text:
+                        direction === "rtl"
+                          ? "الرياض، المملكة العربية السعودية"
+                          : "Riyadh, Saudi Arabia",
+                    },
+                  ].map((d, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center space-x-3 rtl:space-x-reverse group"
+                    >
+                      <d.icon className="w-5 h-5 text-gold flex-shrink-0 group-hover:scale-110 transition-transform" />
+                      <span className="text-slate-300 dark:text-slate-400 text-sm">
+                        {d.text}
+                      </span>
+                    </div>
+                  ))}
             </div>
           </div>
         </div>
 
-        {/* ===== Bottom Bar ===== */}
-        <div className="mt-16 border-t border-white/10 pt-8">
-          <div className="flex flex-col gap-6 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-            <p className="neon-text-muted text-xs font-medium uppercase tracking-[0.2em] sm:text-sm">
-              {direction === 'rtl'
+        {/* ===== الشريط السفلي ===== */}
+        <div className="border-t border-slate-700/50 dark:border-slate-800/50 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 gap-4">
+            <p className="text-slate-400 dark:text-slate-500 text-sm text-center md:text-left">
+              {direction === "rtl"
                 ? `© ${currentYear} مكتب أفوكات للمحاماة. جميع الحقوق محفوظة.`
                 : `© ${currentYear} Avocat Law Firm. All rights reserved.`}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-end">
-              <a href="#" className={`${linkClass} text-sm sm:text-base`}>
-                {direction === 'rtl' ? 'سياسة الخصوصية' : 'Privacy Policy'}
+            <div className="flex flex-wrap justify-center gap-6 rtl:space-x-reverse">
+              <a
+                href="#"
+                className="text-slate-400 dark:text-slate-500 hover:text-accent dark:hover:text-accent transition-colors duration-300 text-sm"
+              >
+                {direction === "rtl" ? "سياسة الخصوصية" : "Privacy Policy"}
               </a>
-              <a href="#" className={`${linkClass} text-sm sm:text-base`}>
-                {direction === 'rtl' ? 'الشروط والأحكام' : 'Terms of Service'}
+              <a
+                href="#"
+                className="text-slate-400 dark:text-slate-500 hover:text-accent dark:hover:text-accent transition-colors duration-300 text-sm"
+              >
+                {direction === "rtl" ? "الشروط والأحكام" : "Terms of Service"}
               </a>
             </div>
           </div>

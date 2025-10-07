@@ -85,7 +85,7 @@ const MobileDrawer: React.FC = () => {
             <div className="flex items-center justify-between border-b border-sidebar-border p-4">
               <BrandLogo variant="full" className="h-8" />
               <Button
-                variant="ghost"
+                variant="hero"
                 size="icon"
                 onClick={closeMobile}
                 className="h-8 w-8"

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 import type { ReactNode, CSSProperties } from 'react';
-
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4';
 
@@ -22,6 +22,7 @@ type SectionTitleProps<T extends HeadingTag = 'h2'> = HTMLMotionProps<T> & {
   children: ReactNode;
   glowIntensity?: number | string;
   animateOnView?: boolean;
+  textDir?: 'rtl' | 'ltr'; // ✅ اسم مختلف لتجنب التضارب مع attr dir
 };
 
 export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitleProps<T>) => {
@@ -36,8 +37,12 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
     whileInView,
     viewport,
     transition,
+    textDir, // ✅ استخدمنا الاسم الجديد هنا
     ...rest
   } = props;
+
+  const { language } = useLanguage();
+  const isArabic = language === 'ar';
 
   const MotionComponent = useMemo(() => motionMap[componentTag as HeadingTag], [componentTag]);
 
@@ -49,13 +54,28 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
     resolvedStyle['--glow-intensity'] = glowIntensity;
   }
 
-  const defaultInitial = { opacity: 0, y: 30, scale: 0.97 };
-  const defaultWhileInView = { opacity: 1, y: 0, scale: 1 };
+  const defaultInitial = {
+    opacity: 0,
+    x: isArabic ? -50 : 50,
+    y: 30,
+    scale: 0.97,
+  };
+
+  const defaultWhileInView = {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+  };
+
   const defaultViewport = { once: true, amount: 0.55 };
   const defaultTransition = { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] };
 
+  const direction = textDir ?? (isArabic ? 'ltr' : 'rtl'); // ✅ هذا هو المتغير المستخدم فعلاً
+
   return (
     <MotionComponent
+      dir={direction}
       initial={initial ?? (animateOnView ? defaultInitial : undefined)}
       whileInView={whileInView ?? (animateOnView ? defaultWhileInView : undefined)}
       viewport={viewport ?? (animateOnView ? defaultViewport : undefined)}
@@ -72,14 +92,13 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
         'hover:text-white hover:drop-shadow-[0_0_25px_rgba(175,220,255,0.8)]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2',
         'focus-visible:ring-offset-background',
+        isArabic ? 'text-right' : 'text-left',
         className,
       )}
       style={resolvedStyle}
       {...rest}
     >
-      <span className="relative z-10">
-        {children}
-      </span>
+      <span className="relative z-10">{children}</span>
     </MotionComponent>
   );
 };

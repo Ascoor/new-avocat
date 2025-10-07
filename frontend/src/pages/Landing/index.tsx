@@ -25,11 +25,10 @@ const LandingPage: React.FC = () => {
         <HeroCarousel />
         <About />
         <Services />
-        <Capabilities />
-        <Features />
+        <Capabilities /> 
         <Achievements />
-        <Team />
         <Testimonials />
+        <Team />
         <Insights />
         <CallToAction />
         <Contact />

@@ -130,14 +130,22 @@ const LandingNavbar: React.FC = () => {
           onClick={() => scrollToAnchor("#home")}
           className="flex items-center gap-3" 
         >
-          <div className="hidden sm:block">
-            <BrandLogo
-                variant="text"
-                className="h-12"
-                lang={language}
-                dark={isTop ? true : undefined}
-              />   </div> 
-          <div className="text-lg font-semibold text-foreground sm:hidden">Avocat</div>
+         <button
+  type="button"
+  onClick={() => scrollToAnchor("#home")}
+  className="flex items-center gap-3" 
+>
+  <div className="hidden sm:block">
+    <BrandLogo
+      variant="text"
+      className="h-12"
+      lang={language}
+      dark={isTop ? true : undefined}
+    />
+  </div> 
+</button>
+
+ 
         </button>
 
         <div className="hidden items-center gap-6 lg:flex">
@@ -169,7 +177,7 @@ const LandingNavbar: React.FC = () => {
  
           <ThemeToggle />
        <Button
-            variant="ghost"
+            variant="accent"
             size="icon"
             onClick={toggleLanguage}
             aria-label="Toggle language"
@@ -184,7 +192,7 @@ const LandingNavbar: React.FC = () => {
 <Button
   type="button"
   onClick={handleLogin}
-  variant="warning" // 👈 شكل بطولي متدرج مع glow
+  variant="chromatic" // 👈 شكل بطولي متدرج مع glow
   size="lg"
   className="hidden lg:inline-flex rounded-full"
 >
@@ -194,7 +202,7 @@ const LandingNavbar: React.FC = () => {
 
           {/* Mobile Menu Toggle */}
           <Button
-            variant="ghost"
+            variant="glass"
             size="icon"
             className={`lg:hidden ${menuButtonColorClass}`}
             onClick={() => setIsOpen((prev) => !prev)}
@@ -225,7 +233,7 @@ const LandingNavbar: React.FC = () => {
               <span>{highlight}</span>
             </div>
             <Button
-              variant="ghost"
+              variant="gold"
               size="sm"
               aria-label={toggleAria}
               onClick={() => {
