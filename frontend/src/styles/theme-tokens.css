@@ -11,9 +11,15 @@
     --neon-muted: 182 70% 90%;
 
     /* Gold Accents */
-    --gold: 45 100% 50%;              
+    --gold: 45 100% 50%;
     --gold-muted: 45 65% 45%;
     --gold-light: 45 100% 97%;
+
+    /* Exclusive Signature */
+    --exclusive: 265 83% 62%;
+    --exclusive-muted: 265 70% 52%;
+    --exclusive-foreground: 218 43% 12%;
+    --exclusive-glow: 265 95% 72%;
 
     /* Slate Neutrals */
     --slate: 220 15% 30%;
@@ -103,6 +109,12 @@
     --gold: 45 100% 55%;
     --gold-muted: 45 80% 50%;
     --gold-light: 45 100% 15%;
+
+    /* Exclusive Signature */
+    --exclusive: 265 85% 68%;
+    --exclusive-muted: 265 65% 46%;
+    --exclusive-foreground: 0 0% 100%;
+    --exclusive-glow: 265 95% 78%;
 
     /* Slate */
     --slate: 220 15% 70%;
