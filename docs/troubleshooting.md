@@ -16,8 +16,10 @@ To resolve the issue:
 1. Log in through the normal authentication flow (`/api/auth/login`). The response contains an `access_token` that the frontend stores in `sessionStorage`.
 2. After a successful login refresh, the axios interceptor sends the `Authorization: Bearer <token>` header, allowing requests such as `/api/admin/auth/me` and `/api/admin/website/pages` to succeed.
 
+The backend now exposes a dedicated `/api/admin/website/...` namespace for managing the marketing site. Listing and mutating pages, articles, testimonials, team members, and achievements all happen behind Sanctum + role checks. Any request that reaches those routes without a valid admin or editor session will return `401` or `403`.
+
 If you are logged in as a non-admin user, the same calls will still fail with `403 Forbidden` because of the `role:admin` middleware on those routes. Switch to an account whose `role` value maps to `admin`.
 
-The `404 Not Found` responses for `/api/admin/website/testimonials` and `/api/admin/website/articles` occur because the backend only exposes `team`, `achievements`, and `articles` CRUD endpoints inside the `/api/website` prefix. There is currently no `/api/admin/website/testimonials` route, so the frontend call returns `404`. Fetch testimonials from the page content instead, or add the missing backend route before calling it.
+If you still receive `404 Not Found` responses from the admin namespace, double-check the slug or identifier you are passing in the URL. The route definitions are available in [`backend/routes/api.php`](../backend/routes/api.php).
 
-In short, authenticate with an admin account before visiting the admin dashboard and avoid calling routes that are not implemented on the backend.
+In short, authenticate with an admin account before visiting the admin dashboard and make sure you are targeting the `/api/admin/website/...` endpoints.
