@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import ThemeToggle from "@/components/ui/theme-toggle";
+import ThemeToggle, {
+  themeToggleToneClassMap,
+  themeToggleToneVariantMap,
+  type ThemeToggleTone,
+} from "@/components/ui/theme-toggle";
 import BrandLogo from "@/components/common/BrandLogo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -86,10 +90,10 @@ const LandingNavbar: React.FC = () => {
   const { label: toggleLabel, aria: toggleAria } = toggleCopy[language];
   const underlineAlignment = isArabic ? "right-0 origin-right" : "left-0 origin-left";
 
-  const isTransparent = !isScrolled;
-  const buttonTone = isDark
-    ? "border-white/40 text-white hover:bg-white/10"
-    : "border-border text-foreground hover:bg-muted/40";
+  const actionTone: ThemeToggleTone = isTop ? "hero" : isDark ? "dark" : "light";
+  const actionVariant = themeToggleToneVariantMap[actionTone];
+  const actionToneClasses = themeToggleToneClassMap[actionTone];
+  const actionButtonBase = "rounded-full transition-all duration-300";
 
   return (
     <nav
@@ -164,15 +168,15 @@ const LandingNavbar: React.FC = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <ThemeToggle />
+          <ThemeToggle tone={actionTone} />
 
           {/* Language */}
           <Button
-            variant={isDark ? "glass" : "outline"}
+            variant={actionVariant}
             size="icon"
             onClick={toggleLanguage}
-            aria-label="Toggle language"
-            className={`rounded-full ${buttonTone} ${
+            aria-label={toggleAria}
+            className={`${actionButtonBase} ${actionToneClasses} ${
               isArabic ? "font-arabic" : "font-english"
             }`}
           >
@@ -192,9 +196,9 @@ const LandingNavbar: React.FC = () => {
 
           {/* Mobile Menu */}
           <Button
-            variant={isDark ? "glass" : "outline"}
+            variant={actionVariant}
             size="icon"
-            className={`lg:hidden ${buttonTone}`}
+            className={`lg:hidden ${actionButtonBase} ${actionToneClasses}`}
             onClick={() => setIsOpen((p) => !p)}
             aria-label={isOpen ? "Close navigation" : "Open navigation"}
           >
