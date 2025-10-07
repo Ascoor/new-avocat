@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import BrandLogo from "@/components/common/BrandLogo";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import {
   Award,
@@ -29,11 +30,8 @@ const navItems: NavItem[] = [
   { href: "#home", icon: Scale, en: "Home", ar: "الرئيسية" },
   { href: "#about", icon: BookOpenText, en: "About", ar: "من نحن" },
   { href: "#services", icon: ShieldCheck, en: "Services", ar: "الخدمات" },
-  // { href: "#capabilities", icon: Sparkles, en: "Capabilities", ar: "الإمكانيات" },
   { href: "#achievements", icon: Award, en: "Achievements", ar: "الإنجازات" },
   { href: "#team", icon: Users, en: "Team", ar: "الفريق" },
-  // { href: "#testimonials", icon: Sparkles, en: "Testimonials", ar: "الشهادات" },
-  // { href: "#insights", icon: BookOpenText, en: "Insights", ar: "المدونة" },
   { href: "#contact", icon: Phone, en: "Contact", ar: "اتصل بنا" },
   {
     href: "/showcase",
@@ -53,14 +51,16 @@ const toggleCopy = {
   en: { label: "Switch to Arabic", aria: "Switch to Arabic" },
   ar: { label: "التبديل إلى الإنجليزية", aria: "التبديل إلى الإنجليزية" },
 };
- 
 
 const LandingNavbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); 
+  const [isOpen, setIsOpen] = useState(false);
+  const { theme } = useTheme();
   const { language, toggleLanguage, direction } = useLanguage();
   const navigate = useNavigate();
- 
+
+  const isDark = theme === "dark";
+  const isArabic = language === "ar";
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -70,9 +70,7 @@ const LandingNavbar: React.FC = () => {
 
   const scrollToAnchor = (href: string) => {
     const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
     setIsOpen(false);
   };
 
@@ -84,88 +82,79 @@ const LandingNavbar: React.FC = () => {
     }
     scrollToAnchor(item.href);
   };
- 
-  const isArabic = language === "ar";
-  const highlight = isArabic ? highlightCopy.ar : highlightCopy.en;
+  const isTop = !isScrolled;
   const { label: toggleLabel, aria: toggleAria } = toggleCopy[language];
   const underlineAlignment = isArabic ? "right-0 origin-right" : "left-0 origin-left";
-  const isTop = !isScrolled;
-  const navTextColorClass = isTop
-    ? "text-white/80 hover:text-white"
-    : "text-foreground/70 hover:text-foreground";
-  const navIconColorClass = isTop ? "text-white" : "text-accent";
-  const navUnderlineToneClass = isTop
-    ? "bg-white/90"
-    : "bg-gradient-to-r from-accent via-primary to-accent";
-  const highlightChipClass = isTop
-    ? "border border-white/50 bg-white/10 text-white/80"
-    : "border border-border/70 bg-card/70 text-foreground/70";
-  const highlightIconClass = isTop ? "text-white" : "text-accent";
-  const languageIconButtonClass = isTop
-    ? "border border-white/60 text-white hover:border-white/80 hover:text-white"
-    : "border border-border/60";
-  const languageDesktopButtonClass = isTop
-    ? "border border-white/60 text-white hover:border-white/80 hover:text-white"
-    : "border border-border/60";
-  const menuButtonColorClass = isTop ? "text-white" : "";
 
-  const handleLogin = () => {
-    setIsOpen(false);
-    navigate("/login");
-  };
+  const isTransparent = !isScrolled;
+  const buttonTone = isDark
+    ? "border-white/40 text-white hover:bg-white/10"
+    : "border-border text-foreground hover:bg-muted/40";
 
   return (
     <nav
       dir={direction}
- 
       className={`fixed top-0 z-50 w-full transition-all duration-500 ${
         isScrolled
           ? "bg-background/90 backdrop-blur-lg border-b border-border shadow-elevated"
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 lg:px-8">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 lg:px-8">
+        {/* Logo */}
         <button
           type="button"
           onClick={() => scrollToAnchor("#home")}
           className="flex items-center gap-3"
         >
-          <div className="sm:hidden">
+          {/* موبايل: أيقونة فقط */}
+          <div className="block sm:hidden">
             <BrandLogo
               variant="icon"
               className="h-10 w-10"
               lang={language}
-              dark={isTop ? true : undefined}
+      dark={isTop ? true : undefined}
             />
           </div>
+
+          {/* ديسكتوب: شعار كامل */}
           <div className="hidden sm:block">
             <BrandLogo
               variant="text"
               className="h-12"
               lang={language}
-              dark={isTop ? true : undefined}
+              dark={isDark}
             />
           </div>
         </button>
 
+        {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 lg:flex">
-          {navItems.map((item) => {
-            const { href, icon: Icon, en, ar } = item;
+          {navItems.map(({ href, icon: Icon, en, ar, type }) => {
             const label = isArabic ? ar : en;
             return (
               <button
                 key={href}
-                type="button"
-                onClick={() => handleNavClick(item)}
-                className={`group relative flex items-center gap-2 text-sm font-medium tracking-wide transition-colors duration-300 ${navTextColorClass}`}
+                onClick={() => handleNavClick({ href, icon: Icon, en, ar, type })}
+                className={`group relative flex items-center gap-2 text-sm font-medium tracking-wide transition-colors ${
+                  isDark
+                    ? "text-white/80 hover:text-white"
+                    : "text-foreground/70 hover:text-foreground"
+                }`}
               >
                 <Icon
-                  className={`h-4 w-4 transition-transform duration-300 group-hover:scale-110 ${navIconColorClass}`}
+                  className={`h-4 w-4 transition-transform duration-300 group-hover:scale-110 ${
+                    isDark ? "text-white" : "text-accent"
+                  }`}
                 />
-                <span className={`relative ${isArabic ? "text-right" : ""}`}>
+                <span className="relative">
                   {label}
                   <span
-                    className={`absolute -bottom-1 block h-0.5 w-full scale-x-0 transform transition-transform duration-300 group-hover:scale-x-100 ${underlineAlignment} ${navUnderlineToneClass}`}
+                    className={`absolute -bottom-1 block h-0.5 w-full scale-x-0 transform transition-transform duration-300 group-hover:scale-x-100 ${underlineAlignment} ${
+                      isDark
+                        ? "bg-white/80"
+                        : "bg-gradient-to-r from-accent via-primary to-accent"
+                    }`}
                   />
                 </span>
               </button>
@@ -173,39 +162,40 @@ const LandingNavbar: React.FC = () => {
           })}
         </div>
 
+        {/* Actions */}
         <div className="flex items-center gap-3">
- 
           <ThemeToggle />
-       <Button
-            variant="accent"
+
+          {/* Language */}
+          <Button
+            variant={isDark ? "glass" : "outline"}
             size="icon"
             onClick={toggleLanguage}
             aria-label="Toggle language"
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-full border ${
-              isTop ? "border-white/60 text-white" : "border-border/60"
-            } ${isArabic ? "font-arabic" : "font-english"}`}
+            className={`rounded-full ${buttonTone} ${
+              isArabic ? "font-arabic" : "font-english"
+            }`}
           >
             {isArabic ? "EN" : "AR"}
           </Button>
 
-  {/* Login */}
-<Button
-  type="button"
-  onClick={handleLogin}
-  variant="chromatic" // 👈 شكل بطولي متدرج مع glow
-  size="lg"
-  className="hidden lg:inline-flex rounded-full"
->
-  {isArabic ? "تسجيل الدخول" : "Client Login"}
-</Button>
-
-
-          {/* Mobile Menu Toggle */}
+          {/* Login */}
           <Button
-            variant="glass"
+            type="button"
+            onClick={() => navigate("/login")}
+            variant={isDark ? "gold" : "chromatic"}
+            size="lg"
+            className="hidden lg:inline-flex rounded-full shadow-md transition-transform hover:-translate-y-0.5"
+          >
+            {isArabic ? "تسجيل الدخول" : "Client Login"}
+          </Button>
+
+          {/* Mobile Menu */}
+          <Button
+            variant={isDark ? "glass" : "outline"}
             size="icon"
-            className={`lg:hidden ${menuButtonColorClass}`}
-            onClick={() => setIsOpen((prev) => !prev)}
+            className={`lg:hidden ${buttonTone}`}
+            onClick={() => setIsOpen((p) => !p)}
             aria-label={isOpen ? "Close navigation" : "Open navigation"}
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -213,29 +203,26 @@ const LandingNavbar: React.FC = () => {
         </div>
       </div>
 
-      <div 
+      {/* Mobile Menu */}
+      <div
         className={`overflow-hidden border-t border-border/70 bg-background/95 backdrop-blur transition-all duration-300 lg:hidden ${
           isOpen ? "max-h-[560px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="space-y-4 px-4 py-6"> 
+        <div className="space-y-4 px-4 py-6">
           <div
             className={`flex items-center justify-between ${
               isArabic ? "flex-row-reverse" : ""
             }`}
           >
-            <div
-              className={`flex items-center gap-2 rounded-full border border-border/70 px-3 py-1 text-xs text-foreground/70 ${
-                isArabic ? "flex-row-reverse" : ""
-              }`}
-            >
+            <div className="flex items-center gap-2 rounded-full border border-border/70 px-3 py-1 text-xs text-foreground/70">
               <Sparkles className="h-3 w-3 text-accent" />
-              <span>{highlight}</span>
+              <span>{isArabic ? highlightCopy.ar : highlightCopy.en}</span>
             </div>
+
             <Button
-              variant="gold"
+              variant={isDark ? "gold" : "accent"}
               size="sm"
-              aria-label={toggleAria}
               onClick={() => {
                 toggleLanguage();
                 setIsOpen(false);
@@ -244,39 +231,30 @@ const LandingNavbar: React.FC = () => {
               {toggleLabel}
             </Button>
           </div>
-          {navItems.map((item) => {
-            const { href, icon: Icon, en, ar, type } = item;
+
+          {navItems.map(({ href, icon: Icon, en, ar, type }) => {
             const label = isArabic ? ar : en;
-            const indicator =
-              type === "route" ? (isArabic ? "المعرض" : "showcase") : href.replace("#", "");
             return (
               <button
                 key={href}
-                type="button"
-                onClick={() => handleNavClick(item)}
-                className={`group flex w-full items-center justify-between rounded-xl border border-transparent px-4 py-3 text-left transition-all duration-300 hover:border-accent/40 hover:bg-accent/10 ${
-                  isArabic ? "text-right" : ""
+                onClick={() => handleNavClick({ href, icon: Icon, en, ar, type })}
+                className={`group flex w-full items-center justify-between rounded-xl border border-transparent px-4 py-3 transition-all hover:border-accent/40 hover:bg-accent/10 ${
+                  isArabic ? "text-right" : "text-left"
                 }`}
               >
                 <div className="flex items-center gap-3 text-foreground">
                   <Icon className="h-5 w-5 text-accent" />
-                  <span className={`relative text-sm font-medium ${isArabic ? "text-right" : ""}`}>
-                    {label}
-                    <span
-                      className={`absolute -bottom-0.5 block h-0.5 w-full scale-x-0 transform rounded-full bg-accent/80 transition-transform duration-300 group-hover:scale-x-100 ${underlineAlignment}`}
-                    />
-                  </span>
+                  <span className="text-sm font-medium">{label}</span>
                 </div>
-                <span className="text-xs uppercase tracking-widest text-muted-foreground">
-                  {indicator}
-                </span>
               </button>
             );
           })}
+
           <Button
             type="button"
-            onClick={handleLogin}
-            className="w-full rounded-xl bg-primary py-2 text-sm font-semibold text-primary-foreground shadow-md transition-transform duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+            onClick={() => navigate("/login")}
+            variant={isDark ? "gold" : "chromatic"}
+            className="w-full rounded-xl py-2 text-sm font-semibold shadow-md transition-transform hover:-translate-y-0.5"
           >
             {isArabic ? "تسجيل الدخول" : "Client Login"}
           </Button>
