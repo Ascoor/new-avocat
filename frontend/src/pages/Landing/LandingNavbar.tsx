@@ -220,16 +220,7 @@ const LandingNavbar: React.FC = () => {
               <span>{isArabic ? highlightCopy.ar : highlightCopy.en}</span>
             </div>
 
-            <Button
-              variant={isDark ? "gold" : "accent"}
-              size="sm"
-              onClick={() => {
-                toggleLanguage();
-                setIsOpen(false);
-              }}
-            >
-              {toggleLabel}
-            </Button>
+              <ThemeToggle />
           </div>
 
           {navItems.map(({ href, icon: Icon, en, ar, type }) => {
