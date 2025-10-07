@@ -128,24 +128,24 @@ const LandingNavbar: React.FC = () => {
         <button
           type="button"
           onClick={() => scrollToAnchor("#home")}
-          className="flex items-center gap-3" 
+          className="flex items-center gap-3"
         >
-         <button
-  type="button"
-  onClick={() => scrollToAnchor("#home")}
-  className="flex items-center gap-3" 
->
-  <div className="hidden sm:block">
-    <BrandLogo
-      variant="text"
-      className="h-12"
-      lang={language}
-      dark={isTop ? true : undefined}
-    />
-  </div> 
-</button>
-
- 
+          <div className="sm:hidden">
+            <BrandLogo
+              variant="icon"
+              className="h-10 w-10"
+              lang={language}
+              dark={isTop ? true : undefined}
+            />
+          </div>
+          <div className="hidden sm:block">
+            <BrandLogo
+              variant="text"
+              className="h-12"
+              lang={language}
+              dark={isTop ? true : undefined}
+            />
+          </div>
         </button>
 
         <div className="hidden items-center gap-6 lg:flex">
