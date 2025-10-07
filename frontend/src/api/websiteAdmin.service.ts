@@ -186,22 +186,22 @@ export interface TeamMemberInput {
 }
 
 export const listTeamMembers = async (): Promise<TeamMemberApi[]> => {
-  const { data } = await api.get('/api/website/team');
+  const { data } = await api.get('/api/admin/website/team');
   return unwrapCollection<TeamMemberApi>(data);
 };
 
 export const createTeamMember = async (payload: TeamMemberInput): Promise<TeamMemberApi> => {
-  const { data } = await api.post('/api/website/team', payload);
+  const { data } = await api.post('/api/admin/website/team', payload);
   return unwrap<TeamMemberApi>(data);
 };
 
 export const updateTeamMember = async (id: number, payload: TeamMemberInput): Promise<TeamMemberApi> => {
-  const { data } = await api.put(`/api/website/team/${id}`, payload);
+  const { data } = await api.put(`/api/admin/website/team/${id}`, payload);
   return unwrap<TeamMemberApi>(data);
 };
 
 export const deleteTeamMember = async (id: number): Promise<void> => {
-  await api.delete(`/api/website/team/${id}`);
+  await api.delete(`/api/admin/website/team/${id}`);
 };
 
 export interface AchievementInput {
@@ -211,22 +211,22 @@ export interface AchievementInput {
 }
 
 export const listAchievements = async (): Promise<AchievementApi[]> => {
-  const { data } = await api.get('/api/website/achievements');
+  const { data } = await api.get('/api/admin/website/achievements');
   return unwrapCollection<AchievementApi>(data);
 };
 
 export const createAchievement = async (payload: AchievementInput): Promise<AchievementApi> => {
-  const { data } = await api.post('/api/website/achievements', payload);
+  const { data } = await api.post('/api/admin/website/achievements', payload);
   return unwrap<AchievementApi>(data);
 };
 
 export const updateAchievement = async (id: number, payload: AchievementInput): Promise<AchievementApi> => {
-  const { data } = await api.put(`/api/website/achievements/${id}`, payload);
+  const { data } = await api.put(`/api/admin/website/achievements/${id}`, payload);
   return unwrap<AchievementApi>(data);
 };
 
 export const deleteAchievement = async (id: number): Promise<void> => {
-  await api.delete(`/api/website/achievements/${id}`);
+  await api.delete(`/api/admin/website/achievements/${id}`);
 };
 
 export interface ArticleInput {

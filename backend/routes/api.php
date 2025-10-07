@@ -235,6 +235,9 @@ Route::prefix('admin/website')
         Route::get('/settings', [PageController::class, 'settings']);
         Route::put('/settings', [PageController::class, 'updateSettings']);
 
+        Route::apiResource('team', TeamController::class);
+        Route::apiResource('achievements', AchievementController::class);
+
         Route::get('/articles', [ArticleController::class, 'index']);
         Route::post('/articles', [ArticleController::class, 'store']);
         Route::get('/articles/{article}', [ArticleController::class, 'show']);
