@@ -3,6 +3,7 @@ import { motion, cubicBezier } from 'framer-motion';
 
 import SectionTitle from '@/components/SectionTitle';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface SectionHeaderProps {
   badge?: string | null;
@@ -39,6 +40,9 @@ const alignClasses: Record<'left' | 'center' | 'right', string> = {
 };
 
 const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtitle, align = 'center', eyebrowIcon }) => {
+  const { language } = useLanguage();
+  const isArabic = language === 'ar';
+
   if (!title && !badge && !subtitle) {
     return null;
   }
@@ -48,13 +52,19 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.5 }}
-      className={cn('section-header-frame max-w-3xl space-y-4', alignClasses[align])}
+      dir={isArabic ? 'rtl' : 'ltr'}
+      className={cn(
+        'section-header-frame max-w-3xl space-y-4',
+        alignClasses[align],
+        isArabic ? 'font-arabic' : 'font-english',
+      )}
     >
       {badge ? (
         <motion.div
           variants={badgeMotion}
           className={cn(
-            'inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground shadow-inner-glow backdrop-blur-sm dark:border-border/40 dark:bg-background/40 dark:text-foreground/80',
+            'inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/90 px-5 py-2 font-semibold text-muted-foreground shadow-inner-glow backdrop-blur-sm dark:border-border/40 dark:bg-background/40 dark:text-foreground/80',
+            isArabic ? 'arabic-eyebrow font-arabic' : 'text-xs uppercase tracking-[0.35em] font-english',
             align === 'center' ? 'justify-center' : 'justify-start',
           )}
         >
@@ -69,6 +79,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
             'font-display',
             align === 'center' && 'mx-auto',
             align === 'right' && 'ml-auto',
+            isArabic ? 'text-right' : undefined,
           )}
         >
           {title}
@@ -78,7 +89,12 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
       {subtitle ? (
         <motion.p
           variants={subtitleMotion}
-          className="text-lg leading-relaxed text-muted-foreground/90 dark:text-muted-foreground/75 md:text-xl"
+          className={cn(
+            'leading-relaxed text-muted-foreground/90 dark:text-muted-foreground/75',
+            isArabic
+              ? 'arabic-subtitle font-arabic'
+              : 'text-lg md:text-xl font-english',
+          )}
         >
           {subtitle}
         </motion.p>

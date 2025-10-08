@@ -26,6 +26,14 @@
     @apply bg-background text-foreground;
   }
 
+  [dir='rtl'] body {
+    font-family: 'Cairo', 'Amiri', 'Inter', sans-serif;
+    font-size: clamp(0.98rem, 0.25vw + 0.92rem, 1.12rem);
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    word-spacing: 0.02em;
+  }
+
   /* Dark CTA background */
   .bg-cta-dark {
     @apply bg-gradient-to-br from-primary via-primary-glow to-slate-bg;
@@ -92,5 +100,36 @@
       transparent
     );
     box-shadow: 0 0 12px hsl(var(--neon-glow) / 0.35);
+  }
+
+  .font-english {
+    font-family: 'Inter', 'Outfit', 'Cairo', sans-serif;
+  }
+
+  .font-arabic {
+    font-family: 'Cairo', 'Amiri', 'Inter', sans-serif;
+    font-weight: 500;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  .arabic-heading-lg {
+    font-size: clamp(2.15rem, 1.45rem + 2.6vw, 3.45rem);
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+  }
+
+  .arabic-subtitle {
+    font-size: clamp(1rem, 0.45vw + 0.95rem, 1.35rem);
+    line-height: 1.85;
+  }
+
+  .arabic-body-text {
+    font-size: clamp(0.96rem, 0.35vw + 0.9rem, 1.18rem);
+    line-height: 1.8;
+  }
+
+  .arabic-eyebrow {
+    font-size: clamp(0.7rem, 0.3vw + 0.65rem, 0.85rem);
+    letter-spacing: 0.18em;
   }
 }

@@ -46,6 +46,12 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
 
   const MotionComponent = useMemo(() => motionMap[componentTag as HeadingTag], [componentTag]);
 
+  const baseFont = isArabic ? 'font-arabic' : 'font-english';
+  const baseTracking = isArabic ? 'tracking-[0.03em]' : 'tracking-[0.08em]';
+  const baseSize = isArabic ? 'arabic-heading-lg' : 'text-3xl md:text-5xl';
+  const baseAlignment = isArabic ? 'text-right' : 'text-left';
+  const baseLeading = isArabic ? 'leading-[1.3]' : 'leading-tight';
+
   const resolvedStyle: GlowStyle = {
     ...(style as GlowStyle),
   };
@@ -82,7 +88,6 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
       transition={transition ?? (animateOnView ? defaultTransition : undefined)}
       className={cn(
         'section-title relative inline-flex w-fit items-center justify-center text-balance font-extrabold',
-        'tracking-[0.08em] text-3xl md:text-5xl',
         'text-[hsl(var(--title-color-light))] dark:text-[hsl(var(--title-color-dark))]',
         'drop-shadow-[0_0_18px_rgba(175,220,255,var(--glow-intensity))]',
         'after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-[2.5rem]',
@@ -92,7 +97,11 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
         'hover:text-white hover:drop-shadow-[0_0_25px_rgba(175,220,255,0.8)]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2',
         'focus-visible:ring-offset-background',
-        isArabic ? 'text-right' : 'text-left',
+        baseFont,
+        baseTracking,
+        baseSize,
+        baseAlignment,
+        baseLeading,
         className,
       )}
       style={resolvedStyle}

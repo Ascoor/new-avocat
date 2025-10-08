@@ -7,12 +7,16 @@ import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import type { Locale } from '@/types/website';
 import {
   ChevronLeft,
-  ChevronRight, 
+  ChevronRight,
   ShieldCheck,
   Sparkles,
-  Loader2,Cpu, PlayCircle } from 'lucide-react';
+  Loader2,
+  Cpu,
+  PlayCircle,
+} from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
+import { cn } from '@/lib/utils';
 import SilkBackground from './components/SilkBackground';
 
 interface HeroSlide {
@@ -160,52 +164,69 @@ const HeroCarousel: React.FC = () => {
               <motion.div
                 variants={textVariants}
                 custom={0}
-
-                
-                className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold text-white/90 shadow-inner backdrop-blur"
+                className={cn(
+                  'mb-6 inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-4 py-2 font-semibold text-white/90 shadow-inner backdrop-blur',
+                  isArabic
+                    ? 'arabic-eyebrow font-arabic'
+                    : 'text-xs uppercase tracking-[0.3em] font-english',
+                )}
               >
                 <Sparkles className="h-4 w-4 text-accent" />
-                <span>{active.badge}</span>
+                <span className="leading-none">{active.badge}</span>
               </motion.div>
             )}
 
             {/* العنوان */}
-          <SectionTitle
-  as="h1"
-  variants={textVariants}
-  custom={1}
-  dir={isArabic ? 'rtl' : 'ltr'}
-  animateOnView={false}
-  glowIntensity={0.85}
-  className={`
-    max-w-3xl font-display 
-    lg:text-6xl 
-    ${isArabic ? 'text-right' : 'text-left'}
-    text-[hsl(var(--title-color-dark))] 
-    dark:text-[hsl(var(--title-color-dark))] 
-  `}
->
-  {active.title}
-</SectionTitle>
+            <SectionTitle
+              as="h1"
+              variants={textVariants}
+              custom={1}
+              dir={isArabic ? 'rtl' : 'ltr'}
+              animateOnView={false}
+              glowIntensity={0.85}
+              className={cn(
+                'max-w-3xl font-display text-[hsl(var(--title-color-dark))] dark:text-[hsl(var(--title-color-dark))]',
+                isArabic
+                  ? 'font-arabic text-right md:text-[clamp(2.5rem,1.8rem+2.4vw,3.85rem)]'
+                  : 'font-english text-left lg:text-6xl',
+              )}
+            >
+              {active.title}
+            </SectionTitle>
 
 
             <motion.p
               variants={textVariants}
               custom={2}
-              className="mt-4 text-lg text-white/85 leading-relaxed"
+              className={cn(
+                'mt-4 text-white/85',
+                isArabic
+                  ? 'arabic-subtitle font-arabic'
+                  : 'text-lg leading-relaxed font-english',
+              )}
             >
               {active.subtitle}
             </motion.p>
 
             {/* النقاط */}
-            <motion.ul className="mt-6 space-y-3 text-base text-white/85" initial="hidden" animate="visible">
+            <motion.ul
+              className={cn(
+                'mt-6 space-y-3 text-white/85',
+                isArabic ? 'arabic-body-text font-arabic text-right' : 'text-base font-english',
+              )}
+              initial="hidden"
+              animate="visible"
+            >
               {active.bullets.map((b, i) => (
                 <motion.li
-                
+
                   key={b}
                   variants={textVariants}
                   custom={i + 3}
-                  className="flex items-start gap-3"
+                  className={cn(
+                    'flex items-start gap-3',
+                    isArabic ? 'flex-row-reverse text-right' : 'text-left',
+                  )}
                 >
                   <ShieldCheck className="mt-1 h-5 w-5 text-accent flex-shrink-0" />
                   <span>{b}</span>
@@ -214,33 +235,39 @@ const HeroCarousel: React.FC = () => {
             </motion.ul>
 
             {/* الأزرار */}
-              <motion.div
-              
-    dir={isArabic ? 'ltr' : 'rtl'}
+            <motion.div
+              dir={isArabic ? 'ltr' : 'rtl'}
               variants={textVariants}
               custom={active.bullets.length + 4}
               className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center"
             >
-       
+              <Button
+                onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
+                variant="accent"
+                className={cn(
+                  'btn-primary flex items-center justify-center gap-2 px-8 py-3 font-semibold text-white',
+                  isArabic
+                    ? 'font-arabic text-sm sm:text-base'
+                    : 'font-english text-base',
+                )}
+              >
+                <PlayCircle className="h-5 w-5" />
+                <span>{isArabic ? 'ابدأ رقمنة مكتبك' : 'Start Your Digital Transformation'}</span>
+              </Button>
 
-<Button
-  onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
-  variant="accent"
-  className="btn-primary flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-white"
->
-  <PlayCircle className="h-5 w-5" />
-  <span>{isArabic ? 'ابدأ رقمنة مكتبك' : 'Start Your Digital Transformation'}</span>
-</Button>
-
-<Button
-  onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
-  variant="hero"
-  className="btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 text-base font-semibold text-white"
->
-  <Cpu className="h-5 w-5" />
-  <span>{isArabic ? 'تعرّف على الأنظمة' : 'Explore Our Systems'}</span>
-</Button>
-
+              <Button
+                onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
+                variant="hero"
+                className={cn(
+                  'btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 font-semibold text-white',
+                  isArabic
+                    ? 'font-arabic text-sm sm:text-base'
+                    : 'font-english text-base',
+                )}
+              >
+                <Cpu className="h-5 w-5" />
+                <span>{isArabic ? 'تعرّف على الأنظمة' : 'Explore Our Systems'}</span>
+              </Button>
             </motion.div>
           </motion.div>
         </div>
