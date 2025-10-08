@@ -117,7 +117,7 @@ const LandingNavbar: React.FC = () => {
               variant="icon"
               className="h-10 w-10"
               lang={language}
-      dark={isTop ? true : undefined}
+              dark={isTop ? true : undefined}
             />
           </div>
 
