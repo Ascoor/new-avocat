@@ -13,6 +13,7 @@ import {
   Loader2,Cpu, PlayCircle } from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
+import SilkBackground from './components/SilkBackground';
 
 interface HeroSlide {
   id: number;
@@ -111,6 +112,12 @@ const HeroCarousel: React.FC = () => {
       dir={isArabic ? 'rtl' : 'ltr'}
       className="relative h-[90vh] min-h-[640px] overflow-hidden bg-black"
     >
+      <SilkBackground
+        className="absolute inset-0 -z-10 pointer-events-none opacity-70"
+        speed={3.2}
+        scale={1.4}
+        rotation={0.35}
+      />
       {/* الخلفية */}
       <AnimatePresence mode="wait">
         {slides.map(
