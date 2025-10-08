@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
 
   const scrollTo = (href: string) => {
     const element = document.querySelector<HTMLElement>(href);
-    if (element) smoothScrollToElement(element, { offset: 90, duration: 950 });
+    if (element) smoothScrollToElement(element, { offset: 90, duration: 1000, easing: 'easeInOutExpo' });
   };
 
   const headingClass =

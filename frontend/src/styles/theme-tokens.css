@@ -1,137 +1,197 @@
 @layer base {
   :root {
-    /* ========== Light Theme ========== */
-    --primary: 220 60% 15%;           /* Deep Navy - Trust */
-    --primary-foreground: 0 0% 100%;  /* White */
-    --primary-glow: 220 55% 25%;      /* Lighter Navy */
+    /* ========== Daylight Palette ========== */
+    --day-background: 216 45% 98%;
+    --day-foreground: 222 48% 18%;
+    --day-surface: 0 0% 100%;
+    --day-surface-muted: 214 45% 96%;
+    --day-surface-elevated: 218 41% 94%;
+    --day-overlay: 214 60% 97%;
+    --day-border-soft: 220 22% 90%;
+    --day-border-strong: 222 18% 70%;
+    --day-ring: 188 82% 42%;
 
-    /* Neon Accent */
-    --neon: 182 100% 72%;
-    --neon-glow: 182 100% 78%;
-    --neon-muted: 182 70% 90%;
+    --day-primary: 226 68% 22%;
+    --day-primary-foreground: 210 100% 98%;
+    --day-primary-glow: 226 68% 30%;
+    --day-secondary: 205 32% 92%;
+    --day-secondary-foreground: 226 68% 22%;
+    --day-muted: 216 20% 92%;
+    --day-muted-foreground: 222 17% 40%;
+    --day-accent: 188 74% 42%;
+    --day-accent-foreground: 195 100% 96%;
+    --day-highlight: 43 95% 55%;
+    --day-highlight-muted: 43 82% 45%;
+    --day-highlight-light: 43 100% 94%;
 
-    /* Gold Accents */
-    --gold: 45 100% 50%;
-    --gold-muted: 45 65% 45%;
-    --gold-light: 45 100% 97%;
+    /* ========== Nightfall Palette ========== */
+    --night-background: 223 52% 6%;
+    --night-foreground: 210 25% 92%;
+    --night-surface: 222 42% 12%;
+    --night-surface-muted: 223 34% 16%;
+    --night-surface-elevated: 224 36% 20%;
+    --night-overlay: 222 48% 10%;
+    --night-border-soft: 222 28% 26%;
+    --night-border-strong: 223 18% 46%;
+    --night-ring: 188 90% 62%;
 
-    /* Exclusive Signature */
+    --night-primary: 44 92% 62%;
+    --night-primary-foreground: 222 54% 12%;
+    --night-primary-glow: 44 96% 70%;
+    --night-secondary: 225 30% 18%;
+    --night-secondary-foreground: 210 25% 92%;
+    --night-muted: 225 24% 24%;
+    --night-muted-foreground: 210 18% 70%;
+    --night-accent: 188 100% 68%;
+    --night-accent-foreground: 222 48% 12%;
+    --night-highlight: 47 96% 64%;
+    --night-highlight-muted: 47 78% 46%;
+    --night-highlight-light: 47 95% 24%;
+
+    /* Shared brand accents */
+    --neon: 188 92% 44%;
+    --neon-glow: 188 92% 68%;
+    --neon-muted: 188 52% 82%;
+
+    --gold: var(--day-highlight);
+    --gold-muted: var(--day-highlight-muted);
+    --gold-light: var(--day-highlight-light);
+
     --exclusive: 265 83% 62%;
     --exclusive-muted: 265 70% 52%;
     --exclusive-foreground: 218 43% 12%;
     --exclusive-glow: 265 95% 72%;
 
-    /* Slate Neutrals */
-    --slate: 220 15% 30%;
-    --slate-light: 220 10% 55%;
-    --slate-bg: 220 20% 98%;
+    --slate: 219 16% 34%;
+    --slate-light: 219 14% 55%;
+    --slate-bg: var(--day-surface-muted);
 
-    /* Semantic Colors */
-    --background: 0 0% 100%;
-    --foreground: 220 60% 15%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 60% 15%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 60% 15%;
-    --secondary: 220 20% 96%;
-    --secondary-foreground: 220 60% 15%;
-    --muted: 220 20% 96%;
-    --muted-foreground: 220 15% 40%;
-    --accent: 45 100% 97%;
-    --accent-foreground: 220 60% 15%;
-    --border: 220 25% 88%;
-    --input: 220 25% 92%;
-    --ring: 45 100% 50%;
+    /* Default (Daylight) Semantic Tokens */
+    --background: var(--day-background);
+    --foreground: var(--day-foreground);
+    --card: var(--day-surface);
+    --card-foreground: var(--day-foreground);
+    --popover: var(--day-surface);
+    --popover-foreground: var(--day-foreground);
+    --secondary: var(--day-secondary);
+    --secondary-foreground: var(--day-secondary-foreground);
+    --muted: var(--day-muted);
+    --muted-foreground: var(--day-muted-foreground);
+    --accent: var(--day-highlight-light);
+    --accent-foreground: var(--day-foreground);
+    --border: var(--day-border-soft);
+    --border-strong: var(--day-border-strong);
+    --border-soft: var(--day-border-soft);
+    --input: var(--day-border-soft);
+    --ring: var(--day-ring);
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --success: 142 71% 45%;
+    --success: 142 66% 38%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
+    --warning: 38 92% 52%;
     --warning-foreground: 0 0% 100%;
-    --info: 199 89% 48%;
+    --info: 200 92% 46%;
     --info-foreground: 0 0% 100%;
 
+    --surface: var(--day-surface);
+    --surface-foreground: var(--day-foreground);
+    --surface-muted: var(--day-surface-muted);
+    --surface-elevated: var(--day-surface-elevated);
+    --overlay: var(--day-overlay);
+    --overlay-foreground: var(--day-foreground);
+
+    --title-color-light: 223 55% 18%;
+    --title-color-dark: 210 95% 96%;
+    --title-glow-dark: 175 220 255;
+    --glow-intensity: 0.65;
+
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 60% 15%) 0%, hsl(220 55% 25%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(45 65% 45%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(220 60% 10%) 0%, hsl(220 60% 18%) 50%, hsl(220 55% 25%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 20% 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary) / 0.98) 0%, hsl(var(--primary-glow)) 100%);
+    --gradient-gold: linear-gradient(120deg, hsl(var(--gold) / 0.92) 0%, hsl(var(--gold-muted) / 0.85) 100%);
+    --gradient-hero: linear-gradient(130deg, hsl(var(--background) / 0.92) 0%, hsl(var(--secondary) / 0.7) 45%, hsl(var(--accent) / 0.85) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--surface-muted)) 0%, hsl(var(--surface)) 100%);
+    --gradient-aurora: radial-gradient(circle at 22% 20%, hsla(var(--accent) / 0.45) 0%, hsla(var(--gold) / 0.35) 45%, transparent 72%);
+    --gradient-sunrise: linear-gradient(160deg, hsla(var(--gold) / 0.65) 0%, hsla(var(--accent) / 0.55) 52%, hsla(var(--primary) / 0.85) 100%);
+    --gradient-overlay: linear-gradient(180deg, hsla(var(--background) / 0.1) 0%, hsla(var(--background) / 0.75) 65%, hsl(var(--background)) 100%);
 
     /* Shadows */
-    --shadow-luxury: 0 25px 50px -12px hsl(220 60% 15% / 0.25);
-    --shadow-gold: 0 10px 30px -10px hsl(45 100% 50% / 0.3);
-    --shadow-card: 0 4px 24px -8px hsl(220 15% 30% / 0.1);
-    --shadow-elegant: 0 8px 32px -8px hsl(220 60% 15% / 0.15);
+    --shadow-luxury: 0 25px 60px -20px hsl(var(--primary) / 0.32);
+    --shadow-gold: 0 18px 40px -18px hsl(var(--gold) / 0.38);
+    --shadow-card: 0 14px 36px -22px hsl(var(--foreground) / 0.18);
+    --shadow-elegant: 0 28px 48px -18px hsl(var(--primary) / 0.28);
+    --shadow-floating: 0 18px 45px -20px hsl(var(--accent) / 0.25);
 
     /* Transitions */
-    --transition-elegant: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-elegant: all 0.45s cubic-bezier(0.19, 1, 0.22, 1);
+    --transition-smooth: all 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.38s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
   }
 
-  /* ========== Dark Theme ========== */
+  /* ========== Dark Theme Overrides ========== */
   .dark {
-    --background: 220 40% 8%;
-    --foreground: 200 20% 95%;
-    --card: 220 35% 10%;
-    --card-foreground: 200 20% 95%;
-    --popover: 220 35% 10%;
-    --popover-foreground: 200 20% 95%;
-    --primary: 45 100% 55%;
-    --primary-foreground: 220 60% 10%;
-    --primary-glow: 45 100% 65%;
+    --background: var(--night-background);
+    --foreground: var(--night-foreground);
+    --card: var(--night-surface);
+    --card-foreground: var(--night-foreground);
+    --popover: var(--night-surface);
+    --popover-foreground: var(--night-foreground);
+    --primary: var(--night-primary);
+    --primary-foreground: var(--night-primary-foreground);
+    --primary-glow: var(--night-primary-glow);
+    --secondary: var(--night-secondary);
+    --secondary-foreground: var(--night-secondary-foreground);
+    --muted: var(--night-muted);
+    --muted-foreground: var(--night-muted-foreground);
+    --accent: var(--night-accent);
+    --accent-foreground: var(--night-accent-foreground);
+    --border: var(--night-border-soft);
+    --border-soft: var(--night-border-soft);
+    --border-strong: var(--night-border-strong);
+    --input: var(--night-border-soft);
+    --ring: var(--night-ring);
 
-    /* Neon Accent */
-    --neon: 182 100% 74%;
-    --neon-glow: 182 100% 82%;
-    --neon-muted: 182 60% 26%;
-    --secondary: 220 30% 15%;
-    --secondary-foreground: 200 20% 95%;
-    --muted: 220 30% 15%;
-    --muted-foreground: 200 15% 65%;
-    --accent: 200 70% 50%;
-    --accent-foreground: 220 60% 10%;
-    --border: 220 30% 20%;
-    --input: 220 30% 18%;
-    --ring: 45 100% 55%;
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --info: 199 89% 48%;
-    --info-foreground: 0 0% 100%;
+    --surface: var(--night-surface);
+    --surface-foreground: var(--night-foreground);
+    --surface-muted: var(--night-surface-muted);
+    --surface-elevated: var(--night-surface-elevated);
+    --overlay: var(--night-overlay);
+    --overlay-foreground: var(--night-foreground);
 
-    /* Gold Accents */
-    --gold: 45 100% 55%;
-    --gold-muted: 45 80% 50%;
-    --gold-light: 45 100% 15%;
+    --neon: 188 100% 72%;
+    --neon-glow: 188 100% 82%;
+    --neon-muted: 188 65% 32%;
 
-    /* Exclusive Signature */
+    --gold: var(--night-highlight);
+    --gold-muted: var(--night-highlight-muted);
+    --gold-light: var(--night-highlight-light);
+
     --exclusive: 265 85% 68%;
     --exclusive-muted: 265 65% 46%;
     --exclusive-foreground: 0 0% 100%;
     --exclusive-glow: 265 95% 78%;
 
-    /* Slate */
-    --slate: 220 15% 70%;
-    --slate-light: 220 10% 55%;
-    --slate-bg: 220 35% 12%;
+    --slate: 220 18% 70%;
+    --slate-light: 220 16% 62%;
+    --slate-bg: 220 32% 12%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 40% 8%) 0%, hsl(220 35% 12%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 55%) 0%, hsl(45 80% 50%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(220 40% 5%) 0%, hsl(220 35% 10%) 50%, hsl(220 40% 8%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(220 40% 8%) 0%, hsl(220 35% 10%) 100%);
+    --title-color-light: 222 90% 94%;
+    --title-color-dark: 210 96% 96%;
 
-    /* Shadows */
-    --shadow-luxury: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
-    --shadow-gold: 0 10px 30px -10px hsl(45 100% 55% / 0.4);
-    --shadow-card: 0 4px 24px -8px hsl(0 0% 0% / 0.3);
-    --shadow-elegant: 0 8px 32px -8px hsl(0 0% 0% / 0.4);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary) / 0.2) 0%, hsl(var(--primary) / 0.65) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold) / 0.45) 0%, hsl(var(--gold-muted) / 0.6) 100%);
+    --gradient-hero: linear-gradient(145deg, hsl(var(--background) / 0.8) 0%, hsl(var(--surface-muted) / 0.78) 45%, hsl(var(--primary) / 0.9) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--surface)) 0%, hsl(var(--surface-elevated)) 100%);
+    --gradient-aurora: radial-gradient(circle at 18% 18%, hsla(var(--accent) / 0.4) 0%, hsla(var(--gold) / 0.42) 55%, transparent 78%);
+    --gradient-sunrise: linear-gradient(160deg, hsla(var(--gold) / 0.55) 0%, hsla(var(--accent) / 0.6) 45%, hsla(var(--primary) / 0.95) 100%);
+    --gradient-overlay: linear-gradient(180deg, hsla(var(--background) / 0.2) 0%, hsla(var(--background) / 0.82) 70%, hsl(var(--background)) 100%);
+
+    --shadow-luxury: 0 30px 70px -20px hsl(0 0% 0% / 0.55);
+    --shadow-gold: 0 22px 50px -22px hsl(var(--gold) / 0.45);
+    --shadow-card: 0 18px 48px -24px hsl(0 0% 0% / 0.45);
+    --shadow-elegant: 0 32px 56px -24px hsl(0 0% 0% / 0.5);
+    --shadow-floating: 0 26px 60px -32px hsl(var(--accent) / 0.32);
   }
 
   /* RTL & LTR */

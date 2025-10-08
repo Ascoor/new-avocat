@@ -31,6 +31,16 @@ const config: Config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          foreground: "hsl(var(--surface-foreground))",
+          muted: "hsl(var(--surface-muted))",
+          elevated: "hsl(var(--surface-elevated))",
+        },
+        overlay: {
+          DEFAULT: "hsl(var(--overlay))",
+          foreground: "hsl(var(--overlay-foreground))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -72,6 +82,8 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "border-strong": "hsl(var(--border-strong))",
+        "border-soft": "hsl(var(--border-soft))",
         gold: {
           DEFAULT: "hsl(var(--gold))",
           muted: "hsl(var(--gold-muted))",
@@ -93,17 +105,22 @@ const config: Config = {
         'gradient-gold': 'var(--gradient-gold)',
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-subtle': 'var(--gradient-subtle)',
+        'gradient-aurora': 'var(--gradient-aurora)',
+        'gradient-sunrise': 'var(--gradient-sunrise)',
+        'gradient-overlay': 'var(--gradient-overlay)',
       },
       boxShadow: {
         'luxury': 'var(--shadow-luxury)',
         'gold': 'var(--shadow-gold)',
         'card': 'var(--shadow-card)',
         'elegant': 'var(--shadow-elegant)',
+        'floating': 'var(--shadow-floating)',
       },
       transitionTimingFunction: {
         'elegant': 'var(--transition-elegant)',
         'smooth': 'var(--transition-smooth)',
         'bounce': 'var(--transition-bounce)',
+        'hero': 'cubic-bezier(0.19, 1, 0.22, 1)',
       },
       fontFamily: {
         'cairo': ['Cairo', 'sans-serif'],

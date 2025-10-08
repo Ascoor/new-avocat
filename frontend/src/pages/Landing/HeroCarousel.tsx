@@ -109,11 +109,18 @@ const HeroCarousel: React.FC = () => {
     }),
   };
 
+  const scrollToSection = (selector: string) => {
+    const element = document.querySelector(selector);
+    if (element) {
+      smoothScrollToElement(element, { offset: 90, duration: 1050, easing: "easeInOutExpo" });
+    }
+  };
+
   return (
     <section
       id="home"
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="relative h-[90vh] min-h-[560px] overflow-hidden bg-black sm:min-h-[620px]"
+      className="relative h-[90vh] min-h-[560px] overflow-hidden bg-[radial-gradient(circle_at_top,hsl(var(--overlay)/0.85),transparent_65%)] sm:min-h-[620px]"
     >
       <SilkBackground
         className="absolute inset-0 -z-10 pointer-events-none opacity-70"
@@ -155,7 +162,7 @@ const HeroCarousel: React.FC = () => {
             key={active.id}
             initial="hidden"
             animate="visible"
-            className="w-full max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur sm:p-8 lg:p-12 dark:bg-background/70"
+            className="w-full max-w-4xl rounded-3xl border border-border-soft/70 bg-surface/95 p-6 shadow-floating backdrop-blur-xl transition-colors duration-500 sm:p-8 lg:p-12 dark:border-border-strong/60 dark:bg-surface/80"
           >
             {/* البادج */}
             {active.badge && (
@@ -163,13 +170,13 @@ const HeroCarousel: React.FC = () => {
                 variants={textVariants}
                 custom={0}
                 className={cn(
-                  'mb-6 inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-4 py-2 font-semibold text-white/90 shadow-inner backdrop-blur',
+                  'mb-6 inline-flex items-center gap-3 rounded-full border border-border-soft/60 bg-surface-elevated/80 px-4 py-2 font-semibold text-foreground/80 shadow-card backdrop-blur',
                   isArabic
                     ? 'arabic-eyebrow font-arabic'
-                    : 'text-xs uppercase tracking-[0.3em] font-english',
+                    : 'text-fluid-xs uppercase tracking-[0.32em] font-english',
                 )}
               >
-                <Sparkles className="h-4 w-4 text-accent" />
+                <Sparkles className="h-4 w-4 text-gold" />
                 <span className="leading-none">{active.badge}</span>
               </motion.div>
             )}
@@ -183,10 +190,7 @@ const HeroCarousel: React.FC = () => {
               animateOnView={false}
               glowIntensity={0.85}
               className={cn(
-                'max-w-3xl font-display text-balance text-[hsl(var(--title-color-dark))] dark:text-[hsl(var(--title-color-dark))]',
-                isArabic
-                  ? 'text-3xl sm:text-4xl xl:text-5xl'
-                  : 'text-4xl md:text-5xl xl:text-6xl',
+                'max-w-3xl text-balance text-[hsl(var(--title-color-light))] dark:text-[hsl(var(--title-color-dark))]',
                 isArabic ? 'text-right' : 'text-left'
               )}
             >
@@ -198,8 +202,8 @@ const HeroCarousel: React.FC = () => {
               variants={textVariants}
               custom={2}
               className={cn(
-                'mt-4 text-white/85 leading-relaxed',
-                isArabic ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'
+                'mt-5 max-w-3xl text-hero-subtitle text-foreground/80 drop-shadow-md',
+                isArabic ? 'text-hero-subtitle-ar text-right' : 'text-left'
               )}
             >
               {active.subtitle}
@@ -208,8 +212,8 @@ const HeroCarousel: React.FC = () => {
             {/* النقاط */}
             <motion.ul
               className={cn(
-                'mt-6 space-y-3 text-white/85',
-                isArabic ? 'text-sm sm:text-base' : 'text-base'
+                'mt-6 space-y-3 text-fluid-md text-foreground/80',
+                isArabic ? 'text-right' : 'text-left'
               )}
               initial="hidden"
               animate="visible"
@@ -222,7 +226,7 @@ const HeroCarousel: React.FC = () => {
                   custom={i + 3}
                   className="flex items-start gap-3 leading-relaxed"
                 >
-                  <ShieldCheck className="mt-1 h-5 w-5 text-accent flex-shrink-0" />
+                  <ShieldCheck className="mt-1 h-5 w-5 flex-shrink-0 text-gold" />
                   <span>{b}</span>
                 </motion.li>
               ))}
@@ -236,11 +240,11 @@ const HeroCarousel: React.FC = () => {
               className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center"
             >
               <Button
-                onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
+                onClick={() => scrollToSection('#demo')}
                 variant="accent"
                 className={cn(
-                  'btn-primary flex items-center justify-center gap-2 px-8 py-3 font-semibold text-white',
-                  isArabic ? 'text-sm sm:text-base' : 'text-base'
+                  'btn-primary flex items-center justify-center gap-2 px-8 py-3 font-semibold text-primary-foreground',
+                  isArabic ? 'text-fluid-sm' : 'text-fluid-md'
                 )}
               >
                 <PlayCircle className="h-5 w-5" />
@@ -248,11 +252,11 @@ const HeroCarousel: React.FC = () => {
               </Button>
 
               <Button
-                onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
+                onClick={() => scrollToSection('#contact')}
                 variant="hero"
                 className={cn(
-                  'btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 font-semibold text-white',
-                  isArabic ? 'text-sm sm:text-base' : 'text-base'
+                  'btn-glass flex items-center justify-center gap-2 border-border-soft/60 px-8 py-3 font-semibold text-foreground',
+                  isArabic ? 'text-fluid-sm' : 'text-fluid-md'
                 )}
               >
                 <Cpu className="h-5 w-5" />

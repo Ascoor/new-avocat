@@ -38,7 +38,7 @@ const CallToAction: React.FC = () => {
   const scrollToSection = (selector: string) => {
     const element = document.querySelector<HTMLElement>(selector);
     if (element) {
-      smoothScrollToElement(element, { offset: 90, duration: 950 });
+      smoothScrollToElement(element, { offset: 90, duration: 1000, easing: 'easeInOutExpo' });
     }
   };
 
