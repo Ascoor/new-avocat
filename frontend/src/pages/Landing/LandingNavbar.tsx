@@ -118,7 +118,7 @@ const LandingNavbar: React.FC = () => {
               className="h-10 w-10"
               dark={isTop ? true : undefined}
               lang={language}
-              
+              dark={isTop ? true : undefined}
             />
           </div>
 
