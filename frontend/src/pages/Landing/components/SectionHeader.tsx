@@ -63,8 +63,8 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
         <motion.div
           variants={badgeMotion}
           className={cn(
-            'inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/90 px-5 py-2 font-semibold text-muted-foreground shadow-inner-glow backdrop-blur-sm dark:border-border/40 dark:bg-background/40 dark:text-foreground/80',
-            isArabic ? 'arabic-eyebrow font-arabic' : 'text-xs uppercase tracking-[0.35em] font-english',
+            'inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/90 px-5 py-2 text-xs font-semibold uppercase text-muted-foreground shadow-inner-glow backdrop-blur-sm dark:border-border/40 dark:bg-background/40 dark:text-foreground/80',
+            isArabic ? 'tracking-[0.2em]' : 'tracking-[0.35em]',
             align === 'center' ? 'justify-center' : 'justify-start',
           )}
         >
@@ -91,9 +91,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
           variants={subtitleMotion}
           className={cn(
             'leading-relaxed text-muted-foreground/90 dark:text-muted-foreground/75',
-            isArabic
-              ? 'arabic-subtitle font-arabic'
-              : 'text-lg md:text-xl font-english',
+            isArabic ? 'text-base sm:text-lg' : 'text-lg md:text-xl',
           )}
         >
           {subtitle}

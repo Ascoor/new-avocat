@@ -26,12 +26,12 @@
     @apply bg-background text-foreground;
   }
 
-  [dir='rtl'] body {
-    font-family: 'Cairo', 'Amiri', 'Inter', sans-serif;
-    font-size: clamp(0.98rem, 0.25vw + 0.92rem, 1.12rem);
-    line-height: 1.7;
-    letter-spacing: 0.01em;
-    word-spacing: 0.02em;
+  html[lang='ar'] body {
+    font-family: 'Cairo', 'Amiri', 'Inter', var(--font-display, 'Inter'), sans-serif;
+  }
+
+  html[lang='ar'] .font-display {
+    font-family: 'Cairo', 'Amiri', 'Inter', var(--font-display, 'Inter'), sans-serif;
   }
 
   /* Dark CTA background */

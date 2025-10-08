@@ -79,6 +79,12 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
 
   const direction = textDir ?? (isArabic ? 'ltr' : 'rtl'); // ✅ هذا هو المتغير المستخدم فعلاً
 
+  const sizeClasses = isArabic
+    ? 'text-2xl sm:text-3xl lg:text-4xl'
+    : 'text-3xl sm:text-4xl lg:text-5xl';
+
+  const trackingClass = isArabic ? 'tracking-[0.05em]' : 'tracking-[0.08em]';
+
   return (
     <MotionComponent
       dir={direction}
@@ -88,6 +94,8 @@ export const SectionTitle = <T extends HeadingTag = 'h2'>(props: SectionTitlePro
       transition={transition ?? (animateOnView ? defaultTransition : undefined)}
       className={cn(
         'section-title relative inline-flex w-fit items-center justify-center text-balance font-extrabold',
+        sizeClasses,
+        trackingClass,
         'text-[hsl(var(--title-color-light))] dark:text-[hsl(var(--title-color-dark))]',
         'drop-shadow-[0_0_18px_rgba(175,220,255,var(--glow-intensity))]',
         'after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-[2.5rem]',
