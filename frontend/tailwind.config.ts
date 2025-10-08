@@ -9,12 +9,22 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1rem",
+        sm: "1.5rem",
+        lg: "2rem",
+        xl: "2.5rem",
+        "2xl": "3rem",
+      },
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      screens: {
+        xs: "420px",
+        "3xl": "1920px",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -148,7 +158,15 @@ const config: Config = {
         "float": {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-20px)" }
-        }
+        },
+        "footer-glow": {
+          "0%, 100%": { opacity: "0.35" },
+          "50%": { opacity: "0.8" },
+        },
+        "footer-marquee": {
+          "0%": { transform: "translateX(-35%)" },
+          "100%": { transform: "translateX(35%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -159,6 +177,8 @@ const config: Config = {
         "float": "float 6s ease-in-out infinite",
         "pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "bounce": "bounce 1s infinite",
+        "footer-glow": "footer-glow 4.5s ease-in-out infinite",
+        "footer-marquee": "footer-marquee 12s linear infinite",
       },
     },
   },

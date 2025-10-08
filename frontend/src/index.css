@@ -11,6 +11,47 @@
 
 
 @layer base {
+  html,
+  body {
+    @apply min-h-screen antialiased;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    margin: 0;
+    @apply bg-background text-foreground overflow-x-hidden;
+  }
+
+  #root {
+    @apply flex min-h-screen flex-col overflow-x-hidden;
+  }
+
+  :root,
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+  }
+
+  body::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+
+  body::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-image: linear-gradient(180deg, hsl(var(--accent) / 0.55), hsl(var(--primary) / 0.7));
+  }
+
+  html.dark body::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(180deg, hsl(var(--gold) / 0.35), hsl(var(--neon) / 0.6));
+  }
+
   :root {
     --title-color-light: 215 80% 22%;
     --title-color-dark: 215 100% 88%;

@@ -17,9 +17,7 @@ import {
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
 import { cn } from '@/lib/utils';
-import SilkBackground from './components/SilkBackground';
-  
-
+import SilkBackground from './components/SilkBackground'; 
 interface HeroSlide {
   id: number;
   badge: string;
@@ -115,7 +113,7 @@ const HeroCarousel: React.FC = () => {
     <section
       id="home"
       dir={isArabic ? 'rtl' : 'ltr'}
-      className="relative h-[90vh] min-h-[640px] overflow-hidden bg-black"
+      className="relative h-[90vh] min-h-[560px] overflow-hidden bg-black sm:min-h-[620px]"
     >
       <SilkBackground
         className="absolute inset-0 -z-10 pointer-events-none opacity-70"
@@ -152,13 +150,12 @@ const HeroCarousel: React.FC = () => {
       </AnimatePresence>
 
       {/* المحتوى */}
-      <div className="relative z-10 flex h-full items-center">
-        <div className="container mx-auto px-4 lg:px-8">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-screen-2xl items-center px-4 sm:px-6 lg:px-8">
           <motion.div
             key={active.id}
             initial="hidden"
             animate="visible"
-            className="max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur lg:p-10 dark:bg-background/70"
+            className="w-full max-w-4xl rounded-3xl bg-slate-950/60 p-6 shadow-ambient backdrop-blur sm:p-8 lg:p-12 dark:bg-background/70"
           >
             {/* البادج */}
             {active.badge && (
@@ -263,7 +260,6 @@ const HeroCarousel: React.FC = () => {
               </Button>
             </motion.div>
           </motion.div>
-        </div>
       </div>
 
       {/* عناصر التحكم */}

@@ -104,7 +104,7 @@ const LandingNavbar: React.FC = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 lg:px-8">
+      <div className="mx-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <button
           type="button"
@@ -117,7 +117,6 @@ const LandingNavbar: React.FC = () => {
               variant="icon"
               className="h-10 w-10" 
               lang={language}
-              dark={isTop ? true : undefined}
             />
           </div>
 
@@ -224,7 +223,7 @@ const LandingNavbar: React.FC = () => {
               <span>{isArabic ? highlightCopy.ar : highlightCopy.en}</span>
             </div>
 
-              <ThemeToggle />
+              <ThemeToggle tone={actionTone} />
           </div>
 
           {navItems.map(({ href, icon: Icon, en, ar, type }) => {
