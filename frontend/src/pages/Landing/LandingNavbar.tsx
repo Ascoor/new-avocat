@@ -115,8 +115,7 @@ const LandingNavbar: React.FC = () => {
           <div className="block sm:hidden">
             <BrandLogo
               variant="icon"
-              className="h-10 w-10"
-              dark={isTop ? true : undefined}
+              className="h-10 w-10" 
               lang={language}
               dark={isTop ? true : undefined}
             />

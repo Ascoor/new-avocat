@@ -18,7 +18,7 @@ import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
 import { cn } from '@/lib/utils';
 import SilkBackground from './components/SilkBackground';
-import { cn } from '@/lib/utils';
+  
 
 interface HeroSlide {
   id: number;

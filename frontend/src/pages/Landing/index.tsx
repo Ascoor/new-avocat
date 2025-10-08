@@ -21,7 +21,7 @@ const LandingPage: React.FC = () => {
     <div className="flex min-h-screen flex-col" dir={direction}>
       <LandingNavbar />
 
-      <main className="flex flex-1 flex-col overflow-x-hidden">
+      <main className="flex flex-1 flex-col ">
         <HeroCarousel />
         <About />
         <Services />
