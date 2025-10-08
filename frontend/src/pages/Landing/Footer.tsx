@@ -2,7 +2,7 @@ import BrandLogo from "@/components/common/BrandLogo";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 import { smoothScrollToElement } from "@/utils/smoothScroll";
-import { Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react";
+import { Linkedin, Mail, MapPin, Phone, Sparkles, Twitter } from "lucide-react";
 
 interface QuickLink {
   href: string;
@@ -56,30 +56,40 @@ const Footer: React.FC = () => {
     "text-slate-300 dark:text-slate-400 hover:text-accent dark:hover:text-accent transition-colors duration-300 text-sm inline-block hover:translate-x-1 rtl:hover:-translate-x-1";
 
   return (
-    <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800/70 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-black border-t border-border/50">
+    <footer className="relative overflow-hidden border-t border-border/50 bg-gradient-to-br from-slate-900 via-slate-800/70 to-slate-900 dark:from-slate-950 dark:via-slate-900 dark:to-black">
       {/* تأثير النيون الخفيف */}
-      <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-primary/5 to-accent/5 pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-accent/10 via-primary/10 to-accent/10 dark:animate-footer-glow" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 overflow-hidden">
+        <span className="absolute inset-0 h-full w-[200%] bg-gradient-to-r from-accent via-primary to-gold opacity-75 animate-footer-marquee dark:from-gold dark:via-neon dark:to-primary" />
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="relative mx-auto w-full max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-8">
         {/* ===== الشبكة الرئيسية ===== */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-14">
           {/* ===== الشعار والمهمة ===== */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2 rtl:space-x-reverse mb-4">
-              <div className="flex flex-col">
-                <BrandLogo variant="full" className="h-8 w-8" />
-             
-              
+            <div className="flex items-center gap-3">
+              <BrandLogo variant="full" className="h-10 w-10" />
+              <div className="flex flex-col text-sm text-slate-200 dark:text-slate-100">
+                <span className="font-semibold tracking-wide">{direction === "rtl" ? "أفوكات" : "Avocat"}</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500">
+                  {direction === "rtl" ? "منصة التحول القانوني" : "Legal transformation platform"}
+                </span>
               </div>
             </div>
 
-  <p className="text-slate-300 dark:text-slate-400 leading-relaxed text-sm max-w-xs">
-    {mission
-      ? mission
-      : language === "ar"
-        ? "رائدون في التحول الرقمي القانوني، نقدم حلولاً متطورة للممارسات القانونية الحديثة."
-        : "Leading legal digital transformation with advanced solutions for modern legal practices."}
-  </p>
+            <p className="max-w-sm text-sm leading-relaxed text-slate-300 dark:text-slate-400">
+              {mission
+                ? mission
+                : language === "ar"
+                  ? "رائدون في التحول الرقمي القانوني، نقدم حلولاً متطورة للممارسات القانونية الحديثة."
+                  : "Leading legal digital transformation with advanced solutions for modern legal practices."}
+            </p>
+
+            <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-slate-200 shadow-inner backdrop-blur dark:border-white/5 dark:bg-white/10">
+              <Sparkles className="h-4 w-4 text-gold" />
+              <span>{direction === "rtl" ? "خبرة قانونية مدعومة بالتقنية" : "Legal expertise powered by technology"}</span>
+            </div>
           </div>
 
           {/* ===== الروابط السريعة ===== */}
@@ -201,23 +211,23 @@ const Footer: React.FC = () => {
         </div>
 
         {/* ===== الشريط السفلي ===== */}
-        <div className="border-t border-slate-700/50 dark:border-slate-800/50 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 gap-4">
-            <p className="text-slate-400 dark:text-slate-500 text-sm text-center md:text-left">
+        <div className="mt-12 border-t border-slate-700/50 pt-8 dark:border-slate-800/50">
+          <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-slate-400 dark:text-slate-500 md:flex-row md:text-left">
+            <p className="max-w-xl">
               {direction === "rtl"
                 ? `© ${currentYear} مكتب أفوكات للمحاماة. جميع الحقوق محفوظة.`
                 : `© ${currentYear} Avocat Law Firm. All rights reserved.`}
             </p>
-            <div className="flex flex-wrap justify-center gap-6 rtl:space-x-reverse">
+            <div className="flex flex-wrap justify-center gap-6">
               <a
                 href="#"
-                className="text-slate-400 dark:text-slate-500 hover:text-accent dark:hover:text-accent transition-colors duration-300 text-sm"
+                className="transition-colors duration-300 hover:text-accent dark:hover:text-accent"
               >
                 {direction === "rtl" ? "سياسة الخصوصية" : "Privacy Policy"}
               </a>
               <a
                 href="#"
-                className="text-slate-400 dark:text-slate-500 hover:text-accent dark:hover:text-accent transition-colors duration-300 text-sm"
+                className="transition-colors duration-300 hover:text-accent dark:hover:text-accent"
               >
                 {direction === "rtl" ? "الشروط والأحكام" : "Terms of Service"}
               </a>
