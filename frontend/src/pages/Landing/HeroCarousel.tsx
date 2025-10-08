@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, easeOut } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '@/components/SectionTitle';
@@ -7,13 +7,17 @@ import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import type { Locale } from '@/types/website';
 import {
   ChevronLeft,
-  ChevronRight, 
+  ChevronRight,
   ShieldCheck,
   Sparkles,
-  Loader2,Cpu, PlayCircle } from 'lucide-react';
+  Loader2,
+  Cpu,
+  PlayCircle,
+} from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
 import SilkBackground from './components/SilkBackground';
+import { cn } from '@/lib/utils';
 
 interface HeroSlide {
   id: number;
@@ -170,42 +174,52 @@ const HeroCarousel: React.FC = () => {
             )}
 
             {/* العنوان */}
-          <SectionTitle
-  as="h1"
-  variants={textVariants}
-  custom={1}
-  dir={isArabic ? 'rtl' : 'ltr'}
-  animateOnView={false}
-  glowIntensity={0.85}
-  className={`
-    max-w-3xl font-display 
-    lg:text-6xl 
-    ${isArabic ? 'text-right' : 'text-left'}
-    text-[hsl(var(--title-color-dark))] 
-    dark:text-[hsl(var(--title-color-dark))] 
-  `}
->
-  {active.title}
-</SectionTitle>
+            <SectionTitle
+              as="h1"
+              variants={textVariants}
+              custom={1}
+              dir={isArabic ? 'rtl' : 'ltr'}
+              animateOnView={false}
+              glowIntensity={0.85}
+              className={cn(
+                'max-w-3xl font-display text-balance text-[hsl(var(--title-color-dark))] dark:text-[hsl(var(--title-color-dark))]',
+                isArabic
+                  ? 'text-3xl sm:text-4xl xl:text-5xl'
+                  : 'text-4xl md:text-5xl xl:text-6xl',
+                isArabic ? 'text-right' : 'text-left'
+              )}
+            >
+              {active.title}
+            </SectionTitle>
 
 
             <motion.p
               variants={textVariants}
               custom={2}
-              className="mt-4 text-lg text-white/85 leading-relaxed"
+              className={cn(
+                'mt-4 text-white/85 leading-relaxed',
+                isArabic ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'
+              )}
             >
               {active.subtitle}
             </motion.p>
 
             {/* النقاط */}
-            <motion.ul className="mt-6 space-y-3 text-base text-white/85" initial="hidden" animate="visible">
+            <motion.ul
+              className={cn(
+                'mt-6 space-y-3 text-white/85',
+                isArabic ? 'text-sm sm:text-base' : 'text-base'
+              )}
+              initial="hidden"
+              animate="visible"
+            >
               {active.bullets.map((b, i) => (
                 <motion.li
-                
+
                   key={b}
                   variants={textVariants}
                   custom={i + 3}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-3 leading-relaxed"
                 >
                   <ShieldCheck className="mt-1 h-5 w-5 text-accent flex-shrink-0" />
                   <span>{b}</span>
@@ -214,82 +228,84 @@ const HeroCarousel: React.FC = () => {
             </motion.ul>
 
             {/* الأزرار */}
-              <motion.div
-              
-    dir={isArabic ? 'ltr' : 'rtl'}
+            <motion.div
+              dir={isArabic ? 'ltr' : 'rtl'}
               variants={textVariants}
               custom={active.bullets.length + 4}
               className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center"
             >
-       
+              <Button
+                onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
+                variant="accent"
+                className={cn(
+                  'btn-primary flex items-center justify-center gap-2 px-8 py-3 font-semibold text-white',
+                  isArabic ? 'text-sm sm:text-base' : 'text-base'
+                )}
+              >
+                <PlayCircle className="h-5 w-5" />
+                <span>{isArabic ? 'ابدأ رقمنة مكتبك' : 'Start Your Digital Transformation'}</span>
+              </Button>
 
-<Button
-  onClick={() => smoothScrollToElement(document.querySelector('#demo')!)}
-  variant="accent"
-  className="btn-primary flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-white"
->
-  <PlayCircle className="h-5 w-5" />
-  <span>{isArabic ? 'ابدأ رقمنة مكتبك' : 'Start Your Digital Transformation'}</span>
-</Button>
-
-<Button
-  onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
-  variant="hero"
-  className="btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 text-base font-semibold text-white"
->
-  <Cpu className="h-5 w-5" />
-  <span>{isArabic ? 'تعرّف على الأنظمة' : 'Explore Our Systems'}</span>
-</Button>
-
+              <Button
+                onClick={() => smoothScrollToElement(document.querySelector('#contact')!)}
+                variant="hero"
+                className={cn(
+                  'btn-glass flex items-center justify-center gap-2 border-white/40 px-8 py-3 font-semibold text-white',
+                  isArabic ? 'text-sm sm:text-base' : 'text-base'
+                )}
+              >
+                <Cpu className="h-5 w-5" />
+                <span>{isArabic ? 'تعرّف على الأنظمة' : 'Explore Our Systems'}</span>
+              </Button>
             </motion.div>
           </motion.div>
         </div>
       </div>
 
       {/* عناصر التحكم */}
-   <div
-  dir={isArabic ? 'rtl' : 'ltr'}
-  className="absolute bottom-6 inset-x-0 z-20 flex items-center justify-center gap-4"
->
-  {/* زر السابق */}
-  <button
-    onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
-    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
-    aria-label={isArabic ? 'الشريحة السابقة' : 'Previous slide'}
-  >
-    {isArabic ? (
-      <ChevronRight className="h-5 w-5" /> // ← بالعربي الزر العكسي
-    ) : (
-      <ChevronLeft className="h-5 w-5" />
-    )}
-  </button>
+      <div
+        dir={isArabic ? 'rtl' : 'ltr'}
+        className="absolute bottom-6 inset-x-0 z-20 flex items-center justify-center gap-4"
+      >
+        {/* زر السابق */}
+        <button
+          onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
+          aria-label={isArabic ? 'الشريحة السابقة' : 'Previous slide'}
+        >
+          {isArabic ? (
+            <ChevronRight className="h-5 w-5" /> // ← بالعربي الزر العكسي
+          ) : (
+            <ChevronLeft className="h-5 w-5" />
+          )}
+        </button>
 
-  {/* النقاط (المؤشرات) */}
-  <div className="flex gap-2">
-    {slides.map((_, i) => (
-      <button
-        key={i}
-        onClick={() => setCurrent(i)}
-        className={`h-2 rounded-full transition-all ${
-          i === current ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
-        }`}
-        aria-label={`Go to slide ${i + 1}`}
-      />
-    ))}
-  </div>
+        {/* النقاط (المؤشرات) */}
+        <div className="flex gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`h-2 rounded-full transition-all ${
+                i === current ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
 
-  {/* زر التالي */}
-  <button
-    onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
-    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
-    aria-label={isArabic ? 'الشريحة التالية' : 'Next slide'}
-  >
-    {isArabic ? (
-      <ChevronLeft className="h-5 w-5" /> // ← بالعربي السهم العكسي
-    ) : (
-      <ChevronRight className="h-5 w-5" />
-    )}
-  </button> 
+        {/* زر التالي */}
+        <button
+          onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-black/40 text-white hover:bg-black/60 transition"
+          aria-label={isArabic ? 'الشريحة التالية' : 'Next slide'}
+        >
+          {isArabic ? (
+            <ChevronLeft className="h-5 w-5" /> // ← بالعربي السهم العكسي
+          ) : (
+            <ChevronRight className="h-5 w-5" />
+          )}
+        </button>
 
         <button
           onClick={() => setAutoPlay((p) => !p)}

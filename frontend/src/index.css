@@ -26,6 +26,14 @@
     @apply bg-background text-foreground;
   }
 
+  html[lang='ar'] body {
+    font-family: 'Cairo', 'Amiri', 'Inter', var(--font-display, 'Inter'), sans-serif;
+  }
+
+  html[lang='ar'] .font-display {
+    font-family: 'Cairo', 'Amiri', 'Inter', var(--font-display, 'Inter'), sans-serif;
+  }
+
   /* Dark CTA background */
   .bg-cta-dark {
     @apply bg-gradient-to-br from-primary via-primary-glow to-slate-bg;

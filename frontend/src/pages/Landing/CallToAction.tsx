@@ -5,9 +5,11 @@ import { useWebsiteContent } from '@/hooks/useWebsiteContent';
 import { Play, ArrowRight, Sparkles, Zap } from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 const CallToAction: React.FC = () => {
   const { language, isRTL } = useLanguage();
+  const isArabic = language === 'ar';
   const locale = language as 'ar' | 'en';
   const { getLocalizedValue, getValueForLocale } = useWebsiteContent('cta');
 
@@ -74,7 +76,10 @@ const CallToAction: React.FC = () => {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-4xl md:text-6xl font-display font-bold text-white leading-tight"
+            className={cn(
+              'font-display font-bold text-white leading-tight text-balance',
+              isArabic ? 'text-3xl sm:text-4xl lg:text-5xl' : 'text-4xl md:text-6xl'
+            )}
           >
             {title}{' '}
             <span className="bg-gradient-gold bg-clip-text text-transparent animate-shine">
@@ -88,7 +93,10 @@ const CallToAction: React.FC = () => {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-xl md:text-2xl text-white/85 max-w-3xl mx-auto leading-relaxed"
+            className={cn(
+              'text-white/85 max-w-3xl mx-auto leading-relaxed',
+              isArabic ? 'text-base sm:text-lg' : 'text-xl md:text-2xl'
+            )}
           >
             {subtitle}
           </motion.p>
@@ -115,7 +123,10 @@ const CallToAction: React.FC = () => {
           <div className={`flex flex-col sm:flex-row gap-6 justify-center items-center ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
             <Button
               size="lg"
-              className="btn-gold text-lg px-10 py-5 group shadow-gold hover:shadow-xl hover:scale-105 transition-all"
+              className={cn(
+                'btn-gold px-10 py-5 group shadow-gold hover:shadow-xl hover:scale-105 transition-all',
+                isArabic ? 'text-base sm:text-lg' : 'text-lg'
+              )}
               onClick={() => scrollToSection('#capabilities')}
             >
               <Play className="w-5 h-5 mr-3 rtl:ml-3 rtl:mr-0 group-hover:scale-110 transition-transform" />
@@ -125,7 +136,10 @@ const CallToAction: React.FC = () => {
             <Button
               size="lg"
               variant="outline"
-              className="text-lg px-10 py-5 border-2 border-white/50 text-white hover:bg-white/20 transition-all"
+              className={cn(
+                'px-10 py-5 border-2 border-white/50 text-white hover:bg-white/20 transition-all',
+                isArabic ? 'text-base sm:text-lg' : 'text-lg'
+              )}
               onClick={() => scrollToSection('#contact')}
             >
               {secondaryLabel}
@@ -155,7 +169,14 @@ const CallToAction: React.FC = () => {
           </motion.div>
 
           {/* Bottom Note */}
-          <p className="text-white/80 text-lg font-medium mt-8 animate-pulse">{bottomNote}</p>
+          <p
+            className={cn(
+              'text-white/80 font-medium mt-8 animate-pulse',
+              isArabic ? 'text-base sm:text-lg' : 'text-lg'
+            )}
+          >
+            {bottomNote}
+          </p>
         </div>
       </div>
     </section>
