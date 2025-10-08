@@ -52,7 +52,12 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.5 }}
-      className={cn('section-header-frame max-w-3xl space-y-4', alignClasses[align])}
+      dir={isArabic ? 'rtl' : 'ltr'}
+      className={cn(
+        'section-header-frame max-w-3xl space-y-4',
+        alignClasses[align],
+        isArabic ? 'font-arabic' : 'font-english',
+      )}
     >
       {badge ? (
         <motion.div
@@ -74,6 +79,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = memo(({ badge, title, subtit
             'font-display',
             align === 'center' && 'mx-auto',
             align === 'right' && 'ml-auto',
+            isArabic ? 'text-right' : undefined,
           )}
         >
           {title}

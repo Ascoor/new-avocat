@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { smoothScrollToElement } from '@/utils/smoothScroll';
 import { resolveAssetUrl } from '@/utils/asset';
+import { cn } from '@/lib/utils';
 import SilkBackground from './components/SilkBackground';
 import { cn } from '@/lib/utils';
 
@@ -164,12 +165,15 @@ const HeroCarousel: React.FC = () => {
               <motion.div
                 variants={textVariants}
                 custom={0}
-
-                
-                className="mb-6 inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-xs font-semibold text-white/90 shadow-inner backdrop-blur"
+                className={cn(
+                  'mb-6 inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-4 py-2 font-semibold text-white/90 shadow-inner backdrop-blur',
+                  isArabic
+                    ? 'arabic-eyebrow font-arabic'
+                    : 'text-xs uppercase tracking-[0.3em] font-english',
+                )}
               >
                 <Sparkles className="h-4 w-4 text-accent" />
-                <span>{active.badge}</span>
+                <span className="leading-none">{active.badge}</span>
               </motion.div>
             )}
 
