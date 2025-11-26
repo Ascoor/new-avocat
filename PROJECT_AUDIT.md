@@ -2,20 +2,18 @@
 
 ## Executive Summary
 - **Monorepo structure:** Laravel backend (`backend/`) paired with a React + Vite frontend (`frontend/`), plus assorted scripts and CI configuration.
-- **Key risks:** Version-controlled build artefacts (`backend/node_modules/`), committed environment secrets (`frontend/.env`), duplicate/unused React showcase files under both `backend/` and `scripts/`, and stale documentation referring to non-existent `docs/` and `dashboards/tailwind/` directories.
-- **Recommended focus:** Remove generated assets from source control, consolidate duplicated dashboard/gallery demos, clean stray files (`update.patch`, `backend/[*,]`), and align READMEs with the current code layout.
+- **Key risks:** Keep dashboard/gallery demos consolidated under `scripts/` to avoid drift, expand test coverage on both stacks, and validate future-dated migrations before release.
+- **Recommended focus:** Prevent generated assets from landing in version control, document any dashboard/catalog changes, and strengthen backend/frontend test suites.
 
 ## Root Directory
 | Path | Role | Status & Recommendations |
 | --- | --- | --- |
-| `.gitignore` | Standard ignore rules for both apps. | Already excludes `node_modules/` and env files, but existing tracked copies (e.g. `frontend/.env`, `backend/node_modules/`) need manual removal to take effect. |
+| `.gitignore` | Standard ignore rules for both apps. | Excludes `node_modules/` and env files; keep generated artefacts and vendor caches out of version control. |
 | `LICENSE` | MIT license stub. | OK. |
-| `README.md` | Bilingual project overview. | Mentions `docs/` and `dashboards/tailwind/` trees that are absent—update or restore the referenced material. |
-| `run_pro.sh` | Convenience script to start both apps. | Useful locally but Linux/macOS-specific (`lsof`, background jobs). Consider moving to `/scripts` and documenting Windows alternative. |
-| `update.patch` | Git patch for API controllers. | Stale temporary artefact—remove after merging upstream changes. |
+| `README.md` | Bilingual project overview. | Updated to match the current docs tree and tooling locations. |
 | `backend/` | Laravel 12 API service. | See [Backend Audit](#backend-audit). |
 | `frontend/` | React 18 + TS client. | See [Frontend Audit](#frontend-audit). |
-| `scripts/` | Dashboard generator + demo React files. | Duplicates of frontend showcase components—see [Scripts](#scripts). |
+| `scripts/` | Dashboard generator + demo React files. | Centralize dashboard demos and the cross-stack `dev.sh` runner here to avoid drift. |
 | `.github/` | Issue/PR templates and CI workflow. | Active. |
 
 ## Backend Audit
@@ -69,15 +67,15 @@
 | Path | Notes | Action |
 | --- | --- | --- |
 | `generate_dashboard_assets.py` | Generates dashboard demo bundles. | Document prerequisites (Pillow) and expected output directories. |
-| `Gallery.tsx`, `Index.tsx`, `dashboards/*.tsx` | React demos duplicated under `backend/`. | Keep a single source of truth (prefer `/scripts` for generation templates) and delete Laravel copies. |
+| `Gallery.tsx`, `Index.tsx`, `dashboards/*.tsx` | React demos duplicated under `backend/`. | Keep a single source of truth (prefer `/scripts` for generation templates); the backend tree is currently clean—avoid reintroducing copies. |
 
 ## CI / Templates (`.github/`)
 - `workflows/ci.yml` sets up CI; ensure jobs cover both PHP and Node stacks.
 - Issue/PR templates exist; align with Conventional Commits as README suggests.
 
 ## Suggested Cleanup Checklist
-1. Delete tracked artefacts: `frontend/.env`, `backend/node_modules/`, `update.patch`, `backend/[*,]`, duplicate dashboard/demo files under `backend/`.
-2. Update READMEs to match actual structure and move `run_pro.sh` into a documented developer tooling area.
+1. Keep generated artefacts (e.g., `node_modules/`, `.env` files) out of version control and prune them if they reappear.
+2. Ensure dashboard/demo assets stay centralized under `scripts/`; remove any future duplicates from the Laravel tree.
 3. Review migrations dated in the future; adjust ordering or annotate rationale.
 4. Audit `frontend/src/components/ui/` and locale strings for unused exports; remove dead code to lighten bundle size.
 5. Expand automated tests (`backend/tests`, potential `frontend` unit/Vitest setup) to cover critical workflows.

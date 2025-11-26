@@ -1,17 +1,23 @@
-# scripts/ — Dashboard Demo Tooling
+# scripts/
 
-This directory contains the only source of truth for dashboard demos, gallery thumbnails, and manifest generators. All previous copies under `backend/` have been removed: regenerate artifacts from here instead.
+This folder groups developer tooling and dashboard demo generators.
 
-## Contents
+## Development orchestrator
+- `dev.sh` – Starts both apps from the repo root (React on port 3000, Laravel on 8000). Safe to run multiple times; re-installs dependencies when missing.
+
+```bash
+bash scripts/dev.sh
+```
+
+## Dashboard demo tooling
 - `generate_dashboard_assets.py` → Creates the Tailwind/React dashboard bundles and updates the dashboard catalog JSON.
-- `manifests/` & `thumbnails/`   → Generated outputs used by the landing page showcase.
+- `dashboards/` → Source templates for demo dashboards.
 
-## Usage
 ```bash
 python scripts/generate_dashboard_assets.py
 ```
 
-The script will:
+The generator will:
 1. Rebuild dashboard JSX + Tailwind stubs inside `scripts/output/` (or the configured target).
 2. Refresh the catalog manifest consumed by the frontend.
 3. Render/overwrite thumbnails.

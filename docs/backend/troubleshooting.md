@@ -9,7 +9,7 @@ GET http://127.0.0.1:8000/api/admin/website/pages 401 (Unauthorized)
 GET http://127.0.0.1:8000/api/admin/website/testimonials 404 (Not Found)
 ```
 
-These errors originate from the frontend calling Laravel Sanctum-protected endpoints. The relevant routes are defined in [`backend/routes/api.php`](../backend/routes/api.php) and all `/api/admin/...` routes require an authenticated Sanctum token that belongs to a user with the `admin` role. Until you log in, the interceptor in [`frontend/src/api/axiosConfig.ts`](../frontend/src/api/axiosConfig.ts) has no bearer token to attach, so Sanctum responds with `401 Unauthorized`.
+These errors originate from the frontend calling Laravel Sanctum-protected endpoints. The relevant routes are defined in [`backend/routes/api.php`](../../backend/routes/api.php) and all `/api/admin/...` routes require an authenticated Sanctum token that belongs to a user with the `admin` role. Until you log in, the interceptor in [`frontend/src/api/axiosConfig.ts`](../../frontend/src/api/axiosConfig.ts) has no bearer token to attach, so Sanctum responds with `401 Unauthorized`.
 
 To resolve the issue:
 
@@ -20,6 +20,6 @@ The backend now exposes a dedicated `/api/admin/website/...` namespace for manag
 
 If you are logged in as a non-admin user, the same calls will still fail with `403 Forbidden` because of the `role:admin` middleware on those routes. Switch to an account whose `role` value maps to `admin`.
 
-If you still receive `404 Not Found` responses from the admin namespace, double-check the slug or identifier you are passing in the URL. The route definitions are available in [`backend/routes/api.php`](../backend/routes/api.php).
+If you still receive `404 Not Found` responses from the admin namespace, double-check the slug or identifier you are passing in the URL. The route definitions are available in [`backend/routes/api.php`](../../backend/routes/api.php).
 
 In short, authenticate with an admin account before visiting the admin dashboard and make sure you are targeting the `/api/admin/website/...` endpoints.
