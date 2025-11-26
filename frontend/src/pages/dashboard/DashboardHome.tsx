@@ -1,11 +1,4 @@
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
   Scale,
@@ -21,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { AppCard } from '@/components/common/AppCard';
 
 interface DashboardStat {
   title: string;
@@ -168,13 +162,13 @@ const DashboardHome = () => {
   const renderActivityIcon = (type: ActivityItem['type']) => {
     switch (type) {
       case 'case':
-        return <Scale className="h-5 w-5 text-blue-500" />;
+        return <Scale className="h-5 w-5 text-brand-primary" />;
       case 'session':
-        return <Calendar className="h-5 w-5 text-orange-500" />;
+        return <Calendar className="h-5 w-5 text-accent-amber" />;
       case 'client':
-        return <Users className="h-5 w-5 text-green-500" />;
+        return <Users className="h-5 w-5 text-accent-mint" />;
       case 'procedure':
-        return <FileText className="h-5 w-5 text-purple-500" />;
+        return <FileText className="h-5 w-5 text-brand-primary" />;
       default:
         return null;
     }
@@ -183,11 +177,11 @@ const DashboardHome = () => {
   const renderTaskIcon = (priority: UpcomingTask['priority']) => {
     switch (priority) {
       case 'high':
-        return <AlertTriangle className="h-4 w-4 text-red-500" />;
+        return <AlertTriangle className="h-4 w-4 text-destructive" />;
       case 'medium':
-        return <Clock className="h-4 w-4 text-yellow-500" />;
+        return <Clock className="h-4 w-4 text-warning" />;
       case 'low':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-success" />;
       default:
         return null;
     }
@@ -219,121 +213,135 @@ const DashboardHome = () => {
   };
 
   return (
-    <div className="space-y-6" dir={direction}>
+    <div className="space-y-8" dir={direction}>
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold font-cairo">
+        <h1 className="text-3xl font-bold">
           {language === 'ar'
             ? `مرحباً، ${user?.name || 'مستخدم تجريبي'}`
             : `Welcome, ${user?.name || 'Demo User'}`}
         </h1>
-        <p className="text-muted-foreground font-cairo">
+        <p className="text-neutral-700 dark:text-neutral-200">
           {language === 'ar'
             ? 'نظرة عامة على أنشطة مكتبك اليوم'
             : "Here's an overview of your office activities today"}
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {dashboardStats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card
-              key={stat.title}
-              className="transition-shadow duration-200 hover:shadow-card"
-            >
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium font-cairo">
-                  {stat.title}
-                </CardTitle>
-                <Icon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <div className="flex items-center text-xs text-muted-foreground gap-2 rtl:space-x-reverse">
-                  <span className="font-cairo">{stat.description}</span>
-                  {renderTrendBadge(stat.trendType, stat.trend)}
+            <AppCard key={stat.title}>
+              <div className="flex items-start justify-between gap-3 pb-2">
+                <div className="space-y-1">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700 dark:text-neutral-200">
+                    {stat.title}
+                  </p>
+                  <div className="text-3xl font-bold text-brand-primary">{stat.value}</div>
                 </div>
-              </CardContent>
-            </Card>
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+                  <Icon className="h-5 w-5" />
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <p className="text-neutral-700 dark:text-neutral-200">{stat.description}</p>
+                {renderTrendBadge(stat.trendType, stat.trend)}
+              </div>
+            </AppCard>
           );
         })}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="font-cairo">
-              {language === 'ar' ? 'الأنشطة الأخيرة' : 'Recent Activities'}
-            </CardTitle>
-            <CardDescription className="font-cairo">
-              {language === 'ar' ? 'آخر التحديثات في مكتبك' : 'Latest updates in your office'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentActivities.map((activity) => (
-                <div
-                  key={activity.id}
-                  className="flex items-start gap-3 rtl:space-x-reverse"
-                >
-                  <div className="flex-shrink-0 mt-0.5">
-                    {renderActivityIcon(activity.type)}
-                  </div>
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <p className="text-sm font-medium font-cairo">
-                        {activity.title}
-                      </p>
-                      <Badge
-                        variant={getActivityStatusVariant(activity.status)}
-                        className="text-xs"
-                      >
-                        {getActivityStatusLabel(activity.status)}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground font-cairo">
-                      {activity.description}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{activity.time}</p>
-                  </div>
-                </div>
-              ))}
+        <AppCard className="lg:col-span-2">
+          <div className="flex flex-row items-center justify-between pb-4">
+            <div className="space-y-1">
+              <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
+                {language === 'ar' ? 'النشاط الأخير' : 'Recent Activity'}
+              </p>
+              <p className="text-sm text-neutral-600 dark:text-neutral-200">
+                {language === 'ar'
+                  ? 'تتبع آخر التحديثات على القضايا والجلسات'
+                  : 'Track the latest updates on cases and sessions'}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <Badge variant="secondary" className="rounded-full text-xs">
+              {language === 'ar' ? 'محدث' : 'Updated'}
+            </Badge>
+          </div>
+          <div className="space-y-4">
+            {recentActivities.map((activity) => (
+              <div
+                key={activity.id}
+                className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-raised/70 p-3 transition duration-base ease-smooth hover:-translate-y-0.5 hover:shadow-soft"
+              >
+                <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
+                  {renderActivityIcon(activity.type)}
+                </div>
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-semibold text-neutral-900 dark:text-neutral-50">{activity.title}</h4>
+                    <Badge variant={getActivityStatusVariant(activity.status)}>
+                      {getActivityStatusLabel(activity.status)}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-neutral-700 dark:text-neutral-200">
+                    {activity.description}
+                  </p>
+                  <p className="text-xs text-neutral-600 dark:text-neutral-300">
+                    {activity.time}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AppCard>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="font-cairo">
+        <AppCard>
+          <div className="space-y-1 pb-4">
+            <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-50">
               {language === 'ar' ? 'المهام القادمة' : 'Upcoming Tasks'}
-            </CardTitle>
-            <CardDescription className="font-cairo">
+            </p>
+            <p className="text-sm text-neutral-600 dark:text-neutral-200">
               {language === 'ar'
-                ? 'المواعيد والمهام المهمة'
-                : 'Important appointments and tasks'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {upcomingTasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="flex items-start gap-3 rtl:space-x-reverse"
-                >
-                  <div className="flex-shrink-0 mt-1">
-                    {renderTaskIcon(task.priority)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium font-cairo">{task.title}</p>
-                    <p className="text-xs text-muted-foreground font-cairo">
-                      {task.time}
-                    </p>
-                  </div>
+                ? 'أولوياتك للأيام القادمة'
+                : 'Your priorities for the coming days'}
+            </p>
+          </div>
+          <div className="space-y-3">
+            {upcomingTasks.map((task) => (
+              <div
+                key={task.id}
+                className="flex items-center gap-3 rounded-xl border border-white/10 bg-surface-raised/70 p-3 transition duration-base ease-smooth hover:-translate-y-0.5 hover:shadow-soft"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
+                  {renderTaskIcon(task.priority)}
+                </span>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-neutral-900 dark:text-neutral-50">{task.title}</h4>
+                  <p className="text-xs text-neutral-600 dark:text-neutral-300">{task.time}</p>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                <Badge
+                  variant={
+                    task.priority === 'high'
+                      ? 'destructive'
+                      : task.priority === 'medium'
+                        ? 'default'
+                        : 'secondary'
+                  }
+                >
+                  {language === 'ar'
+                    ? task.priority === 'high'
+                      ? 'عالية'
+                      : task.priority === 'medium'
+                        ? 'متوسطة'
+                        : 'منخفضة'
+                    : task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </AppCard>
       </div>
     </div>
   );

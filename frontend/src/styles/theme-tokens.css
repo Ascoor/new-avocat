@@ -1,37 +1,32 @@
 @layer base {
   :root {
     /* ========== Light Theme ========== */
-    --primary: 220 60% 15%;           /* Deep Navy - Trust */
-    --primary-foreground: 0 0% 100%;  /* White */
-    --primary-glow: 220 55% 25%;      /* Lighter Navy */
+    --surface: 220 26% 99%;
+    --surface-raised: 220 24% 96%;
+    --surface-overlay: 220 30% 95%;
 
-    /* Neon Accent */
-    --neon: 182 100% 72%;
-    --neon-glow: 182 100% 78%;
-    --neon-muted: 182 70% 90%;
+    --brand-primary: 222 65% 22%;
+    --brand-on: 210 100% 98%;
+    --brand-subtle: 222 55% 32%;
 
-    /* Gold Accents */
-    --gold: 45 100% 50%;
-    --gold-muted: 45 65% 45%;
-    --gold-light: 45 100% 97%;
+    --accent-mint: 164 73% 55%;
+    --accent-amber: 36 92% 58%;
 
-    /* Exclusive Signature */
-    --exclusive: 265 83% 62%;
-    --exclusive-muted: 265 70% 52%;
-    --exclusive-foreground: 218 43% 12%;
-    --exclusive-glow: 265 95% 72%;
+    --neutral-50: 210 30% 98%;
+    --neutral-100: 220 25% 94%;
+    --neutral-700: 215 16% 35%;
+    --neutral-900: 219 28% 12%;
 
-    /* Slate Neutrals */
-    --slate: 220 15% 30%;
-    --slate-light: 220 10% 55%;
-    --slate-bg: 220 20% 98%;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.25rem;
+    --radius: 0.75rem;
 
     /* Semantic Colors */
-    --background: 0 0% 100%;
+    --background: var(--surface);
     --foreground: 220 60% 15%;
-    --card: 0 0% 100%;
+    --card: var(--surface-raised);
     --card-foreground: 220 60% 15%;
-    --popover: 0 0% 100%;
+    --popover: var(--surface-raised);
     --popover-foreground: 220 60% 15%;
     --secondary: 220 20% 96%;
     --secondary-foreground: 220 60% 15%;
@@ -41,7 +36,7 @@
     --accent-foreground: 220 60% 15%;
     --border: 220 25% 88%;
     --input: 220 25% 92%;
-    --ring: 45 100% 50%;
+    --ring: 222 65% 22%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
     --success: 142 71% 45%;
@@ -51,39 +46,68 @@
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
 
+    /* Accent Families */
+    --primary: var(--brand-primary);
+    --primary-foreground: var(--brand-on);
+    --primary-glow: 222 55% 32%;
+    --neon: 182 100% 72%;
+    --neon-glow: 182 100% 78%;
+    --neon-muted: 182 70% 90%;
+    --gold: 45 100% 50%;
+    --gold-muted: 45 65% 45%;
+    --gold-light: 45 100% 97%;
+    --exclusive: 265 83% 62%;
+    --exclusive-muted: 265 70% 52%;
+    --exclusive-foreground: 218 43% 12%;
+    --exclusive-glow: 265 95% 72%;
+    --slate: 220 15% 30%;
+    --slate-light: 220 10% 55%;
+    --slate-bg: 220 20% 98%;
+
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 60% 15%) 0%, hsl(220 55% 25%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(45 65% 45%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(220 60% 10%) 0%, hsl(220 60% 18%) 50%, hsl(220 55% 25%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 20% 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-primary)) 0%, hsl(var(--brand-subtle)) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-muted)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--surface)) 0%, hsl(var(--surface-raised)) 50%, hsl(var(--surface-overlay)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--surface)) 0%, hsl(var(--surface-raised)) 100%);
 
     /* Shadows */
-    --shadow-luxury: 0 25px 50px -12px hsl(220 60% 15% / 0.25);
-    --shadow-gold: 0 10px 30px -10px hsl(45 100% 50% / 0.3);
-    --shadow-card: 0 4px 24px -8px hsl(220 15% 30% / 0.1);
-    --shadow-elegant: 0 8px 32px -8px hsl(220 60% 15% / 0.15);
+    --shadow-luxury: 0 25px 50px -12px hsl(var(--neutral-900) / 0.22);
+    --shadow-gold: 0 10px 30px -10px hsl(var(--accent-amber) / 0.35);
+    --shadow-card: 0 6px 18px -10px hsl(var(--neutral-900) / 0.12);
+    --shadow-elegant: 0 12px 32px -12px hsl(var(--neutral-900) / 0.18);
 
     /* Transitions */
     --transition-elegant: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-    --radius: 0.5rem;
   }
 
   /* ========== Dark Theme ========== */
   .dark {
-    --background: 220 40% 8%;
-    --foreground: 200 20% 95%;
-    --card: 220 35% 10%;
-    --card-foreground: 200 20% 95%;
-    --popover: 220 35% 10%;
-    --popover-foreground: 200 20% 95%;
-    --primary: 45 100% 55%;
-    --primary-foreground: 220 60% 10%;
-    --primary-glow: 45 100% 65%;
+    --surface: 220 25% 10%;
+    --surface-raised: 220 28% 14%;
+    --surface-overlay: 220 35% 18%;
+    --brand-primary: 45 92% 62%;
+    --brand-on: 220 35% 10%;
+    --brand-subtle: 45 82% 48%;
 
-    /* Neon Accent */
+    --accent-mint: 164 73% 55%;
+    --accent-amber: 36 92% 58%;
+
+    --neutral-50: 220 18% 16%;
+    --neutral-100: 220 16% 22%;
+    --neutral-700: 216 18% 70%;
+    --neutral-900: 0 0% 0%;
+
+    --background: var(--surface);
+    --foreground: 200 20% 95%;
+    --card: var(--surface-raised);
+    --card-foreground: 200 20% 95%;
+    --popover: var(--surface-raised);
+    --popover-foreground: 200 20% 95%;
+    --primary: var(--brand-primary);
+    --primary-foreground: var(--brand-on);
+    --primary-glow: 45 100% 65%;
     --neon: 182 100% 74%;
     --neon-glow: 182 100% 82%;
     --neon-muted: 182 60% 26%;
@@ -105,33 +129,26 @@
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
 
-    /* Gold Accents */
     --gold: 45 100% 55%;
     --gold-muted: 45 80% 50%;
     --gold-light: 45 100% 15%;
-
-    /* Exclusive Signature */
     --exclusive: 265 85% 68%;
     --exclusive-muted: 265 65% 46%;
     --exclusive-foreground: 0 0% 100%;
     --exclusive-glow: 265 95% 78%;
-
-    /* Slate */
     --slate: 220 15% 70%;
     --slate-light: 220 10% 55%;
     --slate-bg: 220 35% 12%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(220 40% 8%) 0%, hsl(220 35% 12%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 55%) 0%, hsl(45 80% 50%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(220 40% 5%) 0%, hsl(220 35% 10%) 50%, hsl(220 40% 8%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(220 40% 8%) 0%, hsl(220 35% 10%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--surface)) 0%, hsl(var(--surface-overlay)) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-muted)) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--surface)) 0%, hsl(var(--surface-overlay)) 50%, hsl(var(--surface-raised)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--surface)) 0%, hsl(var(--surface-overlay)) 100%);
 
-    /* Shadows */
-    --shadow-luxury: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
-    --shadow-gold: 0 10px 30px -10px hsl(45 100% 55% / 0.4);
-    --shadow-card: 0 4px 24px -8px hsl(0 0% 0% / 0.3);
-    --shadow-elegant: 0 8px 32px -8px hsl(0 0% 0% / 0.4);
+    --shadow-luxury: 0 25px 50px -12px hsl(var(--neutral-900) / 0.5);
+    --shadow-gold: 0 10px 30px -10px hsl(var(--accent-amber) / 0.4);
+    --shadow-card: 0 6px 18px -10px hsl(var(--neutral-900) / 0.28);
+    --shadow-elegant: 0 12px 32px -12px hsl(var(--neutral-900) / 0.32);
   }
 
   /* RTL & LTR */
