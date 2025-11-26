@@ -16,7 +16,7 @@ return [
         'paths' => ['api/*', 'sanctum/csrf-cookie', 'auth/*'],
    
     'allowed_methods' => ['*'],
-    'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:3000')],
+    'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:8080')],
     'allowed_headers' => ['Content-Type', 'X-Requested-With', 'Authorization', 'X-CSRF-TOKEN'],
     'supports_credentials' => true,
 ];
