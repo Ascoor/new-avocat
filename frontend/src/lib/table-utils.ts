@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 
 export interface TableColumn<T = any> {
@@ -67,31 +67,35 @@ export const sortData = <T extends TableData>(
 };
 
 // Export utilities
-export const exportToExcel = <T extends TableData>(
+export const exportToExcel = async <T extends TableData>(
   data: T[],
   columns: TableColumn<T>[],
   filename: string = 'export'
 ) => {
-  // Prepare data for export
-  const exportData = data.map(item => {
-    const row: Record<string, any> = {};
-    columns.forEach(column => {
-      row[column.title] = item[column.key];
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Data');
+
+  worksheet.columns = columns.map(col => ({
+    header: col.title,
+    key: String(col.key),
+  }));
+
+  data.forEach(item => {
+    const row: Record<string, unknown> = {};
+
+    columns.forEach(col => {
+      const key = String(col.key);
+      row[key] = (item as any)[col.key];
     });
-    return row;
+
+    worksheet.addRow(row);
   });
 
-  // Create workbook and worksheet
-  const workbook = XLSX.utils.book_new();
-  const worksheet = XLSX.utils.json_to_sheet(exportData);
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  });
 
-  // Add worksheet to workbook
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Data');
-
-  // Generate Excel file
-  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-  const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-  
   saveAs(blob, `${filename}.xlsx`);
 };
 

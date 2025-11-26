@@ -67,7 +67,7 @@
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.158.0",
     "vaul": "^0.9.3",
-    "xlsx": "^0.18.5"
+    "exceljs": "^4.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

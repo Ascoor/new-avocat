@@ -76,7 +76,7 @@
 | التدويل | `i18next`, `react-i18next`, `i18next-browser-languagedetector`.【F:frontend/package.json†L47-L48】 |
 | واجهة المستخدم | حزمة Radix المتعددة، `lucide-react` للأيقونات، `framer-motion` للحركة، `embla-carousel-react` للسلايدر، `react-day-picker`, `cmdk`, `sonner`.【F:frontend/package.json†L17-L60】 |
 | الرسوم والتحليلات | `recharts` للرسوم البيانية، `react-resizable-panels` للتخطيطات التكيفية.【F:frontend/package.json†L52-L54】 |
-| الأدوات المساندة | `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, `file-saver`, `xlsx` للتصدير.【F:frontend/package.json†L44-L60】 |
+| الأدوات المساندة | `class-variance-authority`, `clsx`, `tailwind-merge`, `tailwindcss-animate`, `file-saver`, `exceljs` للتصدير.【F:frontend/package.json†L44-L60】 |
 
 ## 8. إدارة المحتوى والبيانات المساعدة
 - تتوفر بيانات وهمية وعينات واجهات في `src/data` لدعم العرض في حال غياب بيانات حقيقية (مثل `dashboard-showcase` و`mock-data`).【F:frontend/src/data/dashboard-showcase.ts†L1-L120】【F:frontend/src/data/mock-data.ts†L1-L140】
