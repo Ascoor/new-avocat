@@ -28,6 +28,17 @@ import { getIconDesign } from "@/config/iconography";
 import { sidebarGroups } from "@/config/sidebar";
 import { cn } from "@/lib/utils";
 
+const sidebarVariants = {
+  open: (rtl: boolean) => ({
+    x: 0,
+    transition: { duration: 0.3, ease: "easeOut" },
+  }),
+  closed: (rtl: boolean) => ({
+    x: rtl ? 32 : -32,
+    transition: { duration: 0.25, ease: "easeInOut" },
+  }),
+};
+
 // ==============================================
 // Sidebar Component
 // ==============================================
@@ -87,10 +98,10 @@ const Sidebar: React.FC = () => {
       const design = getIconDesign(iconKey);
       const sizeClasses =
         size === "sm"
-          ? "h-7 w-7 rounded-lg"
-          : collapsed
           ? "h-9 w-9 rounded-xl"
-          : "h-10 w-10 rounded-2xl";
+          : collapsed
+          ? "h-10 w-10 rounded-full"
+          : "h-11 w-11 rounded-2xl";
       const iconSize = size === "sm" ? 16 : collapsed ? 20 : 18;
 
       return (
@@ -118,10 +129,13 @@ const Sidebar: React.FC = () => {
   return (
     <motion.aside
       initial={false}
-      animate={{ width: collapsed ? 72 : 272 }}
-      transition={{ duration: 0.32, ease: "easeInOut" }}
+      custom={isRTL}
+      animate={collapsed ? "closed" : "open"}
+      variants={sidebarVariants}
+      style={{ width: collapsed ? 72 : 272 }}
       className={cn(
-        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border-e border-white/10 bg-surface/75 backdrop-blur-xl shadow-glass transition-[width] duration-long ease-comfort md:flex"
+        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border border-white/10 bg-surface/75 backdrop-blur-xl shadow-glass transition-[width] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex",
+        "rounded-none"
       )}
       dir={isRTL ? "rtl" : "ltr"}
     >
@@ -166,17 +180,25 @@ const Sidebar: React.FC = () => {
                           asChild
                           isActive={itemActive}
                           tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
-                          className={cn(
-                            "rounded-xl transition-all duration-base ease-smooth",
-                            collapsed ? "justify-center" : "gap-3 px-3",
-                            itemActive
-                              ? "bg-brand-primary/10 text-brand-primary"
-                              : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100"
-                          )}
-                        >
-                          <NavLink to={target} className="flex w-full items-center gap-3">
+                            className={cn(
+                              "group/nav rounded-xl text-sm font-medium transition-all duration-300 ease-smooth",
+                              collapsed ? "justify-center px-2 py-2" : "gap-3 px-3 py-2.5",
+                              itemActive
+                                ? "bg-brand-primary/10 text-brand-primary"
+                                : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                            )}
+                          >
+                          <NavLink
+                            to={target}
+                            className={cn(
+                              "flex items-center gap-3",
+                              collapsed ? "justify-center" : "w-full"
+                            )}
+                          >
                             {renderIcon(item.iconKey as IconKey)}
-                            {!collapsed && <span className="truncate">{t(`nav.${item.key}`)}</span>}
+                            {!collapsed && (
+                              <span className="truncate text-sm font-semibold">{t(`nav.${item.key}`)}</span>
+                            )}
                           </NavLink>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -195,14 +217,14 @@ const Sidebar: React.FC = () => {
                             isActive={groupActive}
                             tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
                             className={cn(
-                              "rounded-xl transition-all duration-base ease-smooth",
-                              collapsed ? "justify-center" : "gap-3 px-3",
+                              "group/nav rounded-xl text-sm font-medium transition-all duration-300 ease-smooth",
+                              collapsed ? "justify-center px-2 py-2" : "gap-3 px-3 py-2.5",
                               groupActive
                                 ? "bg-brand-primary/10 text-brand-primary"
-                                : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100"
+                                : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
                             )}
                           >
-                            <div className="flex items-center gap-3">
+                            <div className={cn("flex items-center gap-3", collapsed ? "justify-center" : "")}> 
                               {renderIcon(item.iconKey as IconKey)}
                               {!collapsed && (
                                 <span className="truncate font-medium">{t(`nav.${item.key}`)}</span>
@@ -236,7 +258,7 @@ const Sidebar: React.FC = () => {
                                     childSpacing,
                                     childActive
                                       ? "bg-brand-primary/10 text-brand-primary"
-                                      : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100"
+                                      : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
                                   )}
                                 >
                                   <NavLink
