@@ -117,19 +117,19 @@ const Sidebar: React.FC = () => {
   // ==============================================
   return (
     <motion.aside
-      initial={{ width: collapsed ? 64 : 256 }}
-      animate={{ width: collapsed ? 64 : 256 }}
-      transition={{ duration: 0.3, ease: [0.25, 0.8, 0.25, 1] }}
+      initial={false}
+      animate={{ width: collapsed ? 72 : 272 }}
+      transition={{ duration: 0.32, ease: "easeInOut" }}
       className={cn(
-        "sidebar-shell hidden h-screen flex-shrink-0 flex-col border-r border-border bg-background md:sticky md:top-0 md:flex"
+        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border-e border-white/10 bg-surface/75 backdrop-blur-xl shadow-glass transition-[width] duration-long ease-comfort md:flex"
       )}
       dir={isRTL ? "rtl" : "ltr"}
     >
       {/* Brand */}
       <div
         className={cn(
-          "flex items-center justify-center transition-all duration-300",
-          collapsed ? "px-4 py-3" : "px-6 py-5"
+          "flex items-center justify-center transition-all duration-base ease-smooth",
+          collapsed ? "px-4 py-3" : "px-5 py-4"
         )}
       >
         <BrandLogo
@@ -139,11 +139,11 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* Navigation */}
-      <SidebarContent className="flex-1 overflow-y-auto px-2 py-4 space-y-6 sidebar-scroll">
+      <SidebarContent className="sidebar-scroll flex-1 space-y-6 overflow-y-auto px-3 py-4">
         {sidebarGroups.map((group) => (
           <SidebarGroup key={group.key}>
             {!collapsed && (
-              <SidebarGroupLabel className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <SidebarGroupLabel className="px-3 text-[11px] font-semibold uppercase tracking-wide text-neutral-700 dark:text-neutral-100">
                 {t(`sidebar.sections.${group.key}`)}
               </SidebarGroupLabel>
             )}
@@ -167,11 +167,11 @@ const Sidebar: React.FC = () => {
                           isActive={itemActive}
                           tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
                           className={cn(
-                            "rounded-lg transition-all duration-200",
+                            "rounded-xl transition-all duration-base ease-smooth",
                             collapsed ? "justify-center" : "gap-3 px-3",
                             itemActive
-                              ? "bg-primary/10 text-primary font-medium"
-                              : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                              ? "bg-brand-primary/10 text-brand-primary"
+                              : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100"
                           )}
                         >
                           <NavLink to={target} className="flex w-full items-center gap-3">
@@ -195,11 +195,11 @@ const Sidebar: React.FC = () => {
                             isActive={groupActive}
                             tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
                             className={cn(
-                              "rounded-lg transition-all duration-200",
+                              "rounded-xl transition-all duration-base ease-smooth",
                               collapsed ? "justify-center" : "gap-3 px-3",
                               groupActive
-                                ? "bg-primary/10 text-primary font-medium"
-                                : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                                ? "bg-brand-primary/10 text-brand-primary"
+                                : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100"
                             )}
                           >
                             <div className="flex items-center gap-3">
@@ -232,11 +232,11 @@ const Sidebar: React.FC = () => {
                                   asChild
                                   isActive={childActive}
                                   className={cn(
-                                    "rounded-lg px-3 py-2 text-sm transition-all duration-200",
+                                    "rounded-xl px-3 py-2 text-sm transition-all duration-base ease-smooth",
                                     childSpacing,
                                     childActive
-                                      ? "bg-primary/10 text-primary font-medium"
-                                      : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                                      ? "bg-brand-primary/10 text-brand-primary"
+                                      : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100"
                                   )}
                                 >
                                   <NavLink

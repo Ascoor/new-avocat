@@ -12,6 +12,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { sidebarGroups, type SidebarItem as SidebarItemType } from "@/config/sidebar";
 import { getIconDesign } from "@/config/iconography";
 
+const drawerVariants = {
+  open: (rtl: boolean) => ({ x: 0, transition: { duration: 0.32, ease: "easeOut" } }),
+  closed: (rtl: boolean) => ({ x: rtl ? 288 : -288, transition: { duration: 0.28, ease: "easeInOut" } }),
+};
+
 const MobileDrawer: React.FC = () => {
   const location = useLocation();
   const { t, language } = useLanguage();
@@ -58,37 +63,31 @@ const MobileDrawer: React.FC = () => {
             exit={{ opacity: 0 }}
             onClick={closeMobile}
             className={cn(
-              "fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm md:hidden"
+              "fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm transition-opacity duration-base ease-smooth md:hidden"
             )}
           />
 
           {/* القائمة نفسها */}
           <motion.aside
-            initial={{ x: isRTL ? "100%" : "-100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: isRTL ? "100%" : "-100%", opacity: 0 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            custom={isRTL}
+            variants={drawerVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
             className={cn(
-              "fixed inset-y-0 z-[9999] h-full w-full max-w-[100vw] bg-sidebar-background border-border md:hidden",
-              "flex flex-col shadow-card",
-              isRTL ? "right-0 border-l" : "left-0 border-r"
+              "fixed inset-y-0 z-[9999] flex h-full w-full max-w-[100vw] flex-col border border-white/10 bg-surface/90 backdrop-blur-2xl shadow-glass md:hidden",
+              isRTL ? "right-0" : "left-0"
             )}
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(11, 18, 35, 0.96) 0%, rgba(13, 24, 45, 0.9) 60%, rgba(11, 18, 35, 0.96) 100%)",
-              boxShadow: "0 28px 48px rgba(8, 15, 34, 0.55)",
-              backdropFilter: "blur(18px)",
-            }}
             dir={isRTL ? "rtl" : "ltr"}
           >
             {/* رأس القائمة */}
-            <div className="flex items-center justify-between border-b border-sidebar-border p-4">
+            <div className="flex items-center justify-between border-b border-white/10 bg-surface/90 px-4 py-3">
               <BrandLogo variant="full" className="h-8" />
               <Button
-                variant="hero"
+                variant="ghost"
                 size="icon"
                 onClick={closeMobile}
-                className="h-8 w-8"
+                className="h-9 w-9 rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-neutral-100"
                 aria-label={t("common.close")}
               >
                 <X className="h-4 w-4" />
@@ -99,7 +98,7 @@ const MobileDrawer: React.FC = () => {
             <nav className="flex flex-1 flex-col gap-6 overflow-y-auto p-4">
               {sidebarGroups.map((group) => (
                 <div key={group.key} className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700 dark:text-neutral-100">
                     {t(`sidebar.sections.${group.key}`)}
                   </p>
                   <div className="space-y-2">
@@ -161,10 +160,10 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({ item, onNavigate, t }) =>
                 onClick={onNavigate}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-base ease-smooth",
                     isActive
-                      ? "bg-sidebar-active-glow text-sidebar-primary"
-                      : "text-sidebar-foreground hover:bg-sidebar-hover-glow hover:text-sidebar-hover-foreground",
+                      ? "bg-brand-primary/10 text-brand-primary"
+                      : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100",
                   )
                 }
               >
@@ -192,10 +191,10 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({ item, onNavigate, t }) =>
       onClick={onNavigate}
       className={({ isActive }) =>
         cn(
-          "flex items-center gap-3 rounded-2xl px-4 py-3 text-base font-medium transition-colors",
+          "flex items-center gap-3 rounded-2xl px-4 py-3 text-base font-medium transition-colors duration-base ease-smooth",
           isActive
-            ? "bg-sidebar-active-glow text-sidebar-primary"
-            : "text-sidebar-foreground hover:bg-sidebar-hover-glow hover:text-sidebar-hover-foreground",
+            ? "bg-brand-primary/10 text-brand-primary"
+            : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100",
         )
       }
     >

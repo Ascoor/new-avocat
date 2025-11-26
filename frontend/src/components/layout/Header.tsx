@@ -34,11 +34,11 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   return (
     <header
       className={cn(
-        "header-shell sticky top-0 z-50 h-16 transition-all duration-500 backdrop-blur",
+        "sticky top-0 z-50 h-16 border-b border-white/10 bg-surface/80 shadow-soft backdrop-blur-xl transition duration-long ease-comfort",
         className
       )}
     >
-      <div className="relative z-[1] flex h-full items-center justify-between px-4">
+      <div className="relative z-[1] flex h-full items-center justify-between px-4 sm:px-6">
         {/* Left side */}
         <div
           className={cn(
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             variant="glass"
             size="icon"
             onClick={toggleMobile}
-            className="md:hidden h-9 w-9"
+            className="h-9 w-9 rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:hidden dark:text-neutral-100"
             aria-label={isMobileOpen ? t("common.close") : t("common.menu")}
           >
             {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -62,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             variant="glass"
             size="icon"
             onClick={toggleCollapsed}
-            className="hidden md:flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-muted-foreground transition hover:border-border hover:bg-muted"
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-neutral-100"
             aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
           >
             <PanelLeft
@@ -82,11 +82,16 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-4">
-        
+        <div className="flex items-center gap-3 sm:gap-4">
+
           <ThemeToggle />
-       
-          <Button onClick={toggleLang} variant="outline" size="sm">
+
+          <Button
+            onClick={toggleLang}
+            variant="outline"
+            size="sm"
+            className="rounded-full border border-white/20 px-3 py-2 text-sm font-medium transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft"
+          >
             {language === "ar" ? "EN" : "عربي"}
           </Button>
 
@@ -96,9 +101,9 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
                 <Button
                   variant="glass"
                   size="sm"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+                  className="flex items-center gap-2 rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-neutral-100"
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
                     <UserCircle className="h-5 w-5" />
                   </div>
                   <div className="hidden md:flex flex-col items-start">
