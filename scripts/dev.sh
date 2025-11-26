@@ -1,13 +1,17 @@
 #!/bin/bash
 
-# Navigate to project root
-PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+# Navigate to project root (one level up from this script)
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_ROOT"
 
 # Kill existing processes on ports 3000 and 8000
 echo "🔴 Checking ports 3000 and 8000..."
-kill -9 $(lsof -t -i:3000) 2>/dev/null || true
-kill -9 $(lsof -t -i:8000) 2>/dev/null || true
+if command -v lsof >/dev/null 2>&1; then
+  kill -9 $(lsof -t -i:3000) 2>/dev/null || true
+  kill -9 $(lsof -t -i:8000) 2>/dev/null || true
+else
+  echo "lsof not found; skipping port pre-checks."
+fi
 
 # Start frontend
 echo "🚀 Starting React frontend on port 3000..."
