@@ -13,8 +13,14 @@ import { sidebarGroups, type SidebarItem as SidebarItemType } from "@/config/sid
 import { getIconDesign } from "@/config/iconography";
 
 const drawerVariants = {
-  open: (rtl: boolean) => ({ x: 0, transition: { duration: 0.32, ease: "easeOut" } }),
-  closed: (rtl: boolean) => ({ x: rtl ? 288 : -288, transition: { duration: 0.28, ease: "easeInOut" } }),
+  open: (rtl: boolean) => ({
+    x: 0,
+    transition: { duration: 0.3, ease: "easeOut" },
+  }),
+  closed: (rtl: boolean) => ({
+    x: rtl ? 320 : -320,
+    transition: { duration: 0.25, ease: "easeInOut" },
+  }),
 };
 
 const MobileDrawer: React.FC = () => {
@@ -75,7 +81,7 @@ const MobileDrawer: React.FC = () => {
             animate="open"
             exit="closed"
             className={cn(
-              "fixed inset-y-0 z-[9999] flex h-full w-full max-w-[100vw] flex-col border border-white/10 bg-surface/90 backdrop-blur-2xl shadow-glass md:hidden",
+              "fixed inset-y-0 z-[9999] flex h-full w-full max-w-[100vw] flex-col border border-white/10 bg-surface/90 backdrop-blur-2xl shadow-glass transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden",
               isRTL ? "right-0" : "left-0"
             )}
             dir={isRTL ? "rtl" : "ltr"}
