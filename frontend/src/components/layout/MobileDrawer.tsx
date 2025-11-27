@@ -25,8 +25,7 @@ const drawerVariants = {
 
 const MobileDrawer: React.FC = () => {
   const location = useLocation();
-  const { t, language } = useLanguage();
-  const isRTL = language === "ar";
+  const { t, isRTL } = useLanguage();
   const { isMobileOpen, closeMobile } = useSidebar();
 
   // إغلاق drawer عند تغيير المسار
@@ -81,7 +80,7 @@ const MobileDrawer: React.FC = () => {
             animate="open"
             exit="closed"
             className={cn(
-              "fixed inset-y-0 z-[9999] flex h-full w-full max-w-[100vw] flex-col border border-white/10 bg-surface/90 backdrop-blur-2xl shadow-glass transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden",
+              "fixed inset-y-0 z-[9999] flex h-full w-full max-w-[360px] flex-col border border-border/80 bg-surface/90 backdrop-blur-2xl shadow-glass transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden",
               isRTL ? "right-0" : "left-0"
             )}
             dir={isRTL ? "rtl" : "ltr"}

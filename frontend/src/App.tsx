@@ -40,11 +40,13 @@ type DashboardSectionKey =
 const DashboardPlaceholder: FC<{ sectionKey: DashboardSectionKey }> = ({ sectionKey }) => {
   const { t } = useLanguage();
   return (
-    <div className="p-8 text-center space-y-2">
-      <h2 className="text-2xl font-bold text-foreground">
-        {t(`dashboard.sections.${sectionKey}`)}
-      </h2>
-      <p className="text-muted-foreground">{t('dashboard.coming_soon')}</p>
+    <div className="flex min-h-[60vh] items-center justify-center px-4 py-10">
+      <div className="w-full max-w-xl rounded-2xl border border-border/80 bg-surface-raised/80 p-8 text-center shadow-card">
+        <h2 className="text-2xl font-semibold text-foreground">
+          {t(`dashboard.sections.${sectionKey}`)}
+        </h2>
+        <p className="mt-3 text-base text-muted-foreground">{t("dashboard.coming_soon")}</p>
+      </div>
     </div>
   );
 };

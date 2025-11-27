@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft, SunDim, MoonStar } from "lucide-react";
+import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,8 +15,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import BrandLogo from "../common/BrandLogo";
-import NotificationBell from "../common/NotificationBell";
-import { useTheme } from "@/contexts/ThemeContext";
 
 interface HeaderProps {
   title?: string;
@@ -27,22 +25,21 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
-  const { theme } = useTheme();
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 h-16 border-b border-white/10 bg-surface/80 shadow-soft backdrop-blur-xl transition duration-long ease-comfort",
+        "sticky top-0 z-50 h-16 border-b border-border/70 bg-surface/80 shadow-soft backdrop-blur-xl transition duration-long ease-comfort",
         className
       )}
     >
-      <div className="relative z-[1] flex h-full items-center justify-between px-4 sm:px-6">
-        {/* Left side */}
+      <div className="relative z-[1] mx-auto flex h-full w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Left side: keeps controls together while respecting reading direction */}
         <div
           className={cn(
-            "flex items-center gap-3",
+            "flex items-center gap-3", 
             isRTL ? "flex-row-reverse" : "flex-row"
           )}
         >
@@ -51,22 +48,25 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             variant="glass"
             size="icon"
             onClick={toggleMobile}
-            className="h-9 w-9 rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:hidden dark:text-neutral-100"
+            className="h-9 w-9 rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:hidden dark:text-neutral-100"
             aria-label={isMobileOpen ? t("common.close") : t("common.menu")}
           >
             {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
 
-          {/* Desktop collapse toggle */}
+          {/* Desktop collapse toggle for mini/sidebar mode */}
           <Button
             variant="glass"
             size="icon"
             onClick={toggleCollapsed}
-            className="hidden h-9 w-9 items-center justify-center rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-neutral-100"
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-neutral-100"
             aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
           >
             <PanelLeft
-              className={cn("h-4 w-4 transition-transform", !isCollapsed && "rotate-180")}
+              className={cn(
+                "h-4 w-4 transition-transform",
+                isCollapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
+              )}
             />
           </Button>
 
@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
             <BrandLogo variant="icon" className="h-8 w-8 md:hidden" />
             {/* Page title */}
             {title && (
-              <h1 className="hidden sm:block text-lg font-semibold text-foreground">
+              <h1 className="hidden text-lg font-semibold text-foreground sm:block">
                 {title}
               </h1>
             )}
@@ -83,14 +83,13 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
 
         {/* Right side */}
         <div className="flex items-center gap-3 sm:gap-4">
-
           <ThemeToggle />
 
           <Button
             onClick={toggleLang}
             variant="outline"
             size="sm"
-            className="rounded-full border border-white/20 px-3 py-2 text-sm font-medium transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft"
+            className="rounded-full border border-border/70 px-3 py-2 text-sm font-medium transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft"
           >
             {language === "ar" ? "EN" : "عربي"}
           </Button>
@@ -101,12 +100,12 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
                 <Button
                   variant="glass"
                   size="sm"
-                  className="flex items-center gap-2 rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-neutral-100"
+                  className="flex items-center gap-2 rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-neutral-100"
                 >
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
                     <UserCircle className="h-5 w-5" />
                   </div>
-                  <div className="hidden md:flex flex-col items-start">
+                  <div className="hidden flex-col items-start md:flex">
                     <span className="text-sm font-medium">{user.name || "Demo User"}</span>
                     <span className="text-xs text-muted-foreground">
                       {language === "ar"
