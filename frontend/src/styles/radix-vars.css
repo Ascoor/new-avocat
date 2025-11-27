@@ -1,7 +1,7 @@
 /* Radix UI behavioural variables */
 :root {
   /* Toast swipe behavior */
-  --radix-toast-swipe-end-x: calc(100% + 24px); /* المسافة اللي بينتهي عندها السحب */
+  --radix-toast-swipe-end-x: calc(100% + 24px);   /* المسافة اللي بينتهي عندها السحب */
   --radix-toast-swipe-move-x: calc(100% + 12px); /* المسافة اللي بتحرك فيها */
 
   /* Navigation Menu */

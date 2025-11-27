@@ -1,8 +1,10 @@
-import React from "react";
+// src/layout/AppShell.tsx
+import React, { CSSProperties } from "react";
 import Sidebar from "./Sidebar";
 import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import { shellContainer, shellSectionSpacing } from "./layout-classes";
 
@@ -14,6 +16,10 @@ interface AppShellProps {
   showSidebarToggle?: boolean;
 }
 
+// نفس القيم المستخدمة في Sidebar
+const COLLAPSED_WIDTH = 72;
+const EXPANDED_WIDTH = 272;
+
 const AppShell: React.FC<AppShellProps> = ({
   children,
   title,
@@ -21,47 +27,49 @@ const AppShell: React.FC<AppShellProps> = ({
   layoutVariant = "default",
   showSidebarToggle = true,
 }) => {
-  const { direction, isRTL } = useLanguage();
+  const { direction } = useLanguage();
+  const { isCollapsed } = useSidebar();
 
- 
-  // Keep a single grid definition and flip order based on reading direction
-  const shellColumns = isRTL ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[auto_1fr]";
-  const sidebarPlacement = isRTL ? "md:order-2" : "md:order-1";
- 
-  const contentPlacement = isRTL ? "md:order-1" : "md:order-2";
+  const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
+  const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-20";
 
-  const desktopFlow = isRTL ? "md:flex-row-reverse" : "md:flex-row";
-  const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-10";
+  const contentStyle: CSSProperties = {
+    ["--sidebar-width" as any]: `${sidebarWidth}px`,
+  };
+
   return (
     <div
       dir={direction}
       className={cn(
         "dashboard-shell min-h-screen bg-background text-foreground",
-        "[--shell-background:theme(colors.surface)] [--shell-overlay:transparent]",
+        "[--shell-background:theme(colors.background)] [--shell-overlay:transparent]",
         className
       )}
     >
-      <div
-        className={cn(
-          "relative flex min-h-screen flex-col bg-gradient-to-br from-surface via-surface-raised to-surface-overlay",
-          desktopFlow
-        )}
-      >
-        {/* Desktop sidebar stays docked; order flips automatically for RTL */}
-        <div className={cn("hidden h-full md:flex", sidebarPlacement)}>
-          <Sidebar />
-        </div>
+      <div className="relative min-h-screen">
+        {/* الشريط الجانبي الثابت يمين/يسار حسب اللغة */}
+        <Sidebar />
 
-        {/* Header + main content */}
-        <div className="relative flex min-h-screen flex-1 flex-col overflow-hidden">
+        {/* الهيدر + المحتوى: في الديسكتوب يتحرك من جهة الشريط فقط */}
+        <div
+          style={contentStyle}
+          className={cn(
+            "relative flex min-h-screen flex-col",
+            "md:transition-[margin] md:duration-300 md:ease-comfort",
+            "ltr:md:ml-[var(--sidebar-width)] rtl:md:mr-[var(--sidebar-width)]"
+          )}
+        >
           <Header title={title} showSidebarToggle={showSidebarToggle} />
-          <main className={cn(shellSectionSpacing, contentPadding)}>
-            <div className={cn(shellContainer, "flex flex-col gap-6")}>{children}</div>
+
+          <main className={cn(shellSectionSpacing, contentPadding, "md:pt-6")}>
+            <div className={cn(shellContainer, "px-4 sm:px-6 lg:px-14 flex flex-col gap-6")}>
+              {children}
+            </div>
           </main>
         </div>
       </div>
 
-      {/* Mobile drawer mounts once so it can animate above the shell */}
+      {/* للموبايل: القائمة الجانبية تغطي الشاشة بالكامل */}
       <MobileDrawer />
     </div>
   );

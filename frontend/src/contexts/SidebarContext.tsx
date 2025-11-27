@@ -25,9 +25,7 @@ const SIDEBAR_STORAGE_KEY = 'sidebar-collapsed';
 
 export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(() => {
-    if (typeof window === 'undefined') {
-      return false;
-    }
+    if (typeof window === 'undefined') return false;
 
     const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
     return stored ? JSON.parse(stored) : false;
@@ -60,9 +58,10 @@ const SidebarContextBridge: React.FC<{
     toggleSidebar();
   }, [toggleSidebar]);
 
+  // ✅ لا نستخدم callback، نعطي boolean مباشرة
   const toggleMobile = useCallback(() => {
-    setOpenMobile(prev => !prev);
-  }, [setOpenMobile]);
+    setOpenMobile(!openMobile);
+  }, [openMobile, setOpenMobile]);
 
   const closeMobile = useCallback(() => {
     setOpenMobile(false);
@@ -79,11 +78,7 @@ const SidebarContextBridge: React.FC<{
     [isCollapsed, openMobile, toggleCollapsed, toggleMobile, closeMobile],
   );
 
-  return (
-    <SidebarContext.Provider value={value}>
-      {children}
-    </SidebarContext.Provider>
-  );
+  return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
 };
 
 export const useSidebar = () => {

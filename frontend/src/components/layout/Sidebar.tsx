@@ -1,14 +1,14 @@
+// src/layout/Sidebar.tsx
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, ChevronRight, LogOut } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 import BrandLogo from "@/components/common/BrandLogo";
 import LegalIcon from "@/components/common/LegalIcon";
 import type { IconKey } from "@/config/iconography";
 import { Button } from "@/components/ui/button";
 import {
-  Sidebar as SidebarRoot,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
@@ -18,7 +18,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -28,47 +32,35 @@ import { getIconDesign } from "@/config/iconography";
 import { sidebarGroups } from "@/config/sidebar";
 import { cn } from "@/lib/utils";
 
-const sidebarVariants = {
-  open: (rtl: boolean) => ({
-    x: 0,
-    transition: { duration: 0.3, ease: [0.17, 0.55, 0.55, 1] },
-  }),
-  closed: (rtl: boolean) => ({
-    x: rtl ? 12 : -12,
-    transition: { duration: 0.25, ease: [0.42, 0, 0.58, 1] },
-  }),
+export const collapsedWidth = 72;
+export const expandedWidth = 272;
+
+const sidebarVariants: Variants = {
+  open: {
+    width: expandedWidth,
+    transition: { duration: 0.25, ease: [0.17, 0.55, 0.55, 1] },
+  },
+  closed: {
+    width: collapsedWidth,
+    transition: { duration: 0.22, ease: [0.42, 0, 0.58, 1] },
+  },
 };
 
-// ==============================================
-// Sidebar Component
-// ==============================================
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const { t, isRTL } = useLanguage();
   const { logout } = useAuth();
   const { isCollapsed } = useSidebarContext();
 
-  const collapsedWidth = 72;
-  const expandedWidth = 272;
-
   const collapsed = isCollapsed;
   const currentPath = location.pathname;
 
-  const baseButtonClasses = cn(
-    "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
-    collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5"
-  );
-  const activeButtonClasses = "bg-brand-primary/10 text-brand-primary";
-  const inactiveButtonClasses =
-    "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100";
-
-  // Helper: Check if a path is active
   const isActive = useCallback(
-    (path?: string) => !!path && (currentPath === path || currentPath.startsWith(`${path}/`)),
+    (path?: string) =>
+      !!path && (currentPath === path || currentPath.startsWith(`${path}/`)),
     [currentPath]
   );
 
-  // Initial expanded groups
   const initialExpanded = useMemo(() => {
     const defaults: Record<string, boolean> = {};
     sidebarGroups.forEach((group) => {
@@ -81,9 +73,9 @@ const Sidebar: React.FC = () => {
     return defaults;
   }, [isActive]);
 
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(initialExpanded);
+  const [expandedGroups, setExpandedGroups] =
+    useState<Record<string, boolean>>(initialExpanded);
 
-  // Sync expansion when route changes
   useEffect(() => {
     setExpandedGroups((prev) => {
       const next = { ...prev };
@@ -99,54 +91,66 @@ const Sidebar: React.FC = () => {
   }, [currentPath, isActive]);
 
   const toggleGroup = useCallback(
-    (key: string) => setExpandedGroups((prev) => ({ ...prev, [key]: !prev[key] })),
+    (key: string) =>
+      setExpandedGroups((prev) => ({ ...prev, [key]: !prev[key] })),
     []
   );
 
-  // Render icon badge safely with IconKey type
+  // 🔹 أيقونة متجاوبة + تستخدم توكنز التصميم
   const renderIcon = useCallback(
-    (iconKey: IconKey, size: "default" | "sm" = "default") => {
+    (iconKey: IconKey, variant: "root" | "child" = "root") => {
       const design = getIconDesign(iconKey);
-      const sizeClasses =
-        size === "sm"
-          ? "h-9 w-9 rounded-xl"
-          : collapsed
-          ? "h-10 w-10 rounded-full"
-          : "h-11 w-11 rounded-2xl";
-      const iconSize = size === "sm" ? 16 : collapsed ? 20 : 18;
+      const isRoot = variant === "root";
+
+      const wrapperClass = cn(
+        "flex items-center justify-center text-white",
+        "shadow-[var(--legal-icon-shadow-soft)]",
+        "rounded-[var(--legal-icon-corner-outer)]",
+        design.badgeClass,
+        collapsed
+          ? "h-9 w-9 md:h-8 md:w-8"
+          : isRoot
+          ? "h-11 w-11 md:h-10 md:w-10" // مستوى أول
+          : "h-9 w-9 md:h-8 md:w-8"      // عنصر فرعي
+      );
+
+      const iconClass = cn(
+        "transition-transform duration-200",
+        collapsed
+          ? "h-4 w-4"
+          : isRoot
+          ? "h-5 w-5 md:h-4 md:w-4"
+          : "h-4 w-4"
+      );
 
       return (
         <span
-          className={cn(
-            "flex items-center justify-center text-white shadow-sm",
-            design.badgeClass,
-            sizeClasses
-          )}
+          className={wrapperClass}
           style={{
             background: design.badgeGradient,
-            boxShadow: design.shadow ?? "var(--shadow-premium)",
+            boxShadow: design.shadow ?? "var(--legal-icon-shadow-soft)",
           }}
         >
-          <LegalIcon iconKey={iconKey} width={iconSize} height={iconSize} />
+          <LegalIcon
+            iconKey={iconKey}
+            className={iconClass}
+            strokeWidth={1.5}
+          />
         </span>
       );
     },
     [collapsed]
   );
 
-  // ==============================================
-  // RENDER
-  // ==============================================
   return (
     <motion.aside
       initial={false}
-      custom={isRTL}
       animate={collapsed ? "closed" : "open"}
       variants={sidebarVariants}
-      style={{ width: collapsed ? collapsedWidth : expandedWidth }}
       className={cn(
-        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border border-white/10 bg-surface/75 backdrop-blur-xl shadow-glass",
-        "transition-[width] duration-300 ease-\[cubic-bezier(0.32,0.72,0,1)\] md:flex"
+        "fixed inset-y-0 z-50 hidden h-screen flex-shrink-0 flex-col bg-surface/75 shadow-glass backdrop-blur-xl",
+        "md:flex",
+        isRTL ? "right-0" : "left-0"
       )}
       dir={isRTL ? "rtl" : "ltr"}
     >
@@ -164,7 +168,7 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* Navigation */}
-      <SidebarContent className="sidebar-scroll flex-1 space-y-6 overflow-y-auto px-3 py-4">
+      <SidebarContent className="sidebar-scroll flex-1 space-y-6 overflow-y-auto px-1 py-4">
         {sidebarGroups.map((group) => (
           <SidebarGroup key={group.key}>
             {!collapsed && (
@@ -182,7 +186,9 @@ const Sidebar: React.FC = () => {
                     : false;
                   const itemActive = item.path ? isActive(item.path) : groupActive;
 
-                  // ---- Single Item ----
+                  // =========================
+                  // عنصر بدون أطفال
+                  // =========================
                   if (!hasChildren) {
                     const target = item.path ?? "#";
                     return (
@@ -191,7 +197,15 @@ const Sidebar: React.FC = () => {
                           asChild
                           isActive={itemActive}
                           tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
-                          className={cn(baseButtonClasses, itemActive ? activeButtonClasses : inactiveButtonClasses)}
+                          className={cn(
+                            "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
+                            collapsed
+                              ? "justify-center px-2 py-2.5"
+                              : "gap-3 px-3 py-2.5",
+                            itemActive
+                              ? "bg-brand-primary/10 text-brand-primary"
+                              : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                          )}
                         >
                           <NavLink
                             to={target}
@@ -200,9 +214,11 @@ const Sidebar: React.FC = () => {
                               collapsed ? "justify-center" : "w-full gap-3"
                             )}
                           >
-                            {renderIcon(item.iconKey as IconKey)}
+                            {renderIcon(item.iconKey as IconKey, "root")}
                             {!collapsed && (
-                              <span className="truncate text-sm font-semibold">{t(`nav.${item.key}`)}</span>
+                              <span className="truncate text-sm font-semibold">
+                                {t(`nav.${item.key}`)}
+                              </span>
                             )}
                           </NavLink>
                         </SidebarMenuButton>
@@ -210,23 +226,43 @@ const Sidebar: React.FC = () => {
                     );
                   }
 
-                  // ---- Collapsible Group ----
+                  // =========================
+                  // عنصر بمستوى فرعي (Collapsible)
+                  // =========================
                   const isExpanded = expandedGroups[item.key] ?? groupActive;
                   const childSpacing = collapsed ? "" : "ps-8";
 
                   return (
                     <SidebarMenuItem key={item.key}>
-                      <Collapsible open={isExpanded} onOpenChange={() => toggleGroup(item.key)}>
+                      <Collapsible
+                        open={isExpanded}
+                        onOpenChange={() => toggleGroup(item.key)}
+                      >
                         <CollapsibleTrigger asChild>
                           <SidebarMenuButton
                             isActive={groupActive}
                             tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
-                            className={cn(baseButtonClasses, groupActive ? activeButtonClasses : inactiveButtonClasses)}
+                            className={cn(
+                              "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
+                              collapsed
+                                ? "justify-center px-2 py-2.5"
+                                : "gap-3 px-3 py-2.5",
+                              groupActive
+                                ? "bg-brand-primary/10 text-brand-primary"
+                                : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                            )}
                           >
-                            <div className={cn("flex items-center", collapsed ? "justify-center" : "gap-3")}> 
-                              {renderIcon(item.iconKey as IconKey)}
+                            <div
+                              className={cn(
+                                "flex items-center",
+                                collapsed ? "justify-center" : "gap-3"
+                              )}
+                            >
+                              {renderIcon(item.iconKey as IconKey, "root")}
                               {!collapsed && (
-                                <span className="truncate font-medium">{t(`nav.${item.key}`)}</span>
+                                <span className="truncate font-medium">
+                                  {t(`nav.${item.key}`)}
+                                </span>
                               )}
                             </div>
                             {!collapsed && (
@@ -241,12 +277,14 @@ const Sidebar: React.FC = () => {
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
 
-                        {/* Sub-items */}
-                        <CollapsibleContent className={cn("mt-1 space-y-1", collapsed && "hidden")}>
+                        <CollapsibleContent
+                          className={cn("mt-1 space-y-1", collapsed && "hidden")}
+                        >
                           {!collapsed &&
                             item.children?.map((child) => {
                               const childActive = isActive(child.path);
                               const childTarget = child.path ?? "#";
+
                               return (
                                 <SidebarMenuButton
                                   key={child.key}
@@ -264,8 +302,10 @@ const Sidebar: React.FC = () => {
                                     to={childTarget}
                                     className="flex w-full items-center gap-3"
                                   >
-                                    {renderIcon(child.iconKey as IconKey, "sm")}
-                                    <span className="truncate">{t(`nav.${child.key}`)}</span>
+                                    {renderIcon(child.iconKey as IconKey, "child")}
+                                    <span className="truncate">
+                                      {t(`nav.${child.key}`)}
+                                    </span>
                                   </NavLink>
                                 </SidebarMenuButton>
                               );
@@ -281,7 +321,7 @@ const Sidebar: React.FC = () => {
         ))}
       </SidebarContent>
 
-      {/* Logout */}
+      {/* Footer / Logout */}
       <SidebarFooter className="border-t border-border px-3 py-4">
         <Button
           onClick={logout}

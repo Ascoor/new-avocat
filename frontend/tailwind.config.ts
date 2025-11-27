@@ -1,11 +1,14 @@
 import type { Config } from "tailwindcss";
-import animate from "tailwindcss-animate";  
+import animate from "tailwindcss-animate";
 
 const config: Config = {
- 
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
-  prefix: "",
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -107,32 +110,32 @@ const config: Config = {
         },
       },
       backgroundImage: {
-        'gradient-primary': 'var(--gradient-primary)',
-        'gradient-gold': 'var(--gradient-gold)',
-        'gradient-hero': 'var(--gradient-hero)',
-        'gradient-subtle': 'var(--gradient-subtle)',
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-gold": "var(--gradient-gold)",
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-subtle": "var(--gradient-subtle)",
       },
       boxShadow: {
         soft: "0 12px 30px -14px hsl(var(--neutral-900) / 0.18)",
         glass: "0 18px 40px -18px hsl(var(--neutral-900) / 0.22)",
-        luxury: 'var(--shadow-luxury)',
-        gold: 'var(--shadow-gold)',
-        card: 'var(--shadow-card)',
-        elegant: 'var(--shadow-elegant)',
+        luxury: "var(--shadow-luxury)",
+        gold: "var(--shadow-gold)",
+        card: "var(--shadow-card)",
+        elegant: "var(--shadow-elegant)",
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
         comfort: "cubic-bezier(0.32, 0.72, 0, 1)",
-        elegant: 'var(--transition-elegant)',
-        bounce: 'var(--transition-bounce)',
+        elegant: "var(--transition-elegant)",
+        bounce: "var(--transition-bounce)",
       },
       transitionDuration: {
         base: "200ms",
         long: "320ms",
       },
       fontFamily: {
-        'cairo': ['Cairo', 'sans-serif'],
-        'inter': ['Inter', 'sans-serif'],
+        cairo: ["Cairo", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
       borderRadius: {
         xl: "1rem",
@@ -143,48 +146,28 @@ const config: Config = {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
         "fade-in": {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(20px)"
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)"
-          }
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "slide-in-right": {
           "0%": { transform: "translateX(100%)" },
-          "100%": { transform: "translateX(0)" }
+          "100%": { transform: "translateX(0)" },
         },
         "scale-in": {
-          "0%": {
-            transform: "scale(0.9)",
-            opacity: "0"
-          },
-          "100%": {
-            transform: "scale(1)",
-            opacity: "1"
-          }
+          "0%": { transform: "scale(0.9)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
         },
-        "float": {
+        float: {
           "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-20px)" }
+          "50%": { transform: "translateY(-20px)" },
         },
         "footer-glow": {
           "0%, 100%": { opacity: "0.35" },
@@ -201,9 +184,9 @@ const config: Config = {
         "fade-in": "fade-in 0.6s ease-out",
         "slide-in-right": "slide-in-right 0.5s ease-out",
         "scale-in": "scale-in 0.4s ease-out",
-        "float": "float 6s ease-in-out infinite",
-        "pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "bounce": "bounce 1s infinite",
+        float: "float 6s ease-in-out infinite",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        bounce: "bounce 1s infinite",
         "footer-glow": "footer-glow 4.5s ease-in-out infinite",
         "footer-marquee": "footer-marquee 12s linear infinite",
       },

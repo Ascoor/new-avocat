@@ -1,3 +1,4 @@
+// src/layout/Header.tsx
 import React from "react";
 import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import BrandLogo from "../common/BrandLogo";
-import { shellContainer } from "./layout-classes";
 
 interface HeaderProps {
   title?: string;
@@ -23,7 +23,11 @@ interface HeaderProps {
   showSidebarToggle?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarToggle = true }) => {
+export const Header: React.FC<HeaderProps> = ({
+  title,
+  className,
+  showSidebarToggle = true,
+}) => {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
@@ -33,24 +37,24 @@ export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarTog
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 h-16 border-b border-border/70 bg-surface/80 shadow-soft backdrop-blur-xl transition duration-long ease-comfort",
+        "sticky top-0 z-40 h-16 border-b border-border/70 bg-surface/80 shadow-soft backdrop-blur-xl transition duration-long ease-comfort",
         className
       )}
     >
       <div
         className={cn(
-          "relative z-[1] flex h-full w-full items-center justify-between px-4 sm:px-6 lg:px-10",
-          shellContainer
+          "relative z-[1] flex h-full w-full items-center justify-between",
+          "px-3 sm:px-4 lg:px-6"
         )}
       >
-        {/* Left side: keeps controls together while respecting reading direction */}
+        {/* يسار/يمين حسب اللغة */}
         <div
           className={cn(
             "flex items-center gap-3",
             isRTL ? "flex-row-reverse" : "flex-row"
           )}
         >
-          {/* Mobile menu button */}
+          {/* زر القائمة للموبايل */}
           <Button
             variant="glass"
             size="icon"
@@ -61,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarTog
             {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
 
-          {/* Desktop collapse toggle for mini/sidebar mode */}
+          {/* زر تصغير/تكبير الشريط الجانبي (ديسكتوب فقط) */}
           {showSidebarToggle && (
             <Button
               variant="glass"
@@ -73,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarTog
               <PanelLeft
                 className={cn(
                   "h-4 w-4 transition-transform",
-                  isCollapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
+                  isCollapsed ? "rotate-0" : isRTL ? "- rotate-180" : "rotate-180"
                 )}
               />
             </Button>
@@ -81,7 +85,6 @@ export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarTog
 
           <div className="flex items-center gap-3">
             <BrandLogo variant="icon" className="h-8 w-8 md:hidden" />
-            {/* Page title */}
             {title && (
               <h1 className="hidden text-lg font-semibold text-foreground sm:block">
                 {title}
@@ -90,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarTog
           </div>
         </div>
 
-        {/* Right side */}
+        {/* يمين الهيدر */}
         <div className="flex items-center gap-3 sm:gap-4">
           <ThemeToggle />
 
@@ -115,7 +118,9 @@ export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarTog
                     <UserCircle className="h-5 w-5" />
                   </div>
                   <div className="hidden flex-col items-start md:flex">
-                    <span className="text-sm font-medium">{user.name || "Demo User"}</span>
+                    <span className="text-sm font-medium">
+                      {user.name || "Demo User"}
+                    </span>
                     <span className="text-xs text-muted-foreground">
                       {language === "ar"
                         ? user.role === "admin"
@@ -128,10 +133,13 @@ export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarTog
                   </div>
                 </Button>
               </DropdownMenuTrigger>
+
               <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium">{user.name || "Demo User"}</p>
+                    <p className="text-sm font-medium">
+                      {user.name || "Demo User"}
+                    </p>
                     <p className="text-xs text-muted-foreground">
                       {user?.email || "demo@avocat.law"}
                     </p>
