@@ -10,9 +10,17 @@ interface AppShellProps {
   children: React.ReactNode;
   title?: string;
   className?: string;
+  layoutVariant?: "default" | "wide";
+  showSidebarToggle?: boolean;
 }
 
-const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
+const AppShell: React.FC<AppShellProps> = ({
+  children,
+  title,
+  className,
+  layoutVariant = "default",
+  showSidebarToggle = true,
+}) => {
   const { direction, isRTL } = useLanguage();
 
  
@@ -33,9 +41,8 @@ const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
     >
       <div
         className={cn(
-          "relative grid min-h-screen bg-gradient-to-br from-surface via-surface-raised to-surface-overlay",
-          "md:items-stretch md:grid",
-          shellColumns
+          "relative flex min-h-screen flex-col bg-gradient-to-br from-surface via-surface-raised to-surface-overlay",
+          desktopFlow
         )}
       >
         {/* Desktop sidebar stays docked; order flips automatically for RTL */}
@@ -44,9 +51,9 @@ const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
         </div>
 
         {/* Header + main content */}
-        <div className={cn("relative flex min-h-screen flex-col", contentPlacement)}>
-          <Header title={title} />
-          <main className={shellSectionSpacing}>
+        <div className="relative flex min-h-screen flex-1 flex-col overflow-hidden">
+          <Header title={title} showSidebarToggle={showSidebarToggle} />
+          <main className={cn(shellSectionSpacing, contentPadding)}>
             <div className={cn(shellContainer, "flex flex-col gap-6")}>{children}</div>
           </main>
         </div>
