@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({
             variant="glass"
             size="icon"
             onClick={toggleMobile}
-            className="h-9 w-9 rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:hidden dark:text-neutral-100"
+            className="h-9 w-9 rounded-full border border-border/80 text-foreground/80 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:hidden dark:text-foreground"
             aria-label={isMobileOpen ? t("common.close") : t("common.menu")}
           >
             {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -72,7 +72,7 @@ export const Header: React.FC<HeaderProps> = ({
               variant="glass"
               size="icon"
               onClick={toggleCollapsed}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-neutral-100"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/80 text-foreground/80 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-foreground"
               aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
             >
               <PanelLeft
@@ -113,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Button
                   variant="glass"
                   size="sm"
-                  className="flex items-center gap-2 rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-neutral-100"
+                  className="flex items-center gap-2 rounded-full border border-border/80 text-foreground/80 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-foreground"
                 >
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
                     <UserCircle className="h-5 w-5" />

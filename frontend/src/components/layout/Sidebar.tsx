@@ -205,7 +205,7 @@ const Sidebar: React.FC = () => {
                               : "gap-3 px-3 py-2.5",
                             itemActive
                               ? "bg-brand-primary/10 text-brand-primary"
-                              : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                              : "text-foreground/80 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-foreground"
                           )}
                         >
                           <NavLink
@@ -250,7 +250,7 @@ const Sidebar: React.FC = () => {
                                 : "gap-3 px-3 py-2.5",
                               groupActive
                                 ? "bg-brand-primary/10 text-brand-primary"
-                                : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                                : "text-foreground/80 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-foreground"
                             )}
                           >
                             <div
@@ -296,7 +296,7 @@ const Sidebar: React.FC = () => {
                                     childSpacing,
                                     childActive
                                       ? "bg-brand-primary/10 text-brand-primary"
-                                      : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                                      : "text-foreground/80 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-foreground"
                                   )}
                                 >
                                   <NavLink

@@ -103,7 +103,7 @@ const MobileDrawer: React.FC = () => {
             <nav className="flex flex-1 flex-col gap-6 overflow-y-auto p-4">
               {sidebarGroups.map((group) => (
                 <div key={group.key} className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-neutral-700 dark:text-neutral-100">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-foreground/70 dark:text-foreground/80">
                     {t(`sidebar.sections.${group.key}`)}
                   </p>
                   <div className="space-y-2">
@@ -168,7 +168,7 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({ item, onNavigate, t }) =>
                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-colors duration-base ease-smooth",
                     isActive
                       ? "bg-brand-primary/10 text-brand-primary"
-                      : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100",
+                      : "text-foreground/80 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-foreground",
                   )
                 }
               >
@@ -197,11 +197,11 @@ const MobileNavItem: React.FC<MobileNavItemProps> = ({ item, onNavigate, t }) =>
       className={({ isActive }) =>
         cn(
           "flex items-center gap-3 rounded-2xl px-4 py-3 text-base font-medium transition-colors duration-base ease-smooth",
-          isActive
-            ? "bg-brand-primary/10 text-brand-primary"
-            : "text-neutral-700 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-neutral-100",
-        )
-      }
+      isActive
+        ? "bg-brand-primary/10 text-brand-primary"
+        : "text-foreground/80 hover:bg-brand-primary/5 hover:text-brand-primary dark:text-foreground",
+    )
+  }
     >
       <span
         className={cn(
