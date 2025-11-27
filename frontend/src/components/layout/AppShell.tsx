@@ -30,6 +30,8 @@ const AppShell: React.FC<AppShellProps> = ({
  
   const contentPlacement = isRTL ? "md:order-1" : "md:order-2";
 
+  const desktopFlow = isRTL ? "md:flex-row-reverse" : "md:flex-row";
+  const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-10";
   return (
     <div
       dir={direction}
