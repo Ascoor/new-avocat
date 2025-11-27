@@ -20,9 +20,10 @@ import { shellContainer } from "./layout-classes";
 interface HeaderProps {
   title?: string;
   className?: string;
+  showSidebarToggle?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, className }) => {
+export const Header: React.FC<HeaderProps> = ({ title, className, showSidebarToggle = true }) => {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
@@ -36,7 +37,12 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
         className
       )}
     >
-      <div className={cn("relative z-[1] flex h-full w-full items-center justify-between", shellContainer)}>
+      <div
+        className={cn(
+          "relative z-[1] flex h-full w-full items-center justify-between px-4 sm:px-6 lg:px-10",
+          shellContainer
+        )}
+      >
         {/* Left side: keeps controls together while respecting reading direction */}
         <div
           className={cn(
@@ -56,20 +62,22 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
           </Button>
 
           {/* Desktop collapse toggle for mini/sidebar mode */}
-          <Button
-            variant="glass"
-            size="icon"
-            onClick={toggleCollapsed}
-            className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-neutral-100"
-            aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
-          >
-            <PanelLeft
-              className={cn(
-                "h-4 w-4 transition-transform",
-                isCollapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
-              )}
-            />
-          </Button>
+          {showSidebarToggle && (
+            <Button
+              variant="glass"
+              size="icon"
+              onClick={toggleCollapsed}
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/80 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-neutral-100"
+              aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
+            >
+              <PanelLeft
+                className={cn(
+                  "h-4 w-4 transition-transform",
+                  isCollapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
+                )}
+              />
+            </Button>
+          )}
 
           <div className="flex items-center gap-3">
             <BrandLogo variant="icon" className="h-8 w-8 md:hidden" />

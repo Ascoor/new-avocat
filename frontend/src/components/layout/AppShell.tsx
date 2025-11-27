@@ -10,15 +10,22 @@ interface AppShellProps {
   children: React.ReactNode;
   title?: string;
   className?: string;
+  layoutVariant?: "default" | "wide";
+  showSidebarToggle?: boolean;
 }
 
-const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
+const AppShell: React.FC<AppShellProps> = ({
+  children,
+  title,
+  className,
+  layoutVariant = "default",
+  showSidebarToggle = true,
+}) => {
   const { direction, isRTL } = useLanguage();
 
-  // Keep a single grid definition and flip order based on reading direction
-  const shellColumns = isRTL ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[auto_1fr]";
-  const sidebarPlacement = isRTL ? "md:order-2" : "md:order-1";
-  const contentPlacement = isRTL ? "md:order-1" : "md:order-2";
+  // Flip the flex flow instead of duplicating markup for RTL/LTR
+  const desktopFlow = isRTL ? "md:flex-row-reverse" : "md:flex-row";
+  const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-10";
 
   return (
     <div
@@ -31,20 +38,19 @@ const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
     >
       <div
         className={cn(
-          "relative grid min-h-screen bg-gradient-to-br from-surface via-surface-raised to-surface-overlay",
-          "md:items-stretch md:grid",
-          shellColumns
+          "relative flex min-h-screen flex-col bg-gradient-to-br from-surface via-surface-raised to-surface-overlay",
+          desktopFlow
         )}
       >
-        {/* Desktop sidebar stays docked; order flips automatically for RTL */}
-        <div className={cn("hidden md:flex", sidebarPlacement)}>
+        {/* Desktop sidebar: docks to the start edge but order flips with direction */}
+        <div className="hidden md:flex">
           <Sidebar />
         </div>
 
         {/* Header + main content */}
-        <div className={cn("relative flex min-h-screen flex-col", contentPlacement)}>
-          <Header title={title} />
-          <main className={shellSectionSpacing}>
+        <div className="relative flex min-h-screen flex-1 flex-col overflow-hidden">
+          <Header title={title} showSidebarToggle={showSidebarToggle} />
+          <main className={cn(shellSectionSpacing, contentPadding)}>
             <div className={cn(shellContainer, "flex flex-col gap-6")}>{children}</div>
           </main>
         </div>
