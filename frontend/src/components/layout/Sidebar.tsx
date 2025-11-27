@@ -138,7 +138,7 @@ const Sidebar: React.FC = () => {
       style={{ width: collapsed ? collapsedWidth : expandedWidth }}
       className={cn(
         "sticky top-0 hidden h-screen flex-shrink-0 flex-col border border-white/10 bg-surface/75 backdrop-blur-xl shadow-glass",
-        "transition-[width] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex"
+        "transition-[width] duration-300 ease-\[cubic-bezier(0.32,0.72,0,1)\] md:flex"
       )}
       dir={isRTL ? "rtl" : "ltr"}
     >

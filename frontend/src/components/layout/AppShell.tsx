@@ -14,8 +14,10 @@ interface AppShellProps {
 const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
   const { direction, isRTL } = useLanguage();
 
-  const shellColumns = isRTL ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[auto_1fr]";
-  const sidebarPlacement = isRTL ? "md:order-2" : "md:order-1";
+  const shellColumns = isRTL
+    ? "md:grid-cols-[minmax(0,1fr)_auto]"
+    : "md:grid-cols-[auto_minmax(0,1fr)]";
+  const sidebarPlacement = isRTL ? "md:order-2 md:justify-end" : "md:order-1";
   const contentPlacement = isRTL ? "md:order-1" : "md:order-2";
 
   return (
@@ -35,7 +37,7 @@ const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
         )}
       >
         {/* Desktop sidebar stays docked; order flips automatically for RTL */}
-        <div className={cn("hidden md:flex", sidebarPlacement)}>
+        <div className={cn("hidden h-full md:flex", sidebarPlacement)}>
           <Sidebar />
         </div>
 
