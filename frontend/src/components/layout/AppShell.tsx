@@ -23,9 +23,12 @@ const AppShell: React.FC<AppShellProps> = ({
 }) => {
   const { direction, isRTL } = useLanguage();
 
-  // Flip the flex flow instead of duplicating markup for RTL/LTR
-  const desktopFlow = isRTL ? "md:flex-row-reverse" : "md:flex-row";
-  const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-10";
+ 
+  // Keep a single grid definition and flip order based on reading direction
+  const shellColumns = isRTL ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[auto_1fr]";
+  const sidebarPlacement = isRTL ? "md:order-2" : "md:order-1";
+ 
+  const contentPlacement = isRTL ? "md:order-1" : "md:order-2";
 
   return (
     <div
@@ -42,8 +45,8 @@ const AppShell: React.FC<AppShellProps> = ({
           desktopFlow
         )}
       >
-        {/* Desktop sidebar: docks to the start edge but order flips with direction */}
-        <div className="hidden md:flex">
+        {/* Desktop sidebar stays docked; order flips automatically for RTL */}
+        <div className={cn("hidden h-full md:flex", sidebarPlacement)}>
           <Sidebar />
         </div>
 

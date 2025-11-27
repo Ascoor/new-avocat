@@ -1,5 +1,11 @@
 import type { FC } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Navigate,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
 
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminRoute from '@/components/AdminRoute';
@@ -55,68 +61,76 @@ const DashboardPlaceholder: FC<{ sectionKey: DashboardSectionKey }> = ({ section
   );
 };
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* 🌍 Public */}
-        <Route path="/" element={<Landing />} /> 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      {/* 🌍 Public */}
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
 
-        {/* 🔒 Protected */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        >
-          {/* 🏠 Main */}
-          <Route index element={<DashboardHome />} />
+      {/* 🔒 Protected */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      >
+        {/* 🏠 Main */}
+        <Route index element={<DashboardHome />} />
 
-          {/* ⚖️ Legal Cases */}
-          <Route path="cases" element={<LegalCasesPage />} />
-          <Route path="cases/:id" element={<LegalCaseDetails />} />
+        {/* ⚖️ Legal Cases */}
+        <Route path="cases" element={<LegalCasesPage />} />
+        <Route path="cases/:id" element={<LegalCaseDetails />} />
 
-          {/* 👥 Clients */}
-          <Route path="clients" element={<ClientsPage />} />
-          <Route path="unClients" element={<UnClientsPage />} />
+        {/* 👥 Clients */}
+        <Route path="clients" element={<ClientsPage />} />
+        <Route path="unClients" element={<UnClientsPage />} />
 
-          {/* ⚖️ Lawyers */}
-          <Route path="lawyers" element={<LawyersList />} />
-          <Route path="lawyers/:id" element={<LawyerDetails />} />
+        {/* ⚖️ Lawyers */}
+        <Route path="lawyers" element={<LawyersList />} />
+        <Route path="lawyers/:id" element={<LawyerDetails />} />
 
-          {/* 🛠️ Services & Settings */}
-          <Route path="services" element={<ServicesPage />} />
-          <Route path="office_settings" element={<OfficeSettingsPage />} />
+        {/* 🛠️ Services & Settings */}
+        <Route path="services" element={<ServicesPage />} />
+        <Route path="office_settings" element={<OfficeSettingsPage />} />
 
-          {/* 🌐 Website Management */}
-          <Route path="website" element={<AdminRoute />}>
-            <Route index element={<Navigate to="pages" replace />} />
-            <Route path="report" element={<WebsiteReportPage />} />
-            <Route path="workflow" element={<WorkflowBoardPage />} />
-            <Route path="activity" element={<ActivityLogPage />} />
-            <Route path="notifications" element={<NotificationsPage />} />
-            <Route path=":section" element={<AdminWebsitePage />} />
-          </Route>
-
-          {/* ⏳ Coming Soon */}
-          <Route path="sessions" element={<DashboardPlaceholder sectionKey="sessions" />} />
-          <Route path="procedures" element={<DashboardPlaceholder sectionKey="procedures" />} />
-          <Route path="reports" element={<DashboardPlaceholder sectionKey="reports" />} />
-          <Route path="settings" element={<DashboardPlaceholder sectionKey="settings" />} />
-          <Route path="users_roles" element={<DashboardPlaceholder sectionKey="users_roles" />} />
-          <Route path="archive" element={<DashboardPlaceholder sectionKey="archive" />} />
-          <Route path="courts_search" element={<DashboardPlaceholder sectionKey="courts_search" />} />
+        {/* 🌐 Website Management */}
+        <Route path="website" element={<AdminRoute />}>
+          <Route index element={<Navigate to="pages" replace />} />
+          <Route path="report" element={<WebsiteReportPage />} />
+          <Route path="workflow" element={<WorkflowBoardPage />} />
+          <Route path="activity" element={<ActivityLogPage />} />
+          <Route path="notifications" element={<NotificationsPage />} />
+          <Route path=":section" element={<AdminWebsitePage />} />
         </Route>
 
-        {/* ❌ 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+        {/* ⏳ Coming Soon */}
+        <Route path="sessions" element={<DashboardPlaceholder sectionKey="sessions" />} />
+        <Route path="procedures" element={<DashboardPlaceholder sectionKey="procedures" />} />
+        <Route path="reports" element={<DashboardPlaceholder sectionKey="reports" />} />
+        <Route path="settings" element={<DashboardPlaceholder sectionKey="settings" />} />
+        <Route path="users_roles" element={<DashboardPlaceholder sectionKey="users_roles" />} />
+        <Route path="archive" element={<DashboardPlaceholder sectionKey="archive" />} />
+        <Route path="courts_search" element={<DashboardPlaceholder sectionKey="courts_search" />} />
+      </Route>
+
+      {/* ❌ 404 */}
+      <Route path="*" element={<NotFound />} />
+    </Route>,
+  ),
+  {
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    },
+  },
+);
+
+const App = () => {
+  return <RouterProvider router={router} />;
 };
 
 export default App;
