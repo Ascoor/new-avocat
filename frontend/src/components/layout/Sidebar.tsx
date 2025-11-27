@@ -148,7 +148,8 @@ const Sidebar: React.FC = () => {
       animate={collapsed ? "closed" : "open"}
       variants={sidebarVariants}
       className={cn(
-        "fixed inset-y-0 z-50 hidden h-screen flex-shrink-0 flex-col bg-surface/75 shadow-glass backdrop-blur-xl",
+        "fixed inset-y-0 z-50 hidden h-screen flex-shrink-0 flex-col",
+        "bg-surface-overlay/80 border border-border shadow-elegant backdrop-blur-xl",
         "md:flex",
         isRTL ? "right-0" : "left-0"
       )}
