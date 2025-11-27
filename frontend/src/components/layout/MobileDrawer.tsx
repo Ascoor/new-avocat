@@ -80,19 +80,19 @@ const MobileDrawer: React.FC = () => {
             animate="open"
             exit="closed"
             className={cn(
-              "fixed inset-y-0 z-[9999] flex h-full w-full max-w-[360px] flex-col border border-border/80 bg-surface/90 backdrop-blur-2xl shadow-glass transition-transform duration-300 ease-\[cubic-bezier(0.32,0.72,0,1)\] md:hidden",
+              "fixed inset-y-0 z-[9999] flex h-full w-full max-w-[360px] flex-col border border-border bg-surface-overlay/90 backdrop-blur-2xl shadow-elegant transition-transform duration-300 ease-\[cubic-bezier(0.32,0.72,0,1)\] md:hidden",
               isRTL ? "right-0" : "left-0"
             )}
             dir={isRTL ? "rtl" : "ltr"}
           >
             {/* رأس القائمة */}
-            <div className="flex items-center justify-between border-b border-white/10 bg-surface/90 px-4 py-3">
+            <div className="flex items-center justify-between border-b border-border bg-surface-raised/80 px-4 py-3">
               <BrandLogo variant="full" className="h-8" />
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={closeMobile}
-                className="h-9 w-9 rounded-full border border-white/10 text-neutral-700 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-neutral-100"
+                className="h-9 w-9 rounded-full border border-border/80 text-foreground transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft"
                 aria-label={t("common.close")}
               >
                 <X className="h-4 w-4" />

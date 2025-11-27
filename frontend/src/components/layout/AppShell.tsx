@@ -42,7 +42,6 @@ const AppShell: React.FC<AppShellProps> = ({
       dir={direction}
       className={cn(
         "dashboard-shell min-h-screen bg-background text-foreground",
-        "[--shell-background:theme(colors.background)] [--shell-overlay:transparent]",
         className
       )}
     >
