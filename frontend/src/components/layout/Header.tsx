@@ -15,6 +15,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import BrandLogo from "../common/BrandLogo";
+import { shellContainer } from "./layout-classes";
 
 interface HeaderProps {
   title?: string;
@@ -35,11 +36,11 @@ export const Header: React.FC<HeaderProps> = ({ title, className }) => {
         className
       )}
     >
-      <div className="relative z-[1] mx-auto flex h-full w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className={cn("relative z-[1] flex h-full w-full items-center justify-between", shellContainer)}>
         {/* Left side: keeps controls together while respecting reading direction */}
         <div
           className={cn(
-            "flex items-center gap-3", 
+            "flex items-center gap-3",
             isRTL ? "flex-row-reverse" : "flex-row"
           )}
         >

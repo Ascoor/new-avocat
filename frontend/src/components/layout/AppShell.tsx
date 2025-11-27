@@ -4,6 +4,7 @@ import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
+import { shellContainer, shellSectionSpacing } from "./layout-classes";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -14,10 +15,11 @@ interface AppShellProps {
 const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
   const { direction, isRTL } = useLanguage();
 
-  const shellColumns = isRTL
-    ? "md:grid-cols-[minmax(0,1fr)_auto]"
-    : "md:grid-cols-[auto_minmax(0,1fr)]";
-  const sidebarPlacement = isRTL ? "md:order-2 md:justify-end" : "md:order-1";
+ 
+  // Keep a single grid definition and flip order based on reading direction
+  const shellColumns = isRTL ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[auto_1fr]";
+  const sidebarPlacement = isRTL ? "md:order-2" : "md:order-1";
+ 
   const contentPlacement = isRTL ? "md:order-1" : "md:order-2";
 
   return (
@@ -44,8 +46,8 @@ const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
         {/* Header + main content */}
         <div className={cn("relative flex min-h-screen flex-col", contentPlacement)}>
           <Header title={title} />
-          <main className="flex-1 overflow-y-auto px-4 pb-8 pt-4 sm:px-6 lg:px-8">
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">{children}</div>
+          <main className={shellSectionSpacing}>
+            <div className={cn(shellContainer, "flex flex-col gap-6")}>{children}</div>
           </main>
         </div>
       </div>

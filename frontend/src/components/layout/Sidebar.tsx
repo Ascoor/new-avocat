@@ -54,6 +54,14 @@ const Sidebar: React.FC = () => {
   const collapsed = isCollapsed;
   const currentPath = location.pathname;
 
+  const baseButtonClasses = cn(
+    "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
+    collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5"
+  );
+  const activeButtonClasses = "bg-brand-primary/10 text-brand-primary";
+  const inactiveButtonClasses =
+    "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100";
+
   // Helper: Check if a path is active
   const isActive = useCallback(
     (path?: string) => !!path && (currentPath === path || currentPath.startsWith(`${path}/`)),
@@ -183,13 +191,7 @@ const Sidebar: React.FC = () => {
                           asChild
                           isActive={itemActive}
                           tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
-                          className={cn(
-                            "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
-                            collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5",
-                            itemActive
-                              ? "bg-brand-primary/10 text-brand-primary"
-                              : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
-                          )}
+                          className={cn(baseButtonClasses, itemActive ? activeButtonClasses : inactiveButtonClasses)}
                         >
                           <NavLink
                             to={target}
@@ -219,13 +221,7 @@ const Sidebar: React.FC = () => {
                           <SidebarMenuButton
                             isActive={groupActive}
                             tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
-                            className={cn(
-                              "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
-                              collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5",
-                              groupActive
-                                ? "bg-brand-primary/10 text-brand-primary"
-                                : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
-                            )}
+                            className={cn(baseButtonClasses, groupActive ? activeButtonClasses : inactiveButtonClasses)}
                           >
                             <div className={cn("flex items-center", collapsed ? "justify-center" : "gap-3")}> 
                               {renderIcon(item.iconKey as IconKey)}
