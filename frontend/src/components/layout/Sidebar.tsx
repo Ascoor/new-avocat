@@ -31,11 +31,11 @@ import { cn } from "@/lib/utils";
 const sidebarVariants = {
   open: (rtl: boolean) => ({
     x: 0,
-    transition: { duration: 0.3, ease: "easeOut" },
+    transition: { duration: 0.3, ease: [0.17, 0.55, 0.55, 1] },
   }),
   closed: (rtl: boolean) => ({
     x: rtl ? 12 : -12,
-    transition: { duration: 0.25, ease: "easeInOut" },
+    transition: { duration: 0.25, ease: [0.42, 0, 0.58, 1] },
   }),
 };
 

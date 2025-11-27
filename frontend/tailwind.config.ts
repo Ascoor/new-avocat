@@ -36,10 +36,6 @@ const config: Config = {
           on: "hsl(var(--brand-on))",
           subtle: "hsl(var(--brand-subtle))",
         },
-        accent: {
-          mint: "hsl(var(--accent-mint))",
-          amber: "hsl(var(--accent-amber))",
-        },
         neutral: {
           50: "hsl(var(--neutral-50))",
           100: "hsl(var(--neutral-100))",
@@ -83,6 +79,8 @@ const config: Config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          mint: "hsl(var(--accent-mint))",
+          amber: "hsl(var(--accent-amber))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
