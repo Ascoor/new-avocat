@@ -14,11 +14,9 @@ interface AppShellProps {
 const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
   const { direction, isRTL } = useLanguage();
 
-  const shellColumns = isRTL
-    ? "md:[grid-template-columns:1fr_auto]"
-    : "md:[grid-template-columns:auto_1fr]";
-  const sidebarPlacement = isRTL ? "md:col-start-2" : "md:col-start-1";
-  const contentPlacement = isRTL ? "md:col-start-1" : "md:col-start-2";
+  const shellColumns = isRTL ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[auto_1fr]";
+  const sidebarPlacement = isRTL ? "md:order-2" : "md:order-1";
+  const contentPlacement = isRTL ? "md:order-1" : "md:order-2";
 
   return (
     <div
@@ -32,7 +30,7 @@ const AppShell: React.FC<AppShellProps> = ({ children, title, className }) => {
       <div
         className={cn(
           "relative grid min-h-screen bg-gradient-to-br from-surface via-surface-raised to-surface-overlay",
-          "md:items-stretch",
+          "md:items-stretch md:grid",
           shellColumns
         )}
       >
