@@ -34,7 +34,7 @@ const sidebarVariants = {
     transition: { duration: 0.3, ease: "easeOut" },
   }),
   closed: (rtl: boolean) => ({
-    x: rtl ? 32 : -32,
+    x: rtl ? 12 : -12,
     transition: { duration: 0.25, ease: "easeInOut" },
   }),
 };
@@ -47,6 +47,9 @@ const Sidebar: React.FC = () => {
   const { t, isRTL } = useLanguage();
   const { logout } = useAuth();
   const { isCollapsed } = useSidebarContext();
+
+  const collapsedWidth = 72;
+  const expandedWidth = 272;
 
   const collapsed = isCollapsed;
   const currentPath = location.pathname;
@@ -132,9 +135,9 @@ const Sidebar: React.FC = () => {
       custom={isRTL}
       animate={collapsed ? "closed" : "open"}
       variants={sidebarVariants}
-      style={{ width: collapsed ? 72 : 272 }}
+      style={{ width: collapsed ? collapsedWidth : expandedWidth }}
       className={cn(
-        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border border-border/80 bg-surface/80 backdrop-blur-2xl shadow-glass",
+        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border border-white/10 bg-surface/75 backdrop-blur-xl shadow-glass",
         "transition-[width] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex"
       )}
       dir={isRTL ? "rtl" : "ltr"}
@@ -181,8 +184,8 @@ const Sidebar: React.FC = () => {
                           isActive={itemActive}
                           tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
                           className={cn(
-                            "group/nav rounded-xl text-sm font-semibold transition-all duration-300 ease-smooth",
-                            collapsed ? "justify-center px-2 py-2" : "gap-3 px-3 py-2.5",
+                            "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
+                            collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5",
                             itemActive
                               ? "bg-brand-primary/10 text-brand-primary"
                               : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
@@ -191,8 +194,8 @@ const Sidebar: React.FC = () => {
                           <NavLink
                             to={target}
                             className={cn(
-                              "flex items-center gap-3",
-                              collapsed ? "justify-center" : "w-full"
+                              "flex items-center",
+                              collapsed ? "justify-center" : "w-full gap-3"
                             )}
                           >
                             {renderIcon(item.iconKey as IconKey)}
@@ -217,14 +220,14 @@ const Sidebar: React.FC = () => {
                             isActive={groupActive}
                             tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
                             className={cn(
-                              "group/nav rounded-xl text-sm font-semibold transition-all duration-300 ease-smooth",
-                              collapsed ? "justify-center px-2 py-2" : "gap-3 px-3 py-2.5",
+                              "group/nav rounded-2xl text-sm font-semibold leading-none transition-all duration-300 ease-smooth",
+                              collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5",
                               groupActive
                                 ? "bg-brand-primary/10 text-brand-primary"
                                 : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
                             )}
                           >
-                            <div className={cn("flex items-center gap-3", collapsed ? "justify-center" : "")}> 
+                            <div className={cn("flex items-center", collapsed ? "justify-center" : "gap-3")}> 
                               {renderIcon(item.iconKey as IconKey)}
                               {!collapsed && (
                                 <span className="truncate font-medium">{t(`nav.${item.key}`)}</span>
