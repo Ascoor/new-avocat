@@ -9,11 +9,14 @@ use App\Http\Resources\PublishingQueueResource;
 use App\Models\ContentBlock;
 use App\Models\Page;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Schema;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class PageController extends Controller
 {
@@ -29,7 +32,7 @@ class PageController extends Controller
 
     public function adminIndex(): AnonymousResourceCollection
     {
-        $pages = Page::query()
+        $pages = $this->pageQuery()
             ->with($this->pageRelations())
             ->orderBy('slug')
             ->get();
@@ -77,7 +80,7 @@ class PageController extends Controller
 
     public function publishAll(Request $request): Response
     {
-        Page::query()->each(function (Page $page) use ($request) {
+        $this->pageQuery()->each(function (Page $page) use ($request) {
             $page->status = 'published';
             $page->workflow_state = 'published';
             $page->published_at = Carbon::now();
@@ -174,7 +177,7 @@ class PageController extends Controller
 
     public function publishingQueue(): AnonymousResourceCollection
     {
-        $queue = Page::query()
+        $queue = $this->pageQuery()
             ->whereNotNull('scheduled_for')
             ->with('lastEditor')
             ->orderBy('scheduled_for')
@@ -199,7 +202,7 @@ class PageController extends Controller
         $notes = Arr::pull($validated, 'notes');
         $editorId = $request->user()?->id;
 
-        $page = Page::firstOrCreate(['slug' => $slug]);
+        $page = $this->pageQuery()->firstOrCreate(['slug' => $slug]);
 
         $page->fill([
             'title_ar' => $validated['title_ar'] ?? $page->title_ar,
@@ -360,10 +363,26 @@ class PageController extends Controller
 
     private function resolvePage(string $slug): Page
     {
-        return Page::query()
+        return $this->pageQuery()
             ->with($this->pageRelations())
             ->where('slug', $slug)
             ->firstOrFail();
+    }
+
+    private function pageQuery(): Builder
+    {
+        $this->assertPagesTableExists();
+
+        return Page::query();
+    }
+
+    private function assertPagesTableExists(): void
+    {
+        if (Schema::hasTable('pages')) {
+            return;
+        }
+
+        abort(HttpResponse::HTTP_SERVICE_UNAVAILABLE, 'Pages storage is not initialized yet.');
     }
 
     private function pageRelations(): array
