@@ -134,8 +134,8 @@ const Sidebar: React.FC = () => {
       variants={sidebarVariants}
       style={{ width: collapsed ? 72 : 272 }}
       className={cn(
-        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border border-white/10 bg-surface/75 backdrop-blur-xl shadow-glass transition-[width] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex",
-        "rounded-none"
+        "sticky top-0 hidden h-screen flex-shrink-0 flex-col border border-border/80 bg-surface/80 backdrop-blur-2xl shadow-glass",
+        "transition-[width] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] md:flex"
       )}
       dir={isRTL ? "rtl" : "ltr"}
     >
@@ -157,7 +157,7 @@ const Sidebar: React.FC = () => {
         {sidebarGroups.map((group) => (
           <SidebarGroup key={group.key}>
             {!collapsed && (
-              <SidebarGroupLabel className="px-3 text-[11px] font-semibold uppercase tracking-wide text-neutral-700 dark:text-neutral-100">
+              <SidebarGroupLabel className="px-3 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 {t(`sidebar.sections.${group.key}`)}
               </SidebarGroupLabel>
             )}
@@ -180,14 +180,14 @@ const Sidebar: React.FC = () => {
                           asChild
                           isActive={itemActive}
                           tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
-                            className={cn(
-                              "group/nav rounded-xl text-sm font-medium transition-all duration-300 ease-smooth",
-                              collapsed ? "justify-center px-2 py-2" : "gap-3 px-3 py-2.5",
-                              itemActive
-                                ? "bg-brand-primary/10 text-brand-primary"
-                                : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
-                            )}
-                          >
+                          className={cn(
+                            "group/nav rounded-xl text-sm font-semibold transition-all duration-300 ease-smooth",
+                            collapsed ? "justify-center px-2 py-2" : "gap-3 px-3 py-2.5",
+                            itemActive
+                              ? "bg-brand-primary/10 text-brand-primary"
+                              : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                          )}
+                        >
                           <NavLink
                             to={target}
                             className={cn(
@@ -207,7 +207,7 @@ const Sidebar: React.FC = () => {
 
                   // ---- Collapsible Group ----
                   const isExpanded = expandedGroups[item.key] ?? groupActive;
-                  const childSpacing = collapsed ? "" : isRTL ? "mr-8" : "ml-8";
+                  const childSpacing = collapsed ? "" : "ps-8";
 
                   return (
                     <SidebarMenuItem key={item.key}>
@@ -217,7 +217,7 @@ const Sidebar: React.FC = () => {
                             isActive={groupActive}
                             tooltip={collapsed ? t(`nav.${item.key}`) : undefined}
                             className={cn(
-                              "group/nav rounded-xl text-sm font-medium transition-all duration-300 ease-smooth",
+                              "group/nav rounded-xl text-sm font-semibold transition-all duration-300 ease-smooth",
                               collapsed ? "justify-center px-2 py-2" : "gap-3 px-3 py-2.5",
                               groupActive
                                 ? "bg-brand-primary/10 text-brand-primary"
