@@ -148,7 +148,8 @@ const Sidebar: React.FC = () => {
       animate={collapsed ? "closed" : "open"}
       variants={sidebarVariants}
       className={cn(
-        "fixed inset-y-0 z-50 hidden h-screen flex-shrink-0 flex-col bg-surface/75 shadow-glass backdrop-blur-xl",
+        "fixed inset-y-0 z-50 hidden h-screen flex-shrink-0 flex-col",
+        "bg-surface-overlay/80 border border-border shadow-elegant backdrop-blur-xl",
         "md:flex",
         isRTL ? "right-0" : "left-0"
       )}
@@ -204,7 +205,7 @@ const Sidebar: React.FC = () => {
                               : "gap-3 px-3 py-2.5",
                             itemActive
                               ? "bg-brand-primary/10 text-brand-primary"
-                              : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                              : "text-foreground/80 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-foreground"
                           )}
                         >
                           <NavLink
@@ -249,7 +250,7 @@ const Sidebar: React.FC = () => {
                                 : "gap-3 px-3 py-2.5",
                               groupActive
                                 ? "bg-brand-primary/10 text-brand-primary"
-                                : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                                : "text-foreground/80 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-foreground"
                             )}
                           >
                             <div
@@ -295,7 +296,7 @@ const Sidebar: React.FC = () => {
                                     childSpacing,
                                     childActive
                                       ? "bg-brand-primary/10 text-brand-primary"
-                                      : "text-neutral-700 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-neutral-100"
+                                      : "text-foreground/80 hover:bg-brand-primary/8 hover:text-brand-primary dark:text-foreground"
                                   )}
                                 >
                                   <NavLink
