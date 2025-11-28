@@ -371,33 +371,18 @@ class PageController extends Controller
 
     private function pageQuery(): Builder
     {
-        $this->assertPageStorageIsReady();
+        $this->assertPagesTableExists();
 
         return Page::query();
     }
 
-    private function assertPageStorageIsReady(): void
+    private function assertPagesTableExists(): void
     {
-        static $alreadyChecked = false;
-
-        if ($alreadyChecked) {
+        if (Schema::hasTable('pages')) {
             return;
         }
 
-        $missing = collect(['pages', 'content_blocks', 'page_revisions'])
-            ->reject(fn (string $table) => Schema::hasTable($table))
-            ->values();
-
-        if ($missing->isEmpty()) {
-            $alreadyChecked = true;
-
-            return;
-        }
-
-        abort(HttpResponse::HTTP_SERVICE_UNAVAILABLE, sprintf(
-            'Pages storage is not initialized: missing %s. Run migrations for the website CMS tables.',
-            $missing->implode(', ')
-        ));
+        abort(HttpResponse::HTTP_SERVICE_UNAVAILABLE, 'Pages storage is not initialized yet.');
     }
 
     private function pageRelations(): array

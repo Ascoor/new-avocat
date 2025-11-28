@@ -156,6 +156,8 @@ const Sidebar: React.FC = () => {
       dir={isRTL ? "rtl" : "ltr"}
     >
       {/* Brand */}
+      
+      {/* Brand */}
       <div
         className={cn(
           "flex items-center justify-center transition-all duration-base ease-smooth",
@@ -167,7 +169,6 @@ const Sidebar: React.FC = () => {
           className={collapsed ? "h-10 w-10" : "h-9 w-auto"}
         />
       </div>
-
       {/* Navigation */}
       <SidebarContent className="sidebar-scroll flex-1 space-y-6 overflow-y-auto px-1 py-4">
         {sidebarGroups.map((group) => (
@@ -341,3 +342,4 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
+  
