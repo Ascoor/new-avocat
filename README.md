@@ -19,6 +19,11 @@ Legal case management with secure SPA auth. Backend: Laravel 12 (PHP 8.2) with S
 # run both apps
 bash scripts/dev.sh
 
+# or launch the full Dockerized stack
+./start.sh         # build (if needed) + run backend, frontend, Postgres, Redis
+./start.sh logs    # view aggregated logs
+./start.sh down    # stop and clean containers
+
 # or run individually
 cd backend && cp .env.example .env && composer install && php artisan key:generate && php artisan migrate
 npm install && npm run dev
