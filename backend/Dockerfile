@@ -5,8 +5,6 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     git \
     unzip \
-    sqlite3 \
-    libsqlite3-dev \
     libpq-dev \
     libzip-dev \
     libpng-dev \
