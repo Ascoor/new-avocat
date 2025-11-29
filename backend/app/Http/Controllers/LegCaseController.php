@@ -15,23 +15,24 @@ class LegCaseController extends Controller
      * @return JsonResponse The JSON response containing the leg cases.
      */
     public function index()
-    {$legCases = LegCase::with([
-        'courts',
-        'clients',
-        'caseType',
-        'caseSubType',
-        'lawyers',
-        'createdBy',
-        'updatedBy',
-        'procedures'
+    {
+        $legCases = LegCase::with([
+            'courts',
+            'clients',
+            'caseType',
+            'caseSubType',
+            'lawyers',
+            'createdBy',
+            'updatedBy',
+            'procedures'
         ])
-        ->orderBy('created_at', 'desc')  // أولوية لتاريخ الإنشاء
-        ->orderBy('updated_at', 'desc')  // ثم تاريخ التحديث
-    ->whereIn('status', ['قيد التجهيز', 'متداولة'])
-    ->orderByRaw("FIELD(status, 'قيد التجهيز', 'متداولة') DESC")
-    ->get();
-    
-    return response()->json($legCases);
+            ->whereIn('status', ['قيد التجهيز', 'متداولة'])
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
+            ->orderByRaw("CASE status WHEN 'قيد التجهيز' THEN 1 WHEN 'متداولة' THEN 2 ELSE 3 END")
+            ->get();
+
+        return response()->json($legCases);
     }
 
     /**
