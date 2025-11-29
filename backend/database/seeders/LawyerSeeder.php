@@ -24,6 +24,7 @@ class LawyerSeeder extends Seeder
         DB::table('lawyers')->truncate();
         
         Schema::enableForeignKeyConstraints();
+        // Lawyer classes to choose from randomly
 
         $lawyers = [
             [
@@ -43,7 +44,7 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1940-05-15',
                 'identity_number' => '23456749512345',
                 'law_reg_num' => '124344',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'إستئناف',
                 'email' => 'mony.ahmed@example.com',
                 'phone_number' => '01012845678',
                 'gender' => 'أنثى',
@@ -55,20 +56,19 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1980-05-15',
                 'identity_number' => '23456765512345',
                 'law_reg_num' => '14234',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'إبتدائي',
                 'email' => 'sayed.ahojmed@example.com',
                 'phone_number' => '01012342678',
                 'gender' => 'ذكر',
                 'address' => 'القاهرة',
                 'religion' => 'مسلم',
             ],
-
             [
                 'name' => 'رشا عبدالنبي',
                 'birthdate' => '1980-05-15',
                 'identity_number' => '23356765512345',
                 'law_reg_num' => '12344',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'جدول عام',
                 'email' => 'sayed.allhmed@example.com',
                 'phone_number' => '0101e322678',
                 'gender' => 'ذكر',
@@ -92,7 +92,7 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1980-05-15',
                 'identity_number' => '12245454785454',
                 'law_reg_num' => '12231134',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'إستئناف',
                 'email' => 'sayed.akhdfgmed@example.com',
                 'phone_number' => '010100022678',
                 'gender' => 'أنثى',
@@ -104,7 +104,7 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1980-05-15',
                 'identity_number' => '12249898785454',
                 'law_reg_num' => '12238874',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'إبتدائي',
                 'email' => 'sayed.akssshmed@example.com',
                 'phone_number' => '010122002678',
                 'gender' => 'أنثى',
@@ -116,7 +116,7 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1980-05-15',
                 'identity_number' => '12545488785454',
                 'law_reg_num' => '12000874',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'جدول عام',
                 'email' => 'sayed.akhmdfded@example.com',
                 'phone_number' => '010133202678',
                 'gender' => 'أنثى',
@@ -140,7 +140,7 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1980-05-15',
                 'identity_number' => '24476765572345',
                 'law_reg_num' => '143134',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'إستئناف',
                 'email' => 'sayed.aksdshmed@example.com',
                 'phone_number' => '010121432678',
                 'gender' => 'ذكر',
@@ -152,7 +152,7 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1980-05-15',
                 'identity_number' => '24547765572345',
                 'law_reg_num' => '12333335',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'إبتدائي',
                 'email' => 'sayed.akhmdded@example.com',
                 'phone_number' => '01012992678',
                 'gender' => 'ذكر',
@@ -164,14 +164,13 @@ class LawyerSeeder extends Seeder
                 'birthdate' => '1980-05-15',
                 'identity_number' => '32347765572345',
                 'law_reg_num' => '123337675',
-                'lawyer_class' => 'نقض',
+                'lawyer_class' => 'جدول عام',
                 'email' => 'sayed.akfdhmed@example.com',
                 'phone_number' => '010132342678',
                 'gender' => 'ذكر',
                 'address' => 'القاهرة',
                 'religion' => 'مسلم',
             ]
-
         ];
 
         foreach ($lawyers as $data) {
@@ -196,11 +195,11 @@ class LawyerSeeder extends Seeder
                     'identity_number' => $data['identity_number'],
                     'email'           => $data['email'],
                     'law_reg_num'     => $data['law_reg_num'],
+                    'lawyer_class'    => $data['lawyer_class'],
                     'phone_number'    => $data['phone_number'],
                     'gender'          => $data['gender'],
                     'address'         => $data['address'],
                     'religion'        => $data['religion'],
-                
                 ]);
 
                 $this->command->info("• Lawyer {$data['name']} & token created.");

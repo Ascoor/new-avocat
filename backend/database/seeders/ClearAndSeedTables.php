@@ -24,7 +24,7 @@ class ClearAndSeedTables extends Seeder
         $this->command->info("Preparing to clear and seed tables in database: $database");
 
         // Disable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+           Schema::disableForeignKeyConstraints();
 
         // List of tables to clear and reseed
         $tables = [
@@ -54,7 +54,7 @@ class ClearAndSeedTables extends Seeder
         }
 
         // Enable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+           Schema::enableForeignKeyConstraints();
 
         // Final message
         $this->command->info("All specified tables have been cleared and reseeded successfully!");
