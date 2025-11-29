@@ -140,7 +140,40 @@
     "name": "الاسم",
     "phone": "الهاتف",
     "email": "البريد الإلكتروني",
-    "joinDate": "تاريخ الانضمام"
+    "joinDate": "تاريخ الانضمام",
+    "list": {
+      "title": "قائمة العملاء",
+      "subtitle": "إدارة بيانات العملاء الحاليين ومعلومات التواصل وحالاتهم.",
+      "add": "إضافة عميل",
+      "empty": "لا يوجد عملاء مضافون بعد.",
+      "table": {
+        "slug": "المرجع",
+        "name": "الاسم",
+        "identity": "رقم الهوية",
+        "phone": "رقم الهاتف",
+        "status": "الحالة",
+        "actions": "إجراءات"
+      },
+      "actions": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "confirmDeleteTitle": "حذف {name}؟",
+      "confirmDeleteDescription": "سيتم حذف سجل هذا العميل بشكل نهائي.",
+      "confirmDelete": "حذف"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط"
+    },
+    "messages": {
+      "toggleErrorTitle": "تعذر تغيير الحالة",
+      "toggleErrorDescription": "يرجى المحاولة بعد قليل.",
+      "deleteSuccess": "تم حذف العميل بنجاح.",
+      "deleteErrorTitle": "تعذر حذف العميل",
+      "deleteErrorDescription": "يرجى المحاولة مرة أخرى لاحقًا."
+    }
   },
   "agents": {
     "title": "إدارة الوكلاء",

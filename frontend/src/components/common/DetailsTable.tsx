@@ -428,7 +428,10 @@ const DetailsTable = <T,>({
               </TableRow>
             ) : (
               paginatedData.map((row, rowIndex) => (
-                <TableRow key={`row-${rowIndex}`} className="border-border/40">
+                <TableRow
+                  key={`row-${rowIndex}`}
+                  className="border-border/40 transition-colors hover:bg-muted/40"
+                >
                   {columns.map((column) => (
                     <TableCell
                       key={`${column.key}-${rowIndex}`}

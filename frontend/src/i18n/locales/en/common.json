@@ -141,7 +141,40 @@
     "name": "Name",
     "phone": "Phone",
     "email": "Email",
-    "joinDate": "Join Date"
+    "joinDate": "Join Date",
+    "list": {
+      "title": "Clients",
+      "subtitle": "Manage active clients, their contact details, and statuses.",
+      "add": "Add client",
+      "empty": "No clients have been added yet.",
+      "table": {
+        "slug": "Reference",
+        "name": "Name",
+        "identity": "National ID",
+        "phone": "Phone",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "confirmDeleteTitle": "Delete {name}?",
+      "confirmDeleteDescription": "This client record will be permanently removed.",
+      "confirmDelete": "Delete"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "messages": {
+      "toggleErrorTitle": "Unable to change status",
+      "toggleErrorDescription": "Please try again in a moment.",
+      "deleteSuccess": "Client deleted successfully.",
+      "deleteErrorTitle": "Unable to delete client",
+      "deleteErrorDescription": "Please try again later."
+    }
   },
   "agents": {
     "title": "Agents Management",

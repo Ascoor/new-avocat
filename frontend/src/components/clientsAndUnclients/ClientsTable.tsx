@@ -20,8 +20,10 @@ const statusLabelKey: Record<Client['status'], string> = {
 };
 
 const statusBadgeClass: Record<Client['status'], string> = {
-  active: 'border-emerald-300 text-emerald-600',
-  inactive: 'border-slate-300 text-slate-600',
+  active:
+    'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-700/60 dark:bg-emerald-950/60 dark:text-emerald-200',
+  inactive:
+    'border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700/60 dark:bg-slate-900/60 dark:text-slate-200',
 };
 
 const ClientsTable = () => {
