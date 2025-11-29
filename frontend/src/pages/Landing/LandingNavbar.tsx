@@ -94,6 +94,11 @@ const LandingNavbar: React.FC = () => {
   const actionVariant = themeToggleToneVariantMap[actionTone];
   const actionToneClasses = themeToggleToneClassMap[actionTone];
   const actionButtonBase = "rounded-full transition-all duration-300";
+  const navTextColor = isTop
+    ? "text-white/80 hover:text-white"
+    : isDark
+    ? "text-white/80 hover:text-white"
+    : "text-foreground/80 hover:text-foreground";
 
   return (
     <nav
@@ -133,36 +138,33 @@ const LandingNavbar: React.FC = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 lg:flex">
-          {navItems.map(({ href, icon: Icon, en, ar, type }) => {
-            const label = isArabic ? ar : en;
-            return (
-              <button
-                key={href}
-                onClick={() => handleNavClick({ href, icon: Icon, en, ar, type })}
-                className={`group relative flex items-center gap-2 text-sm font-medium tracking-wide transition-colors ${
-                  isDark
-                    ? "text-white/80 hover:text-white"
-                    : "text-foreground/70 hover:text-foreground"
-                }`}
-              >
-                <Icon
-                  className={`h-4 w-4 transition-transform duration-300 group-hover:scale-110 ${
-                    isDark ? "text-white" : "text-accent"
-                  }`}
-                />
-                <span className="relative">
-                  {label}
-                  <span
-                    className={`absolute -bottom-1 block h-0.5 w-full scale-x-0 transform transition-transform duration-300 group-hover:scale-x-100 ${underlineAlignment} ${
-                      isDark
-                        ? "bg-white/80"
-                        : "bg-gradient-to-r from-accent via-primary to-accent"
-                    }`}
-                  />
-                </span>
-              </button>
-            );
-          })}
+        {navItems.map(({ href, icon: Icon, en, ar, type }) => {
+  const label = isArabic ? ar : en;
+  return (
+    <button
+      key={href}
+      onClick={() => handleNavClick({ href, icon: Icon, en, ar, type })}
+      className={`group relative flex items-center gap-2 text-sm font-medium tracking-wide transition-colors ${navTextColor}`}
+    >
+      <Icon
+        className={`h-4 w-4 transition-transform duration-300 group-hover:scale-110 ${
+          isDark ? "text-white" : "text-accent"
+        }`}
+      />
+      <span className="relative">
+        {label}
+        <span
+          className={`absolute -bottom-1 block h-0.5 w-full scale-x-0 transform transition-transform duration-300 group-hover:scale-x-100 ${underlineAlignment} ${
+            isDark
+              ? "bg-white/80"
+              : "bg-gradient-to-r from-accent via-primary to-accent"
+          }`}
+        />
+      </span>
+    </button>
+  );
+})}
+
         </div>
 
         {/* Actions */}

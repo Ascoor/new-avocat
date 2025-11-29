@@ -11,6 +11,40 @@
 
 /* ========= Base ========= */
 @layer base {
+  :root {
+    /* منطق ألوان إضافي (logic colors) للروتين اليومي */
+    --navbar-link-hero: 0 0% 100%;
+    --navbar-link-hero-muted: 0 0% 90%;
+    --navbar-link-solid: var(--foreground);
+    --navbar-link-muted: 220 10% 45%;
+
+    --chip-bg-soft: 220 20% 96%;
+    --chip-border-soft: 220 18% 88%;
+    --chip-text-soft: 220 25% 35%;
+
+    --pill-primary-bg: var(--primary);
+    --pill-primary-text: var(--primary-foreground);
+
+    --badge-gold-bg: var(--gold-light);
+    --badge-gold-border: var(--gold-muted);
+    --badge-gold-text: var(--gold-muted);
+  }
+
+  .dark {
+    --navbar-link-hero: 0 0% 100%;
+    --navbar-link-hero-muted: 0 0% 82%;
+    --navbar-link-solid: 210 40% 96%;
+    --navbar-link-muted: 220 10% 70%;
+
+    --chip-bg-soft: 220 24% 16%;
+    --chip-border-soft: 220 24% 22%;
+    --chip-text-soft: 220 18% 80%;
+
+    --badge-gold-bg: 45 32% 16%;
+    --badge-gold-border: 45 80% 55%;
+    --badge-gold-text: 45 90% 70%;
+  }
+
   html,
   body {
     @apply min-h-screen antialiased;
@@ -18,6 +52,7 @@
 
   html {
     @apply scroll-smooth;
+    transition: var(--transition-smooth);
   }
 
   body {
@@ -60,19 +95,8 @@
     );
   }
 
-  :root {
-    --title-color-light: 215 80% 22%;
-    --title-color-dark: 215 100% 88%;
-    --title-glow-dark: 175 220 255;
-    --glow-intensity: 0.65;
-  }
-
   * {
     @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
   }
 
   html[lang='ar'] body {
@@ -81,6 +105,10 @@
 
   html[lang='ar'] .font-display {
     font-family: 'Cairo', 'Amiri', 'Inter', var(--font-display, 'Inter'), sans-serif;
+  }
+
+  html[lang='en'] body {
+    font-family: 'Inter', 'Outfit', 'Cairo', var(--font-display, 'Inter'), sans-serif;
   }
 
   /* Dark CTA background */
@@ -94,9 +122,11 @@
 
 /* ========= Components ========= */
 @layer components {
+  /* عناوين الأقسام */
   .section-title {
     font-family: 'Poppins', 'Cairo', 'Outfit', 'Inter', var(--font-display, 'Inter'), sans-serif;
     letter-spacing: 0.08em;
+    color: hsl(var(--title-color-light));
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     text-shadow:
       0 0 10px rgba(175, 220, 255, 0.25),
@@ -105,6 +135,12 @@
   }
 
   .section-title::after {
+    content: '';
+    display: block;
+    margin-top: 0.4rem;
+    height: 3px;
+    width: 64px;
+    border-radius: 999px;
     background-image: linear-gradient(
       to bottom,
       transparent,
@@ -128,6 +164,89 @@
       transparent,
       rgba(255, 255, 255, 0.08)
     );
+  }
+
+  /* شارة / بادج ناعمة */
+  .chip-soft {
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: hsl(var(--chip-bg-soft));
+    border: 1px solid hsl(var(--chip-border-soft));
+    color: hsl(var(--chip-text-soft));
+  }
+
+  .pill-primary {
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background-color: hsl(var(--pill-primary-bg));
+    color: hsl(var(--pill-primary-text));
+    box-shadow: 0 8px 22px hsl(var(--primary) / 0.25);
+  }
+
+  .badge-gold {
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: hsl(var(--badge-gold-bg));
+    border: 1px solid hsl(var(--badge-gold-border));
+    color: hsl(var(--badge-gold-text));
+  }
+
+  /* روابط الـ Navbar */
+  .nav-link-hero {
+    color: hsl(var(--navbar-link-hero-muted));
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+
+  .nav-link-hero:hover {
+    color: hsl(var(--navbar-link-hero));
+    text-shadow: 0 0 12px hsl(var(--neon-glow) / 0.4);
+  }
+
+  .nav-link-solid {
+    color: hsl(var(--navbar-link-solid));
+    transition: color 0.18s ease;
+  }
+
+  .nav-link-solid-muted {
+    color: hsl(var(--navbar-link-muted));
+  }
+
+  .nav-link-solid:hover {
+    color: hsl(var(--primary));
+  }
+
+  /* بطاقات قانونية */
+  .card-legal {
+    border-radius: var(--radius-2xl);
+    background: linear-gradient(
+      145deg,
+      hsl(var(--card) / 0.98),
+      hsl(var(--card-elevated) / 0.98)
+    );
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-smooth);
+  }
+
+  .dark .card-legal {
+    background: linear-gradient(
+      150deg,
+      hsl(var(--card) / 0.98),
+      hsl(var(--card-elevated) / 0.92)
+    );
+    border-color: hsl(var(--border) / 0.55);
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .card-legal:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-luxury);
   }
 }
 
@@ -192,3 +311,4 @@
     letter-spacing: 0.18em;
   }
 }
+  
