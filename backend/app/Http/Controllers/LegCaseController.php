@@ -265,18 +265,19 @@ public function getLegCaseSearch(Request $request)
                 'updatedBy',
                 'procedures'
             ])
-            ->where('slug', 'like', '%' . $searchQuery . '%')
-            ->orWhere('title', 'like', '%' . $searchQuery . '%')
-            ->orWhereHas('caseSubType', function ($subTypeQuery) use ($searchQuery) {
-                $subTypeQuery->where('name', 'like', '%' . $searchQuery . '%');
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('slug', 'like', '%' . $searchQuery . '%')
+                    ->orWhere('title', 'like', '%' . $searchQuery . '%')
+                    ->orWhereHas('caseSubType', function ($subTypeQuery) use ($searchQuery) {
+                        $subTypeQuery->where('name', 'like', '%' . $searchQuery . '%');
+                    })
+                    ->orWhereHas('clients', function ($clientQuery) use ($searchQuery) {
+                        $clientQuery->where('name', 'like', '%' . $searchQuery . '%');
+                    })
+                    ->orWhereHas('courts', function ($courtQuery) use ($searchQuery) {
+                        $courtQuery->where('name', 'like', '%' . $searchQuery . '%');
+                    });
             })
-            ->orWhereHas('clients', function ($clientQuery) use ($searchQuery) {
-                $clientQuery->where('name', 'like', '%' . $searchQuery . '%');
-            })
-            ->orWhereHas('courts', function ($courtQuery) use ($searchQuery) {
-                $courtQuery->where('name', 'like', '%' . $searchQuery . '%');
-            })
-        
             ->get();
 
         return response()->json($filteredLegCases, 200);
@@ -331,9 +332,9 @@ public function getLegCaseSearch(Request $request)
         DB::beginTransaction();
     
         try {
-            // Detach all associated sessions if they exist
+            // Delete all associated sessions if they exist
             if ($legCase->sessions()->exists()) {
-                $legCase->sessions()->detach();
+                $legCase->sessions()->delete();
             }
     
             // Delete associated procedures if they exist

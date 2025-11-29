@@ -15,9 +15,8 @@ class ProcedureSearchController extends Controller
             'date_start' => 'nullable|date',
             'date_end' => 'nullable|date|after_or_equal:date_start',
             'lawyer_id' => 'nullable|exists:lawyers,id',
-            'court_id' => 'nullable|exists:courts,id',
             'procedure_type_id' => 'nullable|exists:procedure_types,id',
-            'procedure_Place_type_id' => 'nullable|exists:procedure_types,id',
+            'procedure_place_type_id' => 'nullable|exists:procedure_place_types,id',
             'status' => 'nullable|in:منتهي,لم ينفذ,قيد التنفيذ',
         ]);
 
@@ -32,15 +31,11 @@ class ProcedureSearchController extends Controller
             $query->where('lawyer_id', $request->lawyer_id);
         }
 
-        if ($request->filled('court_id')) {
-            $query->where('court_id', $request->court_id);
-        }
-
         if ($request->filled('procedure_type_id')) {
             $query->where('procedure_type_id', $request->procedure_type_id);
         }
-        if ($request->filled('procedure_Place_type_id')) {
-            $query->where('procedure_Place_type_id', $request->procedure_Place_type_id);
+        if ($request->filled('procedure_place_type_id')) {
+            $query->where('procedure_place_type_id', $request->procedure_place_type_id);
         }
 
         if ($request->filled('status')) {
@@ -50,9 +45,6 @@ class ProcedureSearchController extends Controller
 
         // Execute the query and get the results
         $procedures = $query->with([
-            'court',
-
-
             'lawyer',
 
 
