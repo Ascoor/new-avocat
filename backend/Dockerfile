@@ -13,9 +13,9 @@ RUN apt-get update \
     libonig-dev \
     libxml2-dev \
     netcat-openbsd \
+    libsqlite3-dev \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install \
-    pdo \
     pdo_pgsql \
     pdo_mysql \
     pdo_sqlite \
@@ -24,6 +24,7 @@ RUN apt-get update \
     bcmath \
     pcntl \
   && rm -rf /var/lib/apt/lists/*
+
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -38,8 +39,10 @@ RUN composer install --no-interaction --no-plugins --no-scripts --no-progress --
 # Copy application code
 COPY . .
 
-# Ensure storage writable
-RUN mkdir -p storage/framework/{cache,sessions,views} storage/logs \
+RUN mkdir -p \
+    storage/framework/{cache,sessions,views} \
+    storage/logs \
+    bootstrap/cache \
   && chown -R www-data:www-data storage bootstrap/cache \
   && chmod +x docker-entrypoint.sh
 

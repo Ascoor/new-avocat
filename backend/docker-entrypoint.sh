@@ -2,15 +2,20 @@
 set -euo pipefail
 
 cd /var/www/html
-
-# Ensure runtime env file exists
-if [ ! -f .env ]; then
-  if [ -f .env.docker ]; then
-    cp .env.docker .env
-  elif [ -f .env.example ]; then
-    cp .env.example .env
-  fi
+# Ensure runtime env file exists (always recreate from .env.docker inside container)
+if [ -f .env ]; then
+  echo "Removing existing .env..."
+  rm .env
 fi
+
+if [ -f .env.docker ]; then
+  echo "Creating fresh .env from .env.docker"
+  cp .env.docker .env
+elif [ -f .env.example ]; then
+  echo "Creating .env from .env.example"
+  cp .env.example .env
+fi
+ 
 
 # Install PHP dependencies on first run
 if [ ! -f vendor/autoload.php ]; then
