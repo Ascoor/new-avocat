@@ -31,6 +31,8 @@ type Alignment = 'start' | 'center' | 'end';
 export interface DetailsTableColumn<T> {
   key: string;
   header: string;
+  /** Optional secondary label to display under the header (e.g., bilingual hint). */
+  secondaryHeader?: string;
   render: (row: T) => ReactNode;
   accessor?: (row: T) => string | number | Date | null | undefined;
   sortable?: boolean;
@@ -385,7 +387,7 @@ const DetailsTable = <T,>({
       )}
 
       <div className="overflow-x-auto">
-        <Table dir={isRTL ? 'rtl' : 'ltr'}>
+        <Table dir={isRTL ? 'rtl' : 'ltr'} className="min-w-full align-middle">
           <TableHeader>
             <TableRow className="bg-muted/40">
               {columns.map((column) => (
@@ -397,7 +399,14 @@ const DetailsTable = <T,>({
                     column.className,
                   )}
                 >
-                  {column.header}
+                  <div className="flex flex-col gap-0.5 leading-tight">
+                    <span>{column.header}</span>
+                    {column.secondaryHeader ? (
+                      <span className="text-[11px] font-medium uppercase text-foreground/80 dark:text-foreground/70">
+                        {column.secondaryHeader}
+                      </span>
+                    ) : null}
+                  </div>
                 </TableHead>
               ))}
               {hasActions && (

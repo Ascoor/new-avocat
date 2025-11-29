@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
@@ -14,6 +15,7 @@ import {
   getServices,
   deleteService,
 } from '@/api/services.service';
+import { cn } from '@/lib/utils';
 
 const STATUS_OPTIONS = [
   { value: 'جارى التنفيذ', key: 'inProgress' },
@@ -24,22 +26,51 @@ const STATUS_OPTIONS = [
 ] as const;
 
 const statusClassMap: Record<string, string> = {
-  'جارى التنفيذ': 'border-amber-300 text-amber-600',
-  'قيد التنفيذ': 'border-blue-300 text-blue-600',
-  'منتهية': 'border-emerald-300 text-emerald-600',
-  'متداولة': 'border-slate-300 text-slate-600',
-  'استيفاء': 'border-purple-300 text-purple-600',
-  unknown: 'border-muted text-muted-foreground',
+  'جارى التنفيذ': 'border-amber-300 text-amber-700 dark:border-amber-500/40 dark:text-amber-100 bg-amber-50/70 dark:bg-amber-500/10',
+  'قيد التنفيذ': 'border-blue-300 text-blue-700 dark:border-blue-500/40 dark:text-blue-100 bg-blue-50/70 dark:bg-blue-500/10',
+  'منتهية': 'border-emerald-300 text-emerald-700 dark:border-emerald-500/40 dark:text-emerald-100 bg-emerald-50/70 dark:bg-emerald-500/10',
+  'متداولة': 'border-slate-300 text-slate-700 dark:border-slate-500/40 dark:text-slate-100 bg-slate-50/70 dark:bg-slate-500/10',
+  'استيفاء': 'border-purple-300 text-purple-700 dark:border-purple-500/40 dark:text-purple-100 bg-purple-50/70 dark:bg-purple-500/10',
+  unknown: 'border-border/60 text-muted-foreground',
+};
+
+const statusEnglishFallback: Record<(typeof STATUS_OPTIONS)[number]['key'], string> = {
+  inProgress: 'In progress',
+  underExecution: 'Under execution',
+  completed: 'Completed',
+  circulating: 'In court',
+  settled: 'Settlement',
+};
+
+const bilingualFallbacks = {
+  slug: { en: 'Reference', ar: 'المرجع' },
+  type: { en: 'Service type', ar: 'نوع الخدمة' },
+  place: { en: 'Place', ar: 'مكان التنفيذ' },
+  year: { en: 'Year', ar: 'السنة' },
+  status: { en: 'Status', ar: 'الحالة' },
 };
 
 const ServicesPage: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'view'>('create');
   const [selectedService, setSelectedService] = useState<ServiceRecord | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const secondaryLanguage = language === 'ar' ? 'en' : 'ar';
+
+  const buildHeader = useCallback(
+    (key: string, fallbackKey: keyof typeof bilingualFallbacks) => ({
+      header: t(key, { defaultValue: bilingualFallbacks[fallbackKey][language] }),
+      secondary: t(key, {
+        lng: secondaryLanguage,
+        defaultValue: bilingualFallbacks[fallbackKey][secondaryLanguage],
+      }),
+    }),
+    [language, secondaryLanguage, t],
+  );
 
   const handleDialogOpenChange = (open: boolean) => {
     setDialogOpen(open);
@@ -85,50 +116,67 @@ const ServicesPage: React.FC = () => {
     () => [
       {
         key: 'slug',
-        header: t('services.list.table.slug'),
+        header: buildHeader('services.list.table.slug', 'slug').header,
+        secondaryHeader: buildHeader('services.list.table.slug', 'slug').secondary,
         accessor: (service) => service.slug ?? '',
         render: (service) => service.slug ?? '—',
         sortable: true,
       },
       {
         key: 'type',
-        header: t('services.list.table.type'),
+        header: buildHeader('services.list.table.type', 'type').header,
+        secondaryHeader: buildHeader('services.list.table.type', 'type').secondary,
         accessor: (service) => service.service_type?.name ?? '',
         render: (service) => service.service_type?.name ?? '—',
         sortable: true,
       },
       {
         key: 'place',
-        header: t('services.list.table.place'),
+        header: buildHeader('services.list.table.place', 'place').header,
+        secondaryHeader: buildHeader('services.list.table.place', 'place').secondary,
         accessor: (service) => service.service_place_name ?? '',
         render: (service) => service.service_place_name ?? '—',
         sortable: true,
       },
       {
         key: 'year',
-        header: t('services.list.table.year'),
+        header: buildHeader('services.list.table.year', 'year').header,
+        secondaryHeader: buildHeader('services.list.table.year', 'year').secondary,
         accessor: (service) => service.service_year ?? '',
         render: (service) => service.service_year ?? '—',
         sortable: true,
       },
       {
         key: 'status',
-        header: t('services.list.table.status'),
+        header: buildHeader('services.list.table.status', 'status').header,
+        secondaryHeader: buildHeader('services.list.table.status', 'status').secondary,
         accessor: (service) => service.status ?? '',
         render: (service) => {
           const match = STATUS_OPTIONS.find((option) => option.value === service.status);
           const label = match ? t(`services.status.${match.key}`) : service.status ?? t('services.status.unknown');
-          const customClass = statusClassMap[match?.value ?? ''] ?? 'border-muted text-muted-foreground';
+          const englishLabel = match
+            ? t(`services.status.${match.key}`, { lng: 'en', defaultValue: statusEnglishFallback[match.key] })
+            : service.status ?? t('services.status.unknown');
+          const customClass = statusClassMap[match?.value ?? ''] ?? 'border-border/60 text-muted-foreground';
           return (
-            <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${customClass}`}>
-              {label}
-            </span>
+            <Badge
+              variant="outline"
+              className={cn(
+                'flex flex-col items-start gap-0.5 rounded-full border px-3 py-1 text-xs font-semibold leading-tight',
+                customClass,
+              )}
+            >
+              <span className="text-sm leading-none">{label}</span>
+              {englishLabel ? (
+                <span className="text-[11px] font-medium leading-none opacity-80">{englishLabel}</span>
+              ) : null}
+            </Badge>
           );
         },
         sortable: true,
       },
     ],
-    [t],
+    [buildHeader, t],
   );
 
   const handleOpen = (mode: 'create' | 'edit' | 'view', service?: ServiceRecord) => {
