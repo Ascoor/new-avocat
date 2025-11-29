@@ -3,36 +3,49 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import PageHeader from '@/components/common/PageHeader';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLegalCases, useDeleteLegalCase } from '@/hooks/useLegalCases';
 import { LegalCase } from '@/types/legalCase';
 import AddEditLegalCaseModal from '@/components/legalCases/AddEditLegalCaseModal';
+import { cn } from '@/lib/utils';
 
 const statusClasses: Record<string, string> = {
-  'جارى التنفيذ': 'text-yellow-500',
-  'قيد التنفيذ': 'text-orange-500',
-  منتهية: 'text-green-600',
-  متداولة: 'text-blue-500',
-  استيفاء: 'text-purple-500',
+  'جارى التنفيذ': 'border-amber-200 text-amber-700 dark:border-amber-500/40 dark:text-amber-100 bg-amber-50/70 dark:bg-amber-500/10',
+  'قيد التنفيذ': 'border-orange-200 text-orange-700 dark:border-orange-500/40 dark:text-orange-100 bg-orange-50/70 dark:bg-orange-500/10',
+  منتهية: 'border-emerald-200 text-emerald-700 dark:border-emerald-500/40 dark:text-emerald-100 bg-emerald-50/70 dark:bg-emerald-500/10',
+  متداولة: 'border-blue-200 text-blue-700 dark:border-blue-500/40 dark:text-blue-100 bg-blue-50/70 dark:bg-blue-500/10',
+  استيفاء: 'border-purple-200 text-purple-700 dark:border-purple-500/40 dark:text-purple-100 bg-purple-50/70 dark:bg-purple-500/10',
+};
+
+const statusEnglish: Record<string, string> = {
+  'جارى التنفيذ': 'In progress',
+  'قيد التنفيذ': 'Under execution',
+  منتهية: 'Completed',
+  متداولة: 'In court',
+  استيفاء: 'Settlement',
 };
 
 const LegalCases = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { data: cases = [], isLoading, error } = useLegalCases();
   const deleteCase = useDeleteLegalCase();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState<LegalCase | null>(null);
 
+  const secondaryLanguage = language === 'ar' ? 'en' : 'ar';
+
   const columns = useMemo<DetailsTableColumn<LegalCase>[]>(
     () => [
       {
         key: 'slug',
         header: t('legalCases.columns.fileNumber'),
+        secondaryHeader: t('legalCases.columns.fileNumber', { lng: secondaryLanguage }),
         accessor: (item) => item.slug ?? '',
         render: (item) => item.slug ?? '—',
         sortable: true,
@@ -40,6 +53,7 @@ const LegalCases = () => {
       {
         key: 'clients',
         header: t('legalCases.columns.clients'),
+        secondaryHeader: t('legalCases.columns.clients', { lng: secondaryLanguage }),
         accessor: (item) => item.clients?.map((client) => client.name).join(' ') ?? '',
         render: (item) => {
           if (!item.clients || item.clients.length === 0) {
@@ -61,6 +75,7 @@ const LegalCases = () => {
       {
         key: 'client_capacity',
         header: t('legalCases.columns.clientCapacity'),
+        secondaryHeader: t('legalCases.columns.clientCapacity', { lng: secondaryLanguage }),
         accessor: (item) => item.client_capacity ?? '',
         render: (item) => item.client_capacity ?? '—',
         sortable: true,
@@ -68,6 +83,7 @@ const LegalCases = () => {
       {
         key: 'title',
         header: t('legalCases.columns.subject'),
+        secondaryHeader: t('legalCases.columns.subject', { lng: secondaryLanguage }),
         accessor: (item) => item.title ?? '',
         render: (item) => item.title ?? '—',
         sortable: true,
@@ -75,6 +91,7 @@ const LegalCases = () => {
       {
         key: 'case_sub_type',
         header: t('legalCases.columns.caseType'),
+        secondaryHeader: t('legalCases.columns.caseType', { lng: secondaryLanguage }),
         accessor: (item) => item.case_sub_type?.name ?? '',
         render: (item) => item.case_sub_type?.name ?? '—',
         sortable: true,
@@ -82,16 +99,28 @@ const LegalCases = () => {
       {
         key: 'status',
         header: t('legalCases.columns.status'),
+        secondaryHeader: t('legalCases.columns.status', { lng: secondaryLanguage }),
         accessor: (item) => item.status ?? '',
         render: (item) => (
-          <span className={statusClasses[item.status ?? ''] ?? 'text-muted-foreground'}>
-            {item.status ?? '—'}
-          </span>
+          <Badge
+            variant="outline"
+            className={cn(
+              'flex flex-col items-start gap-0.5 rounded-full border px-3 py-1 text-xs font-semibold leading-tight',
+              statusClasses[item.status ?? ''] ?? 'border-border/60 text-muted-foreground',
+            )}
+          >
+            <span className="text-sm leading-none">{item.status ?? '—'}</span>
+            {item.status ? (
+              <span className="text-[11px] font-medium leading-none opacity-80">
+                {statusEnglish[item.status] ?? 'Status'}
+              </span>
+            ) : null}
+          </Badge>
         ),
         sortable: true,
       },
     ],
-    [t],
+    [secondaryLanguage, t],
   );
 
   const handleAddCase = () => {
