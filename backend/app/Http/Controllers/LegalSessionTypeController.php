@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expense;
 use App\Models\LegalSessionType;
+use App\Models\LegalSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
@@ -91,11 +92,11 @@ class LegalSessionTypeController extends Controller
 
     public function getByLegCaseId($legCaseId)
     {
-        $legalSessionType = LegalSessionType::with([ 'legCase', 'lawyer', 'court', 'createdBy'])
-                               ->where('leg_case_id', $legCaseId)
-                               ->get();
+        $sessions = LegalSession::with(['legalSessionType', 'court', 'lawyer', 'createdBy'])
+            ->where('leg_case_id', $legCaseId)
+            ->get();
 
-        return response()->json($legalSessionType);
+        return response()->json($sessions);
     }
     public function destroy($id)
     {
