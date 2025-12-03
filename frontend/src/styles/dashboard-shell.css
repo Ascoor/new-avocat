@@ -74,26 +74,8 @@
       --chart-muted: var(--muted-foreground);
   
       /* ---------- Sidebar system (light) ---------- */
-      --sidebar-background: var(--surface);
-      --sidebar-border: var(--border);
-      --sidebar-primary: var(--primary);
-      --sidebar-text-muted: var(--muted-foreground);
-      --sidebar-hover-highlight: var(--primary-glow);
-  
-      --sidebar-item-active-bg: linear-gradient(
-        135deg,
-        hsl(var(--primary) / 0.06),
-        hsl(var(--primary) / 0.12)
-      );
-      --sidebar-item-active-shadow: 0 12px 24px -16px hsl(var(--primary) / 0.55);
-  
-      --sidebar-item-hover-bg: 220 20% 98%;
-      --sidebar-subitem-active-bg: 220 20% 96%;
-      --sidebar-subitem-hover-bg: 220 20% 97%;
-      --sidebar-hover-foreground: 222 40% 16%;
-  
-      --sidebar-shell-blur: blur(16px);
-      --sidebar-shell-shadow: 0 18px 50px -24px hsl(var(--neutral-900) / 0.35);
+      /* Sidebar variables are defined in theme-tokens.css */
+      /* Only dashboard-specific overrides here */
   
       /* ---------- Header shell ---------- */
       --header-surface-gradient: linear-gradient(
@@ -105,30 +87,9 @@
       --header-shell-shadow: 0 14px 40px -30px hsl(var(--neutral-900) / 0.4);
       --header-shell-border: 1px solid hsl(var(--border) / 0.9);
   
-      /* Glass morphism helpers */
-      --sidebar-glass-background: color-mix(
-        in srgb,
-        hsl(var(--sidebar-background)) 88%,
-        transparent
-      );
-      --sidebar-glass-border: 1px solid hsl(var(--sidebar-border));
-      --sidebar-glass-shadow: var(--sidebar-shell-shadow);
-  
-      --header-glass-background: color-mix(
-        in srgb,
-        hsl(var(--popover)) 92%,
-        transparent
-      );
-      --header-glass-border: var(--header-shell-border);
-      --header-glass-shadow: var(--header-shell-shadow);
-  
-      /* Primary gradient helper للأزرار المميزة */
-      --gradient-primary: linear-gradient(
-        135deg,
-        hsl(var(--primary)) 0%,
-        hsl(var(--gold)) 50%,
-        hsl(var(--exclusive)) 100%
-      );
+      /* Glass morphism helpers - using variables from theme-tokens.css */
+      /* --sidebar-glass-background, --sidebar-glass-border, --sidebar-glass-shadow are in theme-tokens.css */
+      /* --header-glass-background, --header-glass-border, --header-glass-shadow are in theme-tokens.css */
     }
   
     .dark {
@@ -139,14 +100,8 @@
       --shell-overlay-blend: lighten;
       --shell-ambient-opacity: 1;
   
-      /* Sidebar (dark) منسجم مع بقية الثيم */
-      --sidebar-background: 220 25% 8%;
-      --sidebar-border: 220 35% 18%;
-      --sidebar-text-muted: 220 12% 72%;
-      --sidebar-item-hover-bg: 220 22% 18%;
-      --sidebar-subitem-active-bg: 220 26% 22%;
-      --sidebar-subitem-hover-bg: 220 24% 20%;
-      --sidebar-hover-foreground: 210 80% 96%;
+      /* Sidebar (dark) variables are defined in theme-tokens.css */
+      /* Only dashboard-specific overrides here */
     }
   }
   
@@ -159,7 +114,7 @@
       min-height: 100vh;
       background: var(--shell-background);
       color: hsl(var(--foreground));
-      transition: var(--transition-smooth);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       overflow: hidden;
     }
   
@@ -171,7 +126,7 @@
       opacity: var(--shell-overlay-opacity);
       pointer-events: none;
       mix-blend-mode: var(--shell-overlay-blend);
-      transition: var(--transition-smooth);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
   
     .dashboard-shell::after {
@@ -183,7 +138,7 @@
       filter: blur(68px);
       pointer-events: none;
       transform: translate3d(0, 0, 0);
-      transition: var(--transition-elegant);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   
     @keyframes ambientFloat {
@@ -218,7 +173,7 @@
       flex-direction: column;
       flex: 1 1 auto;
       min-height: 100vh;
-      transition: var(--transition-smooth);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
   
     .dashboard-scroll {
@@ -319,7 +274,7 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: var(--sidebar-item-active-bg);
+      background: hsl(var(--sidebar-item-active-bg));
       box-shadow: var(--sidebar-item-active-shadow);
       border: 1px solid hsl(var(--sidebar-primary) / 0.2);
       opacity: 1;
@@ -332,7 +287,7 @@
     .sidebar-nav-link {
       position: relative;
       z-index: 1;
-      transition: var(--transition-smooth);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       font-weight: 600;
       color: hsl(var(--sidebar-text-muted));
     }
@@ -346,7 +301,7 @@
     .sidebar-subitem {
       position: relative;
       border-radius: 0.75rem;
-      transition: var(--transition-smooth);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       color: hsl(var(--sidebar-text-muted));
     }
   
@@ -384,8 +339,8 @@
         hsl(var(--card) / 0.98) 10%,
         hsl(var(--card-elevated) / 0.98) 90%
       );
-      box-shadow: var(--shadow-card);
-      transition: var(--transition-smooth);
+      box-shadow: var(--shadow-lg);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
   
     .dark .card-premium {
@@ -395,7 +350,7 @@
         hsl(var(--card-elevated) / 0.9) 100%
       );
       border-color: hsl(var(--border) / 0.4);
-      box-shadow: var(--shadow-elegant);
+      box-shadow: var(--shadow-xl);
     }
   
     .card-premium::after {
@@ -415,15 +370,20 @@
   
     .card-premium:hover {
       transform: translateY(-4px);
-      box-shadow: var(--shadow-luxury);
+      box-shadow: var(--shadow-2xl);
     }
   
     .btn-premium {
-      background: var(--gradient-primary);
+      background: linear-gradient(
+        135deg,
+        hsl(var(--primary)) 0%,
+        hsl(var(--gold)) 50%,
+        hsl(var(--exclusive)) 100%
+      );
       color: hsl(var(--primary-foreground));
       box-shadow: var(--shadow-gold);
       border-radius: 1rem;
-      transition: var(--transition-elegant);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   
     .btn-premium:hover {

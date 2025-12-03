@@ -33,7 +33,7 @@ type SignupFormState = {
 const Login: React.FC = () => {
   const { t } = useTranslation();
   const { isRTL, language } = useLanguage();
-  const { login, signup, loading, user } = useAuth();
+  const { login, signup, loading, user, isAuthenticated } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -49,10 +49,10 @@ const Login: React.FC = () => {
   const [formError, setFormError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user) {
+    if (user && isAuthenticated) {
       navigate("/dashboard", { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, isAuthenticated, navigate]);
 
   useEffect(() => {
     if (searchParams.get("registered") === "1") {

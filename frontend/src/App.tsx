@@ -16,7 +16,7 @@ import Landing from '@/pages/Landing';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import Dashboard from '@/pages/Dashboard';
-import DashboardHome from '@/pages/dashboard/DashboardHome';
+import DashboardHome from '@/pages/dashboard/DashboardPage';
 import LegalCasesPage from '@/pages/LegalCasesPage';
 import LegalCaseDetails from '@/components/legalCases/Details/LegalCaseDetails';
 import ClientsPage from '@/pages/ClientsPage';

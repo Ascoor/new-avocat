@@ -1,5 +1,4 @@
-// src/layout/AppShell.tsx
-import React, { CSSProperties } from "react";
+import React, { FC, ReactNode } from "react";
 import Sidebar from "./Sidebar";
 import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
@@ -9,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { shellContainer, shellSectionSpacing } from "./layout-classes";
 
 interface AppShellProps {
-  children: React.ReactNode;
+  children: ReactNode;
   title?: string;
   className?: string;
   layoutVariant?: "default" | "wide";
@@ -20,7 +19,7 @@ interface AppShellProps {
 const COLLAPSED_WIDTH = 72;
 const EXPANDED_WIDTH = 272;
 
-const AppShell: React.FC<AppShellProps> = ({
+const AppShell: FC<AppShellProps> = ({
   children,
   title,
   className,
@@ -33,45 +32,77 @@ const AppShell: React.FC<AppShellProps> = ({
   const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
   const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-20";
 
-  const contentStyle: CSSProperties = {
-    ["--sidebar-width" as any]: `${sidebarWidth}px`,
-  };
-
   return (
     <div
       dir={direction}
-      className={cn(
-        "dashboard-shell min-h-screen bg-background text-foreground",
-        className
-      )}
+      className={cn("min-h-screen bg-background text-foreground", className)}
     >
-      <div className="relative min-h-screen">
-        {/* الشريط الجانبي الثابت يمين/يسار حسب اللغة */}
-        <Sidebar />
+      {/* == Top bar (clone of old <Navbar />) == */}
+      <Header title={title} showSidebarToggle={showSidebarToggle} />
 
-        {/* الهيدر + المحتوى: في الديسكتوب يتحرك من جهة الشريط فقط */}
+      {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
+      <div className="flex">
+        {/* Sidebar column */}
         <div
-          style={contentStyle}
           className={cn(
-            "relative flex min-h-screen flex-col",
-            "md:transition-[margin] md:duration-300 md:ease-comfort",
-            "ltr:md:ml-[var(--sidebar-width)] rtl:md:mr-[var(--sidebar-width)]"
+            "hidden md:block",
+            "transition-[width] duration-300 ease-comfort"
+          )}
+          style={{ width: `${sidebarWidth}px` }}
+        >
+          <Sidebar />
+        </div>
+
+        {/* Content column */}
+        <main
+          className={cn(
+            "flex-1 overflow-x-hidden",
+            shellSectionSpacing,
+            contentPadding
           )}
         >
-          <Header title={title} showSidebarToggle={showSidebarToggle} />
-
-          <main className={cn(shellSectionSpacing, contentPadding, "md:pt-6")}>
-            <div className={cn(shellContainer, "px-4 sm:px-6 lg:px-14 flex flex-col gap-6")}>
-              {children}
-            </div>
-          </main>
-        </div>
+          <div
+            className={cn(
+              "container mx-auto p-6",
+              shellContainer,
+              "flex flex-col gap-6"
+            )}
+          >
+            {children}
+          </div>
+        </main>
       </div>
 
-      {/* للموبايل: القائمة الجانبية تغطي الشاشة بالكامل */}
+      {/* Mobile sidebar overlay */}
       <MobileDrawer />
     </div>
   );
 };
 
 export default AppShell;
+interface DashboardLayoutProps {
+  children: ReactNode;
+  className?: string;
+  title?: string; // ← هذا الجديد
+}
+
+export const DashboardLayout: FC<DashboardLayoutProps> = ({
+  children,
+  className,
+  title,
+}) => {
+  return (
+    <div className={cn("flex flex-col gap-8", className)}>
+      
+      {/* العنوان (اختياري) */}
+      {title && (
+        <h1 className="text-3xl font-bold text-foreground mb-4">
+          {title}
+        </h1>
+      )}
+
+      {/* المحتوى */}
+      {children}
+    </div>
+  );
+};
