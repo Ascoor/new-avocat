@@ -9,6 +9,7 @@ import { AppCard } from '@/components/common/AppCard';
 
 import { Badge } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
+import { Bell, Briefcase, Calendar, DollarSign, Users } from 'lucide-react';
 
 export default function DashboardPage() {
   const { t, i18n } = useTranslation();
@@ -22,7 +23,7 @@ export default function DashboardPage() {
       title: t('dashboard.total_cases'),
       value: '124',
       description: t('dashboard.active'),
-      icon: require('lucide-react').Briefcase,
+      icon: Briefcase,
       trendType: 'up',
       trend: '+12%',
     },
@@ -30,7 +31,7 @@ export default function DashboardPage() {
       title: t('dashboard.active_clients'),
       value: '89',
       description: t('dashboard.active'),
-      icon: require('lucide-react').Users,
+      icon: Users,
       trendType: 'up',
       trend: '+8%',
     },
@@ -38,7 +39,7 @@ export default function DashboardPage() {
       title: t('dashboard.upcoming_sessions'),
       value: '23',
       description: t('dashboard.pending'),
-      icon: require('lucide-react').Calendar,
+      icon: Calendar,
       trendType: 'neutral',
       trend: '+0%',
     },
@@ -46,7 +47,7 @@ export default function DashboardPage() {
       title: t('dashboard.total_revenue'),
       value: '$54K',
       description: t('dashboard.revenue'),
-      icon: require('lucide-react').DollarSign,
+      icon: DollarSign,
       trendType: 'up',
       trend: '+5%',
     },
@@ -101,10 +102,7 @@ export default function DashboardPage() {
   };
 
   const renderActivityIcon = (type: string) => {
-    const Icon =
-      type === 'case'
-        ? require('lucide-react').Briefcase
-        : require('lucide-react').Calendar;
+    const Icon = type === 'case' ? Briefcase : Calendar;
     return <Icon className="h-5 w-5" />;
   };
 
@@ -127,8 +125,7 @@ export default function DashboardPage() {
   ];
 
   const renderTaskIcon = (priority: string) => {
-    const Icon = require('lucide-react').Bell;
-    return <Icon className="h-4 w-4" />;
+    return <Bell className="h-4 w-4" />;
   };
 
   return (
