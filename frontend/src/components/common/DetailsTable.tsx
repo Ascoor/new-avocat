@@ -1,14 +1,17 @@
 import type { ReactNode } from 'react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowDown,
   ArrowUp,
   ArrowUpDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   FileDown,
+  Info,
   Plus,
   Search,
+  Sparkles,
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -41,6 +44,12 @@ export interface DetailsTableColumn<T> {
   className?: string;
 }
 
+export interface DetailsTableDetailItem {
+  label: string;
+  value: ReactNode;
+  icon?: ReactNode;
+}
+
 export interface DetailsTableProps<T> {
   data: T[];
   columns: DetailsTableColumn<T>[];
@@ -63,6 +72,14 @@ export interface DetailsTableProps<T> {
   getRowId?: (row: T) => string | number;
   selectedRowIds?: Array<string | number>;
   onSelectionChange?: (selectedRows: T[], selectedRowIds: string[]) => void;
+  /** Enables a rich details card per row with an animated toggle. */
+  enableDetailsCard?: boolean;
+  /** Label shown above the details card; defaults to a translated value. */
+  detailsCardLabel?: string;
+  /** Optional function to create a human friendly title for the row. */
+  getRowDisplayName?: (row: T) => string;
+  /** Custom renderer for details card items. Defaults to using visible columns. */
+  renderDetailsItems?: (row: T) => DetailsTableDetailItem[];
 }
 
 const alignClass: Record<Alignment, string> = {
@@ -140,10 +157,15 @@ const DetailsTable = <T,>({
   getRowId,
   selectedRowIds,
   onSelectionChange,
+  enableDetailsCard = false,
+  detailsCardLabel,
+  getRowDisplayName,
+  renderDetailsItems,
 }: DetailsTableProps<T>) => {
   const { isRTL, t } = useLanguage();
   const hasActions = typeof renderActions === 'function';
   const selectionEnabled = enableRowSelection;
+  const detailCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const resolveRowId = useCallback(
     (row: T, fallbackIndex: number) => {
@@ -183,6 +205,10 @@ const DetailsTable = <T,>({
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [page, setPage] = useState(1);
+  const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
+  const [closingRowId, setClosingRowId] = useState<string | null>(null);
+
+  const detailsHeader = detailsCardLabel ?? t('table.detailsCard.header');
 
   useEffect(() => {
     if (!selectionEnabled || !selectedRowIds) return;
@@ -192,6 +218,12 @@ const DetailsTable = <T,>({
   useEffect(() => {
     setPage(1);
   }, [searchTerm, sortKey, sortDirection, data.length, pageSize]);
+
+  useEffect(() => {
+    return () => {
+      if (detailCloseTimer.current) clearTimeout(detailCloseTimer.current);
+    };
+  }, []);
 
   const filteredData = useMemo(() => {
     if (!enableSearch || !searchTerm.trim()) return data;
@@ -298,6 +330,22 @@ const DetailsTable = <T,>({
     setInternalSelectedIds(new Set());
   };
 
+  const toggleDetails = (rowId: string) => {
+    setExpandedRowId((previous) => {
+      if (previous === rowId) {
+        setClosingRowId(rowId);
+        if (detailCloseTimer.current) clearTimeout(detailCloseTimer.current);
+        detailCloseTimer.current = setTimeout(() => {
+          setClosingRowId((current) => (current === rowId ? null : current));
+        }, 200);
+        return null;
+      }
+      if (detailCloseTimer.current) clearTimeout(detailCloseTimer.current);
+      setClosingRowId(null);
+      return rowId;
+    });
+  };
+
   const downloadBlob = (blob: Blob, filename: string) => {
     if (typeof window === 'undefined') return;
     const url = URL.createObjectURL(blob);
@@ -377,7 +425,11 @@ const DetailsTable = <T,>({
 
   const showingFrom = enablePagination && totalItems > 0 ? (page - 1) * pageSize + 1 : totalItems > 0 ? 1 : 0;
   const showingTo = enablePagination ? Math.min(page * pageSize, totalItems) : totalItems;
-  const totalColumns = columns.length + (hasActions ? 1 : 0) + (selectionEnabled ? 1 : 0);
+  const totalColumns =
+    columns.length +
+    (hasActions ? 1 : 0) +
+    (selectionEnabled ? 1 : 0) +
+    (enableDetailsCard ? 1 : 0);
 
   return (
     <div className="rounded-lg border border-border/60 bg-card/40 shadow-card">
@@ -513,6 +565,11 @@ const DetailsTable = <T,>({
                   />
                 </TableHead>
               )}
+              {enableDetailsCard && (
+                <TableHead className="w-14 px-4 py-2 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {detailsHeader}
+                </TableHead>
+              )}
               {columns.map((column) => (
                 <TableHead
                   key={column.key}
@@ -562,44 +619,145 @@ const DetailsTable = <T,>({
               paginatedData.map((row, rowIndex) => {
                 const rowId = resolveRowId(row, (page - 1) * pageSize + rowIndex);
                 const isRowSelected = selectionEnabled && internalSelectedIds.has(rowId);
+                const isRowExpanded = enableDetailsCard && expandedRowId === rowId;
+                const isClosing = enableDetailsCard && closingRowId === rowId;
+                const showDetailsRow = enableDetailsCard && (isRowExpanded || isClosing);
+                const detailState = isRowExpanded ? 'open' : 'closed';
+                const detailItems =
+                  renderDetailsItems?.(row) ??
+                  columns.map((column) => ({ label: column.header, value: column.render(row), icon: undefined }));
+                const rowDisplayName =
+                  getRowDisplayName?.(row) ??
+                  ((row as { title?: string }).title ??
+                    (row as { name?: string }).name ??
+                    (row as { slug?: string }).slug ??
+                    t('table.detailsCard.fallbackTitle'));
                 return (
-                  <TableRow
-                    key={rowId}
-                    data-selected={isRowSelected ? 'true' : undefined}
-                    aria-selected={isRowSelected}
-                    className={cn(
-                      'border-border/40 transition-colors hover:bg-muted/40',
-                      isRowSelected && 'bg-primary/5 hover:bg-primary/10 dark:bg-primary/10 dark:hover:bg-primary/15',
+                  <Fragment key={rowId}>
+                    <TableRow
+                      data-selected={isRowSelected ? 'true' : undefined}
+                      aria-selected={isRowSelected}
+                      className={cn(
+                        'border-border/40 transition-colors hover:bg-muted/40',
+                        isRowSelected && 'bg-primary/5 hover:bg-primary/10 dark:bg-primary/10 dark:hover:bg-primary/15',
+                      )}
+                    >
+                      {selectionEnabled && (
+                        <TableCell className="w-14 px-4 py-2 text-center">
+                          <Checkbox
+                            aria-label={t('table.aria.selectRow')}
+                            checked={isRowSelected}
+                            onCheckedChange={() => toggleSelectRow(rowId)}
+                            className="mx-auto"
+                          />
+                        </TableCell>
+                      )}
+
+                      {enableDetailsCard && (
+                        <TableCell className="w-14 px-4 py-2 text-center">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            aria-expanded={isRowExpanded}
+                            aria-label={
+                              isRowExpanded
+                                ? t('table.detailsCard.hideDetails')
+                                : t('table.detailsCard.showDetails')
+                            }
+                            onClick={() => toggleDetails(rowId)}
+                            className="h-9 w-9"
+                          >
+                            <Info className={cn('h-4 w-4 transition', isRowExpanded && 'text-primary')} />
+                          </Button>
+                        </TableCell>
+                      )}
+
+                      {columns.map((column) => (
+                        <TableCell
+                          key={`${column.key}-${rowIndex}`}
+                          className={cn(
+                            'px-4 py-2 text-sm text-foreground',
+                            alignClass[column.align ?? 'start'],
+                            column.className,
+                          )}
+                        >
+                          {column.render(row)}
+                        </TableCell>
+                      ))}
+                      {hasActions && (
+                        <TableCell className="px-4 py-2 text-center">
+                          {renderActions?.(row)}
+                        </TableCell>
+                      )}
+                    </TableRow>
+
+                    {showDetailsRow && (
+                      <TableRow data-state={detailState} className="border-border/40">
+                        <TableCell colSpan={totalColumns} className="px-4 py-3">
+                          <div
+                            className={cn(
+                              'transition-all duration-300',
+                              detailState === 'open'
+                                ? 'opacity-100 translate-y-0'
+                                : 'opacity-0 -translate-y-1',
+                            )}
+                          >
+                            <div className="relative overflow-hidden rounded-lg border border-primary/10 bg-gradient-to-br from-background via-muted/50 to-background shadow-sm">
+                              <div className="pointer-events-none absolute inset-0 opacity-60">
+                                <div className="absolute -left-10 top-0 h-32 w-32 rounded-full bg-primary/15 blur-3xl" />
+                                <div className="absolute -right-16 bottom-0 h-32 w-32 rounded-full bg-secondary/10 blur-3xl" />
+                              </div>
+
+                              <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                    <Info className="h-5 w-5" />
+                                  </div>
+                                  <div className="leading-tight">
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
+                                      {detailsHeader}
+                                    </p>
+                                    <p className="text-base font-semibold text-foreground">{rowDisplayName}</p>
+                                  </div>
+                                </div>
+
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => toggleDetails(rowId)}
+                                  className="gap-2"
+                                >
+                                  {t('table.detailsCard.hideDetails')}
+                                  <ChevronUp className="h-4 w-4" />
+                                </Button>
+                              </div>
+
+                              <div className="grid gap-3 px-4 pb-4 sm:grid-cols-2 lg:grid-cols-3">
+                                {detailItems.map((item, index) => (
+                                  <div
+                                    key={`${rowId}-detail-${index}`}
+                                    className="flex items-start gap-3 rounded-md border border-border/70 bg-background/80 p-3 shadow-[0_1px_0_0] shadow-border/60 transition hover:border-primary/40"
+                                  >
+                                    <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                      {item.icon ?? <Sparkles className="h-4 w-4" />}
+                                    </div>
+                                    <div className="space-y-1">
+                                      <p className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                                        {item.label}
+                                      </p>
+                                      <div className="text-sm font-medium text-foreground">{item.value}</div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </TableCell>
+                      </TableRow>
                     )}
-                  >
-                    {selectionEnabled && (
-                      <TableCell className="w-14 px-4 py-2 text-center">
-                        <Checkbox
-                          aria-label={t('table.aria.selectRow')}
-                          checked={isRowSelected}
-                          onCheckedChange={() => toggleSelectRow(rowId)}
-                          className="mx-auto"
-                        />
-                      </TableCell>
-                    )}
-                    {columns.map((column) => (
-                      <TableCell
-                        key={`${column.key}-${rowIndex}`}
-                        className={cn(
-                          'px-4 py-2 text-sm text-foreground',
-                          alignClass[column.align ?? 'start'],
-                          column.className,
-                        )}
-                      >
-                        {column.render(row)}
-                      </TableCell>
-                    ))}
-                    {hasActions && (
-                      <TableCell className="px-4 py-2 text-center">
-                        {renderActions?.(row)}
-                      </TableCell>
-                    )}
-                  </TableRow>
+                  </Fragment>
                 );
               })
             )}

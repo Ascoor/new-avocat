@@ -106,6 +106,12 @@
       "exportExcel": "Export table as Excel",
       "selectAll": "Select all rows on this page",
       "selectRow": "Select row"
+    },
+    "detailsCard": {
+      "header": "Details",
+      "showDetails": "Show details",
+      "hideDetails": "Hide details",
+      "fallbackTitle": "Record details"
     }
   },
   "status": {
