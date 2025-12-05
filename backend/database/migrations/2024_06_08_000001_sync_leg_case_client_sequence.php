@@ -11,9 +11,12 @@ return new class extends Migration
         $driver = DB::getDriverName();
 
         if ($driver === 'pgsql') {
+            $sequenceValue = $maxId ?? 1;
+            $isCalled = $maxId !== null;
+
             DB::statement(
-                "SELECT setval(pg_get_serial_sequence('leg_case_client', 'id'), ?, true)",
-                [$maxId ?? 0]
+                "SELECT setval(pg_get_serial_sequence('leg_case_client', 'id'), ?, ?)",
+                [$sequenceValue, $isCalled]
             );
         } elseif (in_array($driver, ['mysql', 'mysqli'])) {
             DB::statement('ALTER TABLE leg_case_client AUTO_INCREMENT = ' . (($maxId ?? 0) + 1));
