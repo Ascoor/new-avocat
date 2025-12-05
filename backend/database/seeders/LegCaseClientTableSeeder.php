@@ -9511,7 +9511,19 @@ class LegCaseClientTableSeeder extends Seeder
                 'client_id' => 3,
             ),
         ));
-        
-        
+
+        $maxId = DB::table('leg_case_client')->max('id');
+        $driver = DB::getDriverName();
+
+        if ($driver === 'pgsql') {
+            DB::statement(
+                "SELECT setval(pg_get_serial_sequence('leg_case_client', 'id'), ?, true)",
+                [$maxId ?? 0]
+            );
+        } elseif (in_array($driver, ['mysql', 'mysqli'])) {
+            DB::statement('ALTER TABLE leg_case_client AUTO_INCREMENT = ' . (($maxId ?? 0) + 1));
+        }
+
+
     }
 }
