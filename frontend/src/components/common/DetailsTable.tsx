@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -57,6 +58,11 @@ export interface DetailsTableProps<T> {
   onAdd?: () => void;
   toolbarExtras?: ReactNode;
   isLoading?: boolean;
+  showSecondaryHeaders?: boolean;
+  enableRowSelection?: boolean;
+  getRowId?: (row: T) => string | number;
+  selectedRowIds?: Array<string | number>;
+  onSelectionChange?: (selectedRows: T[], selectedRowIds: string[]) => void;
 }
 
 const alignClass: Record<Alignment, string> = {
@@ -129,9 +135,31 @@ const DetailsTable = <T,>({
   onAdd,
   toolbarExtras,
   isLoading = false,
+  showSecondaryHeaders = false,
+  enableRowSelection = false,
+  getRowId,
+  selectedRowIds,
+  onSelectionChange,
 }: DetailsTableProps<T>) => {
   const { isRTL, t } = useLanguage();
   const hasActions = typeof renderActions === 'function';
+  const selectionEnabled = enableRowSelection;
+
+  const resolveRowId = useCallback(
+    (row: T, fallbackIndex: number) => {
+      if (getRowId) return String(getRowId(row));
+      if (typeof (row as { id?: string | number }).id !== 'undefined') {
+        const idValue = (row as { id?: string | number }).id;
+        if (typeof idValue === 'string' || typeof idValue === 'number') return String(idValue);
+      }
+      return String(fallbackIndex);
+    },
+    [getRowId],
+  );
+
+  const [internalSelectedIds, setInternalSelectedIds] = useState<Set<string>>(
+    () => new Set(selectedRowIds?.map(String) ?? []),
+  );
 
   const sortableColumns = useMemo(
     () =>
@@ -155,6 +183,11 @@ const DetailsTable = <T,>({
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    if (!selectionEnabled || !selectedRowIds) return;
+    setInternalSelectedIds(new Set(selectedRowIds.map(String)));
+  }, [selectionEnabled, selectedRowIds]);
 
   useEffect(() => {
     setPage(1);
@@ -201,6 +234,69 @@ const DetailsTable = <T,>({
     const start = (page - 1) * pageSize;
     return sortedData.slice(start, start + pageSize);
   }, [enablePagination, page, pageSize, sortedData]);
+
+  useEffect(() => {
+    if (!selectionEnabled) return;
+    setInternalSelectedIds((previous) => {
+      const validIds = new Set(
+        sortedData.map((row, index) => resolveRowId(row, index)),
+      );
+      const next = new Set<string>();
+      previous.forEach((id) => {
+        if (validIds.has(id)) next.add(id);
+      });
+      return next;
+    });
+  }, [resolveRowId, selectionEnabled, sortedData]);
+
+  useEffect(() => {
+    if (!selectionEnabled || !onSelectionChange) return;
+    const selectedRows = sortedData.filter((row, index) =>
+      internalSelectedIds.has(resolveRowId(row, index)),
+    );
+    onSelectionChange(selectedRows, Array.from(internalSelectedIds));
+  }, [internalSelectedIds, onSelectionChange, resolveRowId, selectionEnabled, sortedData]);
+
+  const visibleRowIds = useMemo(
+    () => paginatedData.map((row, index) => resolveRowId(row, (page - 1) * pageSize + index)),
+    [page, pageSize, paginatedData, resolveRowId],
+  );
+
+  const allVisibleSelected =
+    selectionEnabled && visibleRowIds.length > 0 && visibleRowIds.every((id) => internalSelectedIds.has(id));
+  const someVisibleSelected =
+    selectionEnabled && visibleRowIds.some((id) => internalSelectedIds.has(id) && !allVisibleSelected);
+
+  const toggleSelectAllVisible = () => {
+    if (!selectionEnabled) return;
+    setInternalSelectedIds((previous) => {
+      const next = new Set(previous);
+      if (allVisibleSelected) {
+        visibleRowIds.forEach((id) => next.delete(id));
+      } else {
+        visibleRowIds.forEach((id) => next.add(id));
+      }
+      return next;
+    });
+  };
+
+  const toggleSelectRow = (rowId: string) => {
+    if (!selectionEnabled) return;
+    setInternalSelectedIds((previous) => {
+      const next = new Set(previous);
+      if (next.has(rowId)) {
+        next.delete(rowId);
+      } else {
+        next.add(rowId);
+      }
+      return next;
+    });
+  };
+
+  const clearSelection = () => {
+    if (!selectionEnabled) return;
+    setInternalSelectedIds(new Set());
+  };
 
   const downloadBlob = (blob: Blob, filename: string) => {
     if (typeof window === 'undefined') return;
@@ -272,10 +368,16 @@ const DetailsTable = <T,>({
   }, [onSortChange]);
 
   const controlsVisible =
-    enableSearch || (enableSorting && sortableColumns.length > 0) || enableExport || onAdd || toolbarExtras;
+    enableSearch ||
+    (enableSorting && sortableColumns.length > 0) ||
+    enableExport ||
+    onAdd ||
+    toolbarExtras ||
+    (selectionEnabled && internalSelectedIds.size > 0);
 
   const showingFrom = enablePagination && totalItems > 0 ? (page - 1) * pageSize + 1 : totalItems > 0 ? 1 : 0;
   const showingTo = enablePagination ? Math.min(page * pageSize, totalItems) : totalItems;
+  const totalColumns = columns.length + (hasActions ? 1 : 0) + (selectionEnabled ? 1 : 0);
 
   return (
     <div className="rounded-lg border border-border/60 bg-card/40 shadow-card">
@@ -383,6 +485,17 @@ const DetailsTable = <T,>({
               )}
             </div>
           </div>
+
+          {selectionEnabled && internalSelectedIds.size > 0 && (
+            <div className="flex items-center justify-between gap-3 rounded-md border border-border/60 bg-background/60 px-3 py-2 text-sm shadow-sm">
+              <span className="font-medium text-foreground">
+                {t('table.selectedCount', { count: internalSelectedIds.size })}
+              </span>
+              <Button variant="ghost" size="sm" onClick={clearSelection} className="h-8 px-3">
+                {t('table.clearSelection')}
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
@@ -390,6 +503,16 @@ const DetailsTable = <T,>({
         <Table dir={isRTL ? 'rtl' : 'ltr'} className="min-w-full align-middle">
           <TableHeader>
             <TableRow className="bg-muted/40">
+              {selectionEnabled && (
+                <TableHead className="w-14 px-4 py-2 text-center">
+                  <Checkbox
+                    aria-label={t('table.aria.selectAll')}
+                    checked={allVisibleSelected ? true : someVisibleSelected ? 'indeterminate' : false}
+                    onCheckedChange={toggleSelectAllVisible}
+                    className="mx-auto"
+                  />
+                </TableHead>
+              )}
               {columns.map((column) => (
                 <TableHead
                   key={column.key}
@@ -401,7 +524,7 @@ const DetailsTable = <T,>({
                 >
                   <div className="flex flex-col gap-0.5 leading-tight">
                     <span>{column.header}</span>
-                    {column.secondaryHeader ? (
+                    {showSecondaryHeaders && column.secondaryHeader ? (
                       <span className="text-[11px] font-medium uppercase text-foreground/80 dark:text-foreground/70">
                         {column.secondaryHeader}
                       </span>
@@ -420,7 +543,7 @@ const DetailsTable = <T,>({
             {isLoading ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length + (hasActions ? 1 : 0)}
+                  colSpan={totalColumns}
                   className="px-4 py-6 text-center text-sm text-muted-foreground"
                 >
                   {t('common.loading')}
@@ -429,37 +552,56 @@ const DetailsTable = <T,>({
             ) : paginatedData.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length + (hasActions ? 1 : 0)}
+                  colSpan={totalColumns}
                   className="px-4 py-6 text-center text-sm text-muted-foreground"
                 >
                   {emptyMessage}
                 </TableCell>
               </TableRow>
             ) : (
-              paginatedData.map((row, rowIndex) => (
-                <TableRow
-                  key={`row-${rowIndex}`}
-                  className="border-border/40 transition-colors hover:bg-muted/40"
-                >
-                  {columns.map((column) => (
-                    <TableCell
-                      key={`${column.key}-${rowIndex}`}
-                      className={cn(
-                        'px-4 py-2 text-sm text-foreground',
-                        alignClass[column.align ?? 'start'],
-                        column.className,
-                      )}
-                    >
-                      {column.render(row)}
-                    </TableCell>
-                  ))}
-                  {hasActions && (
-                    <TableCell className="px-4 py-2 text-center">
-                      {renderActions?.(row)}
-                    </TableCell>
-                  )}
-                </TableRow>
-              ))
+              paginatedData.map((row, rowIndex) => {
+                const rowId = resolveRowId(row, (page - 1) * pageSize + rowIndex);
+                const isRowSelected = selectionEnabled && internalSelectedIds.has(rowId);
+                return (
+                  <TableRow
+                    key={rowId}
+                    data-selected={isRowSelected ? 'true' : undefined}
+                    aria-selected={isRowSelected}
+                    className={cn(
+                      'border-border/40 transition-colors hover:bg-muted/40',
+                      isRowSelected && 'bg-primary/5 hover:bg-primary/10 dark:bg-primary/10 dark:hover:bg-primary/15',
+                    )}
+                  >
+                    {selectionEnabled && (
+                      <TableCell className="w-14 px-4 py-2 text-center">
+                        <Checkbox
+                          aria-label={t('table.aria.selectRow')}
+                          checked={isRowSelected}
+                          onCheckedChange={() => toggleSelectRow(rowId)}
+                          className="mx-auto"
+                        />
+                      </TableCell>
+                    )}
+                    {columns.map((column) => (
+                      <TableCell
+                        key={`${column.key}-${rowIndex}`}
+                        className={cn(
+                          'px-4 py-2 text-sm text-foreground',
+                          alignClass[column.align ?? 'start'],
+                          column.className,
+                        )}
+                      >
+                        {column.render(row)}
+                      </TableCell>
+                    ))}
+                    {hasActions && (
+                      <TableCell className="px-4 py-2 text-center">
+                        {renderActions?.(row)}
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>

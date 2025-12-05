@@ -201,6 +201,8 @@ const ServicesPage: React.FC = () => {
         enableExport
         enableSearch
         enablePagination
+        enableRowSelection
+        getRowId={(service) => service.id?.toString() ?? service.slug}
         exportFileName="services"
         isLoading={servicesQuery.isLoading}
         emptyMessage={servicesQuery.isLoading ? t('common.loading') : t('services.list.empty')}

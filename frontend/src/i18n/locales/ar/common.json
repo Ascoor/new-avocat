@@ -95,12 +95,16 @@
       "desc": "تنازلي"
     },
     "clearSort": "إعادة الترتيب",
+    "selectedCount": "تم تحديد {{count}}",
+    "clearSelection": "مسح التحديد",
     "aria": {
       "sortColumn": "تغيير عمود الترتيب",
       "toggleDirection": "تبديل اتجاه الترتيب",
       "clearSort": "مسح الترتيب",
       "exportCsv": "تصدير الجدول كملف CSV",
-      "exportExcel": "تصدير الجدول كملف Excel"
+      "exportExcel": "تصدير الجدول كملف Excel",
+      "selectAll": "تحديد كل الصفوف في هذه الصفحة",
+      "selectRow": "تحديد الصف"
     }
   },
   "status": {

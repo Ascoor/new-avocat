@@ -96,12 +96,16 @@
       "desc": "Descending"
     },
     "clearSort": "Reset sorting",
+    "selectedCount": "{{count}} selected",
+    "clearSelection": "Clear selection",
     "aria": {
       "sortColumn": "Change sort column",
       "toggleDirection": "Toggle sort direction",
       "clearSort": "Clear sorting",
       "exportCsv": "Export table as CSV",
-      "exportExcel": "Export table as Excel"
+      "exportExcel": "Export table as Excel",
+      "selectAll": "Select all rows on this page",
+      "selectRow": "Select row"
     }
   },
   "status": {

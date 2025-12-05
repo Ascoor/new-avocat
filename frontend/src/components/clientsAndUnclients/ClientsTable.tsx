@@ -128,6 +128,8 @@ const ClientsTable = () => {
         enableSearch
         enableExport
         enablePagination
+        enableRowSelection
+        getRowId={(client) => client.id.toString()}
         exportFileName="clients"
         isLoading={isClientsLoading}
         emptyMessage={
