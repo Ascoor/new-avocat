@@ -14,7 +14,7 @@ import {
   Megaphone,
 } from 'lucide-react';
 
-import { CaseSummaryCard } from '@/components/legalCases/CaseSummaryCard';
+import { CaseSummaryCard } from '@/components/cases/CaseSummaryCard';
 
 const ClientsSection = lazy(() => import('./ClientsSection'));
 const CourtsSection = lazy(() => import('./CourtsSection'));
@@ -60,7 +60,7 @@ const LegalCaseDetails = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <Button
-            variant="ghost"
+            variant="hero"
             size="icon"
             onClick={() => navigate(-1)}
             className="rounded-full border border-border/50 bg-surface-highlight/80 backdrop-blur-sm transition hover:border-primary/50 hover:bg-primary/10"
