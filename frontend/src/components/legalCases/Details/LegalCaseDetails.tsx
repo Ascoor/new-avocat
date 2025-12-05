@@ -14,7 +14,7 @@ import {
   Megaphone,
 } from 'lucide-react';
 
-import { CaseSummaryCard } from '@/components/cases/CaseSummaryCard';
+import { CaseSummaryCard } from '@/components/legalCases/CaseSummaryCard';
 
 const ClientsSection = lazy(() => import('./ClientsSection'));
 const CourtsSection = lazy(() => import('./CourtsSection'));
