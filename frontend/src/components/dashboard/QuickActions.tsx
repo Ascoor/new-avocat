@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import LegalIcon from "@/components/common/LegalIcon";
 import { getIconDesign, type IconKey } from "@/config/iconography";
@@ -7,7 +7,7 @@ export interface Action {
   label: string;
   to: string;
   iconKey: IconKey; // <— مهم جداً
-  variant: "default" | "success" | "info" | "warning";
+  variant?: ButtonProps["variant"];
 }
 
 export default function QuickActions({ actions }: { actions: Action[] }) {
