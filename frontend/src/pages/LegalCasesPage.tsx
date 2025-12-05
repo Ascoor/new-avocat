@@ -4,7 +4,7 @@ import { Eye, Pencil, Trash2 } from 'lucide-react';
 import DetailsTable, { DetailsTableColumn } from '@/components/common/DetailsTable';
 import PageHeader from '@/components/common/PageHeader';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import TableActionButton from '@/components/common/TableActionButton';
 import { useToast } from '@/components/ui/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLegalCases, useDeleteLegalCase } from '@/hooks/useLegalCases';
@@ -187,36 +187,27 @@ const LegalCases = () => {
         actionsHeader={t('common.actions')}
         renderActions={(legalCase) => (
           <div className="flex items-center justify-center gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
+            <TableActionButton
+              label={t('common.view')}
+              tone="view"
               onClick={() => handleViewCase(String(legalCase.id))}
             >
               <Eye className="h-4 w-4" />
-              <span className="sr-only">{t('common.view')}</span>
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="h-8 w-8"
+            </TableActionButton>
+            <TableActionButton
+              label={t('common.edit')}
+              tone="edit"
               onClick={() => handleEditCase(String(legalCase.id))}
             >
               <Pencil className="h-4 w-4" />
-              <span className="sr-only">{t('common.edit')}</span>
-            </Button>
-            <Button
-              type="button"
-              variant="hero"
-              size="icon"
-              className="h-8 w-8"
+            </TableActionButton>
+            <TableActionButton
+              label={t('common.delete')}
+              tone="delete"
               onClick={() => handleDeleteCase(legalCase)}
             >
               <Trash2 className="h-4 w-4" />
-              <span className="sr-only">{t('common.delete')}</span>
-            </Button>
+            </TableActionButton>
           </div>
         )}
       />
