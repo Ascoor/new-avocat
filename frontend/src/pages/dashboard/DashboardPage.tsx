@@ -5,11 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { 
   Briefcase, 
   Calendar, 
-  AlertTriangle, 
+  AlertTriangle,
   Users,
   TrendingUp,
   Clock,
-  DollarSign,
   PieChart as PieChartIcon,
   Activity,
   BarChart3,
@@ -32,6 +31,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
+import type { TooltipProps } from 'recharts';
 
 type StatCard = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -98,37 +98,61 @@ export default function DashboardPage() {
   const language = i18n.language;
   const isArabic = language?.startsWith('ar');
 
+  const renderChartTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+    if (!active || !payload?.length) return null;
+
+    return (
+      <div className="rounded-lg border border-border bg-card/95 p-3 shadow-lg backdrop-blur-sm">
+        <p className="text-xs text-muted-foreground">{label}</p>
+        <div className="mt-2 space-y-1">
+          {payload.map((item) => (
+            <div key={item.dataKey as string} className="flex items-center justify-between gap-3">
+              <span className="flex items-center gap-2 text-sm font-medium text-foreground">
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ backgroundColor: item.color || chartColors.primary }}
+                />
+                {item.name}
+              </span>
+              <span className="text-sm text-foreground">{item.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   // -------------------------
   // Top Stats Cards
   // -------------------------
   const stats: StatCard[] = [
     {
       icon: Briefcase,
-      label: t('activeCases'),
+      label: t('dashboard.kpis.openCases'),
       value: '47',
       trend: '+12%',
       color: 'from-blue-500 to-blue-600',
     },
     {
       icon: Calendar,
-      label: t('todaySessions'),
+      label: t('dashboard.upcoming_sessions'),
       value: '8',
       trend: isArabic ? '2 قادمة' : '2 upcoming',
       color: 'from-accent to-gold-500',
     },
     {
       icon: AlertTriangle,
-      label: t('overdueCases'),
+      label: t('dashboard.active_clients'),
       value: '3',
       trend: isArabic ? 'تحتاج انتباه' : 'needs attention',
-      color: 'from-red-500 to-red-600',
+      color: 'from-orange-500 to-amber-500',
     },
     {
       icon: Users,
-      label: t('activeClients'),
+      label: t('dashboard.kpis.activeClients'),
       value: '124',
-      trend: '+8%',
-      color: 'from-green-500 to-green-600',
+      trend: isArabic ? 'هذا الأسبوع' : 'this week',
+      color: 'from-green-500 to-emerald-500',
     },
   ];
 
@@ -225,7 +249,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-bold">{t('dashboard')}</h1>
+        <h1 className="text-3xl font-bold">{t('dashboard.title')}</h1>
         <p className="text-muted-foreground">
           {isArabic ? 'نظرة عامة على أداء مكتبك' : 'Overview of your office performance'}
         </p>
@@ -287,6 +311,16 @@ export default function DashboardPage() {
             </div>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={monthlySessionsData}>
+                <defs>
+                  <linearGradient id="sessionsGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor={chartColors.primary} stopOpacity={0.25} />
+                    <stop offset="95%" stopColor={chartColors.primary} stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="completedGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor={chartColors.gold} stopOpacity={0.25} />
+                    <stop offset="95%" stopColor={chartColors.gold} stopOpacity={0} />
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
                 <XAxis
                   dataKey="month"
@@ -297,31 +331,26 @@ export default function DashboardPage() {
                   stroke="hsl(var(--muted-foreground))"
                   tick={{ fill: 'hsl(var(--muted-foreground))' }}
                 />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  }}
-                />
+                <Tooltip content={renderChartTooltip} />
                 <Legend />
-                <Line
+                <Area
                   type="monotone"
                   dataKey="sessions"
                   stroke={chartColors.primary}
                   strokeWidth={3}
+                  fill="url(#sessionsGradient)"
                   dot={{ fill: chartColors.primary, r: 5 }}
-                  activeDot={{ r: 7 }}
+                  activeDot={{ r: 8 }}
                   name={isArabic ? 'مجدولة' : 'Scheduled'}
                 />
-                <Line
+                <Area
                   type="monotone"
                   dataKey="completed"
                   stroke={chartColors.gold}
                   strokeWidth={3}
+                  fill="url(#completedGradient)"
                   dot={{ fill: chartColors.gold, r: 5 }}
-                  activeDot={{ r: 7 }}
+                  activeDot={{ r: 8 }}
                   name={isArabic ? 'منجزة' : 'Completed'}
                 />
               </LineChart>
@@ -363,7 +392,8 @@ export default function DashboardPage() {
                   label={({ name, percent }) =>
                     `${name} ${(percent * 100).toFixed(0)}%`
                   }
-                  outerRadius={100}
+                  innerRadius={60}
+                  outerRadius={110}
                   dataKey="value"
                   animationBegin={0}
                   animationDuration={800}
@@ -372,14 +402,17 @@ export default function DashboardPage() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  }}
-                />
+                <Tooltip content={renderChartTooltip} />
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="fill-foreground"
+                  style={{ fontSize: '14px', fontWeight: 700 }}
+                >
+                  {isArabic ? 'الإجمالي' : 'Total'} {caseTypeDistribution.reduce((sum, item) => sum + item.value, 0)}
+                </text>
               </RePieChart>
             </ResponsiveContainer>
           </Card>
@@ -422,14 +455,7 @@ export default function DashboardPage() {
                   stroke="hsl(var(--muted-foreground))"
                   tick={{ fill: 'hsl(var(--muted-foreground))' }}
                 />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  }}
-                />
+                <Tooltip content={renderChartTooltip} />
                 <Legend />
                 <Bar
                   dataKey="won"
@@ -504,16 +530,16 @@ export default function DashboardPage() {
                   domain={[0, 100]}
                 />
                 <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                  }}
-                  formatter={(value) => [
-                    `${value}%`,
-                    isArabic ? 'معدل الإغلاق' : 'Closure Rate',
-                  ]}
+                  content={(props) =>
+                    renderChartTooltip({
+                      ...props,
+                      payload: props.payload?.map((entry) => ({
+                        ...entry,
+                        name: isArabic ? 'معدل الإغلاق' : 'Closure Rate',
+                        value: `${entry.value}%`,
+                      })),
+                    })
+                  }
                 />
                 <Area
                   type="monotone"
@@ -543,7 +569,7 @@ export default function DashboardPage() {
           <Card className="p-6 backdrop-blur-sm bg-gradient-to-br from-card to-surface shadow-legal-icon-shadow-soft border-sidebar-border">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-semibold bg-gradient-to-r from-brand-primary to-exclusive bg-clip-text text-transparent">
-                {t('upcomingSessions')}
+                {t('dashboard.upcoming_sessions')}
               </h2>
               <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-accent to-gold flex items-center justify-center">
                 <Calendar className="h-5 w-5 text-white" />
@@ -600,7 +626,7 @@ export default function DashboardPage() {
           <Card className="p-6 backdrop-blur-sm bg-gradient-to-br from-card to-surface shadow-legal-icon-shadow-soft border-sidebar-border">
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-semibold bg-gradient-to-r from-exclusive to-neon bg-clip-text text-transparent">
-                {t('casesByStatus')}
+                {t('dashboard.casesByStatus')}
               </h2>
               <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-exclusive to-neon flex items-center justify-center shadow-exclusive-glow">
                 <Briefcase className="h-5 w-5 text-white" />
