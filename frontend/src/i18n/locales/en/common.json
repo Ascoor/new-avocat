@@ -180,6 +180,85 @@
       "deleteErrorDescription": "Please try again later."
     }
   },
+  "services": {
+    "title": "Services",
+    "subtitle": "Manage service workflows and monitor their execution status.",
+    "list": {
+      "title": "Services",
+      "subtitle": "Track service references, destinations, and completion progress.",
+      "add": "Add service",
+      "empty": "No services have been added yet.",
+      "table": {
+        "slug": "Reference",
+        "type": "Service type",
+        "place": "Place of execution",
+        "year": "Year",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "confirmDeleteTitle": "Delete {{name}}?",
+      "confirmDeleteDescription": "This service record will be permanently removed.",
+      "confirmDelete": "Delete"
+    },
+    "status": {
+      "inProgress": "In progress",
+      "underExecution": "Under execution",
+      "completed": "Completed",
+      "circulating": "In court",
+      "settled": "Settlement",
+      "unknown": "Unknown status"
+    },
+    "form": {
+      "titleCreate": "Add service",
+      "titleEdit": "Edit service",
+      "titleView": "Service details",
+      "readOnlyNotice": "This record is read-only.",
+      "labels": {
+        "slug": "Reference",
+        "serviceType": "Service type",
+        "place": "Place of execution",
+        "year": "Year",
+        "description": "Description",
+        "associationType": "Associated with",
+        "status": "Status",
+        "client": "Client",
+        "unclient": "Prospect"
+      },
+      "placeholders": {
+        "slug": "Enter reference",
+        "serviceType": "Select a service type",
+        "place": "Enter place of execution",
+        "year": "Enter year",
+        "client": "Select a client",
+        "unclient": "Select a prospect"
+      },
+      "association": {
+        "client": "Client",
+        "unclient": "Prospect"
+      },
+      "actions": {
+        "create": "Create service"
+      },
+      "messages": {
+        "loadErrorTitle": "Unable to load service details",
+        "loadErrorDescription": "Please refresh and try again.",
+        "updateSuccess": "Service updated successfully.",
+        "createSuccess": "Service created successfully.",
+        "errorTitle": "Unable to save service",
+        "errorDescription": "Review the fields and try again."
+      }
+    },
+    "messages": {
+      "deleteSuccess": "Service deleted successfully.",
+      "deleteErrorTitle": "Unable to delete service",
+      "deleteErrorDescription": "Please try again later."
+    }
+  },
   "agents": {
     "title": "Agents Management",
     "name": "Agent Name",
