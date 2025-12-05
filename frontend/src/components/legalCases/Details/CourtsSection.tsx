@@ -162,7 +162,7 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
       onOpenChange={setSectionOpen}
  
       actions={
-        <Button variant="secondary" onClick={handleAddRow} className="self-start sm:self-auto">
+        <Button variant="premium" onClick={handleAddRow} className="self-start sm:self-auto">
           {t('legalCaseDetails.courts.addCourt')}
         </Button>
       }
@@ -216,7 +216,7 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
                 ))}
               </select>
               <div className="sm:col-span-2 lg:col-span-4">
-                <Button variant="ghost" size="sm" onClick={() => removeRow(index)}>
+                <Button variant="premium" size="sm" onClick={() => removeRow(index)}>
                   {t('legalCaseDetails.courts.removeRow')}
                 </Button>
               </div>
@@ -241,30 +241,42 @@ const CourtsSection = ({ caseId, courts, onChanged }: CourtsSectionProps) => {
             </tr>
           </thead>
           <tbody>
-            {courts.length === 0 && (
-              <tr>
-                <td className="px-4 py-4 text-center text-muted-foreground" colSpan={5}>
-                  {t('legalCaseDetails.courts.empty')}
-                </td>
-              </tr>
-            )}
-            {courts.map((court) => (
-              <tr key={court.id} className="border-t border-border/40">
-                <td className="px-4 py-2 text-sm">{court.name}</td>
-                <td className="px-4 py-2 text-sm">{court.court_level?.name ?? '—'}</td>
-                <td className="px-4 py-2 text-sm">{court.case_number ?? '—'}</td>
-                <td className="px-4 py-2 text-sm">{court.case_year ?? '—'}</td>
-                <td className="px-4 py-2 text-center">
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => setConfirmDelete({ id: court.id, name: court.name })}
-                  >
-                    {t('legalCaseDetails.courts.deleteCourt')}
-                  </Button>
-                </td>
-              </tr>
-            ))}
+          {courts.map((court) => (
+  <tr key={court.id} className="border-t border-border/40">
+    {/* اسم المحكمة */}
+    <td className="px-4 py-2 text-sm">{court.name}</td>
+
+    {/* مستوى المحكمة (بالاسم) */}
+    <td className="px-4 py-2 text-sm">
+      {(() => {
+        const matched = availableCourts.find((c) => c.id === court.id);
+        return matched?.court_level?.name ?? '—';
+      })()}
+    </td>
+
+    {/* رقم القضية من الـ pivot */}
+    <td className="px-4 py-2 text-sm">
+      {court.pivot?.case_number ?? '—'}
+    </td>
+
+    {/* سنة القضية من الـ pivot */}
+    <td className="px-4 py-2 text-sm">
+      {court.pivot?.case_year ?? '—'}
+    </td>
+
+    {/* الأكشنز */}
+    <td className="px-4 py-2 text-center">
+      <Button
+        variant="hero"
+        size="sm"
+        onClick={() => setConfirmDelete({ id: court.id, name: court.name })}
+      >
+        {t('legalCaseDetails.courts.deleteCourt')}
+      </Button>
+    </td>
+  </tr>
+))}
+
           </tbody>
         </table>
       </div>
