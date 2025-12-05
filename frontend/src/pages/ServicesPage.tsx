@@ -230,8 +230,8 @@ const ServicesPage: React.FC = () => {
               <span className="sr-only">{t('services.list.actions.edit')}</span>
             </Button>
             <Button
-              type="button"
-              variant="destructive"
+              type="button" 
+              variant="outline"
               size="icon"
               className="h-8 w-8"
               onClick={() => handleDelete(service)}

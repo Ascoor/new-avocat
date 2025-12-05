@@ -27,7 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->default(1);
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-         
+          
 
             $table->enum('status', ['قيد التنفيذ', 'جارى التنفيذ', 'منتهية', 'متداولة', 'استيفاء'])->default('جارى التنفيذ');
         
