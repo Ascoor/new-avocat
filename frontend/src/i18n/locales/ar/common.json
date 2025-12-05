@@ -179,6 +179,85 @@
       "deleteErrorDescription": "يرجى المحاولة مرة أخرى لاحقًا."
     }
   },
+  "services": {
+    "title": "الخدمات",
+    "subtitle": "إدارة طلبات الخدمات ومتابعة حالتها التنفيذية.",
+    "list": {
+      "title": "قائمة الخدمات",
+      "subtitle": "تتبع المراجع وأماكن التنفيذ وتقدم الإنجاز.",
+      "add": "إضافة خدمة",
+      "empty": "لا توجد خدمات مضافة بعد.",
+      "table": {
+        "slug": "المرجع",
+        "type": "نوع الخدمة",
+        "place": "مكان التنفيذ",
+        "year": "السنة",
+        "status": "الحالة",
+        "actions": "إجراءات"
+      },
+      "actions": {
+        "view": "عرض",
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "confirmDeleteTitle": "حذف {{name}}؟",
+      "confirmDeleteDescription": "سيتم حذف سجل هذه الخدمة نهائيًا.",
+      "confirmDelete": "حذف"
+    },
+    "status": {
+      "inProgress": "جارى التنفيذ",
+      "underExecution": "قيد التنفيذ",
+      "completed": "منتهية",
+      "circulating": "متداولة",
+      "settled": "استيفاء",
+      "unknown": "حالة غير معروفة"
+    },
+    "form": {
+      "titleCreate": "إضافة خدمة",
+      "titleEdit": "تعديل الخدمة",
+      "titleView": "تفاصيل الخدمة",
+      "readOnlyNotice": "هذا السجل للعرض فقط.",
+      "labels": {
+        "slug": "المرجع",
+        "serviceType": "نوع الخدمة",
+        "place": "مكان التنفيذ",
+        "year": "السنة",
+        "description": "وصف الخدمة",
+        "associationType": "مرتبط بـ",
+        "status": "الحالة",
+        "client": "العميل",
+        "unclient": "العميل المحتمل"
+      },
+      "placeholders": {
+        "slug": "أدخل المرجع",
+        "serviceType": "اختر نوع الخدمة",
+        "place": "أدخل مكان التنفيذ",
+        "year": "أدخل السنة",
+        "client": "اختر العميل",
+        "unclient": "اختر العميل المحتمل"
+      },
+      "association": {
+        "client": "عميل",
+        "unclient": "عميل محتمل"
+      },
+      "actions": {
+        "create": "إنشاء خدمة"
+      },
+      "messages": {
+        "loadErrorTitle": "تعذر تحميل بيانات الخدمة",
+        "loadErrorDescription": "يرجى إعادة المحاولة بعد التحديث.",
+        "updateSuccess": "تم تحديث الخدمة بنجاح.",
+        "createSuccess": "تم إنشاء الخدمة بنجاح.",
+        "errorTitle": "تعذر حفظ بيانات الخدمة",
+        "errorDescription": "يرجى مراجعة الحقول والمحاولة مرة أخرى."
+      }
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف الخدمة بنجاح.",
+      "deleteErrorTitle": "تعذر حذف الخدمة",
+      "deleteErrorDescription": "يرجى المحاولة مرة أخرى لاحقًا."
+    }
+  },
   "agents": {
     "title": "إدارة الوكلاء",
     "name": "اسم الوكيل",
