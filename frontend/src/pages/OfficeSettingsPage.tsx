@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import PageHeader from '@/components/common/PageHeader';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
+import TableActionButton from '@/components/common/TableActionButton';
 import { Button } from '@/components/ui/button';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Badge } from '@/components/ui/badge';
@@ -168,7 +169,11 @@ const ExpenseCategoriesSection = () => {
           </CardTitle>
           <CardDescription>{t('officeSettings.expenseCategories.description')}</CardDescription>
         </div>
-        <Button type="button" onClick={() => handleOpenDialog('create')}>
+        <Button
+          type="button"
+          onClick={() => handleOpenDialog('create')}
+          className="gap-2 rounded-full bg-gradient-to-r from-primary/90 via-primary to-primary/80 text-primary-foreground shadow-[0_14px_38px_-16px_rgba(0,0,0,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-18px_rgba(0,0,0,0.65)]"
+        >
           <Plus className="h-4 w-4" />
           <span>{t('officeSettings.expenseCategories.add')}</span>
         </Button>
@@ -214,29 +219,25 @@ const ExpenseCategoriesSection = () => {
                     <TableCell className={cn(isRTL ? 'text-left' : 'text-right')}>
                       <div
                         className={cn(
-                          'flex items-center gap-2',
-                          isRTL ? 'justify-start' : 'justify-end',
+                          'inline-flex items-center gap-2 rounded-full bg-muted/40 px-2 py-1 shadow-inner shadow-border/50 backdrop-blur',
+                          isRTL ? 'flex-row-reverse justify-start' : 'justify-end',
                         )}
                       >
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
+                        <TableActionButton
+                          label={t('common.edit')}
+                          tone="edit"
                           onClick={() => handleOpenDialog('edit', category)}
                         >
                           <Pencil className="h-4 w-4" />
-                          <span className="text-sm">{t('common.edit')}</span>
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="sm"
+                        </TableActionButton>
+                        <TableActionButton
+                          label={t('common.delete')}
+                          tone="delete"
                           onClick={() => handleDelete(category)}
                           disabled={deleteMutation.isPending && pendingDelete?.id === category.id}
                         >
                           <Trash2 className="h-4 w-4" />
-                          <span className="text-sm">{t('common.delete')}</span>
-                        </Button>
+                        </TableActionButton>
                       </div>
                     </TableCell>
                   </TableRow>

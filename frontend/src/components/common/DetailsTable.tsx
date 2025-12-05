@@ -435,7 +435,12 @@ const DetailsTable = <T,>({
     <div className="rounded-lg border border-border/60 bg-card/40 shadow-card">
       {controlsVisible && (
         <div className="flex flex-col gap-3 border-b border-border/60 bg-muted/30 px-4 py-3">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div
+            className={cn(
+              'flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between',
+              isRTL ? 'lg:flex-row-reverse' : '',
+            )}
+          >
             {enableSearch ? (
               <div className="relative w-full lg:max-w-sm">
                 <Search
@@ -455,9 +460,19 @@ const DetailsTable = <T,>({
               <div />
             )}
 
-            <div className="flex flex-wrap items-center justify-end gap-2">
+            <div
+              className={cn(
+                'flex flex-wrap items-center gap-2',
+                isRTL ? 'justify-start lg:flex-row-reverse' : 'justify-end',
+              )}
+            >
               {enableSorting && sortableColumns.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2">
+                <div
+                  className={cn(
+                    'flex flex-wrap items-center gap-2 rounded-full bg-background/80 px-3 py-2 shadow-inner shadow-border/50 backdrop-blur',
+                    isRTL ? 'flex-row-reverse' : 'flex-row',
+                  )}
+                >
                   <Select value={sortKey ?? 'none'} onValueChange={handleSortKeyChange}>
                     <SelectTrigger className="h-9 w-44" aria-label={t('table.aria.sortColumn')}>
                       <SelectValue placeholder={t('table.sortBy')}>
@@ -482,6 +497,7 @@ const DetailsTable = <T,>({
                     onClick={handleToggleDirection}
                     disabled={!sortKey}
                     aria-label={t('table.aria.toggleDirection')}
+                    className="rounded-full"
                   >
                     {sortDirection === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
                   </Button>
@@ -492,7 +508,7 @@ const DetailsTable = <T,>({
                     onClick={handleClearSort}
                     disabled={!sortKey}
                     aria-label={t('table.aria.clearSort')}
-                    className="gap-2"
+                    className="gap-2 rounded-full"
                   >
                     <ArrowUpDown className="h-4 w-4" />
                     <span className="text-sm">{t('table.clearSort')}</span>
@@ -501,7 +517,12 @@ const DetailsTable = <T,>({
               )}
 
               {enableExport && exportableColumns.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2">
+                <div
+                  className={cn(
+                    'flex flex-wrap items-center gap-2 rounded-full bg-background/80 px-3 py-2 shadow-inner shadow-border/50 backdrop-blur',
+                    isRTL ? 'flex-row-reverse' : 'flex-row',
+                  )}
+                >
                   <Button
                     type="button"
                     variant="outline"
@@ -530,7 +551,14 @@ const DetailsTable = <T,>({
               {toolbarExtras}
 
               {onAdd && (
-                <Button type="button" onClick={onAdd} className="gap-2">
+                <Button
+                  type="button"
+                  onClick={onAdd}
+                  className={cn(
+                    'gap-2 rounded-full border-0 bg-gradient-to-r from-primary/90 via-primary to-primary/80 text-primary-foreground shadow-[0_14px_38px_-16px_rgba(0,0,0,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-18px_rgba(0,0,0,0.65)]',
+                    isRTL ? 'order-first' : '',
+                  )}
+                >
                   <Plus className="h-4 w-4" />
                   {addButtonLabel ?? t('common.add')}
                 </Button>
@@ -554,7 +582,7 @@ const DetailsTable = <T,>({
       <div className="overflow-x-auto">
         <Table dir={isRTL ? 'rtl' : 'ltr'} className="min-w-full align-middle">
           <TableHeader>
-            <TableRow className="bg-muted/40">
+            <TableRow className="bg-gradient-to-r from-muted/40 via-muted/25 to-muted/40">
               {selectionEnabled && (
                 <TableHead className="w-14 px-4 py-2 text-center">
                   <Checkbox
@@ -590,7 +618,12 @@ const DetailsTable = <T,>({
                 </TableHead>
               ))}
               {hasActions && (
-                <TableHead className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground text-center">
+                <TableHead
+                  className={cn(
+                    'px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground',
+                    isRTL ? 'text-left' : 'text-right',
+                  )}
+                >
                   {actionsHeader}
                 </TableHead>
               )}
@@ -686,8 +719,15 @@ const DetailsTable = <T,>({
                         </TableCell>
                       ))}
                       {hasActions && (
-                        <TableCell className="px-4 py-2 text-center">
-                          {renderActions?.(row)}
+                        <TableCell className={cn('px-4 py-2', isRTL ? 'text-left' : 'text-right')}>
+                          <div
+                            className={cn(
+                              'inline-flex items-center gap-2 rounded-full bg-muted/40 px-2 py-1 shadow-inner shadow-border/50 backdrop-blur',
+                              isRTL ? 'flex-row-reverse' : 'flex-row',
+                            )}
+                          >
+                            {renderActions?.(row)}
+                          </div>
                         </TableCell>
                       )}
                     </TableRow>
