@@ -209,7 +209,7 @@ const LegalCases = () => {
             </Button>
             <Button
               type="button"
-              variant="outline"
+              variant="hero"
               size="icon"
               className="h-8 w-8"
               onClick={() => handleDeleteCase(legalCase)}
