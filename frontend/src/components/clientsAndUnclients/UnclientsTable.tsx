@@ -107,6 +107,8 @@ const UnclientsTable = () => {
         enableSearch
         enableExport
         enablePagination
+        enableRowSelection
+        getRowId={(unclient) => unclient.id.toString()}
         exportFileName="unclients"
         isLoading={unclientsQuery.isLoading}
         emptyMessage={

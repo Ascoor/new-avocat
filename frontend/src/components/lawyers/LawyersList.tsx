@@ -107,6 +107,8 @@ const LawyersList = () => {
           columns={columns}
           enableSorting
           enableExport
+          enableRowSelection
+          getRowId={(lawyer) => lawyer.id?.toString() ?? lawyer.identity_number}
           exportFileName="lawyers"
           emptyMessage={t('lawyers.list.empty')}
           isLoading={isLoading}

@@ -177,6 +177,8 @@ const LegalCases = () => {
         columns={columns}
         enableSorting
         enableExport
+        enableRowSelection
+        getRowId={(item) => item.id?.toString() ?? item.slug ?? ''}
         exportFileName="legal-cases"
         isLoading={isLoading}
         emptyMessage={error ? t('legalCases.fetchError') : t('common.noData')}
