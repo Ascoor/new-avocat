@@ -151,7 +151,7 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
       open={sectionOpen}
       onOpenChange={setSectionOpen}
       actions={
-        <Button variant="secondary" onClick={handleAddRow} className="self-start sm:self-auto">
+        <Button variant="outline" onClick={handleAddRow} className="self-start sm:self-auto">
           {t('legalCaseDetails.clients.addClient')}
         </Button>
       }
@@ -195,7 +195,7 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
                 </div>
               )}
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={() => handleRemovePending(index)}
               >
@@ -246,7 +246,7 @@ const ClientsSection = ({ caseId, clients, onChanged }: ClientsSectionProps) => 
                 </td>
                 <td className="px-4 py-2 text-center">
                   <Button
-                    variant="destructive"
+                    variant="outline"
                     size="sm"
                     onClick={() =>
                       setConfirmDelete({ id: client.id, name: client.name })

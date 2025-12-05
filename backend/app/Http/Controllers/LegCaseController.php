@@ -180,13 +180,19 @@ class LegCaseController extends Controller
                     $legCase->clients()->attach($clientId);
                 }
             }
-
+    
             return response()->json(['message' => 'Clients added successfully.']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to add clients.'], 500);
+            \Log::error('addClients error: '.$e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+            ]);
+    
+            return response()->json([
+                'error' => 'Failed to add clients.',
+                'debug' => $e->getMessage(),   // مؤقتًا أثناء التطوير فقط
+            ], 500);
         }
     }
-
     /**
      * Add Leg Case Courts.
      *
