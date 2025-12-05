@@ -34,6 +34,7 @@ import {
 import type { TooltipProps } from 'recharts';
 
 type StatCard = {
+  id: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   label: string;
   value: string;
@@ -127,6 +128,7 @@ export default function DashboardPage() {
   // -------------------------
   const stats: StatCard[] = [
     {
+      id: 'open-cases',
       icon: Briefcase,
       label: t('dashboard.kpis.openCases'),
       value: '47',
@@ -134,6 +136,7 @@ export default function DashboardPage() {
       color: 'from-blue-500 to-blue-600',
     },
     {
+      id: 'upcoming-sessions',
       icon: Calendar,
       label: t('dashboard.upcoming_sessions'),
       value: '8',
@@ -141,6 +144,7 @@ export default function DashboardPage() {
       color: 'from-accent to-gold-500',
     },
     {
+      id: 'clients-needing-attention',
       icon: AlertTriangle,
       label: t('dashboard.active_clients'),
       value: '3',
@@ -148,6 +152,7 @@ export default function DashboardPage() {
       color: 'from-orange-500 to-amber-500',
     },
     {
+      id: 'active-clients',
       icon: Users,
       label: t('dashboard.kpis.activeClients'),
       value: '124',
@@ -259,7 +264,7 @@ export default function DashboardPage() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
           <motion.div
-            key={stat.label}
+            key={stat.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
