@@ -105,6 +105,12 @@
       "exportExcel": "تصدير الجدول كملف Excel",
       "selectAll": "تحديد كل الصفوف في هذه الصفحة",
       "selectRow": "تحديد الصف"
+    },
+    "detailsCard": {
+      "header": "التفاصيل",
+      "showDetails": "عرض التفاصيل",
+      "hideDetails": "إخفاء التفاصيل",
+      "fallbackTitle": "تفاصيل السجل"
     }
   },
   "status": {
