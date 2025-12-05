@@ -90,13 +90,13 @@ export const CaseSummaryCard: React.FC<CaseSummaryCardProps> = ({
   const secondaryBadges: EntitySummaryBadge[] = [
     legCase.status && {
       label: legCase.status,
-      variant: 'secondary' as const,
+      variant: 'secondary',
     },
     legCase.case_type?.name && {
       label: legCase.case_type.name,
-      variant: 'outline' as const,
+      variant: 'outline',
     },
-  ].filter(Boolean) as EntitySummaryBadge[];
+  ].filter((badge): badge is EntitySummaryBadge => Boolean(badge));
 
   return (
     <EntitySummaryCard
@@ -105,11 +105,12 @@ export const CaseSummaryCard: React.FC<CaseSummaryCardProps> = ({
       eyebrow={t('legalCaseDetails.sections.basicInfo')}
       title={legCase.title ?? t('legalCaseDetails.title')}
       subtitle={t('legalCaseDetails.subtitle')}
-      primaryBadge=
+      primaryBadge={
         legCase.slug
           ? { label: `#${legCase.slug}`, variant: 'outline' }
           : undefined
-      secondaryBadges={secondaryBadges as any}
+      }
+      secondaryBadges={secondaryBadges}
       expanded={expanded}
       onToggleExpanded={onToggleExpanded}
       overviewSections={[
