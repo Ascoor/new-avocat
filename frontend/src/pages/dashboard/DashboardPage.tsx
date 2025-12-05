@@ -1,4 +1,4 @@
-import QuickActions from '@/components/dashboard/QuickActions';
+import QuickActions, { type Action } from '@/components/dashboard/QuickActions';
 import DashboardStatCard from '@/components/dashboard/DashboardStatCard';
 import DashboardActivityItem from '@/components/dashboard/DashboardActivityItem';
 import DashboardTaskItem from '@/components/dashboard/DashboardTaskItem';
@@ -7,7 +7,7 @@ import RecentCases from '@/components/dashboard/RecentCases';
 
 import { AppCard } from '@/components/common/AppCard';
 
-import { Badge } from '@/components/ui/badge';
+import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { useTranslation } from 'react-i18next';
 import { Bell, Briefcase, Calendar, DollarSign, Users } from 'lucide-react';
 
@@ -87,10 +87,10 @@ export default function DashboardPage() {
   ];
 
   // Status variants
-  const getActivityStatusVariant = (status: string) => {
-    if (status === 'new') return 'success';
-    if (status === 'pending') return 'warning';
-    return 'default';
+  const getActivityStatusVariant = (status: string): BadgeProps['variant'] => {
+    if (status === 'new') return 'default';
+    if (status === 'pending') return 'secondary';
+    return 'outline';
   };
 
   const getActivityStatusLabel = (status: string) => {
@@ -128,11 +128,41 @@ export default function DashboardPage() {
     return <Bell className="h-4 w-4" />;
   };
 
+  // -------------------------
+  // Quick Actions
+  // -------------------------
+  const quickActions: Action[] = [
+    {
+      label: language === 'ar' ? 'إنشاء قضية جديدة' : 'Create new case',
+      to: '/cases/new',
+      iconKey: 'cases',
+      variant: 'accent',
+    },
+    {
+      label: language === 'ar' ? 'جلسة جديدة' : 'Schedule session',
+      to: '/sessions/new',
+      iconKey: 'sessions',
+      variant: 'chromatic',
+    },
+    {
+      label: language === 'ar' ? 'عميل جديد' : 'Add client',
+      to: '/clients/new',
+      iconKey: 'clients',
+      variant: 'outline',
+    },
+    {
+      label: language === 'ar' ? 'تقرير سريع' : 'Quick report',
+      to: '/reports',
+      iconKey: 'reports',
+      variant: 'default',
+    },
+  ];
+
   return (
     <div className="space-y-10">
 
       {/* 🌟 Quick Actions */}
-      <QuickActions />
+      <QuickActions actions={quickActions} />
 
       {/* 🌟 Stats */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
