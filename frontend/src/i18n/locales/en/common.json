@@ -927,6 +927,49 @@
       "deleteErrorDescription": "Please try again later."
     }
   },
+  "serviceDetails": {
+    "title": "Service Details",
+    "subtitle": "Review associated clients and execution steps.",
+    "back": "Back to services",
+    "fetchError": "Unable to load service.",
+    "sections": {
+      "overview": "Overview",
+      "ownership": "Ownership & audit"
+    },
+    "fields": {
+      "slug": "Reference",
+      "status": "Status",
+      "serviceType": "Service type",
+      "place": "Place of execution",
+      "year": "Year",
+      "description": "Description",
+      "createdBy": "Created by",
+      "updatedBy": "Updated by"
+    },
+    "clients": {
+      "title": "Clients",
+      "subtitle": "Linked clients and prospects",
+      "client": "Client",
+      "prospect": "Prospect",
+      "empty": "No clients have been linked to this service yet."
+    },
+    "procedures": {
+      "title": "Procedures",
+      "subtitle": "Operational steps for this service",
+      "empty": "No procedures have been recorded for this service.",
+      "columns": {
+        "title": "Title",
+        "lawyer": "Lawyer",
+        "place": "Place",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "status": "Status"
+      },
+      "status": {
+        "unknown": "Unknown status"
+      }
+    }
+  },
   "documents": {
     "title": "Documents",
     "upload": "Upload Document",

@@ -23,8 +23,9 @@ import ClientsPage from '@/pages/ClientsPage';
 import UnClientsPage from '@/pages/UnClientsPage';
 import { LawyersList, LawyerDetails } from '@/pages/LawyersPage';
 import ServicesPage from '@/pages/ServicesPage';
+import ServiceDetails from '@/components/services/ServiceDetails';
 import OfficeSettingsPage from '@/pages/OfficeSettingsPage';
-import NotFound from '@/pages/NotFound'; 
+import NotFound from '@/pages/NotFound';
 import AdminWebsitePage from '@/pages/admin/Website/AdminWebsitePage';
 import WebsiteReportPage from '@/pages/admin/Website/WebsiteReportPage';
 import WorkflowBoardPage from '@/pages/admin/Website/WorkflowBoardPage';
@@ -95,6 +96,7 @@ const router = createBrowserRouter(
 
         {/* 🛠️ Services & Settings */}
         <Route path="services" element={<ServicesPage />} />
+        <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="office_settings" element={<OfficeSettingsPage />} />
 
         {/* 🌐 Website Management */}
