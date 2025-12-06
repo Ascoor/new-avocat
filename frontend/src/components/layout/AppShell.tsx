@@ -66,7 +66,7 @@ const AppShell: FC<AppShellProps> = ({
         >
           <div
             className={cn(
-              "mx-auto w-full max-w-screen-2xl p-4 sm:p-6", // keeps content aligned with the header container
+              "mx-auto w-full p-4 sm:p-6", // keeps content aligned with the header container
               shellContainer,
               "flex flex-col gap-6"
             )}

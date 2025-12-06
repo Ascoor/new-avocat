@@ -34,6 +34,12 @@ export const Header: React.FC<HeaderProps> = ({
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
 
+  const sidebarWidth = isCollapsed ? 72 : 272;
+  const desktopOffset = `${sidebarWidth + 16}px`;
+  const offsetStyles = {
+    ["--sidebar-offset" as string]: desktopOffset,
+  } as React.CSSProperties;
+
   return (
     <header
       dir={isRTL ? "rtl" : "ltr"}
@@ -45,9 +51,13 @@ export const Header: React.FC<HeaderProps> = ({
     >
       <div
         className={cn(
-          "relative z-[1] mx-auto flex h-full w-full max-w-screen-2xl items-center justify-between",
-          "px-3 sm:px-4 lg:px-6 xl:px-8"
+          "relative z-[1] mx-auto flex h-full w-full items-center justify-between",
+          "px-3 sm:px-4 lg:px-6 xl:px-8",
+          isRTL
+            ? "md:[padding-inline-end:var(--sidebar-offset)]"
+            : "md:[padding-inline-start:var(--sidebar-offset)]"
         )}
+        style={offsetStyles}
       >
         {/* يسار/يمين حسب اللغة */}
         <div
