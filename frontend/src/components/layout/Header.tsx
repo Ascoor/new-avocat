@@ -1,8 +1,8 @@
 // src/layout/Header.tsx
 import React from "react";
 import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft } from "lucide-react";
-import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_EXPANDED_WIDTH } from "./Sidebar";
 import { Button } from "@/components/ui/button";
+import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_EXPANDED_WIDTH } from "./Sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,22 +22,25 @@ interface HeaderProps {
   title?: string;
   className?: string;
   showSidebarToggle?: boolean;
+  sidebarWidth?: number;
+  sidebarSide?: "left" | "right";
 }
 
 export const Header: React.FC<HeaderProps> = ({
   title,
   className,
   showSidebarToggle = true,
+  sidebarWidth,
+  sidebarSide,
 }) => {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
-  const sidebarWidth = isCollapsed
-    ? SIDEBAR_COLLAPSED_WIDTH
-    : SIDEBAR_EXPANDED_WIDTH;
-  const desktopOffset = `${sidebarWidth + 16}px`;
+  const effectiveSidebarWidth = sidebarWidth ?? (isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH);
+  const sidebarPosition = sidebarSide ?? (isRTL ? "right" : "left");
+  const desktopOffset = `${effectiveSidebarWidth + 16}px`;
   const offsetStyles = {
     ["--sidebar-offset" as string]: desktopOffset,
   } as React.CSSProperties;
@@ -56,7 +59,7 @@ export const Header: React.FC<HeaderProps> = ({
         className={cn(
           "relative z-[1] mx-auto flex h-full w-full items-center justify-between",
           "px-3 sm:px-4 lg:px-6 xl:px-8",
-          isRTL
+          sidebarPosition === "right"
             ? "md:[padding-inline-end:var(--sidebar-offset)]"
             : "md:[padding-inline-start:var(--sidebar-offset)]"
         )}
