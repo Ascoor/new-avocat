@@ -39,6 +39,7 @@ const AppShell: FC<AppShellProps> = ({
       : "px-4 sm:px-6 lg:px-10 xl:px-14";
 
   const sidebarInlineSize = `${sidebarWidth}px`;
+  const contentOffsetStyle = { marginInlineStart: `${sidebarWidth}px` } as const;
 
   return (
     <div
@@ -83,8 +84,7 @@ const AppShell: FC<AppShellProps> = ({
         <div
           className={cn(
             "hidden md:block",
-            "transition-[width] duration-300 ease-comfort",
-            isRTL ? "order-last" : "order-first"
+            "transition-[width] duration-300 ease-comfort"
           )}
           style={{ width: `${sidebarWidth}px` }}
         >
@@ -97,13 +97,8 @@ const AppShell: FC<AppShellProps> = ({
             "flex-1 overflow-x-hidden transition-[margin] duration-300 ease-comfort",
             shellSectionSpacing,
             contentPadding,
-            isRTL ? "order-first" : "order-last"
           )}
-          style={
-            isRTL
-              ? { marginRight: `${sidebarWidth}px` }
-              : { marginLeft: `${sidebarWidth}px` }
-          }
+          style={contentOffsetStyle}
         >
           <div
             className={cn(
