@@ -30,7 +30,10 @@ const AppShell: FC<AppShellProps> = ({
   const { isCollapsed } = useSidebar();
 
   const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
-  const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-20";
+  const contentPadding =
+    layoutVariant === "wide"
+      ? "px-4 sm:px-6 lg:px-12"
+      : "px-4 sm:px-6 lg:px-10 xl:px-14";
 
   return (
     <div
@@ -56,14 +59,14 @@ const AppShell: FC<AppShellProps> = ({
         {/* Content column */}
         <main
           className={cn(
-            "flex-1 overflow-x-hidden",
+            "flex-1 overflow-x-hidden", // allows content to stretch naturally on all screens
             shellSectionSpacing,
             contentPadding
           )}
         >
           <div
             className={cn(
-              "container mx-auto p-6",
+              "mx-auto w-full max-w-screen-2xl p-4 sm:p-6", // keeps content aligned with the header container
               shellContainer,
               "flex flex-col gap-6"
             )}
