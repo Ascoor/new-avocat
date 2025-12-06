@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import Sidebar from "./Sidebar";
+import Sidebar, { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_EXPANDED_WIDTH } from "./Sidebar";
 import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -15,10 +15,6 @@ interface AppShellProps {
   showSidebarToggle?: boolean;
 }
 
-// نفس القيم المستخدمة في Sidebar
-const COLLAPSED_WIDTH = 72;
-const EXPANDED_WIDTH = 272;
-
 const AppShell: FC<AppShellProps> = ({
   children,
   title,
@@ -29,7 +25,7 @@ const AppShell: FC<AppShellProps> = ({
   const { direction, isRTL } = useLanguage();
   const { isCollapsed } = useSidebar();
 
-  const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
+  const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
   const contentPadding =
     layoutVariant === "wide"
       ? "px-4 sm:px-6 lg:px-12"
@@ -58,8 +54,9 @@ const AppShell: FC<AppShellProps> = ({
 
         {/* Content column */}
         <main
+          dir={direction}
           className={cn(
-            "flex-1 overflow-x-hidden", // allows content to stretch naturally on all screens
+            "flex-1 min-w-0 overflow-x-hidden", // allows content to stretch naturally on all screens
             shellSectionSpacing,
             contentPadding
           )}
