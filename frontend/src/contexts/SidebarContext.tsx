@@ -17,19 +17,25 @@ interface SidebarContextType {
   toggleCollapsed: () => void;
   toggleMobile: () => void;
   closeMobile: () => void;
+  setCollapsed: (collapsed: boolean) => void;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 
 const SIDEBAR_STORAGE_KEY = 'sidebar-collapsed';
 
-export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isCollapsed, setIsCollapsed] = useState(() => {
-    if (typeof window === 'undefined') return false;
+const getInitialCollapsed = () => {
+  if (typeof window === 'undefined') return true;
 
-    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : false;
-  });
+  const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY);
+  if (stored !== null) return JSON.parse(stored);
+
+  // اعرض الشريط الجانبي المصغر افتراضيًا على الشاشات المتوسطة والكبيرة
+  return window.matchMedia('(min-width: 768px)').matches;
+};
+
+export const SidebarProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isCollapsed, setIsCollapsed] = useState(getInitialCollapsed);
 
   const handleOpenChange = useCallback((open: boolean) => {
     setIsCollapsed(!open);
@@ -58,6 +64,15 @@ const SidebarContextBridge: React.FC<{
     toggleSidebar();
   }, [toggleSidebar]);
 
+  const setCollapsed = useCallback(
+    (collapsed: boolean) => {
+      if (collapsed !== isCollapsed) {
+        toggleSidebar();
+      }
+    },
+    [isCollapsed, toggleSidebar],
+  );
+
   // ✅ لا نستخدم callback، نعطي boolean مباشرة
   const toggleMobile = useCallback(() => {
     setOpenMobile(!openMobile);
@@ -74,8 +89,9 @@ const SidebarContextBridge: React.FC<{
       toggleCollapsed,
       toggleMobile,
       closeMobile,
+      setCollapsed,
     }),
-    [isCollapsed, openMobile, toggleCollapsed, toggleMobile, closeMobile],
+    [isCollapsed, openMobile, toggleCollapsed, toggleMobile, closeMobile, setCollapsed],
   );
 
   return <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>;
