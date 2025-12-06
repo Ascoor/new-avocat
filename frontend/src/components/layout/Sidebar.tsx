@@ -50,7 +50,7 @@ const Sidebar: React.FC = () => {
   const location = useLocation();
   const { t, isRTL } = useLanguage();
   const { logout } = useAuth();
-  const { isCollapsed } = useSidebarContext();
+  const { isCollapsed, closeMobile } = useSidebarContext();
 
   const collapsed = isCollapsed;
   const currentPath = location.pathname;
@@ -59,6 +59,15 @@ const Sidebar: React.FC = () => {
     (path?: string) =>
       !!path && (currentPath === path || currentPath.startsWith(`${path}/`)),
     [currentPath]
+  );
+
+  const handleSectionSelect = useCallback(
+    (parentKey?: string) => {
+      if (!parentKey) return;
+      setExpandedGroups((prev) => ({ ...prev, [parentKey]: false }));
+      closeMobile();
+    },
+    [closeMobile]
   );
 
   const initialExpanded = useMemo(() => {
@@ -211,6 +220,7 @@ const Sidebar: React.FC = () => {
                         >
                           <NavLink
                             to={target}
+                            onClick={() => handleSectionSelect(item.key)}
                             className={cn(
                               "flex items-center",
                               collapsed ? "justify-center" : "w-full gap-3"
@@ -302,6 +312,7 @@ const Sidebar: React.FC = () => {
                                 >
                                   <NavLink
                                     to={childTarget}
+                                    onClick={() => handleSectionSelect(item.key)}
                                     className="flex w-full items-center gap-3"
                                   >
                                     {renderIcon(child.iconKey as IconKey, "child")}

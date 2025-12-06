@@ -44,8 +44,8 @@ export const Header: React.FC<HeaderProps> = ({
     >
       <div
         className={cn(
-          "relative z-[1] flex h-full w-full items-center justify-between",
-          "px-3 sm:px-4 lg:px-6"
+          "relative z-[1] mx-auto flex h-full w-full max-w-screen-2xl items-center justify-between",
+          "px-3 sm:px-4 lg:px-6 xl:px-8"
         )}
       >
         {/* يسار/يمين حسب اللغة */}
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
               <PanelLeft
                 className={cn(
                   "h-4 w-4 transition-transform",
-                  isCollapsed ? "rotate-0" : isRTL ? "- rotate-180" : "rotate-180"
+                  isCollapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
                 )}
               />
             </Button>
