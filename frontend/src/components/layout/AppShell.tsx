@@ -32,6 +32,10 @@ const AppShell: FC<AppShellProps> = ({
       ? "px-4 sm:px-6 lg:px-12"
       : "px-4 sm:px-6 lg:px-10 xl:px-14";
 
+  const layoutVars = {
+    ["--sidebar-width" as string]: `${sidebarWidth}px`,
+  } as React.CSSProperties;
+
   return (
     <div
       dir={direction}
@@ -45,39 +49,32 @@ const AppShell: FC<AppShellProps> = ({
         sidebarSide={sidebarSide}
       />
 
-      {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
-      <div className={cn("flex", sidebarSide === "right" ? "flex-row-reverse" : "flex-row")}> 
-        {/* Sidebar column */}
+      {/* == Sidebar + Content == */}
+      <Sidebar />
+
+      <main
+        dir={direction}
+        style={layoutVars}
+        className={cn(
+          "flex-1 min-w-0 overflow-x-hidden", // allows content to stretch naturally on all screens
+          "transition-[margin,transform] duration-300 ease-comfort",
+          sidebarSide === "left"
+            ? "md:ms-[var(--sidebar-width)] md:me-0"
+            : "md:me-[var(--sidebar-width)] md:ms-0",
+          shellSectionSpacing,
+          contentPadding
+        )}
+      >
         <div
           className={cn(
-            "hidden md:block",
-            "transition-[width] duration-300 ease-comfort"
+            "mx-auto w-full p-4 sm:p-6", // keeps content aligned with the header container
+            shellContainer,
+            "flex flex-col gap-6"
           )}
-          style={{ width: `${sidebarWidth}px` }}
         >
-          <Sidebar />
+          {children}
         </div>
-
-        {/* Content column */}
-        <main
-          dir={direction}
-          className={cn(
-            "flex-1 min-w-0 overflow-x-hidden", // allows content to stretch naturally on all screens
-            shellSectionSpacing,
-            contentPadding
-          )}
-        >
-          <div
-            className={cn(
-              "mx-auto w-full p-4 sm:p-6", // keeps content aligned with the header container
-              shellContainer,
-              "flex flex-col gap-6"
-            )}
-          >
-            {children}
-          </div>
-        </main>
-      </div>
+      </main>
 
       {/* Mobile sidebar overlay */}
       <MobileDrawer />

@@ -25,12 +25,14 @@ const Sidebar: React.FC = () => {
       className={cn(
         "hidden md:flex", // desktop only
         "shrink-0 border-border/70 bg-sidebar-surface text-sidebar-text", // styling
-        "transition-[width] duration-300 ease-comfort", // smooth resize
+        "md:fixed md:top-16 md:bottom-0", // hug the header and screen edge
+        isRTL ? "md:left-auto md:right-0" : "md:left-0 md:right-auto",
+        "transition-[width,transform] duration-300 ease-comfort", // smooth resize and slide
         isRTL ? "border-l" : "border-r"
       )}
       style={{ width: `${sidebarWidth}px` }}
     >
-      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
+      <div className="flex h-full w-full flex-col overflow-hidden">
         <div className="flex items-center gap-3 border-b border-border/60 px-4 py-4">
           <BrandLogo variant={isCollapsed ? "icon" : "full"} className={cn(isCollapsed ? "h-8" : "h-9", "transition-all")} />
           {!isCollapsed && (
