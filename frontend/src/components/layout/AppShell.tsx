@@ -45,12 +45,12 @@ const AppShell: FC<AppShellProps> = ({
       <Header title={title} showSidebarToggle={showSidebarToggle} />
 
       {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
-      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}> 
+      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}>
         {/* Sidebar column */}
         <div
           className={cn(
             "hidden md:block",
-            "transition-[width] duration-300 ease-comfort"
+            "transition-[width] duration-200 ease-comfort will-change-[width]"
           )}
           style={{ width: `${sidebarWidth}px` }}
         >

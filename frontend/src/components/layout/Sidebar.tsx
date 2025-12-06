@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import BrandLogo from "@/components/common/BrandLogo";
 import LegalIcon from "@/components/common/LegalIcon";
@@ -20,25 +21,44 @@ const Sidebar: React.FC = () => {
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
 
   return (
-    <aside
+    <motion.aside
       dir={isRTL ? "rtl" : "ltr"}
+      initial={false}
+      animate={{ width: sidebarWidth, translateX: 0 }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
       className={cn(
         "hidden md:flex", // desktop only
         "shrink-0 border-border/70 bg-sidebar-surface text-sidebar-text", // styling
-        "transition-[width] duration-300 ease-comfort", // smooth resize
+        "transition-[width] duration-200 ease-comfort will-change-[width,transform]",
         isRTL ? "border-l" : "border-r"
       )}
       style={{ width: `${sidebarWidth}px` }}
     >
       <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
-        <div className="flex items-center gap-3 border-b border-border/60 px-4 py-4">
-          <BrandLogo variant={isCollapsed ? "icon" : "full"} className={cn(isCollapsed ? "h-8" : "h-9", "transition-all")} />
-          {!isCollapsed && (
-            <div className="flex flex-col">
-              <span className="text-sm font-semibold text-foreground">Avocat</span>
-              <span className="text-xs text-muted-foreground">{t("dashboard.title")}</span>
-            </div>
+        <div
+          className={cn(
+            "flex items-center gap-3 border-b border-border/60 px-4 py-4 transition-[padding] duration-200 ease-comfort",
+            isRTL ? "flex-row-reverse" : "flex-row",
+            isCollapsed ? "px-3" : "px-4"
           )}
+        >
+          <BrandLogo
+            variant={isCollapsed ? "icon" : "full"}
+            className={cn(isCollapsed ? "h-8" : "h-9", "transition-all duration-200 ease-comfort")}
+          />
+          <motion.div
+            initial={false}
+            animate={{ opacity: isCollapsed ? 0 : 1, x: isCollapsed ? (isRTL ? 12 : -12) : 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className={cn(
+              "flex flex-col",
+              isCollapsed && "pointer-events-none select-none",
+              isRTL ? "items-end" : "items-start"
+            )}
+          >
+            <span className="text-sm font-semibold text-foreground">Avocat</span>
+            <span className="text-xs text-muted-foreground">{t("dashboard.title")}</span>
+          </motion.div>
         </div>
 
         <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-5">
@@ -66,7 +86,7 @@ const Sidebar: React.FC = () => {
           ))}
         </nav>
       </div>
-    </aside>
+    </motion.aside>
   );
 };
 
@@ -119,11 +139,13 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   const linkContent = (
     <div
       className={cn(
-        "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-base ease-comfort",
+        "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200 ease-comfort",
         current
           ? "bg-brand-primary/10 text-brand-primary shadow-[0_10px_30px_-18px_rgba(16,133,109,0.65)]"
           : "text-foreground/80 hover:bg-brand-primary/5 hover:text-brand-primary",
-        isCollapsed ? "justify-center px-2" : "justify-start",
+        isCollapsed
+          ? cn("justify-center px-2", isRTL ? "flex-row-reverse" : "flex-row")
+          : cn(isRTL ? "flex-row-reverse text-right" : "flex-row", "justify-start"),
         hasChildren && "border border-transparent hover:border-border/60"
       )}
     >
@@ -133,7 +155,18 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       >
         <LegalIcon iconKey={iconKey} width={22} height={22} />
       </span>
-      {!isCollapsed && <span className="truncate text-sm">{translateKey(itemKey, language)}</span>}
+      <motion.span
+        initial={false}
+        animate={{ opacity: isCollapsed ? 0 : 1, x: isCollapsed ? (isRTL ? 8 : -8) : 0 }}
+        transition={{ duration: 0.18, ease: "easeInOut" }}
+        className={cn(
+          "truncate text-sm",
+          isCollapsed && "pointer-events-none select-none",
+          isRTL ? "text-right" : "text-left"
+        )}
+      >
+        {translateKey(itemKey, language)}
+      </motion.span>
     </div>
   );
 
@@ -149,7 +182,13 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
           </TooltipContent>
         </Tooltip>
 
-        <ul className={cn("space-y-1 pl-4", isRTL && "pr-4", isCollapsed && "hidden")}> 
+        <ul
+          className={cn(
+            "space-y-1 transition-[padding,opacity] duration-200 ease-comfort",
+            isCollapsed && "pointer-events-none select-none opacity-0",
+            isRTL ? "pr-4" : "pl-4"
+          )}
+        >
           {childrenItems!.map((child) => {
             const childActive = child.path && activePath.startsWith(child.path);
             return (
@@ -159,6 +198,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
                   className={({ isActive }) =>
                     cn(
                       "flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors duration-base ease-comfort",
+                      isRTL ? "flex-row-reverse text-right" : "flex-row",
                       isActive || childActive
                         ? "bg-brand-primary/10 text-brand-primary"
                         : "text-foreground/75 hover:bg-brand-primary/5 hover:text-brand-primary"
@@ -183,7 +223,17 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
     <li>
       <Tooltip disabled={!isCollapsed}>
         <TooltipTrigger asChild>
-          <NavLink to={path ?? "#"}>{linkContent}</NavLink>
+          <NavLink
+            to={path ?? "#"}
+            className={({ isActive }) =>
+              cn(
+                isRTL ? "flex-row-reverse text-right" : "flex-row",
+                isActive && "[&>div]:bg-brand-primary/10 [&>div]:text-brand-primary"
+              )
+            }
+          >
+            {linkContent}
+          </NavLink>
         </TooltipTrigger>
         <TooltipContent side={isRTL ? "left" : "right"} hidden={!isCollapsed}>
           {translateKey(itemKey, language)}
