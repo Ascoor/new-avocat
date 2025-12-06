@@ -94,22 +94,6 @@
     );
   }
 
-  * {
-    @apply border-border;
-  }
-
-  html[lang='ar'] body {
-    font-family: 'Cairo', 'Amiri', 'Inter', var(--font-display, 'Inter'), sans-serif;
-  }
-
-  html[lang='ar'] .font-display {
-    font-family: 'Cairo', 'Amiri', 'Inter', var(--font-display, 'Inter'), sans-serif;
-  }
-
-  html[lang='en'] body {
-    font-family: 'Inter', 'Outfit', 'Cairo', var(--font-display, 'Inter'), sans-serif;
-  }
-
   /* Dark CTA background */
   .bg-cta-dark {
     @apply bg-gradient-to-br from-primary via-primary-glow to-slate-bg;
@@ -280,13 +264,17 @@
   }
 
   .font-english {
-    font-family: 'Inter', 'Outfit', 'Cairo', sans-serif;
+    font-family: var(--font-latin);
+    direction: ltr;
+    text-align: left;
   }
 
   .font-arabic {
-    font-family: 'Cairo', 'Amiri', 'Inter', sans-serif;
+    font-family: var(--font-arabic);
     font-weight: 500;
     font-feature-settings: 'kern' 1, 'liga' 1;
+    direction: rtl;
+    text-align: right;
   }
 
   .arabic-heading-lg {

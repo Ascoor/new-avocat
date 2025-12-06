@@ -5,6 +5,12 @@ All colors MUST be HSL.
 */
 @layer base {
   :root {
+    /* Typography */
+    --font-latin: "Inter", "Outfit", "Cairo", sans-serif;
+    --font-arabic: "Cairo", "Amiri", "Inter", sans-serif;
+    --font-display: "Poppins", "Cairo", "Outfit", "Inter", sans-serif;
+    --font-body: var(--font-latin);
+
     /* AVOCAT LAW FIRM - LIGHT MODE (ROYAL NAVY IDENTITY) */
 
     /* SURFACE & NEUTRALS */
@@ -347,16 +353,24 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
     font-feature-settings: 'cv11', 'ss01';
   }
 
   /* RTL Support */
   [dir="rtl"] {
     direction: rtl;
+    --font-body: var(--font-arabic);
+    --font-display: var(--font-arabic);
   }
 
   [dir="ltr"] {
     direction: ltr;
+  }
+
+  :root[lang="ar"] {
+    --font-body: var(--font-arabic);
+    --font-display: var(--font-arabic);
   }
 }
 
@@ -484,6 +498,25 @@ All colors MUST be HSL.
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* ─────────────────────────────────────────────────────────────── */
+  /* LANGUAGE & DIRECTION UTILITIES */
+  /* ─────────────────────────────────────────────────────────────── */
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-rtl {
+    font-family: var(--font-arabic);
+    direction: rtl;
+    text-align: right;
+  }
+
+  .font-ltr {
+    font-family: var(--font-latin);
+    direction: ltr;
+    text-align: left;
   }
 
   /* ─────────────────────────────────────────────────────────────── */
