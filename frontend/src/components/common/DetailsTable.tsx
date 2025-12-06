@@ -432,40 +432,35 @@ const DetailsTable = <T,>({
     (enableDetailsCard ? 1 : 0);
 
   return (
-    <div className="rounded-lg border border-border/60 bg-card/40 shadow-card">
+    <div className="rounded-2xl border border-border/60 bg-gradient-to-b from-background/70 via-card/70 to-muted/40 shadow-[0_20px_60px_-38px_rgba(0,0,0,0.55)]">
       {controlsVisible && (
-        <div className="flex flex-col gap-3 border-b border-border/60 bg-muted/30 px-4 py-3">
+        <div className="flex flex-col gap-4 border-b border-border/60 bg-muted/25 px-4 py-4 backdrop-blur-sm">
           <div
             className={cn(
-              'flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between',
-              isRTL ? 'lg:flex-row-reverse' : '',
+              'grid gap-3 lg:grid-cols-[auto_1fr_auto] lg:items-center',
+              isRTL ? 'lg:[direction:rtl]' : '',
             )}
           >
-            {enableSearch ? (
-              <div className="relative w-full lg:max-w-sm">
-                <Search
-                  className={cn(
-                    'absolute top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground',
-                    isRTL ? 'right-3' : 'left-3',
-                  )}
-                />
-                <Input
-                  value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
-                  placeholder={t('table.search')}
-                  className={cn(isRTL ? 'pr-9 pl-3' : 'pl-9 pr-3')}
-                />
-              </div>
-            ) : (
-              <div />
-            )}
-
             <div
               className={cn(
                 'flex flex-wrap items-center gap-2',
-                isRTL ? 'justify-start lg:flex-row-reverse' : 'justify-end',
+                isRTL ? 'lg:justify-end' : 'lg:justify-start',
               )}
             >
+              {onAdd && (
+                <Button
+                  type="button"
+                  onClick={onAdd}
+                  className={cn(
+                    'gap-2 rounded-full border-0 bg-gradient-to-r from-primary/90 via-primary to-primary/80 text-primary-foreground shadow-[0_14px_38px_-16px_rgba(0,0,0,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-18px_rgba(0,0,0,0.65)]',
+                    isRTL ? 'order-first' : '',
+                  )}
+                >
+                  <Plus className="h-4 w-4" />
+                  {addButtonLabel ?? t('common.add')}
+                </Button>
+              )}
+
               {enableSorting && sortableColumns.length > 0 && (
                 <div
                   className={cn(
@@ -474,7 +469,7 @@ const DetailsTable = <T,>({
                   )}
                 >
                   <Select value={sortKey ?? 'none'} onValueChange={handleSortKeyChange}>
-                    <SelectTrigger className="h-9 w-44" aria-label={t('table.aria.sortColumn')}>
+                    <SelectTrigger className="h-9 w-44 rounded-full" aria-label={t('table.aria.sortColumn')}>
                       <SelectValue placeholder={t('table.sortBy')}>
                         {sortKey
                           ? sortableColumns.find((column) => column.key === sortKey)?.header
@@ -516,6 +511,37 @@ const DetailsTable = <T,>({
                 </div>
               )}
 
+              {toolbarExtras ? <div className="flex items-center gap-2">{toolbarExtras}</div> : null}
+            </div>
+
+            {enableSearch ? (
+              <div className="relative w-full lg:max-w-xl lg:justify-self-center">
+                <Search
+                  className={cn(
+                    'absolute top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground',
+                    isRTL ? 'right-4' : 'left-4',
+                  )}
+                />
+                <Input
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  placeholder={t('table.search')}
+                  className={cn(
+                    'h-11 rounded-full border-border/60 bg-background/80 pl-11 pr-4 text-sm shadow-inner shadow-border/40 transition focus-visible:ring-2 focus-visible:ring-primary/30',
+                    isRTL ? 'pr-11 pl-4' : 'pl-11 pr-4',
+                  )}
+                />
+              </div>
+            ) : (
+              <div className="hidden lg:block" />
+            )}
+
+            <div
+              className={cn(
+                'flex flex-wrap items-center justify-end gap-2',
+                isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row',
+              )}
+            >
               {enableExport && exportableColumns.length > 0 && (
                 <div
                   className={cn(
@@ -529,7 +555,7 @@ const DetailsTable = <T,>({
                     size="sm"
                     onClick={handleExportCsv}
                     aria-label={t('table.aria.exportCsv')}
-                    className="gap-2"
+                    className="gap-2 rounded-full"
                   >
                     <FileDown className="h-4 w-4" />
                     {t('table.exportCSV')}
@@ -540,38 +566,22 @@ const DetailsTable = <T,>({
                     size="sm"
                     onClick={handleExportExcel}
                     aria-label={t('table.aria.exportExcel')}
-                    className="gap-2"
+                    className="gap-2 rounded-full"
                   >
                     <FileDown className="h-4 w-4" />
                     {t('table.exportExcel')}
                   </Button>
                 </div>
               )}
-
-              {toolbarExtras}
-
-              {onAdd && (
-                <Button
-                  type="button"
-                  onClick={onAdd}
-                  className={cn(
-                    'gap-2 rounded-full border-0 bg-gradient-to-r from-primary/90 via-primary to-primary/80 text-primary-foreground shadow-[0_14px_38px_-16px_rgba(0,0,0,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-18px_rgba(0,0,0,0.65)]',
-                    isRTL ? 'order-first' : '',
-                  )}
-                >
-                  <Plus className="h-4 w-4" />
-                  {addButtonLabel ?? t('common.add')}
-                </Button>
-              )}
             </div>
           </div>
 
           {selectionEnabled && internalSelectedIds.size > 0 && (
-            <div className="flex items-center justify-between gap-3 rounded-md border border-border/60 bg-background/60 px-3 py-2 text-sm shadow-sm">
+            <div className="flex items-center justify-between gap-3 rounded-lg border border-border/60 bg-background/70 px-3 py-2 text-sm shadow-sm">
               <span className="font-medium text-foreground">
                 {t('table.selectedCount', { count: internalSelectedIds.size })}
               </span>
-              <Button variant="ghost" size="sm" onClick={clearSelection} className="h-8 px-3">
+              <Button variant="ghost" size="sm" onClick={clearSelection} className="h-8 rounded-full px-3">
                 {t('table.clearSelection')}
               </Button>
             </div>
@@ -582,14 +592,14 @@ const DetailsTable = <T,>({
       <div className="overflow-x-auto">
         <Table dir={isRTL ? 'rtl' : 'ltr'} className="min-w-full align-middle">
           <TableHeader>
-            <TableRow className="bg-gradient-to-r from-muted/40 via-muted/25 to-muted/40">
+            <TableRow className="bg-gradient-to-r from-muted/50 via-muted/35 to-muted/50 text-xs uppercase tracking-wide">
               {selectionEnabled && (
                 <TableHead className="w-14 px-4 py-2 text-center">
                   <Checkbox
                     aria-label={t('table.aria.selectAll')}
                     checked={allVisibleSelected ? true : someVisibleSelected ? 'indeterminate' : false}
                     onCheckedChange={toggleSelectAllVisible}
-                    className="mx-auto"
+                    className="mx-auto h-5 w-5 rounded-md border-border/70 shadow-sm data-[state=checked]:border-primary data-[state=checked]:bg-primary/90 data-[state=indeterminate]:bg-primary/70"
                   />
                 </TableHead>
               )}
@@ -671,7 +681,7 @@ const DetailsTable = <T,>({
                       data-selected={isRowSelected ? 'true' : undefined}
                       aria-selected={isRowSelected}
                       className={cn(
-                        'border-border/40 transition-colors hover:bg-muted/40',
+                        'border-border/40 transition-colors hover:bg-muted/35',
                         isRowSelected && 'bg-primary/5 hover:bg-primary/10 dark:bg-primary/10 dark:hover:bg-primary/15',
                       )}
                     >
@@ -681,7 +691,7 @@ const DetailsTable = <T,>({
                             aria-label={t('table.aria.selectRow')}
                             checked={isRowSelected}
                             onCheckedChange={() => toggleSelectRow(rowId)}
-                            className="mx-auto"
+                            className="mx-auto h-5 w-5 rounded-md border-border/70 shadow-sm data-[state=checked]:border-primary data-[state=checked]:bg-primary/90 data-[state=indeterminate]:bg-primary/70"
                           />
                         </TableCell>
                       )}
