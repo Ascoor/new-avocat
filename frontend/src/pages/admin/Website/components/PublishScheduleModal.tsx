@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PublishScheduleModalProps {
   open: boolean;
@@ -47,6 +48,7 @@ const PublishScheduleModal: React.FC<PublishScheduleModalProps> = ({
   defaultDate,
   isSubmitting,
 }) => {
+  const { direction } = useLanguage();
   const form = useForm<ScheduleFormValues>({ defaultValues });
 
   useEffect(() => {
@@ -73,13 +75,13 @@ const PublishScheduleModal: React.FC<PublishScheduleModalProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent dir={direction} className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Schedule publish</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(handleSubmit)}>
+          <form className="space-y-6" dir={direction} onSubmit={form.handleSubmit(handleSubmit)}>
             <FormField
               control={form.control}
               name="scheduled_for"

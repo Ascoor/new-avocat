@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import {
   getCaseTypes,
   getCaseSubTypes,
@@ -19,6 +20,7 @@ import {
   CaseSubType,
   LegalCaseCreateDTO,
 } from '@/types/legalCase';
+import { cn } from '@/lib/utils';
 
 interface AddEditLegalCaseModalProps {
   isOpen: boolean;
@@ -65,6 +67,7 @@ const AddEditLegalCaseModal = ({
   initialData = null,
 }: AddEditLegalCaseModalProps) => {
   const { user } = useAuth();
+  const { direction, isRTL } = useLanguage();
   const { toast } = useToast();
   const [formState, setFormState] = useState<FormState>(DEFAULT_FORM);
   const [caseTypes, setCaseTypes] = useState<CaseType[]>([]);
@@ -182,27 +185,38 @@ const AddEditLegalCaseModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent
+        dir={direction}
+        lang={direction === 'rtl' ? 'ar' : 'en'}
+        className={cn(
+          'max-w-3xl space-y-4 rounded-2xl border border-border/80 bg-card/95 text-foreground shadow-2xl backdrop-blur',
+          'sm:space-y-6'
+        )}
+      >
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle className="font-display text-balance text-xl font-semibold leading-tight tracking-tight">
             {initialData ? 'تعديل بيانات القضية' : 'إضافة قضية جديدة'}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="رقم الملف" required>
+        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6" dir={direction}>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Field label="رقم الملف" required direction={direction}>
               <Input
                 value={formState.slug}
                 onChange={(event) => handleChange('slug', event.target.value)}
                 placeholder="أدخل رقم الملف"
                 required
+                className="text-sm"
               />
             </Field>
-            <Field label="صفة الإدعاء" required>
+            <Field label="صفة الإدعاء" required direction={direction}>
               <select
                 value={formState.client_capacity}
                 onChange={(event) => handleChange('client_capacity', event.target.value)}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className={cn(
+                  'w-full rounded-lg border border-input bg-background px-3 py-2 text-sm transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/30',
+                  isRTL ? 'text-right' : 'text-left'
+                )}
                 required
               >
                 <option value="">اختر صفة الإدعاء</option>
@@ -215,12 +229,15 @@ const AddEditLegalCaseModal = ({
             </Field>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="نوع القضية" required>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Field label="نوع القضية" required direction={direction}>
               <select
                 value={formState.case_type_id}
                 onChange={(event) => handleChange('case_type_id', event.target.value)}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className={cn(
+                  'w-full rounded-lg border border-input bg-background px-3 py-2 text-sm transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/30',
+                  isRTL ? 'text-right' : 'text-left'
+                )}
                 required
                 disabled={loadingTypes}
               >
@@ -232,11 +249,14 @@ const AddEditLegalCaseModal = ({
                 ))}
               </select>
             </Field>
-            <Field label="نوع القضية الفرعي" required>
+            <Field label="نوع القضية الفرعي" required direction={direction}>
               <select
                 value={formState.case_sub_type_id}
                 onChange={(event) => handleChange('case_sub_type_id', event.target.value)}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className={cn(
+                  'w-full rounded-lg border border-input bg-background px-3 py-2 text-sm transition focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/30',
+                  isRTL ? 'text-right' : 'text-left'
+                )}
                 required
                 disabled={!formState.case_type_id}
               >
@@ -250,55 +270,63 @@ const AddEditLegalCaseModal = ({
             </Field>
           </div>
 
-          <Field label="موضوع الدعوى" required>
+          <Field label="موضوع الدعوى" required direction={direction}>
             <Input
               value={formState.title}
               onChange={(event) => handleChange('title', event.target.value)}
               placeholder="أدخل موضوع الدعوى"
               required
+              className="text-sm"
             />
           </Field>
 
-          <Field label="الوصف">
+          <Field label="الوصف" direction={direction}>
             <Textarea
               value={formState.description}
               onChange={(event) => handleChange('description', event.target.value)}
               rows={3}
+              className="text-sm"
             />
           </Field>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="الخصم">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Field label="الخصم" direction={direction}>
               <Input
                 value={formState.litigants_name}
                 onChange={(event) => handleChange('litigants_name', event.target.value)}
+                className="text-sm"
               />
             </Field>
-            <Field label="رقم هاتف الخصم">
+            <Field label="رقم هاتف الخصم" direction={direction}>
               <Input
                 value={formState.litigants_phone}
                 onChange={(event) => handleChange('litigants_phone', event.target.value)}
                 type="tel"
+                inputMode="tel"
+                className="text-sm"
               />
             </Field>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="وكيل الخصم">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Field label="وكيل الخصم" direction={direction}>
               <Input
                 value={formState.litigants_lawyer_name}
                 onChange={(event) =>
                   handleChange('litigants_lawyer_name', event.target.value)
                 }
+                className="text-sm"
               />
             </Field>
-            <Field label="رقم هاتف وكيل الخصم">
+            <Field label="رقم هاتف وكيل الخصم" direction={direction}>
               <Input
                 value={formState.litigants_lawyer_phone}
                 onChange={(event) =>
                   handleChange('litigants_lawyer_phone', event.target.value)
                 }
                 type="tel"
+                inputMode="tel"
+                className="text-sm"
               />
             </Field>
           </div>
@@ -317,15 +345,23 @@ const AddEditLegalCaseModal = ({
   );
 };
 
-const Field: React.FC<{ label: string; children: React.ReactNode; required?: boolean }> = ({
-  label,
-  children,
-  required,
-}) => (
-  <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-    <span>
-      {label}
-      {required && <span className="text-destructive"> *</span>}
+interface FieldProps {
+  label: string;
+  children: React.ReactNode;
+  required?: boolean;
+  direction?: 'ltr' | 'rtl';
+}
+
+const Field: React.FC<FieldProps> = ({ label, children, required, direction = 'ltr' }) => (
+  <label
+    className={cn(
+      'flex flex-col gap-2 text-sm font-medium text-foreground',
+      direction === 'rtl' ? 'items-end text-right' : 'text-left'
+    )}
+  >
+    <span className="inline-flex items-center gap-1 font-semibold">
+      <span className="text-base leading-tight">{label}</span>
+      {required && <span className="text-destructive">*</span>}
     </span>
     {children}
   </label>
