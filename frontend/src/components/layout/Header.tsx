@@ -56,7 +56,9 @@ export const Header: React.FC<HeaderProps> = ({
         className={cn(
           "relative z-[1] mx-auto flex h-full w-full items-center justify-between",
           "px-3 sm:px-4 lg:px-6 xl:px-8",
-          "md:[padding-inline-start:var(--sidebar-offset)]"
+          isRTL
+            ? "md:[padding-inline-end:var(--sidebar-offset)]"
+            : "md:[padding-inline-start:var(--sidebar-offset)]"
         )}
         style={offsetStyles}
       >

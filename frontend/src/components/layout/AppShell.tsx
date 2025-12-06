@@ -1,8 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import Sidebar, {
-  SIDEBAR_COLLAPSED_WIDTH,
-  SIDEBAR_EXPANDED_WIDTH,
-} from "./Sidebar";
+import Sidebar from "./Sidebar";
 import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -18,6 +15,10 @@ interface AppShellProps {
   showSidebarToggle?: boolean;
 }
 
+// نفس القيم المستخدمة في Sidebar
+const COLLAPSED_WIDTH = 72;
+const EXPANDED_WIDTH = 272;
+
 const AppShell: FC<AppShellProps> = ({
   children,
   title,
@@ -28,9 +29,7 @@ const AppShell: FC<AppShellProps> = ({
   const { direction, isRTL } = useLanguage();
   const { isCollapsed } = useSidebar();
 
-  const sidebarWidth = isCollapsed
-    ? SIDEBAR_COLLAPSED_WIDTH
-    : SIDEBAR_EXPANDED_WIDTH;
+  const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
   const contentPadding =
     layoutVariant === "wide"
       ? "px-4 sm:px-6 lg:px-12"
@@ -45,12 +44,12 @@ const AppShell: FC<AppShellProps> = ({
       <Header title={title} showSidebarToggle={showSidebarToggle} />
 
       {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
-      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}>
+      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}> 
         {/* Sidebar column */}
         <div
           className={cn(
             "hidden md:block",
-            "transition-[width] duration-200 ease-comfort will-change-[width]"
+            "transition-[width] duration-300 ease-comfort"
           )}
           style={{ width: `${sidebarWidth}px` }}
         >
@@ -67,8 +66,9 @@ const AppShell: FC<AppShellProps> = ({
         >
           <div
             className={cn(
+              "mx-auto w-full p-4 sm:p-6", // keeps content aligned with the header container
               shellContainer,
-              "flex flex-col gap-6 p-4 sm:p-6 lg:p-8"
+              "flex flex-col gap-6"
             )}
           >
             {children}
