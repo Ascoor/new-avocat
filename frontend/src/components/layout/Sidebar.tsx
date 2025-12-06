@@ -15,9 +15,15 @@ export const SIDEBAR_EXPANDED_WIDTH = 276;
 const Sidebar: React.FC = () => {
   const { pathname } = useLocation();
   const { t, language, isRTL } = useLanguage();
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed, setCollapsed } = useSidebar();
 
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
+
+  React.useEffect(() => {
+    if (!isCollapsed) {
+      setCollapsed(true);
+    }
+  }, [isCollapsed, pathname, setCollapsed]);
 
   return (
     <aside
