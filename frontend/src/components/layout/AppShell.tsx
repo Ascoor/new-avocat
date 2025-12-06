@@ -26,7 +26,7 @@ const AppShell: FC<AppShellProps> = ({
   layoutVariant = "default",
   showSidebarToggle = true,
 }) => {
-  const { direction } = useLanguage();
+  const { direction, isRTL } = useLanguage();
   const { isCollapsed } = useSidebar();
 
   const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
@@ -44,7 +44,7 @@ const AppShell: FC<AppShellProps> = ({
       <Header title={title} showSidebarToggle={showSidebarToggle} />
 
       {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
-      <div className="flex">
+      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}> 
         {/* Sidebar column */}
         <div
           className={cn(
