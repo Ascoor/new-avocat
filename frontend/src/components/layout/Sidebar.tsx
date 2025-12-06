@@ -1,121 +1,196 @@
-import React, { FC, ReactNode } from "react";
+import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
-import Sidebar from "./Sidebar";
-import MobileDrawer from "./MobileDrawer";
-import { Header } from "./Header";
+import BrandLogo from "@/components/common/BrandLogo";
+import LegalIcon from "@/components/common/LegalIcon";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSidebar } from "@/contexts/SidebarContext";
+import { sidebarGroups, translateKey } from "@/config/sidebar";
 import { cn } from "@/lib/utils";
-import { shellContainer, shellSectionSpacing } from "./layout-classes";
 
-interface AppShellProps {
-  // ✅ خليناه اختياري عشان يختفي خطأ "children is missing in type {}"
-  children?: ReactNode;
-  title?: string;
-  className?: string;
-  layoutVariant?: "default" | "wide";
-  showSidebarToggle?: boolean;
-}
+export const SIDEBAR_COLLAPSED_WIDTH = 76;
+export const SIDEBAR_EXPANDED_WIDTH = 276;
 
-// نفس القيم المستخدمة في الهيدر/Sidebar
-const COLLAPSED_WIDTH = 72;
-const EXPANDED_WIDTH = 272;
-
-const AppShell: FC<AppShellProps> = ({
-  children,
-  title,
-  className,
-  layoutVariant = "default",
-  showSidebarToggle = true,
-}) => {
-  const { direction } = useLanguage();
+const Sidebar: React.FC = () => {
+  const { pathname } = useLocation();
+  const { t, language, isRTL } = useLanguage();
   const { isCollapsed } = useSidebar();
 
-  const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
-
-  const contentPadding =
-    layoutVariant === "wide"
-      ? "px-4 sm:px-6 lg:px-12"
-      : "px-4 sm:px-6 lg:px-10 xl:px-14";
-
-  const sidebarInlineSize = `${sidebarWidth}px`;
-
-  // margin-inline-start تشتغل RTL/LTR تلقائي حسب dir
-  const contentOffsetStyle = {
-    marginInlineStart: sidebarInlineSize,
-  } as const;
+  const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
 
   return (
-    <div
-      dir={direction}
-      className={cn("min-h-screen bg-background text-foreground", className)}
-      style={{ ["--sidebar-width" as string]: sidebarInlineSize }}
+    <aside
+      dir={isRTL ? "rtl" : "ltr"}
+      className={cn(
+        "hidden md:flex", // desktop only
+        "shrink-0 border-border/70 bg-sidebar-surface text-sidebar-text", // styling
+        "transition-[width] duration-300 ease-comfort", // smooth resize
+        isRTL ? "border-l" : "border-r"
+      )}
+      style={{ width: `${sidebarWidth}px` }}
     >
-      {/* الهيدر بعرض كامل */}
-      <Header title={title} showSidebarToggle={showSidebarToggle} />
-
-      {/* الصف الرئيسي: سايدبار + محتوى */}
-      <div className="flex">
-        {/* عمود السايدبار */}
-        <div
-          className={cn(
-            "hidden md:block",
-            "transition-[width] duration-300 ease-comfort"
+      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
+        <div className="flex items-center gap-3 border-b border-border/60 px-4 py-4">
+          <BrandLogo variant={isCollapsed ? "icon" : "full"} className={cn(isCollapsed ? "h-8" : "h-9", "transition-all")} />
+          {!isCollapsed && (
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold text-foreground">Avocat</span>
+              <span className="text-xs text-muted-foreground">{t("dashboard.title")}</span>
+            </div>
           )}
-          style={{ width: sidebarInlineSize }}
-        >
-          <Sidebar />
         </div>
 
-        {/* عمود المحتوى */}
-        <main
-          className={cn(
-            "flex-1 overflow-x-hidden",
-            "transition-[margin-inline-start] duration-300 ease-comfort",
-            shellSectionSpacing,
-            contentPadding
-          )}
-          style={contentOffsetStyle}
-        >
-          <div
-            className={cn(
-              "mx-auto w-full min-h-[calc(100vh-4rem)] min-w-0 p-4 sm:p-6",
-              shellContainer,
-              "flex flex-col gap-6"
-            )}
-          >
-            {children}
-          </div>
-        </main>
+        <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-5">
+          {sidebarGroups.map((group) => (
+            <SidebarSection
+              key={group.key}
+              label={t(`sidebar.sections.${group.key}`)}
+              isCollapsed={isCollapsed}
+              isRTL={isRTL}
+            >
+              {group.items.map((item) => (
+                <SidebarLink
+                  key={item.key}
+                  itemKey={item.key}
+                  iconKey={item.iconKey}
+                  path={item.path}
+                  childrenItems={item.children}
+                  isCollapsed={isCollapsed}
+                  isRTL={isRTL}
+                  activePath={pathname}
+                  language={language}
+                />
+              ))}
+            </SidebarSection>
+          ))}
+        </nav>
       </div>
-
-      {/* Drawer للموبايل */}
-      <MobileDrawer />
-    </div>
+    </aside>
   );
 };
 
-export default AppShell;
-
-interface DashboardLayoutProps {
-  children: ReactNode;
-  className?: string;
-  title?: string;
+interface SidebarSectionProps {
+  label: string;
+  children: React.ReactNode;
+  isCollapsed: boolean;
+  isRTL: boolean;
 }
 
-export const DashboardLayout: FC<DashboardLayoutProps> = ({
-  children,
-  className,
-  title,
-}) => {
-  return (
-    <div className={cn("flex flex-col gap-8", className)}>
-      {title && (
-        <h1 className="mb-4 text-3xl font-bold text-foreground">
-          {title}
-        </h1>
+const SidebarSection: React.FC<SidebarSectionProps> = ({ label, children, isCollapsed, isRTL }) => (
+  <div className="space-y-2">
+    <div
+      className={cn(
+        "px-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-foreground/60 transition-opacity",
+        isCollapsed ? "opacity-0" : "opacity-80",
+        isRTL ? "text-right" : "text-left"
       )}
-      {children}
+    >
+      {label}
+    </div>
+    <ul className="space-y-1">{children}</ul>
+  </div>
+);
+
+interface SidebarLinkProps {
+  itemKey: string;
+  iconKey: string;
+  path?: string;
+  childrenItems?: typeof sidebarGroups[number]["items"][number]["children"];
+  isCollapsed: boolean;
+  isRTL: boolean;
+  activePath: string;
+  language: string;
+}
+
+const SidebarLink: React.FC<SidebarLinkProps> = ({
+  itemKey,
+  iconKey,
+  path,
+  childrenItems,
+  isCollapsed,
+  isRTL,
+  activePath,
+  language,
+}) => {
+  const hasChildren = childrenItems && childrenItems.length > 0;
+  const current = path && activePath.startsWith(path);
+
+  const linkContent = (
+    <div
+      className={cn(
+        "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-base ease-comfort",
+        current
+          ? "bg-brand-primary/10 text-brand-primary shadow-[0_10px_30px_-18px_rgba(16,133,109,0.65)]"
+          : "text-foreground/80 hover:bg-brand-primary/5 hover:text-brand-primary",
+        isCollapsed ? "justify-center px-2" : "justify-start",
+        hasChildren && "border border-transparent hover:border-border/60"
+      )}
+    >
+      <span
+        className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-primary/15 via-brand-primary/10 to-brand-primary/5 text-brand-primary"
+        aria-hidden
+      >
+        <LegalIcon iconKey={iconKey} width={22} height={22} />
+      </span>
+      {!isCollapsed && <span className="truncate text-sm">{translateKey(itemKey, language)}</span>}
     </div>
   );
+
+  if (hasChildren) {
+    return (
+      <li className="space-y-1">
+        <Tooltip disabled={!isCollapsed}>
+          <TooltipTrigger asChild>
+            <div>{linkContent}</div>
+          </TooltipTrigger>
+          <TooltipContent side={isRTL ? "left" : "right"} hidden={!isCollapsed}>
+            {translateKey(itemKey, language)}
+          </TooltipContent>
+        </Tooltip>
+
+        <ul className={cn("space-y-1 pl-4", isRTL && "pr-4", isCollapsed && "hidden")}> 
+          {childrenItems!.map((child) => {
+            const childActive = child.path && activePath.startsWith(child.path);
+            return (
+              <li key={child.key}>
+                <NavLink
+                  to={child.path ?? "#"}
+                  className={({ isActive }) =>
+                    cn(
+                      "flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors duration-base ease-comfort",
+                      isActive || childActive
+                        ? "bg-brand-primary/10 text-brand-primary"
+                        : "text-foreground/75 hover:bg-brand-primary/5 hover:text-brand-primary"
+                    )
+                  }
+                  end
+                >
+                  <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-surface-muted/60 text-brand-primary">
+                    <LegalIcon iconKey={child.iconKey} width={18} height={18} />
+                  </span>
+                  <span className="truncate">{translateKey(child.key, language)}</span>
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      <Tooltip disabled={!isCollapsed}>
+        <TooltipTrigger asChild>
+          <NavLink to={path ?? "#"}>{linkContent}</NavLink>
+        </TooltipTrigger>
+        <TooltipContent side={isRTL ? "left" : "right"} hidden={!isCollapsed}>
+          {translateKey(itemKey, language)}
+        </TooltipContent>
+      </Tooltip>
+    </li>
+  );
 };
+
+export default Sidebar;

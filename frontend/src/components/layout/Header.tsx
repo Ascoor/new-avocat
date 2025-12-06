@@ -1,6 +1,7 @@
 // src/layout/Header.tsx
 import React from "react";
 import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft } from "lucide-react";
+import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_EXPANDED_WIDTH } from "./Sidebar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -33,7 +34,9 @@ export const Header: React.FC<HeaderProps> = ({
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
-  const sidebarWidth = isCollapsed ? 72 : 272;
+  const sidebarWidth = isCollapsed
+    ? SIDEBAR_COLLAPSED_WIDTH
+    : SIDEBAR_EXPANDED_WIDTH;
   const desktopOffset = `${sidebarWidth + 16}px`;
   const offsetStyles = {
     ["--sidebar-offset" as string]: desktopOffset,
