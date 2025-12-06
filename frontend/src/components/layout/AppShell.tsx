@@ -26,11 +26,11 @@ const AppShell: FC<AppShellProps> = ({
   const { isCollapsed } = useSidebar();
 
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
-  const sidebarSide = isRTL ? "right" : "left";
+  const sidebarSide = isRTL ? "left" : "right";
   const contentPadding =
     layoutVariant === "wide"
       ? "px-4 sm:px-6 lg:px-12"
-      : "px-4 sm:px-6 lg:px-10 xl:px-14";
+      : "px-4 sm:px-6 lg:px-10 xl:px-40";
 
   return (
     <div
