@@ -36,6 +36,15 @@ class ServiceController extends Controller
 
     public function show(Service $service)
     {
+        $service->load([
+            'serviceType',
+            'clients',
+            'unclients',
+            'procedures.lawyer',
+            'createdBy',
+            'updatedBy',
+        ]);
+
         return response()->json(['service' => $service]);
     }
     

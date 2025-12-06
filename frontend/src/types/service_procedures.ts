@@ -1,3 +1,5 @@
+import type { Lawyer } from './legalCase';
+
 export interface ServiceProcedure {
   id: number;
   service_id?: number;
@@ -19,4 +21,5 @@ export interface ServiceProcedure {
   updated_by?: number;
   created_at: string;
   updated_at: string;
+  lawyer?: Lawyer;
 }

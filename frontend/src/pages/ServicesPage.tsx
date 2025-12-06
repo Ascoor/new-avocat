@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 
@@ -54,6 +55,7 @@ const ServicesPage: React.FC = () => {
   const { t, language } = useLanguage();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMode, setDialogMode] = useState<'create' | 'edit' | 'view'>('create');
   const [selectedService, setSelectedService] = useState<ServiceRecord | null>(null);
@@ -216,7 +218,7 @@ const ServicesPage: React.FC = () => {
               variant="outline"
               size="icon"
               className="h-8 w-8"
-              onClick={() => handleOpen('view', service)}
+              onClick={() => service.id && navigate(`/services/${service.id}`)}
             >
               <Eye className="h-4 w-4" />
               <span className="sr-only">{t('services.list.actions.view')}</span>
