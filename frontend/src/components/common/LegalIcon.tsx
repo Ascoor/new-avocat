@@ -8,7 +8,7 @@ export interface LegalIconProps extends React.SVGProps<SVGSVGElement> {
   title?: string;
 }
 
-const LegalIcon = React.forwardRef<SVGSVGElement, LegalIconProps>(
+const  LegalIcon = React.forwardRef<SVGSVGElement, LegalIconProps>(
   ({ iconKey, width = 32, height = 32, ...rest }, ref) => {
     const { icon: IconComponent } = getIconDesign(iconKey);
     return (
