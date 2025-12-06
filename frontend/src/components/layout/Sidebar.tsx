@@ -1,7 +1,7 @@
 // src/layout/Sidebar.tsx
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, ChevronRight, LogOut } from "lucide-react";
+import { ChevronDown, ChevronRight, LogOut, PanelLeft } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 
 import BrandLogo from "@/components/common/BrandLogo";
@@ -50,7 +50,7 @@ const Sidebar: React.FC = () => {
   const location = useLocation();
   const { t, isRTL } = useLanguage();
   const { logout } = useAuth();
-  const { isCollapsed, closeMobile } = useSidebarContext();
+  const { isCollapsed, closeMobile, toggleCollapsed } = useSidebarContext();
 
   const collapsed = isCollapsed;
   const currentPath = location.pathname;
@@ -165,18 +165,37 @@ const Sidebar: React.FC = () => {
       dir={isRTL ? "rtl" : "ltr"}
     >
       {/* Brand */}
-      
-      {/* Brand */}
+
+      {/* Brand + Toggle */}
       <div
         className={cn(
-          "flex items-center justify-center transition-all duration-base ease-smooth",
-          collapsed ? "px-4 py-3" : "px-5 py-4"
+          "flex items-center justify-between gap-2 transition-all duration-base ease-smooth",
+          collapsed ? "px-3 py-3" : "px-4 py-4"
         )}
       >
         <BrandLogo
           variant={collapsed ? "icon" : "full"}
           className={collapsed ? "h-10 w-10" : "h-9 w-auto"}
         />
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={toggleCollapsed}
+          className={cn(
+            "hidden h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border/70 text-muted-foreground transition duration-200 ease-comfort hover:border-border hover:text-foreground md:inline-flex",
+            collapsed ? "bg-transparent" : "bg-surface/60"
+          )}
+          aria-label={collapsed ? t("common.expand") : t("common.collapse")}
+        >
+          <PanelLeft
+            className={cn(
+              "h-4 w-4 transition-transform",
+              collapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
+            )}
+          />
+        </Button>
       </div>
       {/* Navigation */}
       <SidebarContent className="sidebar-scroll flex-1 space-y-6 overflow-y-auto px-1 py-4">
