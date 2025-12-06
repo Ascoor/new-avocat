@@ -52,17 +52,20 @@ const AppShell: FC<AppShellProps> = ({
       {showSidebarToggle && (
         <div
           className="pointer-events-none fixed top-24 z-30 hidden md:block"
-          style=
+          style={
             isRTL
               ? { right: `calc(${sidebarInlineSize} - 28px)` }
               : { left: `calc(${sidebarInlineSize} - 28px)` }
+          }
         >
           <Button
             size="icon"
-            variant="secondary"
+            variant="outline" // 👈 use one of your defined variants
             className="pointer-events-auto h-10 w-10 rounded-full shadow-elegant"
             onClick={toggleCollapsed}
-            aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
+            aria-label={
+              isCollapsed ? t("common.expand") : t("common.collapse")
+            }
           >
             <PanelLeft
               className={cn(
@@ -74,7 +77,7 @@ const AppShell: FC<AppShellProps> = ({
         </div>
       )}
 
-      {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
+      {/* == Main row: Sidebar + Content (clone of old <div className="flex">) == */}
       <div className="flex">
         {/* Sidebar column */}
         <div
@@ -91,7 +94,7 @@ const AppShell: FC<AppShellProps> = ({
         {/* Content column */}
         <main
           className={cn(
-            "flex-1 overflow-x-hidden transition-[margin] duration-300 ease-comfort", // allows content to stretch naturally on all screens
+            "flex-1 overflow-x-hidden transition-[margin] duration-300 ease-comfort",
             shellSectionSpacing,
             contentPadding,
             isRTL ? "order-first" : "order-last"
@@ -104,7 +107,7 @@ const AppShell: FC<AppShellProps> = ({
         >
           <div
             className={cn(
-              "mx-auto w-full min-h-[calc(100vh-4rem)] min-w-0 p-4 sm:p-6", // keeps content aligned with the header container
+              "mx-auto w-full min-h-[calc(100vh-4rem)] min-w-0 p-4 sm:p-6",
               shellContainer,
               "flex flex-col gap-6"
             )}
@@ -121,6 +124,7 @@ const AppShell: FC<AppShellProps> = ({
 };
 
 export default AppShell;
+
 interface DashboardLayoutProps {
   children: ReactNode;
   className?: string;
@@ -134,10 +138,9 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
 }) => {
   return (
     <div className={cn("flex flex-col gap-8", className)}>
-      
       {/* العنوان (اختياري) */}
       {title && (
-        <h1 className="text-3xl font-bold text-foreground mb-4">
+        <h1 className="mb-4 text-3xl font-bold text-foreground">
           {title}
         </h1>
       )}
