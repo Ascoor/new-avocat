@@ -44,12 +44,13 @@ const AppShell: FC<AppShellProps> = ({
       <Header title={title} showSidebarToggle={showSidebarToggle} />
 
       {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
-      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}> 
+      <div className="flex">
         {/* Sidebar column */}
         <div
           className={cn(
             "hidden md:block",
-            "transition-[width] duration-300 ease-comfort"
+            "transition-[width] duration-300 ease-comfort",
+            isRTL ? "order-last" : "order-first"
           )}
           style={{ width: `${sidebarWidth}px` }}
         >
@@ -59,10 +60,16 @@ const AppShell: FC<AppShellProps> = ({
         {/* Content column */}
         <main
           className={cn(
-            "flex-1 overflow-x-hidden", // allows content to stretch naturally on all screens
+            "flex-1 overflow-x-hidden transition-[margin] duration-300 ease-comfort", // allows content to stretch naturally on all screens
             shellSectionSpacing,
-            contentPadding
+            contentPadding,
+            isRTL ? "order-first" : "order-last"
           )}
+          style={
+            isRTL
+              ? { marginRight: `${sidebarWidth}px` }
+              : { marginLeft: `${sidebarWidth}px` }
+          }
         >
           <div
             className={cn(
