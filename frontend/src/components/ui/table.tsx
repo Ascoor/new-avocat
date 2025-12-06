@@ -4,10 +4,15 @@ import { cn } from "@/lib/utils";
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto rounded-xl border border-border/60 shadow-[0_20px_45px_-35px_rgba(0,0,0,0.45)]">
+    <div
+      className="relative w-full overflow-auto rounded-2xl border border-border/70 bg-gradient-to-br from-background/90 via-background/95 to-muted/50 shadow-[0_22px_58px_-32px_rgba(0,0,0,0.45)] dark:from-background/80 dark:via-background/60 dark:to-muted/30"
+    >
       <table
         ref={ref}
-        className={cn("w-full caption-bottom text-sm", className)}
+        className={cn(
+          "w-full caption-bottom text-sm text-foreground/90 transition-colors",
+          className,
+        )}
         {...props}
       />
     </div>
@@ -39,7 +44,7 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
     <tr
       ref={ref}
       className={cn(
-        "border-b border-border/60 bg-background/60 transition-all duration-200 hover:-translate-y-[1px] hover:bg-gradient-to-r hover:from-muted/40 hover:via-background hover:to-muted/40 hover:shadow-[0_10px_30px_-24px_rgba(0,0,0,0.65)] data-[state=selected]:border-primary/50 data-[state=selected]:bg-primary/5 data-[state=selected]:shadow-[0_12px_30px_-20px_rgba(59,130,246,0.45)]",
+        "group border-b border-border/60 bg-background/70 transition-all duration-200 hover:-translate-y-[1px] hover:bg-muted/40 hover:shadow-[0_12px_32px_-26px_rgba(0,0,0,0.65)] dark:border-border/50 dark:bg-background/50 dark:hover:bg-muted/25 data-[state=selected]:border-primary/60 data-[state=selected]:bg-primary/5 data-[state=selected]:shadow-[0_14px_36px_-24px_rgba(59,130,246,0.45)]",
         className,
       )}
       {...props}
@@ -53,7 +58,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
     <th
       ref={ref}
       className={cn(
-        "h-12 px-4 text-left align-middle font-medium uppercase tracking-wide text-muted-foreground rtl:text-right [&:has([role=checkbox])]:pr-0",
+        "h-12 px-4 text-left align-middle font-semibold uppercase tracking-wide text-muted-foreground/90 rtl:text-right [&:has([role=checkbox])]:pr-0",
         className,
       )}
       {...props}
@@ -64,7 +69,14 @@ TableHead.displayName = "TableHead";
 
 const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
   ({ className, ...props }, ref) => (
-    <td ref={ref} className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)} {...props} />
+    <td
+      ref={ref}
+      className={cn(
+        "p-4 align-middle text-sm text-foreground/90 transition-colors group-hover:text-foreground [&:has([role=checkbox])]:pr-0",
+        className,
+      )}
+      {...props}
+    />
   ),
 );
 TableCell.displayName = "TableCell";
