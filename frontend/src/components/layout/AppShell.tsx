@@ -26,6 +26,7 @@ const AppShell: FC<AppShellProps> = ({
   const { isCollapsed } = useSidebar();
 
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
+  const sidebarSide = isRTL ? "right" : "left";
   const contentPadding =
     layoutVariant === "wide"
       ? "px-4 sm:px-6 lg:px-12"
@@ -37,10 +38,15 @@ const AppShell: FC<AppShellProps> = ({
       className={cn("min-h-screen bg-background text-foreground", className)}
     >
       {/* == Top bar (clone of old <Navbar />) == */}
-      <Header title={title} showSidebarToggle={showSidebarToggle} />
+      <Header
+        title={title}
+        showSidebarToggle={showSidebarToggle}
+        sidebarWidth={sidebarWidth}
+        sidebarSide={sidebarSide}
+      />
 
       {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
-      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}> 
+      <div className={cn("flex", sidebarSide === "right" ? "flex-row-reverse" : "flex-row")}> 
         {/* Sidebar column */}
         <div
           className={cn(
