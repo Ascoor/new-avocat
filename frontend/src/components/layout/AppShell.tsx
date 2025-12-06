@@ -1,6 +1,4 @@
 import React, { FC, ReactNode } from "react";
-import { PanelLeft } from "lucide-react";
-
 import Sidebar from "./Sidebar";
 import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
@@ -8,7 +6,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { cn } from "@/lib/utils";
 import { shellContainer, shellSectionSpacing } from "./layout-classes";
-import { Button } from "../ui/button";
 
 interface AppShellProps {
   children: ReactNode;
@@ -29,8 +26,8 @@ const AppShell: FC<AppShellProps> = ({
   layoutVariant = "default",
   showSidebarToggle = true,
 }) => {
-  const { direction, isRTL, t } = useLanguage();
-  const { isCollapsed, toggleCollapsed } = useSidebar();
+  const { direction, isRTL } = useLanguage();
+  const { isCollapsed } = useSidebar();
 
   const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
   const contentPadding =
@@ -38,48 +35,16 @@ const AppShell: FC<AppShellProps> = ({
       ? "px-4 sm:px-6 lg:px-12"
       : "px-4 sm:px-6 lg:px-10 xl:px-14";
 
-  const sidebarInlineSize = `${sidebarWidth}px`;
-  const contentOffsetStyle = { marginInlineStart: `${sidebarWidth}px` } as const;
-
   return (
     <div
       dir={direction}
       className={cn("min-h-screen bg-background text-foreground", className)}
-      style={{ ["--sidebar-width" as string]: sidebarInlineSize }}
     >
       {/* == Top bar (clone of old <Navbar />) == */}
       <Header title={title} showSidebarToggle={showSidebarToggle} />
 
-      {showSidebarToggle && (
-        <div
-          className="pointer-events-none fixed top-24 z-30 hidden md:block"
-          style={
-            isRTL
-              ? { right: `calc(${sidebarInlineSize} - 28px)` }
-              : { left: `calc(${sidebarInlineSize} - 28px)` }
-          }
-        >
-          <Button
-            size="icon"
-            variant="outline" // 👈 use one of your defined variants
-            className="pointer-events-auto h-10 w-10 rounded-full shadow-elegant"
-            onClick={toggleCollapsed}
-            aria-label={
-              isCollapsed ? t("common.expand") : t("common.collapse")
-            }
-          >
-            <PanelLeft
-              className={cn(
-                "h-4 w-4 transition-transform",
-                isCollapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
-              )}
-            />
-          </Button>
-        </div>
-      )}
-
-      {/* == Main row: Sidebar + Content (clone of old <div className="flex">) == */}
-      <div className="flex">
+      {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
+      <div className={cn("flex", isRTL ? "flex-row-reverse" : "flex-row")}> 
         {/* Sidebar column */}
         <div
           className={cn(
@@ -94,15 +59,14 @@ const AppShell: FC<AppShellProps> = ({
         {/* Content column */}
         <main
           className={cn(
-            "flex-1 overflow-x-hidden transition-[margin] duration-300 ease-comfort",
+            "flex-1 overflow-x-hidden", // allows content to stretch naturally on all screens
             shellSectionSpacing,
-            contentPadding,
+            contentPadding
           )}
-          style={contentOffsetStyle}
         >
           <div
             className={cn(
-              "mx-auto w-full min-h-[calc(100vh-4rem)] min-w-0 p-4 sm:p-6",
+              "mx-auto w-full max-w-screen-2xl p-4 sm:p-6", // keeps content aligned with the header container
               shellContainer,
               "flex flex-col gap-6"
             )}
@@ -119,7 +83,6 @@ const AppShell: FC<AppShellProps> = ({
 };
 
 export default AppShell;
-
 interface DashboardLayoutProps {
   children: ReactNode;
   className?: string;
@@ -133,9 +96,10 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
 }) => {
   return (
     <div className={cn("flex flex-col gap-8", className)}>
+      
       {/* العنوان (اختياري) */}
       {title && (
-        <h1 className="mb-4 text-3xl font-bold text-foreground">
+        <h1 className="text-3xl font-bold text-foreground mb-4">
           {title}
         </h1>
       )}

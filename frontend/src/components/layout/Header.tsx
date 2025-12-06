@@ -33,12 +33,12 @@ export const Header: React.FC<HeaderProps> = ({
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
-
   const sidebarWidth = isCollapsed ? 72 : 272;
   const desktopOffset = `${sidebarWidth + 16}px`;
   const offsetStyles = {
     ["--sidebar-offset" as string]: desktopOffset,
   } as React.CSSProperties;
+  
 
   return (
     <header
