@@ -25,6 +25,8 @@ const AppShell: FC<AppShellProps> = ({
   const { direction, isRTL } = useLanguage();
   const { isCollapsed } = useSidebar();
 
+  const headerHeight = 64;
+
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
   const sidebarSide = isRTL ? "left" : "right";
   const contentPadding =
@@ -36,10 +38,16 @@ const AppShell: FC<AppShellProps> = ({
     ["--sidebar-width" as string]: `${sidebarWidth}px`,
   } as React.CSSProperties;
 
+  const layoutVars = {
+    ["--sidebar-width" as string]: `${sidebarWidth}px`,
+    ["--header-height" as string]: `${headerHeight}px`,
+  } as React.CSSProperties;
+
   return (
     <div
       dir={direction}
       className={cn("min-h-screen bg-background text-foreground", className)}
+      style={layoutVars}
     >
       {/* == Top bar (clone of old <Navbar />) == */}
       <Header

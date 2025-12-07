@@ -30,7 +30,10 @@ const Sidebar: React.FC = () => {
         "transition-[width] duration-300 ease-comfort",
         isRTL ? "border-l" : "border-r"
       )}
-      style={{ width: `${sidebarWidth}px` }}
+      style={{
+        width: `${sidebarWidth}px`,
+        ["--header-height" as string]: "64px",
+      }}
     >
       <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
         {/* رأس الشريط */}
