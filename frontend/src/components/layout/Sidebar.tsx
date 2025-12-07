@@ -25,10 +25,9 @@ const Sidebar: React.FC = () => {
     <aside
       dir={isRTL ? "rtl" : "ltr"}
       className={cn(
-        "hidden md:flex",
-        "shrink-0 border-border/70 bg-sidebar-surface text-sidebar-text",
-        "transition-[width] duration-300 ease-comfort",
-        isRTL ? "border-l" : "border-r"
+        "fixed top-[var(--header-height)] h-[calc(100vh-var(--header-height))]",
+        "transition-all duration-300 bg-sidebar z-40",
+        isCollapsed ? "w-[var(--sidebar-width)]" : "w-[var(--sidebar-width)]"
       )}
       style={{
         width: `${sidebarWidth}px`,
