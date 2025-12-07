@@ -25,6 +25,8 @@ const AppShell: FC<AppShellProps> = ({
   const { direction, isRTL } = useLanguage();
   const { isCollapsed } = useSidebar();
 
+  const headerHeight = 64;
+
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
   const sidebarSide = isRTL ? "right" : "left";
   const contentPadding =
@@ -32,10 +34,16 @@ const AppShell: FC<AppShellProps> = ({
       ? "px-4 sm:px-6 lg:px-12"
       : "px-4 sm:px-6 lg:px-10 xl:px-14";
 
+  const layoutVars = {
+    ["--sidebar-width" as string]: `${sidebarWidth}px`,
+    ["--header-height" as string]: `${headerHeight}px`,
+  } as React.CSSProperties;
+
   return (
     <div
       dir={direction}
       className={cn("min-h-screen bg-background text-foreground", className)}
+      style={layoutVars}
     >
       {/* == Top bar (clone of old <Navbar />) == */}
       <Header
@@ -45,31 +53,26 @@ const AppShell: FC<AppShellProps> = ({
         sidebarSide={sidebarSide}
       />
 
-      {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
-      <div className={cn("flex", sidebarSide === "right" ? "flex-row-reverse" : "flex-row")}> 
-        {/* Sidebar column */}
-        <div
-          className={cn(
-            "hidden md:block",
-            "transition-[width] duration-300 ease-comfort"
-          )}
-          style={{ width: `${sidebarWidth}px` }}
-        >
-          <Sidebar />
-        </div>
+      {/* == Sidebar + Content == */}
+      <div className="relative flex w-full">
+        <Sidebar />
 
-        {/* Content column */}
         <main
           dir={direction}
+          style={{ minHeight: "calc(100vh - var(--header-height, 64px))" }}
           className={cn(
-            "flex-1 min-w-0 overflow-x-hidden", // allows content to stretch naturally on all screens
+            "relative flex-1 min-w-0 overflow-x-hidden",
+            "transition-[margin,transform] duration-300 ease-comfort",
+            sidebarSide === "left"
+              ? "md:ms-[var(--sidebar-width)] md:me-0"
+              : "md:me-[var(--sidebar-width)] md:ms-0",
             shellSectionSpacing,
             contentPadding
           )}
         >
           <div
             className={cn(
-              "mx-auto w-full p-4 sm:p-6", // keeps content aligned with the header container
+              "mx-auto w-full p-4 sm:p-6",
               shellContainer,
               "flex flex-col gap-6"
             )}
