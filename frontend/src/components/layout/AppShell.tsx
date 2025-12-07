@@ -28,11 +28,15 @@ const AppShell: FC<AppShellProps> = ({
   const headerHeight = 64;
 
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
-  const sidebarSide = isRTL ? "right" : "left";
+  const sidebarSide = isRTL ? "left" : "right";
   const contentPadding =
     layoutVariant === "wide"
       ? "px-4 sm:px-6 lg:px-12"
-      : "px-4 sm:px-6 lg:px-10 xl:px-14";
+      : "px-4 sm:px-6 lg:px-10 xl:px-40";
+
+  const layoutVars = {
+    ["--sidebar-width" as string]: `${sidebarWidth}px`,
+  } as React.CSSProperties;
 
   const layoutVars = {
     ["--sidebar-width" as string]: `${sidebarWidth}px`,
@@ -54,33 +58,31 @@ const AppShell: FC<AppShellProps> = ({
       />
 
       {/* == Sidebar + Content == */}
-      <div className="relative flex w-full">
-        <Sidebar />
+      <Sidebar />
 
-        <main
-          dir={direction}
-          style={{ minHeight: "calc(100vh - var(--header-height, 64px))" }}
+      <main
+        dir={direction}
+        style={layoutVars}
+        className={cn(
+          "flex-1 min-w-0 overflow-x-hidden", // allows content to stretch naturally on all screens
+          "transition-[margin,transform] duration-300 ease-comfort",
+          sidebarSide === "left"
+            ? "md:ms-[var(--sidebar-width)] md:me-0"
+            : "md:me-[var(--sidebar-width)] md:ms-0",
+          shellSectionSpacing,
+          contentPadding
+        )}
+      >
+        <div
           className={cn(
-            "relative flex-1 min-w-0 overflow-x-hidden",
-            "transition-[margin,transform] duration-300 ease-comfort",
-            sidebarSide === "left"
-              ? "md:ms-[var(--sidebar-width)] md:me-0"
-              : "md:me-[var(--sidebar-width)] md:ms-0",
-            shellSectionSpacing,
-            contentPadding
+            "mx-auto w-full p-4 sm:p-6", // keeps content aligned with the header container
+            shellContainer,
+            "flex flex-col gap-6"
           )}
         >
-          <div
-            className={cn(
-              "mx-auto w-full p-4 sm:p-6",
-              shellContainer,
-              "flex flex-col gap-6"
-            )}
-          >
-            {children}
-          </div>
-        </main>
-      </div>
+          {children}
+        </div>
+      </main>
 
       {/* Mobile sidebar overlay */}
       <MobileDrawer />

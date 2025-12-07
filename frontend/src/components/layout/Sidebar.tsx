@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import BrandLogo from "@/components/common/BrandLogo";
-import LegalIcon from "@/components/common/LegalIcon";
+import LegalIcon, { IconKey } from "@/components/common/LegalIcon";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -15,20 +15,19 @@ export const SIDEBAR_EXPANDED_WIDTH = 276;
 const Sidebar: React.FC = () => {
   const { pathname } = useLocation();
   const { t, language, isRTL } = useLanguage();
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed } = useSidebar(); // 👈 نستخدم الحالة فقط، بدون setCollapsed
 
   const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
+
+ 
 
   return (
     <aside
       dir={isRTL ? "rtl" : "ltr"}
       className={cn(
-        "hidden md:flex", // desktop only
-        "shrink-0 border-border/70 bg-sidebar-surface text-sidebar-text", // styling
-        "md:fixed md:top-[var(--header-height)] md:bottom-0", // hug the header and screen edge
-        "md:h-[calc(100vh-var(--header-height))]", // keep inside the viewport
-        isRTL ? "md:left-auto md:right-0" : "md:left-0 md:right-auto",
-        "transition-[width,transform] duration-300 ease-comfort", // smooth resize and slide
+        "hidden md:flex",
+        "shrink-0 border-border/70 bg-sidebar-surface text-sidebar-text",
+        "transition-[width] duration-300 ease-comfort",
         isRTL ? "border-l" : "border-r"
       )}
       style={{
@@ -36,17 +35,17 @@ const Sidebar: React.FC = () => {
         ["--header-height" as string]: "64px",
       }}
     >
-      <div className="flex h-full w-full flex-col overflow-hidden">
+      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
+        {/* رأس الشريط */}
         <div className="flex items-center gap-3 border-b border-border/60 px-4 py-4">
-          <BrandLogo variant={isCollapsed ? "icon" : "full"} className={cn(isCollapsed ? "h-8" : "h-9", "transition-all")} />
-          {!isCollapsed && (
-            <div className="flex flex-col">
-              <span className="text-sm font-semibold text-foreground">Avocat</span>
-              <span className="text-xs text-muted-foreground">{t("dashboard.title")}</span>
-            </div>
-          )}
+          <BrandLogo
+            variant={isCollapsed ? "icon" : "full"}
+            className={cn(isCollapsed ? "h-8" : "h-9", "transition-all")}
+          />
+         
         </div>
 
+        {/* الروابط */}
         <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-5">
           {sidebarGroups.map((group) => (
             <SidebarSection
@@ -76,6 +75,12 @@ const Sidebar: React.FC = () => {
   );
 };
 
+export default Sidebar;
+
+// ===================
+// SidebarSection
+// ===================
+
 interface SidebarSectionProps {
   label: string;
   children: React.ReactNode;
@@ -83,7 +88,12 @@ interface SidebarSectionProps {
   isRTL: boolean;
 }
 
-const SidebarSection: React.FC<SidebarSectionProps> = ({ label, children, isCollapsed, isRTL }) => (
+const SidebarSection: React.FC<SidebarSectionProps> = ({
+  label,
+  children,
+  isCollapsed,
+  isRTL,
+}) => (
   <div className="space-y-2">
     <div
       className={cn(
@@ -98,11 +108,15 @@ const SidebarSection: React.FC<SidebarSectionProps> = ({ label, children, isColl
   </div>
 );
 
+// ===================
+// SidebarLink
+// ===================
+
 interface SidebarLinkProps {
   itemKey: string;
-  iconKey: string;
+  iconKey: IconKey; // 👈 هنا استخدمنا IconKey بدل string
   path?: string;
-  childrenItems?: typeof sidebarGroups[number]["items"][number]["children"];
+  childrenItems?: (typeof sidebarGroups)[number]["items"][number]["children"];
   isCollapsed: boolean;
   isRTL: boolean;
   activePath: string;
@@ -139,23 +153,39 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
       >
         <LegalIcon iconKey={iconKey} width={22} height={22} />
       </span>
-      {!isCollapsed && <span className="truncate text-sm">{translateKey(itemKey, language)}</span>}
+      {!isCollapsed && (
+        <span className="truncate text-sm">
+          {translateKey(itemKey, language)}
+        </span>
+      )}
     </div>
   );
 
+  // لو عنده أطفال (قائمة فرعية)
   if (hasChildren) {
     return (
       <li className="space-y-1">
-        <Tooltip disabled={!isCollapsed}>
-          <TooltipTrigger asChild>
-            <div>{linkContent}</div>
-          </TooltipTrigger>
-          <TooltipContent side={isRTL ? "left" : "right"} hidden={!isCollapsed}>
-            {translateKey(itemKey, language)}
-          </TooltipContent>
-        </Tooltip>
+        {/* ✅ Tooltip فقط في حالة الشريط المصغّر */}
+        {isCollapsed ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>{linkContent}</div>
+            </TooltipTrigger>
+            <TooltipContent side={isRTL ? "left" : "right"}>
+              {translateKey(itemKey, language)}
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <div>{linkContent}</div>
+        )}
 
-        <ul className={cn("space-y-1 pl-4", isRTL && "pr-4", isCollapsed && "hidden")}> 
+        <ul
+          className={cn(
+            "space-y-1 pl-4",
+            isRTL && "pr-4",
+            isCollapsed && "hidden"
+          )}
+        >
           {childrenItems!.map((child) => {
             const childActive = child.path && activePath.startsWith(child.path);
             return (
@@ -173,9 +203,11 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
                   end
                 >
                   <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-surface-muted/60 text-brand-primary">
-                    <LegalIcon iconKey={child.iconKey} width={18} height={18} />
+                    <LegalIcon iconKey={child.iconKey as IconKey} width={18} height={18} />
                   </span>
-                  <span className="truncate">{translateKey(child.key, language)}</span>
+                  <span className="truncate">
+                    {translateKey(child.key, language)}
+                  </span>
                 </NavLink>
               </li>
             );
@@ -185,18 +217,21 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
     );
   }
 
+  // عنصر عادي بدون قائمة فرعية
   return (
     <li>
-      <Tooltip disabled={!isCollapsed}>
-        <TooltipTrigger asChild>
-          <NavLink to={path ?? "#"}>{linkContent}</NavLink>
-        </TooltipTrigger>
-        <TooltipContent side={isRTL ? "left" : "right"} hidden={!isCollapsed}>
-          {translateKey(itemKey, language)}
-        </TooltipContent>
-      </Tooltip>
+      {isCollapsed ? (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <NavLink to={path ?? "#"}>{linkContent}</NavLink>
+          </TooltipTrigger>
+          <TooltipContent side={isRTL ? "left" : "right"}>
+            {translateKey(itemKey, language)}
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        <NavLink to={path ?? "#"}>{linkContent}</NavLink>
+      )}
     </li>
   );
 };
-
-export default Sidebar;
