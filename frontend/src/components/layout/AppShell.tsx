@@ -35,7 +35,7 @@ const AppShell: FC<AppShellProps> = ({
     ? SIDEBAR_COLLAPSED_WIDTH
     : SIDEBAR_EXPANDED_WIDTH;
 
-  const sidebarSide = isRTL ? "left" : "right";
+  const sidebarSide = isRTL ? "right" : "left";
 
   const contentPadding =
     layoutVariant === "wide"
@@ -72,9 +72,9 @@ const AppShell: FC<AppShellProps> = ({
         dir={direction}
         style={layoutVars}
         className={cn(
-          "flex-1 min-w-0 overflow-x-hidden",
+          "flex-4  min-w-0 overflow-x-hidden",
           "transition-[margin,transform] duration-300 ease-comfort",
-          sidebarSide === "left"
+          sidebarSide === "right"
             ? "md:ms-[var(--sidebar-width)] md:me-0"
             : "md:me-[var(--sidebar-width)] md:ms-0",
           shellSectionSpacing,

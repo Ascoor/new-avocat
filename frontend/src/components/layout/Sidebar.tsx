@@ -1,9 +1,15 @@
+// src/components/layout/Sidebar.tsx
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import BrandLogo from "@/components/common/BrandLogo";
-import LegalIcon, { IconKey } from "@/components/common/LegalIcon";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+// ✅ نستخدم فقط الـ default export
+import LegalIcon from "@/components/common/LegalIcon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { sidebarGroups, translateKey } from "@/config/sidebar";
@@ -15,33 +21,33 @@ export const SIDEBAR_EXPANDED_WIDTH = 276;
 const Sidebar: React.FC = () => {
   const { pathname } = useLocation();
   const { t, language, isRTL } = useLanguage();
-  const { isCollapsed } = useSidebar(); // 👈 نستخدم الحالة فقط، بدون setCollapsed
+  const { isCollapsed } = useSidebar();
 
-  const sidebarWidth = isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH;
-
- 
+  const sidebarWidth = isCollapsed
+    ? SIDEBAR_COLLAPSED_WIDTH
+    : SIDEBAR_EXPANDED_WIDTH;
 
   return (
     <aside
       dir={isRTL ? "rtl" : "ltr"}
       className={cn(
-        "fixed top-[var(--header-height)] h-[calc(100vh-var(--header-height))]",
-        "transition-all duration-300 bg-sidebar z-40",
-        isCollapsed ? "w-[var(--sidebar-width)]" : "w-[var(--sidebar-width)]"
+        // ✅ يبدأ من أعلى الصفحة وينتهي عند أسفلها
+        "fixed inset-y-0 z-40 bg-sidebar border-border/60 border-r",
+        // مكانه يمين أو يسار حسب RTL
+        isRTL ? "right-0" : "right-0",
+        "transition-[width] duration-300"
       )}
       style={{
-        width: `${sidebarWidth}px`,
-        ["--header-height" as string]: "64px",
+        width: sidebarWidth,
       }}
     >
-      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
+      <div className="flex h-full w-full flex-col overflow-hidden">
         {/* رأس الشريط */}
         <div className="flex items-center gap-3 border-b border-border/60 px-4 py-4">
           <BrandLogo
             variant={isCollapsed ? "icon" : "full"}
             className={cn(isCollapsed ? "h-8" : "h-9", "transition-all")}
           />
-         
         </div>
 
         {/* الروابط */}
@@ -113,7 +119,7 @@ const SidebarSection: React.FC<SidebarSectionProps> = ({
 
 interface SidebarLinkProps {
   itemKey: string;
-  iconKey: IconKey; // 👈 هنا استخدمنا IconKey بدل string
+  iconKey: string; // ✅ رجعناها string عشان نحل مشكلة IconKey
   path?: string;
   childrenItems?: (typeof sidebarGroups)[number]["items"][number]["children"];
   isCollapsed: boolean;
@@ -138,7 +144,7 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
   const linkContent = (
     <div
       className={cn(
-        "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-base ease-comfort",
+        "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-200 ease-comfort",
         current
           ? "bg-brand-primary/10 text-brand-primary shadow-[0_10px_30px_-18px_rgba(16,133,109,0.65)]"
           : "text-foreground/80 hover:bg-brand-primary/5 hover:text-brand-primary",
@@ -160,11 +166,9 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
     </div>
   );
 
-  // لو عنده أطفال (قائمة فرعية)
   if (hasChildren) {
     return (
       <li className="space-y-1">
-        {/* ✅ Tooltip فقط في حالة الشريط المصغّر */}
         {isCollapsed ? (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -186,14 +190,15 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
           )}
         >
           {childrenItems!.map((child) => {
-            const childActive = child.path && activePath.startsWith(child.path);
+            const childActive =
+              child.path && activePath.startsWith(child.path);
             return (
               <li key={child.key}>
                 <NavLink
                   to={child.path ?? "#"}
                   className={({ isActive }) =>
                     cn(
-                      "flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors duration-base ease-comfort",
+                      "flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors duration-200 ease-comfort",
                       isActive || childActive
                         ? "bg-brand-primary/10 text-brand-primary"
                         : "text-foreground/75 hover:bg-brand-primary/5 hover:text-brand-primary"
@@ -202,7 +207,11 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
                   end
                 >
                   <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-surface-muted/60 text-brand-primary">
-                    <LegalIcon iconKey={child.iconKey as IconKey} width={18} height={18} />
+                    <LegalIcon
+                      iconKey={child.iconKey as string}
+                      width={18}
+                      height={18}
+                    />
                   </span>
                   <span className="truncate">
                     {translateKey(child.key, language)}
@@ -216,7 +225,6 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({
     );
   }
 
-  // عنصر عادي بدون قائمة فرعية
   return (
     <li>
       {isCollapsed ? (
