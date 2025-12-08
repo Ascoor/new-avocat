@@ -435,32 +435,63 @@ const DetailsTable = <T,>({
     <div className="rounded-2xl border border-border/60 bg-gradient-to-b from-background/70 via-card/70 to-muted/40 shadow-[0_20px_60px_-38px_rgba(0,0,0,0.55)]">
       {controlsVisible && (
         <div className="flex flex-col gap-4 border-b border-border/60 bg-muted/25 px-4 py-4 backdrop-blur-sm">
-          <div
-            className={cn(
-              'grid gap-3 lg:grid-cols-[auto_1fr_auto] lg:items-center',
-              isRTL ? 'lg:[direction:rtl]' : '',
-            )}
-          >
+          <div className={cn('flex flex-col gap-3', isRTL ? 'lg:[direction:rtl]' : '')}>
             <div
               className={cn(
-                'flex flex-wrap items-center gap-2',
-                isRTL ? 'lg:justify-end' : 'lg:justify-start',
+                'flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between',
+                isRTL ? 'sm:flex-row-reverse' : '',
               )}
             >
-              {onAdd && (
-                <Button
-                  type="button"
-                  onClick={onAdd}
-                  className={cn(
-                    'gap-2 rounded-full border-0 bg-gradient-to-r from-primary/90 via-primary to-primary/80 text-primary-foreground shadow-[0_14px_38px_-16px_rgba(0,0,0,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-18px_rgba(0,0,0,0.65)]',
-                    isRTL ? 'order-first' : '',
-                  )}
-                >
-                  <Plus className="h-4 w-4" />
-                  {addButtonLabel ?? t('common.add')}
-                </Button>
-              )}
+              <div
+                className={cn(
+                  'flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:gap-3',
+                  isRTL ? 'sm:flex-row-reverse' : '',
+                )}
+              >
+                {onAdd && (
+                  <Button
+                    type="button"
+                    onClick={onAdd}
+                    className={cn(
+                      'gap-2 rounded-full border-0 bg-gradient-to-r from-primary/90 via-primary to-primary/80 text-primary-foreground shadow-[0_14px_38px_-16px_rgba(0,0,0,0.55)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-18px_rgba(0,0,0,0.65)]',
+                      isRTL ? 'sm:order-last' : 'sm:order-first',
+                    )}
+                  >
+                    <Plus className="h-4 w-4" />
+                    {addButtonLabel ?? t('common.add')}
+                  </Button>
+                )}
 
+                {enableSearch ? (
+                  <div className="relative w-full min-w-[240px]">
+                    <Search
+                      className={cn(
+                        'absolute top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground',
+                        isRTL ? 'right-4' : 'left-4',
+                      )}
+                    />
+                    <Input
+                      value={searchTerm}
+                      onChange={(event) => setSearchTerm(event.target.value)}
+                      placeholder={t('table.search')}
+                      className={cn(
+                        'h-11 rounded-full border-border/60 bg-background/80 pl-11 pr-4 text-sm shadow-inner shadow-border/40 transition focus-visible:ring-2 focus-visible:ring-primary/30',
+                        isRTL ? 'pr-11 pl-4' : 'pl-11 pr-4',
+                      )}
+                    />
+                  </div>
+                ) : null}
+              </div>
+
+              {toolbarExtras ? <div className="flex items-center gap-2">{toolbarExtras}</div> : null}
+            </div>
+
+            <div
+              className={cn(
+                'flex flex-wrap items-center justify-between gap-2 sm:justify-start',
+                isRTL ? 'flex-row-reverse' : 'flex-row',
+              )}
+            >
               {enableSorting && sortableColumns.length > 0 && (
                 <div
                   className={cn(
@@ -511,37 +542,6 @@ const DetailsTable = <T,>({
                 </div>
               )}
 
-              {toolbarExtras ? <div className="flex items-center gap-2">{toolbarExtras}</div> : null}
-            </div>
-
-            {enableSearch ? (
-              <div className="relative w-full lg:max-w-xl lg:justify-self-center">
-                <Search
-                  className={cn(
-                    'absolute top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground',
-                    isRTL ? 'right-4' : 'left-4',
-                  )}
-                />
-                <Input
-                  value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
-                  placeholder={t('table.search')}
-                  className={cn(
-                    'h-11 rounded-full border-border/60 bg-background/80 pl-11 pr-4 text-sm shadow-inner shadow-border/40 transition focus-visible:ring-2 focus-visible:ring-primary/30',
-                    isRTL ? 'pr-11 pl-4' : 'pl-11 pr-4',
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="hidden lg:block" />
-            )}
-
-            <div
-              className={cn(
-                'flex flex-wrap items-center justify-end gap-2',
-                isRTL ? 'lg:flex-row-reverse' : 'lg:flex-row',
-              )}
-            >
               {enableExport && exportableColumns.length > 0 && (
                 <div
                   className={cn(
