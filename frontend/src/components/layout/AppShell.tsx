@@ -1,9 +1,5 @@
-// src/components/layout/AppShell.tsx
 import React, { FC, ReactNode } from "react";
-import Sidebar, {
-  SIDEBAR_COLLAPSED_WIDTH,
-  SIDEBAR_EXPANDED_WIDTH,
-} from "./Sidebar";
+import {Sidebar} from "./Sidebar";
 import MobileDrawer from "./MobileDrawer";
 import { Header } from "./Header";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -19,6 +15,10 @@ interface AppShellProps {
   showSidebarToggle?: boolean;
 }
 
+// نفس القيم المستخدمة في Sidebar
+const COLLAPSED_WIDTH = 72;
+const EXPANDED_WIDTH = 272;
+
 const AppShell: FC<AppShellProps> = ({
   children,
   title,
@@ -26,86 +26,64 @@ const AppShell: FC<AppShellProps> = ({
   layoutVariant = "default",
   showSidebarToggle = true,
 }) => {
-  const { direction, isRTL } = useLanguage();
+  const { direction } = useLanguage();
   const { isCollapsed } = useSidebar();
 
-  const headerHeight = 64;
-
-  const sidebarWidth = isCollapsed
-    ? SIDEBAR_COLLAPSED_WIDTH
-    : SIDEBAR_EXPANDED_WIDTH;
-
-  const sidebarSide = isRTL ? "right" : "left";
-
-  const contentPadding =
-    layoutVariant === "wide"
-      ? "px-4 sm:px-6 lg:px-12"
-      : "px-4 sm:px-6 lg:px-10 xl:px-40";
-
-  const layoutVars = {
-    ["--sidebar-width" as string]: `${sidebarWidth}px`,
-    ["--header-height" as string]: `${headerHeight}px`,
-  } as React.CSSProperties;
+  const sidebarWidth = isCollapsed ? COLLAPSED_WIDTH : EXPANDED_WIDTH;
+  const contentPadding = layoutVariant === "wide" ? "lg:px-12" : "lg:px-20";
 
   return (
     <div
       dir={direction}
-      className={cn(
-        "min-h-screen bg-background text-foreground flex flex-col",
-        className
-      )}
-      style={layoutVars}
+      className={cn("min-h-screen bg-background text-foreground", className)}
     >
-      {/* الشريط العلوي */}
-      <Header
-        title={title}
-        showSidebarToggle={showSidebarToggle}
-        sidebarWidth={sidebarWidth}
-        sidebarSide={sidebarSide}
-      />
+      {/* == Top bar (clone of old <Navbar />) == */}
+      <Header title={title} showSidebarToggle={showSidebarToggle} />
 
-      {/* الشريط الجانبي (ثابت) */}
-      <Sidebar />
-
-      {/* المحتوى */}
-      <main
-        dir={direction}
-        style={layoutVars}
-        className={cn(
-          "flex-4  min-w-0 overflow-x-hidden",
-          "transition-[margin,transform] duration-300 ease-comfort",
-          sidebarSide === "right"
-            ? "md:ms-[var(--sidebar-width)] md:me-0"
-            : "md:me-[var(--sidebar-width)] md:ms-0",
-          shellSectionSpacing,
-          contentPadding
-        )}
-      >
+      {/* == Main row: Sidebar + Content (clone of old <div className=\"flex\">) == */}
+      <div className="flex">
+        {/* Sidebar column */}
         <div
           className={cn(
-            "mx-auto w-full p-4 sm:p-6",
-            shellContainer,
-            "flex flex-col gap-6"
+            "hidden md:block",
+            "transition-[width] duration-300 ease-comfort"
+          )}
+          style={{ width: `${sidebarWidth}px` }}
+        >
+          <Sidebar />
+        </div>
+
+        {/* Content column */}
+        <main
+          className={cn(
+            "flex-1 overflow-x-hidden",
+            shellSectionSpacing,
+            contentPadding
           )}
         >
-          {children}
-        </div>
-      </main>
+          <div
+            className={cn(
+              "container mx-auto p-6",
+              shellContainer,
+              "flex flex-col gap-6"
+            )}
+          >
+            {children}
+          </div>
+        </main>
+      </div>
 
-      {/* الشريط الجانبي للجوال */}
+      {/* Mobile sidebar overlay */}
       <MobileDrawer />
     </div>
   );
 };
 
 export default AppShell;
-
-// ================= DashboardLayout =================
-
 interface DashboardLayoutProps {
   children: ReactNode;
   className?: string;
-  title?: string;
+  title?: string; // ← هذا الجديد
 }
 
 export const DashboardLayout: FC<DashboardLayoutProps> = ({
@@ -114,18 +92,17 @@ export const DashboardLayout: FC<DashboardLayoutProps> = ({
   title,
 }) => {
   return (
-    <AppShell title={title}>
-      <div className={cn("flex flex-col gap-8", className)}>
-        {/* العنوان (اختياري) */}
-        {title && (
-          <h1 className="text-3xl font-bold text-foreground mb-4">
-            {title}
-          </h1>
-        )}
+    <div className={cn("flex flex-col gap-8", className)}>
+      
+      {/* العنوان (اختياري) */}
+      {title && (
+        <h1 className="text-3xl font-bold text-foreground mb-4">
+          {title}
+        </h1>
+      )}
 
-        {/* المحتوى */}
-        {children}
-      </div>
-    </AppShell>
+      {/* المحتوى */}
+      {children}
+    </div>
   );
 };

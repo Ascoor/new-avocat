@@ -1,8 +1,6 @@
-// src/layout/Header.tsx
 import React from "react";
 import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SIDEBAR_COLLAPSED_WIDTH, SIDEBAR_EXPANDED_WIDTH } from "./Sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,33 +20,21 @@ interface HeaderProps {
   title?: string;
   className?: string;
   showSidebarToggle?: boolean;
-  sidebarWidth?: number;
-  sidebarSide?: "left" | "right";
 }
 
 export const Header: React.FC<HeaderProps> = ({
   title,
   className,
   showSidebarToggle = true,
-  sidebarWidth,
-  sidebarSide,
 }) => {
   const { language, setLanguage, t, isRTL } = useLanguage();
   const { user, logout } = useAuth();
   const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
-  const effectiveSidebarWidth = sidebarWidth ?? (isCollapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_EXPANDED_WIDTH);
-  const sidebarPosition = sidebarSide ?? (isRTL ? "right" : "left");
-  const desktopOffset = `${effectiveSidebarWidth + 16}px`;
-  const offsetStyles = {
-    ["--sidebar-offset" as string]: desktopOffset,
-  } as React.CSSProperties;
-  
 
   return (
     <header
-      dir={isRTL ? "rtl" : "ltr"}
       className={cn(
         "sticky top-0 z-40 h-16 border-b border-border",
         "bg-surface-raised/80 shadow-card backdrop-blur-xl transition duration-long ease-comfort",
@@ -57,13 +43,9 @@ export const Header: React.FC<HeaderProps> = ({
     >
       <div
         className={cn(
-          "relative z-[1] mx-auto flex h-full w-full items-center justify-between",
-          "px-3 sm:px-4 lg:px-6 xl:px-8",
-          sidebarPosition === "right"
-            ? "md:[padding-inline-end:var(--sidebar-offset)]"
-            : "md:[padding-inline-start:var(--sidebar-offset)]"
+          "relative z-[1] flex h-full w-full items-center justify-between",
+          "px-3 sm:px-4 lg:px-6"
         )}
-        style={offsetStyles}
       >
         {/* يسار/يمين حسب اللغة */}
         <div
@@ -95,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
               <PanelLeft
                 className={cn(
                   "h-4 w-4 transition-transform",
-                  isCollapsed ? "rotate-0" : isRTL ? "-rotate-180" : "rotate-180"
+                  isCollapsed ? "rotate-0" : isRTL ? "- rotate-180" : "rotate-180"
                 )}
               />
             </Button>
