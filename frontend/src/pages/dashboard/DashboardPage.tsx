@@ -27,8 +27,7 @@ import { shellContainer } from '@/components/layout/layout-classes';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/contexts/LanguageContext';
 import GlobalSpinner from '@/components/common/GlobalSpinner';
-import { useClients } from '@/hooks/useClients';
-import type { Client } from '@/types/clients';
+import { Client, type DashboardClient } from '@/pages/dashboard/api';
 
 type DetailSection = 'cases' | 'services';
 type DetailSubTab = 'procedures' | 'sessions' | 'ads' | null;
@@ -55,7 +54,10 @@ export default function DashboardPage() {
   const { t, language } = useLanguage();
   const isArabic = language === 'ar';
   const [query, setQuery] = useState('');
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [clients, setClients] = useState<DashboardClient[]>([]);
+  const [loadingClients, setLoadingClients] = useState(true);
+  const [clientsError, setClientsError] = useState<string | null>(null);
+  const [selectedClient, setSelectedClient] = useState<DashboardClient | null>(null);
   const [activeResultIndex, setActiveResultIndex] = useState(-1);
   const [viewState, setViewState] = useState<ClientViewState>({
     section: 'cases',
@@ -63,9 +65,31 @@ export default function DashboardPage() {
     subTab: null,
   });
   const resultsRef = useRef<HTMLDivElement | null>(null);
-  const { clients, isLoading: loadingClients, isError: hasClientError, error: clientsError } = useClients();
 
-  const handleSelectClient = useCallback((client: Client) => {
+  useEffect(() => {
+    let isMounted = true;
+    setLoadingClients(true);
+    Client.list()
+      .then((response) => {
+        if (!isMounted) return;
+        setClients(response);
+        setClientsError(null);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setClientsError(isArabic ? 'حدث خطأ أثناء تحميل العملاء' : 'Failed to load clients.');
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setLoadingClients(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isArabic]);
+
+  const handleSelectClient = useCallback((client: DashboardClient) => {
     setSelectedClient(client);
     setViewState({ section: 'cases', itemId: null, subTab: null });
     setActiveResultIndex(-1);
@@ -75,8 +99,8 @@ export default function DashboardPage() {
     const normalizedQuery = query.trim().toLowerCase();
     if (!normalizedQuery) return [];
 
-    return (clients ?? []).filter((client) => {
-      const fields = [client.name, client.slug, client.phone_number ?? '', client.identity_number ?? ''];
+    return clients.filter((client) => {
+      const fields = [client.name, client.slug, client.phoneNumber ?? ''];
       return fields.some((field) => field.toLowerCase().includes(normalizedQuery));
     });
   }, [clients, query]);
@@ -84,9 +108,6 @@ export default function DashboardPage() {
   const hasQuery = query.trim().length > 0;
   const hasResults = filteredClients.length > 0;
   const hideDashboardWidgets = hasQuery || selectedClient;
-  const clientsErrorMessage = hasClientError
-    ? clientsError?.message ?? (isArabic ? 'حدث خطأ أثناء تحميل العملاء' : 'Failed to load clients.')
-    : null;
 
   useEffect(() => {
     setActiveResultIndex(-1);
@@ -339,7 +360,6 @@ export default function DashboardPage() {
               onClick={() => {
                 setQuery('');
                 setSelectedClient(null);
-                setActiveResultIndex(-1);
               }}
               className="text-xs font-semibold text-brand-primary hover:underline"
             >
@@ -356,7 +376,7 @@ export default function DashboardPage() {
         />
 
         <AnimatePresence>
-          {(hasQuery || loadingClients || clientsErrorMessage) && !selectedClient && (
+          {(hasQuery || loadingClients || clientsError) && !selectedClient && (
             <motion.div
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -370,19 +390,19 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              {clientsErrorMessage && (
+              {clientsError && (
                 <div className="px-4 py-6 text-center text-sm font-semibold text-destructive">
-                  {clientsErrorMessage}
+                  {clientsError}
                 </div>
               )}
 
-              {!loadingClients && !clientsErrorMessage && hasQuery && !hasResults && (
+              {!loadingClients && !clientsError && hasQuery && !hasResults && (
                 <div className="px-4 py-6 text-center text-sm text-muted-foreground">
                   {isArabic ? 'لم يتم العثور على نتائج مطابقة.' : 'No matching clients found.'}
                 </div>
               )}
 
-              {!loadingClients && !clientsErrorMessage && hasResults && (
+              {!loadingClients && !clientsError && hasResults && (
                 <div className="max-h-[320px] overflow-auto" ref={resultsRef}>
                   <table className="w-full border-collapse text-sm">
                     <thead className="bg-gradient-to-r from-brand-primary to-indigo-500 text-white">
@@ -408,7 +428,7 @@ export default function DashboardPage() {
                           >
                             <td className="px-4 py-3 font-semibold">{highlightMatch(client.slug)}</td>
                             <td className="px-4 py-3">{highlightMatch(client.name)}</td>
-                            <td className="px-4 py-3">{client.phone_number ? highlightMatch(client.phone_number) : '—'}</td>
+                            <td className="px-4 py-3">{client.phoneNumber ? highlightMatch(client.phoneNumber) : '—'}</td>
                             <td className="px-4 py-3">
                               <span
                                 className={cn(
@@ -449,7 +469,7 @@ export default function DashboardPage() {
                     </p>
                     <h2 className="text-xl font-bold text-foreground">{selectedClient.name}</h2>
                     <p className="text-sm text-muted-foreground">
-                      {selectedClient.slug} • {selectedClient.phone_number ?? '—'}
+                      {selectedClient.slug} • {selectedClient.phoneNumber ?? '—'}
                     </p>
                   </div>
                   <button
@@ -596,7 +616,7 @@ function ClientTreeNav({
   onChangeSection,
   onSelectItem,
 }: {
-  client: Client;
+  client: DashboardClient;
   viewState: ClientViewState;
   isArabic: boolean;
   onChangeSection: (section: DetailSection) => void;
@@ -683,7 +703,7 @@ function ClientDetailsView({
   isArabic,
   onChangeSubTab,
 }: {
-  client: Client;
+  client: DashboardClient;
   viewState: ClientViewState;
   isArabic: boolean;
   onChangeSubTab: (subTab: DetailSubTab) => void;

@@ -10,6 +10,8 @@ export interface DashboardCase {
 export interface DashboardClient {
   id: string;
   name: string;
+  slug: string;
+  phoneNumber?: string;
   status: 'active' | 'inactive';
 }
 
@@ -31,11 +33,11 @@ const cases: DashboardCase[] = [
 ];
 
 const clients: DashboardClient[] = [
-  { id: '1', name: 'Ahmed Ali', status: 'active' },
-  { id: '2', name: 'Sara Ibrahim', status: 'active' },
-  { id: '3', name: 'John Smith', status: 'inactive' },
-  { id: '4', name: 'Global Corp', status: 'active' },
-  { id: '5', name: 'Wealthy LLC', status: 'inactive' }
+  { id: '1', name: 'Ahmed Ali', slug: 'CL-001', phoneNumber: '+966 55 123 4567', status: 'active' },
+  { id: '2', name: 'Sara Ibrahim', slug: 'CL-002', phoneNumber: '+966 55 987 6543', status: 'active' },
+  { id: '3', name: 'John Smith', slug: 'CL-003', phoneNumber: '+966 55 222 1100', status: 'inactive' },
+  { id: '4', name: 'Global Corp', slug: 'CL-004', phoneNumber: '+966 55 444 2200', status: 'active' },
+  { id: '5', name: 'Wealthy LLC', slug: 'CL-005', phoneNumber: '+966 55 777 3300', status: 'inactive' }
 ];
 
 const sessions: DashboardSession[] = [
