@@ -33,6 +33,10 @@ import ActivityLogPage from '@/pages/admin/Website/ActivityLogPage';
 import NotificationsPage from '@/pages/admin/Website/NotificationsPage';
 import { shellContainer } from '@/components/layout/layout-classes';
 import { cn } from '@/lib/utils';
+import AppShellV2 from '@/layout/AppShellV2';
+import DashboardLandingV2 from '@/features/dashboard/DashboardLandingV2';
+import SearchHubV2 from '@/features/clients/SearchHubV2';
+import V2Placeholder from '@/app/v2/V2Placeholder';
 
 // 🌀 نوع الأقسام المستقبلية
 type DashboardSectionKey =
@@ -117,6 +121,38 @@ const router = createBrowserRouter(
         <Route path="users_roles" element={<DashboardPlaceholder sectionKey="users_roles" />} />
         <Route path="archive" element={<DashboardPlaceholder sectionKey="archive" />} />
         <Route path="courts_search" element={<DashboardPlaceholder sectionKey="courts_search" />} />
+      </Route>
+
+      {/* ✅ v2 Protected */}
+      <Route
+        path="/dashboard-v2"
+        element={
+          <ProtectedRoute>
+            <AppShellV2 />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<DashboardLandingV2 />} />
+        <Route path="search" element={<SearchHubV2 />} />
+        <Route path="clients" element={<SearchHubV2 />} />
+        <Route
+          path="cases"
+          element={(
+            <V2Placeholder
+              title="Cases workspace"
+              description="Detailed case dashboards will migrate into v2 here."
+            />
+          )}
+        />
+        <Route
+          path="services"
+          element={(
+            <V2Placeholder
+              title="Services workspace"
+              description="Service management views will migrate into v2 here."
+            />
+          )}
+        />
       </Route>
 
       {/* ❌ 404 */}

@@ -9,6 +9,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import NotificationCenterProvider from '@/modules/notifications/NotificationCenter';
+import BrandingProvider from '@/theme/BrandingProvider';
 
 const queryClient = new QueryClient();
 
@@ -22,15 +23,17 @@ const AppProviders = ({ children }: AppProvidersProps) => {
       <LanguageProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <NotificationCenterProvider>
-              <SidebarProvider>
-                <TooltipProvider>
-                  <Toaster />
-                  <Sonner />
-                  {children}
-                </TooltipProvider>
-              </SidebarProvider>
-            </NotificationCenterProvider>
+            <BrandingProvider>
+              <NotificationCenterProvider>
+                <SidebarProvider>
+                  <TooltipProvider>
+                    <Toaster />
+                    <Sonner />
+                    {children}
+                  </TooltipProvider>
+                </SidebarProvider>
+              </NotificationCenterProvider>
+            </BrandingProvider>
           </AuthProvider>
         </QueryClientProvider>
       </LanguageProvider>

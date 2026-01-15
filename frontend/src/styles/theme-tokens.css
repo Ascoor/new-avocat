@@ -14,7 +14,15 @@ All colors MUST be HSL.
     /* AVOCAT LAW FIRM - LIGHT MODE (ROYAL NAVY IDENTITY) */
 
     /* SURFACE & NEUTRALS */
-    --surface: 0 0% 100%;
+    --color-primary: 225 65% 40%;
+    --color-surface: 0 0% 100%;
+    --color-accent: 42 90% 50%;
+    --color-muted: 210 40% 96%;
+    --color-border: 214 32% 91%;
+    --color-success: 142 71% 42%;
+    --color-danger: 0 80% 58%;
+
+    --surface: var(--color-surface);
     --surface-raised: 0 0% 98%;
     --surface-overlay: 0 0% 100%;
     --card-elevated: 0 0% 99%;
@@ -24,24 +32,24 @@ All colors MUST be HSL.
     --neutral-700: 215 16% 47%;
     --neutral-900: 225 45% 12%;
 
-    --background: 0 0% 100%;
+    --background: var(--color-surface);
     --foreground: 225 45% 12%;
     --card: 0 0% 100%;
     --card-foreground: 225 45% 12%;
     --popover: 0 0% 100%;
     --popover-foreground: 225 45% 12%;
 
-    --secondary: 214 32% 91%;
+    --secondary: var(--color-border);
     --secondary-foreground: 225 45% 16%;
-    --muted: 210 40% 96%;
+    --muted: var(--color-muted);
     --muted-foreground: 215 16% 47%;
 
-    --input: 214 32% 91%;
-    --border: 214 32% 91%;
+    --input: var(--color-border);
+    --border: var(--color-border);
     --ring: 225 55% 35%;
 
     /* BRAND & PRIMARY – NAVY + GOLD */
-    --brand-primary: 225 65% 40%;
+    --brand-primary: var(--color-primary);
     --brand-on: 0 0% 100%;
     --brand-subtle: 225 35% 94%;
 
@@ -49,11 +57,11 @@ All colors MUST be HSL.
     --gold-muted: 40 70% 46%;
     --gold-light: 45 90% 65%;
 
-    --primary: 225 65% 40%;
+    --primary: var(--color-primary);
     --primary-foreground: 0 0% 100%;
     --primary-glow: 225 70% 50%;
 
-    --accent: 42 90% 50%;
+    --accent: var(--color-accent);
     --accent-foreground: 225 45% 14%;
     --accent-mint: 160 78% 40%;
     --accent-amber: 42 90% 50%;
@@ -85,9 +93,9 @@ All colors MUST be HSL.
     --legal-neutral-300: 214 32% 85%;
     --legal-neutral-100: 214 32% 95%;
 
-    --legal-success-500: 142 71% 42%;
+    --legal-success-500: var(--color-success);
     --legal-warning-500: 42 90% 50%;
-    --legal-danger-500: 0 80% 58%;
+    --legal-danger-500: var(--color-danger);
 
     /* SIDEBAR – NAVY BLOCK WITH GOLD ACCENTS */
     --sidebar-background: 225 65% 18%;
@@ -195,7 +203,15 @@ All colors MUST be HSL.
   .dark {
     /* AVOCAT LAW FIRM - DARK ROYAL NAVY THEME */
 
-    --surface: 225 45% 6%;
+    --color-primary: 225 65% 55%;
+    --color-surface: 225 45% 6%;
+    --color-accent: 225 55% 52%;
+    --color-muted: 225 25% 14%;
+    --color-border: 225 25% 22%;
+    --color-success: 142 72% 45%;
+    --color-danger: 0 78% 60%;
+
+    --surface: var(--color-surface);
     --surface-raised: 225 45% 9%;
     --surface-overlay: 225 45% 11%;
     --card-elevated: 225 45% 13%;
@@ -205,24 +221,24 @@ All colors MUST be HSL.
     --neutral-700: 220 18% 68%;
     --neutral-900: 210 40% 96%;
 
-    --background: 225 45% 6%;
+    --background: var(--color-surface);
     --foreground: 210 40% 96%;
     --card: 225 45% 9%;
     --card-foreground: 210 40% 96%;
     --popover: 225 45% 9%;
     --popover-foreground: 210 40% 96%;
 
-    --secondary: 225 30% 14%;
+    --secondary: var(--color-border);
     --secondary-foreground: 210 40% 95%;
-    --muted: 225 25% 14%;
+    --muted: var(--color-muted);
     --muted-foreground: 220 18% 68%;
 
-    --input: 225 25% 20%;
-    --border: 225 25% 22%;
+    --input: var(--color-border);
+    --border: var(--color-border);
     --ring: 42 90% 58%;
 
     /* NAVY + GOLD كهوية ثابتة */
-    --brand-primary: 225 65% 55%;
+    --brand-primary: var(--color-primary);
     --brand-on: 225 45% 6%;
     --brand-subtle: 225 35% 20%;
 
@@ -230,11 +246,11 @@ All colors MUST be HSL.
     --gold-muted: 40 75% 52%;
     --gold-light: 45 90% 68%;
 
-    --primary: 225 65% 55%;
+    --primary: var(--color-primary);
     --primary-foreground: 210 40% 96%;
     --primary-glow: 225 80% 65%;
 
-    --accent: 225 55% 52%;
+    --accent: var(--color-accent);
     --accent-foreground: 210 40% 96%;
     --accent-mint: 165 70% 45%;
     --accent-amber: 42 90% 58%;
@@ -262,9 +278,9 @@ All colors MUST be HSL.
     --legal-neutral-300: 225 20% 28%;
     --legal-neutral-100: 225 20% 18%;
 
-    --legal-success-500: 142 72% 45%;
+    --legal-success-500: var(--color-success);
     --legal-warning-500: 42 90% 58%;
-    --legal-danger-500: 0 78% 60%;
+    --legal-danger-500: var(--color-danger);
 
     --sidebar-background: 225 45% 8%;
     --sidebar-foreground: 210 40% 96%;
