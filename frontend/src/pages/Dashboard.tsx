@@ -1,8 +1,8 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import AppShell from "@/components/layout/AppShell";
+import { Outlet } from 'react-router-dom';
 
-const Dashboard: React.FC = () => {
+import AppShell from '@/components/layout/AppShell';
+
+const Dashboard = () => {
   return (
     <AppShell>
       <Outlet />
