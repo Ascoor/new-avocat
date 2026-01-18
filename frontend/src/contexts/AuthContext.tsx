@@ -35,12 +35,27 @@ const AUTH_EVENTS = {
   authorized: 'auth:authorized',
 } as const;
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const missingProviderMessage = 'useAuth must be used within an AuthProvider';
+
+const defaultAuthContext: AuthContextType = {
+  user: null,
+  isAuthenticated: false,
+  login: async () => {
+    throw new Error(missingProviderMessage);
+  },
+  signup: async () => {
+    throw new Error(missingProviderMessage);
+  },
+  logout: () => undefined,
+  loading: false,
+};
+
+const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (context === defaultAuthContext) {
+    console.warn(missingProviderMessage);
   }
   return context;
 };
