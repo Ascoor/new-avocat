@@ -45,3 +45,4 @@ backend/.phpunit.result.cache
 *.swo
 .DS_Store
 Thumbs.db
+FETCH_HEAD
