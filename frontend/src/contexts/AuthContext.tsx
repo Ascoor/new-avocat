@@ -209,7 +209,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (responseStatus === 401 || responseStatus === 403) {
         clearAuth();
         setStatus('unauthenticated');
+        return;
       }
+
+      clearAuth();
+      setStatus('unauthenticated');
     }
   }, [clearAuth, hydrateFromStorage, mapApiUserToContextUser, persistUser, readTokenFromStorage]);
 
