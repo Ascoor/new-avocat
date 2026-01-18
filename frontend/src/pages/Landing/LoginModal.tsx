@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Eye, EyeOff, LogIn, ShieldCheck, X } from "lucide-react";
@@ -6,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import BrandLogo from "@/components/common/BrandLogo";
+import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
 import { smoothScrollToElement } from "@/utils/smoothScroll";
 
@@ -91,7 +93,11 @@ const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const navigate = useNavigate();
+  const { login, status } = useAuth();
 
   const titleId = useId();
   const descriptionId = useId();
@@ -206,6 +212,7 @@ const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps
   useEffect(() => {
     if (open) {
       setErrors({});
+      setSubmitError(null);
     }
   }, [open, mode]);
 
@@ -238,12 +245,38 @@ const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSubmitError(null);
     if (!validate()) {
       return;
     }
+
+    if (mode !== "login") {
+      onOpenChange(false);
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      await login({ email: email.trim(), password: password.trim() });
+      onOpenChange(false);
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      const message =
+        (error as { message?: string })?.message ||
+        (language === "ar" ? "تعذر تسجيل الدخول، يرجى المحاولة مرة أخرى." : "Unable to sign in, please try again.");
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const isAuthenticating = isSubmitting || status === "loading";
+  const isSubmitDisabled =
+    isAuthenticating ||
+    !email.trim() ||
+    (mode === "login" ? !password.trim() : !organization.trim());
 
   if (typeof document === "undefined") {
     return null;
@@ -351,6 +384,15 @@ const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps
                   </div>
 
                   <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+                    {submitError ? (
+                      <div
+                        className="rounded-xl border border-[hsl(var(--legal-danger-500))]/40 bg-[hsl(var(--legal-danger-500))]/10 px-3 py-2 text-sm text-[hsl(var(--legal-danger-500))]"
+                        role="alert"
+                        aria-live="polite"
+                      >
+                        {submitError}
+                      </div>
+                    ) : null}
                     <div className="space-y-2 text-start">
                       <label className="text-sm font-medium text-[hsl(var(--foreground))]" htmlFor="auth-email">
                         {text.emailLabel}
@@ -474,9 +516,14 @@ const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps
                         type="submit"
                         variant="gold"
                         className="h-11 rounded-xl shadow-[0_18px_30px_-22px_hsl(var(--auth-accent-glow))]"
+                        disabled={isSubmitDisabled}
                       >
                         <LogIn className="h-4 w-4" />
-                        {modeCopy.button}
+                        {isAuthenticating
+                          ? language === "ar"
+                            ? "جارٍ تسجيل الدخول..."
+                            : "Signing in..."
+                          : modeCopy.button}
                       </Button>
                       <Button
                         type="button"
