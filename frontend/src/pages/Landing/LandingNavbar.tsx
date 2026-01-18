@@ -102,6 +102,15 @@ const LandingNavbar: React.FC = () => {
     ? "text-[hsl(var(--navbar-link-hero-muted))] hover:text-[hsl(var(--navbar-link-hero))]"
     : "text-[hsl(var(--navbar-link-solid))] hover:text-[hsl(var(--foreground))]";
 
+  const loginButtonClasses = cn(
+    "hidden lg:inline-flex h-11 rounded-full px-6 text-sm font-semibold",
+    "border border-[hsl(var(--auth-border))]",
+    "shadow-[0_12px_24px_-18px_hsl(var(--auth-accent-glow))]",
+    "transition-all duration-300",
+    "hover:-translate-y-0.5 hover:shadow-[0_0_18px_hsl(var(--auth-accent-glow)),var(--shadow-md)]",
+    "active:translate-y-0 active:shadow-[0_0_10px_hsl(var(--auth-accent-glow))]",
+  );
+
   return (
     <>
       <nav
@@ -177,12 +186,7 @@ const LandingNavbar: React.FC = () => {
               onClick={handleLoginOpen}
               variant={isDark ? "gold" : "chromatic"}
               size="lg"
-              className={cn(
-                "hidden lg:inline-flex h-11 rounded-full px-6 text-sm font-semibold",
-                "border border-[hsl(var(--auth-border))] shadow-[0_8px_24px_-18px_hsl(var(--auth-accent-glow))]",
-                "transition-all hover:-translate-y-0.5 hover:shadow-[0_0_22px_hsl(var(--auth-accent-glow)),var(--shadow-md)]",
-                "active:translate-y-0 active:shadow-[0_0_12px_hsl(var(--auth-accent-glow))]",
-              )}
+              className={loginButtonClasses}
             >
               {isArabic ? "تسجيل الدخول" : "Client Login"}
             </Button>
