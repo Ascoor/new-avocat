@@ -128,8 +128,8 @@ const Signup: React.FC = () => {
     <div
       className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl"
       style={{
-        background: 'hsla(var(var(--primary)) / 0.12)',
-        color: 'hsl(var(var(--primary)))',
+        background: 'hsl(var(--primary) / 0.12)',
+        color: 'hsl(var(--primary))',
       }}
     >
       <BrandLogo variant="icon" className="h-8 w-8" lang={language} />
@@ -175,7 +175,7 @@ const Signup: React.FC = () => {
       hero={{
         badge: (
           <>
-            <Sparkles className="h-4 w-4" style={{ color: 'hsl(var(var(--gold-light)))' }} />
+            <Sparkles className="h-4 w-4" style={{ color: 'hsl(var(--gold-light))' }} />
             <span>{heroCopy.badge}</span>
           </>
         ),
@@ -194,9 +194,9 @@ const Signup: React.FC = () => {
               <div
                 className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm"
                 style={{
-                  color: 'hsl(var(var(--destructive)))',
-                  background: 'hsla(var(var(--destructive)) / 0.12)',
-                  border: '1px solid hsla(var(var(--destructive)) / 0.35)',
+                  color: 'hsl(var(--destructive))',
+                  background: 'hsl(var(--destructive) / 0.12)',
+                  border: '1px solid hsl(var(--destructive) / 0.35)',
                 }}
               >
                 <AlertCircle className="h-4 w-4" />
@@ -346,7 +346,7 @@ const Signup: React.FC = () => {
               </Button>
             </form>
 
-            <div className="space-y-2 text-center text-sm text-[hsl(var(var(--slate-light)))]">
+            <div className="space-y-2 text-center text-sm text-[hsl(var(--slate-light))]">
               <p>
                 {t('auth.signup.have_account')}{' '}
                 <Link to="/login" className="font-medium text-primary hover:underline">
@@ -366,22 +366,22 @@ const Signup: React.FC = () => {
                 isRTL ? 'flex-row-reverse text-right' : 'text-left'
               )}
               style={{
-                borderColor: 'hsla(var(var(--primary)) / 0.4)',
-                background: 'hsla(var(var(--primary)) / 0.05)',
+                borderColor: 'hsl(var(--primary) / 0.4)',
+                background: 'hsl(var(--primary) / 0.05)',
               }}
             >
               <div
                 className="flex h-12 w-12 items-center justify-center rounded-xl"
                 style={{
-                  background: 'hsla(var(var(--primary)) / 0.12)',
-                  color: 'hsl(var(var(--primary)))',
+                  background: 'hsl(var(--primary) / 0.12)',
+                  color: 'hsl(var(--primary))',
                 }}
               >
                 <ShieldCheck className="h-6 w-6" />
               </div>
               <div className="space-y-1 text-xs sm:text-sm">
-                <p className="font-semibold text-[hsl(var(var(--foreground)))]">{t('auth.signup.security_title')}</p>
-                <p className="text-[hsl(var(var(--slate-light)))]">{t('auth.signup.security_description')}</p>
+                <p className="font-semibold text-[hsl(var(--foreground))]">{t('auth.signup.security_title')}</p>
+                <p className="text-[hsl(var(--slate-light))]">{t('auth.signup.security_description')}</p>
               </div>
             </div>
           </>
