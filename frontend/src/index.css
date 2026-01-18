@@ -2,94 +2,300 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&family=Outfit:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap');
 
 @import './styles/theme-tokens.css';
+@import './styles/radix-vars.css';
+@import './styles/dashboard-shell.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ========= Base ========= */
 @layer base {
-  *,
-  ::before,
-  ::after {
-    border-color: hsl(var(--border));
+  :root {
+    /* منطق ألوان إضافي (logic colors) للروتين اليومي */
+    --navbar-link-hero: 0 0% 100%;
+    --navbar-link-hero-muted: 0 0% 90%;
+    --navbar-link-solid: var(--foreground);
+    --navbar-link-muted: 220 10% 45%;
+
+    --chip-bg-soft: 220 20% 96%;
+    --chip-border-soft: 220 18% 88%;
+    --chip-text-soft: 220 25% 35%;
+
+    --pill-primary-bg: var(--primary);
+    --pill-primary-text: var(--primary-foreground);
+
+    --badge-gold-bg: var(--gold-light);
+    --badge-gold-border: var(--gold-muted);
+    --badge-gold-text: var(--gold-muted);
+  }
+
+  .dark {
+    --navbar-link-hero: 0 0% 100%;
+    --navbar-link-hero-muted: 0 0% 82%;
+    --navbar-link-solid: 210 40% 96%;
+    --navbar-link-muted: 220 10% 70%;
+
+    --chip-bg-soft: 220 24% 16%;
+    --chip-border-soft: 220 24% 22%;
+    --chip-text-soft: 220 18% 80%;
+
+    --badge-gold-bg: 45 32% 16%;
+    --badge-gold-border: 45 80% 55%;
+    --badge-gold-text: 45 90% 70%;
+  }
+
+  html,
+  body {
+    @apply min-h-screen antialiased;
   }
 
   html {
-    scroll-behavior: smooth;
-    font-family: var(--font-body);
+    @apply scroll-smooth;
   }
 
   body {
     margin: 0;
-    min-height: 100vh;
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
-    text-rendering: optimizeLegibility;
-  }
-
-  body,
-  #root {
-    min-height: 100vh;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 
   #root {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@layer utilities {
-  .glass-panel {
-    background: hsl(var(--card) / 0.7);
-    border: 1px solid hsl(var(--border) / 0.55);
-    box-shadow: var(--shadow-md);
-    backdrop-filter: blur(18px);
+    @apply flex min-h-screen flex-col overflow-x-hidden;
   }
 
-  .glass-hero {
-    background: hsl(var(--primary) / 0.25);
-    border: 1px solid hsl(var(--nav-border));
-    box-shadow: var(--shadow-lg);
-    backdrop-filter: blur(20px);
+  :root,
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent;
   }
 
-  .gradient-aurora {
-    background-image: radial-gradient(
-        circle at 15% 20%,
-        hsl(var(--neon) / 0.18),
-        transparent 55%
-      ),
-      radial-gradient(
-        circle at 85% 20%,
-        hsl(var(--gold) / 0.18),
-        transparent 50%
-      ),
-      linear-gradient(
-        135deg,
-        hsl(var(--primary) / 0.95),
-        hsl(var(--primary-glow) / 0.85)
-      );
+  body::-webkit-scrollbar {
+    width: 0.6rem;
   }
 
-  .noise-overlay {
-    background-image: repeating-linear-gradient(
-      120deg,
-      hsl(var(--foreground) / 0.04) 0px,
-      hsl(var(--foreground) / 0.04) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-    mix-blend-mode: soft-light;
+  body::-webkit-scrollbar-track {
+    background: transparent;
   }
 
-  .text-gold-gradient {
+  body::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
     background-image: linear-gradient(
-      120deg,
-      hsl(var(--gold)),
-      hsl(var(--gold-light))
+      180deg,
+      hsl(var(--accent) / 0.55),
+      hsl(var(--primary) / 0.7)
     );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  }
+
+  html.dark body::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(
+      180deg,
+      hsl(var(--gold) / 0.35),
+      hsl(var(--neon) / 0.6)
+    );
+  }
+
+  /* Dark CTA background */
+  .bg-cta-dark {
+    @apply bg-gradient-to-br from-primary via-primary-glow to-slate-bg;
+    background-image: url('/textures/stars.svg');
+    background-size: cover;
+    opacity: 0.9;
   }
 }
+
+/* ========= Components ========= */
+@layer components {
+  /* عناوين الأقسام */
+  .section-title {
+    font-family: 'Poppins', 'Cairo', 'Outfit', 'Inter', var(--font-display, 'Inter'), sans-serif;
+    letter-spacing: 0.08em;
+    color: hsl(var(--title-color-light));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    text-shadow:
+      0 0 10px rgba(175, 220, 255, 0.25),
+      0 0 20px rgba(175, 220, 255, 0.15),
+      1px 2px 4px rgba(0, 0, 0, 0.35);
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    margin-top: 0.4rem;
+    height: 3px;
+    width: 64px;
+    border-radius: 999px;
+    background-image: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255, 255, 255, 0.1)
+    );
+  }
+
+  .dark .section-title {
+    color: hsl(var(--title-color-dark));
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+    text-shadow:
+      0 0 12px rgba(var(--title-glow-dark), 0.3),
+      0 0 24px rgba(var(--title-glow-dark), 0.2),
+      0 0 40px rgba(var(--title-glow-dark), 0.35),
+      1px 2px 6px rgba(0, 0, 0, 0.45);
+  }
+
+  .dark .section-title::after {
+    background-image: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255, 255, 255, 0.08)
+    );
+  }
+
+  /* شارة / بادج ناعمة */
+  .chip-soft {
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: hsl(var(--chip-bg-soft));
+    border: 1px solid hsl(var(--chip-border-soft));
+    color: hsl(var(--chip-text-soft));
+  }
+
+  .pill-primary {
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background-color: hsl(var(--pill-primary-bg));
+    color: hsl(var(--pill-primary-text));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .badge-gold {
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: hsl(var(--badge-gold-bg));
+    border: 1px solid hsl(var(--badge-gold-border));
+    color: hsl(var(--badge-gold-text));
+  }
+
+  /* روابط الـ Navbar */
+  .nav-link-hero {
+    color: hsl(var(--navbar-link-hero-muted));
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+
+  .nav-link-hero:hover {
+    color: hsl(var(--navbar-link-hero));
+    text-shadow: 0 0 12px hsl(var(--neon-glow) / 0.4);
+  }
+
+  .nav-link-solid {
+    color: hsl(var(--navbar-link-solid));
+    transition: color 0.18s ease;
+  }
+
+  .nav-link-solid-muted {
+    color: hsl(var(--navbar-link-muted));
+  }
+
+  .nav-link-solid:hover {
+    color: hsl(var(--primary));
+  }
+
+  /* بطاقات قانونية */
+  .card-legal {
+    border-radius: var(--radius-2xl);
+    background: linear-gradient(
+      145deg,
+      hsl(var(--card) / 0.98),
+      hsl(var(--card-elevated) / 0.98)
+    );
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-lg);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark .card-legal {
+    background: linear-gradient(
+      150deg,
+      hsl(var(--card) / 0.98),
+      hsl(var(--card-elevated) / 0.92)
+    );
+    border-color: hsl(var(--border) / 0.55);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .card-legal:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2xl);
+  }
+}
+
+/* ========= Utilities ========= */
+@layer utilities {
+  .neon-text {
+    color: hsl(var(--neon));
+    text-shadow:
+      0 0 6px hsl(var(--neon-glow) / 0.75),
+      0 0 18px hsl(var(--neon-glow) / 0.35),
+      0 0 30px hsl(var(--neon-glow) / 0.18);
+  }
+
+  .neon-text-muted {
+    color: hsl(var(--neon-muted));
+  }
+
+  .dark .neon-text-muted {
+    color: hsl(var(--neon));
+    opacity: 0.9;
+  }
+
+  .neon-divider {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--neon) / 0.55),
+      hsl(var(--neon) / 0.8),
+      transparent
+    );
+    box-shadow: 0 0 12px hsl(var(--neon-glow) / 0.35);
+  }
+
+  .font-english {
+    font-family: var(--font-latin);
+    direction: ltr;
+    text-align: left;
+  }
+
+  .font-arabic {
+    font-family: var(--font-arabic);
+    font-weight: 500;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    direction: rtl;
+    text-align: right;
+  }
+
+  .arabic-heading-lg {
+    font-size: clamp(2.15rem, 1.45rem + 2.6vw, 3.45rem);
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+  }
+
+  .arabic-subtitle {
+    font-size: clamp(1rem, 0.45vw + 0.95rem, 1.35rem);
+    line-height: 1.85;
+  }
+
+  .arabic-body-text {
+    font-size: clamp(0.96rem, 0.35vw + 0.9rem, 1.18rem);
+    line-height: 1.8;
+  }
+
+  .arabic-eyebrow {
+    font-size: clamp(0.7rem, 0.3vw + 0.65rem, 0.85rem);
+    letter-spacing: 0.18em;
+  }
+}
+  
