@@ -44,6 +44,10 @@ const HeroCarousel: React.FC = () => {
   };
 
   const copy = content[language];
+  const primaryCtaClasses =
+    "rounded-full px-6 py-6 text-sm font-semibold bg-none bg-[hsl(var(--cta-primary-bg))] text-[hsl(var(--cta-primary-fg))] shadow-[var(--shadow-gold)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-2";
+  const secondaryCtaClasses =
+    "rounded-full border border-[hsl(var(--cta-secondary-border))] bg-[hsl(var(--cta-secondary-bg))] px-6 py-6 text-sm font-semibold text-[hsl(var(--cta-secondary-fg))] shadow-[var(--shadow-sm)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-2";
 
   return (
     <section id="home" className="relative overflow-hidden rounded-3xl">
@@ -82,7 +86,7 @@ const HeroCarousel: React.FC = () => {
           <div className="mt-8 flex flex-wrap gap-4">
             <Button
               variant="accent"
-              className="rounded-full px-6 py-6 text-sm font-semibold shadow-[var(--shadow-gold)]"
+              className={primaryCtaClasses}
               onClick={() => {
                 const element = document.getElementById("contact");
                 if (element) smoothScrollToElement(element, { offset: 92 });
@@ -93,7 +97,7 @@ const HeroCarousel: React.FC = () => {
             </Button>
             <Button
               variant="glass"
-              className="rounded-full border-[hsl(var(--nav-border))] px-6 py-6 text-sm font-semibold text-[hsl(var(--navbar-link-hero))]"
+              className={secondaryCtaClasses}
               onClick={() => {
                 const element = document.getElementById("services");
                 if (element) smoothScrollToElement(element, { offset: 92 });

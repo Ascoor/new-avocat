@@ -15,7 +15,7 @@ All colors MUST be HSL.
 
     /* SURFACE & NEUTRALS */
     --color-primary: 225 65% 40%;
-    --color-surface: 0 0% 100%;
+    --color-surface: 40 30% 98%;
     --color-accent: 42 90% 50%;
     --color-muted: 210 40% 96%;
     --color-border: 214 32% 91%;
@@ -29,11 +29,11 @@ All colors MUST be HSL.
 
     --neutral-50: 210 40% 98%;
     --neutral-100: 214 32% 95%;
-    --neutral-700: 215 16% 47%;
-    --neutral-900: 225 45% 12%;
+    --neutral-700: 220 18% 42%;
+    --neutral-900: 225 50% 12%;
 
     --background: var(--color-surface);
-    --foreground: 225 45% 12%;
+    --foreground: 225 50% 12%;
     --card: 0 0% 100%;
     --card-foreground: 225 45% 12%;
     --popover: 0 0% 100%;
@@ -42,7 +42,7 @@ All colors MUST be HSL.
     --secondary: var(--color-border);
     --secondary-foreground: 225 45% 16%;
     --muted: var(--color-muted);
-    --muted-foreground: 215 16% 47%;
+    --muted-foreground: 220 18% 42%;
 
     --input: var(--color-border);
     --border: var(--color-border);
@@ -137,14 +137,25 @@ All colors MUST be HSL.
     --header-glass-shadow: 0 4px 24px hsl(225 45% 16% / 0.1);
 
     /* NAVBAR */
-    --nav-bg-top: 225 60% 16% / 0.35;
-    --nav-bg-scrolled: 0 0% 100% / 0.92;
-    --nav-border: 225 30% 88% / 0.7;
+    --nav-bg-top: 40 35% 98% / 0.8;
+    --nav-bg-scrolled: 0 0% 100% / 0.96;
+    --nav-border: 220 28% 90% / 0.7;
     --overlay: 225 25% 10% / 0.45;
     --auth-card: 0 0% 100% / 0.82;
     --auth-border: 225 30% 88% / 0.7;
     --auth-shadow: 0 24px 80px hsl(225 45% 15% / 0.18);
     --auth-accent-glow: 42 90% 50% / 0.35;
+
+    /* CTA */
+    --cta-primary-bg: 42 92% 56%;
+    --cta-primary-fg: 225 45% 12%;
+    --cta-secondary-bg: 0 0% 100% / 0.85;
+    --cta-secondary-border: 225 35% 20% / 0.25;
+    --cta-secondary-fg: 225 45% 16%;
+
+    /* THEME TRANSITION */
+    --theme-transition-light: 45 55% 96%;
+    --theme-transition-dark: 225 45% 8%;
 
     /* GRADIENTS */
     --gradient-hero: linear-gradient(
@@ -338,6 +349,13 @@ All colors MUST be HSL.
     --auth-border: 225 30% 28% / 0.65;
     --auth-shadow: 0 30px 90px hsl(225 60% 3% / 0.6);
     --auth-accent-glow: 190 90% 60% / 0.45;
+
+    /* CTA */
+    --cta-primary-bg: 42 92% 58%;
+    --cta-primary-fg: 225 45% 8%;
+    --cta-secondary-bg: 225 30% 12% / 0.7;
+    --cta-secondary-border: 225 30% 26% / 0.6;
+    --cta-secondary-fg: 210 40% 96%;
 
     --gradient-hero: linear-gradient(
       140deg,

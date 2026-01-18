@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import ThemeTransitionOverlay from '@/components/theme/ThemeTransitionOverlay';
 
 type Theme = 'light' | 'dark';
 
@@ -20,6 +21,7 @@ interface ThemeContextType {
   isDark: boolean;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  toggleThemeWithTransition: (origin?: { x: number; y: number }) => void;
   syncWithSystem: () => void;
 }
 
@@ -50,6 +52,10 @@ export const useTheme = () => {
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<ThemeState>(() => getPreferredTheme());
+  const [transition, setTransition] = useState<{
+    origin: { x: number; y: number };
+    nextTheme: Theme;
+  } | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -95,6 +101,31 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setState((prev) => ({ theme: prev.theme === 'dark' ? 'light' : 'dark', manual: true }));
   }, []);
 
+  const toggleThemeWithTransition = useCallback(
+    (origin?: { x: number; y: number }) => {
+      if (typeof window === 'undefined') {
+        toggleTheme();
+        return;
+      }
+
+      if (transition) {
+        return;
+      }
+
+      const isRtl = window.document.documentElement.dir === 'rtl';
+      const fallbackOrigin = {
+        x: isRtl ? 0 : window.innerWidth,
+        y: 0,
+      };
+
+      setTransition({
+        origin: origin ?? fallbackOrigin,
+        nextTheme: state.theme === 'dark' ? 'light' : 'dark',
+      });
+    },
+    [state.theme, toggleTheme, transition],
+  );
+
   const syncWithSystem = useCallback(() => {
     if (typeof window === 'undefined') {
       return;
@@ -110,10 +141,26 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       isDark: state.theme === 'dark',
       setTheme,
       toggleTheme,
+      toggleThemeWithTransition,
       syncWithSystem,
     }),
-    [state.theme, setTheme, toggleTheme, syncWithSystem],
+    [state.theme, setTheme, toggleTheme, toggleThemeWithTransition, syncWithSystem],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+      <ThemeTransitionOverlay
+        isActive={Boolean(transition)}
+        origin={transition?.origin ?? { x: 0, y: 0 }}
+        nextTheme={transition?.nextTheme ?? state.theme}
+        onMidpoint={() => {
+          if (transition) {
+            setState({ theme: transition.nextTheme, manual: true });
+          }
+        }}
+        onComplete={() => setTransition(null)}
+      />
+    </ThemeContext.Provider>
+  );
 };
