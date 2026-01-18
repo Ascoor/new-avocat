@@ -35,12 +35,27 @@ const AUTH_EVENTS = {
   authorized: 'auth:authorized',
 } as const;
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const missingProviderMessage = 'useAuth must be used within an AuthProvider';
+
+const defaultAuthContext: AuthContextType = {
+  user: null,
+  isAuthenticated: false,
+  login: async () => {
+    throw new Error(missingProviderMessage);
+  },
+  signup: async () => {
+    throw new Error(missingProviderMessage);
+  },
+  logout: () => undefined,
+  loading: false,
+};
+
+const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (context === defaultAuthContext) {
+    console.warn(missingProviderMessage);
   }
   return context;
 };
@@ -97,6 +112,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [mapRole],
   );
 
+  const fetchProfile = useCallback(async () => {
+    const { data } = await api.get<ApiUser>('/api/auth/profile');
+    return mapApiUserToContextUser(data);
+  }, [mapApiUserToContextUser]);
+
   useEffect(() => {
     const initialize = async () => {
       try {
@@ -109,8 +129,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (storedToken) {
           const parsedToken = JSON.parse(storedToken) as string | null;
           if (parsedToken) {
-            const { data } = await api.get<ApiUser>('/api/auth/profile');
-            const mappedUser = mapApiUserToContextUser(data);
+            const mappedUser = await fetchProfile();
             setUser(mappedUser);
             localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(mappedUser));
           }
@@ -125,7 +144,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     void initialize();
-  }, [mapApiUserToContextUser, readUserFromStorage]);
+  }, [fetchProfile, readUserFromStorage]);
 
   useEffect(() => {
     const handleAuthReset = () => {
@@ -196,7 +215,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(token));
 
-        const mappedUser = mapApiUserToContextUser(apiUser);
+        let mappedUser = mapApiUserToContextUser(apiUser);
+        try {
+          mappedUser = await fetchProfile();
+        } catch (error) {
+          console.warn('Failed to load profile after login', error);
+        }
         setUser(mappedUser);
         localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(mappedUser));
         broadcastAuthEvent('authorized');
@@ -207,7 +231,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setLoading(false);
       }
     },
-    [broadcastAuthEvent, extractErrorMessage, mapApiUserToContextUser],
+    [broadcastAuthEvent, extractErrorMessage, fetchProfile, mapApiUserToContextUser],
   );
 
   const signup = useCallback(
@@ -234,7 +258,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(token));
 
-        const mappedUser = mapApiUserToContextUser(apiUser);
+        let mappedUser = mapApiUserToContextUser(apiUser);
+        try {
+          mappedUser = await fetchProfile();
+        } catch (error) {
+          console.warn('Failed to load profile after signup', error);
+        }
         setUser(mappedUser);
         localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(mappedUser));
         broadcastAuthEvent('authorized');
@@ -245,7 +274,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setLoading(false);
       }
     },
-    [broadcastAuthEvent, extractErrorMessage, mapApiUserToContextUser],
+    [broadcastAuthEvent, extractErrorMessage, fetchProfile, mapApiUserToContextUser],
   );
 
   const logout = useCallback(() => {

@@ -1,11 +1,14 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Eye, EyeOff, LogIn, ShieldCheck, X } from "lucide-react";
+import { Eye, EyeOff, Loader2, LogIn, ShieldCheck, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import BrandLogo from "@/components/common/BrandLogo";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { smoothScrollToElement } from "@/utils/smoothScroll";
 
@@ -84,6 +87,9 @@ const focusableSelector =
   "a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex='-1'])";
 
 const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps) => {
+  const { login, loading } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -243,7 +249,47 @@ const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps
     if (!validate()) {
       return;
     }
+
+    if (mode === "login") {
+      void (async () => {
+        try {
+          await login(email.trim(), password.trim());
+          toast({
+            title: language === "ar" ? "تم تسجيل الدخول" : "Signed in",
+            description: language === "ar" ? "مرحبًا بك من جديد." : "Welcome back!",
+          });
+          onOpenChange(false);
+          navigate("/dashboard");
+        } catch (error) {
+          const description =
+            error instanceof Error
+              ? error.message
+              : language === "ar"
+                ? "تعذر تسجيل الدخول"
+                : "Unable to sign in";
+          toast({
+            title: language === "ar" ? "خطأ" : "Error",
+            description,
+            variant: "destructive",
+          });
+        }
+      })();
+    } else {
+      toast({
+        title: language === "ar" ? "تم إرسال الطلب" : "Request sent",
+        description:
+          language === "ar"
+            ? "سنتواصل معك قريبًا لتفعيل الوصول."
+            : "We'll contact you soon to activate access.",
+      });
+      onOpenChange(false);
+    }
   };
+
+  const disableSubmit =
+    loading ||
+    !email.trim() ||
+    (mode === "login" ? !password.trim() : !organization.trim());
 
   if (typeof document === "undefined") {
     return null;
@@ -474,9 +520,14 @@ const LoginModal = ({ open, onOpenChange, language, direction }: LoginModalProps
                         type="submit"
                         variant="gold"
                         className="h-11 rounded-xl shadow-[0_18px_30px_-22px_hsl(var(--auth-accent-glow))]"
+                        disabled={disableSubmit}
                       >
-                        <LogIn className="h-4 w-4" />
-                        {modeCopy.button}
+                        {loading ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <LogIn className="h-4 w-4" />
+                        )}
+                        {loading ? (language === "ar" ? "جارٍ المعالجة..." : "Processing...") : modeCopy.button}
                       </Button>
                       <Button
                         type="button"
