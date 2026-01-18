@@ -16,8 +16,8 @@ export const themeToggleToneVariantMap: Record<ThemeToggleTone, ButtonProps["var
 };
 
 export const themeToggleToneClassMap: Record<ThemeToggleTone, string> = {
-  hero: "border-[hsl(var(--nav-border))] text-[hsl(var(--navbar-link-hero))] hover:bg-[hsl(var(--nav-bg-top))] shadow-[var(--shadow-lg)] ring-1 ring-[hsl(var(--nav-border))]",
-  dark: "border-[hsl(var(--nav-border))] text-[hsl(var(--navbar-link-hero))] hover:bg-[hsl(var(--nav-bg-top))]",
+  hero: "border-[hsl(var(--nav-border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--nav-bg-top))] shadow-[var(--shadow-lg)] ring-1 ring-[hsl(var(--nav-border))]",
+  dark: "border-[hsl(var(--nav-border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--nav-bg-top))]",
   light: "border-border text-foreground hover:bg-[hsl(var(--muted))]",
 };
 
@@ -27,7 +27,7 @@ interface ThemeToggleProps {
 }
 
 const ThemeToggle: React.FC<ThemeToggleProps> = ({ tone, className }) => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, toggleThemeWithTransition } = useTheme();
   const isDark = theme === "dark";
 
   const resolvedTone: ThemeToggleTone = tone ?? (isDark ? "dark" : "light");
@@ -38,7 +38,10 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ tone, className }) => {
     <Button
       variant={variant}
       size="icon"
-      onClick={toggleTheme}
+      onClick={(event) => {
+        const hasCoords = event.clientX || event.clientY;
+        toggleThemeWithTransition(hasCoords ? { x: event.clientX, y: event.clientY } : undefined);
+      }}
       aria-label={isDark ? "Switch to Light" : "Switch to Dark"}
       className={cn(
         "rounded-full transition-all duration-300",

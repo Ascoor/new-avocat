@@ -99,7 +99,9 @@ const LandingNavbar: React.FC = () => {
   };
 
   const navText = isTop
-    ? "text-[hsl(var(--navbar-link-hero-muted))] hover:text-[hsl(var(--navbar-link-hero))]"
+    ? isDark
+      ? "text-[hsl(var(--navbar-link-hero-muted))] hover:text-[hsl(var(--navbar-link-hero))]"
+      : "text-[hsl(var(--foreground))] hover:text-[hsl(var(--primary))]"
     : "text-[hsl(var(--navbar-link-solid))] hover:text-[hsl(var(--foreground))]";
 
   const loginButtonClasses = cn(
@@ -184,7 +186,7 @@ const LandingNavbar: React.FC = () => {
             <Button
               type="button"
               onClick={handleLoginOpen}
-              variant={isDark ? "gold" : "chromatic"}
+              variant="gold"
               size="lg"
               className={loginButtonClasses}
             >
