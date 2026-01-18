@@ -11,13 +11,16 @@ import Features from "./Features";
 import Achievements from "./Achievements";
 import Team from "./Team";
 import Testimonials from "./Testimonials";
-import Insights from "./Insights";
 import CallToAction from "./CallToAction";
 import Contact from "./Contact";
 import Footer from "./Footer";
 import ScrollToTopButton from "@/components/common/ScrollToTopButton";
 
-const LandingPage: React.FC = () => { 
+const SectionDivider = () => (
+  <div className="mx-auto h-px w-full max-w-5xl bg-[linear-gradient(90deg,hsl(var(--background))_0%,hsl(var(--gold))_45%,hsl(var(--neon))_55%,hsl(var(--background))_100%)] opacity-60" />
+);
+
+const LandingPage: React.FC = () => {
   const { direction } = useLanguage();
   const { isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
@@ -28,7 +31,6 @@ const LandingPage: React.FC = () => {
     }
   }, [isAuthenticated, loading, navigate]);
 
-  // Show loading state while checking auth
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -37,24 +39,25 @@ const LandingPage: React.FC = () => {
     );
   }
 
-  // Don't render landing page if authenticated (will redirect)
   if (isAuthenticated) {
     return null;
   }
- 
+
   return (
-    <div className="flex min-h-screen flex-col" dir={direction}>
+    <div className="flex min-h-screen flex-col bg-[hsl(var(--background))]" dir={direction}>
       <LandingNavbar />
 
       <main className="flex flex-1 flex-col gap-16 px-4 pt-24 sm:px-6 lg:px-10 xl:px-16">
         <HeroCarousel />
-        <About />
-        <Services />
         <Capabilities />
+        <SectionDivider />
+        <Services />
+        <Features />
+        <About />
+        <SectionDivider />
         <Achievements />
-        <Testimonials />
         <Team />
-        <Insights />
+        <Testimonials />
         <CallToAction />
         <Contact />
       </main>

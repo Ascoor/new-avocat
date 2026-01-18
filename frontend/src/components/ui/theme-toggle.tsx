@@ -16,9 +16,9 @@ export const themeToggleToneVariantMap: Record<ThemeToggleTone, ButtonProps["var
 };
 
 export const themeToggleToneClassMap: Record<ThemeToggleTone, string> = {
-  hero: "border-white/60 text-white hover:bg-white/15 shadow-[0_18px_48px_-20px_rgba(15,23,42,0.65)] ring-1 ring-white/20",
-  dark: "border-white/40 text-white hover:bg-white/10",
-  light: "border-border text-foreground hover:bg-muted/40",
+  hero: "border-[hsl(var(--nav-border))] text-[hsl(var(--navbar-link-hero))] hover:bg-[hsl(var(--nav-bg-top))] shadow-[var(--shadow-lg)] ring-1 ring-[hsl(var(--nav-border))]",
+  dark: "border-[hsl(var(--nav-border))] text-[hsl(var(--navbar-link-hero))] hover:bg-[hsl(var(--nav-bg-top))]",
+  light: "border-border text-foreground hover:bg-[hsl(var(--muted))]",
 };
 
 interface ThemeToggleProps {
@@ -46,7 +46,11 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({ tone, className }) => {
         className,
       )}
     >
-      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      {isDark ? (
+        <Sun className="h-4 w-4 text-[hsl(var(--gold))]" />
+      ) : (
+        <Moon className="h-4 w-4 text-[hsl(var(--primary))]" />
+      )}
     </Button>
   );
 };

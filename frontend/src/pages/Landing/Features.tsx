@@ -1,131 +1,84 @@
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Database, Laptop, Shield, Users } from 'lucide-react';
-
-import SectionHeader from './components/SectionHeader';
-import SectionContainer from './components/SectionContainer';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import type { ContentBlock, Locale } from '@/types/website';
-
-const iconLookup: Record<string, typeof Shield> = {
-  shield: Shield,
-  users: Users,
-  database: Database,
-  laptop: Laptop,
-};
+import { MotionSection } from "@/components/landing/landing-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { ClipboardCheck, Network, Radar, ShieldCheck } from "lucide-react";
 
 const Features: React.FC = () => {
   const { language } = useLanguage();
-  const locale = language as Locale;
-  const { loading, contentBlocks, getValueForLocale } = useWebsiteContent('features');
+  const isArabic = language === "ar";
 
-  const header = {
-    eyebrow: getValueForLocale('features_badge', locale) ?? '',
-    title: getValueForLocale('features_title', locale) ?? '',
-    subtitle: getValueForLocale('features_subtitle', locale) ?? '',
-  };
-
-  const features = useMemo(
-    () =>
-      contentBlocks
-        .filter((block) => block.key.startsWith('features_item_'))
-        .map((block) => mapFeature(block, locale)),
-    [contentBlocks, locale]
-  );
+  const steps = [
+    {
+      icon: Radar,
+      en: "Intake diagnostics",
+      ar: "تشخيص أولي دقيق",
+      descEn: "We map jurisdiction, stakeholders, and exposure within 48 hours.",
+      descAr: "نحلل الاختصاص والأطراف والمخاطر خلال 48 ساعة.",
+    },
+    {
+      icon: Network,
+      en: "Evidence orchestration",
+      ar: "تنسيق الأدلة",
+      descEn: "Evidence is structured into defensible narratives and automated timelines.",
+      descAr: "ننظم الأدلة في سرديات دفاعية وجداول زمنية مؤتمتة.",
+    },
+    {
+      icon: ClipboardCheck,
+      en: "Compliance-grade delivery",
+      ar: "تسليم بمعايير امتثال",
+      descEn: "Every submission is audit-ready, with signature trails and approvals.",
+      descAr: "كل تسليم جاهز للتدقيق مع مسارات توقيع واعتمادات واضحة.",
+    },
+    {
+      icon: ShieldCheck,
+      en: "Outcome monitoring",
+      ar: "متابعة النتائج",
+      descEn: "We monitor KPIs, judgments, and client sentiment in real time.",
+      descAr: "نراقب مؤشرات الأداء والأحكام ورضا العملاء لحظيًا.",
+    },
+  ];
 
   return (
-    <section
-      id="features"
-      className="relative overflow-hidden bg-background py-24"
-      aria-labelledby="features-heading"
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,hsla(200,85%,65%,0.18),transparent_62%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border/70 to-transparent" />
+    <MotionSection id="about" className="space-y-10">
+      <div className="flex flex-col gap-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--gold))]">
+          {isArabic ? "المنهجية العلمية" : "Scientific Method"}
+        </p>
+        <h2 className="text-3xl font-display text-[hsl(var(--foreground))] sm:text-4xl">
+          {isArabic
+            ? "إطار عمل مدروس يحول الخبرة القانونية إلى نتائج قابلة للتنبؤ"
+            : "A disciplined framework that turns legal expertise into predictable outcomes"}
+        </h2>
+        <p className="max-w-3xl text-lg text-[hsl(var(--muted-foreground))]">
+          {isArabic
+            ? "من التشخيص إلى التوثيق، نعتمد على خطوات دقيقة تحمي المكتب والعميل في كل مرحلة." 
+            : "From diagnostics to documentation, each phase is engineered to protect both firm and client with measurable rigor."}
+        </p>
+      </div>
 
-      <div className="container relative z-10 mx-auto px-6">
-        <SectionContainer
-          loading={loading}
-          loaderLabel={locale === 'ar' ? 'جارٍ تحميل قسم المزايا' : 'Loading features'}
-          className="bg-background/80"
-        >
-          <div className="space-y-16">
-            <SectionHeader
-              title={header.title}
-              subtitle={header.subtitle}
-              badge={header.eyebrow}
-              align="center"
-            />
-
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {features.map((feature, index) => (
-                <motion.article
-                  key={`${feature.title}-${index}`}
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
-                  className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card/90 p-6 shadow-ambient transition-all duration-500 ease-elegant hover:-translate-y-3 hover:shadow-glow-strong"
-                >
-                  <div className="pointer-events-none absolute inset-[1px] -z-10 rounded-[1.05rem] bg-gradient-card opacity-0 transition-opacity duration-500 ease-elegant group-hover:opacity-100" />
-                  <div className="pointer-events-none absolute -inset-12 -z-20 rounded-full bg-gradient-aurora opacity-0 blur-[140px] transition-all duration-700 ease-smooth group-hover:scale-110 group-hover:opacity-60" />
-
-                  <div className="mb-6 flex items-center justify-center">
-                    <motion.div
-                      initial={{ scale: 0.86, rotate: -10, opacity: 0 }}
-                      whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
-                      viewport={{ once: true, amount: 0.75 }}
-                      transition={{ duration: 0.5, delay: 0.05 }}
-                      className="relative rounded-full bg-accent-soft p-4 shadow-inner-glow transition-all duration-300 ease-smooth group-hover:scale-105 group-hover:bg-accent"
-                    >
-                      <div className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gradient-aurora opacity-0 blur-xl transition-opacity duration-500 ease-smooth group-hover:opacity-80" />
-                      <feature.Icon className="h-10 w-10 text-accent" aria-hidden />
-                    </motion.div>
-                  </div>
-
-                  <h3 className="mb-2 text-xl font-semibold text-text-strong transition-colors duration-300 ease-smooth group-hover:text-primary">
-                    {feature.title}
-                  </h3>
-
-                  <p className="text-text-body transition-colors duration-300 ease-smooth group-hover:text-text-muted">
-                    {feature.description}
-                  </p>
-                </motion.article>
-              ))}
+      <div className="grid gap-6 md:grid-cols-2">
+        {steps.map(({ icon: Icon, en, ar, descEn, descAr }) => (
+          <div
+            key={en}
+            className="rounded-3xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--surface-overlay))] p-6 shadow-[var(--shadow-sm)]"
+          >
+            <div className="flex items-start gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[hsl(var(--gold))] text-[hsl(var(--accent-foreground))]">
+                <Icon className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-[hsl(var(--foreground))]">
+                  {isArabic ? ar : en}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
+                  {isArabic ? descAr : descEn}
+                </p>
+              </div>
             </div>
           </div>
-        </SectionContainer>
+        ))}
       </div>
-    </section>
+    </MotionSection>
   );
 };
-
-function mapFeature(block: ContentBlock, locale: Locale) {
-  const localized = block.value as unknown as {
-    ar?: {
-      icon?: string;
-      title?: string;
-      description?: string;
-      tagline?: string;
-    } | null;
-    en?: {
-      icon?: string;
-      title?: string;
-      description?: string;
-      tagline?: string;
-    } | null;
-  };
-
-  const fallback = localized.en ?? {};
-  const data = localized[locale] ?? fallback ?? {};
-  const iconKey = (data.icon ?? fallback.icon ?? 'shield').toLowerCase();
-
-  return {
-    Icon: iconLookup[iconKey] ?? Shield,
-    title: data.title ?? fallback.title ?? '',
-    description: data.description ?? fallback.description ?? '',
-    tagline: data.tagline ?? fallback.tagline ?? '',
-  };
-}
 
 export default Features;

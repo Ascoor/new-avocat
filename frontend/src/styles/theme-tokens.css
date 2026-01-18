@@ -136,6 +136,11 @@ All colors MUST be HSL.
     --header-glass-border: 214 32% 92% / 0.55;
     --header-glass-shadow: 0 4px 24px hsl(225 45% 16% / 0.1);
 
+    /* NAVBAR */
+    --nav-bg-top: 225 60% 16% / 0.35;
+    --nav-bg-scrolled: 0 0% 100% / 0.92;
+    --nav-border: 225 30% 88% / 0.7;
+
     /* GRADIENTS */
     --gradient-hero: linear-gradient(
       135deg,
@@ -318,6 +323,11 @@ All colors MUST be HSL.
     --header-glass-background: 225 40% 10% / 0.8;
     --header-glass-border: 225 25% 22% / 0.5;
     --header-glass-shadow: 0 6px 24px hsl(220 60% 3% / 0.75);
+
+    /* NAVBAR */
+    --nav-bg-top: 225 55% 10% / 0.45;
+    --nav-bg-scrolled: 225 45% 10% / 0.92;
+    --nav-border: 225 30% 26% / 0.75;
 
     --gradient-hero: linear-gradient(
       140deg,

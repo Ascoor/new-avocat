@@ -1,172 +1,82 @@
-import { useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { GraduationCap, Scale, ShieldCheck, UserCircle2 } from 'lucide-react';
-
-import SectionHeader from './components/SectionHeader';
-import SectionContainer from './components/SectionContainer';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import { useWebsiteCollection } from '@/hooks/useWebsiteCollection';
-import type { Locale, TeamMemberApi } from '@/types/website';
-
-const leadershipIcons = [Scale, GraduationCap, ShieldCheck];
+import { MotionSection } from "@/components/landing/landing-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { BadgeCheck } from "lucide-react";
 
 const Team: React.FC = () => {
   const { language } = useLanguage();
-  const locale = language as Locale;
-  const isArabic = language === 'ar';
-  const { loading, getValueForLocale } = useWebsiteContent('team');
-  const { data: teamData, loading: teamLoading } = useWebsiteCollection<TeamMemberApi>('/api/website/team');
+  const isArabic = language === "ar";
 
-  const getString = useCallback(
-    (key: string, fallback = ''): string =>
-      getValueForLocale<string>(key, locale) ?? fallback,
-    [getValueForLocale, locale]
-  );
-
-  const header = {
-    badge: getString('team_badge'),
-    title: getString('team_title'),
-    description: getString('team_description'),
-  };
-
-  const leadershipBadges = useMemo(() => {
-    return leadershipIcons
-      .map((Icon, index) => ({
-        Icon,
-        text: getString(`team_leadership_badge_${index + 1}`),
-      }))
-      .filter((badge) => badge.text);
-  }, [getString, locale]);
-
-  const members = useMemo(() => {
-    if (Array.isArray(teamData)) {
-      return teamData;
-    }
-    const nested = (teamData as { data?: TeamMemberApi[] } | null)?.data;
-    return Array.isArray(nested) ? nested : [];
-  }, [teamData]);
-
-  const isLoading = loading || teamLoading;
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 32 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  const team = [
+    {
+      nameEn: "Dr. Leila Hassan",
+      nameAr: "د. ليلى حسن",
+      roleEn: "Head of Litigation Strategy",
+      roleAr: "رئيسة استراتيجية التقاضي",
+      specialtyEn: "Complex disputes · Regulatory advocacy",
+      specialtyAr: "النزاعات المعقدة · التقاضي التنظيمي",
     },
-  } as const;
+    {
+      nameEn: "Omar Al-Sayed",
+      nameAr: "عمر السيد",
+      roleEn: "Chief Legal Operations",
+      roleAr: "مدير العمليات القانونية",
+      specialtyEn: "Process governance · Compliance audits",
+      specialtyAr: "حوكمة العمليات · تدقيق الامتثال",
+    },
+    {
+      nameEn: "Mariam Qureshi",
+      nameAr: "مريم قريشي",
+      roleEn: "Client Trust Partner",
+      roleAr: "مسؤولة ثقة العملاء",
+      specialtyEn: "Relationship clarity · Executive reporting",
+      specialtyAr: "وضوح العلاقة · تقارير تنفيذية",
+    },
+  ];
 
   return (
-    <section id="team" className="bg-surface-highlight/70 py-24">
-      <div className="container mx-auto px-4 lg:px-8">
-        <SectionContainer
-          loading={isLoading}
-          loaderLabel={isArabic ? 'جارٍ تحميل الفريق' : 'Loading leadership team'}
-          className="bg-background/80"
-        >
-          <div className="space-y-16">
-            <SectionHeader badge={header.badge} title={header.title} subtitle={header.description} />
-
-            <div className="grid gap-10 lg:grid-cols-2">
-              {members.map((member, index) => {
-                const name = member.name[locale] ?? member.name.en ?? '';
-                const role = member.position[locale] ?? member.position.en ?? '';
-                const bio = member.bio[locale] ?? member.bio.en ?? '';
-                const highlights = member.highlights[locale] ?? member.highlights.en ?? [];
-
-                return (
-                  <motion.article
-                    key={`${member.id}-${member.name.en}`}
-                    dir={isArabic ? 'rtl' : 'ltr'}
-                    variants={cardVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.35 }}
-                    transition={{ delay: index * 0.08 }}
-                    className="flex h-full flex-col gap-6 rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
-                  >
-                    <div className="flex items-start gap-4">
-                      <motion.div
-                        initial={{ scale: 0.85, rotate: -8, opacity: 0 }}
-                        whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
-                        viewport={{ once: true, amount: 0.75 }}
-                        transition={{ duration: 0.55, delay: 0.05 }}
-                        className="rounded-3xl bg-gradient-gold p-4 text-accent-foreground shadow-gold"
-                      >
-                        <UserCircle2 className="h-10 w-10" />
-                      </motion.div>
-                      <div>
-                        <h3
-                          className={`text-2xl font-semibold ${
-                            isArabic ? 'font-arabic text-accent' : 'font-english text-foreground'
-                          }`}
-                        >
-                          {name}
-                        </h3>
-                        <p className="mt-2 text-sm uppercase tracking-widest text-muted-foreground">{role}</p>
-                      </div>
-                    </div>
-
-                    <motion.div
-                      className="space-y-4 text-base leading-relaxed text-muted-foreground"
-                      initial={{ opacity: 0, y: 14 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.6 }}
-                      transition={{ duration: 0.55, delay: 0.12 }}
-                    >
-                      <p className={isArabic ? 'font-arabic' : 'font-english'}>{bio}</p>
-                      <ul
-                        className={`space-y-3 pl-5 ${
-                          isArabic ? 'border-r-2 border-accent pr-5' : 'border-l-2 border-accent'
-                        }`}
-                      >
-                        {highlights.map((highlight, i) => (
-                          <li key={`${member.id}-highlight-${i}`} className="relative">
-                            <span
-                              className={`absolute top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-accent bg-card text-xs font-bold text-accent ${
-                                isArabic ? 'right-[-18px]' : 'left-[-18px]'
-                              }`}
-                            >
-                              {i + 1}
-                            </span>
-
-                            <span
-                              className={`leading-relaxed ${
-                                isArabic ? 'font-arabic text-right pr-6' : 'font-english text-left pl-6'
-                              }`}
-                            >
-                              {highlight}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-
-                    <div className="grid gap-4 md:grid-cols-3">
-                      {leadershipBadges.map(({ Icon, text }, badgeIndex) => (
-                        <motion.div
-                          key={`${member.id}-${text}`}
-                          initial={{ opacity: 0, y: 12 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, amount: 0.6 }}
-                          transition={{ duration: 0.45, delay: 0.15 + badgeIndex * 0.05 }}
-                          className="rounded-2xl border border-border bg-background/70 p-4 text-center"
-                        >
-                          <Icon className="mx-auto mb-2 h-6 w-6 text-primary" />
-                          <p className="text-xs font-semibold text-muted-foreground">{text}</p>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.article>
-                );
-              })}
-            </div>
-          </div>
-        </SectionContainer>
+    <MotionSection id="team" className="space-y-10">
+      <div className="flex flex-col gap-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--gold))]">
+          {isArabic ? "فريق الخبراء" : "Expert Team"}
+        </p>
+        <h2 className="text-3xl font-display text-[hsl(var(--foreground))] sm:text-4xl">
+          {isArabic
+            ? "خبرات قانونية وتقنية تقود التحول بثقة"
+            : "Legal and technical leaders guiding transformation with confidence"}
+        </h2>
+        <p className="max-w-3xl text-lg text-[hsl(var(--muted-foreground))]">
+          {isArabic
+            ? "يعمل فريقنا متعدد التخصصات جنبًا إلى جنب لضمان قرارات مدعومة بالخبرة والبيانات." 
+            : "Our multidisciplinary experts partner with your firm to ensure every decision is backed by insight and evidence."}
+        </p>
       </div>
-    </section>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        {team.map((member) => (
+          <div
+            key={member.nameEn}
+            className="rounded-3xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--surface-overlay))] p-6 shadow-[var(--shadow-sm)]"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-[hsl(var(--foreground))]">
+                  {isArabic ? member.nameAr : member.nameEn}
+                </h3>
+                <p className="text-sm text-[hsl(var(--muted-foreground))]">
+                  {isArabic ? member.roleAr : member.roleEn}
+                </p>
+              </div>
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[hsl(var(--gold))] text-[hsl(var(--accent-foreground))]">
+                <BadgeCheck className="h-5 w-5" />
+              </div>
+            </div>
+            <p className="mt-4 text-sm text-[hsl(var(--muted-foreground))]">
+              {isArabic ? member.specialtyAr : member.specialtyEn}
+            </p>
+          </div>
+        ))}
+      </div>
+    </MotionSection>
   );
 };
 

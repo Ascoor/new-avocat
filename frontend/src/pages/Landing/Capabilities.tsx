@@ -1,139 +1,124 @@
-import { useCallback, useMemo } from 'react';
-import { Cpu, Layers, ShieldEllipsis } from 'lucide-react';
+import { useRef } from "react";
+import { useInView } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { MotionSection } from "@/components/landing/landing-motion";
+import { useCountUp } from "@/components/landing/useCountUp";
+import { ShieldCheck, Scale, Sparkles } from "lucide-react";
 
-import SectionTitle from '@/components/SectionTitle';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import type { ContentBlock, Locale } from '@/types/website';
+type Metric = {
+  value: number;
+  suffix: string;
+  en: string;
+  ar: string;
+};
 
-    const iconLookup: Record<string, typeof Layers> = {
-      layers: Layers,
-      cpu: Cpu,
-      shieldellipsis: ShieldEllipsis,
-    };
+const MetricCard = ({ metric, start, isArabic }: { metric: Metric; start: boolean; isArabic: boolean }) => {
+  const count = useCountUp(metric.value, 1800, start);
+  return (
+    <div className="space-y-3 text-center">
+      <p className="text-3xl font-semibold text-[hsl(var(--gold))]">
+        {count}
+        {metric.suffix}
+      </p>
+      <p className="text-sm text-[hsl(var(--muted-foreground))]">
+        {isArabic ? metric.ar : metric.en}
+      </p>
+    </div>
+  );
+};
 
-    const Capabilities: React.FC = () => {
-      const { language } = useLanguage();
-      const isArabic = language === 'ar';
-      const locale = language as Locale;
-      const { contentBlocks, getValueForLocale } = useWebsiteContent('capabilities');
+const Capabilities: React.FC = () => {
+  const { language } = useLanguage();
+  const isArabic = language === "ar";
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { once: true, margin: "-120px" });
 
-      const getString = useCallback(
-        (key: string, fallback = ''): string =>
-          getValueForLocale<string>(key, locale) ?? fallback,
-        [getValueForLocale, locale]
-      );
+  const metrics: Metric[] = [
+    {
+      value: 280,
+      suffix: "+",
+      en: "Active legal matters orchestrated",
+      ar: "قضايا نشطة تتم إدارتها بدقة",
+    },
+    {
+      value: 94,
+      suffix: "%",
+      en: "Client satisfaction on strategic clarity",
+      ar: "رضا العملاء عن وضوح الاستراتيجية",
+    },
+    {
+      value: 36,
+      suffix: "%",
+      en: "Faster preparation for court submissions",
+      ar: "تسريع تجهيز الملفات القضائية",
+    },
+  ];
 
-      const header = {
-        badge: getString('capabilities_badge'),
-        title: getString('capabilities_title'),
-        subtitle: getString('capabilities_subtitle'),
-      };
+  const highlights = [
+    {
+      icon: ShieldCheck,
+      en: "Risk-reviewed case pathways",
+      ar: "مسارات قضايا مدققة بالمخاطر",
+    },
+    {
+      icon: Scale,
+      en: "Precision task allocation for legal teams",
+      ar: "توزيع مهام دقيق للفرق القانونية",
+    },
+    {
+      icon: Sparkles,
+      en: "Human + AI verification layers",
+      ar: "طبقات تحقق تجمع الإنسان والذكاء الاصطناعي",
+    },
+  ];
 
-      const capabilities = useMemo(() => {
-        return contentBlocks
-          .filter((block) => block.key.startsWith('capabilities_item_'))
-          .map((block) => mapCapability(block, locale));
-      }, [contentBlocks, locale]);
+  return (
+    <MotionSection id="trust" className="space-y-10">
+      <div className="flex flex-col gap-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--gold))]">
+          {isArabic ? "معايير الثقة" : "Trust Bar"}
+        </p>
+        <h2 className="text-3xl font-display text-[hsl(var(--foreground))] sm:text-4xl">
+          {isArabic
+            ? "مصداقية مبنية على مؤشرات قابلة للقياس"
+            : "Credibility anchored in measurable performance"}
+        </h2>
+        <p className="max-w-3xl text-lg text-[hsl(var(--muted-foreground))]">
+          {isArabic
+            ? "نقيس النجاح بتقارير دقيقة، ومراجعات امتثال فورية، وتجربة عميل ثابتة عبر كل نقطة تواصل."
+            : "We quantify success through live compliance reviews, disciplined reporting, and a consistent client journey at every touchpoint."}
+        </p>
+      </div>
 
-      return (
-        <section id="capabilities" className="relative overflow-hidden py-24"
-          dir={isArabic ? 'rtl' : 'ltr'}>
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/15 to-background" />
+      <div ref={ref} className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-4 rounded-3xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--surface-overlay))] p-6 shadow-[var(--shadow-lg)] md:grid-cols-3">
+          {metrics.map((metric) => (
+            <MetricCard key={metric.en} metric={metric} start={inView} isArabic={isArabic} />
+          ))}
+        </div>
 
-        
-          <div className="container relative mx-auto px-4 lg:px-8">
-            <div className="mb-16 text-center">
-              <div className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-2 text-xs uppercase tracking-widest text-muted-foreground">
-                <span>{header.badge}</span>
+        <div className="grid gap-4 rounded-3xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--card-elevated))] p-6 shadow-[var(--shadow-md)]">
+          {highlights.map(({ icon: Icon, en, ar }) => (
+            <div key={en} className="flex items-start gap-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[hsl(var(--gold))] text-[hsl(var(--accent-foreground))] shadow-[var(--shadow-gold)]">
+                <Icon className="h-5 w-5" />
               </div>
-
-              <div className="relative mx-auto mt-8 inline-flex max-w-3xl flex-col items-center overflow-hidden rounded-3xl bg-gradient-to-r from-primary via-primary-hover to-accent p-[1px]">
-                <div className="relative w-full overflow-hidden rounded-[calc(1.5rem-1px)] bg-gradient-to-r from-background/95 via-background/90 to-background/95 px-8 py-10 shadow-header-light transition-shadow duration-500 dark:from-secondary/40 dark:via-primary-darker/60 dark:to-secondary/40 dark:shadow-header-dark">
-                  <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-aurora opacity-0 blur-3xl transition-opacity duration-500 dark:opacity-20" />
-                  <SectionTitle
-                    className="mx-auto text-center font-display"
-                    glowIntensity={0.7}
-                  >
-                    {header.title}
-                  </SectionTitle>
-                  <p className="mt-3 text-lg leading-relaxed text-muted-foreground/90 lg:text-xl">
-                    {header.subtitle}
-                  </p>
-                </div>
+              <div>
+                <p className="text-base font-semibold text-[hsl(var(--foreground))]">
+                  {isArabic ? ar : en}
+                </p>
+                <p className="text-sm text-[hsl(var(--muted-foreground))]">
+                  {isArabic
+                    ? "قابل للتتبع عبر لوحات الامتثال وتوثيق الأدلة."
+                    : "Traceable through compliance dashboards and evidentiary logs."}
+                </p>
               </div>
             </div>
-
-            {/* Capabilities Grid */}
-            <div className="grid gap-8 lg:grid-cols-3">
-              {capabilities.map((capability, index) => {
-                const Icon = capability.Icon;
-                return (
-                  <div
-                    key={`${capability.title}-${index}`}
-                    className="h-full rounded-3xl border border-border bg-card/80 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium"
-                  >
-                    {/* Card Header */}
-                <div className="mb-6 flex items-center gap-3">
-                      <div className="rounded-2xl bg-primary/10 p-3 text-primary">
-                            <Icon className="h-6 w-6" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-text-strong">
-                        {capability.title}
-                      </h3>
-                    </div>
-
-                    {/* Card Body */}
-                    <div className="p-6 space-y-4">
-                      <p className="leading-relaxed text-muted-foreground">
-                        {capability.description}
-                      </p>
-
-                      {/* Points List */}
-                <ul className="space-y-3">
-      {capability.points.map((point, i) => (
-        <li
-          key={i}
-          className="flex items-center gap-2 flex-row"
-        >
-          {/* رقم التعداد */}
-          <span className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-accent bg-card text-xs font-bold text-accent shadow-glow">
-            {i + 1}
-          </span>
-
-          {/* النص */}
-          <span className="leading-relaxed">{point}</span>
-        </li>
-      ))}
-    </ul>
-
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      );
-    };
-
-    function mapCapability(block: ContentBlock, locale: Locale) {
-      const localized = block.value as unknown as {
-        ar?: { icon?: string; title?: string; description?: string; points?: string[] } | null;
-        en?: { icon?: string; title?: string; description?: string; points?: string[] } | null;
-      };
-
-      const fallback = localized.en ?? {};
-      const data = localized[locale] ?? fallback ?? {};
-      const iconKey = (data.icon ?? fallback.icon ?? 'layers').toLowerCase();
-      const Icon = iconLookup[iconKey] ?? Layers;
-
-      return {
-        Icon,
-        title: data.title ?? fallback.title ?? '',
-        description: data.description ?? fallback.description ?? '',
-        points: (data.points ?? fallback.points ?? []).filter(Boolean),
-      };
-}
+          ))}
+        </div>
+      </div>
+    </MotionSection>
+  );
+};
 
 export default Capabilities;
