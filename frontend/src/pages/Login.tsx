@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { AlertCircle, Loader2, Shield, UserCheck } from "lucide-react";
+import { AlertCircle, Scale, Shield, Sparkles, UserCheck } from "lucide-react";
 import BrandLogo from "@/components/common/BrandLogo";
 
 const emailRegex = /\S+@\S+\.\S+/;
@@ -151,11 +151,16 @@ const Login: React.FC = () => {
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-16 sm:px-6 lg:px-8">
         <div className="w-full max-w-lg space-y-8">
-          <div className="rounded-3xl border border-[hsl(var(var(--border)))] bg-[hsl(var(var(--card)))]/95 p-6 shadow-[var(var(--shadow-card))] backdrop-blur sm:p-8">
-            <div className="flex flex-col items-center gap-3 text-center">
-              <BrandLogo variant="icon" className="h-16 sm:h-20" />
-              <BrandLogo variant="text" className="h-12 sm:h-16" />
-              <p className="mt-1 text-sm text-[hsl(var(var(--slate-light)))]">
+
+          <div className="rounded-3xl border border-[hsl(var(var(--border)))] bg-[hsl(var(var(--card)))]/95 p-8 shadow-[var(var(--shadow-card))] backdrop-blur">
+            <div className="flex flex-col items-center text-center">
+          <div className="text-center">
+<BrandLogo variant="icon" className="h-24"/>
+          </div>
+ 
+<BrandLogo variant="text" className="h-16"/>
+ 
+              <p className="mt-2 text-sm text-[hsl(var(var(--slate-light)))]">
                 {activeTab === "signin" ? t("auth.login.subtitle") : t("auth.signup.subtitle")}
               </p>
             </div>
@@ -212,14 +217,7 @@ const Login: React.FC = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={disableSigninButton}>
-                    {loading ? (
-                      <span className="inline-flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        {t("common.loading")}
-                      </span>
-                    ) : (
-                      t("auth.login.submit")
-                    )}
+                    {loading ? t("common.loading") : t("auth.login.submit")}
                   </Button>
                 </form>
               </TabsContent>
@@ -280,20 +278,14 @@ const Login: React.FC = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={disableSignupButton}>
-                    {loading ? (
-                      <span className="inline-flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        {t("common.loading")}
-                      </span>
-                    ) : (
-                      t("auth.signup.submit")
-                    )}
+                    {loading ? t("common.loading") : t("auth.signup.submit")}
                   </Button>
                 </form>
               </TabsContent>
             </Tabs>
 
             <div className="mt-8 text-center text-sm text-[hsl(var(var(--slate-light)))]">
+ 
               <Link to="/" className="mt-3 inline-block transition-colors hover:text-[hsl(var(var(--primary)))]">
                 {language === "ar" ? "← العودة إلى الصفحة الرئيسية" : "← Back to home"}
               </Link>
