@@ -1,6 +1,8 @@
 import React from "react";
-import { Menu, X, UserCircle, Settings, User, LogOut, PanelLeft } from "lucide-react";
+import { Menu, UserCircle, Settings, User, LogOut } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/ui/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,117 +11,107 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import ThemeToggle from "@/components/ui/theme-toggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { useSidebar } from "@/contexts/SidebarContext";
-import { cn } from "@/lib/utils";
-import BrandLogo from "../common/BrandLogo";
+import BrandLogo from "@/components/common/BrandLogo";
 
 interface HeaderProps {
+  onMobileMenuOpen: () => void;
+  sidebarCollapsed: boolean;
   title?: string;
   className?: string;
-  showSidebarToggle?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  title,
-  className,
-  showSidebarToggle = true,
-}) => {
-  const { language, setLanguage, t, isRTL } = useLanguage();
+const SIDEBAR_W = 280;
+const SIDEBAR_W_COLLAPSED = 80;
+
+export function Header({ onMobileMenuOpen, sidebarCollapsed, title, className }: HeaderProps) {
+  const { language, setLanguage, t, direction } = useLanguage();
   const { user, logout } = useAuth();
-  const { isMobileOpen, toggleMobile, isCollapsed, toggleCollapsed } = useSidebar();
+
+  const isRTL = direction === "rtl";
+  const desktopOffset = sidebarCollapsed ? SIDEBAR_W_COLLAPSED : SIDEBAR_W;
+
+  // header fixed مثل القديم: يتزحزح حسب sidebar + RTL
+  const offsetClasses = isRTL
+    ? `left-0 right-0 md:right-[${desktopOffset}px]`
+    : `left-0 right-0 md:left-[${desktopOffset}px]`;
 
   const toggleLang = () => setLanguage(language === "ar" ? "en" : "ar");
 
   return (
     <header
+      dir={direction}
       className={cn(
-        "sticky top-0 z-40 h-16 border-b border-border",
-        "bg-surface-raised/80 shadow-card backdrop-blur-xl transition duration-long ease-comfort",
+        "fixed top-0 z-40 h-16",
+        offsetClasses,
+        "border-b border-border bg-[hsl(var(--surface-raised)/0.78)] backdrop-blur-xl",
+        "shadow-[var(--shadow-sm)] transition-all duration-300",
         className
       )}
     >
-      <div
-        className={cn(
-          "relative z-[1] flex h-full w-full items-center justify-between",
-          "px-3 sm:px-4 lg:px-6"
-        )}
-      >
-        {/* يسار/يمين حسب اللغة */}
-        <div
-          className={cn(
-            "flex items-center gap-3",
-            isRTL ? "flex-row-reverse" : "flex-row"
-          )}
-        >
-          {/* زر القائمة للموبايل */}
+      <div className="flex h-full w-full items-center justify-between px-3 sm:px-4 lg:px-6">
+        {/* Left */}
+        <div className={cn("flex items-center gap-3", isRTL ? "flex-row-reverse" : "flex-row")}>
+          {/* Mobile menu */}
           <Button
             variant="glass"
             size="icon"
-            onClick={toggleMobile}
-            className="h-9 w-9 rounded-full border border-border/80 text-foreground/80 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:hidden dark:text-foreground"
-            aria-label={isMobileOpen ? t("common.close") : t("common.menu")}
+            onClick={onMobileMenuOpen}
+            className={cn(
+              "h-9 w-9 rounded-full border border-border/80 md:hidden",
+              "text-foreground/80 transition-all duration-200",
+              "hover:-translate-y-0.5 hover:bg-[hsl(var(--brand-primary)/0.10)] hover:text-[hsl(var(--brand-primary))]"
+            )}
+            aria-label={t?.("common.menu") ?? "Menu"}
           >
-            {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Menu className="h-5 w-5" />
           </Button>
 
-          {/* زر تصغير/تكبير الشريط الجانبي (ديسكتوب فقط) */}
-          {showSidebarToggle && (
-            <Button
-              variant="glass"
-              size="icon"
-              onClick={toggleCollapsed}
-              className="hidden h-9 w-9 items-center justify-center rounded-full border border-border/80 text-foreground/80 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft md:flex dark:text-foreground"
-              aria-label={isCollapsed ? t("common.expand") : t("common.collapse")}
-            >
-              <PanelLeft
-                className={cn(
-                  "h-4 w-4 transition-transform",
-                  isCollapsed ? "rotate-0" : isRTL ? "- rotate-180" : "rotate-180"
-                )}
-              />
-            </Button>
-          )}
-
           <div className="flex items-center gap-3">
-            <BrandLogo variant="icon" className="h-8 w-8 md:hidden" />
-            {title && (
-              <h1 className="hidden text-lg font-semibold text-foreground sm:block">
-                {title}
-              </h1>
-            )}
+            <BrandLogo variant="icon" className="h-8 w-8 md:hidden" lang={language} />
+            {title ? (
+              <h1 className="hidden text-base font-semibold text-foreground sm:block">{title}</h1>
+            ) : null}
           </div>
         </div>
 
-        {/* يمين الهيدر */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        {/* Right */}
+        <div className={cn("flex items-center gap-2 sm:gap-3", isRTL ? "flex-row-reverse" : "flex-row")}> 
           <ThemeToggle />
 
           <Button
             onClick={toggleLang}
             variant="outline"
             size="sm"
-            className="rounded-full border border-border/70 px-3 py-2 text-sm font-medium transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft"
+            className={cn(
+              "rounded-full border border-border/70 px-3 py-2 text-sm font-medium",
+              "transition-all duration-200",
+              "hover:-translate-y-0.5 hover:bg-[hsl(var(--brand-primary)/0.10)] hover:text-[hsl(var(--brand-primary))]"
+            )}
+            aria-label={language === "ar" ? "Switch to English" : "التبديل إلى العربية"}
           >
             {language === "ar" ? "EN" : "عربي"}
           </Button>
 
-          {user && (
+          {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="glass"
                   size="sm"
-                  className="flex items-center gap-2 rounded-full border border-border/80 text-foreground/80 transition duration-base ease-comfort hover:-translate-y-0.5 hover:bg-brand-primary/10 hover:text-brand-primary hover:shadow-soft dark:text-foreground"
+                  className={cn(
+                    "flex items-center gap-2 rounded-full border border-border/80",
+                    "text-foreground/80 transition-all duration-200",
+                    "hover:-translate-y-0.5 hover:bg-[hsl(var(--brand-primary)/0.10)] hover:text-[hsl(var(--brand-primary))]"
+                  )}
                 >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--brand-primary)/0.10)] text-[hsl(var(--brand-primary))]">
                     <UserCircle className="h-5 w-5" />
                   </div>
                   <div className="hidden flex-col items-start md:flex">
-                    <span className="text-sm font-medium">
-                      {user.name || "Demo User"}
+                    <span className="text-sm font-medium text-foreground">
+                      {user.name || (language === "ar" ? "مستخدم" : "User")}
                     </span>
                     <span className="text-xs text-muted-foreground">
                       {language === "ar"
@@ -128,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({
                           : user.role === "lawyer"
                           ? "محامٍ"
                           : "عميل"
-                        : user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                        : user.role}
                     </span>
                   </div>
                 </Button>
@@ -137,36 +129,29 @@ export const Header: React.FC<HeaderProps> = ({
               <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium">
-                      {user.name || "Demo User"}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {user?.email || "demo@avocat.law"}
-                    </p>
+                    <p className="text-sm font-medium">{user.name || "User"}</p>
+                    <p className="text-xs text-muted-foreground">{user.email || "user@avocat.law"}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                  <User className={cn("h-4 w-4", isRTL ? "ml-2" : "mr-2")} />
                   {language === "ar" ? "الملف الشخصي" : "Profile"}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                  <Settings className={cn("h-4 w-4", isRTL ? "ml-2" : "mr-2")} />
                   {language === "ar" ? "الإعدادات" : "Settings"}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-destructive focus:text-destructive"
-                  onClick={logout}
-                >
-                  <LogOut className="mr-2 h-4 w-4 rtl:ml-2 rtl:mr-0" />
+                <DropdownMenuItem className="text-destructive focus:text-destructive" onClick={logout}>
+                  <LogOut className={cn("h-4 w-4", isRTL ? "ml-2" : "mr-2")} />
                   {language === "ar" ? "تسجيل الخروج" : "Sign Out"}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          )}
+          ) : null}
         </div>
       </div>
     </header>
   );
-};
+}
