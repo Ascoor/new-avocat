@@ -29,9 +29,11 @@ const broadcastAuthEvent = (event: 'auth:authorized' | 'auth:unauthorized' | 'au
   window.dispatchEvent(new CustomEvent(event));
 };
 
+const TOKEN_STORAGE_KEY = 'avocat_token';
+
 const readTokenFromStorage = (): string | null => {
   try {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem(TOKEN_STORAGE_KEY);
     if (!token) {
       return null;
     }
@@ -39,18 +41,18 @@ const readTokenFromStorage = (): string | null => {
     const parsed = JSON.parse(token) as unknown;
     return typeof parsed === 'string' ? parsed : null;
   } catch (error) {
-    console.warn('Error parsing token from sessionStorage', error);
+    console.warn('Error parsing token from localStorage', error);
     return null;
   }
 };
 
 const persistToken = (token: string | null) => {
   if (!token) {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
     return;
   }
 
-  sessionStorage.setItem('token', JSON.stringify(token));
+  localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(token));
 };
 
 let refreshPromise: Promise<string | null> | null = null;

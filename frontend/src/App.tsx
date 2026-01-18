@@ -7,8 +7,9 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 
-import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminRoute from '@/components/AdminRoute';
+import AuthRoute from '@/routes/AuthRoute';
+import ProtectedRoute from '@/routes/ProtectedRoute';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // Pages
@@ -71,7 +72,14 @@ const router = createBrowserRouter(
     <Route>
       {/* 🌍 Public */}
       <Route path="/" element={<Landing />} />
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={(
+          <AuthRoute>
+            <Login />
+          </AuthRoute>
+        )}
+      />
       <Route path="/signup" element={<Signup />} />
 
       {/* 🔒 Protected */}
