@@ -1,37 +1,123 @@
-import { Scale } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useWebsiteContent } from '@/hooks/useWebsiteContent';
+import { resolveAssetUrl } from '@/utils/asset';
+import type { Locale } from '@/types/website';
+
+// Local fallbacks
+import logoIconLight from '@/assets/brand/icons/logo-icon-light.png';
+import logoIconDark from '@/assets/brand/icons/logo-icon-dark.png';
+import logoTextArLight from '@/assets/brand/text/logo-text-ar-light.png';
+import logoTextArDark from '@/assets/brand/text/logo-text-ar-dark.png';
+import logoTextEnLight from '@/assets/brand/text/logo-text-en-light.png';
+import logoTextEnDark from '@/assets/brand/text/logo-text-en-dark.png';
+import logoFullArLight from '@/assets/brand/full/logo-full-arabic-light.png';
+import logoFullArDark from '@/assets/brand/full/logo-full-arabic-dark.png';
+import logoFullEnLight from '@/assets/brand/full/logo-full-en-light.png';
+import logoFullEnDark from '@/assets/brand/full/logo-full-en-dark.png';
+
+export type LogoVariant = 'icon' | 'text' | 'full';
 
 interface BrandLogoProps {
-  variant?: 'icon' | 'text';
-  lang: 'en' | 'ar';
-  dark?: boolean;
+  variant?: LogoVariant;
   className?: string;
+  lang?: 'ar' | 'en';
+  dark?: boolean;
 }
 
-export const BrandLogo = ({ variant = 'text', lang, dark = false, className }: BrandLogoProps) => {
-  const wordmark = lang === 'ar' ? 'أفوكات' : 'AVOCAT';
+const fallbackLogos = {
+  icon: {
+    light: logoIconLight,
+    dark: logoIconDark,
+  },
+  text: {
+    ar: { light: logoTextArLight, dark: logoTextArDark },
+    en: { light: logoTextEnLight, dark: logoTextEnDark },
+  },
+  full: {
+    ar: { light: logoFullArLight, dark: logoFullArDark },
+    en: { light: logoFullEnLight, dark: logoFullEnDark },
+  },
+};
+
+const BrandLogo: React.FC<BrandLogoProps> = ({
+  variant = 'full',
+  className,
+  lang,
+  dark,
+}) => {
+  const { i18n } = useTranslation();
+  const { theme } = useTheme();
+  const { getLocalizedValue } = useWebsiteContent('settings');
+
+  const currentLang: Locale = lang ?? (i18n.language?.startsWith('ar') ? 'ar' : 'en');
+  const isDark = typeof dark === 'boolean' ? dark : theme === 'dark';
+  const mode = isDark ? 'dark' : 'light';
+
+  const remoteIcons = useMemo(
+    () => getLocalizedValue<{ light?: string | null; dark?: string | null }>('logo_icon'),
+    [getLocalizedValue]
+  );
+  const remoteText = useMemo(
+    () => getLocalizedValue<{ light?: string | null; dark?: string | null }>('logo_text'),
+    [getLocalizedValue]
+  );
+  const remoteFull = useMemo(
+    () => getLocalizedValue<{ light?: string | null; dark?: string | null }>('logo_full'),
+    [getLocalizedValue]
+  );
+  const remoteSite = useMemo(
+    () => getLocalizedValue<string>('site_logo'),
+    [getLocalizedValue]
+  );
+
+  const resolveRemoteVariant = (
+    sources: { light?: string | null; dark?: string | null } | undefined
+  ): string | undefined => {
+    if (!sources) return undefined;
+    const candidate = sources[mode] ?? sources.light ?? sources.dark;
+    return resolveAssetUrl(candidate ?? undefined);
+  };
+
+  const getSrc = (): string => {
+    if (variant === 'icon') {
+      const remote = resolveRemoteVariant(remoteIcons?.[currentLang]);
+      return remote ?? (isDark ? fallbackLogos.icon.dark : fallbackLogos.icon.light);
+    }
+
+    if (variant === 'text') {
+      const remote = resolveRemoteVariant(remoteText?.[currentLang]);
+      const fallback = fallbackLogos.text[currentLang][mode];
+      return remote ?? fallback;
+    }
+
+    const remoteFullLogo = resolveRemoteVariant(remoteFull?.[currentLang]);
+  const remoteSiteLogo = resolveAssetUrl(remoteSite?.[currentLang] ?? remoteSite?.en ?? undefined);
+    const fallback = fallbackLogos.full[currentLang][mode];
+    return remoteFullLogo ?? remoteSiteLogo ?? fallback;
+  };
+
+  const src = getSrc();
+
+  const getAltText = (): string => {
+    if (variant === 'icon') return 'Avocat Icon';
+    if (variant === 'text') return currentLang === 'ar' ? 'أفوكات' : 'Avocat';
+    return currentLang === 'ar' ? 'شعار أفوكات الكامل' : 'Avocat Full Logo';
+  };
 
   return (
-    <div
+    <img
+      src={src}
+      alt={getAltText()}
       className={cn(
-        'flex items-center gap-3 font-[var(--font-display)] tracking-[0.22em] uppercase',
-        dark ? 'text-[hsl(var(--primary-foreground))]' : 'text-[hsl(var(--foreground))]',
-        className,
+        'object-contain',
+        currentLang === 'ar' ? 'rtl' : 'ltr',
+        className
       )}
-    >
-      <span
-        className={cn(
-          'grid h-10 w-10 place-items-center rounded-2xl border border-[hsl(var(--gold)/0.4)]',
-          dark ? 'bg-[hsl(var(--primary)/0.6)]' : 'bg-[hsl(var(--card))]',
-        )}
-        style={{ boxShadow: 'var(--shadow-gold)' }}
-      >
-        <Scale className="h-5 w-5 text-[hsl(var(--gold))]" />
-      </span>
-      {variant === 'text' && (
-        <span className={cn('text-sm font-semibold', lang === 'ar' && 'tracking-[0.12em]')}>{wordmark}</span>
-      )}
-    </div>
+      dir={currentLang === 'ar' ? 'rtl' : 'ltr'}
+    />
   );
 };
 
