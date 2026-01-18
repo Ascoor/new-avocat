@@ -46,3 +46,4 @@ backend/.phpunit.result.cache
 .DS_Store
 Thumbs.db
 FETCH_HEAD
+FETCH_HEAD
