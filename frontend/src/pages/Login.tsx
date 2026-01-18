@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -33,9 +33,10 @@ type SignupFormState = {
 const Login: React.FC = () => {
   const { t } = useTranslation();
   const { isRTL, language } = useLanguage();
-  const { login, signup, loading, user, isAuthenticated } = useAuth();
+  const { login, signup, status } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
 
   const [activeTab, setActiveTab] = useState<AuthTab>("signin");
@@ -47,12 +48,8 @@ const Login: React.FC = () => {
     confirmPassword: "",
   });
   const [formError, setFormError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (user && isAuthenticated) {
-      navigate("/dashboard", { replace: true });
-    }
-  }, [user, isAuthenticated, navigate]);
+  const [isSigninSubmitting, setIsSigninSubmitting] = useState(false);
+  const [isSignupSubmitting, setIsSignupSubmitting] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("registered") === "1") {
@@ -80,9 +77,11 @@ const Login: React.FC = () => {
     }
 
     try {
-      await login(signinForm.email.trim(), signinForm.password.trim());
+      setIsSigninSubmitting(true);
+      await login({ email: signinForm.email.trim(), password: signinForm.password.trim() });
       toast({ title: t("common.success"), description: t("auth.login.success") });
-      const nextUrl = searchParams.get("next") || "/dashboard";
+      const fromState = (location.state as { from?: string } | null)?.from;
+      const nextUrl = typeof fromState === "string" ? fromState : "/dashboard";
       navigate(nextUrl, { replace: true });
     } catch (err) {
       const description =
@@ -91,6 +90,8 @@ const Login: React.FC = () => {
         t("auth.login.error");
       setFormError(description);
       toast({ title: t("common.error"), description, variant: "destructive" });
+    } finally {
+      setIsSigninSubmitting(false);
     }
   };
 
@@ -119,6 +120,7 @@ const Login: React.FC = () => {
     }
 
     try {
+      setIsSignupSubmitting(true);
       await signup(signupForm.email.trim(), signupForm.password.trim(), signupForm.name.trim());
       toast({ title: t("common.success"), description: t("auth.signup.success_message") });
       navigate("/dashboard", { replace: true });
@@ -129,13 +131,19 @@ const Login: React.FC = () => {
         t("common.error");
       setFormError(description);
       toast({ title: t("common.error"), description, variant: "destructive" });
+    } finally {
+      setIsSignupSubmitting(false);
     }
   };
 
   const disableSigninButton =
-    loading || !signinForm.email.trim() || !signinForm.password.trim();
+    status === "loading" ||
+    isSigninSubmitting ||
+    !signinForm.email.trim() ||
+    !signinForm.password.trim();
   const disableSignupButton =
-    loading ||
+    status === "loading" ||
+    isSignupSubmitting ||
     !signupForm.name.trim() ||
     !signupForm.email.trim() ||
     !signupForm.password.trim() ||
@@ -217,7 +225,7 @@ const Login: React.FC = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={disableSigninButton}>
-                    {loading ? t("common.loading") : t("auth.login.submit")}
+                    {isSigninSubmitting ? t("common.loading") : t("auth.login.submit")}
                   </Button>
                 </form>
               </TabsContent>
@@ -278,7 +286,7 @@ const Login: React.FC = () => {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={disableSignupButton}>
-                    {loading ? t("common.loading") : t("auth.signup.submit")}
+                    {isSignupSubmitting ? t("common.loading") : t("auth.signup.submit")}
                   </Button>
                 </form>
               </TabsContent>

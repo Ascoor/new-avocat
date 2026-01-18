@@ -25,7 +25,7 @@ const unwrap = <T>(payload: unknown): T => {
 
 const hasValidSessionToken = (): boolean => {
   try {
-    const storedToken = sessionStorage.getItem('token');
+    const storedToken = localStorage.getItem('avocat_token');
     if (!storedToken) {
       return false;
     }
@@ -33,7 +33,7 @@ const hasValidSessionToken = (): boolean => {
     const parsed = JSON.parse(storedToken) as unknown;
     return typeof parsed === 'string' && parsed.length > 0;
   } catch (error) {
-    console.warn('Failed to read auth token from sessionStorage', error);
+    console.warn('Failed to read auth token from localStorage', error);
     return false;
   }
 };

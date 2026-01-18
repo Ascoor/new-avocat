@@ -94,7 +94,7 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
 
   const readToken = useCallback((): string | null => {
     try {
-      const storedToken = sessionStorage.getItem('token');
+      const storedToken = localStorage.getItem('avocat_token');
       if (!storedToken) {
         return null;
       }
@@ -106,7 +106,7 @@ const NotificationCenterProvider = ({ children }: { children: ReactNode }) => {
 
       return parsed;
     } catch (error) {
-      console.warn('Unable to parse session token for SSE connection', error);
+      console.warn('Unable to parse auth token for SSE connection', error);
       return null;
     }
   }, []);
