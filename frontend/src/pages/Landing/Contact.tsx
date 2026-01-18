@@ -1,271 +1,139 @@
-import { useMemo, useState, type ComponentType } from 'react';
-import { motion } from 'framer-motion';
-import { Clock3, Mail, MapPin, Phone, Send } from 'lucide-react';
-
-import SectionHeader from './components/SectionHeader';
-import SectionContainer from './components/SectionContainer';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-
-type ContactLocale = 'ar' | 'en';
-
-interface ContactFormCopy {
-  labels: {
-    name: string;
-    email: string;
-    message: string;
-  };
-  placeholders: {
-    name: string;
-    email: string;
-    message: string;
-  };
-  submit: string;
-  submitting: string;
-  success: {
-    title: string;
-    description: string;
-  };
-}
-
-interface ContactPoint {
-  icon: string;
-  title: string;
-  details: string;
-}
-
-const iconLookup: Record<string, ComponentType<{ className?: string }>> = {
-  MapPin,
-  Phone,
-  Mail,
-  Clock3,
-};
+import { MotionSection } from "@/components/landing/landing-motion";
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Mail, MapPin, PhoneCall, ShieldCheck } from "lucide-react";
 
 const Contact: React.FC = () => {
-  const { toast } = useToast();
-  const { language, direction } = useLanguage();
-  const isArabic = language === 'ar';
-  const locale = language as ContactLocale;
-  const { loading, contentBlocks, getLocalizedValue, getValueForLocale } = useWebsiteContent('contact');
-
-  const header = {
-    badge: getValueForLocale('contact_badge', locale) ?? '',
-    title: getValueForLocale('contact_title', locale) ?? '',
-    description: getValueForLocale('contact_subtitle', locale) ?? '',
-    note: getValueForLocale('contact_note', locale) ?? '',
-    conciergeTitle: getValueForLocale('contact_concierge_title', locale) ?? '',
-    conciergeBody: getValueForLocale('contact_concierge_body', locale) ?? '',
-  };
-
-  const formCopy = useMemo<ContactFormCopy>(() => {
-    const localized = getLocalizedValue<ContactFormCopy>('contact_form_copy', {
-      ar: {
-        labels: { name: '', email: '', message: '' },
-        placeholders: { name: '', email: '', message: '' },
-        submit: '',
-        submitting: '',
-        success: { title: '', description: '' },
-      },
-      en: {
-        labels: { name: '', email: '', message: '' },
-        placeholders: { name: '', email: '', message: '' },
-        submit: '',
-        submitting: '',
-        success: { title: '', description: '' },
-      },
-    });
-
-    return localized[locale] ?? localized.en ?? {
-      labels: { name: '', email: '', message: '' },
-      placeholders: { name: '', email: '', message: '' },
-      submit: '',
-      submitting: '',
-      success: { title: '', description: '' },
-    };
-  }, [getLocalizedValue, locale]);
-
-  const contactPoints = useMemo<ContactPoint[]>(() => {
-    return contentBlocks
-      .filter((block) => block.key.startsWith('contact_point_'))
-      .sort((a, b) => a.key.localeCompare(b.key))
-      .map((block) => {
-        const localized = block.value as unknown as {
-          ar?: ContactPoint | null;
-          en?: ContactPoint | null;
-        };
-
-        const fallback = localized.en ?? { icon: 'MapPin', title: '', details: '' };
-        const data = localized[locale] ?? fallback;
-
-        return {
-          icon: data.icon ?? fallback.icon ?? 'MapPin',
-          title: data.title ?? fallback.title ?? '',
-          details: data.details ?? fallback.details ?? '',
-        };
-      });
-  }, [contentBlocks, locale]);
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-
-    setTimeout(() => {
-      toast({ title: formCopy.success.title, description: formCopy.success.description });
-      setFormData({ name: '', email: '', message: '' });
-      setIsSubmitting(false);
-    }, 1500);
-  };
+  const { language } = useLanguage();
+  const isArabic = language === "ar";
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-gradient-to-br from-background via-secondary/10 to-background py-24" dir={direction}>
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute -left-20 top-32 h-72 w-72 rounded-full bg-primary/40 blur-3xl" />
-        <div className="absolute -right-16 bottom-10 h-80 w-80 rounded-full bg-accent/40 blur-3xl" />
+    <MotionSection id="contact" className="space-y-10">
+      <div className="flex flex-col gap-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--gold))]">
+          {isArabic ? "تواصل معنا" : "Contact"}
+        </p>
+        <h2 className="text-3xl font-display text-[hsl(var(--foreground))] sm:text-4xl">
+          {isArabic
+            ? "ابدأ شراكة قانونية مبنية على الثقة"
+            : "Start a trusted legal partnership"}
+        </h2>
+        <p className="max-w-3xl text-lg text-[hsl(var(--muted-foreground))]">
+          {isArabic
+            ? "نستقبل طلبات الاستشارة والخدمات الخاصة على مدار الأسبوع. تواصل معنا لنبدأ تقييمًا احترافيًا." 
+            : "We accept consultation requests throughout the week. Connect with us to begin a professional assessment."}
+        </p>
       </div>
 
-      <div className="container relative mx-auto px-4 lg:px-8">
-        <SectionContainer
-          loading={loading}
-          loaderLabel={locale === 'ar' ? 'جارٍ تجهيز نموذج التواصل' : 'Preparing contact module'}
-          className="bg-background/85"
-        >
-          <div className="space-y-16">
-            <SectionHeader badge={header.badge} title={header.title} subtitle={header.description} />
+      <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <form className="space-y-5 rounded-3xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--surface-overlay))] p-6 shadow-[var(--shadow-lg)]">
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className="text-sm font-semibold text-[hsl(var(--foreground))]">
+              {isArabic ? "الاسم الكامل" : "Full name"}
+              <input
+                type="text"
+                required
+                className="mt-2 w-full rounded-2xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--card))] px-4 py-3 text-sm text-[hsl(var(--foreground))] outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]"
+                placeholder={isArabic ? "مثال: أحمد العتيبي" : "e.g. Sarah Johnson"}
+              />
+            </label>
+            <label className="text-sm font-semibold text-[hsl(var(--foreground))]">
+              {isArabic ? "البريد الإلكتروني" : "Email"}
+              <input
+                type="email"
+                required
+                className="mt-2 w-full rounded-2xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--card))] px-4 py-3 text-sm text-[hsl(var(--foreground))] outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]"
+                placeholder={isArabic ? "name@avocat.com" : "name@avocat.com"}
+              />
+            </label>
+          </div>
 
-            <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
-              <motion.form
-                onSubmit={handleSubmit}
-                className="rounded-3xl border border-border bg-card/80 p-8 shadow-elevated backdrop-blur"
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.45 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="space-y-6">
-                  <div className="grid gap-6 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground" htmlFor="name">
-                        {formCopy.labels.name}
-                      </label>
-                      <Input
-                        required
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder={formCopy.placeholders.name}
-                        className="h-12 rounded-2xl border-border bg-background/70"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground" htmlFor="email">
-                        {formCopy.labels.email}
-                      </label>
-                      <Input
-                        required
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder={formCopy.placeholders.email}
-                        className="h-12 rounded-2xl border-border bg-background/70"
-                      />
-                    </div>
-                  </div>
+          <label className="text-sm font-semibold text-[hsl(var(--foreground))]">
+            {isArabic ? "طبيعة الطلب" : "Type of request"}
+            <select
+              required
+              defaultValue=""
+              className="mt-2 w-full rounded-2xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--card))] px-4 py-3 text-sm text-[hsl(var(--foreground))] outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]"
+            >
+              <option value="" disabled>
+                {isArabic ? "اختر الخدمة" : "Select a service"}
+              </option>
+              <option>{isArabic ? "استشارة قانونية استراتيجية" : "Strategic legal consultation"}</option>
+              <option>{isArabic ? "حزمة امتثال مؤسسي" : "Corporate compliance package"}</option>
+              <option>{isArabic ? "إعداد تقارير تقاضي" : "Litigation reporting"}</option>
+            </select>
+          </label>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground" htmlFor="message">
-                      {formCopy.labels.message}
-                    </label>
-                    <Textarea
-                      required
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={6}
-                      placeholder={formCopy.placeholders.message}
-                      className="resize-none rounded-2xl border-border bg-background/70"
-                    />
-                  </div>
+          <label className="text-sm font-semibold text-[hsl(var(--foreground))]">
+            {isArabic ? "تفاصيل إضافية" : "Additional details"}
+            <textarea
+              required
+              rows={5}
+              className="mt-2 w-full rounded-2xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--card))] px-4 py-3 text-sm text-[hsl(var(--foreground))] outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]"
+              placeholder={
+                isArabic
+                  ? "اذكر الأهداف والتحديات التي ترغب بمعالجتها."
+                  : "Share the goals and challenges you want us to address."
+              }
+            />
+          </label>
 
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn-gold flex w-full items-center justify-center gap-2 py-3 text-base font-semibold"
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2 text-sm">
-                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                        {formCopy.submitting}
-                      </span>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4" />
-                        <span>{formCopy.submit}</span>
-                      </>
-                    )}
-                  </Button>
-                </div>
-                <p className="mt-6 text-center text-xs uppercase tracking-[0.4em] text-muted-foreground">
-                  {header.note}
-                </p>
-              </motion.form>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2 text-xs text-[hsl(var(--muted-foreground))]">
+              <ShieldCheck className="h-4 w-4 text-[hsl(var(--gold))]" />
+              {isArabic
+                ? "نحفظ بياناتك وفق معايير السرية المهنية."
+                : "Your data is protected under professional confidentiality."}
+            </div>
+            <Button type="submit" variant="accent" className="rounded-full px-6 py-6 text-sm font-semibold">
+              {isArabic ? "إرسال الطلب" : "Submit request"}
+            </Button>
+          </div>
+        </form>
 
-              <motion.div
-                className="space-y-6 rounded-3xl border border-border bg-card/60 p-8 shadow-ambient backdrop-blur"
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="space-y-3">
-                  <h3 className="text-xl font-semibold text-foreground">{header.conciergeTitle}</h3>
-                  <p className="text-sm text-muted-foreground">{header.conciergeBody}</p>
-                </div>
-
-                <div className="space-y-4">
-                  {contactPoints.map((point, index) => {
-                    const Icon = iconLookup[point.icon] ?? MapPin;
-                    return (
-                      <motion.div
-                        key={`${point.title}-${index}`}
-                        initial={{ opacity: 0, x: isArabic ? 20 : -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.7 }}
-                        transition={{ duration: 0.45, delay: index * 0.08 }}
-                        className="flex items-start gap-3 rounded-2xl border border-border/60 bg-background/70 p-3"
-                      >
-                        <div className="rounded-xl bg-primary/10 p-2 text-primary">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <div className="space-y-1 text-sm text-muted-foreground">
-                          <h4 className="text-base font-semibold text-foreground">{point.title}</h4>
-                          <p className={isArabic ? 'font-arabic' : undefined}>{point.details}</p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </motion.div>
+        <div className="space-y-6 rounded-3xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--card))] p-6 shadow-[var(--shadow-sm)]">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[hsl(var(--gold))] text-[hsl(var(--accent-foreground))]">
+              <MapPin className="h-6 w-6" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-[hsl(var(--foreground))]">
+                {isArabic ? "مكتب الرياض" : "Riyadh Office"}
+              </p>
+              <p className="text-sm text-[hsl(var(--muted-foreground))]">
+                {isArabic
+                  ? "حي العليا، طريق الملك فهد، برج الأعمال القانوني"
+                  : "Olaya District, King Fahd Rd, Legal Business Tower"}
+              </p>
             </div>
           </div>
-        </SectionContainer>
+
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[hsl(var(--gold))] text-[hsl(var(--accent-foreground))]">
+              <PhoneCall className="h-6 w-6" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-[hsl(var(--foreground))]">
+                {isArabic ? "الاتصال المباشر" : "Direct line"}
+              </p>
+              <p className="text-sm text-[hsl(var(--muted-foreground))]">+966 11 555 0303</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[hsl(var(--gold))] text-[hsl(var(--accent-foreground))]">
+              <Mail className="h-6 w-6" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-[hsl(var(--foreground))]">
+                {isArabic ? "البريد المهني" : "Professional email"}
+              </p>
+              <p className="text-sm text-[hsl(var(--muted-foreground))]">contact@avocat.legal</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+    </MotionSection>
   );
 };
 

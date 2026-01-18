@@ -1,172 +1,104 @@
-import { useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import type { ComponentType, SVGProps } from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { BrainCircuit, Scale } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useWebsiteContent } from '@/hooks/useWebsiteContent';
-import type { Locale } from '@/types/website';
-import SectionHeader from './components/SectionHeader';
-import SectionContainer from './components/SectionContainer';
-
-const iconMap: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
-  legal_services: Scale,
-  digital_ai_services: BrainCircuit,
-};
+import { MotionSection } from "@/components/landing/landing-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  Building2,
+  FileCheck2,
+  Gavel,
+  LineChart,
+  Shield,
+  Users,
+} from "lucide-react";
 
 const Services: React.FC = () => {
   const { language } = useLanguage();
-  const locale = language as Locale;
-  const isArabic = language === 'ar';
-  const { loading, contentBlocks, getLocalizedValue, getValueForLocale } = useWebsiteContent('services');
+  const isArabic = language === "ar";
 
-  const getString = useCallback(
-    (key: string, fallback = ''): string => getValueForLocale<string>(key, locale) ?? fallback,
-    [getValueForLocale, locale]
-  );
-
-  const groupKeys = useMemo(() => {
-    const keys = new Set<string>();
-
-    contentBlocks.forEach((block) => {
-      const match = block.key.match(/^services_group_(.+)_title$/);
-      if (match) {
-        keys.add(match[1]);
-      }
-    });
-
-    return Array.from(keys);
-  }, [contentBlocks]);
-
-  const groups = useMemo(
-    () =>
-      groupKeys.map((key) => {
-        const itemsLocalized = getLocalizedValue<string[]>(`services_group_${key}_items`, {
-          ar: [],
-          en: [],
-        });
-
-        return {
-          key,
-          Icon: iconMap[key] ?? Scale,
-          title: getString(`services_group_${key}_title`),
-          description: getString(`services_group_${key}_description`),
-          items: (itemsLocalized[locale] ?? itemsLocalized.en ?? []).filter(Boolean),
-        };
-      }),
-    [getLocalizedValue, getString, groupKeys, locale]
-  );
-
-  const badge = getString('services_badge');
-  const title = getString('services_title');
-  const description = getString('services_description');
-  const highlightOne = getString('services_highlight_1');
-  const highlightTwo = getString('services_highlight_2');
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 32 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  const services = [
+    {
+      icon: Gavel,
+      en: "Litigation Intelligence",
+      ar: "ذكاء التقاضي",
+      descEn: "Scenario mapping, evidence timing, and judge-ready briefs for complex disputes.",
+      descAr: "تحليل السيناريوهات وتوقيت الأدلة ومذكرات جاهزة للقضاة في القضايا المعقدة.",
     },
-  } as const;
+    {
+      icon: Building2,
+      en: "Corporate Governance",
+      ar: "حوكمة الشركات",
+      descEn: "Board-ready compliance, policy libraries, and proactive risk registers.",
+      descAr: "حوكمة جاهزة لمجالس الإدارة ومكتبات سياسات وسجلات مخاطر استباقية.",
+    },
+    {
+      icon: Shield,
+      en: "Regulatory Assurance",
+      ar: "ضمان الامتثال",
+      descEn: "Automated compliance trails with audit-grade evidence packaging.",
+      descAr: "مسارات امتثال مؤتمتة مع تجهيز أدلة بمعايير التدقيق.",
+    },
+    {
+      icon: FileCheck2,
+      en: "Contract Control",
+      ar: "ضبط العقود",
+      descEn: "Clause intelligence, deadline governance, and revision accountability.",
+      descAr: "ذكاء البنود وحوكمة المواعيد وتحمل المسؤولية في المراجعات.",
+    },
+    {
+      icon: LineChart,
+      en: "Case Performance Analytics",
+      ar: "تحليلات أداء القضايا",
+      descEn: "Outcome forecasting and KPI visibility across every matter.",
+      descAr: "توقع النتائج ورؤية مؤشرات الأداء لكل قضية.",
+    },
+    {
+      icon: Users,
+      en: "Client Experience Layer",
+      ar: "طبقة تجربة العميل",
+      descEn: "Private portals, transparent updates, and trusted collaboration.",
+      descAr: "بوابات خاصة وتحديثات شفافة وتعاون موثوق.",
+    },
+  ];
 
   return (
-    <section id="services" className="bg-surface-highlight/60 py-24" dir={isArabic ? 'rtl' : 'ltr'}>
-      <div className="container mx-auto px-4 lg:px-8">
-        <SectionContainer
-          loading={loading}
-          loaderLabel={isArabic ? 'جارٍ تحميل قسم الخدمات' : 'Loading services'}
-          className="bg-background/80"
-        >
-          <div className="space-y-16">
-            <SectionHeader badge={badge} title={title} subtitle={description} />
-
-            <div className="grid gap-10 lg:grid-cols-2">
-              {groups.map((group, index) => {
-                const { Icon } = group;
-
-                return (
-                  <motion.div
-                    key={group.key}
-                    variants={cardVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.35 }}
-                    transition={{ delay: index * 0.08 }}
-                  >
-                    <Card className="h-full border-border/80 bg-card/80 shadow-elevated backdrop-blur transition-transform duration-500 hover:-translate-y-2 hover:shadow-premium">
-                      <CardContent className="space-y-8 p-8">
-                        <div className="flex items-center gap-3">
-                          <motion.div
-                            initial={{ scale: 0.85, rotate: -6, opacity: 0 }}
-                            whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
-                            viewport={{ once: true, amount: 0.7 }}
-                            transition={{ duration: 0.6, delay: 0.05 }}
-                            className="rounded-2xl bg-gradient-gold p-3 text-accent-foreground shadow-gold"
-                          >
-                            <Icon className="h-6 w-6" />
-                          </motion.div>
-                          <h3 className="text-2xl font-semibold text-foreground">{group.title}</h3>
-                        </div>
-
-                        <div className="space-y-4 text-base leading-relaxed text-muted-foreground" dir={isArabic ? 'rtl' : 'ltr'}>
-                          <motion.p
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.6 }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
-                          >
-                            {group.description}
-                          </motion.p>
-                          <motion.div
-                            className="flex flex-wrap gap-2"
-                            dir={isArabic ? 'rtl' : 'ltr'}
-                            initial={{ opacity: 0, y: 12 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.6 }}
-                            transition={{ duration: 0.55, delay: 0.16 }}
-                          >
-                            {group.items.map((item) => (
-                              <Badge
-                                key={item}
-                                variant="outline"
-                                className="border-border bg-background/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground/90"
-                              >
-                                {item}
-                              </Badge>
-                            ))}
-                          </motion.div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {[highlightOne, highlightTwo]
-                .filter(Boolean)
-                .map((highlight, index) => (
-                  <motion.div
-                    key={`${highlight}-${index}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.6 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="rounded-3xl border border-border bg-gradient-to-br from-primary/5 via-background to-background p-6 text-center shadow-ambient"
-                  >
-                    <p className="text-sm font-semibold text-primary">{highlight}</p>
-                  </motion.div>
-                ))}
-            </div>
-          </div>
-        </SectionContainer>
+    <MotionSection id="services" className="space-y-10">
+      <div className="flex flex-col gap-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--gold))]">
+          {isArabic ? "الخدمات القانونية" : "Legal Services"}
+        </p>
+        <h2 className="text-3xl font-display text-[hsl(var(--foreground))] sm:text-4xl">
+          {isArabic
+            ? "خدمات مترابطة لصناعة قرار قانوني أكثر ثقة"
+            : "Integrated services for confident legal decisions"}
+        </h2>
+        <p className="max-w-3xl text-lg text-[hsl(var(--muted-foreground))]">
+          {isArabic
+            ? "نحوّل الخبرة القانونية إلى منظومة قابلة للقياس، حيث تعمل فرق المحامين والامتثال والعمليات ضمن لوحة واحدة." 
+            : "We translate legal expertise into measurable operations, uniting attorneys, compliance, and operations in one premium workspace."}
+        </p>
       </div>
-    </section>
+
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {services.map(({ icon: Icon, en, ar, descEn, descAr }) => (
+          <div
+            key={en}
+            className="group rounded-3xl border border-[hsl(var(--nav-border))] bg-[hsl(var(--card))] p-6 shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-lg)]"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[hsl(var(--gold))] text-[hsl(var(--accent-foreground))] shadow-[var(--shadow-gold)]">
+              <Icon className="h-6 w-6" />
+            </div>
+            <h3 className="mt-5 text-lg font-semibold text-[hsl(var(--foreground))]">
+              {isArabic ? ar : en}
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
+              {isArabic ? descAr : descEn}
+            </p>
+            <div className="mt-6 h-px w-full bg-[hsl(var(--nav-border))]" />
+            <p className="mt-4 text-xs uppercase tracking-[0.3em] text-[hsl(var(--gold))]">
+              {isArabic ? "نتائج قابلة للقياس" : "Measured Outcomes"}
+            </p>
+          </div>
+        ))}
+      </div>
+    </MotionSection>
   );
 };
 
