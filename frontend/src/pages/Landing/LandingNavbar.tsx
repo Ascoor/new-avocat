@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ThemeToggle, {
   themeToggleToneClassMap,
@@ -8,6 +7,7 @@ import ThemeToggle, {
   type ThemeToggleTone,
 } from "@/components/ui/theme-toggle";
 import BrandLogo from "@/components/common/BrandLogo";
+import LoginModal from "@/pages/Landing/LoginModal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useScrollSpy } from "@/components/landing/useScrollSpy";
@@ -17,6 +17,7 @@ import {
   Award,
   BookOpenText,
   BriefcaseBusiness,
+  LogIn,
   Menu,
   Phone,
   ShieldCheck,
@@ -43,9 +44,9 @@ const toggleCopy = {
 const LandingNavbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const { theme } = useTheme();
   const { language, toggleLanguage, direction } = useLanguage();
-  const navigate = useNavigate();
 
   const sectionIds = useMemo(() => navSections.map((section) => section.id), []);
   const activeId = useScrollSpy(sectionIds, { offset: 96 });
@@ -77,6 +78,11 @@ const LandingNavbar: React.FC = () => {
     setIsOpen(false);
   };
 
+  const handleLoginOpen = () => {
+    setIsLoginOpen(true);
+    setIsOpen(false);
+  };
+
   const containerVariants = {
     hidden: { height: 0, opacity: 0 },
     visible: {
@@ -97,162 +103,183 @@ const LandingNavbar: React.FC = () => {
     : "text-[hsl(var(--navbar-link-solid))] hover:text-[hsl(var(--foreground))]";
 
   return (
-    <nav
-      dir={direction}
-      className={cn(
-        "fixed top-0 z-50 w-full transition-all duration-500",
-        isScrolled
-          ? "bg-[hsl(var(--nav-bg-scrolled))] backdrop-blur-xl border-b border-[hsl(var(--nav-border))] shadow-[var(--shadow-md)]"
-          : "bg-[hsl(var(--nav-bg-top))] backdrop-blur-md",
-      )}
-    >
-      <div className="mx-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-10">
-        <button
-          type="button"
-          onClick={() => scrollToAnchor("home")}
-          className="flex items-center gap-3"
-          aria-label="Avocat"
-        >
-          <div className="block sm:hidden">
-            <BrandLogo variant="icon" className="h-9 w-9" lang={language} dark={logoDark} />
-          </div>
-          <div className="hidden sm:block">
-            <BrandLogo variant="text" className="h-10" lang={language} dark={logoDark} />
-          </div>
-        </button>
-
-        <div className="hidden items-center gap-6 lg:flex">
-          {navSections.map(({ id, icon: Icon, en, ar }) => {
-            const label = isArabic ? ar : en;
-            const isActive = activeId === id;
-            return (
-              <button
-                key={id}
-                onClick={() => scrollToAnchor(id)}
-                className={cn(
-                  "group relative flex items-center gap-2 text-sm font-medium tracking-wide transition-colors",
-                  navText,
-                )}
-              >
-                <Icon className="h-4 w-4 text-[hsl(var(--gold))]" />
-                <span className="relative">
-                  {label}
-                  <span
-                    className={cn(
-                      "absolute -bottom-1 block h-0.5 w-full transform rounded-full transition-transform duration-300",
-                      underlineAlignment,
-                      isActive ? "scale-x-100 bg-[hsl(var(--gold))]" : "scale-x-0 bg-[hsl(var(--gold))] group-hover:scale-x-100",
-                    )}
-                  />
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center gap-3">
-          <ThemeToggle tone={actionTone} />
-
-          <Button
-            variant={actionVariant}
-            size="icon"
-            onClick={toggleLanguage}
-            aria-label={toggleAria}
-            className={cn("rounded-full transition-all duration-300", actionToneClasses)}
-          >
-            {isArabic ? "EN" : "AR"}
-          </Button>
-
-          <Button
+    <>
+      <nav
+        dir={direction}
+        className={cn(
+          "fixed top-0 z-50 w-full transition-all duration-500",
+          isScrolled
+            ? "bg-[hsl(var(--nav-bg-scrolled))] backdrop-blur-xl border-b border-[hsl(var(--nav-border))] shadow-[var(--shadow-md)]"
+            : "bg-[hsl(var(--nav-bg-top))] backdrop-blur-md",
+        )}
+      >
+        <div className="mx-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-10">
+          <button
             type="button"
-            onClick={() => navigate("/login")}
-            variant={isDark ? "gold" : "chromatic"}
-            size="lg"
-            className="hidden lg:inline-flex rounded-full px-6 shadow-[var(--shadow-md)] transition-transform hover:-translate-y-0.5"
+            onClick={() => scrollToAnchor("home")}
+            className="flex items-center gap-3"
+            aria-label="Avocat"
           >
-            {isArabic ? "تسجيل الدخول" : "Client Login"}
-          </Button>
-
-          <Button
-            variant={actionVariant}
-            size="icon"
-            className={cn("lg:hidden rounded-full", actionToneClasses)}
-            onClick={() => setIsOpen((prev) => !prev)}
-            aria-label={isOpen ? "Close navigation" : "Open navigation"}
-          >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {isOpen ? (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={containerVariants}
-            className="overflow-hidden border-t border-[hsl(var(--nav-border))] bg-[hsl(var(--nav-bg-scrolled))] backdrop-blur"
-          >
-            <div className="space-y-3 px-4 py-5">
-              <motion.div
-                variants={itemVariants}
-                className="flex items-center justify-between rounded-full border border-[hsl(var(--nav-border))] px-4 py-2 text-xs text-[hsl(var(--muted-foreground))]"
-              >
-                <span className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-[hsl(var(--gold))]" />
-                  {isArabic ? "قوة قانونية رقمية موثوقة" : "Trusted legal-tech resilience"}
-                </span>
-                <span className="rounded-full bg-[hsl(var(--gold))] px-2 py-0.5 text-[0.65rem] font-semibold text-[hsl(var(--accent-foreground))]">
-                  {isArabic ? "جديد" : "New"}
-                </span>
-              </motion.div>
-
-              {navSections.map(({ id, icon: Icon, en, ar }) => {
-                const label = isArabic ? ar : en;
-                return (
-                  <motion.button
-                    key={id}
-                    variants={itemVariants}
-                    onClick={() => scrollToAnchor(id)}
-                    className={cn(
-                      "flex w-full items-center justify-between rounded-2xl border border-transparent px-4 py-3 text-sm font-medium transition-all",
-                      "hover:border-[hsl(var(--nav-border))] hover:bg-[hsl(var(--muted))]",
-                      isArabic ? "text-right" : "text-left",
-                    )}
-                  >
-                    <span className="flex items-center gap-3 text-[hsl(var(--foreground))]">
-                      <Icon className="h-5 w-5 text-[hsl(var(--gold))]" />
-                      {label}
-                    </span>
-                  </motion.button>
-                );
-              })}
-
-              <motion.div variants={itemVariants} className="grid gap-3">
-                <Button
-                  type="button"
-                  onClick={() => navigate("/login")}
-                  variant={isDark ? "gold" : "chromatic"}
-                  className="w-full rounded-2xl py-3 text-sm font-semibold shadow-[var(--shadow-md)]"
-                >
-                  {isArabic ? "تسجيل الدخول" : "Client Login"}
-                </Button>
-
-                <Button
-                  type="button"
-                  onClick={() => scrollToAnchor("contact")}
-                  variant="outline"
-                  className="w-full rounded-2xl border-[hsl(var(--nav-border))] text-sm"
-                >
-                  {isArabic ? "احجز مكالمة استراتيجية" : "Book a Strategy Call"}
-                </Button>
-              </motion.div>
+            <div className="block sm:hidden">
+              <BrandLogo variant="icon" className="h-9 w-9" lang={language} dark={logoDark} />
             </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </nav>
+            <div className="hidden sm:block">
+              <BrandLogo variant="text" className="h-10" lang={language} dark={logoDark} />
+            </div>
+          </button>
+
+          <div className="hidden items-center gap-6 lg:flex">
+            {navSections.map(({ id, icon: Icon, en, ar }) => {
+              const label = isArabic ? ar : en;
+              const isActive = activeId === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => scrollToAnchor(id)}
+                  className={cn(
+                    "group relative flex items-center gap-2 text-sm font-medium tracking-wide transition-colors",
+                    navText,
+                  )}
+                >
+                  <Icon className="h-4 w-4 text-[hsl(var(--gold))]" />
+                  <span className="relative">
+                    {label}
+                    <span
+                      className={cn(
+                        "absolute -bottom-1 block h-0.5 w-full transform rounded-full transition-transform duration-300",
+                        underlineAlignment,
+                        isActive
+                          ? "scale-x-100 bg-[hsl(var(--gold))]"
+                          : "scale-x-0 bg-[hsl(var(--gold))] group-hover:scale-x-100",
+                      )}
+                    />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className={cn("flex items-center gap-3 transition-opacity", isLoginOpen && "opacity-70")}>
+            <ThemeToggle tone={actionTone} />
+
+            <Button
+              variant={actionVariant}
+              size="icon"
+              onClick={toggleLanguage}
+              aria-label={toggleAria}
+              className={cn("rounded-full transition-all duration-300", actionToneClasses)}
+            >
+              {isArabic ? "EN" : "AR"}
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleLoginOpen}
+              variant={isDark ? "gold" : "chromatic"}
+              size="lg"
+              className={cn(
+                "hidden lg:inline-flex h-11 rounded-full px-6 text-sm font-semibold",
+                "border border-[hsl(var(--auth-border))] shadow-[0_8px_24px_-18px_hsl(var(--auth-accent-glow))]",
+                "transition-all hover:-translate-y-0.5 hover:shadow-[0_0_22px_hsl(var(--auth-accent-glow)),var(--shadow-md)]",
+                "active:translate-y-0 active:shadow-[0_0_12px_hsl(var(--auth-accent-glow))]",
+              )}
+            >
+              {isArabic ? "تسجيل الدخول" : "Client Login"}
+            </Button>
+
+            <Button
+              type="button"
+              variant={actionVariant}
+              size="icon"
+              onClick={handleLoginOpen}
+              className={cn("lg:hidden rounded-full", actionToneClasses)}
+              aria-label={isArabic ? "تسجيل الدخول" : "Client Login"}
+            >
+              <LogIn className="h-4 w-4" />
+            </Button>
+
+            <Button
+              variant={actionVariant}
+              size="icon"
+              className={cn("lg:hidden rounded-full", actionToneClasses)}
+              onClick={() => setIsOpen((prev) => !prev)}
+              aria-label={isOpen ? "Close navigation" : "Open navigation"}
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {isOpen ? (
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={containerVariants}
+              className="overflow-hidden border-t border-[hsl(var(--nav-border))] bg-[hsl(var(--nav-bg-scrolled))] backdrop-blur"
+            >
+              <div className="space-y-3 px-4 py-5">
+                <motion.div
+                  variants={itemVariants}
+                  className="flex items-center justify-between rounded-full border border-[hsl(var(--nav-border))] px-4 py-2 text-xs text-[hsl(var(--muted-foreground))]"
+                >
+                  <span className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-[hsl(var(--gold))]" />
+                    {isArabic ? "قوة قانونية رقمية موثوقة" : "Trusted legal-tech resilience"}
+                  </span>
+                  <span className="rounded-full bg-[hsl(var(--gold))] px-2 py-0.5 text-[0.65rem] font-semibold text-[hsl(var(--accent-foreground))]">
+                    {isArabic ? "جديد" : "New"}
+                  </span>
+                </motion.div>
+
+                {navSections.map(({ id, icon: Icon, en, ar }) => {
+                  const label = isArabic ? ar : en;
+                  return (
+                    <motion.button
+                      key={id}
+                      variants={itemVariants}
+                      onClick={() => scrollToAnchor(id)}
+                      className={cn(
+                        "flex w-full items-center justify-between rounded-2xl border border-transparent px-4 py-3 text-sm font-medium transition-all",
+                        "hover:border-[hsl(var(--nav-border))] hover:bg-[hsl(var(--muted))]",
+                        isArabic ? "text-right" : "text-left",
+                      )}
+                    >
+                      <span className="flex items-center gap-3 text-[hsl(var(--foreground))]">
+                        <Icon className="h-5 w-5 text-[hsl(var(--gold))]" />
+                        {label}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+
+                <motion.div variants={itemVariants} className="grid gap-3">
+                  <Button
+                    type="button"
+                    onClick={handleLoginOpen}
+                    variant={isDark ? "gold" : "chromatic"}
+                    className="w-full rounded-2xl py-3 text-sm font-semibold shadow-[var(--shadow-md)]"
+                  >
+                    {isArabic ? "تسجيل الدخول" : "Client Login"}
+                  </Button>
+
+                  <Button
+                    type="button"
+                    onClick={() => scrollToAnchor("contact")}
+                    variant="outline"
+                    className="w-full rounded-2xl border-[hsl(var(--nav-border))] text-sm"
+                  >
+                    {isArabic ? "احجز مكالمة استراتيجية" : "Book a Strategy Call"}
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
+      </nav>
+      <LoginModal open={isLoginOpen} onOpenChange={setIsLoginOpen} language={language} direction={direction} />
+    </>
   );
 };
 
